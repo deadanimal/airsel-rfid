@@ -4,13 +4,13 @@
 .*
 *.sqlite3
 *.pem
-/site/
-/htmlcov/
-/coverage/
-/build/
+site/
+htmlcov/
+coverage/
+build/
 
-/env/
-/*.egg-info/
+env/
+*.egg-info/
 MANIFEST
 coverage.*
 !.gitignore
