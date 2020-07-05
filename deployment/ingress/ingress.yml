@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: airsel-rfid-my-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "airsel-rfid-my-prod"
+spec:
+  tls:
+  - hosts:
+    - airsel-rfid.pipe.my
+    - airsel-rfid-api.pipe.my
+
+    secretName: airsel-rfid-my-prod
+
+  rules:
+  - host: airsel-rfid-api.pipe.my
+    http:
+      paths:
+      - backend:
+          serviceName: airsel-rfid-api
+          servicePort: 5000    
+  - host: airsel-rfid.pipe.my
+    http:
+      paths:
+      - backend:
+          serviceName: airsel-rfid-webapp
+          servicePort: 80    
