@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController, ToastController } from "@ionic/angular";
+import { MenuController, NavController, ToastController } from "@ionic/angular";
 import { QRScanner, QRScannerStatus } from "@ionic-native/qr-scanner/ngx";
 
 @Component({
@@ -14,6 +14,7 @@ export class QrScannerComponent implements OnInit {
   link: string;
 
   constructor(
+    public menu: MenuController,
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     private route: ActivatedRoute,
@@ -28,7 +29,9 @@ export class QrScannerComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.menu.enable(false, "menuNotification");
+  }
 
   ionViewWillEnter() {
     this.scan();

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AlertController, ModalController } from "@ionic/angular";
+import { AlertController, MenuController, ModalController } from "@ionic/angular";
 import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 
 @Component({
@@ -121,6 +121,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
 
   constructor(
     public alertController: AlertController,
+    public menu: MenuController,
     public modalController: ModalController,
     private route: ActivatedRoute,
     private router: Router
@@ -133,6 +134,8 @@ export class MaintenanceWorkDetailPage implements OnInit {
   }
 
   ngOnInit() {
+    this.menu.enable(false, "menuNotification");
+
     this.items = this.pendings;
   }
 

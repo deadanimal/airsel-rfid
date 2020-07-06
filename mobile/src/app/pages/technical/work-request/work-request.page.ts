@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 
@@ -21,11 +22,13 @@ export class WorkRequestPage implements OnInit {
   capturedSnapURL: string;
 
   constructor(
+    public menu: MenuController,
     // private barcodeScanner: BarcodeScanner
     private camera: Camera,
   ) { }
 
   ngOnInit() {
+    this.menu.enable(false, "menuNotification");
   }
 
   scanQrCode() {

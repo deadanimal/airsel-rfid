@@ -1,13 +1,32 @@
-<ion-header>
-  <ion-toolbar>
-    <div class="ion-text-center" style="font-weight: bold;">
-      ASSET DETAIL
-    </div>
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="homePage('/technical/tabs/tab1')">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem;"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold;">
+      Asset Detail
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          size="small"
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px;"
+          >3</ion-badge
+        >
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+<ion-content class="content-core">
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button (click)="scanQrCode()">
       <ion-icon name="scan"></ion-icon>
     </ion-fab-button>
@@ -142,8 +161,8 @@
     </ion-card-content>
   </ion-card>
 
-  <div class="ion-text-center">
-    <h6>Service History</h6>
+  <div class="ion-padding-start">
+    <ion-card-title>Service History</ion-card-title>
   </div>
 
   <ion-slides [options]="sliderConfig">
@@ -169,7 +188,7 @@
   </ion-slides>
 
   <div class="ion-text-center ion-padding-bottom">
-    <ion-button>Update<br/>asset</ion-button>
+    <ion-button>Update<br/>Asset</ion-button>
     <ion-button [routerLink]="['/technical/submit']">Submit</ion-button>
     <ion-button [routerLink]="['/technical/work-request']">Create Work<br/>Request</ion-button>
   </div>

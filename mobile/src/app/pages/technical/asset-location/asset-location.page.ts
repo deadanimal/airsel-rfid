@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, NavigationExtras } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import { AlertController, MenuController } from "@ionic/angular";
 
 // import * as L from "leaflet";
 import { Map, tileLayer, Marker, icon, LatLng } from 'leaflet';
@@ -41,10 +41,13 @@ export class AssetLocationPage implements OnInit {
   constructor(
     private geolocation: Geolocation,
     private alertController: AlertController,
+    private menu: MenuController,
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.menu.enable(false, "menuNotification");
+  }
 
   ionViewDidEnter() {
     this.loadMap();

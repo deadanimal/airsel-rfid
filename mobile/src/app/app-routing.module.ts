@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
+    path: 'forgot',
+    loadChildren: () => import('./pages/forgot/forgot.module').then(m => m.ForgotPageModule)
+  },
+  {
     path: 'technical',
     loadChildren: () => import('./pages/technical/technical.module').then( m => m.TechnicalModule)
   },

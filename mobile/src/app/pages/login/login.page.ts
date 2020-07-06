@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import { AlertController, MenuController } from "@ionic/angular";
 
 @Component({
   selector: "app-login",
@@ -15,10 +15,13 @@ export class LoginPage implements OnInit {
 
   constructor(
     public alertController: AlertController,
+    public menu: MenuController,
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.menu.enable(false, "menuNotification");
+  }
 
   login() {
     if (
@@ -90,5 +93,9 @@ export class LoginPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  navigateForgotPage() {
+    this.router.navigate(['/forgot'])
   }
 }

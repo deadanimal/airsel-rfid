@@ -1,22 +1,22 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary" mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <div class="ion-text-center" style="font-weight: bold;">
-      ASSET LOCATION
-    </div>
+    <ion-title style="font-weight: bold;">
+      Asset Location
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+<ion-content class="content-core">
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button (click)="locateMe('', 2.835388, 101.738382)">
       <ion-icon name="locate"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <div id="mapId" style="height: 300px"></div>
+  <div id="mapId" style="height: 300px;"></div>
   <!-- <div
     id="map"
     style="height: 300px;"
@@ -39,19 +39,21 @@
     </ion-list>
   </div>
 
-  <ion-list-header class="air-selangor-toolbar">
-    <div class="ion-text-center">
-      List of Pump House
-    </div>
-  </ion-list-header>
-  <ion-card *ngFor="let pumphouse of pumphouses" (click)="locateMe(pumphouse.name, pumphouse.lat, pumphouse.lng)">
+  <div class="ion-padding-start">
+    <ion-card-title>List of Pump House</ion-card-title>
+  </div>
+  
+  <ion-card
+    *ngFor="let pumphouse of pumphouses"
+    (click)="locateMe(pumphouse.name, pumphouse.lat, pumphouse.lng)"
+  >
     <!-- <ion-card-content> -->
-      <div class="ion-float-left ion-padding">
-        {{ pumphouse.name }}
-      </div>
-      <div class="ion-float-right ion-padding" style="font-size: 1rem">
-        <ion-icon name="locate"></ion-icon>
-      </div>
+    <div class="ion-float-left ion-padding">
+      {{ pumphouse.name }}
+    </div>
+    <div class="ion-float-right ion-padding" style="font-size: 1rem;">
+      <ion-icon name="locate"></ion-icon>
+    </div>
     <!-- </ion-card-content> -->
   </ion-card>
 

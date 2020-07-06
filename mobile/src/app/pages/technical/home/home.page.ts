@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AlertController, ModalController } from "@ionic/angular";
+import { AlertController, MenuController, ModalController } from "@ionic/angular";
 import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 
 @Component({
@@ -135,6 +135,7 @@ export class HomePage implements OnInit {
 
   constructor(
     public alertController: AlertController,
+    public menu: MenuController,
     public modalController: ModalController,
     private router: Router
   ) {}
@@ -211,5 +212,9 @@ export class HomePage implements OnInit {
 
   homePage(path: string) {
     this.router.navigate([path]);
+  }
+
+  openNotification() {
+    this.menu.open("menuNotification");
   }
 }
