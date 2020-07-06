@@ -1,0 +1,48 @@
+<div class="main-content auth-content">
+    <div class="container mt-8 pb-8">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="card bg-secondary border-0 mb-0">
+                    <div class="card-body px-lg-5 py-lg-5">
+                        <div class="client-logo-area">
+                            <img class="client-logo" src="assets/img/logo/airsel-logo.png">
+                        </div>
+                        <div *ngIf="!isReset">
+                            <form role="form">
+                                <div class="form-group mb-3" [ngClass]="{ focused: focus === true }">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-primary">
+                                                <i class="ni ni-email-83 text-white"></i>
+                                            </span>
+                                        </div>
+                                        <input
+                                            class="form-control text-dark"
+                                            placeholder="Email"
+                                            type="email"
+                                            (focus)="focus = true"
+                                            (blur)="focus = false"
+                                        />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="isReset" class="text-center">
+                            <h4 class="m-0">
+                                Reset link has been sent to your email to reset your password
+                            </h4>
+                        </div>
+                        <div class="text-center">
+                            <button *ngIf="!isReset" type="button" class="btn btn-primary btn-block my-4" (click)="reset()">
+                                Reset Password
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-block my-4" [routerLink]="['/auth/login']">
+                                Back to Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

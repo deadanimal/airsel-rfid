@@ -1,0 +1,227 @@
+<div class="header pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-dark d-inline-block mb-0">
+            Big Data Analytics - Asset Condition Score
+          </h6>
+
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">
+                  <i class="far fa-chart-bar text-dark"> </i>
+                </a>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <h4 class="mb-0">Search filter</h4>
+            </div>
+            <div class="col-auto text-right">
+              <button class="btn btn-default btn-sm">Search</button>
+              <button class="btn btn-secondary btn-sm">Reset</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Owning Organization</label>
+                <select class="form-control form-control-sm">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Work Category</label>
+                <select class="form-control form-control-sm">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Date Range</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  placeholder="Please select date range"
+                  bsDaterangepicker
+                  [bsConfig]="{
+                    isAnimated: true,
+                    containerClass: 'theme-default',
+                    rangeInputFormat: 'MM/DD/YYYY',
+                    dateInputFormat: 'MM/DD/YYYY'
+                  }"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Region</label>
+                <select class="form-control form-control-sm">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">WAMS: Asset Condition Store</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6 col-xs-12">
+              <div class="row">
+                <div class="col">
+                  <h3>Average (Overall)</h3>
+                  <small>Data as of 30 Mac 2020</small><br />
+
+                  <span class="text-info"> ● </span>
+                  <small
+                    >New asset register on April:
+                    <strong class="font-weight-bolder"
+                      >2,846 nos.</strong
+                    ></small
+                  >
+                </div>
+                <div
+                  class="col"
+                  style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <p class="font-weight-bolder" style="font-size: 48px;">
+                    2.88
+                  </p>
+                </div>
+              </div>
+              <hr style="margin-bottom: 0; margin-top: 0;" />
+              <div class="text-center">
+                <h4>Percentage Asset Condition Rating Completion:</h4>
+                <h1>46.26%</h1>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+              <p>
+                Asset that completed Preventive Maintenance:
+                <strong>37,298 nos</strong>
+              </p>
+              <span class="text-info"> ● </span>
+              <small
+                >PM Trigger have been completed on
+                <strong class="font-weight-bolder"
+                  >November 2019.</strong
+                ></small
+              ><br />
+              <span class="text-info"> ● </span>
+              <small
+                >Hence, the asset condition ratings will be completely captured
+                by
+                <strong class="font-weight-bolder"
+                  >November 2020.</strong
+                ></small
+              ><br /><br />
+
+              <small class="text-muted"
+                >* No record due to the remaining assets are waiting for
+                maintenance schedule / no maintenance activity conducted</small
+              >
+            </div>
+            <div class="table-responsive pt-3">
+              <table class="table align-items-center table-flush">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Numbers of Asset</th>
+                    <th class="text-center">0<br />No record*</th>
+                    <th class="text-center">1<br />Very Good</th>
+                    <th class="text-center">2<br />Good</th>
+                    <th class="text-center">3<br />Average</th>
+                    <th class="text-center">4<br />Poor</th>
+                    <th class="text-center">5<br />Extremely<br />Critical</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let tableAssetConditionStore of tableAssetConditionStores
+                    "
+                  >
+                    <td class="font-weight-bolder">
+                      {{ tableAssetConditionStore.title }}
+                    </td>
+                    <td class="text-center font-weight-bolder">
+                      {{ tableAssetConditionStore.noasset | number }}
+                    </td>
+                    <td class="text-center font-weight-bolder">
+                      {{ tableAssetConditionStore.zero | number }}
+                    </td>
+                    <td
+                      class="text-center font-weight-bolder"
+                      style="background-color: #9dcb82;"
+                    >
+                      {{ tableAssetConditionStore.one | number }}
+                    </td>
+                    <td
+                      class="text-center font-weight-bolder"
+                      style="background-color: #bbdcac;"
+                    >
+                      {{ tableAssetConditionStore.two | number }}
+                    </td>
+                    <td
+                      class="text-center font-weight-bolder"
+                      style="background-color: #fbff04;"
+                    >
+                      {{ tableAssetConditionStore.three | number }}
+                    </td>
+                    <td
+                      class="text-center font-weight-bolder"
+                      style="background-color: #f9b81a;"
+                    >
+                      {{ tableAssetConditionStore.four | number }}
+                    </td>
+                    <td
+                      class="text-center font-weight-bolder"
+                      style="background-color: #f50f1d;"
+                    >
+                      {{ tableAssetConditionStore.five | number }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,194 @@
+<div class="header pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class=" h2 text-dark d-inline-block mb-0">User Audit Trail</h6>
+
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0)"> <i class="fas fa-tools text-dark"> </i> </a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header py-3 bg-secondary">
+                    <h4 class="m-0">Audit Trail</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" placeholder="Enter module">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" placeholder="Enter username">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" placeholder="Enter action">
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn btn-primary btn-sm ml-auto">Search</button>
+                            <button type="button" class="btn btn-secondary btn-sm mr-auto">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="dataTables_wrapper py-4 responsive-table">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="dataTables_length" id="datatable_length">
+                                <label>
+                                    Show
+                                    <select name="datatable_length" aria-controls="datatable"
+                                        class="form-control form-control-sm" (change)="entriesChange($event)">
+                                        <option value="5" [selected]="entries==5">5</option>
+                                        <option value="10" [selected]="entries==10">10</option>
+                                        <option value="25" [selected]="entries==25">25</option>
+                                        <option value="50" [selected]="entries==50">50</option>
+                                        <option value="-1" [selected]="entries==-1">All</option>
+                                    </select>
+                                    entries
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div id="datatable_filter" class="dataTables_filter">
+                                <label>
+                                    <input type="search" class="form-control form-control-sm"
+                                        placeholder="Search records" aria-controls="datatable"
+                                        (keyup)="filterTable($event)" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'" [headerHeight]="50"
+                        [footerHeight]="50" [rowHeight]="'auto'" [limit]="entries != -1 ? entries:undefined"
+                        [rows]="temp">
+
+                        <ngx-datatable-column name="Module"></ngx-datatable-column>
+                        <ngx-datatable-column name="Action"></ngx-datatable-column>
+                        <ngx-datatable-column name="Username"></ngx-datatable-column>
+                        <ngx-datatable-column name="Date"></ngx-datatable-column>
+                        <ngx-datatable-column name="Time"></ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #addUserPrivilege>
+    <div class="modal-header bg-default">
+        <h6 class="modal-title my-auto text-white">
+            Add New User Privilege
+        </h6>
+
+        <button aria-label="Close" class=" close" data-dismiss="modal" type="button" (click)="closeModal()">
+            <span aria-hidden="true" class="my-auto text-white"> × </span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-control-label">Module</label>
+            <select class="form-control form-control-sm custom-select custom-select-sm">
+                <option selected hidden>Select module</option>
+                <option>Asset</option>
+                <option>Inventory</option>
+                <option>Utility</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">User Type</label>
+            <select class="form-control form-control-sm custom-select custom-select-sm">
+                <option selected hidden>Select user type</option>
+                <option>Admin</option>
+                <option>Branch</option>
+                <option>Headquarter</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Access</label>
+            <select class="form-control form-control-sm custom-select custom-select-sm">
+                <option selected hidden>User's access</option>
+                <option>True</option>
+                <option>False</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="modal-footer mt--4">
+        <button class="btn btn-primary btn-sm mr-auto" data-dismiss="modal" type="button" (click)="register()">
+            Add
+        </button>
+        <button class="btn btn-warning btn-sm ml-auto" data-dismiss="modal" type="button" (click)="closeModal()">
+            Close
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #editUserPrivilege>
+    <div class="modal-header bg-default">
+        <h6 class="modal-title text-white m-0">
+            Edit User Privilege
+        </h6>
+
+        <button aria-label="Close" class=" close" data-dismiss="modal" type="button" (click)="closeModal()">
+            <span aria-hidden="true" class="text-white m-0"> × </span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-control-label">Module</label>
+            <select class="form-control form-control-sm custom-select custom-select-sm">
+                <option selected hidden>Select module</option>
+                <option>Asset</option>
+                <option>Inventory</option>
+                <option>Utility</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">User Type</label>
+            <select class="form-control form-control-sm custom-select custom-select-sm">
+                <option selected hidden>Select user type</option>
+                <option>Admin</option>
+                <option>Branch</option>
+                <option>Headquarter</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Access</label>
+            <select class="form-control form-control-sm custom-select custom-select-sm">
+                <option selected hidden>User's access</option>
+                <option>True</option>
+                <option>False</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="modal-footer mt--4">
+        <button class="btn btn-success btn-sm mr-auto" data-dismiss="modal" type="button" (click)="save()">
+            Save
+        </button>
+        <button class="btn btn-warning btn-sm ml-auto" data-dismiss="modal" type="button" (click)="closeModal()">
+            Close
+        </button>
+    </div>
+</ng-template>
