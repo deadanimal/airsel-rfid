@@ -1,0 +1,45 @@
+.form {
+  min-width: 250px !important;
+
+  .validation-errors {
+    min-height: 25px;
+  }
+
+  .error-message {
+    color: var(--ion-color-danger);
+    text-align: right;
+    font-size: 0.8em;
+    padding-top: 5px;
+  }
+
+  ion-input {
+    --color: var(--ion-color-medium);
+    --placeholder-font-weight: 400;
+    --background: #f2f2f2;
+    border-radius: 15px;
+    --padding-start: 15px !important;
+    margin-top: 0.7rem;
+  }
+
+  ion-item {
+    --background: transparent;
+    border-radius: 15px;
+  }
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  max-width: 50%;
+  padding-bottom: 25px;
+}
+
+// Avoid keyboard to hide or move elements in the UI
+@media (max-height: 450px) {
+  h2.title {
+    display: none;
+  }
+  p.subtitle {
+    display: none;
+  }
+}

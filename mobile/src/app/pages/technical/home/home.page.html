@@ -1,135 +1,27 @@
-<!-- <ion-header>
-  <ion-toolbar>
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="homePage('/technical/tabs/tab1')">
         <ion-icon
-          src="../../../../assets/icon/air-selangor.svg"
-          style="font-size: 100px;"
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem;"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <div class="ion-text-center" style="font-weight: bold;">
+    <ion-title style="font-weight: bold;">
       TAMS
-    </div>
+    </ion-title>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
         <ion-badge
+          size="small"
           color="danger"
-          style="position: absolute; right: -5px; top: -3px;"
+          style="position: absolute; right: -5px; top: 1px;"
           >3</ion-badge
         >
       </ion-button>
-      <ion-button (click)="clickLogout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
     </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <h1 class="ion-text-center">
-    <ion-icon name="bar-chart"></ion-icon> TOTAL WORK ACTIVITY ASSIGN:
-    <ion-badge class="air-selangor-toolbar" size="large">110</ion-badge>
-  </h1>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6" class="ion-no-padding">
-        <ion-card class="cardStatus" color="success">
-          <ion-card-content class="ion-text-center">
-            <h3>New</h3>
-            <h1 style="font-weight: bold;">
-              54 <ion-badge color="success">+3</ion-badge>
-            </h1>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6" class="ion-no-padding">
-        <ion-card class="cardStatus" color="warning">
-          <ion-card-content class="ion-text-center">
-            <h3>In Progress</h3>
-            <h1 style="font-weight: bold;">
-              35 <ion-badge color="warning" style="color: white;">+7</ion-badge>
-            </h1>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="6" class="ion-no-padding">
-        <ion-card class="cardStatus" color="danger">
-          <ion-card-content class="ion-text-center">
-            <h3>Backlog</h3>
-            <h1 style="font-weight: bold;">
-              14 <ion-badge color="danger">+2</ion-badge>
-            </h1>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6" class="ion-no-padding">
-        <ion-card class="cardStatus" color="secondary">
-          <ion-card-content class="ion-text-center">
-            <h3>Complete</h3>
-            <h1 style="font-weight: bold;">
-              7 <ion-badge color="secondary">+6</ion-badge>
-            </h1>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <hr style="height: 4px; background: black;" />
-  <h1 class="ion-text-center"><ion-icon name="reader"></ion-icon> TASK</h1>
-
-  <ion-slides [options]="sliderConfig">
-    <ion-slide>
-      <ion-card
-        class="cardTask ion-text-center"
-        (click)="openPage('/technical/maintenance-work-list')"
-      >
-        <ion-card-content>
-          <img src="../../../../assets/technical/maintenance.svg" />
-          <h5 class="ion-no-margin">
-            Maintenance Work
-          </h5>
-        </ion-card-content>
-      </ion-card>
-    </ion-slide>
-    <ion-slide>
-      <ion-card
-        class="cardTask ion-text-center"
-        (click)="openPage('/technical/tabs/tab2')"
-      >
-        <ion-card-content>
-          <img src="../../../../assets/technical/fuel.svg" />
-          <h5 class="ion-no-margin">
-            Operational Reading
-          </h5>
-        </ion-card-content>
-      </ion-card>
-    </ion-slide>
-    <ion-slide>
-      <ion-card
-        class="cardTask ion-text-center"
-        (click)="openPage('/technical/tabs/tab2')"
-      >
-        <ion-card-content>
-          <img src="../../../../assets/technical/checklist.svg" />
-          <h5 class="ion-no-margin">
-            Asset Registration
-          </h5>
-        </ion-card-content>
-      </ion-card>
-    </ion-slide>
-  </ion-slides>
-</ion-content> -->
-
-<ion-header mode="ios" class="ion-no-border">
-  <ion-toolbar mode="ios" class="ion-no-border">
-    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -137,22 +29,43 @@
   <ion-list class="list-core">
     <ion-list-header>
       <h3 class="ion-no-margin">
-        <ion-icon name="bar-chart-outline" style="display: inline-block;vertical-align: middle;"></ion-icon>
-        <span style="display: inline-block;vertical-align: middle; margin-left: 0.7rem">Total Work Activity Assign: </span>
-        <ion-badge color="primary" mode="ios" style="display: inline-block;vertical-align: middle; margin-left:0.7rem">11</ion-badge>
+        <ion-icon
+          name="bar-chart-outline"
+          style="display: inline-block; vertical-align: middle;"
+        ></ion-icon>
+        <span
+          style="
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.7rem;
+          "
+          >Total Work Activity Assign:
+        </span>
+        <ion-badge
+          color="primary"
+          mode="ios"
+          style="
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.7rem;
+          "
+          >11</ion-badge
+        >
       </h3>
     </ion-list-header>
 
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card class="card-core  ion-no-margin" mode="ios" color="success">
+          <ion-card class="card-core ion-no-margin" mode="ios" color="success">
             <ion-card-content class="ion-padding">
               <ion-row class="ion-no-padding">
-                <ion-col>
-                  
+                <ion-col class="ion-no-padding">
+                  <ion-label class="ion-text-center">
+                    <p>New</p>
+                  </ion-label>
                 </ion-col>
-                 
+
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
                     <h1>51</h1>
@@ -161,11 +74,7 @@
               </ion-row>
 
               <ion-row>
-                <ion-col class="ion-no-padding">
-                  <ion-label class="ion-text-center">
-                    <p>New</p>
-                  </ion-label>
-                </ion-col>
+                <ion-col> </ion-col>
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
@@ -176,15 +85,17 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-  
+
         <ion-col>
-          <ion-card class="card-core  ion-no-margin" mode="ios" color="danger">
+          <ion-card class="card-core ion-no-margin" mode="ios" color="danger">
             <ion-card-content class="ion-padding">
               <ion-row class="ion-no-padding">
-                <ion-col>
-                  
+                <ion-col class="ion-no-padding">
+                  <ion-label class="ion-text-center">
+                    <p>Backing</p>
+                  </ion-label>
                 </ion-col>
-                 
+
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
                     <h1>61</h1>
@@ -193,11 +104,7 @@
               </ion-row>
 
               <ion-row>
-                <ion-col class="ion-no-padding">
-                  <ion-label class="ion-text-center">
-                    <p>Backing</p>
-                  </ion-label>
-                </ion-col>
+                <ion-col> </ion-col>
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
@@ -209,29 +116,27 @@
           </ion-card>
         </ion-col>
       </ion-row>
-  
+
       <ion-row>
         <ion-col>
-          <ion-card class="card-core  ion-no-margin" mode="ios" color="warning">
+          <ion-card class="card-core ion-no-margin" mode="ios" color="warning">
             <ion-card-content class="ion-padding">
               <ion-row class="ion-no-padding">
-                <ion-col>
-                  
-                </ion-col>
-                 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <h1>71</h1>
+                    <p style="color: white;">In Progress</p>
+                  </ion-label>
+                </ion-col>
+
+                <ion-col class="ion-no-padding">
+                  <ion-label class="ion-text-center">
+                    <h1 style="color: white;">71</h1>
                   </ion-label>
                 </ion-col>
               </ion-row>
 
               <ion-row>
-                <ion-col class="ion-no-padding">
-                  <ion-label class="ion-text-center">
-                    <p>In Progress</p>
-                  </ion-label>
-                </ion-col>
+                <ion-col> </ion-col>
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
@@ -242,15 +147,17 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-  
+
         <ion-col>
-          <ion-card class="card-core  ion-no-margin" mode="ios" color="tertiary">
+          <ion-card class="card-core ion-no-margin" mode="ios" color="tertiary">
             <ion-card-content class="ion-padding">
               <ion-row class="ion-no-padding">
-                <ion-col>
-                  
+                <ion-col class="ion-no-padding">
+                  <ion-label class="ion-text-center">
+                    <p>Completed</p>
+                  </ion-label>
                 </ion-col>
-                 
+
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
                     <h1>81</h1>
@@ -259,11 +166,7 @@
               </ion-row>
 
               <ion-row>
-                <ion-col class="ion-no-padding">
-                  <ion-label class="ion-text-center">
-                    <p>Completed</p>
-                  </ion-label>
-                </ion-col>
+                <ion-col> </ion-col>
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
@@ -279,55 +182,85 @@
 
     <ion-list-header>
       <h3 class="ion-no-margin">
-        <ion-icon name="list-outline" style="vertical-align: middle;"></ion-icon>
-        <span style="display: inline-block;vertical-align: middle; margin-left: 0.7rem">Task </span>
+        <ion-icon
+          name="list-outline"
+          style="vertical-align: middle;"
+        ></ion-icon>
+        <span
+          style="
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.7rem;
+          "
+          >Task
+        </span>
       </h3>
     </ion-list-header>
 
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card class="card-core ion-no-margin" mode="ios" (click)="openPage('/technical/maintenance-work-list')">
+          <ion-card
+            class="card-core ion-no-margin"
+            mode="ios"
+            (click)="openPage('/technical/maintenance-work-list')"
+          >
             <ion-card-content class="ion-no-padding">
-              <img src="assets/svg/activity.svg">
+              <img src="assets/svg/activity.svg" />
             </ion-card-content>
             <ion-card-header class="ion-no-padding ion-padding-bottom">
-              <p class="ion-no-margin ion-text-center ion-text-bold">Work Activity</p>
+              <p class="ion-no-margin ion-text-center ion-text-bold">
+                Work Activity
+              </p>
             </ion-card-header>
           </ion-card>
         </ion-col>
-  
+
         <ion-col>
           <ion-card class="card-core ion-no-margin" mode="ios">
             <ion-card-content class="ion-no-padding">
-              <img src="assets/svg/request.svg">
+              <img src="assets/svg/request.svg" />
             </ion-card-content>
             <ion-card-header class="ion-no-padding ion-padding-bottom">
-              <p class="ion-no-margin ion-text-center ion-text-bold">Work Request</p>
+              <p class="ion-no-margin ion-text-center ion-text-bold">
+                Work Request
+              </p>
             </ion-card-header>
           </ion-card>
         </ion-col>
       </ion-row>
-  
+
       <ion-row>
         <ion-col>
-          <ion-card class="card-core ion-no-margin" mode="ios" (click)="openPage('/technical/tabs/tab2')">
+          <ion-card
+            class="card-core ion-no-margin"
+            mode="ios"
+            (click)="openPage('/technical/tabs/tab2')"
+          >
             <ion-card-content class="ion-no-padding">
-              <img src="assets/svg/reading.svg">
+              <img src="assets/svg/reading.svg" />
             </ion-card-content>
             <ion-card-header class="ion-no-padding ion-padding-bottom">
-              <p class="ion-no-margin ion-text-center ion-text-bold">Operational Reading</p>
+              <p class="ion-no-margin ion-text-center ion-text-bold">
+                Operational Reading
+              </p>
             </ion-card-header>
           </ion-card>
         </ion-col>
-  
+
         <ion-col>
-          <ion-card class="card-core ion-no-margin" mode="ios" (click)="openPage('/technical/tabs/tab2')">
+          <ion-card
+            class="card-core ion-no-margin"
+            mode="ios"
+            (click)="openPage('/technical/tabs/tab2')"
+          >
             <ion-card-content class="ion-no-padding">
-              <img src="assets/svg/registration.svg">
+              <img src="assets/svg/registration.svg" />
             </ion-card-content>
             <ion-card-header class="ion-no-padding ion-padding-bottom">
-              <p class="ion-no-margin ion-text-center ion-text-bold">Asset Registrations</p>
+              <p class="ion-no-margin ion-text-center ion-text-bold">
+                Asset Registrations
+              </p>
             </ion-card-header>
           </ion-card>
         </ion-col>
@@ -335,4 +268,3 @@
     </ion-grid>
   </ion-list>
 </ion-content>
-

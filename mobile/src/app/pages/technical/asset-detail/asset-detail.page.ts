@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router, NavigationExtras } from "@angular/router";
+import { MenuController } from '@ionic/angular';
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 
 @Component({
@@ -99,7 +100,7 @@ export class AssetDetailPage implements OnInit {
   sliderConfig = {
     slidesPerView: 1.6,
     spaceBetween: 10,
-    centeredSlides: true
+    // centeredSlides: true
   };
 
   assetDetail = {
@@ -110,6 +111,7 @@ export class AssetDetailPage implements OnInit {
   role;
 
   constructor(
+    public menu: MenuController,
     // private barcodeScanner: BarcodeScanner,
     private route: ActivatedRoute,
     private router: Router
@@ -140,5 +142,13 @@ export class AssetDetailPage implements OnInit {
     //   .catch(err => {
     //     console.log("Error", err);
     //   });
+  }
+
+  homePage(path: string) {
+    this.router.navigate([path]);
+  }
+
+  openNotification() {
+    this.menu.open("menuNotification");
   }
 }

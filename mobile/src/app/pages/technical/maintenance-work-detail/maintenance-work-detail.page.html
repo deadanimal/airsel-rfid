@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header mode="ios" class="ion-no-border">
   <!-- <ion-fab horizontal="end" *ngIf="type == 'pending'">
     <ion-fab-button
       fill="clear"
@@ -9,42 +9,46 @@
       <ion-icon color="light" name="information-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab> -->
-  <ion-toolbar>
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="homePage('/technical/tabs/tab1')">
         <ion-icon
-          src="../../../../assets/icon/air-selangor.svg"
-          style="font-size: 100px;"
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem;"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <div class="ion-text-center" style="font-weight: bold;">
+    <ion-title class="ion-text-wrap" style="font-weight: bold;">
       WORK ACTIVITY INFORMATION
-    </div>
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button>
-        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-icon
+          color="first"
+          slot="icon-only"
+          name="notifications"
+        ></ion-icon>
         <ion-badge
+          size="small"
           color="danger"
-          style="position: absolute; right: -5px; top: -3px;"
+          style="position: absolute; right: -5px; top: 1px;"
           >3</ion-badge
         >
-      </ion-button>
-      <ion-button (click)="clickLogout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="content-core">
   <div class="ion-padding">
     <ion-segment [(ngModel)]="type">
       <ion-segment-button value="pending">
         <ion-label style="font-weight: bold;">New / In Progress</ion-label>
+        <ion-icon name="business"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="completed">
         <ion-label style="font-weight: bold;">Completed</ion-label>
+        <ion-icon name="briefcase"></ion-icon>
       </ion-segment-button>
     </ion-segment>
   </div>
@@ -53,18 +57,27 @@
     <div *ngSwitchCase="'pending'">
       <div>
         <ion-list class="line-input">
-          <ion-item class="ion-padding-start ion-padding-end">
-            <ion-label position="stacked"
-              >Please select work activity status</ion-label
-            >
-            <ion-select [(ngModel)]="category" (ionChange)="categorySelect()">
-              <ion-select-option
-                [value]="category.value"
-                *ngFor="let category of categorys"
-                >{{ category.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
+          <ion-grid class="ion-padding-start ion-padding-end">
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="stacked"
+                    >Please select work activity status</ion-label
+                  >
+                  <ion-select
+                    [(ngModel)]="category"
+                    (ionChange)="categorySelect()"
+                  >
+                    <ion-select-option
+                      [value]="category.value"
+                      *ngFor="let category of categorys"
+                      >{{ category.name }}</ion-select-option
+                    >
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
           <ion-grid class="ion-padding-start ion-padding-end">
             <ion-row>
               <ion-col size="6" class="ion-text-center">

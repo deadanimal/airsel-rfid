@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone, ViewChild } from "@angular/core";
 import { Router, NavigationExtras } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import { AlertController, MenuController } from "@ionic/angular";
 import { Chart } from "chart.js";
 import "chartjs-plugin-labels";
 import * as am4core from "@amcharts/amcharts4/core";
@@ -41,6 +41,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
   constructor(
     public alertController: AlertController,
+    public menu: MenuController,
     private router: Router,
     private zone: NgZone
   ) {}
@@ -597,5 +598,9 @@ export class MaintenanceWorkListPage implements OnInit {
 
   homePage(path: string) {
     this.router.navigate([path]);
+  }
+
+  openNotification() {
+    this.menu.open("menuNotification");
   }
 }

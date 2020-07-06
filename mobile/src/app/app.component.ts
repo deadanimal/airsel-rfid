@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 
-import { Platform, IonRouterOutlet, ToastController } from '@ionic/angular';
+import { Platform, IonRouterOutlet, MenuController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -15,6 +15,7 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
+    public menu: MenuController,
     public toastController: ToastController,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -69,5 +70,9 @@ export class AppComponent {
         }
       });
     });
+  }
+
+  closeNotification() {
+    this.menu.close("menuNotification");
   }
 }

@@ -1,5 +1,5 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary" mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -7,23 +7,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+<ion-content class="content-core ion-padding-bottom">
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button (click)="takeCamera()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <div class="ion-text-center">
-    <h4>Create Work Request (WR)</h4>
+    <ion-card-title>Create Work Request<br/>(WR)</ion-card-title>
   </div>
 
-  <ion-img
-    *ngIf="!capturedSnapURL"
-    src="assets/image/no-image.png"
-  ></ion-img>
-  <ion-card>
-    <img *ngIf="capturedSnapURL" [src]="capturedSnapURL" />
+  <ion-grid *ngIf="!capturedSnapURL">
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="3"></ion-col>
+      <ion-col size="6">
+        <div>
+          <ion-img src="assets/image/no-image.png"></ion-img>
+        </div>
+      </ion-col>
+      <ion-col size="3"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card *ngIf="capturedSnapURL">
+    <img [src]="capturedSnapURL" />
   </ion-card>
 
   <ion-list class="ion-padding line-input">

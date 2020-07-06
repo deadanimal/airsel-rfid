@@ -1,0 +1,49 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding content-core" fullscreen scrollY="false">
+  <ion-grid style="height: 100%">
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 100%; flex-direction: column">
+      <h2 class="title">Reset password</h2>
+      <p class="subtitle" style="max-width: 240px; text-align: center; padding-bottom: 20px;">Enter your email and we
+        will send you a
+        reset link</p>
+      <form class="form" [formGroup]="validations_form">
+        <ion-item lines="none">
+          <ion-input type="text" formControlName="email" placeholder="Enter your email"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.email">
+            <div class="error-message"
+              *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="ion-text-center">
+          <ion-button 
+            *ngIf="!isLoading"
+            type="submit" 
+            [disabled]="!validations_form.valid" 
+            shape="round"
+            (click)="resetPassword()"
+            color="primary">Reset Password
+          </ion-button>
+          <ion-button
+            disabled
+            *ngIf="isLoading"
+            type="submit" 
+            shape="round" 
+            color="primary">
+            <ion-spinner name="bubbles"></ion-spinner>
+          </ion-button>
+        </div>
+      </form>
+    </ion-row>
+  </ion-grid>
+</ion-content>

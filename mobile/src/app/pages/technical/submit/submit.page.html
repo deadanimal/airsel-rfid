@@ -1,15 +1,15 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary" mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <div class="ion-text-center" style="font-weight: bold;">
-      SUBMIT
-    </div>
+    <ion-title style="font-weight: bold;">
+      Submit
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="content-core">
   <ion-card *ngFor="let asset of assets">
     <ion-card-header>
       <ion-card-title>Asset ID: {{ asset.assetId }}</ion-card-title>
