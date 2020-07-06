@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <div class="ion-text-center" style="font-weight: bold;">
+      WORK REQUEST
+    </div>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          color="danger"
+          style="position: absolute; right: -5px; top: -3px;"
+          >3</ion-badge
+        >
+      </ion-button>
+      <ion-button (click)="clickLogout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+    <ion-fab-button (click)="takeCamera()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="ion-text-center">
+    <h4>Create Work Request (WR)</h4>
+  </div>
+
+  <ion-img
+    *ngIf="!capturedSnapURL"
+    src="assets/image/no-image.png"
+  ></ion-img>
+  <ion-card>
+    <img *ngIf="capturedSnapURL" [src]="capturedSnapURL" />
+  </ion-card>
+
+  <ion-list class="ion-padding line-input">
+    <ion-item>
+      <ion-label position="stacked">Nama Aset</ion-label>
+      <ion-select placeholder="Sila Pilih" class="ion-text-wrap">
+        <ion-select-option
+          [value]="assetName"
+          *ngFor="let assetName of assetNames"
+          >{{ assetName }}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Jenis Permasalahan</ion-label>
+      <ion-select placeholder="Sila Pilih" class="ion-text-wrap">
+        <ion-select-option>Masalah Kebocoran</ion-select-option>
+        <ion-select-option>Masalah Paip Tersumbat</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Huraian</ion-label>
+      <ion-textarea rows="5"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-text-center">
+    <ion-button>Submit</ion-button>
+  </div>
+</ion-content>

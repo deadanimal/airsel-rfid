@@ -1,0 +1,14 @@
+ion-card {
+  --background: linear-gradient(
+    45deg,
+    rgba(76, 185, 196, 1) 0%,
+    rgba(61, 211, 174, 1) 100%
+  );
+
+  ion-card-content {
+    div {
+      color: white;
+      font-weight: bold;
+    }
+  }
+}

@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="homePage('/operator/tabs/tab1')">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor.svg"
+          style="font-size: 100px;"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="ion-text-center" style="font-weight: bold;">
+      OPERATOR DETAILS
+    </div>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          color="danger"
+          style="position: absolute; right: -5px; top: -3px;"
+          >3</ion-badge
+        >
+      </ion-button>
+      <ion-button (click)="clickLogout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-card style="height: auto;">
+    <ion-card-content>
+      <ion-list>
+        <ion-item class="nopaddingstart">
+          <ion-label position="stacked">Name</ion-label>
+          <ion-input readonly value="Ahmad Albab"></ion-input>
+        </ion-item>
+
+        <ion-item class="nopaddingstart">
+          <ion-label position="stacked">Department</ion-label>
+          <ion-input readonly type="text" value="Distribution"></ion-input>
+        </ion-item>
+
+        <ion-item class="nopaddingstart">
+          <ion-label position="stacked">Region</ion-label>
+          <ion-input readonly type="text" value="North"></ion-input>
+        </ion-item>
+
+        <ion-item class="nopaddingstart">
+          <ion-label position="stacked">Zone</ion-label>
+          <ion-input readonly type="text" value="KL 1"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card> -->
+
+  <ion-card
+    class="cardTask"
+    (click)="openPage('/operator/tabs/tab2')"
+  >
+    <ion-grid>
+      <ion-row>
+        <ion-col
+          size="4"
+          style="display: flex; justify-content: center; align-items: center;"
+        >
+          <img src="../../../../assets/technical/fuel.svg" />
+        </ion-col>
+        <ion-col
+          size="8"
+          style="display: flex; justify-content: center; align-items: center;"
+        >
+          <h5 class="ion-no-margin">
+            Operational Reading
+          </h5>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>

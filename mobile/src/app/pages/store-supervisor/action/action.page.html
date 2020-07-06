@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar class="air-selangor-toolbar">
+    <div class="ion-text-center" style="font-weight: bold;">
+      ACTION
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <img
+              src="../../../../assets/inventory/stock-receive.svg"
+              style="width: 50%;"
+              (click)="goToPage('/store-supervisor/stock-receive')"
+            />
+            <div class="ion-padding-top" (click)="stockReceiveInfo()">Stock Receive <ion-icon name="information-circle"></ion-icon></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <img
+              src="../../../../assets/inventory/stock-issuance.svg"
+              style="width: 50%;"
+              (click)="goToPage('/store-supervisor/stock-issuance')"
+            />
+            <div class="ion-padding-top" (click)="stockIssuanceInfo()">Stock Issuance <ion-icon name="information-circle"></ion-icon></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <img
+              src="../../../../assets/inventory/return.svg"
+              style="width: 50%;"
+              (click)="goToPage('/store-supervisor/return')"
+            />
+            <div class="ion-padding-top" (click)="returnInfo()">Return <ion-icon name="information-circle"></ion-icon></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <img
+              src="../../../../assets/inventory/stock-count.svg"
+              style="width: 50%;"
+              (click)="goToPage('/store-supervisor/stock-count')"
+            />
+            <div class="ion-padding-top" (click)="stockCountInfo()">Stock Count <ion-icon name="information-circle"></ion-icon></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <img
+              src="../../../../assets/inventory/sending.svg"
+              style="width: 50%;"
+              (click)="goToPage('/store-supervisor/inter-warehouse-transfer')"
+            />
+            <div class="ion-padding-top" (click)="interWarehouseTransferInfo()">Inter-Warehouse Transfer <ion-icon name="information-circle"></ion-icon></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <img
+              src="../../../../assets/inventory/reversal.svg"
+              style="width: 50%;"
+              (click)="goToPage('/store-supervisor/reversal')"
+            />
+            <div class="ion-padding-top" (click)="reversalInfo()">Reversal <ion-icon name="information-circle"></ion-icon></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <img
+              src="../../../../assets/inventory/dispose.svg"
+              style="width: 50%;"
+              (click)="goToPage('/store-supervisor/dispose')"
+            />
+            <div class="ion-padding-top" (click)="disposeInfo()">Dispose <ion-icon name="information-circle"></ion-icon></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

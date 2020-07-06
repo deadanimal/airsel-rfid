@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-text-center">
+    <h4>Borang Senarai Semak Pemeriksaan Visual & Penyenggaraan Injap Altitude Di Tapak</h4>
+  </div>
+  <mat-vertical-stepper linear="false" #stepper>
+ 
+    <mat-step [stepControl]="maklumatAmForm" label="Maklumat Am">
+      <form [formGroup]="maklumatAmForm">
+        <ion-list class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Wilayah</ion-label>
+            <ion-select placeholder="Pilih Wilayah" formControlName="wilayah">
+              <ion-select-option *ngFor="let wilayah of wilayahs">{{ wilayah.val }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Tarikh</ion-label>
+            <ion-datetime displayFormat="MM DD YYYY" placeholder="Pilih Tarikh"></ion-datetime>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="stacked">Masa (dari)</ion-label>
+            <ion-datetime displayFormat="HH:mm" placeholder="Pilih Masa (dari)"></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Masa (siap)</ion-label>
+            <ion-datetime displayFormat="HH:mm" placeholder="Pilih Masa (siap)"></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Lokasi Injap Altitude</ion-label>
+            <ion-textarea rows="5"></ion-textarea>
+          </ion-item>
+        </ion-list>
+      </form>
+    </mat-step>
+   
+    <mat-step label="Jenis Kerja">
+      
+    </mat-step>
+    
+    <mat-step label="Tarikh Kali Terakhir Senggara / Periksa">
+      
+    </mat-step>
+
+    <mat-step label="Staf Bertugas / Plet Kenderaan / Jenis">
+      
+    </mat-step>
+
+    <mat-step label="Maklumat Kebuk / Injap">
+      
+    </mat-step>
+
+    <mat-step label="Maklumat Penutup Kebuk (Sekiranya Ada):">
+      
+    </mat-step>
+
+    <mat-step label="Lakaran Skimatik Kedudukan Injap">
+      
+    </mat-step>
+
+    <mat-step label="Maklumat Injap Altitude">
+      
+    </mat-step>
+
+    <mat-step label="Isolation Valve (13)">
+      
+    </mat-step>
+
+    <mat-step label="Downstream Isolation Valve (14)">
+      
+    </mat-step>
+
+    <mat-step label="Maklumat Injap Saluran By-Pass(15)">
+      
+    </mat-step>
+
+    <mat-step label="Sensing Line Injap Altitude">
+      
+    </mat-step>
+
+    <mat-step label="Main Body (1) Injap ALtitude">
+      
+    </mat-step>
+
+    <mat-step label="Pipe Fitting Injap Altitude">
+      
+    </mat-step>
+
+    <mat-step label="Altitude Pilot (3)">
+      
+    </mat-step>
+
+    <mat-step label="Keputusan Penujian Diaphragm Main Valve & Ujian Simulasi">
+      
+    </mat-step>
+   
+  </mat-vertical-stepper>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <div class="ion-text-end">
+          <ion-button>Submit</ion-button>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="ion-text-start">
+          <ion-button [routerLink]="['/technical/work-request']">Request (WR)</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

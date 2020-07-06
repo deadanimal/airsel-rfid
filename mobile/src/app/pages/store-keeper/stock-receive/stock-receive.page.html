@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar class="air-selangor-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <div style="font-weight: bold; text-transform: uppercase;">
+      Stock Receive
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-content>
+      <p>Description: CONTACTOR - 32A 240V 4 POLES (SCHNEIDER)</p>
+      <p>Category: ELECTRICAL ACCESSORIES</p>
+      <p>Quantity: 10</p>
+      <div class="ion-padding-top ion-text-center">
+        <strong style="color: red"><ion-icon name="alert-circle-outline"></ion-icon> Partial Receive</strong>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <p>Description: CONTACTOR - 32A 240V 4 POLES (SCHNEIDER)</p>
+      <p>Category: ELECTRICAL ACCESSORIES</p>
+      <p>Quantity: 10</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <p>Description: CONTACTOR - 32A 240V 4 POLES (SCHNEIDER)</p>
+      <p>Category: ELECTRICAL ACCESSORIES</p>
+      <p>Quantity: 10</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <p>Description: CONTACTOR - 32A 240V 4 POLES (SCHNEIDER)</p>
+      <p>Category: ELECTRICAL ACCESSORIES</p>
+      <p>Quantity: 10</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <p>Description: CONTACTOR - 32A 240V 4 POLES (SCHNEIDER)</p>
+      <p>Category: ELECTRICAL ACCESSORIES</p>
+      <p>Quantity: 10</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <div class="ion-text-center ion-padding-top">
+    <ion-button [routerLink]="['/store-keeper/to-review']">To Review</ion-button>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" (click)="scanQrCode()">Add More</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" (click)="submit()">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
