@@ -1,0 +1,150 @@
+<div class="header pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-dark d-inline-block mb-0">
+            Big Data Analytics - Work Activity
+          </h6>
+
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">
+                  <i class="far fa-chart-bar text-dark"> </i>
+                </a>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <h4 class="mb-0">Search filter</h4>
+            </div>
+            <div class="col-auto text-right">
+              <button class="btn btn-default btn-sm">Search</button>
+              <button class="btn btn-secondary btn-sm">Reset</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Owning Organization</label>
+                <select class="form-control form-control-sm">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Work Category</label>
+                <select class="form-control form-control-sm">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Date Range</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  placeholder="Please select date range"
+                  bsDaterangepicker
+                  [bsConfig]="{
+                    isAnimated: true,
+                    containerClass: 'theme-default',
+                    rangeInputFormat: 'MM/DD/YYYY',
+                    dateInputFormat: 'MM/DD/YYYY'
+                  }"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Region</label>
+                <select class="form-control form-control-sm">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4 col-xs-12">
+      <div class="card bg-info">
+        <div class="card-body text-center">
+          <h4 class="mb-0 text-white">Total Work Activity Generated</h4>
+          <h1 class="font-weight-bolder text-white">12,942</h1>
+        </div>
+      </div>
+
+      <div class="card bg-danger">
+        <div class="card-body text-center">
+          <h4 class="mb-0 text-white">Total Numbers of Backlog</h4>
+          <div class="row">
+            <div class="col-4 text-right">
+              <h1 class="font-weight-bold">2,371</h1>
+            </div>
+            <div class="col-4 pt-1">
+              <i class="fas fa-arrow-right fa-2x"></i>
+            </div>
+            <div class="col-4 text-left">
+              <h1 class="text-white font-weight-bolder">3,215</h1>
+            </div>
+          </div>
+
+          <h4 class="mb-0 text-white">Backlog Percentage:</h4>
+          <div class="row">
+            <div class="col-4 text-right">
+              <h2 class="font-weight-bold">23.16%</h2>
+            </div>
+            <div class="col-4 pt-1">
+              <i class="fas fa-arrow-right fa-lg"></i>
+            </div>
+            <div class="col-4 text-left">
+              <h2 class="text-white font-weight-bolder">24.84%</h2>
+            </div>
+          </div>
+
+          <small style="color: white;"
+            >*Users are reminded to complete work activity within required by
+            date.</small
+          >
+        </div>
+      </div>
+
+      <div class="alert alert-default" role="alert">
+        <strong>Definition</strong><br />
+        Work Activity Backlog: Work Activity does not completed within required
+        by date.
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-xs-12">
+      <div class="card">
+        <div>
+          <div style="width: 100%; height: 500px;" id="chartdivone"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

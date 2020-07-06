@@ -1,0 +1,163 @@
+<div class="header pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-dark d-inline-block mb-0">
+            Big Data Analytics - Total Asset Maintenance
+          </h6>
+
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">
+                  <i class="far fa-chart-bar text-dark"> </i>
+                </a>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <h4 class="mb-0">Search filter</h4>
+            </div>
+            <div class="col-auto text-right">
+              <button class="btn btn-default btn-sm">Search</button>
+              <button class="btn btn-secondary btn-sm">Reset</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Owning Organization</label>
+                <select class="form-control form-control-sm">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Work Category</label>
+                <select class="form-control form-control-sm">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Date Range</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  placeholder="Please select date range"
+                  bsDaterangepicker
+                  [bsConfig]="{
+                    isAnimated: true,
+                    containerClass: 'theme-default',
+                    rangeInputFormat: 'MM/DD/YYYY',
+                    dateInputFormat: 'MM/DD/YYYY'
+                  }"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Region</label>
+                <select class="form-control form-control-sm">
+                  <option value="">Please select</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">
+            WAMS: Total Asset Maintenance generated in March 2019
+          </h3>
+        </div>
+        <div class="card-body">
+          <small
+            >Total Asset Maintenance generated in WAMS in March 2019:
+            <span class="font-weight-bolder" style="font-size: 24px;"
+              >8,341 nos</span
+            ></small
+          >
+
+          <div class="row pt-3">
+            <div class="col-lg-3 col-xs-12">
+              <div id="piedivone" style="width: 100%;"></div>
+              <h3 class="m-0 text-center">Distribution</h3>
+            </div>
+
+            <div class="col-lg-3 col-xs-12">
+              <div id="piedivtwo" style="width: 100%;"></div>
+              <h3 class="m-0 text-center">ES-D</h3>
+            </div>
+
+            <div class="col-lg-3 col-xs-12">
+              <div id="piedivthree" style="width: 100%;"></div>
+              <h3 class="m-0 text-center">NRW</h3>
+            </div>
+
+            <div class="col-lg-3 col-xs-12">
+              <div id="piedivfour" style="width: 100%;"></div>
+              <h3 class="m-0 text-center">PD-N</h3>
+            </div>
+          </div>
+
+          <div class="row pt-3">
+            <div class="col-lg-1"></div>
+
+            <div class="col-lg-2 col-xs-12">
+              <div id="piedivfive" style="width: 100%;"></div>
+              <h3 class="m-0 text-center">SCADA</h3>
+            </div>
+
+            <div class="col-lg-2 col-xs-12">
+              <div id="piedivsix" style="width: 100%;"></div>
+              <h3 class="m-0 text-center">WQ</h3>
+            </div>
+
+            <div class="col-lg-2 col-xs-12">
+              <div id="piedivseven" style="width: 100%;"></div>
+              <h3 class="m-0 text-center">FLEET</h3>
+            </div>
+
+            <div class="col-lg-2 col-xs-12">
+              <div id="piediveight" style="width: 100%;"></div>
+              <h3 class="m-0 text-center">PD-S</h3>
+            </div>
+
+            <div class="col-lg-2 col-xs-12">
+              <div id="piedivnine" style="width: 100%;"></div>
+              <h3 class="m-0 text-center">CBS</h3>
+            </div>
+
+            <div class="col-lg-1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

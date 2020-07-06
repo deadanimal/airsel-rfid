@@ -1,0 +1,1320 @@
+<div class="header pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class=" h2 text-dark d-inline-block mb-0">Asset Management</h6>
+
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0)"> <i class="fas fa-boxes text-dark"> </i> </a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <div class="col-lg-6 col-5 text-right">
+                    <a class="btn btn-sm btn-default text-white" (click)="openModal(registerAsset)">Register Asset</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="mb-2">
+                <form
+                    class="navbar-search navbar-search-light form-inline mr-sm-3"
+                    id="navbar-search-main"
+                >
+                    <div class="form-group mb-0" [ngClass]="{ focused: focusSearch === true }">
+                        <div class="input-group input-group-alternative input-group-merge">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </div>
+                            <input
+                                class="form-control"
+                                placeholder="Search"
+                                type="text"
+                                (focus)="focusSearch = true"
+                                (blur)="focusSearch = false"
+                            />
+                        </div>
+                    </div>
+                    <button
+                        type="button"
+                        class="close"
+                        (click)="closeSearch()"
+                        data-action="search-close"
+                        data-target="#navbar-search-main"
+                        aria-label="Close"
+                    >
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-header py-3 bg-secondary">
+                    <h4 class="m-0">Asset List</h4>
+                </div>
+                <div class="responsive-table">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Asset</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Approval</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            <tr>
+                                <th scope="row">
+                                    1.
+                                </th>
+                                <td>MOTR-1000001</td>
+                                <td>Valve</td>
+                                <td>Reservoir</td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm" (click)="approve()">
+                                        Appprove
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" (click)="reject()">
+                                        Reject
+                                    </button>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-icon btn-2 btn-info btn-sm">
+                                        <span class="btn-inner--icon"><i class="far fa-eye"></i></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    2.
+                                </th>
+                                <td>MOTR-1000002</td>
+                                <td>Pump</td>
+                                <td>Reservoir 2</td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm" (click)="approve()">
+                                        Appprove
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" (click)="reject()">
+                                        Reject
+                                    </button>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-icon btn-2 btn-info btn-sm">
+                                        <span class="btn-inner--icon"><i class="far fa-eye"></i></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    3.
+                                </th>
+                                <td>MOTR-1000003</td>
+                                <td>Motor</td>
+                                <td>Reservoir 5</td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm" (click)="approve()">
+                                        Appprove
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" (click)="reject()">
+                                        Reject
+                                    </button>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-icon btn-2 btn-info btn-sm">
+                                        <span class="btn-inner--icon"><i class="far fa-eye"></i></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    4.
+                                </th>
+                                <td>MOTR-1000004</td>
+                                <td>Motor</td>
+                                <td>Pumphouse 2</td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm" (click)="approve()">
+                                        Appprove
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" (click)="reject()">
+                                        Reject
+                                    </button>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-icon btn-2 btn-info btn-sm">
+                                        <span class="btn-inner--icon"><i class="far fa-eye"></i></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    5.
+                                </th>
+                                <td>MOTR-1000005</td>
+                                <td>Motor</td>
+                                <td>Pumphouse 4</td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm" (click)="approve()">
+                                        Appprove
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" (click)="reject()">
+                                        Reject
+                                    </button>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-icon btn-2 btn-info btn-sm">
+                                        <span class="btn-inner--icon"><i class="far fa-eye"></i></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #registerAsset>
+    <div class="modal-header bg-default">
+        <h6 class="modal-title my-auto text-white">
+            New asset registration
+        </h6>
+
+        <button aria-label="Close" class=" close" data-dismiss="modal" type="button" (click)="modal.hide()">
+            <span aria-hidden="true" class="my-auto text-white"> × </span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <mat-vertical-stepper 
+            [linear]="isLinear" 
+            #stepper
+            [disableRipple]="isDisableRipple">
+            <mat-step [stepControl]="firstFormGroup">
+                <form>
+                    <ng-template matStepLabel>Asset Owning</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Asset Owning Department</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Distribution</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-success" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+                <form>
+                    <ng-template matStepLabel>Asset Hierarchy</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Level 1</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Distribution</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Level 2</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Sepang</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Level 3</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Reservoir</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Level 4</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Kolam Menara Taman Suria Warisan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Match with Location Details</label>
+                        <select class="form-control custom-select form-control-sm custom-select-sm">
+                            <option hidden selected>Please select</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Level 5</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Service Reservoir</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Level 6</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-danger" matStepperPrevious>Back</button>
+                        <button class="btn btn-sm btn-success" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
+                <form>
+                    <ng-template matStepLabel>Asset Categorization</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Asset or Component Type</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Asset</option>
+                                    <option>Component</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Asset Class/Asset Category</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Mechanical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Hand Over Asset or Procured</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Handed Over</option>
+                                    <option>Procured</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <!--<button mat-button matStepperPrevious>Back</button>-->
+                        <button class="btn btn-sm btn-danger" matStepperPrevious>Back</button>
+                        <button class="btn btn-sm btn-success" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="fourthFormGroup">
+                <form>
+                    <ng-template matStepLabel>Asset Grouping</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Air Selangor Internal Asset Identity</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Kolam Menara Taman Suria Warisan SE087_KM040</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Asset Primary Category</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Reservoir</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Sub-category 1</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Reinforced Concrete</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Sub-category 2</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Elevated</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-sm btn-danger" matStepperPrevious>Back</button>
+                        <button class="btn btn-sm btn-success" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="fifthFormGroup">
+                <form>
+                    <ng-template matStepLabel>Asset Detailed Description</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Brand</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Model Number</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Site/Capacity 1</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>1250</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Site/Capacity 1 - Unit measurement</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>M3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Site/Capacity 2</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>32.5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Site/Capacity 2 - Unit measurement</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>BWL(M)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Site/Capacity 3</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>37.5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Site/Capacity 3 - Unit measurement</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>TWL(M)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Parent Asset/Plate Number</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Serial Number</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Vendor Part Number</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">SCADA ID</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">External ID</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Asset Tag Number</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Pallet Number</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Purchase Date/Installed/Handed Over Date</label>
+                                <input class="form-control form-control-sm" type="date">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Condition Rating</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>1 - Very Good</option>
+                                    <option>2 - Good</option>
+                                    <option>3 - Average</option>
+                                    <option>4 - Popover</option>
+                                    <option>5 - Replace</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Status</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>In - Service</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Maintenance Specification</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Reservoir Maintenance Specification</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Bill of Material</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Measurement Type</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>Level Indicator</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-sm btn-danger" matStepperPrevious>Back</button>
+                        <button class="btn btn-sm btn-success" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="sixthFormGroup">
+                <form>
+                    <ng-template matStepLabel>Asset Warranty Information</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Warranty</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Actual Warranty Period</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Warranty Vendor Name</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button class="btn btn-sm btn-danger" matStepperPrevious>Back</button>
+                        <button class="btn btn-sm btn-success" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="seventhFormGroup">
+                <form>
+                    <ng-template matStepLabel>PO Detail</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Purchase Order Vendor Name</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Purchase Cost</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <<button class="btn btn-sm btn-danger" matStepperPrevious>Back</button>
+                        <button class="btn btn-sm btn-success" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>You are now done.</p>
+                <div>
+                    <button class="btn btn-sm btn-danger" matStepperPrevious>Back</button>
+                    <button class="btn btn-sm btn-warning" (click)="stepper.reset()">Reset</button>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-success btn-sm mr-auto" type="button" (click)="register()">
+            Register
+        </button>
+
+        <button class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal" type="button" (click)="modal.hide()">
+            Close
+        </button>
+    </div>
+</ng-template>
+
+
+<!--
+
+<ng-template #registerAsset>
+    <div class="modal-header">
+        <h6 class="modal-title">
+            New asset registration
+        </h6>
+
+        <button aria-label="Close" class=" close" data-dismiss="modal" type="button" (click)="assetModal.hide()">
+            <span aria-hidden="true"> × </span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <mat-vertical-stepper [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+                <form>
+                    <ng-template matStepLabel>Asset Physical Location</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Location Description</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>KOLAM MENARA TAMAN SURIA WARISAN-SE087_KM040</option>
+                                    <option>KOLAM MENARA TAMAN SURIA WARISAN-BUTTERFLY VALVE-1</option>
+                                    <option>KOLAM MENARA TAMAN SURIA WARISAN-BUTTERFLY VALVE-2</option>
+                                    <option>KOLAM MENARA TAMAN SURIA WARISAN-BUTTERFLY VALVE-3</option>
+                                    <option>KOLAM MENARA TAMAN SURIA WARISAN-SLUICE VALVE-4</option>
+                                    <option>KOLAM MENARA TAMAN SURIA WARISAN-SLUICE VALVE-5</option>
+                                    <option>KOLAM MENARA TAMAN SURIA WARISAN-SLUICE VALVE-6</option>
+                                    <option>KOLAM MENARA TAMAN SURIA WARISAN-SLUICE VALVE-7</option>
+                                    <option>KOLAM SEDUT TAMAN SURIA WARISAN-SE087_KS036</option>
+                                    <option>KOLAM SEDUT TAMAN SURIA WARISAN-SLUICE VALVE-2</option>
+                                    <option>KOLAM SEDUT TAMAN SURIA WARISAN-SLUICE VALVE-3</option>
+                                    <option>KOLAM SEDUT TAMAN SURIA WARISAN-ALTITUDE VALVE-6</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Building</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>SE087_KM045</option>
+                                    <option>KOLAM SEDUT TAMAN SURIA WARISAN</option>
+                                    <option>SE087_KS036</option>
+                                    <option>KOLAM MENARA TAMAN SURIA WARISAN</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Room</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Position</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Address Line 1</label>
+                        <select class="form-control custom-select form-control-sm custom-select-sm">
+                            <option hidden selected>Please select</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Address Line 2</label>
+                        <select class="form-control custom-select form-control-sm custom-select-sm">
+                            <option hidden selected>Please select</option>
+                            <option>TAMAN SURIA WARISAN</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Address Line 3</label>
+                        <select class="form-control custom-select form-control-sm custom-select-sm">
+                            <option hidden selected>Please select</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Postal Code</label>
+                                <input class="form-control form-control-sm" placeholder="Enter postal code">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">City</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>TAMAN SURIA WARISAN</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">State</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                    <option>TAMAN SURIA WARISAN</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Country</label>
+                                <select class="form-control custom-select">
+                                    <option hidden selected>Please select</option>
+                                    <option>Malaysia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Tag Number</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Point ID</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Service Area</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Parent Location/Organization</label>
+                                <<select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Location Main Contact</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Location/Asset Maintenance Manager</label>
+                                <<select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Maintenance Planner</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">RCM System</label>
+                                <<select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Environment Rating</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Backlog Group</label>
+                                <<select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Ran to Failure</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Connected To</label>
+                                <<select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Direction</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Offset</label>
+                                <<select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Breaker</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Runtime Source</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+                <form>
+                    <ng-template matStepLabel>GIS  Details for Asset Physical Location</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">GIS/ESRI ID</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Latitude</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Longitude</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
+                <form>
+                    <ng-template matStepLabel>Location Asset Criticality</ng-template>
+                    <div class="form-group">
+                        <label class="form-control-label">Asset Criticality</label>
+                        <select class="form-control custom-select form-control-sm custom-select-sm">
+                            <option hidden selected>Please select</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="fourthFormGroup">
+                <form>
+                    <ng-template matStepLabel>Financial Information</ng-template>
+                    <div class="form-group">
+                        <label class="form-control-label">Cost Center</label>
+                        <select class="form-control custom-select form-control-sm custom-select-sm">
+                            <option hidden selected>Please select</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="fifthFormGroup">
+                <form>
+                    <ng-template matStepLabel>Basic Information</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Site ID</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Lot Number</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Water Asset Category</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="sixthFormGroup">
+                <form>
+                    <ng-template matStepLabel>Land Information</ng-template>
+                    <div class="form-group">
+                        <label class="form-control-label">Land Status</label>
+                        <select class="form-control custom-select form-control-sm custom-select-sm">
+                            <option hidden selected>Please select</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="seventhFormGroup">
+                <form>
+                    <ng-template matStepLabel>Build By</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Date Take Over</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Take Over Source</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="eightFormGroup">
+                <form>
+                    <ng-template matStepLabel>Taking Over Information</ng-template>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Land Acre</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Plan Reference</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Quit Rent Bill</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Assessment Bill</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-control-label">Lease Expired Date</label>
+                                <select class="form-control custom-select form-control-sm custom-select-sm">
+                                    <option hidden selected>Please select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>You are now done.</p>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
+
+    </div>
+
+    <div class=" modal-footer">
+        <button class=" btn btn-white" type="button">
+            Register
+        </button>
+
+        <button class="btn btn-link text-white ml-auto" data-dismiss="modal" type="button" (click)="assetModal.hide()">
+            Close
+        </button>
+    </div>
+</ng-template>
+
+-->
+
+<!--
+
+<ng-template #registerAsset>
+                        <div class="modal-header">
+                            <h6 class="modal-title">
+                                New asset registration
+                            </h6>
+        
+                            <button
+                                aria-label="Close"
+                                class=" close"
+                                data-dismiss="modal"
+                                type="button"
+                                (click)="assetModal.hide()"
+                            >
+                                <span aria-hidden="true"> × </span>
+                            </button>
+                        </div>
+        
+                        <div class="modal-body">
+                            <div class="py-3 text-center">
+                                <div class="form-group row">
+                                    <label
+                                      class="col-md-2 col-form-label form-control-label text-white"
+                                      for="example-text-input"
+                                    >
+                                      Type
+                                    </label>
+                    
+                                    <div class="col-md-10">
+                                      <select class="form-control custom-select">
+                                          <option hidden selected>Please select type</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label
+                                      class="col-md-2 col-form-label form-control-label text-white"
+                                      for="example-text-input"
+                                    >
+                                      Current Location
+                                    </label>
+                    
+                                    <div class="col-md-10">
+                                      <select class="form-control custom-select">
+                                          <option hidden selected>Please select current location</option>
+                                          <option>Pumphouse 1</option>
+                                          <option>Pumphouse 2</option>
+                                          <option>Pumphouse 3</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label
+                                      class="col-md-2 col-form-label form-control-label text-white"
+                                      for="example-text-input"
+                                    >
+                                      Specification
+                                    </label>
+                    
+                                    <div class="col-md-10">
+                                      <select class="form-control custom-select">
+                                          <option hidden selected>Please select specification</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label
+                                      class="col-md-2 col-form-label form-control-label text-white"
+                                      for="example-text-input"
+                                    >
+                                      ID Number
+                                    </label>
+                    
+                                    <div class="col-md-10">
+                                      <input class="form-control" placeholder="Please enter ID number">
+                                    </div>
+                                </div>
+                                <div class="dropzone dropzone-single mb-3" id="dropzone-single">
+                                    <div class="dz-message" data-dz-message><span>Upload asset picture here</span></div>
+                                    <div class="fallback">
+                                        <div class="custom-file">
+                                            <input
+                                                class="custom-file-input"
+                                                id="projectCoverUploads"
+                                                type="file"
+                                            />
+                      
+                                            <label class=" custom-file-label" for="projectCoverUploads">
+                                                Choose file
+                                            </label>
+                                        </div>
+                                    </div>
+                      
+                                    <div class="dz-preview dz-preview-single">
+                                        <div class="dz-preview-cover">
+                                            <img
+                                                alt="..."
+                                                class=" dz-preview-img"
+                                                data-dz-thumbnail=""
+                                                src="..."
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class=" modal-footer">
+                            <button class=" btn btn-white" type="button">
+                                Register
+                            </button>
+        
+                            <button
+                                class="btn btn-link text-white ml-auto"
+                                data-dismiss="modal"
+                                type="button"
+                                (click)="assetModal.hide()"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </ng-template>ˇ
+
+-->
+

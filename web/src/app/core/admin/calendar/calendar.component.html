@@ -1,0 +1,465 @@
+<div class="header pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-dark d-inline-block mb-0">Calendar</h6>
+
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">
+                  <i class="far fa-calendar-alt text-dark"> </i>
+                </a>
+              </li>
+            </ol>
+          </nav>
+
+          <ng-template #popTemplate>
+            <h4 class="text-center">Information</h4>
+            <small class="text-justify"
+              >User will be able to monitor all maintenance activities in a
+              calendar. Short term represents:</small
+            >
+            <ul>
+              <li>CM - Corrective Maintenance</li>
+              <li>PM - Preventive Maintenance</li>
+            </ul>
+            <small>Each color represents:</small>
+            <ul>
+              <li><button class="btn btn-sm btn-success">New</button></li>
+              <li>
+                <button class="btn btn-sm btn-warning">In Progress</button>
+              </li>
+              <li><button class="btn btn-sm btn-danger">Pending</button></li>
+            </ul>
+          </ng-template>
+          <button
+            type="button"
+            class="btn btn-icon btn-default btn-sm ml-md-4"
+            [popover]="popTemplate"
+            placement="right"
+            [outsideClick]="true"
+          >
+            <span class="btn-inner--icon"
+              ><i class="fas fa-info-circle"></i
+            ></span>
+          </button>
+        </div>
+        <!-- <div class="col-lg-6 mt-3 mt-lg-0 text-lg-right">
+          <a
+            class="fullcalendar-btn-prev btn btn-sm btn-default"
+            href="javascript:void(0)"
+            (click)="calendar.next()"
+          >
+            <i class="fas fa-angle-left"> </i>
+          </a>
+
+          <a
+            class="fullcalendar-btn-next btn btn-sm btn-default"
+            href="javascript:void(0)"
+            (click)="calendar.prev()"
+          >
+            <i class="fas fa-angle-right"> </i>
+          </a>
+
+          <a
+            class="btn btn-sm btn-default"
+            data-calendar-view="month"
+            href="javascript:void(0)"
+            (click)="changeView('dayGridMonth')"
+          >
+            Month
+          </a>
+
+          <a
+            class="btn btn-sm btn-default"
+            data-calendar-view="basicWeek"
+            href="javascript:void(0)"
+            (click)="changeView('dayGridWeek')"
+          >
+            Week
+          </a>
+
+          <a
+            class="btn btn-sm btn-default"
+            data-calendar-view="basicDay"
+            href="javascript:void(0)"
+            (click)="changeView('dayGridDay')"
+          >
+            Day
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Search filter</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6 col-12">
+              <div class="form-group">
+                <label class="form-control-label">Work Category</label>
+                <ng-select
+                  class="custom"
+                  [items]="workCategoryArray"
+                  [multiple]="true"
+                  [closeOnSelect]="false"
+                  [searchable]="false"
+                  bindLabel="name"
+                  bindValue="value"
+                  placeholder="Please select work category"
+                  [(ngModel)]="searchInput.workCategory"
+                >
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-12 row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">Start Date</label>
+                  <input
+                    class="form-control form-control-sm"
+                    type="text"
+                    placeholder="Please select start date"
+                    bsDatepicker
+                    [bsConfig]="{
+                      isAnimated: true,
+                      containerClass: 'theme-default',
+                      dateInputFormat: 'MM/DD/YYYY'
+                    }"
+                    [(ngModel)]="searchInput.startDate"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label">End Date</label>
+                  <input
+                    class="form-control form-control-sm"
+                    type="text"
+                    placeholder="Please select end date"
+                    bsDatepicker
+                    [bsConfig]="{
+                      isAnimated: true,
+                      containerClass: 'theme-default',
+                      dateInputFormat: 'MM/DD/YYYY'
+                    }"
+                    [(ngModel)]="searchInput.endDate"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Department</label>
+                <ng-select
+                  [items]="departmentArray"
+                  [multiple]="true"
+                  [closeOnSelect]="false"
+                  [searchable]="false"
+                  bindLabel="name"
+                  bindValue="value"
+                  placeholder="Please select department"
+                  [(ngModel)]="searchInput.department"
+                >
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Region</label>
+                <ng-select
+                  [items]="regionArray"
+                  [multiple]="true"
+                  [closeOnSelect]="false"
+                  [searchable]="false"
+                  bindLabel="name"
+                  bindValue="value"
+                  placeholder="Please select region"
+                  [(ngModel)]="searchInput.region"
+                >
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Status</label>
+                <ng-select
+                  [items]="statusArray"
+                  [multiple]="true"
+                  [closeOnSelect]="false"
+                  [searchable]="false"
+                  bindLabel="name"
+                  bindValue="value"
+                  placeholder="Please select status"
+                  [(ngModel)]="searchInput.status"
+                >
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-center">
+              <button class="btn btn-default btn-sm" (click)="searchCalendar()">
+                Search
+              </button>
+              <button class="btn btn-secondary btn-sm" (click)="resetCalendar()">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card card-calendar">
+        <div class="card-header py-3 bg-secondary">
+          <div class="row">
+            <div class="col">
+              <h5 class="h3 mb-0">Work Schedule</h5>
+            </div>
+            <div class="col text-center">
+              <h5 class="h3 mb-0">
+                {{
+                  months[calendar.getDate().getMonth()] +
+                    " " +
+                    calendar.getDate().getFullYear()
+                }}
+              </h5>
+            </div>
+            <div class="col text-right">
+              <a
+                class="fullcalendar-btn-prev btn btn-sm btn-default"
+                href="javascript:void(0)"
+                (click)="calendar.prev()"
+              >
+                <i class="fas fa-angle-left"> </i>
+              </a>
+
+              <a
+                class="fullcalendar-btn-next btn btn-sm btn-default"
+                href="javascript:void(0)"
+                (click)="calendar.next()"
+              >
+                <i class="fas fa-angle-right"> </i>
+              </a>
+
+              <a
+                class="btn btn-sm btn-default"
+                data-calendar-view="month"
+                href="javascript:void(0)"
+                (click)="changeView('dayGridMonth')"
+              >
+                Month
+              </a>
+
+              <a
+                class="btn btn-sm btn-default"
+                data-calendar-view="basicWeek"
+                href="javascript:void(0)"
+                (click)="changeView('dayGridWeek')"
+              >
+                Week
+              </a>
+
+              <a
+                class="btn btn-sm btn-default"
+                data-calendar-view="basicDay"
+                href="javascript:void(0)"
+                (click)="changeView('dayGridDay')"
+              >
+                Day
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-0">
+          <div class="calendar" data-toggle="calendar" id="calendar"></div>
+        </div>
+      </div>
+      <div
+        aria-hidden="true"
+        aria-labelledby="edit-event-label"
+        class="modal fade"
+        id="edit-event"
+        role="dialog"
+        tabindex="-1"
+      >
+        <div
+          class="modal-dialog modal-dialog-centered modal-secondary"
+          role="document"
+        >
+          <ng-template #modalEdit>
+            <div class="modal-body">
+              <form class="edit-event--form">
+                <div class="form-group">
+                  <label class="form-control-label"> Event title </label>
+
+                  <input
+                    class="form-control form-control-alternative edit-event--title"
+                    placeholder="Event Title"
+                    readonly="true"
+                    type="text"
+                    value="{{ eventTitle }}"
+                    (change)="getNewEventTitle($event)"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-control-label d-block mb-3">
+                    Status color
+                  </label>
+
+                  <div
+                    class="btn-group btn-group-toggle btn-group-colors event-tag mb-0"
+                    data-toggle="buttons"
+                  >
+                    <label
+                      class="btn bg-info"
+                      [ngClass]="{ active: radios === 'bg-info' }"
+                    >
+                      <input
+                        autocomplete="off"
+                        checked="checked"
+                        disabled="true"
+                        name="event-tag"
+                        type="radio"
+                        value="bg-info"
+                        (click)="radios = 'bg-info'"
+                      />
+                    </label>
+
+                    <label
+                      class="btn bg-warning"
+                      [ngClass]="{ active: radios === 'bg-warning' }"
+                    >
+                      <input
+                        autocomplete="off"
+                        disabled="true"
+                        name="event-tag"
+                        type="radio"
+                        value="bg-warning"
+                        (click)="radios = 'bg-warning'"
+                      />
+                    </label>
+
+                    <label
+                      class="btn bg-danger"
+                      [ngClass]="{ active: radios === 'bg-danger' }"
+                    >
+                      <input
+                        autocomplete="off"
+                        disabled="true"
+                        name="event-tag"
+                        type="radio"
+                        value="bg-danger"
+                        (click)="radios = 'bg-danger'"
+                      />
+                    </label>
+
+                    <label
+                      class="btn bg-success"
+                      [ngClass]="{ active: radios === 'bg-success' }"
+                    >
+                      <input
+                        autocomplete="off"
+                        disabled="true"
+                        name="event-tag"
+                        type="radio"
+                        value="bg-success"
+                        (click)="radios = 'bg-success'"
+                      />
+                    </label>
+
+                    <label
+                      class="btn bg-default"
+                      [ngClass]="{ active: radios === 'bg-default' }"
+                    >
+                      <input
+                        autocomplete="off"
+                        disabled="true"
+                        name="event-tag"
+                        type="radio"
+                        value="bg-default"
+                        (click)="radios = 'bg-default'"
+                      />
+                    </label>
+
+                    <label
+                      class="btn bg-primary"
+                      [ngClass]="{ active: radios === 'bg-primary' }"
+                    >
+                      <input
+                        autocomplete="off"
+                        disabled="true"
+                        name="event-tag"
+                        type="radio"
+                        value="bg-primary"
+                        (click)="radios = 'bg-primary'"
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-control-label"> Description </label>
+
+                  <textarea
+                    class="form-control form-control-alternative edit-event--description textarea-autosize"
+                    placeholder="Event Desctiption"
+                    readonly="true"
+                    rows="5"
+                    value="{{ eventDescription }}"
+                    (change)="getNewEventDescription($event)"
+                  >
+                  </textarea>
+
+                  <i class="form-group--bar"> </i>
+                </div>
+
+                <input class="edit-event--id" type="hidden" />
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <!-- <button
+                class="btn btn-primary"
+                data-calendar="update"
+                (click)="updateEvent()"
+              >
+                Update
+              </button>
+
+              <button
+                class="btn btn-danger"
+                data-calendar="delete"
+                (click)="deleteEventSweetAlert()"
+              >
+                Delete
+              </button> -->
+
+              <button
+                class="btn btn-link ml-auto"
+                data-dismiss="modal"
+                (click)="editModal.hide()"
+              >
+                Close
+              </button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
