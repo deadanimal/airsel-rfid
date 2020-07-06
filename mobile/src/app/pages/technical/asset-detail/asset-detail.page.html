@@ -1,0 +1,176 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-text-center" style="font-weight: bold;">
+      ASSET DETAIL
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+    <ion-fab-button (click)="scanQrCode()">
+      <ion-icon name="scan"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="3"></ion-col>
+      <ion-col size="6">
+        <div>
+          <ion-img src="assets/image/no-image.png"></ion-img>
+        </div>
+      </ion-col>
+      <ion-col size="3"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Equipment info
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list class="line-input">
+        <ion-item>
+          <ion-label position="stacked">RFID ID</ion-label>
+          <ion-input readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">QR CODE ID</ion-label>
+          <ion-input readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Asset ID</ion-label>
+          <ion-input readonly></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-list class="line-input">
+        <ion-item>
+          <ion-label position="stacked">Asset Type</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Asset Name</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Specifications</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Condition Rating</ion-label>
+          <ion-input [(ngModel)]="assetDetail.condition"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <div class="ion-text-end">
+        <ion-button>Edit</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Asset Location
+        <div class="ion-float-right">
+          <ion-button size="small" routerLink="/technical/asset-location">Map</ion-button>
+        </div>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list class="line-input">
+        <ion-item>
+          <ion-label position="stacked">Region</ion-label>
+          <ion-select placeholder="Please select region">
+            <ion-select-option [value]="region" *ngFor="let region of regions">{{ region }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="stacked">Treatment Plant Name / Pump House / NRW / Reservoir</ion-label>
+          <ion-select placeholder="Please select">
+            <ion-select-option [value]="treatmentPlant" *ngFor="let treatmentPlant of treatmentPlants">{{ treatmentPlant }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Choose Asset</ion-label>
+          <ion-select placeholder="Please select">
+            <ion-select-option [value]="asset" *ngFor="let asset of assets">{{ asset }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Operational Reading
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list class="line-input">
+        <ion-item>
+          <ion-label position="stacked">Running hours</ion-label>
+          <ion-input type="number"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="stacked">Pressure reading</ion-label>
+          <ion-input type="number"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="stacked">Flow rate</ion-label>
+          <ion-input type="number"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="ion-text-center">
+    <h6>Service History</h6>
+  </div>
+
+  <ion-slides [options]="sliderConfig">
+    <ion-slide *ngFor="let serviceHistory of serviceHistorys">
+      <div>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>
+              <!-- <div class="ion-float-left"> -->
+                <p>{{ serviceHistory.serviceid }}</p>
+              <!-- </div> -->
+              <!-- <div class="ion-float-right"> -->
+                <!-- <p>{{ serviceHistory.servicedate }}</p> -->
+              <!-- </div> -->
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="ion-text-justify">{{ serviceHistory.servicedesc }}</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-slide>
+  </ion-slides>
+
+  <div class="ion-text-center ion-padding-bottom">
+    <ion-button>Update<br/>asset</ion-button>
+    <ion-button [routerLink]="['/technical/submit']">Submit</ion-button>
+    <ion-button [routerLink]="['/technical/work-request']">Create Work<br/>Request</ion-button>
+  </div>
+</ion-content>

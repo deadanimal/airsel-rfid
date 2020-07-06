@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="homePage('/technical/tabs/tab1')">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor.svg"
+          style="font-size: 100px;"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="ion-text-center" style="font-weight: bold;">
+      MAINTENANCE WORK
+    </div>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          color="danger"
+          style="position: absolute; right: -5px; top: -3px;"
+          >3</ion-badge
+        >
+      </ion-button>
+      <ion-button (click)="clickLogout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="12">
+        <ion-card
+          class="cardChart"
+          (click)="openPage('technical/maintenance-work-detail', 'CM')"
+        >
+          <ion-card-content class="ion-text-center">
+            <div id="chartdivcm" style="width: 100%; height: 200px;"></div>
+            <!-- <canvas #pieChartCM></canvas> -->
+            <div class="ion-padding-top cardTitle">
+              Corrective Maintenance (CM)
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12">
+        <ion-card
+          class="cardChart"
+          (click)="openPage('technical/maintenance-work-detail', 'PM')"
+        >
+          <ion-card-content class="ion-text-center">
+            <div id="chartdivpm" style="width: 100%; height: 200px;"></div>
+            <!-- <canvas #pieChartPM></canvas> -->
+            <div class="ion-padding-top cardTitle">
+              Preventive Maintenance (PM)
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="12">
+        <ion-card
+          class="cardChart"
+          (click)="openPage('technical/maintenance-work-detail', 'ITC')"
+        >
+          <ion-card-content class="ion-text-center">
+            <div id="chartdivitc" style="width: 100%; height: 200px;"></div>
+            <!-- <canvas #pieChartITC></canvas> -->
+            <div class="ion-padding-top cardTitle">
+              Installation Testing Commissioning
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12">
+        <ion-card
+          class="cardChart"
+          (click)="openPage('technical/maintenance-work-detail', 'PdM')"
+        >
+          <ion-card-content class="ion-text-center">
+            <div id="chartdivpdm" style="width: 100%; height: 200px;"></div>
+            <!-- <canvas #pieChartPDM></canvas> -->
+            <div class="ion-padding-top cardTitle">
+              Predictive Maintenance (PdM)
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="12">
+        <ion-card
+          class="cardChart"
+          (click)="openPage('technical/maintenance-work-detail', 'Disposal')"
+        >
+          <ion-card-content class="ion-text-center">
+            <div id="chartdivd" style="width: 100%; height: 200px;"></div>
+            <!-- <canvas #pieChartD></canvas> -->
+            <div class="ion-padding-top cardTitle">
+              Disposal
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12">
+        <ion-card
+          class="cardChart"
+          (click)="openPage('technical/maintenance-work-detail', 'Compliance')"
+        >
+          <ion-card-content class="ion-text-center">
+            <div id="chartdivc" style="width: 100%; height: 200px;"></div>
+            <!-- <canvas #pieChartC></canvas> -->
+            <div class="ion-padding-top cardTitle">
+              Compliance
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="12">
+        <ion-card
+          class="cardChart"
+          (click)="openPage('technical/maintenance-work-detail', 'Redesign')"
+        >
+          <ion-card-content class="ion-text-center">
+            <div id="chartdivr" style="width: 100%; height: 200px;"></div>
+            <!-- <canvas #pieChartR></canvas> -->
+            <div class="ion-padding-top cardTitle">
+              Redesign
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

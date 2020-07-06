@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar class="air-selangor-toolbar">
+    <div class="ion-text-center ion-padding-top" style="font-weight: bold;">
+      INVENTORY
+    </div>
+
+    <ion-segment [(ngModel)]="type">
+      <ion-segment-button value="toreceive">
+        <ion-label color="light" style="font-weight: bold;"
+          >To Receive</ion-label
+        >
+      </ion-segment-button>
+      <ion-segment-button value="delivered">
+        <ion-label color="light" style="font-weight: bold;"
+          >Delivered</ion-label
+        >
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="type">
+    <div *ngSwitchCase="'toreceive'">
+      <h3 class="ion-text-center">Store Keeper Activity</h3>
+
+      <ion-card *ngFor="let toreceive of toreceives">
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">
+            Purchase Order {{ toreceive.purchaseOrder }}<br />Expected Date of
+            Delivery on<br />{{ toreceive.dateDelivery }}
+          </ion-label>
+          <div slot="end">
+            <ion-button color="primary" shape="round" size="small" (click)="openList()"
+              >List of Item</ion-button
+            >
+          </div>
+        </ion-item>
+      </ion-card>
+    </div>
+
+    <div *ngSwitchCase="'delivered'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" class="ion-text-center">
+            <ion-item>
+              <ion-label position="stacked">Start Date</ion-label>
+              <ion-datetime
+                displayFormat="DD-MM-YYYY"
+                placeholder="Select date"
+              ></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6" class="ion-text-center">
+            <ion-item>
+              <ion-label position="stacked">End Date</ion-label>
+              <ion-datetime
+                displayFormat="DD-MM-YYYY"
+                placeholder="Select date"
+              ></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-card>
+        <ion-card-content>
+          <p>Purchase Order 3231414</p>
+          <p>Placed on 04 Apr 2020</p>
+          <p>Paid on 04 Apr 2020</p>
+          <p>Expected Date of Delivery on 20 Apr 2020</p>
+          <hr />
+          <p>CONTACTOR - 32A 240V 4 POLES (SCHNEIDER)</p>
+          <p>EACT000005</p>
+          <p>QTY 2</p>
+          <hr />
+          <p>CONTACTOR (MAGNETIC) - 3TF54 22-OXL2 132kW (SIEMENS)</p>
+          <p>EACT010010</p>
+          <p>QTY 10</p>
+          <hr />
+          <p>CONTACTOR (MAGNETIC) - LC1D50M7</p>
+          <p>EACT010018</p>
+          <p>QTY 1</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

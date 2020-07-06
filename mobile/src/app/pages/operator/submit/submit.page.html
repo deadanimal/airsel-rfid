@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <div class="ion-text-center" style="font-weight: bold;">
+      SUBMIT
+    </div>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <div class="ion-text-center" style="font-weight: bold;">
+      SUBMIT
+    </div>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          color="danger"
+          style="position: absolute; right: -5px; top: -3px;"
+          >3</ion-badge
+        >
+      </ion-button>
+      <ion-button (click)="clickLogout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let asset of assets">
+    <ion-card-header>
+      <ion-card-title>Asset ID: {{ asset.assetId }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Action: {{ asset.action }}</p>
+      <p>Asset Name: {{ asset.assetName }}</p>
+      <p>Asset Location: {{ asset.assetLocation }}</p>
+
+      <div class="ion-padding">
+        <div class="ion-float-left">
+          <ion-button fill="clear" [routerLink]="['/operator/tabs/tab2']">
+            <ion-icon slot="icon-only" name="build" ></ion-icon>
+          </ion-button>
+        </div>
+        <div class="ion-float-right">
+          <ion-button fill="clear" (click)="deleteAlertConfirm()">
+            <ion-icon slot="icon-only" name="trash" color="danger"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="ion-text-center ion-padding">
+    <ion-button (click)="submitAlert()">Submit</ion-button>
+  </div>
+</ion-content>

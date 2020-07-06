@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar class="air-selangor-toolbar">
+    <div class="ion-text-center" style="font-weight: bold;">
+      PROFILE
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding-top">
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="5">
+        <div class="ion-text-center">
+          <ion-img src="assets/image/user-circle.png"></ion-img>  
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-content>
+            <ion-list class="line-input">
+              <ion-item>
+                <ion-label position="stacked">Name</ion-label>
+                <ion-input type="text" readonly value="Fairul Bin Omar"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Role</ion-label>
+                <ion-input type="text" readonly value="AIS Central Store Supervisor"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Location</ion-label>
+                <ion-select placeholder="Select Store Location" [(ngModel)]="profile.location" [ngModelOptions]="{standalone:true}">
+                  <ion-select-option *ngFor="let location of locations" [value]="location.value">{{ location.text }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Designation</ion-label>
+                <ion-input type="text" readonly value="Store Supervisor"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Store Code</ion-label>
+                <ion-input type="text" readonly value="All Stores"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

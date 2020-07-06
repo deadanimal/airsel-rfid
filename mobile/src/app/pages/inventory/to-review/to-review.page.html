@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar class="air-selangor-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <div style="font-weight: bold; text-transform: uppercase;">
+      Review
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-content>
+      <p>Company Name: SA Supply Sdn Bhd</p>
+      <p>Delivery Date: 20 Apr 2020</p>
+
+      <ion-item lines="none">
+        <ion-label position="stacked">Rating</ion-label>
+      </ion-item>
+      <rating readonly="false" size="default"> </rating>
+
+      <ion-item class="nopaddingstart">
+        <ion-label position="stacked">Other Comments</ion-label>
+        <ion-textarea rows="5"></ion-textarea>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="ion-text-center">
+    <ion-button [routerLink]="['/inventory/stock-receive']">Submit</ion-button>
+  </div>
+</ion-content>
