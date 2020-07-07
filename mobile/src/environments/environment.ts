@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://sic-009-airsel-wjob.herokuapp.com/'
+  baseUrl: 'https://airsel-rfid-api.pipe.my/'
 };
 
 /*
