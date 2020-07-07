@@ -1,6 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AlertController, MenuController } from "@ionic/angular";
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  FormControl,
+} from "@angular/forms";
+import {
+  AlertController,
+  MenuController,
+  ToastController,
+} from "@ionic/angular";
+import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { NotificationService } from "src/app/shared/handler/notification/notification.service";
 
 @Component({
   selector: "app-login",
@@ -8,23 +20,68 @@ import { AlertController, MenuController } from "@ionic/angular";
   styleUrls: ["./login.page.scss"],
 })
 export class LoginPage implements OnInit {
-  loginForm = {
-    username: "",
-    password: "",
+  // Form
+  validations_form: FormGroup;
+  validation_messages = {
+    username: [
+      { type: "required", message: "Email is required." },
+      { type: "pattern", message: "Please enter a valid email." },
+    ],
+    password: [
+      { type: "required", message: "Password is required." },
+      { type: "minlength", message: "At least 6 characters long." },
+    ],
   };
+
+  // Loading
+  isLoading: boolean = false;
 
   constructor(
     public alertController: AlertController,
     public menu: MenuController,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private toastr: NotificationService
   ) {}
 
   ngOnInit() {
     this.menu.enable(false, "menuNotification");
+
+    this.validations_form = this.formBuilder.group({
+      username: new FormControl(
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
+        ])
+      ),
+      password: new FormControl(
+        "",
+        Validators.compose([Validators.minLength(6), Validators.required])
+      ),
+    });
   }
 
   login() {
-    if (
+    this.isLoading = true;
+    this.authService.obtainToken(this.validations_form.value).subscribe(
+      () => {
+        // Success
+        this.isLoading = false;
+      },
+      () => {
+        // Failed
+        this.isLoading = false;
+      },
+      () => {
+        // After
+        this.toastr.openToastr("Welcome back");
+        this.navigateByRole(this.authService.userType);
+      }
+    );
+
+    /* if (
       this.loginForm.username == "technical" ||
       this.loginForm.username == "1"
     ) {
@@ -50,6 +107,31 @@ export class LoginPage implements OnInit {
       this.router.navigate(["/store-supervisor/tabs/tab1"]);
     } else {
       alert("wrong user!");
+    } */
+  }
+
+  navigateByRole(userType: string) {
+    /* Data Reference From DB */
+
+    // ('OP', 'Operator'),
+    // ('SK', 'Store Keeper'),
+    // ('SS', 'Store Supervisor'),
+    // ('TC', 'Technical Crew')
+
+    if (userType === "TC") {
+      // technical
+      this.router.navigate(["/technical/tabs/tab1"]);
+    } else if (userType === "OP") {
+      // operator
+      this.router.navigate(["/operator/tabs/tab1"]);
+    } else if (userType === "SK") {
+      // inventory
+      this.router.navigate(["/store-keeper/tabs/tab1"]);
+    } else if (userType === "SS") {
+      // inventory
+      this.router.navigate(["/store-supervisor/tabs/tab1"]);
+    } else {
+      this.wrongCredential();
     }
   }
 
@@ -95,7 +177,17 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
+  async wrongCredential() {
+    const alert = await this.alertController.create({
+      header: "Wrong Credential",
+      message: "You have entered wrong credentials. Please try again.",
+      buttons: ["OK"],
+    });
+
+    await alert.present();
+  }
+
   navigateForgotPage() {
-    this.router.navigate(['/forgot'])
+    this.router.navigate(["/forgot"]);
   }
 }
