@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router, NavigationExtras } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import { AlertController, MenuController } from "@ionic/angular";
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 
 @Component({
@@ -109,6 +109,7 @@ export class AssetDetailPage implements OnInit {
 
   constructor(
     public alertController: AlertController,
+    public menu: MenuController,
     // private barcodeScanner: BarcodeScanner,
     private route: ActivatedRoute,
     private router: Router
@@ -164,5 +165,10 @@ export class AssetDetailPage implements OnInit {
 
   homePage(path: string) {
     this.router.navigate([path]);
+  }
+
+  openNotification() {
+    this.menu.enable(true, "menuNotification");
+    this.menu.open("menuNotification");
   }
 }

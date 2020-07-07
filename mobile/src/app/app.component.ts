@@ -45,7 +45,7 @@ export class AppComponent {
   initializeApp() {
     this.statusBar.hide();
     this.platform.ready().then(() => {
-      // this.statusBar.styleDefault();
+      this.statusBar.styleLightContent();
       this.splashScreen.hide();
 
       var lastTimeBackPress = 0;

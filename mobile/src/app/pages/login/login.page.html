@@ -9,17 +9,24 @@
     <ion-slide>
       <ion-img src="assets/svg/analytics.svg"></ion-img>
       <h1 class="ion-text-center">Track & Monitor</h1>
-      <p class="ion-text-center">Track & monitor your work activity assigned to increase productivity & efficiency</p>
+      <p class="ion-text-center">
+        Track & monitor your work activity assigned to increase productivity &
+        efficiency
+      </p>
     </ion-slide>
     <ion-slide>
       <ion-img src="assets/svg/efficient.svg"></ion-img>
       <h1 class="ion-text-center">Analyse</h1>
-      <p class="ion-text-center">Examine the data to make a better decision making</p>
+      <p class="ion-text-center">
+        Examine the data to make a better decision making
+      </p>
     </ion-slide>
     <ion-slide>
       <ion-img src="assets/svg/personal_finance.svg"></ion-img>
       <h1 class="ion-text-center">Save Cost</h1>
-      <p class="ion-text-center">Cost to maintain the asset become more reasonable than before</p>
+      <p class="ion-text-center">
+        Cost to maintain the asset become more reasonable than before
+      </p>
     </ion-slide>
   </ion-slides>
 
@@ -27,17 +34,37 @@
     <h3 class="ion-margin-start">Sign in</h3>
     <ion-item lines="none">
       <ion-label position="stacked">Username</ion-label>
-      <ion-input type="text" placeholder="Username" [(ngModel)]="loginForm.username"></ion-input>
+      <ion-input
+        type="text"
+        placeholder="Username"
+        [(ngModel)]="loginForm.username"
+      ></ion-input>
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="stacked">Password</ion-label>
-      <ion-input type="password" placeholder="Password" [(ngModel)]="loginForm.password"></ion-input>
+      <ion-input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="loginForm.password"
+      ></ion-input>
     </ion-item>
-    <div class="validation-errors ion-text-right ion-padding-end">
-      <p><a (click)="navigateForgotPage()">Forgot Password </a></p>
-    </div>
-    <ion-button 
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-padding-start" size="6">
+          <ion-item lines="none" class="ion-no-padding">
+            <ion-checkbox slot="start"></ion-checkbox>
+            <ion-label><p>Stay Login?</p></ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-text-right" size="6">
+          <ion-item lines="none" class="ion-no-padding">
+            <ion-label class="ion-text-right"><p><a (click)="navigateForgotPage()">Forgot Password </a></p></ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button
       shape="round"
       expand="block"
       color="primary"

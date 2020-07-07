@@ -92,7 +92,7 @@
               <ion-row class="ion-no-padding">
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <p>Backing</p>
+                    <p>Backlog</p>
                   </ion-label>
                 </ion-col>
 
@@ -217,7 +217,11 @@
         </ion-col>
 
         <ion-col>
-          <ion-card class="card-core ion-no-margin" mode="ios">
+          <ion-card
+            class="card-core ion-no-margin"
+            mode="ios"
+            (click)="openPage('/technical/work-request')"
+          >
             <ion-card-content class="ion-no-padding">
               <img src="assets/svg/request.svg" />
             </ion-card-content>

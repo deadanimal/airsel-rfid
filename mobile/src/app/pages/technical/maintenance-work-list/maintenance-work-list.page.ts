@@ -50,13 +50,13 @@ export class MaintenanceWorkListPage implements OnInit {
 
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
-      this.initChartCM();
-      this.initChartPM();
-      this.initChartITC();
-      this.initChartPDM();
-      this.initChartD();
-      this.initChartC();
-      this.initChartR();
+      // this.initChartCM();
+      // this.initChartPM();
+      // this.initChartITC();
+      // this.initChartPDM();
+      // this.initChartD();
+      // this.initChartC();
+      // this.initChartR();
     });
   }
 
@@ -601,6 +601,7 @@ export class MaintenanceWorkListPage implements OnInit {
   }
 
   openNotification() {
+    this.menu.enable(true, "menuNotification");
     this.menu.open("menuNotification");
   }
 }

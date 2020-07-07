@@ -1,10 +1,10 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="homePage('/operator/tabs/tab1')">
         <ion-icon
-          src="../../../../assets/icon/air-selangor.svg"
-          style="font-size: 100px;"
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem;"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -12,22 +12,23 @@
       OPERATOR DETAILS
     </div>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
         <ion-badge
+          size="small"
           color="danger"
-          style="position: absolute; right: -5px; top: -3px;"
+          style="position: absolute; right: -5px; top: 1px;"
           >3</ion-badge
         >
       </ion-button>
-      <ion-button (click)="clickLogout()">
+      <!-- <ion-button (click)="clickLogout()">
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
+      </ion-button> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="content-core">
   <!-- <ion-card style="height: auto;">
     <ion-card-content>
       <ion-list>
@@ -54,27 +55,43 @@
     </ion-card-content>
   </ion-card> -->
 
-  <ion-card
-    class="cardTask"
-    (click)="openPage('/operator/tabs/tab2')"
-  >
-    <ion-grid>
-      <ion-row>
-        <ion-col
-          size="4"
-          style="display: flex; justify-content: center; align-items: center;"
+  <ion-list-header>
+    <h3 class="ion-no-margin">
+      <ion-icon
+        name="list-outline"
+        style="vertical-align: middle;"
+      ></ion-icon>
+      <span
+        style="
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 0.7rem;
+        "
+        >Task
+      </span>
+    </h3>
+  </ion-list-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3"></ion-col>
+      <ion-col size="6">
+        <ion-card
+          class="card-core ion-no-margin"
+          mode="ios"
+          (click)="openPage('/operator/tabs/tab2')"
         >
-          <img src="../../../../assets/technical/fuel.svg" />
-        </ion-col>
-        <ion-col
-          size="8"
-          style="display: flex; justify-content: center; align-items: center;"
-        >
-          <h5 class="ion-no-margin">
-            Operational Reading
-          </h5>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+          <ion-card-content class="ion-no-padding">
+            <img src="assets/svg/reading.svg" />
+          </ion-card-content>
+          <ion-card-header class="ion-no-padding ion-padding-bottom">
+            <p class="ion-no-margin ion-text-center ion-text-bold">
+              Operational Reading
+            </p>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size="3"></ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
