@@ -1,8 +1,8 @@
 {
-  "name": "air-selangor",
+  "name": "air-selangor-rfid",
   "integrations": {
     "cordova": {}
   },
   "type": "angular",
-  "id": "93669bd3"
+  "id": "eb0c7c8e"
 }
