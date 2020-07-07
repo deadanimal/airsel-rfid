@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import { AlertController, MenuController } from "@ionic/angular";
 
 @Component({
   selector: "app-profile",
@@ -10,6 +10,7 @@ import { AlertController } from "@ionic/angular";
 export class ProfilePage implements OnInit {
   constructor(
     public alertController: AlertController,
+    public menu: MenuController,
     private router: Router
   ) {}
 
@@ -39,5 +40,10 @@ export class ProfilePage implements OnInit {
 
   homePage(path: string) {
     this.router.navigate([path]);
+  }
+
+  openNotification() {
+    this.menu.enable(true, "menuNotification");
+    this.menu.open("menuNotification");
   }
 }

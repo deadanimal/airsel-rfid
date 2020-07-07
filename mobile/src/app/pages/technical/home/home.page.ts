@@ -215,6 +215,7 @@ export class HomePage implements OnInit {
   }
 
   openNotification() {
+    this.menu.enable(true, "menuNotification");
     this.menu.open("menuNotification");
   }
 }
