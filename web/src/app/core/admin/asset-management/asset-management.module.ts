@@ -13,6 +13,7 @@ import {
   RatingModule,
   TypeaheadModule
 } from "ngx-bootstrap";
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
@@ -31,6 +32,7 @@ import { DatabaseComponent } from "./database/database.component";
   declarations: [RegistrationComponent, ApprovalComponent, DatabaseComponent],
   imports: [
     CommonModule,
+    NgSelectModule,
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
