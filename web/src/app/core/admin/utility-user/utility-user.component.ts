@@ -1,127 +1,273 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from "@angular/core";
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  FormControl,
+} from "@angular/forms";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import swal from 'sweetalert2';
+import swal from "sweetalert2";
 
-import { UserData } from '../../../../assets/mock/utility';
+import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { UsersService } from "src/app/shared/services/users/users.service";
 
 @Component({
-  selector: 'app-utility-user',
-  templateUrl: './utility-user.component.html',
-  styleUrls: ['./utility-user.component.scss']
+  selector: "app-utility-user",
+  templateUrl: "./utility-user.component.html",
+  styleUrls: ["./utility-user.component.scss"],
 })
 export class UtilityUserComponent implements OnInit {
-
   // Data
-  users
-  focusSearch
+  users;
+  focusSearch;
 
   // Modal
   modal: BsModalRef;
   modalConfig = {
     keyboard: true,
-    class: "modal-dialog-centered modal-md"
-  }
+    class: "modal-dialog-centered modal-lg",
+    ignoreBackdropClick: true,
+  };
 
   // Table
-  entries: number = 5
-  selected: any[] = []
-  temp = []
-  activeRow: any
-  rows: any = []
+  entries: number = 5;
+  selected: any[] = [];
+  temp = [];
+  activeRow: any;
+  rows: any = [];
 
-  SelectionType
-  
+  SelectionType;
+
+  userTypes = [
+    {
+      name: "Operator",
+      value: "OP",
+    },
+    {
+      name: "Store Keeper",
+      value: "SK",
+    },
+    {
+      name: "Store Supervisor",
+      value: "SS",
+    },
+    {
+      name: "Technical",
+      value: "TC",
+    },
+    {
+      name: "AMS",
+      value: "AM",
+    },
+    {
+      name: "INV",
+      value: "IN",
+    },
+    {
+      name: "Vendor",
+      value: "VD",
+    },
+  ];
+
+  // Forms
+  userFormGroup: FormGroup;
+  validation_forms = [];
+
   constructor(
-    private modalService: BsModalService
-  ) { 
-    this.users = UserData
-    this.rows = this.users
-    this.temp = this.rows.map((prop,key)=>{
-      return {
-        ...prop,
-        id: key
-      };
+    public formBuilder: FormBuilder,
+    public modalService: BsModalService,
+    private authService: AuthService,
+    private userService: UsersService
+  ) {
+    this.getUsers();
 
-    })
+    this.userFormGroup = this.formBuilder.group({
+      id: "",
+      username: new FormControl("", [Validators.required]),
+      name: new FormControl("", [Validators.required]),
+      email: new FormControl("", [Validators.required]),
+      office_number: new FormControl("", [Validators.required]),
+      mobile_number: new FormControl("", [Validators.required]),
+      user_type: new FormControl("", [Validators.required]),
+      is_active: new FormControl("", [Validators.required]),
+      password1: "password@123",
+      password2: "password@123",
+    });
   }
 
-  ngOnInit() {
-    this.users = UserData
+  ngOnInit() {}
+
+  getUsers() {
+    this.userService.get().subscribe((data) => {
+      if (data) {
+        this.rows = data;
+        this.temp = data.map((prop, key) => {
+          return {
+            ...prop,
+            // id: key,
+          };
+        });
+      }
+    });
   }
 
-  openModal(modalInventory: TemplateRef<any>) {
-    this.modal = this.modalService.show(modalInventory, this.modalConfig)
+  openModal(modalInventory: TemplateRef<any>, row) {
+    if (row) {
+      this.userFormGroup.patchValue({
+        id: row.id,
+        username: row.username,
+        name: row.name,
+        email: row.email,
+        office_number: row.office_number,
+        mobile_number: row.mobile_number,
+        user_type: row.user_type,
+        is_active: row.is_active,
+      });
+    }
+    this.modal = this.modalService.show(modalInventory, this.modalConfig);
   }
 
   closeModal() {
-    this.modal.hide()
+    this.modal.hide();
   }
 
   register() {
-    this.modal.hide()
-    swal.fire({
-      title: 'Added!',
-      text: 'New user has been added',
-      type: 'success',
-      buttonsStyling: false,
-      confirmButtonText: 'Ok',
-      confirmButtonClass: 'btn btn-success btn-sm'
-    })
+    // To reset the formGroup if exist value
+    this.userFormGroup.reset();
+
+    this.authService.register(this.userFormGroup.value).subscribe(
+      (res) => {
+        if (res) {
+          // console.log("auth", res);
+          this.userFormGroup.value.id = res.user.pk;
+
+          this.userService
+            .update(this.userFormGroup.value.id, this.userFormGroup.value)
+            .subscribe(
+              (res) => {
+                // console.log("user", res);
+
+                this.modal.hide();
+                swal.fire({
+                  title: "Added!",
+                  text: "New user has been added",
+                  type: "success",
+                  buttonsStyling: false,
+                  confirmButtonText: "Ok",
+                  confirmButtonClass: "btn btn-success btn-sm",
+                }).then(result => {
+                  if (result.value) {
+                    this.getUsers();
+                  }
+                });
+              },
+              (err) => {
+                console.error(err);
+              },
+              () => {
+                () => console.log("HTTP request completed.");
+              }
+            );
+        }
+      },
+      (err) => {
+        this.validation_forms = err.error;
+      },
+      () => {
+        () => console.log("HTTP request completed.");
+      }
+    );
   }
 
-  save() {
-    this.modal.hide()
-    swal.fire({
-      title: 'Saved!',
-      text: 'Your edited information has been saved',
-      type: 'success',
-      buttonsStyling: false,
-      confirmButtonText: 'Ok',
-      confirmButtonClass: 'btn btn-success btn-sm'
-    })
+  update() {
+    this.userService
+      .update(this.userFormGroup.value.id, this.userFormGroup.value)
+      .subscribe(
+        (res) => {
+          if (res) {
+            // console.log("user", res);
+
+            this.modal.hide();
+            swal.fire({
+              title: "Saved!",
+              text: "Your edited information has been saved",
+              type: "success",
+              buttonsStyling: false,
+              confirmButtonText: "Ok",
+              confirmButtonClass: "btn btn-success btn-sm",
+            }).then(result => {
+              if (result.value) {
+                this.getUsers();
+              }
+            });
+          }
+        },
+        (err) => {
+          this.validation_forms = err.error;
+        },
+        () => {
+          () => console.log("HTTP request completed.");
+        }
+      );
   }
 
-  entriesChange($event){
+  entriesChange($event) {
     this.entries = $event.target.value;
   }
-  
+
   filterTable($event) {
     let val = $event.target.value;
-    this.temp = this.rows.filter(function(d) {
-
-      for(var key in d){
-        if(d[key].toLowerCase().indexOf(val) !== -1){
-          return true;
+    this.temp = this.rows.filter(function (d) {
+      for (var key in d) {
+        if (d[key]) {
+          if (d[key].toString().toLowerCase().indexOf(val) !== -1) {
+            return true;
+          }
         }
       }
       return false;
-    })
+    });
+  }
+
+  onSelect({ selected }) {
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
+  }
+
+  onActivate(event) {
+    this.activeRow = event.row;
+  }
+
+  findUserType(value: string) {
+    var result = this.userTypes.find((obj) => {
+      return obj.value === value;
+    });
+    return result.name;
   }
 
   openSearch() {
     document.body.classList.add("g-navbar-search-showing");
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-showing");
       document.body.classList.add("g-navbar-search-show");
     }, 150);
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.add("g-navbar-search-shown");
     }, 300);
   }
-  
+
   closeSearch() {
     document.body.classList.remove("g-navbar-search-shown");
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-show");
       document.body.classList.add("g-navbar-search-hiding");
     }, 150);
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-hiding");
       document.body.classList.add("g-navbar-search-hidden");
     }, 300);
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-hidden");
     }, 500);
   }
-
 }
