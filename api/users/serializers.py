@@ -22,8 +22,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'name',
-            'office_number', 
-            'mobile_number',
+            'mobile',
             'nric',
             'user_type',
             'profile_picture',
@@ -73,3 +72,4 @@ class PasswordResetSerializer(serializers.Serializer):
         }
         opts.update(self.get_email_options())
         self.reset_form.save(**opts)
+

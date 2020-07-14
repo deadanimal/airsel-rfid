@@ -72,3 +72,4 @@ class CustomUserViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         """
         return queryset    
  
+

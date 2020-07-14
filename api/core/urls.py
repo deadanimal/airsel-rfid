@@ -24,19 +24,35 @@ class NestedDefaultRouter(NestedRouterMixin, routers.DefaultRouter):
 
 router = NestedDefaultRouter()
 
+# Asset
 from assets.views import (
-    AssetViewSet
+    AssetViewSet,
+    AssetGroupViewSet,
+    AssetTypeViewSet,
+    RfidViewSet
 )
 
 assets_router = router.register(
     'assets', AssetViewSet
 )
 
-# Locations app
+asset_groups_router = router.register(
+    'asset-groups', AssetGroupViewSet
+)
 
+asset_types_router = router.register(
+    'asset-types', AssetTypeViewSet
+)
+
+rfids_router = router.register(
+    'rfids', RfidViewSet
+)
+
+# Locations app
 from locations.views import (
     RegionViewSet,
-    StoreViewSet
+    StoreViewSet,
+    LocationViewSet
 )
 
 regions_router = router.register(
@@ -47,17 +63,44 @@ stores_router = router.register(
     'stores', StoreViewSet
 )
 
-# Operations app
+locations_router = router.register(
+    'locations', LocationViewSet
+)
 
+# Medias app
+from medias.views import (
+    MediaViewSet
+)
+
+medias_router = router.register(
+    'medias', MediaViewSet
+)
+
+# Notifications app
+from notifications.views import (
+    NotificationViewSet
+)
+
+notifications_router = router.register(
+    'notifications', NotificationViewSet
+)
+
+# Operations app
 from operations.views import (
-    ActivityViewSet,
+    IssueTypeViewSet,
+    MaintenanceViewSet,
     OperationalReadingViewSet,
     WorkActivityViewSet,
+    WorkActivityTeamViewSet,
     WorkRequestViewSet
 )
 
-activities_router = router.register(
-    'activities', ActivityViewSet
+issue_types_router = router.register(
+    'issue-types', IssueTypeViewSet
+)
+
+maintenances_router = router.register(
+    'maintenances', MaintenanceViewSet
 )
 
 operational_readings_router = router.register(
@@ -68,12 +111,15 @@ work_activities_router = router.register(
     'work-activities', WorkActivityViewSet
 )
 
+work_activity_teams_router = router.register(
+    'work-activity-teams', WorkActivityTeamViewSet
+)
+
 work_requests_router = router.register(
     'work-requests', WorkRequestViewSet
 )
 
 # Organisations app
-
 from organisations.views import (
     OrganisationViewSet
 )
@@ -82,6 +128,7 @@ organisations_router = router.register(
     'organisations', OrganisationViewSet
 )
 
+# Stock
 from stocks.views import (
     StockViewSet,
     ReceiveViewSet,
@@ -131,7 +178,6 @@ counts_router = router.register(
 )
 
 # Users app
-
 from users.views import (
     CustomUserViewSet
 )
@@ -141,7 +187,10 @@ users_router = router.register(
 )
 
 urlpatterns = [
-    url(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    url(r'^email-verification/$',
+        TemplateView.as_view(template_name="email_verification.html"),
+        name='email-verification'), # Tukar sini
+    url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         TemplateView.as_view(template_name="password_reset_confirm.html"),
         name='password_reset_confirm'
     ),

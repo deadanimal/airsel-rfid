@@ -22,6 +22,10 @@ class OrganisationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Organisation.objects.all()
     serializer_class = OrganisationSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'is_active',
+        'created_at'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
