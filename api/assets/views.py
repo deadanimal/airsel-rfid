@@ -11,11 +11,17 @@ from rest_framework_extensions.mixins import NestedViewSetMixin
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import (
-    Asset
+    Asset,
+    AssetGroup,
+    AssetType,
+    Rfid
 )
 
 from .serializers import (
-    AssetSerializer
+    AssetSerializer,
+    AssetGroupSerializer,
+    AssetTypeSerializer,
+    RfidSerializer
 )
 
 class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -24,30 +30,29 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
         'purchased_at',
-        'owned_department',
         'is_active',
-        'hierarchy_level_1',
-        'hierarchy_level_2',
-        'hierarchy_level_3',
-        'hierarchy_level_4',
-        'hierarchy_level_5',
-        'hierarchy_level_6',
+        'owning_department',
+        'level_1',
+        'level_2',
+        'level_3',
+        'level_4',
+        'level_5',
+        'level_6',
+        'primary_category',
+        'identity',
+        'sub_category_1',
+        'sub_category_2',
         'type_asset',
         'category',
-        'category_extra',
-        'is_hand_over',
-        'is_procured',
-        'internal_detail_indentity',
-        'primary_category',
-        'grouping_sub_category_1',
-        'grouping_sub_category_2',
+        'acquired_by',
         'brand',
         'model_no',
         'rating',
         'status',
         'measuring_type',
         'is_warranty',
-        'po_vendor'
+        'po_vendor',
+        'location'
     ]
 
     def get_permissions(self):
@@ -97,46 +102,6 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         serializer = AssetSerializer(asset)
         return Response(serializer.data)
 
-    
-    @action(methods=['GET'], detail=True)
-    def hand_overed(self, request, *args, **kwargs):
-        asset = self.get_object()
-        asset.is_hand_over = True
-        asset.save()
-
-        serializer = AssetSerializer(asset)
-        return Response(serializer.data)
-
-
-    @action(methods=['GET'], detail=True)
-    def dehand_overed(self, request, *args, **kwargs):
-        asset = self.get_object()
-        asset.is_hand_over = True
-        asset.save()
-
-        serializer = AssetSerializer(asset)
-        return Response(serializer.data)
-
-
-    @action(methods=['GET'], detail=True)
-    def procured(self, request, *args, **kwargs):
-        asset = self.get_object()
-        asset.is_procured = True
-        asset.save()
-
-        serializer = AssetSerializer(asset)
-        return Response(serializer.data)
-
-
-    @action(methods=['GET'], detail=True)
-    def deprocured(self, request, *args, **kwargs):
-        asset = self.get_object()
-        asset.is_procured = False
-        asset.save()
-
-        serializer = AssetSerializer(asset)
-        return Response(serializer.data)
-
 
     @action(methods=['GET'], detail=True)
     def warranty_end(self, request, *args, **kwargs):
@@ -146,4 +111,116 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         serializer = AssetSerializer(asset)
         return Response(serializer.data)
+
+
+class AssetGroupViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetGroup.objects.all()
+    serializer_class = AssetGroupSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'category',
+        'created_at'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
     
+    def get_queryset(self):
+        queryset = AssetGroup.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset
+
+
+class AssetTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetType.objects.all()
+    serializer_class = AssetTypeSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'category',
+        'created_at'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetType.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset
+
+
+class RfidViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = Rfid.objects.all()
+    serializer_class = RfidSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'created_at'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = Rfid.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset

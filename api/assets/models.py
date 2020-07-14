@@ -8,7 +8,12 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from simple_history.models import HistoricalRecords
 
 from locations.models import (
-    Region
+    Region,
+    Location
+)
+
+from medias.models import (
+    Media
 )
 
 from organisations.models import (
@@ -21,10 +26,72 @@ from users.models import (
 
 from core.helpers import PathAndRename
 
+class Rfid(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=100, default='NA')
+    rfid_id = models.CharField(max_length=100, default='NA')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['name']
+    
+    def __str__(self):
+        return self.name
+
+class AssetGroup(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=100, default='NA')
+    
+    CATEGORY = [
+        ('AI', 'Asset Identity'),
+        ('PG', 'Primary Category'),
+        ('S1', 'Sub Category 1'),
+        ('S2', 'Sub Category 2')
+    ]
+    category = models.CharField(max_length=2, choices=CATEGORY, default='AI')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['name']
+    
+    def __str__(self):
+        return self.name
+
+
+class AssetType(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=100, default='NA')
+    
+    CATEGORY = [
+        ('AC', 'Asset / Component'),
+        ('AG', 'Asset Category'),
+        ('AT', 'Asset Type (Asset Primary Category)')
+    ]
+    category = models.CharField(max_length=2, choices=CATEGORY, default='AI')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+
+
 class Asset(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100, default='NA')
+    wams_asset_id = models.CharField(max_length=100, default='NA')
+    rfid = models.ForeignKey(
+        Rfid,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_rfid'
+    )
     purchased_at = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     
@@ -41,13 +108,13 @@ class Asset(models.Model):
         ('WQ', 'Water Quality'),
         ('NA', ' Not Available')
     ]
-    owned_department = models.CharField(
+    owning_department = models.CharField(
         max_length=2,
         choices=DEPARTMENT,
         default='NA'
     )
 
-    HIERARCHY_LEVEL_1 = [
+    LEVEL_1 = [
         ('CB', 'Customer Billing Services'),
         ('DB', 'Distribution'),
         ('FL', 'Fleet'),
@@ -57,14 +124,19 @@ class Asset(models.Model):
         ('WQ', 'Water Quality'),
         ('NA', ' Not Available')
     ]
-    hierarchy_level_1 = models.CharField(
+    level_1 = models.CharField(
         max_length=2,
-        choices=HIERARCHY_LEVEL_1,
+        choices=LEVEL_1,
         default='NA'
     )
-    hierarchy_level_2 = models.ForeignKey(Region, on_delete=models.CASCADE, null=True, related_name='assets_hierarchy_level_2')
+    level_2 = models.ForeignKey(
+        Region,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='assets_level_2'
+    )
 
-    HIERARCHY_LEVEL_3 = [
+    LEVEL_3 = [
         ('ND', 'NRW - District Metering Zone'),
         ('NT', 'NRW - Transmission Network'),
         ('NW', 'NRW - Water Balancing Area'),
@@ -79,26 +151,15 @@ class Asset(models.Model):
         ('WS', 'WQ Sampling Station'),
         ('NA', ' Not Available')
     ]
-    hierarchy_level_3 = models.CharField(
+    level_3 = models.CharField(
         max_length=2,
-        choices=HIERARCHY_LEVEL_3,
+        choices=LEVEL_3,
         default='NA'
     )
 
-    HIERARCHY_LEVEL_4 = [
-        ('NR', 'NRW'),
-        ('PH', 'Pump House'),
-        ('RS', 'Reservoir'),
-        ('TP', 'Treatment Plant Name'),
-        ('NA', ' Not Available')
-    ]
-    hierarchy_level_4 = models.CharField(
-        max_length=2,
-        choices=HIERARCHY_LEVEL_4,
-        default='NA'
-    )
+    level_4 = models.CharField(max_length=100, default='NA')
 
-    HIERARCHY_LEVEL_5 = [
+    LEVEL_5 = [
         ('AS', 'Aeration System'),
         ('BR', 'Balancing Reservoir'),
         ('BD', 'Buildings'),
@@ -125,13 +186,13 @@ class Asset(models.Model):
         ('WA', 'Water Analysis'),
         ('NA', ' Not Available')
     ]
-    hierarchy_level_5 = models.CharField(
+    level_5 = models.CharField(
         max_length=2,
-        choices=HIERARCHY_LEVEL_5,
+        choices=LEVEL_5,
         default='NA'
     )
 
-    HIERARCHY_LEVEL_6 = [
+    LEVEL_6 = [
         ('AP', 'Actiflo Process'),
         ('AC', 'Activated Carbon Process'),
         ('AS', 'Aeration System'),
@@ -198,121 +259,96 @@ class Asset(models.Model):
         ('WS', 'Wash Water System'),
         ('NA', ' Not Available')
     ]
-    hierarchy_level_6 = models.CharField(
+    level_6 = models.CharField(
         max_length=2,
-        choices=HIERARCHY_LEVEL_6,
+        choices=LEVEL_6,
         default='NA'
     )
 
-    TYPE_ASSET = [
-        ('AS', 'Asset'),
-        ('CP', 'Component'),
-        ('NA', 'Not Available')
-    ]
-    type_asset = models.CharField(
-        max_length=2,
-        choices=TYPE_ASSET,
-        default='NA'
+    primary_category = models.ForeignKey(
+        AssetType,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_primary_category',
+        limit_choices_to={
+            'category': 'AT'
+        }
     )
 
-    CATEGORY = [
-        ('EL', 'Electrical'),
-        ('MC', 'Mechanical'),
-        ('IS', 'Insturement'),
-        ('OT', 'Other')
-    ]
-    category = models.CharField(
-        max_length=2,
-        choices=CATEGORY,
-        default='OT'
-    )
-    category_extra = models.CharField(max_length=100, null=True, blank=True)
-
-    is_hand_over = models.BooleanField(default=False)
-    is_procured = models.BooleanField(default=False)
-
-    INTERNAL_DETAIL_IDENTITY = [
-        ('P1', 'Pump-1'),
-        ('P2', 'Pump-2'),
-        ('M1', 'Motor-1'),
-        ('M2', 'Motor-2'),
-        ('NA', 'Not Available')
-    ]
-    internal_detail_indentity = models.CharField(
-        max_length=2,
-        choices=INTERNAL_DETAIL_IDENTITY,
-        default='NA'
+    identity = models.ForeignKey(
+        AssetGroup,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_identity',
+        limit_choices_to={
+            'category': 'AI'
+        }
     )
 
-    PRIMARY_CATEGORY = [
-        ('BV', 'Butterfly Valve'),
-        ('CA', 'Chain Block'),
-        ('CE', 'Check Valve'),
-        ('HT', 'Hydropneumatic Tank'),
-        ('MS', 'Main Switchboard'),
-        ('MT', 'Motor'),
-        ('PG', 'Presuure Gauge'),
-        ('PP', 'Pump'),
-        ('SV', 'Sluice Valve'),
-        ('SA', 'Surge Anticipating Valve'),
-        ('NA', 'Not Available')
-    ]
-    primary_category = models.CharField(
-        max_length=2,
-        choices=PRIMARY_CATEGORY,
-        default='NA'
+    sub_category_1 = models.ForeignKey(
+        AssetGroup,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_sub_category_1',
+        limit_choices_to={
+            'category': 'S1'
+        }
     )
 
-    GROUPING_SUB_CATEGORY_1 = [
-        ('AR', 'Air Receiver Tank'),
-        ('DL', 'Delivery'),
-        ('HR', 'Horizontal'),
-        ('MP', 'Main Power Suppply'),
-        ('MN', 'Manual'),
-        ('OF', 'Oil Filled'),
-        ('ST', 'Suction'),
-        ('VT', 'Vertical'),
-        ('NA', 'Not Available')
-    ]
-    grouping_sub_category_1 = models.CharField(
-        max_length=2,
-        choices=GROUPING_SUB_CATEGORY_1,
-        default='NA'
+    sub_category_2 = models.ForeignKey(
+        AssetGroup,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_sub_category_2',
+        limit_choices_to={
+            'category': 'S2'
+        }
     )
-    
-    GROUPING_SUB_CATEGORY_2 = [
-        ('CS', 'Casing'),
-        ('DL', 'Delivery'),
-        ('DF', 'Double Flange Swing'),
-        ('EL', 'Electrical Installation'),
-        ('ES', 'End Suction'),
-        ('MS', 'Multi Stage'),
-        ('RP', 'Reduced Port'),
-        ('SP', 'Split'),
-        ('SC', 'Squirrel Cage'),
-        ('ST', 'Suction'),
-        ('VT', 'Vertical'),
-        ('WT', 'Wafer Twin Door'),
-        ('NA', 'Not Available')
+
+    type_asset = models.ForeignKey(
+        AssetType,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_type',
+        limit_choices_to={
+            'category': 'AC'
+        }
+    )
+
+    category = models.ForeignKey(
+        AssetType,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_category',
+        limit_choices_to={
+            'category': 'AG'
+        }
+    )
+
+    ACQUIRED_BY = [
+        ('AH', 'Asset Handover'),
+        ('PC', 'Procured')
     ]
-    grouping_sub_category_2 = models.CharField(
+    acquired_by = models.CharField(
         max_length=2,
-        choices=GROUPING_SUB_CATEGORY_2,
-        default='NA'
+        choices=ACQUIRED_BY,
+        default='AH'
     )
     
     brand = models.CharField(max_length=100, default='NA')
     model_no = models.CharField(max_length=100, default='NA')
 
-    msize_capcity_1 = models.IntegerField(default=0)
-    msize_capcity_1_measurement = models.IntegerField(default=0)
-    msize_capcity_2 = models.IntegerField(default=0)
-    msize_capcity_2_measurement = models.IntegerField(default=0)
-    msize_capcity_3 = models.IntegerField(default=0)
-
-    msize_capcity_3_measurement = models.IntegerField(default=0)
+    size_capacity_1 = models.FloatField(default=0)
+    size_capacity_1_measurement = models.FloatField(default=0)
+    size_capacity_2 = models.FloatField(default=0)
+    size_capacity_2_measurement = models.FloatField(default=0)
+    size_capacity_3 = models.FloatField(default=0)
+    size_capacity_3_measurement = models.FloatField(default=0)
+    
     parent_plate_number = models.CharField(max_length=100, default='NA')
     plate_number = models.CharField(max_length=100, default='NA')
+    serial_number = models.CharField(max_length=100, default='NA')
+    vendor_part_no = models.CharField(max_length=100, default='NA')
     scada_id = models.CharField(max_length=100, default='NA')
     external_id = models.CharField(max_length=100, default='NA')
     tag_number = models.CharField(max_length=100, default='NA')
@@ -360,8 +396,18 @@ class Asset(models.Model):
     warranty_vendor = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='asset_warranty_vendor')
     po_vendor = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, related_name='asset_po_vendor')
     po_cost = models.IntegerField(default=1)
-
-    # supervisor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_location'
+    )
+    created_by = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_created_by'
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

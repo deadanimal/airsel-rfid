@@ -9,16 +9,25 @@ from rest_framework import serializers
 from django.utils.timezone import now
 
 from .models import (
-    Activity,
+    Maintenance,
+    IssueType,
     WorkActivity,
+    WorkActivityTeam,
     WorkRequest,
     OperationalReading
 )
 
-class ActivitySerializer(serializers.ModelSerializer):
+class MaintenanceSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Activity
+        model = Maintenance
+        fields = '__all__'
+
+
+class IssueTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = IssueType
         fields = '__all__'
 
 
@@ -26,6 +35,13 @@ class WorkActivitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkActivity
+        fields = '__all__'
+
+
+class WorkActivityTeamSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = WorkActivityTeam
         fields = '__all__'
 
 

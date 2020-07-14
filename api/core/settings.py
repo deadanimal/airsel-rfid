@@ -50,6 +50,8 @@ INSTALLED_APPS = [
 
     'assets',
     'locations',
+    'medias',
+    'notifications',
     'operations',
     'organisations',
     'stocks',
@@ -158,6 +160,12 @@ AWS_S3_ENDPOINT_URL = config('AWS_S3_ENDPOINT_URL')
 AWS_DEFAULT_ACL = 'public-read'
 
 SITE_ID = 1
+
+EMAIL_SUBJECT_PREFIX = '[Successful] '
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Successful] '
+
+PHONENUMBER_DB_FORMAT = 'NATIONAL'
+PHONENUMBER_DEFAULT_REGION = 'MY'
 
 REST_USE_JWT = True
 

@@ -18,8 +18,17 @@ class Store(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100, default='NA')
     code = models.CharField(max_length=100, default='NA')
+    is_active = models.BooleanField(default=True)
 
-    supervisor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, related_name='store_supervisor')
+    supervisor = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='store_supervisor',
+        limit_choices_to={
+            'user_type': 'SS'
+        }
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -44,3 +53,26 @@ class Region(models.Model):
     
     def __str__(self):
         return self.name
+
+
+class Location(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=100, default='NA')
+    region = models.ForeignKey(
+        Region,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='location_region'
+    )
+    is_active = models.BooleanField(default=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['name']
+    
+    def __str__(self):
+        return self.name
+    

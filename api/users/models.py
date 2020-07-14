@@ -14,16 +14,18 @@ from core.helpers import PathAndRename
 class CustomUser(AbstractUser):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255, blank=True)
-    office_number = PhoneNumberField(blank=True)
-    mobile_number = PhoneNumberField(blank=True)
-    nric = models.CharField(max_length=12, default='NA')
+    name = models.CharField(max_length=255, blank=True, default='NA')
+    mobile = PhoneNumberField(blank=True, null=True)
+    nric = models.CharField(max_length=12, blank=True, default='NA')
 
     USER_TYPE = [
+        ('AM', 'Asset Management System'),
+        ('IV', 'Inventory'),
         ('OP', 'Operator'),
         ('SK', 'Store Keeper'),
         ('SS', 'Store Supervisor'),
-        ('TC', 'Technical Crew')
+        ('TC', 'Technical Crew'),
+        ('VD', 'Vendor')
     ]
     user_type = models.CharField(
         max_length=2,

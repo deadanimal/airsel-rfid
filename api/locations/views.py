@@ -12,18 +12,23 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import (
     Store,
-    Region
+    Region,
+    Location
 )
 
 from .serializers import (
     StoreSerializer,
-    RegionSerializer
+    RegionSerializer,
+    LocationSerializer
 )
 
 class StoreViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'is_active'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -70,6 +75,43 @@ class RegionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     
     def get_queryset(self):
         queryset = Region.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Company.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Store.objects.all()
+            else:
+                queryset = Store.objects.filter(company=company.id)
+        """
+        return queryset  
+
+
+class LocationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'is_active'
+    ]
+    
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = Location.objects.all()
 
         """
         if self.request.user.is_anonymous:

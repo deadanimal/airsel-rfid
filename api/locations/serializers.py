@@ -10,7 +10,8 @@ from django.utils.timezone import now
 
 from .models import (
     Store,
-    Region
+    Region,
+    Location
 )
 
 class StoreSerializer(serializers.ModelSerializer):
@@ -24,4 +25,11 @@ class RegionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Region
+        fields = '__all__'
+
+
+class LocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Location
         fields = '__all__'
