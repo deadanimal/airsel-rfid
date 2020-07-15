@@ -10,9 +10,12 @@ import Dropzone from "dropzone";
 import swal from "sweetalert2";
 
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
+import { AssetGroupsService } from 'src/app/shared/services/asset-groups/asset-groups.service';
+import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
-import { NotifyService } from 'src/app/shared/handler/notify/notify.service';
+import { NotifyService } from "src/app/shared/handler/notify/notify.service";
 
 export enum SelectionType {
   single = "single",
@@ -72,7 +75,7 @@ export class RegistrationComponent implements OnInit {
     { value: "PD", name: "Production" },
     { value: "SD", name: "SCADA" },
     { value: "WQ", name: "Water Quality" },
-    { value: "NA", name: " Not Available" },
+    { value: "NA", name: "Not Available" },
   ];
   hierarchylevel3s = [
     { value: "ND", name: "NRW - District Metering Zone" },
@@ -87,14 +90,14 @@ export class RegistrationComponent implements OnInit {
     { value: "WO", name: "WQ - Online Analyzer" },
     { value: "WR", name: "WQ - River Monitoring Station" },
     { value: "WS", name: "WQ Sampling Station" },
-    { value: "NA", name: " Not Available" },
+    { value: "NA", name: "Not Available" },
   ];
   hierarchylevel4s = [
     { value: "NR", name: "NRW" },
     { value: "PH", name: "Pump House" },
     { value: "RS", name: "Reservoir" },
     { value: "TP", name: "Treatment Plant Name" },
-    { value: "NA", name: " Not Available" },
+    { value: "NA", name: "Not Available" },
   ];
   hierarchylevel5s = [
     { value: "AS", name: "Aeration System" },
@@ -121,7 +124,7 @@ export class RegistrationComponent implements OnInit {
     { value: "TP", name: "Treatment Process" },
     { value: "TW", name: "Treated Water Process" },
     { value: "WA", name: "Water Analysis" },
-    { value: "NA", name: " Not Available" },
+    { value: "NA", name: "Not Available" },
   ];
   hierarchylevel6s = [
     { value: "AP", name: "Actiflo Process" },
@@ -188,64 +191,64 @@ export class RegistrationComponent implements OnInit {
     { value: "WP", name: "Wash Water Process" },
     { value: "WR", name: "Wash Water Recovery" },
     { value: "WS", name: "Wash Water System" },
-    { value: "NA", name: " Not Available" },
+    { value: "NA", name: "Not Available" },
   ];
   typeassets = [
-    { value: "AS", name: "Asset" },
-    { value: "CP", name: "Component" },
-    { value: "NA", name: "Not Available" },
+    // { value: "AS", name: "Asset" },
+    // { value: "CP", name: "Component" },
+    // { value: "NA", name: "Not Available" },
   ];
   categories = [
-    { value: "EL", name: "Electrical" },
-    { value: "MC", name: "Mechanical" },
-    { value: "IS", name: "Insturement" },
-    { value: "OT", name: "Other" },
+    // { value: "EL", name: "Electrical" },
+    // { value: "MC", name: "Mechanical" },
+    // { value: "IS", name: "Insturement" },
+    // { value: "OT", name: "Other" },
   ];
-  internaldetailidentities = [
-    { value: "P1", name: "Pump-1" },
-    { value: "P2", name: "Pump-2" },
-    { value: "M1", name: "Motor-1" },
-    { value: "M2", name: "Motor-2" },
-    { value: "NA", name: "Not Available" },
+  identities = [
+    // { value: "P1", name: "Pump-1" },
+    // { value: "P2", name: "Pump-2" },
+    // { value: "M1", name: "Motor-1" },
+    // { value: "M2", name: "Motor-2" },
+    // { value: "NA", name: "Not Available" },
   ];
   primarycategories = [
-    { value: "BV", name: "Butterfly Valve" },
-    { value: "CA", name: "Chain Block" },
-    { value: "CE", name: "Check Valve" },
-    { value: "HT", name: "Hydropneumatic Tank" },
-    { value: "MS", name: "Main Switchboard" },
-    { value: "MT", name: "Motor" },
-    { value: "PG", name: "Presuure Gauge" },
-    { value: "PP", name: "Pump" },
-    { value: "SV", name: "Sluice Valve" },
-    { value: "SA", name: "Surge Anticipating Valve" },
-    { value: "NA", name: "Not Available" },
+    // { value: "BV", name: "Butterfly Valve" },
+    // { value: "CA", name: "Chain Block" },
+    // { value: "CE", name: "Check Valve" },
+    // { value: "HT", name: "Hydropneumatic Tank" },
+    // { value: "MS", name: "Main Switchboard" },
+    // { value: "MT", name: "Motor" },
+    // { value: "PG", name: "Presuure Gauge" },
+    // { value: "PP", name: "Pump" },
+    // { value: "SV", name: "Sluice Valve" },
+    // { value: "SA", name: "Surge Anticipating Valve" },
+    // { value: "NA", name: "Not Available" },
   ];
   groupsubcategory1s = [
-    { value: "AR", name: "Air Receiver Tank" },
-    { value: "DL", name: "Delivery" },
-    { value: "HR", name: "Horizontal" },
-    { value: "MP", name: "Main Power Suppply" },
-    { value: "MN", name: "Manual" },
-    { value: "OF", name: "Oil Filled" },
-    { value: "ST", name: "Suction" },
-    { value: "VT", name: "Vertical" },
-    { value: "NA", name: "Not Available" },
+    // { value: "AR", name: "Air Receiver Tank" },
+    // { value: "DL", name: "Delivery" },
+    // { value: "HR", name: "Horizontal" },
+    // { value: "MP", name: "Main Power Suppply" },
+    // { value: "MN", name: "Manual" },
+    // { value: "OF", name: "Oil Filled" },
+    // { value: "ST", name: "Suction" },
+    // { value: "VT", name: "Vertical" },
+    // { value: "NA", name: "Not Available" },
   ];
   groupsubcategory2s = [
-    { value: "CS", name: "Casing" },
-    { value: "DL", name: "Delivery" },
-    { value: "DF", name: "Double Flange Swing" },
-    { value: "EL", name: "Electrical Installation" },
-    { value: "ES", name: "End Suction" },
-    { value: "MS", name: "Multi Stage" },
-    { value: "RP", name: "Reduced Port" },
-    { value: "SP", name: "Split" },
-    { value: "SC", name: "Squirrel Cage" },
-    { value: "ST", name: "Suction" },
-    { value: "VT", name: "Vertical" },
-    { value: "WT", name: "Wafer Twin Door" },
-    { value: "NA", name: "Not Available" },
+    // { value: "CS", name: "Casing" },
+    // { value: "DL", name: "Delivery" },
+    // { value: "DF", name: "Double Flange Swing" },
+    // { value: "EL", name: "Electrical Installation" },
+    // { value: "ES", name: "End Suction" },
+    // { value: "MS", name: "Multi Stage" },
+    // { value: "RP", name: "Reduced Port" },
+    // { value: "SP", name: "Split" },
+    // { value: "SC", name: "Squirrel Cage" },
+    // { value: "ST", name: "Suction" },
+    // { value: "VT", name: "Vertical" },
+    // { value: "WT", name: "Wafer Twin Door" },
+    // { value: "NA", name: "Not Available" },
   ];
   ratings = [
     { value: "1", name: "1 - Very Good" },
@@ -277,26 +280,19 @@ export class RegistrationComponent implements OnInit {
   fifthFormGroup: FormGroup;
   sixthFormGroup: FormGroup;
   seventhFormGroup: FormGroup;
-  validation_messages = {
-    // username: [
-    //   { type: "required", message: "Email is required." },
-    //   { type: "pattern", message: "Please enter a valid email." },
-    // ],
-    // password: [
-    //   { type: "required", message: "Password is required." },
-    //   { type: "minlength", message: "At least 6 characters long." },
-    // ],
-  };
+  validation_messages = [];
 
   constructor(
     public formBuilder: FormBuilder,
     public modalService: BsModalService,
     public assetsService: AssetsService,
+    public assetGroupsService: AssetGroupsService,
+    public assetTypesService: AssetTypesService,
+    public authService: AuthService,
     public organisationsService: OrganisationsService,
     public regionsService: RegionsService,
     public toastr: NotifyService
   ) {
-
     this.assetsService.get().subscribe((assets) => {
       if (assets) {
         this.temp = assets.map((prop, key) => {
@@ -312,37 +308,38 @@ export class RegistrationComponent implements OnInit {
       owning_department: ["", Validators.required],
     });
     this.secondFormGroup = this.formBuilder.group({
-      hierarchy_level_1: ["", Validators.required],
-      hierarchy_level_2: ["", Validators.required],
-      hierarchy_level_3: ["", Validators.required],
-      hierarchy_level_4: ["", Validators.required],
-      hierarchy_level_5: ["", Validators.required],
-      hierarchy_level_6: ["", Validators.required],
+      level_1: ["", Validators.required],
+      level_2: ["", Validators.required],
+      level_3: ["", Validators.required],
+      level_4: ["", Validators.required],
+      level_5: ["", Validators.required],
+      level_6: ["", Validators.required],
     });
     this.thirdFormGroup = this.formBuilder.group({
-      type_asset: ["", Validators.required],
-      category: ["", Validators.required],
-      category_extra: [""], // required IF category is 'OT'
-      is_hand_over: [""],
-      is_procured: [""],
+      identity: ["", Validators.required],
+      primary_category: ["", Validators.required],
+      sub_category_1: ["", Validators.required],
+      sub_category_2: ["", Validators.required],
     });
     this.fourthFormGroup = this.formBuilder.group({
-      internal_detail_indentity: ["", Validators.required],
-      primary_category: ["", Validators.required],
-      grouping_sub_category_1: ["", Validators.required],
-      grouping_sub_category_2: ["", Validators.required],
+      type_asset: ["", Validators.required],
+      category: ["", Validators.required],
+      // category_extra: [""], // required IF category is 'OT'
+      acquired_by: [""],
     });
     this.fifthFormGroup = this.formBuilder.group({
       brand: ["", Validators.required],
       model_no: ["", Validators.required],
-      msize_capcity_1: ["", Validators.required],
-      msize_capcity_1_measurement: ["", Validators.required],
-      msize_capcity_2: ["", Validators.required],
-      msize_capcity_2_measurement: ["", Validators.required],
-      msize_capcity_3: ["", Validators.required],
-      msize_capcity_3_measurement: ["", Validators.required],
+      size_capacity_1: ["", Validators.required],
+      size_capacity_1_measurement: ["", Validators.required],
+      size_capacity_2: ["", Validators.required],
+      size_capacity_2_measurement: ["", Validators.required],
+      size_capacity_3: ["", Validators.required],
+      size_capacity_3_measurement: ["", Validators.required],
       parent_plate_number: ["", Validators.required],
       plate_number: ["", Validators.required],
+      serial_number: ["", Validators.required],
+      vendor_part_no: ["", Validators.required],
       scada_id: ["", Validators.required],
       external_id: ["", Validators.required],
       tag_number: ["", Validators.required],
@@ -366,13 +363,83 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.regionsService.get().subscribe((regions) => {
-      if (regions) this.regions = regions;
-    });
+    this.regionsService.get().subscribe(
+      (res) => {
+        if (res) this.regions = res;
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
 
-    this.organisationsService.get().subscribe((organisations) => {
-      if (organisations) this.organisations = organisations;
-    });
+    this.organisationsService.get().subscribe(
+      (res) => {
+        if (res) this.organisations = res;
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
+
+    this.assetTypesService.get().subscribe(
+      (res) => {
+        if (res) {
+          this.primarycategories = res.filter(function (data) {
+            if (data.category.toString().toLowerCase().indexOf("at") !== -1) return true;
+            return false;
+          });
+
+          this.typeassets = res.filter(function (data) {
+            if (data.category.toString().toLowerCase().indexOf("ac") !== -1) return true;
+            return false;
+          });
+
+          this.categories = res.filter(function (data) {
+            if (data.category.toString().toLowerCase().indexOf("ag") !== -1) return true;
+            return false;
+          });
+        }
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
+
+    this.assetGroupsService.get().subscribe(
+      (res) => {
+        if (res) {
+          this.identities = res.filter(function (data) {
+            if (data.category.toString().toLowerCase().indexOf("ai") !== -1) return true;
+            return false;
+          });
+
+          this.groupsubcategory1s = res.filter(function (data) {
+            if (data.category.toString().toLowerCase().indexOf("s1") !== -1) return true;
+            return false;
+          });
+
+          this.groupsubcategory2s = res.filter(function (data) {
+            if (data.category.toString().toLowerCase().indexOf("s2") !== -1) return true;
+            return false;
+          });
+        }
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
 
     // let currentSingleFile = undefined;
     // // single dropzone file - accepts only images
@@ -452,13 +519,27 @@ export class RegistrationComponent implements OnInit {
       ...this.fifthFormGroup.value,
       ...this.sixthFormGroup.value,
       ...this.seventhFormGroup.value,
+      // created_by: this.authService.userID
     };
 
-    this.assetsService.post(postAssets).subscribe((assets) => {
-      if (assets) {
-        this.toastr.openToastr("Your asset have successfully registered.", "Register Asset")
+    this.assetsService.post(postAssets).subscribe(
+      (res) => {
+        if (res) {
+          console.log("res", res);
+          this.toastr.openToastr(
+            "Your asset have successfully registered.",
+            "Register Asset"
+          );
+        }
+      },
+      (err) => {
+        console.error("err", err);
+        this.validation_messages = err.error;
+      },
+      () => {
+        console.log("Http request completed");
       }
-    });
+    );
   }
 
   update() {
