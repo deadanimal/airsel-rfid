@@ -408,6 +408,32 @@ class Asset(models.Model):
         null=True,
         related_name='asset_created_by'
     )
+    modified_by = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_modified_by'
+    )
+
+    #Approval
+    APPROVAL_STATUS = [
+        ('AP', 'Approve'),
+        ('RE', 'Reject'),
+        ('NA', 'Not Available')
+    ]
+    approval_status = models.CharField(
+        max_length=2,
+        choices=APPROVAL_STATUS,
+        default='NA'
+    )
+    approval_by = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='asset_approval_by'
+    )
+    approval_date = models.DateTimeField(auto_now=True)
+    reject_remark = models.CharField(max_length=100, default='NA')
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
