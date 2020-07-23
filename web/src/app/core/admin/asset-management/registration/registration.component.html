@@ -436,7 +436,7 @@
                   <span>Actions</span>
                 </ng-template>
                 <ng-template ngx-datatable-cell-template>
-                  <button
+                  <!-- <button
                     type="button"
                     class="btn btn-icon btn-2 btn-danger btn-sm mr-2"
                     placement="top"
@@ -446,7 +446,7 @@
                     <span class="btn-inner--icon"
                       ><i class="fas fa-lightbulb"></i
                     ></span>
-                  </button>
+                  </button> -->
                   <button
                     type="button"
                     class="btn btn-icon btn-2 btn-info btn-sm"
@@ -455,7 +455,7 @@
                     (click)="openModalViewAsset(viewAsset)"
                   >
                     <span class="btn-inner--icon"
-                      ><i class="far fa-eye"></i
+                      ><i class="fas fa-eye"></i
                     ></span>
                   </button>
                 </ng-template>
@@ -531,6 +531,9 @@
                     >{{ department.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.owning_department
+                }}</small>
               </div>
             </div>
           </div>
@@ -548,7 +551,7 @@
                 <label class="form-control-label">Level 1</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="hierarchy_level_1"
+                  formControlName="level_1"
                 >
                   <option value="">Please select</option>
                   <option
@@ -557,6 +560,9 @@
                     >{{ hierarchylevel1.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_1
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -564,13 +570,16 @@
                 <label class="form-control-label">Level 2</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="hierarchy_level_2"
+                  formControlName="level_2"
                 >
                   <option value="">Please select</option>
                   <option *ngFor="let region of regions" [value]="region.id">{{
                     region.name
                   }}</option>
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_2
+                }}</small>
               </div>
             </div>
           </div>
@@ -580,7 +589,7 @@
                 <label class="form-control-label">Level 3</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="hierarchy_level_3"
+                  formControlName="level_3"
                 >
                   <option value="">Please select</option>
                   <option
@@ -589,14 +598,22 @@
                     >{{ hierarchylevel3.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_3
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 4</label>
-                <select
+                <input
+                  type="text"
+                  formControlName="level_4"
+                  class="form-control form-control-sm"
+                />
+                <!-- <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="hierarchy_level_4"
+                  formControlName="level_4"
                 >
                   <option value="">Please select</option>
                   <option
@@ -604,7 +621,10 @@
                     [value]="hierarchylevel4.value"
                     >{{ hierarchylevel4.name }}</option
                   >
-                </select>
+                </select> -->
+                <small class="validation_messages">{{
+                  validation_messages.level_4
+                }}</small>
               </div>
             </div>
           </div>
@@ -614,7 +634,7 @@
                 <label class="form-control-label">Level 5</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="hierarchy_level_5"
+                  formControlName="level_5"
                 >
                   <option value="">Please select</option>
                   <option
@@ -623,6 +643,9 @@
                     >{{ hierarchylevel5.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_5
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -630,7 +653,7 @@
                 <label class="form-control-label">Level 6</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="hierarchy_level_6"
+                  formControlName="level_6"
                 >
                   <option value="">Please select</option>
                   <option
@@ -639,6 +662,9 @@
                     >{{ hierarchylevel6.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_6
+                }}</small>
               </div>
             </div>
           </div>
@@ -652,88 +678,84 @@
       </mat-step>
       <mat-step [stepControl]="thirdFormGroup">
         <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>Asset Categorization</ng-template>
+          <ng-template matStepLabel>Asset Grouping</ng-template>
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Asset or Component Type</label
-                >
+                <label class="form-control-label">Asset Primary Category</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="type_asset"
+                  formControlName="primary_category"
                 >
                   <option value="">Please select</option>
                   <option
-                    *ngFor="let typeasset of typeassets"
-                    [value]="typeasset.value"
-                    >{{ typeasset.name }}</option
+                    *ngFor="let primarycategory of primarycategories"
+                    [value]="primarycategory.id"
+                    >{{ primarycategory.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.primary_category
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Asset Class/Asset Category</label
-                >
+                <label class="form-control-label">Asset Identity</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="category"
+                  formControlName="identity"
                 >
                   <option value="">Please select</option>
                   <option
-                    *ngFor="let category of categories"
-                    [value]="category.value"
-                    >{{ category.name }}</option
+                    *ngFor="let identity of identities"
+                    [value]="identity.id"
+                    >{{ identity.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.identity
+                }}</small>
               </div>
-              <div
-                class="form-group"
-                *ngIf="thirdFormGroup.value.category == 'OT'"
-              >
-                <label class="form-control-label">Other category</label>
-                <input
-                  type="text"
-                  formControlName="category_extra"
-                  class="form-control form-control-sm"
-                />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="form-control-label">Sub-category 1</label>
+                <select
+                  class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="sub_category_1"
+                >
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let groupsubcategory1 of groupsubcategory1s"
+                    [value]="groupsubcategory1.value"
+                    >{{ groupsubcategory1.name }}</option
+                  >
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.sub_category_1
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Hand Over Asset or Procured</label
-                ><br />
-                <div
-                  class="custom-control custom-checkbox custom-control-inline"
+                <label class="form-control-label">Sub-category 2</label>
+                <select
+                  class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="sub_category_2"
                 >
-                  <input
-                    type="checkbox"
-                    id="is_hand_over"
-                    name="is_hand_over"
-                    class="custom-control-input"
-                    formControlName="is_hand_over"
-                  />
-                  <label class="custom-control-label" for="is_hand_over"
-                    >hand over asset</label
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let groupsubcategory2 of groupsubcategory2s"
+                    [value]="groupsubcategory2.value"
+                    >{{ groupsubcategory2.name }}</option
                   >
-                </div>
-                <div
-                  class="custom-control custom-checkbox custom-control-inline"
-                >
-                  <input
-                    type="checkbox"
-                    id="is_procured"
-                    name="is_procured"
-                    class="custom-control-input"
-                    formControlName="is_procured"
-                  />
-                  <label class="custom-control-label" for="is_procured"
-                    >procured</label
-                  >
-                </div>
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.grouping_sub_category_2
+                }}</small>
               </div>
             </div>
           </div>
@@ -749,76 +771,96 @@
       </mat-step>
       <mat-step [stepControl]="fourthFormGroup">
         <form [formGroup]="fourthFormGroup">
-          <ng-template matStepLabel>Asset Grouping</ng-template>
+          <ng-template matStepLabel>Asset Categorization</ng-template>
           <div class="row">
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label"
-                  >Air Selangor Internal Asset Identity</label
+                  >Asset or Component Type</label
                 >
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="internal_detail_indentity"
+                  formControlName="type_asset"
                 >
                   <option value="">Please select</option>
                   <option
-                    *ngFor="
-                      let internaldetailidentity of internaldetailidentities
-                    "
-                    [value]="internaldetailidentity.value"
-                    >{{ internaldetailidentity.name }}</option
+                    *ngFor="let typeasset of typeassets"
+                    [value]="typeasset.id"
+                    >{{ typeasset.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.type_asset
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label">Asset Primary Category</label>
+                <label class="form-control-label"
+                  >Asset Class/Asset Category</label
+                >
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="primary_category"
+                  formControlName="category"
                 >
                   <option value="">Please select</option>
                   <option
-                    *ngFor="let primarycategory of primarycategories"
-                    [value]="primarycategory.value"
-                    >{{ primarycategory.name }}</option
+                    *ngFor="let category of categories"
+                    [value]="category.id"
+                    >{{ category.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.category
+                }}</small>
+              </div>
+              <div
+                class="form-group"
+                *ngIf="thirdFormGroup.value.category == 'OT'"
+              >
+                <label class="form-control-label">Other category</label>
+                <input
+                  type="text"
+                  formControlName="category_extra"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.category_extra
+                }}</small>
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label">Sub-category 1</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="grouping_sub_category_1"
-                >
-                  <option value="">Please select</option>
-                  <option
-                    *ngFor="let groupsubcategory1 of groupsubcategory1s"
-                    [value]="groupsubcategory1.value"
-                    >{{ groupsubcategory1.name }}</option
+                <label class="form-control-label"
+                  >Hand Over Asset or Procured</label
+                ><br />
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="ah"
+                    name="acquired_by"
+                    class="custom-control-input"
+                    formControlName="acquired_by"
+                    value="AH"
+                  />
+                  <label class="custom-control-label" for="ah"
+                    >Asset Handover</label
                   >
-                </select>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Sub-category 2</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="grouping_sub_category_2"
-                >
-                  <option value="">Please select</option>
-                  <option
-                    *ngFor="let groupsubcategory2 of groupsubcategory2s"
-                    [value]="groupsubcategory2.value"
-                    >{{ groupsubcategory2.name }}</option
-                  >
-                </select>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="pc"
+                    name="acquired_by"
+                    class="custom-control-input"
+                    formControlName="acquired_by"
+                    value="PC"
+                  />
+                  <label class="custom-control-label" for="pc">Procured</label>
+                </div>
+                <small class="validation_messages">{{
+                  validation_messages.acquired_by
+                }}</small>
               </div>
             </div>
           </div>
@@ -843,6 +885,9 @@
                   formControlName="brand"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.brand
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -853,6 +898,9 @@
                   formControlName="model_no"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.model_no
+                }}</small>
               </div>
             </div>
           </div>
@@ -862,9 +910,12 @@
                 <label class="form-control-label">Site/Capacity 1</label>
                 <input
                   type="text"
-                  formControlName="msize_capcity_1"
+                  formControlName="size_capacity_1"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_1
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -874,9 +925,12 @@
                 >
                 <input
                   type="text"
-                  formControlName="msize_capcity_1_measurement"
+                  formControlName="size_capacity_1_measurement"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_1_measurement
+                }}</small>
               </div>
             </div>
           </div>
@@ -886,9 +940,12 @@
                 <label class="form-control-label">Site/Capacity 2</label>
                 <input
                   type="text"
-                  formControlName="msize_capcity_2"
+                  formControlName="size_capacity_2"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_2
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -898,9 +955,12 @@
                 >
                 <input
                   type="text"
-                  formControlName="msize_capcity_2_measurement"
+                  formControlName="size_capacity_2_measurement"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_2_measurement
+                }}</small>
               </div>
             </div>
           </div>
@@ -910,9 +970,12 @@
                 <label class="form-control-label">Site/Capacity 3</label>
                 <input
                   type="text"
-                  formControlName="msize_capcity_3"
+                  formControlName="size_capacity_3"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_3
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -922,9 +985,12 @@
                 >
                 <input
                   type="text"
-                  formControlName="msize_capcity_3_measurement"
+                  formControlName="size_capacity_3_measurement"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_3_measurement
+                }}</small>
               </div>
             </div>
           </div>
@@ -939,6 +1005,9 @@
                   formControlName="parent_plate_number"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.parent_plate_number
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -949,6 +1018,9 @@
                   formControlName="plate_number"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.plate_number
+                }}</small>
               </div>
             </div>
           </div>
@@ -956,13 +1028,15 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Serial Number</label>
-                <input type="text" class="form-control form-control-sm" />
+                <input type="text" formControlName="serial_number" class="form-control form-control-sm" />
+                <small class="validation_messages">{{ validation_messages.serial_number }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Vendor Part Number</label>
-                <input type="text" class="form-control form-control-sm" />
+                <input type="text" formControlName="vendor_part_no" class="form-control form-control-sm" />
+                <small class="validation_messages">{{ validation_messages.vendor_part_no }}</small>
               </div>
             </div>
           </div>
@@ -975,6 +1049,9 @@
                   formControlName="scada_id"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.scada_id
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -985,6 +1062,9 @@
                   formControlName="external_id"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.external_id
+                }}</small>
               </div>
             </div>
           </div>
@@ -997,6 +1077,9 @@
                   formControlName="tag_number"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.tag_number
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -1007,6 +1090,9 @@
                   formControlName="pallet_number"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.pallet_number
+                }}</small>
               </div>
             </div>
           </div>
@@ -1026,6 +1112,9 @@
                     isAnimated: true
                   }"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.installed_at
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -1066,6 +1155,9 @@
                     >{{ rating.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.rating
+                }}</small>
               </div>
             </div>
           </div>
@@ -1084,6 +1176,9 @@
                     >{{ status.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.status
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -1096,6 +1191,9 @@
                   formControlName="maintenance_specification"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.maintenance_specification
+                }}</small>
               </div>
             </div>
           </div>
@@ -1108,6 +1206,9 @@
                   formControlName="bill_of_material"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.bill_of_material
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -1124,6 +1225,9 @@
                     >{{ measuringtype.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.measuring_type
+                }}</small>
               </div>
             </div>
           </div>
@@ -1165,6 +1269,9 @@
                   />
                   <label class="custom-control-label" for="no">No</label>
                 </div>
+                <small class="validation_messages">{{
+                  validation_messages.is_warranty
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -1175,6 +1282,9 @@
                   formControlName="warranty_period_actual"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.warranty_period_actual
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -1191,6 +1301,9 @@
                     >{{ organisation.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.warranty_vendor
+                }}</small>
               </div>
             </div>
           </div>
@@ -1223,6 +1336,9 @@
                     >{{ organisation.name }}</option
                   >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.po_vendor
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -1233,6 +1349,9 @@
                   formControlName="po_cost"
                   class="form-control form-control-sm"
                 />
+                <small class="validation_messages">{{
+                  validation_messages.po_cost
+                }}</small>
               </div>
             </div>
           </div>
