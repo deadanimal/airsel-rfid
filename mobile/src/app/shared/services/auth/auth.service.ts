@@ -20,7 +20,7 @@ export class AuthService {
     environment.baseUrl + "auth/password/reset/";
   public urlTokenObtain: string = environment.baseUrl + "auth/obtain/";
   public urlTokenRefresh: string = environment.baseUrl + "auth/refresh/";
-  public urlTokenVerify: string = environment.baseUrl + "auth/token/verify/";
+  public urlTokenVerify: string = environment.baseUrl + "auth/verify/";
 
   // Data
   public token: TokenResponse;
@@ -58,7 +58,7 @@ export class AuthService {
     );
   }
 
-  obtainToken(body: Form): Observable<any> {
+  obtainToken(body: Form, isLogin: boolean): Observable<any> {
     let jwtHelper: JwtHelperService = new JwtHelperService();
     return this.http.post<any>(this.urlTokenObtain, body).pipe(
       tap((res) => {
@@ -82,6 +82,11 @@ export class AuthService {
         // console.log('User type: ', this.userType)
         this.jwtService.saveToken("accessToken", this.tokenAccess);
         this.jwtService.saveToken("refreshToken", this.tokenRefresh);
+
+        if (isLogin) {
+          this.jwtService.saveToken("rmbrmeAccessToken", this.tokenAccess);
+          this.jwtService.saveToken("rmbrmeRefreshToken", this.tokenRefresh);
+        }
       })
     );
   }
@@ -94,7 +99,7 @@ export class AuthService {
     );
   }
 
-  verifyToken(body: Form): Observable<any> {
+  verifyToken(body): Observable<any> {
     return this.http.post<any>(this.urlTokenVerify, body).pipe(
       tap((res) => {
         console.log("Token verify: ", res);
