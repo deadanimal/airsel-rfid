@@ -1,6 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AlertController, MenuController, ModalController } from "@ionic/angular";
+import {
+  AlertController,
+  MenuController,
+  ModalController,
+} from "@ionic/angular";
 import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 
 @Component({
@@ -104,28 +108,28 @@ export class HomePage implements OnInit {
     {
       serviceid: "SERVICE-2020-00019",
       servicedate: "10 March 2020",
-      servicedesc: "This service conducted at Petaling zone by 5 members......"
+      servicedesc: "This service conducted at Petaling zone by 5 members......",
     },
     {
       serviceid: "SERVICE-2020-00018",
       servicedate: "7 March 2020",
-      servicedesc: "They have an accident occured at Sepang region that......"
+      servicedesc: "They have an accident occured at Sepang region that......",
     },
     {
       serviceid: "SERVICE-2020-00017",
       servicedate: "5 March 2020",
-      servicedesc: "Service at Kuala Lumpur have been done at......"
+      servicedesc: "Service at Kuala Lumpur have been done at......",
     },
     {
       serviceid: "SERVICE-2020-00016",
       servicedate: "3 March 2020",
-      servicedesc: "Done service at Hulu Langat zone at......"
+      servicedesc: "Done service at Hulu Langat zone at......",
     },
     {
       serviceid: "SERVICE-2020-00015",
       servicedate: "1 March 2020",
-      servicedesc: "Gombak service have done at complete at......"
-    }
+      servicedesc: "Gombak service have done at complete at......",
+    },
   ];
 
   sliderConfig = {
@@ -191,20 +195,21 @@ export class HomePage implements OnInit {
 
   async clickLogout() {
     const alert = await this.alertController.create({
-      header: 'Logout',
-      message: 'Are you want to logout?',
+      header: "Logout",
+      message: "Are you want to logout?",
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {}
-        }, {
-          text: 'Yes, logout it!',
+          text: "Cancel",
+          role: "cancel",
+          handler: () => {},
+        },
+        {
+          text: "Yes, logout it!",
           handler: () => {
-            this.router.navigate(['/']);
-          }
-        }
-      ]
+            this.router.navigate(["/"]);
+          },
+        },
+      ],
     });
 
     await alert.present();

@@ -36,6 +36,9 @@ export class LoginPage implements OnInit {
   // Loading
   isLoading: boolean = false;
 
+  // Stay Login
+  isLogin: boolean = false;
+
   constructor(
     public alertController: AlertController,
     public menu: MenuController,
@@ -50,14 +53,15 @@ export class LoginPage implements OnInit {
 
     this.validations_form = this.formBuilder.group({
       username: new FormControl(
-        "",
+        "syafiqbasri@pipeline.com.my",
         Validators.compose([
           Validators.required,
-          Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
+          // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
+          Validators.email,
         ])
       ),
       password: new FormControl(
-        "",
+        "PabloEscobar",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),
     });
@@ -65,7 +69,7 @@ export class LoginPage implements OnInit {
 
   login() {
     this.isLoading = true;
-    this.authService.obtainToken(this.validations_form.value).subscribe(
+    this.authService.obtainToken(this.validations_form.value, this.isLogin).subscribe(
       () => {
         // Success
         this.isLoading = false;
@@ -125,10 +129,10 @@ export class LoginPage implements OnInit {
       // operator
       this.router.navigate(["/operator/tabs/tab1"]);
     } else if (userType === "SK") {
-      // inventory
+      // store keeper
       this.router.navigate(["/store-keeper/tabs/tab1"]);
     } else if (userType === "SS") {
-      // inventory
+      // store supervisor
       this.router.navigate(["/store-supervisor/tabs/tab1"]);
     } else {
       this.wrongCredential();
