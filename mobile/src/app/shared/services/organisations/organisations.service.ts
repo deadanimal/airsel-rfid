@@ -13,8 +13,8 @@ export class OrganisationsService {
   url: string = environment.baseUrl + "v1/organisations/";
 
   // Data
-  public omodels: OrganisationsModel[] = [];
-  public omodel: OrganisationsModel;
+  public rmodels: OrganisationsModel[] = [];
+  public rmodel: OrganisationsModel;
 
   constructor(private http: HttpClient) {}
 
@@ -30,7 +30,7 @@ export class OrganisationsService {
     return this.http.get<any>(this.url).pipe(
       tap((res) => {
         console.log("OrganisationsModel", res);
-        this.omodels = res;
+        this.rmodels = res;
       })
     );
   }
@@ -40,7 +40,7 @@ export class OrganisationsService {
     return this.http.get<OrganisationsModel>(urlID).pipe(
       tap((res: OrganisationsModel) => {
         console.log("OrganisationsModel", res);
-        this.omodel = res;
+        this.rmodel = res;
       })
     );
   }

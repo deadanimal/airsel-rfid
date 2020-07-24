@@ -1,0 +1,636 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="homePage('/technical/tabs/tab1')">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem;"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold;">
+      ASSET REGISTRATION
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          size="small"
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px;"
+          >3</ion-badge
+        >
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-core">
+  <mat-vertical-stepper
+    [linear]="isLinear"
+    #stepper
+    [disableRipple]="isDisableRipple"
+  >
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Asset Owning</ng-template>
+        <div class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Asset Owning Department</ion-label>
+            <ion-select
+              placeholder="Please select"
+              formControlName="owning_department"
+            >
+              <ion-select-option
+                *ngFor="let department of departments"
+                [value]="department.value"
+                >{{ department.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.owning_department }}</small
+            >
+          </ion-item>
+        </div>
+
+        <div>
+          <ion-button color="success" size="small" matStepperNext
+            >Next</ion-button
+          >
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Asset Hierarchy</ng-template>
+        <div class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Level 1</ion-label>
+            <ion-select placeholder="Please select" formControlName="level_1">
+              <ion-select-option
+                *ngFor="let hierarchylevel1 of hierarchylevel1s"
+                [value]="hierarchylevel1.value"
+                >{{ hierarchylevel1.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.level_1 }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Level 2</ion-label>
+            <ion-select placeholder="Please select" formControlName="level_2">
+              <ion-select-option
+                *ngFor="let region of regions"
+                [value]="region.id"
+                >{{ region.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.level_2 }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Level 3</ion-label>
+            <ion-select placeholder="Please select" formControlName="level_3">
+              <ion-select-option
+                *ngFor="let hierarchylevel3 of hierarchylevel3s"
+                [value]="hierarchylevel3.value"
+                >{{ hierarchylevel3.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.level_3 }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Level 4</ion-label>
+            <ion-input type="text" formControlName="level_4"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.level_4 }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Level 5</ion-label>
+            <ion-select placeholder="Please select" formControlName="level_5">
+              <ion-select-option
+                *ngFor="let hierarchylevel5 of hierarchylevel5s"
+                [value]="hierarchylevel5.value"
+                >{{ hierarchylevel5.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.level_5 }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Level 6</ion-label>
+            <ion-select placeholder="Please select" formControlName="level_6">
+              <ion-select-option
+                *ngFor="let hierarchylevel6 of hierarchylevel6s"
+                [value]="hierarchylevel6.value"
+                >{{ hierarchylevel6.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.level_6 }}</small
+            >
+          </ion-item>
+        </div>
+        <div>
+          <ion-button color="danger" size="small" matStepperPrevious>
+            Back
+          </ion-button>
+          <ion-button color="success" size="small" matStepperNext
+            >Next</ion-button
+          >
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Asset Grouping</ng-template>
+        <div class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Asset Primary Category</ion-label>
+            <ion-select
+              placeholder="Please select"
+              formControlName="primary_category"
+            >
+              <ion-select-option
+                *ngFor="let primarycategory of primarycategories"
+                [value]="primarycategory.id"
+                >{{ primarycategory.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.primary_category }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Asset Identity</ion-label>
+            <ion-select placeholder="Please select" formControlName="identity">
+              <ion-select-option
+                *ngFor="let identity of identities"
+                [value]="identity.id"
+                >{{ identity.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.identity }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Sub-category 1</ion-label>
+            <ion-select
+              placeholder="Please select"
+              formControlName="sub_category_1"
+            >
+              <ion-select-option
+                *ngFor="let groupsubcategory1 of groupsubcategory1s"
+                [value]="groupsubcategory1.id"
+                >{{ groupsubcategory1.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.sub_category_1 }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Sub-category 2</ion-label>
+            <ion-select
+              placeholder="Please select"
+              formControlName="sub_category_2"
+            >
+              <ion-select-option
+                *ngFor="let groupsubcategory2 of groupsubcategory2s"
+                [value]="groupsubcategory2.id"
+                >{{ groupsubcategory2.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.sub_category_2 }}</small
+            >
+          </ion-item>
+        </div>
+
+        <div>
+          <ion-button color="danger" size="small" matStepperPrevious>
+            Back
+          </ion-button>
+          <ion-button color="success" size="small" matStepperNext
+            >Next</ion-button
+          >
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="fourthFormGroup">
+      <form [formGroup]="fourthFormGroup">
+        <ng-template matStepLabel>Asset Categorization</ng-template>
+        <div class="line-input">
+          <div class="row">
+            <ion-item>
+              <ion-label position="stacked">Asset or Component Type</ion-label>
+              <ion-select
+                placeholder="Please select"
+                formControlName="type_asset"
+              >
+                <ion-select-option
+                  *ngFor="let typeasset of typeassets"
+                  [value]="typeasset.id"
+                  >{{ typeasset.name }}</ion-select-option
+                >
+              </ion-select>
+              <small class="validation_messages"
+                >{{ validation_messages.type_asset }}</small
+              >
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked"
+                >Asset Class/Asset Category</ion-label
+              >
+              <ion-select
+                placeholder="Please select"
+                formControlName="category"
+              >
+                <ion-select-option
+                  *ngFor="let category of categories"
+                  [value]="category.id"
+                  >{{ category.name }}</ion-select-option
+                >
+              </ion-select>
+              <small class="validation_messages"
+                >{{ validation_messages.category }}</small
+              >
+            </ion-item>
+            <ion-radio-group formControlName="acquired_by">
+              <ion-list-header>
+                <ion-label>Hand Over Asset or Procured</ion-label>
+              </ion-list-header>
+
+              <ion-item>
+                <ion-label>Asset Handover</ion-label>
+                <ion-radio slot="start" value="AH"></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Procured</ion-label>
+                <ion-radio slot="start" value="PC"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+            <small class="validation_messages"
+              >{{ validation_messages.acquired_by }}</small
+            >
+          </div>
+        </div>
+
+        <div>
+          <ion-button color="danger" size="small" matStepperPrevious>
+            Back
+          </ion-button>
+          <ion-button color="success" size="small" matStepperNext
+            >Next</ion-button
+          >
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="fifthFormGroup">
+      <form [formGroup]="fifthFormGroup">
+        <ng-template matStepLabel>Asset Detailed Description</ng-template>
+        <div class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Brand</ion-label>
+            <ion-input type="text" formControlName="brand"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.brand }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Model Number</ion-label>
+            <ion-input type="text" formControlName="model_no"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.model_no }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Site/Capacity 1</ion-label>
+            <ion-input
+              type="number"
+              formControlName="size_capacity_1"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.size_capacity_1 }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"
+              >Site/Capacity 1 - Unit Measurement</ion-label
+            >
+            <ion-input
+              type="number"
+              formControlName="size_capacity_1_measurement"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.size_capacity_1_measurement }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Site/Capacity 2</ion-label>
+            <ion-input
+              type="number"
+              formControlName="size_capacity_2"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.size_capacity_2 }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"
+              >Site/Capacity 2 - Unit Measurement</ion-label
+            >
+            <ion-input
+              type="number"
+              formControlName="size_capacity_2_measurement"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.size_capacity_2_measurement }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Site/Capacity 3</ion-label>
+            <ion-input
+              type="number"
+              formControlName="size_capacity_3"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.size_capacity_3 }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked"
+              >Site/Capacity 3 - Unit Measurement</ion-label
+            >
+            <ion-input
+              type="number"
+              formControlName="size_capacity_3_measurement"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.size_capacity_3_measurement }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Parent Asset/Plate Number</ion-label>
+            <ion-input
+              type="text"
+              formControlName="parent_plate_number"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.parent_plate_number }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Asset/Plate Number</ion-label>
+            <ion-input type="text" formControlName="plate_number"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.plate_number }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Serial Number</ion-label>
+            <ion-input type="text" formControlName="serial_number"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.serial_number }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Vendor Part Number</ion-label>
+            <ion-input type="text" formControlName="vendor_part_no"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.vendor_part_no }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">SCADA ID</ion-label>
+            <ion-input type="text" formControlName="scada_id"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.scada_id }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">External ID</ion-label>
+            <ion-input type="text" formControlName="external_id"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.external_id }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Asset Tag Number</ion-label>
+            <ion-input type="text" formControlName="tag_number"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.tag_number }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Pallet Number</ion-label>
+            <ion-input type="text" formControlName="pallet_number"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.pallet_number }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked"
+              >Purchase Date/Installed/Handed Over Date</ion-label
+            >
+            <ion-datetime
+              displayFormat="MMM, DD YYYY"
+              formControlName="installed_at"
+            ></ion-datetime>
+            <small class="validation_messages"
+              >{{ validation_messages.installed_at }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Condition Rating </ion-label>
+            <ion-select placeholder="Please select" formControlName="rating">
+              <ion-select-option
+                *ngFor="let rating of ratings"
+                [value]="rating.value"
+                >{{ rating.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.rating }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Status</ion-label>
+            <ion-select placeholder="Please select" formControlName="status">
+              <ion-select-option
+                *ngFor="let status of statuses"
+                [value]="status.value"
+                >{{ status.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.status }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Maintenance Specification</ion-label>
+            <ion-input
+              type="text"
+              formControlName="maintenance_specification"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.maintenance_specification }}</small
+            >
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Bill of Material</ion-label>
+            <ion-input
+              type="text"
+              formControlName="bill_of_material"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.bill_of_material }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Measurement Type</ion-label>
+            <ion-select
+              placeholder="Please select"
+              formControlName="measuring_type"
+            >
+              <ion-select-option
+                *ngFor="let measuringtype of measuringtypes"
+                [value]="measuringtype.value"
+                >{{ measuringtype.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.measuring_type }}</small
+            >
+          </ion-item>
+        </div>
+
+        <div>
+          <ion-button color="danger" size="small" matStepperPrevious>
+            Back
+          </ion-button>
+          <ion-button color="success" size="small" matStepperNext
+            >Next</ion-button
+          >
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="sixthFormGroup">
+      <form [formGroup]="sixthFormGroup">
+        <ng-template matStepLabel>Asset Warranty Information</ng-template>
+        <div class="line-input">
+          <ion-radio-group formControlName="is_warranty">
+            <ion-list-header>
+              <ion-label>Warranty</ion-label>
+            </ion-list-header>
+
+            <ion-item>
+              <ion-label>Yes</ion-label>
+              <ion-radio slot="start" value="true"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>No</ion-label>
+              <ion-radio slot="start" value="false"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+          <small class="validation_messages"
+            >{{ validation_messages.is_warranty }}</small
+          >
+
+          <ion-item>
+            <ion-label position="stacked">Actual Warranty Period</ion-label>
+            <ion-input
+              type="number"
+              formControlName="warranty_period_actual"
+            ></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.warranty_period_actual }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Warranty Vendor Name</ion-label>
+            <ion-select
+              placeholder="Please select"
+              formControlName="warranty_vendor"
+            >
+              <ion-select-option
+                *ngFor="let organisation of organisations"
+                [value]="organisation.id"
+                >{{ organisation.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.warranty_vendor }}</small
+            >
+          </ion-item>
+        </div>
+
+        <div>
+          <ion-button color="danger" size="small" matStepperPrevious>
+            Back
+          </ion-button>
+          <ion-button color="success" size="small" matStepperNext
+            >Next</ion-button
+          >
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="seventhFormGroup">
+      <form [formGroup]="seventhFormGroup">
+        <ng-template matStepLabel>PO Detail</ng-template>
+        <div class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Purchase Order Vendor Name</ion-label>
+            <ion-select placeholder="Please select" formControlName="po_vendor">
+              <ion-select-option
+                *ngFor="let organisation of organisations"
+                [value]="organisation.id"
+                >{{ organisation.name }}</ion-select-option
+              >
+            </ion-select>
+            <small class="validation_messages"
+              >{{ validation_messages.po_vendor }}</small
+            >
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Purchase Cost</ion-label>
+            <ion-input type="number" formControlName="po_cost"></ion-input>
+            <small class="validation_messages"
+              >{{ validation_messages.po_cost }}</small
+            >
+          </ion-item>
+        </div>
+      </form>
+    </mat-step>
+  </mat-vertical-stepper>
+
+  <div class="ion-padding ion-text-center">
+    <ion-button color="primary" (click)="register()">Register</ion-button>
+    <ion-button color="light" (click)="cancel()">Cancel</ion-button>
+  </div>
+</ion-content>
