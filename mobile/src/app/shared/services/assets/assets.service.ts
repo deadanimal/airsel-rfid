@@ -18,7 +18,7 @@ export class AssetsService {
 
   constructor(private http: HttpClient) {}
 
-  post(body: Form): Observable<AssetsModel> {
+  post(body): Observable<AssetsModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
         console.log("AssetsModel", res);
