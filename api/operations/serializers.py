@@ -11,6 +11,7 @@ from django.utils.timezone import now
 from .models import (
     Maintenance,
     IssueType,
+    WorkOrder,
     WorkActivity,
     WorkActivityTeam,
     WorkRequest,
@@ -30,6 +31,11 @@ class IssueTypeSerializer(serializers.ModelSerializer):
         model = IssueType
         fields = '__all__'
 
+class WorkOrderSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = WorkOrder
+        fields = '__all__'
 
 class WorkActivitySerializer(serializers.ModelSerializer):
 
