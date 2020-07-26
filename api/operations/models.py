@@ -49,12 +49,29 @@ class IssueType(models.Model):
     def __str__(self):
         return self.name
 
+class WorkOrder(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    wams_id = models.CharField(max_length=100, default='NA')
+    description = models.CharField(max_length=100, default='NA')
+    planner_cd = models.CharField(max_length=100, default='NA')
+    planner_name = models.CharField(max_length=100, default='NA')
+    completed_at = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['planner_name']
+    
+    def __str__(self):
+        #return "{} {} {}".format(self.name, self.activity, self.created_at)
+        return self.wams_id
 
 class WorkActivity(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100, default='NA')
     wams_work_id = models.CharField(max_length=100, default='NA')
+    work_order = models.ForeignKey(WorkOrder, on_delete=models.CASCADE, null=True, related_name='work_order_no')
     completed_at = models.DateTimeField(blank=True, null=True)
 
     maintenance_form = models.ForeignKey(Maintenance, on_delete=models.CASCADE, null=True, related_name='work_activity_maintenance_form')
@@ -75,6 +92,7 @@ class WorkActivity(models.Model):
         ('BL', 'Backlog'),
         ('IP', 'In Progress'),
         ('NW', 'New')
+        ('CP', 'Completed')
     ]
     status = models.CharField(max_length=2, choices=STATUS, default='NW')
     due_date = models.DateTimeField(blank=True, null=True)
