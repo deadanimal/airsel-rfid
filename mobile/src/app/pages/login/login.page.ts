@@ -39,6 +39,15 @@ export class LoginPage implements OnInit {
   // Stay Login
   isLogin: boolean = false;
 
+  // Slide
+  slideOpts = {
+    initialSlide: 0,
+    // speed: 4000,
+    autoplay: {
+      delay: 4000
+    }
+  };
+
   constructor(
     public alertController: AlertController,
     public menu: MenuController,
@@ -53,7 +62,7 @@ export class LoginPage implements OnInit {
 
     this.validations_form = this.formBuilder.group({
       username: new FormControl(
-        "syafiqbasri@pipeline.com.my",
+        "",
         Validators.compose([
           Validators.required,
           // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
@@ -61,7 +70,7 @@ export class LoginPage implements OnInit {
         ])
       ),
       password: new FormControl(
-        "PabloEscobar",
+        "",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),
     });
