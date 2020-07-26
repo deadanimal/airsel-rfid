@@ -10,6 +10,8 @@ from rest_framework_extensions.mixins import NestedViewSetMixin
 
 from django_filters.rest_framework import DjangoFilterBackend
 
+from datetime import datetime
+
 from .models import (
     Asset,
     AssetGroup,
@@ -107,6 +109,28 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     def warranty_end(self, request, *args, **kwargs):
         asset = self.get_object()
         asset.is_warranty = False
+        asset.save()
+
+        serializer = AssetSerializer(asset)
+        return Response(serializer.data)
+    
+    @action(methods=['GET'], detail=True)
+    def approve(self, request, *args, **kwargs):
+        asset = self.get_object()
+        asset.approval_status = 'AP'
+        asset.approval_by = self.request.user
+        asset.approval_at = datetime.now()
+        asset.save()
+
+        serializer = AssetSerializer(asset)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=True)
+    def reject(self, request, *args, **kwargs):
+        asset = self.get_object()
+        asset.approval_status = 'RJ'
+        asset.approval_by = self.request.user
+        asset.approval_at = datetime.now()
         asset.save()
 
         serializer = AssetSerializer(asset)
