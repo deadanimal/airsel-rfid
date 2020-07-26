@@ -38,14 +38,6 @@
             ></span>
           </button>
         </div>
-
-        <div class="col-lg-6 col-5 text-right">
-          <a
-            class="btn btn-sm btn-default text-white"
-            (click)="openModal(registerAsset)"
-            >Register Asset</a
-          >
-        </div>
       </div>
     </div>
   </div>
@@ -99,7 +91,7 @@
         <div class="card-header py-3 bg-secondary">
           <h4 class="m-0">Asset List</h4>
         </div>
-        <div class="table-responsive">
+        <!-- <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
@@ -280,19 +272,174 @@
               </tr>
             </tbody>
           </table>
+        </div> -->
+        <div class="card-body">
+          <div class="dataTables_wrapper py-4">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="datatable_length">
+                  <label>
+                    Show
+                    <select
+                      name="datatable_length"
+                      aria-controls="datatable"
+                      class="form-control form-control-sm"
+                      (change)="entriesChange($event)"
+                    >
+                      <option value="10" [selected]="entries == 10">10</option>
+                      <option value="25" [selected]="entries == 25">25</option>
+                      <option value="50" [selected]="entries == 50">50</option>
+                      <option value="-1" [selected]="entries == -1">All</option>
+                    </select>
+                    entries
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div id="datatable_filter" class="dataTables_filter">
+                  <label>
+                    <input
+                      type="search"
+                      class="form-control form-control-sm"
+                      placeholder="Search records"
+                      aria-controls="datatable"
+                      (keyup)="filterTable($event)"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <ngx-datatable
+              class="bootstrap selection-cell"
+              [columnMode]="'force'"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="entries != -1 ? entries : undefined"
+              [rows]="temp"
+              (activate)="onActivate($event)"
+              [scrollbarH]="true"
+            >
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span>No.</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.no + 1 }}
+                </ng-template>
+              </ngx-datatable-column>
+              <!-- <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span>Applicant</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.applicant }}
+                </ng-template>
+              </ngx-datatable-column> -->
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span>Asset ID</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.id }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span>Region</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ getRegion(row.level_2) }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span>Approval Status</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <span [ngClass]="statusBadge(row.approval_status)">{{
+                    row.approval_status
+                  }}</span>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span>Approval</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm"
+                    (click)="approve(row)"
+                  >
+                    Approve
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-warning btn-sm"
+                    (click)="reject(row)"
+                  >
+                    Reject
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="id">
+                <ng-template ngx-datatable-header-template>
+                  <span>Actions</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <!-- <button
+                    type="button"
+                    class="btn btn-icon btn-2 btn-danger btn-sm mr-2"
+                    placement="top"
+                    tooltip="Error data input"
+                    (click)="openModal(asset)"
+                  >
+                    <span class="btn-inner--icon"
+                      ><i class="fas fa-lightbulb"></i
+                    ></span>
+                  </button> -->
+                  <button
+                    type="button"
+                    class="btn btn-icon btn-2 btn-info btn-sm"
+                    placement="top"
+                    tooltip="View"
+                    (click)="openModal(asset, row)"
+                  >
+                    <span class="btn-inner--icon"
+                      ><i class="fas fa-eye"></i
+                    ></span>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<ng-template #registerAsset>
+<ng-template #asset>
   <div class="modal-header bg-default">
     <h6 class="modal-title my-auto text-white">
-      New asset registration
+      Asset
     </h6>
 
     <button
+      *ngIf="modalRegisterAsset"
+      aria-label="Close"
+      class="close"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRegisterAsset.hide()"
+    >
+      <span aria-hidden="true" class="my-auto text-white"> × </span>
+    </button>
+
+    <button
+      *ngIf="modal"
       aria-label="Close"
       class="close"
       data-dismiss="modal"
@@ -310,7 +457,7 @@
       [disableRipple]="isDisableRipple"
     >
       <mat-step [stepControl]="firstFormGroup">
-        <form>
+        <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Asset Owning</ng-template>
           <div class="row">
             <div class="col">
@@ -320,10 +467,18 @@
                 >
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="owning_department"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Distribution</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let department of departments"
+                    [value]="department.value"
+                    >{{ department.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.owning_department
+                }}</small>
               </div>
             </div>
           </div>
@@ -333,48 +488,43 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="secondFormGroup">
-        <form>
+        <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Asset Hierarchy</ng-template>
           <div class="row">
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 1</label>
-                <!-- <select
+                <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="level_1"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Distribution</option>
-                </select> -->
-                <input
-                  [(ngModel)]="selectedTypes"
-                  [ngModelOptions]="{ standalone: true }"
-                  [typeahead]="types"
-                  class="form-control form-control-sm"
-                />
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let hierarchylevel1 of hierarchylevel1s"
+                    [value]="hierarchylevel1.value"
+                    >{{ hierarchylevel1.name }}</option
+                  >
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_1
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 2</label>
-                <!-- <select
+                <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="level_2"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Sepang</option>
-                </select> -->
-                <!-- <input
-                  [(ngModel)]="selectedRegions"
-                  [ngModelOptions]="{ standalone: true }"
-                  [typeahead]="regions"
-                  class="form-control form-control-sm"
-                /> -->
-                <select2
-                  [data]="data"
-                  (update)="update($event)"
-                  [(ngModel)]="value"
-                  [ngModelOptions]="{ standalone: true }"
-                >
-                </select2>
+                  <option value="">Please select</option>
+                  <option *ngFor="let region of regions" [value]="region.id">{{
+                    region.name
+                  }}</option>
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_2
+                }}</small>
               </div>
             </div>
           </div>
@@ -384,35 +534,44 @@
                 <label class="form-control-label">Level 3</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="level_3"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Reservoir</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let hierarchylevel3 of hierarchylevel3s"
+                    [value]="hierarchylevel3.value"
+                    >{{ hierarchylevel3.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_3
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 4</label>
-                <select
+                <input
+                  type="text"
+                  formControlName="level_4"
+                  class="form-control form-control-sm"
+                />
+                <!-- <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="level_4"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Kolam Menara Taman Suria Warisan</option>
-                </select>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let hierarchylevel4 of hierarchylevel4s"
+                    [value]="hierarchylevel4.value"
+                    >{{ hierarchylevel4.name }}</option
+                  >
+                </select> -->
+                <small class="validation_messages">{{
+                  validation_messages.level_4
+                }}</small>
               </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="form-control-label"
-              >Match with Location Details</label
-            >
-            <select
-              class="form-control custom-select form-control-sm custom-select-sm"
-            >
-              <option hidden selected>Please select</option>
-              <option>Yes</option>
-              <option>No</option>
-            </select>
           </div>
           <div class="row">
             <div class="col">
@@ -420,10 +579,18 @@
                 <label class="form-control-label">Level 5</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="level_5"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Service Reservoir</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let hierarchylevel5 of hierarchylevel5s"
+                    [value]="hierarchylevel5.value"
+                    >{{ hierarchylevel5.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_5
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -431,9 +598,18 @@
                 <label class="form-control-label">Level 6</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="level_6"
                 >
-                  <option hidden selected>Please select</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let hierarchylevel6 of hierarchylevel6s"
+                    [value]="hierarchylevel6.value"
+                    >{{ hierarchylevel6.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.level_6
+                }}</small>
               </div>
             </div>
           </div>
@@ -446,48 +622,85 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="thirdFormGroup">
-        <form>
-          <ng-template matStepLabel>Asset Categorization</ng-template>
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel>Asset Grouping</ng-template>
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Asset or Component Type</label
-                >
+                <label class="form-control-label">Asset Primary Category</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="primary_category"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Asset</option>
-                  <option>Component</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let primarycategory of primarycategories"
+                    [value]="primarycategory.id"
+                    >{{ primarycategory.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.primary_category
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Asset Class/Asset Category</label
-                >
+                <label class="form-control-label">Asset Identity</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="identity"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Mechanical</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let identity of identities"
+                    [value]="identity.id"
+                    >{{ identity.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.identity
+                }}</small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="form-control-label">Sub-category 1</label>
+                <select
+                  class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="sub_category_1"
+                >
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let groupsubcategory1 of groupsubcategory1s"
+                    [value]="groupsubcategory1.id"
+                    >{{ groupsubcategory1.name }}</option
+                  >
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.sub_category_1
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Hand Over Asset or Procured</label
-                >
+                <label class="form-control-label">Sub-category 2</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="sub_category_2"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Handed Over</option>
-                  <option>Procured</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let groupsubcategory2 of groupsubcategory2s"
+                    [value]="groupsubcategory2.id"
+                    >{{ groupsubcategory2.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.sub_category_2
+                }}</small>
               </div>
             </div>
           </div>
@@ -502,55 +715,97 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="fourthFormGroup">
-        <form>
-          <ng-template matStepLabel>Asset Grouping</ng-template>
+        <form [formGroup]="fourthFormGroup">
+          <ng-template matStepLabel>Asset Categorization</ng-template>
           <div class="row">
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label"
-                  >Air Selangor Internal Asset Identity</label
+                  >Asset or Component Type</label
                 >
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="type_asset"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Kolam Menara Taman Suria Warisan SE087_KM040</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let typeasset of typeassets"
+                    [value]="typeasset.id"
+                    >{{ typeasset.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.type_asset
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label">Asset Primary Category</label>
+                <label class="form-control-label"
+                  >Asset Class/Asset Category</label
+                >
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="category"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Reservoir</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let category of categories"
+                    [value]="category.id"
+                    >{{ category.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.category
+                }}</small>
+              </div>
+              <div
+                class="form-group"
+                *ngIf="thirdFormGroup.value.category == 'OT'"
+              >
+                <label class="form-control-label">Other category</label>
+                <input
+                  type="text"
+                  formControlName="category_extra"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.category_extra
+                }}</small>
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label">Sub-category 1</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                  <option>Reinforced Concrete</option>
-                </select>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Sub-category 2</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                  <option>Elevated</option>
-                </select>
+                <label class="form-control-label"
+                  >Hand Over Asset or Procured</label
+                ><br />
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="ah"
+                    name="acquired_by"
+                    class="custom-control-input"
+                    formControlName="acquired_by"
+                    value="AH"
+                  />
+                  <label class="custom-control-label" for="ah"
+                    >Asset Handover</label
+                  >
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="pc"
+                    name="acquired_by"
+                    class="custom-control-input"
+                    formControlName="acquired_by"
+                    value="PC"
+                  />
+                  <label class="custom-control-label" for="pc">Procured</label>
+                </div>
+                <small class="validation_messages">{{
+                  validation_messages.acquired_by
+                }}</small>
               </div>
             </div>
           </div>
@@ -564,27 +819,33 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="fifthFormGroup">
-        <form>
+        <form [formGroup]="fifthFormGroup">
           <ng-template matStepLabel>Asset Detailed Description</ng-template>
           <div class="row">
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Brand</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="brand"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.brand
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Model Number</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="model_no"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.model_no
+                }}</small>
               </div>
             </div>
           </div>
@@ -592,12 +853,14 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Site/Capacity 1</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                  <option>1250</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="size_capacity_1"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_1
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -605,12 +868,14 @@
                 <label class="form-control-label"
                   >Site/Capacity 1 - Unit measurement</label
                 >
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                  <option>M3</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="size_capacity_1_measurement"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_1_measurement
+                }}</small>
               </div>
             </div>
           </div>
@@ -618,12 +883,14 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Site/Capacity 2</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                  <option>32.5</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="size_capacity_2"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_2
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -631,12 +898,14 @@
                 <label class="form-control-label"
                   >Site/Capacity 2 - Unit measurement</label
                 >
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                  <option>BWL(M)</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="size_capacity_2_measurement"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_2_measurement
+                }}</small>
               </div>
             </div>
           </div>
@@ -644,12 +913,14 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Site/Capacity 3</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                  <option>37.5</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="size_capacity_3"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_3
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -657,12 +928,14 @@
                 <label class="form-control-label"
                   >Site/Capacity 3 - Unit measurement</label
                 >
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                  <option>TWL(M)</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="size_capacity_3_measurement"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.size_capacity_3_measurement
+                }}</small>
               </div>
             </div>
           </div>
@@ -672,11 +945,27 @@
                 <label class="form-control-label"
                   >Parent Asset/Plate Number</label
                 >
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="parent_plate_number"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.parent_plate_number
+                }}</small>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label class="form-control-label">Asset/Plate Number</label>
+                <input
+                  type="text"
+                  formControlName="plate_number"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.plate_number
+                }}</small>
               </div>
             </div>
           </div>
@@ -684,21 +973,27 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Serial Number</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="serial_number"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.serial_number
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Vendor Part Number</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="vendor_part_no"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.vendor_part_no
+                }}</small>
               </div>
             </div>
           </div>
@@ -706,21 +1001,27 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">SCADA ID</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="scada_id"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.scada_id
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">External ID</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="external_id"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.external_id
+                }}</small>
               </div>
             </div>
           </div>
@@ -728,21 +1029,27 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Asset Tag Number</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="tag_number"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.tag_number
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Pallet Number</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="pallet_number"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.pallet_number
+                }}</small>
               </div>
             </div>
           </div>
@@ -752,7 +1059,19 @@
                 <label class="form-control-label"
                   >Purchase Date/Installed/Handed Over Date</label
                 >
-                <input class="form-control form-control-sm" type="date" />
+                <input
+                  type="text"
+                  formControlName="installed_at"
+                  class="form-control form-control-sm"
+                  bsDatepicker
+                  [bsConfig]="{
+                    dateInputFormat: 'YYYY-MM-DD',
+                    isAnimated: true
+                  }"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.installed_at
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -784,14 +1103,18 @@
                 </label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="rating"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>1 - Very Good</option>
-                  <option>2 - Good</option>
-                  <option>3 - Average</option>
-                  <option>4 - Popover</option>
-                  <option>5 - Replace</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let rating of ratings"
+                    [value]="rating.value"
+                    >{{ rating.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.rating
+                }}</small>
               </div>
             </div>
           </div>
@@ -801,10 +1124,18 @@
                 <label class="form-control-label">Status</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="status"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>In - Service</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let status of statuses"
+                    [value]="status.value"
+                    >{{ status.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.status
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -812,12 +1143,14 @@
                 <label class="form-control-label"
                   >Maintenance Specification</label
                 >
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                  <option>Reservoir Maintenance Specification</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="maintenance_specification"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.maintenance_specification
+                }}</small>
               </div>
             </div>
           </div>
@@ -825,11 +1158,14 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Bill of Material</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="text"
+                  formControlName="bill_of_material"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.bill_of_material
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -837,10 +1173,18 @@
                 <label class="form-control-label">Measurement Type</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="measuring_type"
                 >
-                  <option hidden selected>Please select</option>
-                  <option>Level Indicator</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let measuringtype of measuringtypes"
+                    [value]="measuringtype.value"
+                    >{{ measuringtype.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.measuring_type
+                }}</small>
               </div>
             </div>
           </div>
@@ -854,27 +1198,50 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="sixthFormGroup">
-        <form>
+        <form [formGroup]="sixthFormGroup">
           <ng-template matStepLabel>Asset Warranty Information</ng-template>
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label">Warranty</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <label class="form-control-label">Warranty</label><br />
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="yes"
+                    name="is_warranty"
+                    class="custom-control-input"
+                    formControlName="is_warranty"
+                    value="true"
+                  />
+                  <label class="custom-control-label" for="yes">Yes</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="no"
+                    name="is_warranty"
+                    class="custom-control-input"
+                    formControlName="is_warranty"
+                    value="false"
+                  />
+                  <label class="custom-control-label" for="no">No</label>
+                </div>
+                <small class="validation_messages">{{
+                  validation_messages.is_warranty
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Actual Warranty Period</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="number"
+                  formControlName="warranty_period_actual"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.warranty_period_actual
+                }}</small>
               </div>
             </div>
             <div class="col">
@@ -882,9 +1249,18 @@
                 <label class="form-control-label">Warranty Vendor Name</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="warranty_vendor"
                 >
-                  <option hidden selected>Please select</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let organisation of organisations"
+                    [value]="organisation.id"
+                    >{{ organisation.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.warranty_vendor
+                }}</small>
               </div>
             </div>
           </div>
@@ -898,7 +1274,7 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="seventhFormGroup">
-        <form>
+        <form [formGroup]="seventhFormGroup">
           <ng-template matStepLabel>PO Detail</ng-template>
           <div class="row">
             <div class="col">
@@ -908,19 +1284,31 @@
                 >
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="po_vendor"
                 >
-                  <option hidden selected>Please select</option>
+                  <option value="">Please select</option>
+                  <option
+                    *ngFor="let organisation of organisations"
+                    [value]="organisation.id"
+                    >{{ organisation.name }}</option
+                  >
                 </select>
+                <small class="validation_messages">{{
+                  validation_messages.po_vendor
+                }}</small>
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Purchase Cost</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                >
-                  <option hidden selected>Please select</option>
-                </select>
+                <input
+                  type="number"
+                  formControlName="po_cost"
+                  class="form-control form-control-sm"
+                />
+                <small class="validation_messages">{{
+                  validation_messages.po_cost
+                }}</small>
               </div>
             </div>
           </div>
@@ -933,7 +1321,7 @@
           </div>
         </form>
       </mat-step>
-      <mat-step>
+      <!-- <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <p>You are now done.</p>
         <div>
@@ -942,13 +1330,14 @@
             Reset
           </button>
         </div>
-      </mat-step>
+      </mat-step> -->
     </mat-vertical-stepper>
   </div>
 
   <div class="modal-footer">
     <button
-      class="btn btn-success btn-sm mr-auto"
+      *ngIf="modalRegisterAsset"
+      class="btn btn-default btn-sm mr-auto"
       type="button"
       (click)="register()"
     >
@@ -956,6 +1345,26 @@
     </button>
 
     <button
+      *ngIf="modalViewAsset"
+      class="btn btn-success btn-sm mr-auto"
+      type="button"
+      (click)="update()"
+    >
+      Update
+    </button>
+
+    <button
+      *ngIf="modalRegisterAsset"
+      class="btn btn-secondary btn-sm ml-auto"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRegisterAsset.hide()"
+    >
+      Close
+    </button>
+
+    <button
+      *ngIf="modal"
       class="btn btn-secondary btn-sm ml-auto"
       data-dismiss="modal"
       type="button"
@@ -1011,7 +1420,7 @@
               <button
                 class="btn btn-icon btn-2 btn-sm btn-info"
                 type="button"
-                (click)="openModal(registerAsset)"
+                (click)="openModal(asset)"
               >
                 <span class="btn-inner--icon"
                   ><i class="fas fa-tools"></i

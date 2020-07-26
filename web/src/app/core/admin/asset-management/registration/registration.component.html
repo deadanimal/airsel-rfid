@@ -156,7 +156,7 @@
     </div>
   </div>
 
-  <div class="row pb-3">
+  <!-- <div class="row pb-3">
     <div class="col">
       <form
         class="navbar-search navbar-search-light form-inline mr-sm-3"
@@ -193,7 +193,7 @@
         </button>
       </form>
     </div>
-  </div>
+  </div> -->
 
   <div class="row">
     <div class="col">
@@ -412,7 +412,7 @@
                   <span>Asset Type</span>
                 </ng-template>
                 <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ row.type_asset }}
+                  {{ getAssetType(row.type_asset) }}
                 </ng-template>
               </ngx-datatable-column>
               <ngx-datatable-column>
@@ -420,7 +420,7 @@
                   <span>Category</span>
                 </ng-template>
                 <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ row.category }}
+                  {{ getCategory(row.category) }}
                 </ng-template>
               </ngx-datatable-column>
               <ngx-datatable-column>
@@ -428,26 +428,24 @@
                   <span>Created At</span>
                 </ng-template>
                 <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ row.created_at }}
+                  {{ row.created_at | date }}
                 </ng-template>
               </ngx-datatable-column>
               <ngx-datatable-column prop="id">
                 <ng-template ngx-datatable-header-template>
                   <span>Actions</span>
                 </ng-template>
-                <ng-template ngx-datatable-cell-template>
-                  <!-- <button
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <button
                     type="button"
-                    class="btn btn-icon btn-2 btn-danger btn-sm mr-2"
-                    placement="top"
-                    tooltip="Error data input"
-                    (click)="openModal(asset)"
+                    class="btn btn-icon btn-2 btn-default btn-sm"
+                    (click)="openModalEdit(asset, row)"
                   >
                     <span class="btn-inner--icon"
-                      ><i class="fas fa-lightbulb"></i
+                      ><i class="fas fa-edit"></i
                     ></span>
-                  </button> -->
-                  <button
+                  </button>
+                  <!-- <button
                     type="button"
                     class="btn btn-icon btn-2 btn-info btn-sm"
                     placement="top"
@@ -457,7 +455,7 @@
                     <span class="btn-inner--icon"
                       ><i class="fas fa-eye"></i
                     ></span>
-                  </button>
+                  </button> -->
                 </ng-template>
               </ngx-datatable-column>
             </ngx-datatable>
@@ -682,7 +680,7 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label">Asset Primary Category</label>
+                <label class="form-control-label">Asset Type</label>
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
                   formControlName="primary_category"
@@ -730,7 +728,7 @@
                   <option value="">Please select</option>
                   <option
                     *ngFor="let groupsubcategory1 of groupsubcategory1s"
-                    [value]="groupsubcategory1.value"
+                    [value]="groupsubcategory1.id"
                     >{{ groupsubcategory1.name }}</option
                   >
                 </select>
@@ -749,12 +747,12 @@
                   <option value="">Please select</option>
                   <option
                     *ngFor="let groupsubcategory2 of groupsubcategory2s"
-                    [value]="groupsubcategory2.value"
+                    [value]="groupsubcategory2.id"
                     >{{ groupsubcategory2.name }}</option
                   >
                 </select>
                 <small class="validation_messages">{{
-                  validation_messages.grouping_sub_category_2
+                  validation_messages.sub_category_2
                 }}</small>
               </div>
             </div>
@@ -776,7 +774,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label"
-                  >Asset or Component Type</label
+                  >Asset or Component?</label
                 >
                 <select
                   class="form-control custom-select form-control-sm custom-select-sm"
@@ -1364,7 +1362,7 @@
           </div>
         </form>
       </mat-step>
-      <mat-step>
+      <!-- <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <p>You are now done.</p>
         <div>
@@ -1373,7 +1371,7 @@
             Reset
           </button>
         </div>
-      </mat-step>
+      </mat-step> -->
     </mat-vertical-stepper>
   </div>
 
@@ -1388,7 +1386,7 @@
     </button>
 
     <button
-      *ngIf="modalViewAsset"
+      *ngIf="modalEditAsset"
       class="btn btn-success btn-sm mr-auto"
       type="button"
       (click)="update()"
@@ -1407,11 +1405,11 @@
     </button>
 
     <button
-      *ngIf="modal"
+      *ngIf="modalEditAsset"
       class="btn btn-secondary btn-sm ml-auto"
       data-dismiss="modal"
       type="button"
-      (click)="modal.hide()"
+      (click)="modalEditAsset.hide()"
     >
       Close
     </button>
