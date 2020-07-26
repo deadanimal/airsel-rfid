@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from "@angular/router";
 import { MenuController, NavController, ToastController } from "@ionic/angular";
 import { QRScanner, QRScannerStatus } from "@ionic-native/qr-scanner/ngx";
 
@@ -21,7 +21,7 @@ export class QrScannerComponent implements OnInit {
     private router: Router,
     private qrScanner: QRScanner
   ) {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.link = this.router.getCurrentNavigation().extras.state.link;
         console.log("link", this.link);
@@ -45,12 +45,23 @@ export class QrScannerComponent implements OnInit {
     this.ionViewWillLeave();
     this.toastCtrl.dismiss();
 
-    this.router.navigate([this.link]);
+    if (this.scanText) {
+      let navigationExtras: NavigationExtras = {
+        state: {
+          qrcode: this.scanText,
+        },
+      };
+      this.router.navigate([this.link], navigationExtras);
+    } else {
+      this.router.navigate([this.link]);
+    }
     // this.router.navigate(['/inventory/stock-receive']);
     // this.navCtrl.navigateBack("/inventory/stock-receive");
   }
 
   scan() {
+    // const ionApp = <HTMLElement>document.getElementsByTagName('ion-app')[0];
+
     (window.document.querySelector("ion-app") as HTMLElement).classList.add(
       "cameraView"
     );
@@ -59,6 +70,7 @@ export class QrScannerComponent implements OnInit {
       .then((status: QRScannerStatus) => {
         if (status.authorized) {
           this.qrScanner.show();
+          // ionApp.style.display = "none";
           this.scanSubscription = this.qrScanner
             .scan()
             .subscribe((text: string) => {
@@ -75,6 +87,8 @@ export class QrScannerComponent implements OnInit {
   }
 
   stopScanning() {
+    // const ionApp = <HTMLElement>document.getElementsByTagName('ion-app')[0];
+
     this.scanSubscription ? this.scanSubscription.unsubscribe() : null;
     this.scanSubscription = null;
     (window.document.querySelector("ion-app") as HTMLElement).classList.remove(
@@ -82,6 +96,7 @@ export class QrScannerComponent implements OnInit {
     );
     this.qrScanner.hide();
     this.qrScanner.destroy();
+    // ionApp.style.display = "block";
   }
 
   async presentToast() {

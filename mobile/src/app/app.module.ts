@@ -42,11 +42,11 @@ import { HttpTokenInterceptor } from "./shared/interceptor/http.token.intercepto
     // BarcodeScanner,
     QRScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpTokenInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: HttpTokenInterceptor,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent],
 })

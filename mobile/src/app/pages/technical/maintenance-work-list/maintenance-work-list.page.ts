@@ -7,6 +7,9 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
+import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
+import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
+
 am4core.useTheme(am4themes_animated);
 
 @Component({
@@ -39,12 +42,24 @@ export class MaintenanceWorkListPage implements OnInit {
   private chartc: am4charts.PieChart;
   private chartr: am4charts.PieChart;
 
+  cmArray = [];
+  pmArray = [];
+  itcArray = [];
+  pdmArray = [];
+  dArray = [];
+  cArray = [];
+  rArray = [];
+
   constructor(
     public alertController: AlertController,
     public menu: MenuController,
     private router: Router,
-    private zone: NgZone
-  ) {}
+    private zone: NgZone,
+    private notificationService: NotificationsService,
+    private workactivityService: WorkActivitiesService
+  ) {
+    this.getWorkActivities();
+  }
 
   ngOnInit() {}
 
@@ -81,6 +96,105 @@ export class MaintenanceWorkListPage implements OnInit {
     // this.createPieChartD();
     // this.createPieChartC();
     // this.createPieChartR();
+  }
+
+  getWorkActivities() {
+    // From database
+    // ('CM', 'Corrective Maintenance'),
+    // ('CP', 'Compliance'),
+    // ('DP', 'Disposal'),
+    // ('IT', 'Installation Testing Commisioning'),
+    // ('PD', 'Predictive Maintenance'),
+    // ('PM', 'Preventive Maintenance'),
+    // ('RD', 'Redesign')
+    this.workactivityService.get().subscribe(
+      (res) => {
+        // console.log("res", res);
+        if (res) {
+          this.cmArray = res.filter(function (data) {
+            if (
+              data.activity_type.toString().toLowerCase().indexOf("cm") !== -1
+            )
+              return true;
+            return false;
+          });
+
+          this.pmArray = res.filter(function (data) {
+            if (
+              data.activity_type.toString().toLowerCase().indexOf("pm") !== -1
+            )
+              return true;
+            return false;
+          });
+
+          this.itcArray = res.filter(function (data) {
+            if (
+              data.activity_type.toString().toLowerCase().indexOf("it") !== -1
+            )
+              return true;
+            return false;
+          });
+
+          this.pdmArray = res.filter(function (data) {
+            if (
+              data.activity_type.toString().toLowerCase().indexOf("pd") !== -1
+            )
+              return true;
+            return false;
+          });
+
+          this.dArray = res.filter(function (data) {
+            if (
+              data.activity_type.toString().toLowerCase().indexOf("dp") !== -1
+            )
+              return true;
+            return false;
+          });
+
+          this.cArray = res.filter(function (data) {
+            if (
+              data.activity_type.toString().toLowerCase().indexOf("cp") !== -1
+            )
+              return true;
+            return false;
+          });
+
+          this.rArray = res.filter(function (data) {
+            if (
+              data.activity_type.toString().toLowerCase().indexOf("rd") !== -1
+            )
+              return true;
+            return false;
+          });
+        }
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request is completed");
+      }
+    );
+  }
+
+  calculateTotalStatus(array: Array<any>, status: string) {
+    // From database
+    // ('BL', 'Backlog'),
+    // ('IP', 'In Progress'),
+    // ('NW', 'New')
+    if (array.length > 0) {
+      let tempArray = array.filter(function (data) {
+        if (
+          data.status.toString().toLowerCase().indexOf(status.toLowerCase()) !==
+          -1
+        )
+          return true;
+        return false;
+      });
+      return tempArray.length > 0 ? tempArray.length : 0;
+    } else {
+      return 0;
+    }
   }
 
   createPieChartCM() {
@@ -566,9 +680,35 @@ export class MaintenanceWorkListPage implements OnInit {
   }
 
   openPage(route: string, type: string) {
+    let array: any;
+    switch (type) {
+      case "CM":
+        array = this.cmArray;
+        break;
+      case "PM":
+        array = this.pmArray;
+        break;
+      case "ITC":
+        array = this.itcArray;
+        break;
+      case "PdM":
+        array = this.pdmArray;
+        break;
+      case "Disposal":
+        array = this.dArray;
+        break;
+      case "Compliance":
+        array = this.cArray;
+        break;
+      case "Redesign":
+        array = this.rArray;
+        break;
+    }
+
     let navigationExtras: NavigationExtras = {
       state: {
         type: type,
+        maintenance_work: array,
       },
     };
     this.router.navigate([route], navigationExtras);

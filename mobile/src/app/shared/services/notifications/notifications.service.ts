@@ -15,6 +15,7 @@ export class NotificationsService {
   // Data
   public nmodels: NotificationsModel[] = [];
   public nmodel: NotificationsModel;
+  totalnotificationbyuser: number;
 
   constructor(private http: HttpClient) {}
 
@@ -62,10 +63,11 @@ export class NotificationsService {
   }
 
   filter(field: string): Observable<NotificationsModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
     return this.http.get<NotificationsModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("NotificationsModel", res);
+        this.totalnotificationbyuser = res.length;
       })
     );
   }

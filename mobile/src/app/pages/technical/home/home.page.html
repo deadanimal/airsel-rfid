@@ -18,7 +18,7 @@
           size="small"
           color="danger"
           style="position: absolute; right: -5px; top: 1px;"
-          >3</ion-badge
+          >{{ notificationService.totalnotificationbyuser }}</ion-badge
         >
       </ion-button>
     </ion-buttons>
@@ -68,7 +68,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <h1>51</h1>
+                    <h1>{{ calculateStatus("NW") }}</h1>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -78,7 +78,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
-                    <ion-badge color="medium"><span>+7 today</span></ion-badge>
+                    <ion-badge color="medium"><span>+3 today</span></ion-badge>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -98,7 +98,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <h1>61</h1>
+                    <h1>{{ calculateStatus("BL") }}</h1>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -108,7 +108,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
-                    <ion-badge color="medium"><span>+5 today</span></ion-badge>
+                    <ion-badge color="medium"><span>+2 today</span></ion-badge>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -130,7 +130,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <h1 style="color: white;">71</h1>
+                    <h1 style="color: white;">{{ calculateStatus("IP") }}</h1>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -140,7 +140,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
-                    <ion-badge color="medium"><span>+7 today</span></ion-badge>
+                    <ion-badge color="medium"><span>+1 today</span></ion-badge>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -160,7 +160,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <h1>81</h1>
+                    <h1>{{ calculateStatus("CP") }}</h1>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -170,7 +170,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
-                    <ion-badge color="medium"><span>+7 today</span></ion-badge>
+                    <ion-badge color="medium"><span>+2 today</span></ion-badge>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -263,7 +263,7 @@
             </ion-card-content>
             <ion-card-header class="ion-no-padding ion-padding-bottom">
               <p class="ion-no-margin ion-text-center ion-text-bold">
-                Asset Registrations
+                Asset Registration
               </p>
             </ion-card-header>
           </ion-card>

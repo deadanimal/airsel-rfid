@@ -18,7 +18,7 @@
           size="small"
           color="danger"
           style="position: absolute; right: -5px; top: 1px;"
-          >3</ion-badge
+          >{{ notificationService.totalnotificationbyuser }}</ion-badge
         >
       </ion-button>
     </ion-buttons>
@@ -27,7 +27,7 @@
 
 <ion-content class="content-core">
   <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button (click)="update()">
       <ion-icon name="pencil"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -36,7 +36,7 @@
     <ion-row class="ion-justify-content-center ion-align-items-center">
       <ion-col size="5">
         <div class="ion-text-center">
-          <ion-img src="assets/image/user-circle.png"></ion-img>  
+          <ion-img src="assets/image/user-circle.png"></ion-img>
         </div>
       </ion-col>
     </ion-row>
@@ -44,27 +44,29 @@
       <ion-col>
         <ion-card>
           <ion-card-content>
-            <ion-list class="line-input">
-              <ion-item>
-                <ion-label position="stacked">Name</ion-label>
-                <ion-input></ion-input>
-              </ion-item>
+            <form [formGroup]="userFormGroup">
+              <ion-list class="line-input">
+                <ion-item>
+                  <ion-label position="stacked">Name</ion-label>
+                  <ion-input formControlName="name"></ion-input>
+                </ion-item>
 
-              <ion-item>
-                <ion-label position="stacked">Title</ion-label>
-                <ion-input></ion-input>
-              </ion-item>
+                <ion-item>
+                  <ion-label position="stacked">Title</ion-label>
+                  <ion-input></ion-input>
+                </ion-item>
 
-              <ion-item>
-                <ion-label position="stacked">Department</ion-label>
-                <ion-input></ion-input>
-              </ion-item>
+                <ion-item>
+                  <ion-label position="stacked">Department</ion-label>
+                  <ion-input></ion-input>
+                </ion-item>
 
-              <ion-item>
-                <ion-label position="stacked">ID</ion-label>
-                <ion-input></ion-input>
-              </ion-item>
-            </ion-list>
+                <ion-item>
+                  <ion-label position="stacked">ID</ion-label>
+                  <ion-input formControlName="id"></ion-input>
+                </ion-item>
+              </ion-list>
+            </form>
           </ion-card-content>
         </ion-card>
       </ion-col>
