@@ -12,6 +12,7 @@ import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
 import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
 
@@ -204,6 +205,7 @@ export class AssetRegistrationPage implements OnInit {
     public assetGroupsService: AssetGroupsService,
     public assetTypesService: AssetTypesService,
     public authService: AuthService,
+    private notificationService: NotificationsService,
     public organisationsService: OrganisationsService,
     public regionsService: RegionsService,
     private router: Router

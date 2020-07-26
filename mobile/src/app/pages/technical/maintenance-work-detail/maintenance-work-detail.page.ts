@@ -1,7 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AlertController, MenuController, ModalController } from "@ionic/angular";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import {
+  AlertController,
+  MenuController,
+  ModalController,
+} from "@ionic/angular";
 import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
+
+import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
 
 @Component({
   selector: "app-maintenance-work-detail",
@@ -12,58 +18,32 @@ export class MaintenanceWorkDetailPage implements OnInit {
   type: string = "pending";
   role;
   category: number = 99;
+  startdatePending: any;
+  enddatePending: any;
   categorys = [
     {
       value: 99,
       name: "All",
     },
     {
-      value: 1,
+      value: "NW",
       name: "New",
     },
     {
-      value: 2,
+      value: "IP",
       name: "In Progress",
     },
     {
-      value: 3,
+      value: "BL",
       name: "Backlog",
     },
   ];
   items: any[];
   data: any;
+  maintenance_work: any;
 
   // lists
-  pendings = [
-    {
-      type: this.data,
-      date: "14 February 2020",
-      desc: "Maintenance need to do at Petaling zone near......",
-      color: "success",
-      status: 1,
-    },
-    {
-      type: this.data,
-      date: "12 February 2020",
-      desc: "There have a water leakage at Sepang zone that......",
-      color: "warning",
-      status: 2,
-    },
-    {
-      type: this.data,
-      date: "13 February 2020",
-      desc: "Need to replace components at Kuala Lumpur zone......",
-      color: "danger",
-      status: 3,
-    },
-    {
-      type: this.data,
-      date: "11 February 2020",
-      desc: "Gombak have a water disrupted at 10.00 am......",
-      color: "danger",
-      status: 3,
-    },
-  ];
+  pendings = [];
   completeds = [
     {
       id: "WORKORDER-2020-00011",
@@ -124,11 +104,23 @@ export class MaintenanceWorkDetailPage implements OnInit {
     public menu: MenuController,
     public modalController: ModalController,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationsService,
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.data = this.router.getCurrentNavigation().extras.state.type;
+        this.maintenance_work = this.router.getCurrentNavigation().extras.state.maintenance_work;
+
+        this.pendings = this.maintenance_work.filter((data) => {
+          if (data.status.toString().toLowerCase().indexOf("nw") !== -1)
+            return true;
+          if (data.status.toString().toLowerCase().indexOf("ip") !== -1)
+            return true;
+          if (data.status.toString().toLowerCase().indexOf("bl") !== -1)
+            return true;
+          return false;
+        });
       }
     });
   }
@@ -152,6 +144,23 @@ export class MaintenanceWorkDetailPage implements OnInit {
     });
   }
 
+  dateSelectPending() {
+    this.initializeItems();
+
+    console.log("startdatePending", this.startdatePending);
+    console.log("enddatePending", this.enddatePending);
+
+    // this.pendings = this.pendings.filter((pending) => {
+    //   if (this.startdatePending && this.enddatePending) {
+    //     if (
+    //       pending.created_at.getDate() >= this.startdatePending.getDate() &&
+    //       pending.created_at.getDate() <= this.enddatePending.getDate()
+    //     )
+    //       return pending;
+    //   }
+    // });
+  }
+
   async notesAlert() {
     const alert = await this.alertController.create({
       header: "Notes",
@@ -173,26 +182,42 @@ export class MaintenanceWorkDetailPage implements OnInit {
 
   async clickLogout() {
     const alert = await this.alertController.create({
-      header: 'Logout',
-      message: 'Are you want to logout?',
+      header: "Logout",
+      message: "Are you want to logout?",
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {}
-        }, {
-          text: 'Yes, logout it!',
+          text: "Cancel",
+          role: "cancel",
+          handler: () => {},
+        },
+        {
+          text: "Yes, logout it!",
           handler: () => {
-            this.router.navigate(['/']);
-          }
-        }
-      ]
+            this.router.navigate(["/"]);
+          },
+        },
+      ],
     });
 
     await alert.present();
   }
 
+  clickWorkActivity(work_order) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        work_order
+      }
+    };
+    this.router.navigate(['/technical/work-order'], navigationExtras);
+  }
+
   homePage(path: string) {
     this.router.navigate([path]);
+  }
+
+  pendingColor(status: string) {
+    if (status == "NW") return "success";
+    if (status == "IP") return "warning";
+    if (status == "BL") return "danger";
   }
 }

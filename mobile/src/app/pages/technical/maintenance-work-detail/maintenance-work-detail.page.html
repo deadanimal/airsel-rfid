@@ -32,7 +32,7 @@
           size="small"
           color="danger"
           style="position: absolute; right: -5px; top: 1px;"
-          >3</ion-badge
+          >{{ notificationService.totalnotificationbyuser }}</ion-badge
         >
       </ion-button>
     </ion-buttons>
@@ -86,6 +86,8 @@
                   <ion-datetime
                     displayFormat="DD-MM-YYYY"
                     placeholder="Select date"
+                    [(ngModel)]="startdatePending"
+                    (ionChange)="dateSelectPending()"
                   ></ion-datetime>
                 </ion-item>
               </ion-col>
@@ -95,31 +97,34 @@
                   <ion-datetime
                     displayFormat="DD-MM-YYYY"
                     placeholder="Select date"
+                    [(ngModel)]="enddatePending"
+                    (ionChange)="dateSelectPending()"
                   ></ion-datetime>
                 </ion-item>
               </ion-col>
             </ion-row>
           </ion-grid>
         </ion-list>
-        <ion-card *ngFor="let pending of pendings" [color]="pending.color">
+        <ion-card *ngFor="let pending of pendings" [color]="pendingColor(pending.status)">
           <ion-card-header>
             <ion-fab horizontal="end">
               <ion-fab-button
                 size="small"
                 color="light"
-                [routerLink]="['/technical/work-order']"
+                (click)="clickWorkActivity(pending)"
               >
                 <ion-icon name="build"></ion-icon>
               </ion-fab-button>
             </ion-fab>
-            <ion-card-title style="color: white;">{{ data }}</ion-card-title>
+            <ion-card-title style="color: white;">{{ pending.work_order }}</ion-card-title>
             <ion-card-subtitle style="color: white;" class="ion-padding-bottom">
-              {{ pending.date }}
+              <p>Due Date: {{ pending.due_date | date }}</p>
+              <p>Completed Date: {{ pending.completed_at | date }}</p>
             </ion-card-subtitle>
           </ion-card-header>
           <ion-card-content style="color: white;">
             <div class="ion-text-justify">
-              {{ pending.desc }}
+              WAMS ID: {{ pending.wams_work_id }}
             </div>
           </ion-card-content>
         </ion-card>

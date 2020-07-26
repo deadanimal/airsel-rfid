@@ -11,7 +11,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
-        Work 1011
+        {{ work_order.work_order }}
       </ion-card-title>
     </ion-card-header>
 
@@ -25,9 +25,9 @@
         <ion-list>
           <ion-label position="stacked">Name</ion-label>
           <ion-item class="nopaddingstart">
-            <ion-label>Umar Mansour</ion-label>
+            <ion-label>{{ userService.umodel.name }}</ion-label>
           </ion-item>
-          <ion-item class="nopaddingstart">
+          <!-- <ion-item class="nopaddingstart">
             <ion-label>Izzat Danial</ion-label>
           </ion-item>
           <ion-item class="nopaddingstart">
@@ -38,12 +38,12 @@
           </ion-item>
           <ion-item class="nopaddingstart">
             <ion-label>Siti Munirah</ion-label>
-          </ion-item>
+          </ion-item> -->
         </ion-list>
 
         <ion-item class="nopaddingstart">
           <ion-label position="stacked">Asset Location</ion-label>
-          <ion-textarea readonly rows="2" value="BOOSTER IXORA PUMP HOUSE"></ion-textarea>
+          <ion-textarea readonly rows="2" value="BT 3 3/4 JALAN KLANG LAMA PUMP HOUSE"></ion-textarea>
         </ion-item>
       </ion-list>
     </ion-card-content>
@@ -99,5 +99,9 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+  </div>
+
+  <div class="ion-padding ion-text-center">
+    <ion-button color="primary" (click)="submit()">Submit</ion-button>
   </div>
 </ion-content>

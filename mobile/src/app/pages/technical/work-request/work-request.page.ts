@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 
@@ -22,6 +22,7 @@ export class WorkRequestPage implements OnInit {
   capturedSnapURL: string;
 
   constructor(
+    public alertController: AlertController,
     public menu: MenuController,
     // private barcodeScanner: BarcodeScanner
     private camera: Camera,
@@ -63,6 +64,16 @@ export class WorkRequestPage implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  async submit() {
+    const alert = await this.alertController.create({
+      header: 'Work Request',
+      message: 'Your work request have successfully submitted into the system. Thank you.',
+      buttons: ['OK']
+    });
+
+    await alert.present();  
   }
 
 }

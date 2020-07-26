@@ -7,6 +7,11 @@ import {
 } from "@ionic/angular";
 import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 
+import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
+import { UsersService } from "src/app/shared/services/users/users.service";
+import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.page.html",
@@ -18,6 +23,7 @@ export class HomePage implements OnInit {
   category: string = "All";
   categorys = ["All", "New", "In Progress", "Pending"];
   items: any[];
+  workactivities = [];
 
   accordionIcon: string = "arrow-up-circle";
   showAccordion: boolean = true;
@@ -141,8 +147,41 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     public menu: MenuController,
     public modalController: ModalController,
-    private router: Router
-  ) {}
+    private router: Router,
+    private authService: AuthService,
+    private notificationService: NotificationsService,
+    private userService: UsersService,
+    private workactivityService: WorkActivitiesService
+  ) {
+    this.userService.getOne(this.authService.userID).subscribe(
+      (res) => {
+        // if (res) console.log("res", res);
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request is completed");
+      }
+    );
+  }
+
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter HomePage");
+
+    this.workactivityService.get().subscribe(
+      (res) => {
+        console.log("res", res);
+        this.workactivities = res;
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request is completed");
+      }
+    );
+  }
 
   ngOnInit() {
     this.items = this.pendings;
@@ -213,6 +252,14 @@ export class HomePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  calculateStatus(status: string) {
+    let count = 0;
+    for (let i = 0; i < this.workactivities.length; i++) {
+      if (this.workactivities[i].status === status) count++;
+    }
+    return count;
   }
 
   homePage(path: string) {

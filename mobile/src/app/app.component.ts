@@ -19,6 +19,7 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { AuthService } from "./shared/services/auth/auth.service";
 import { JwtService } from "./shared/handler/jwt/jwt.service";
+import { NotificationsService } from "./shared/services/notifications/notifications.service";
 
 @Component({
   selector: "app-root",
@@ -27,6 +28,9 @@ import { JwtService } from "./shared/handler/jwt/jwt.service";
 })
 export class AppComponent {
   @ViewChild(IonRouterOutlet, { static: false }) routerOutlet: IonRouterOutlet;
+
+  // Notification
+  notifications = [];
 
   constructor(
     private platform: Platform,
@@ -38,6 +42,7 @@ export class AppComponent {
     private router: Router,
     private authService: AuthService,
     private jwtService: JwtService,
+    private notifyService: NotificationsService
   ) {
     this.initializeApp();
 
@@ -49,6 +54,19 @@ export class AppComponent {
 
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
+        if (this.router.url === "/technical/tabs/tab1") {
+          this.notifyService
+            .filter("receiver=" + this.authService.userID)
+            .subscribe(
+              (res) => {
+                // console.log("res", res);
+                this.notifications = res;
+              },
+              (err) => {
+                console.error("err", err);
+              }
+            );
+        }
       }
 
       if (event instanceof NavigationError) {
@@ -71,9 +89,13 @@ export class AppComponent {
 
       this.platform.backButton.subscribeWithPriority(0, async () => {
         console.log(this.router.url);
-        if (this.routerOutlet && this.routerOutlet.canGoBack()) {
+        if (this.routerOutlet && this.routerOutlet.canGoBack() && this.router.url !== "/technical/tabs/tab1") {
           this.routerOutlet.pop();
-        } else if (this.router.url === "/") {
+        } 
+        /* else if (
+          this.router.url === "/" ||
+          this.router.url === "/technical/tabs/tab1"
+        ) {
           if (new Date().getTime() - lastTimeBackPress < timePeriodToExit) {
             navigator["app"].exitApp();
           } else {
@@ -85,7 +107,7 @@ export class AppComponent {
             toast.present();
             lastTimeBackPress = new Date().getTime();
           }
-        }
+        } */
       });
 
       this.checkIsLogin();
@@ -93,15 +115,14 @@ export class AppComponent {
   }
 
   // To verify either rmbrmeAccessToken is valid or not
-  async checkIsLogin() {
-    let loading = await this.loadingController.create({
-      message: "Please wait to be verified...",
-    });
-    await loading.present();
-
+  checkIsLogin() {
     let jwtHelper: JwtHelperService = new JwtHelperService();
-    this.jwtService.getToken("rmbrmeAccessToken").then((data) => {
+    this.jwtService.getToken("rmbrmeAccessToken").then(async (data) => {
       if (data) {
+        let loading = await this.loadingController.create({
+          message: "Please wait to be verified...",
+        });
+        await loading.present();
         let obj = {
           token: data,
         };

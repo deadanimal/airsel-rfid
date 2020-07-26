@@ -18,7 +18,7 @@
           size="small"
           color="danger"
           style="position: absolute; right: -5px; top: 1px;"
-          >3</ion-badge
+          >{{ notificationService.totalnotificationbyuser }}</ion-badge
         >
       </ion-button>
     </ion-buttons>
@@ -38,17 +38,23 @@
               <ion-row>
                 <ion-col size="4">
                   <ion-badge color="success"
-                    ><span style="color: black;">3</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(cmArray, 'NW') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="warning"
-                    ><span style="color: black;">6</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(cmArray, 'IP') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="danger"
-                    ><span style="color: black;">2</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(cmArray, 'BL') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
               </ion-row>
@@ -66,17 +72,23 @@
               <ion-row>
                 <ion-col size="4">
                   <ion-badge color="success"
-                    ><span style="color: black;">2</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(pmArray, 'NW') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="warning"
-                    ><span style="color: black;">3</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(pmArray, 'IP') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="danger"
-                    ><span style="color: black;">0</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(pmArray, 'BL') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
               </ion-row>
@@ -99,17 +111,23 @@
               <ion-row>
                 <ion-col size="4">
                   <ion-badge color="success"
-                    ><span style="color: black;">3</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(itcArray, 'NW') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="warning"
-                    ><span style="color: black;">0</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(itcArray, 'IP') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="danger"
-                    ><span style="color: black;">0</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(itcArray, 'BL') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
               </ion-row>
@@ -129,17 +147,23 @@
               <ion-row>
                 <ion-col size="4">
                   <ion-badge color="success"
-                    ><span style="color: black;">3</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(pdmArray, 'NW') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="warning"
-                    ><span style="color: black;">0</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(pdmArray, 'IP') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="danger"
-                    ><span style="color: black;">1</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(pdmArray, 'BL') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
               </ion-row>
@@ -162,17 +186,23 @@
               <ion-row>
                 <ion-col size="4">
                   <ion-badge color="success"
-                    ><span style="color: black;">2</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(dArray, 'NW') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="warning"
-                    ><span style="color: black;">3</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(dArray, 'IP') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="danger"
-                    ><span style="color: black;">0</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(dArray, 'BL') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
               </ion-row>
@@ -192,17 +222,23 @@
               <ion-row>
                 <ion-col size="4">
                   <ion-badge color="success"
-                    ><span style="color: black;">0</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(cArray, 'NW') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="warning"
-                    ><span style="color: black;">1</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(cArray, 'IP') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="danger"
-                    ><span style="color: black;">0</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(cArray, 'BL') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
               </ion-row>
@@ -225,17 +261,23 @@
               <ion-row>
                 <ion-col size="4">
                   <ion-badge color="success"
-                    ><span style="color: black;">3</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(rArray, 'NW') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="warning"
-                    ><span style="color: black;">6</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(rArray, 'IP') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="4">
                   <ion-badge color="danger"
-                    ><span style="color: black;">2</span></ion-badge
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(rArray, 'BL') }}</span
+                    ></ion-badge
                   >
                 </ion-col>
               </ion-row>
