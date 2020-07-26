@@ -432,7 +432,7 @@ class Asset(models.Model):
         null=True,
         related_name='asset_approval_by'
     )
-    approval_date = models.DateTimeField(auto_now=True)
+    approval_at = models.DateTimeField(null=True, blank=True)
     reject_remark = models.CharField(max_length=100, default='NA')
 
     created_at = models.DateTimeField(auto_now_add=True)

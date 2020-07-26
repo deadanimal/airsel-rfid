@@ -14,6 +14,10 @@ from .models import (
     Location
 )
 
+from users.serializers import (
+    CustomUserSerializer
+)
+
 class StoreSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -29,6 +33,22 @@ class RegionSerializer(serializers.ModelSerializer):
 
 
 class LocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Location
+        fields = '__all__'
+
+
+class StoreExtendedSerializer(serializers.ModelSerializer):
+    supervisor = CustomUserSerializer(read_only=True)
+
+    class Meta:
+        model = Store
+        fields = '__all__'
+
+
+class LocationExtendedSerializer(serializers.ModelSerializer):
+    region = RegionSerializer(read_only=True)
 
     class Meta:
         model = Location

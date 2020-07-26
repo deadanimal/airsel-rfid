@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
-
+import json
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -18,8 +18,10 @@ from .models import (
 
 from .serializers import (
     StoreSerializer,
+    StoreExtendedSerializer,
     RegionSerializer,
-    LocationSerializer
+    LocationSerializer,
+    LocationExtendedSerializer
 )
 
 class StoreViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -58,6 +60,14 @@ class StoreViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         """
         return queryset    
  
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = Store.objects.all()
+        serializer_class = StoreExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
 
 class RegionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Region.objects.all()
@@ -128,3 +138,12 @@ class LocationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Store.objects.filter(company=company.id)
         """
         return queryset  
+    
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = Location.objects.all()
+        serializer_class = LocationExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
