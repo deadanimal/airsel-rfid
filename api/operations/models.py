@@ -116,7 +116,7 @@ class WorkActivity(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     class meta:
-        ordering = ['name']
+        ordering = ['work_order']
     
     def __str__(self):
         #return "{} {} {}".format(self.name, self.activity, self.created_at)
