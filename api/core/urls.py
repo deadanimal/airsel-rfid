@@ -90,6 +90,7 @@ from operations.views import (
     IssueTypeViewSet,
     MaintenanceViewSet,
     OperationalReadingViewSet,
+    WorkOrderViewSet,
     WorkActivityViewSet,
     WorkActivityTeamViewSet,
     WorkRequestViewSet
@@ -105,6 +106,10 @@ maintenances_router = router.register(
 
 operational_readings_router = router.register(
     'operational-readings', OperationalReadingViewSet
+)
+
+work_orders_router = router.register(
+    'work-orders', WorkOrderViewSet
 )
 
 work_activities_router = router.register(
