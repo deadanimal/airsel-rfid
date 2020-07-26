@@ -45,8 +45,9 @@ export class AssetsService {
     );
   }
 
-  update(body: Form): Observable<AssetsModel> {
-    return this.http.patch<AssetsModel>(this.url, body).pipe(
+  update(id: string, body: Form): Observable<AssetsModel> {
+    let urlTemp = this.url + id + '/'
+    return this.http.patch<AssetsModel>(urlTemp, body).pipe(
       tap((res) => {
         console.log("AssetsModel", res);
       })

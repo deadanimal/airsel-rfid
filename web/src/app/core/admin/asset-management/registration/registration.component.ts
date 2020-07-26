@@ -10,9 +10,9 @@ import Dropzone from "dropzone";
 import swal from "sweetalert2";
 
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
-import { AssetGroupsService } from 'src/app/shared/services/asset-groups/asset-groups.service';
+import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
 import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
 import { NotifyService } from "src/app/shared/handler/notify/notify.service";
@@ -39,6 +39,7 @@ export class RegistrationComponent implements OnInit {
   modal: BsModalRef;
   modalViewAsset: BsModalRef;
   modalRegisterAsset: BsModalRef;
+  modalEditAsset: BsModalRef;
   modalConfig = {
     keyboard: true,
     class: "modal-dialog-centered modal-xl",
@@ -193,63 +194,12 @@ export class RegistrationComponent implements OnInit {
     { value: "WS", name: "Wash Water System" },
     { value: "NA", name: "Not Available" },
   ];
-  typeassets = [
-    // { value: "AS", name: "Asset" },
-    // { value: "CP", name: "Component" },
-    // { value: "NA", name: "Not Available" },
-  ];
-  categories = [
-    // { value: "EL", name: "Electrical" },
-    // { value: "MC", name: "Mechanical" },
-    // { value: "IS", name: "Insturement" },
-    // { value: "OT", name: "Other" },
-  ];
-  identities = [
-    // { value: "P1", name: "Pump-1" },
-    // { value: "P2", name: "Pump-2" },
-    // { value: "M1", name: "Motor-1" },
-    // { value: "M2", name: "Motor-2" },
-    // { value: "NA", name: "Not Available" },
-  ];
-  primarycategories = [
-    // { value: "BV", name: "Butterfly Valve" },
-    // { value: "CA", name: "Chain Block" },
-    // { value: "CE", name: "Check Valve" },
-    // { value: "HT", name: "Hydropneumatic Tank" },
-    // { value: "MS", name: "Main Switchboard" },
-    // { value: "MT", name: "Motor" },
-    // { value: "PG", name: "Presuure Gauge" },
-    // { value: "PP", name: "Pump" },
-    // { value: "SV", name: "Sluice Valve" },
-    // { value: "SA", name: "Surge Anticipating Valve" },
-    // { value: "NA", name: "Not Available" },
-  ];
-  groupsubcategory1s = [
-    // { value: "AR", name: "Air Receiver Tank" },
-    // { value: "DL", name: "Delivery" },
-    // { value: "HR", name: "Horizontal" },
-    // { value: "MP", name: "Main Power Suppply" },
-    // { value: "MN", name: "Manual" },
-    // { value: "OF", name: "Oil Filled" },
-    // { value: "ST", name: "Suction" },
-    // { value: "VT", name: "Vertical" },
-    // { value: "NA", name: "Not Available" },
-  ];
-  groupsubcategory2s = [
-    // { value: "CS", name: "Casing" },
-    // { value: "DL", name: "Delivery" },
-    // { value: "DF", name: "Double Flange Swing" },
-    // { value: "EL", name: "Electrical Installation" },
-    // { value: "ES", name: "End Suction" },
-    // { value: "MS", name: "Multi Stage" },
-    // { value: "RP", name: "Reduced Port" },
-    // { value: "SP", name: "Split" },
-    // { value: "SC", name: "Squirrel Cage" },
-    // { value: "ST", name: "Suction" },
-    // { value: "VT", name: "Vertical" },
-    // { value: "WT", name: "Wafer Twin Door" },
-    // { value: "NA", name: "Not Available" },
-  ];
+  typeassets = [];
+  categories = [];
+  identities = [];
+  primarycategories = [];
+  groupsubcategory1s = [];
+  groupsubcategory2s = [];
   ratings = [
     { value: "1", name: "1 - Very Good" },
     { value: "2", name: "2 - Good" },
@@ -293,18 +243,10 @@ export class RegistrationComponent implements OnInit {
     public regionsService: RegionsService,
     public toastr: NotifyService
   ) {
-    this.assetsService.get().subscribe((assets) => {
-      if (assets) {
-        this.temp = assets.map((prop, key) => {
-          return {
-            ...prop,
-            // id: key,
-          };
-        });
-      }
-    });
+    this.getAssets();
 
     this.firstFormGroup = this.formBuilder.group({
+      id: ["", Validators.required],
       owning_department: ["", Validators.required],
     });
     this.secondFormGroup = this.formBuilder.group({
@@ -362,6 +304,30 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
+  getAssets() {
+    // this.rows = assets;
+    // this.temp = this.rows.map((prop, key) => {
+    //   return {
+    //     ...prop,
+    //     // id: key,
+    //     no: key,
+    //   };
+    // });
+
+    this.assetsService.get().subscribe((assets) => {
+      if (assets) {
+        this.rows = assets;
+        this.temp = this.rows.map((prop, key) => {
+          return {
+            ...prop,
+            // id: key,
+            no: key,
+          };
+        });
+      }
+    });
+  }
+
   ngOnInit() {
     this.regionsService.get().subscribe(
       (res) => {
@@ -391,17 +357,20 @@ export class RegistrationComponent implements OnInit {
       (res) => {
         if (res) {
           this.primarycategories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("at") !== -1) return true;
+            if (data.category.toString().toLowerCase().indexOf("at") !== -1)
+              return true;
             return false;
           });
 
           this.typeassets = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ac") !== -1) return true;
+            if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
+              return true;
             return false;
           });
 
           this.categories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ag") !== -1) return true;
+            if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
+              return true;
             return false;
           });
         }
@@ -418,17 +387,20 @@ export class RegistrationComponent implements OnInit {
       (res) => {
         if (res) {
           this.identities = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ai") !== -1) return true;
+            if (data.category.toString().toLowerCase().indexOf("ai") !== -1)
+              return true;
             return false;
           });
 
           this.groupsubcategory1s = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("s1") !== -1) return true;
+            if (data.category.toString().toLowerCase().indexOf("s1") !== -1)
+              return true;
             return false;
           });
 
           this.groupsubcategory2s = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("s2") !== -1) return true;
+            if (data.category.toString().toLowerCase().indexOf("s2") !== -1)
+              return true;
             return false;
           });
         }
@@ -474,7 +446,7 @@ export class RegistrationComponent implements OnInit {
     let val = $event.target.value;
     this.temp = this.rows.filter(function (d) {
       for (var key in d) {
-        if (d[key].toString().toLowerCase().indexOf(val) !== -1) {
+        if (d[key].toString().toLowerCase().indexOf(val.toString().toLowerCase()) !== -1) {
           return true;
         }
       }
@@ -510,6 +482,35 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
+  openModalEdit(modalNotification: TemplateRef<any>, row) {
+    this.firstFormGroup.patchValue({
+      ...row,
+    });
+    this.secondFormGroup.patchValue({
+      ...row,
+    });
+    this.thirdFormGroup.patchValue({
+      ...row,
+    });
+    this.fourthFormGroup.patchValue({
+      ...row,
+    });
+    this.fifthFormGroup.patchValue({
+      ...row,
+    });
+    this.sixthFormGroup.patchValue({
+      ...row,
+    });
+    this.seventhFormGroup.patchValue({
+      ...row,
+    });
+
+    this.modalEditAsset = this.modalService.show(
+      modalNotification,
+      this.modalConfig
+    );
+  }
+
   register() {
     let postAssets = {
       ...this.firstFormGroup.value,
@@ -530,6 +531,8 @@ export class RegistrationComponent implements OnInit {
             "Your asset have successfully registered.",
             "Register Asset"
           );
+          this.modalRegisterAsset.hide();
+          this.getAssets();
         }
       },
       (err) => {
@@ -543,15 +546,37 @@ export class RegistrationComponent implements OnInit {
   }
 
   update() {
-    this.modal.hide();
-    swal.fire({
-      title: "Updated!",
-      text: "The asset has been updated",
-      type: "success",
-      buttonsStyling: false,
-      confirmButtonText: "Ok",
-      confirmButtonClass: "btn btn-success btn-sm",
-    });
+    let editAssets = {
+      ...this.firstFormGroup.value,
+      ...this.secondFormGroup.value,
+      ...this.thirdFormGroup.value,
+      ...this.fourthFormGroup.value,
+      ...this.fifthFormGroup.value,
+      ...this.sixthFormGroup.value,
+      ...this.seventhFormGroup.value,
+      // created_by: this.authService.userID
+    };
+
+    this.assetsService.update(this.firstFormGroup.value.id, editAssets).subscribe(
+      (res) => {
+        if (res) {
+          console.log("res", res);
+          this.toastr.openToastr(
+            "Your asset have successfully updated.",
+            "Register Asset"
+          );
+          this.modalEditAsset.hide();
+          this.getAssets();
+        }
+      },
+      (err) => {
+        console.error("err", err);
+        this.validation_messages = err.error;
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
   }
 
   openSearch() {
@@ -588,5 +613,19 @@ export class RegistrationComponent implements OnInit {
       buttonsStyling: false,
       confirmButtonClass: "btn btn-success",
     });
+  }
+
+  getCategory(value: string) {
+    let result = this.categories.find((obj) => {
+      return obj.id === value;
+    });
+    return result.name;
+  }
+
+  getAssetType(value: string) {
+    let result = this.typeassets.find((obj) => {
+      return obj.id === value;
+    });
+    return result.name;
   }
 }
