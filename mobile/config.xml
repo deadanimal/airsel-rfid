@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="my.pipe.airsel.rfid" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Air Selangor - RFID</name>
+    <name>TAMS-WAMS Mobile</name>
     <description>An app for the Air Selangor workers.</description>
     <author email="webmaster@airselangor.com" href="https://www.airselangor.com/">Air Selangor</author>
     <content src="index.html" />

@@ -92,9 +92,11 @@ class Asset(models.Model):
         null=True,
         related_name='asset_rfid'
     )
+    qrcode = models.CharField(max_length=100, default='NA')
     purchased_at = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     
+    badge_number = models.CharField(max_length=100, default='NA')
     DEPARTMENT = [
         ('CB', 'Customer Billing Services'),
         ('DB', 'Distribution'),
@@ -305,6 +307,7 @@ class Asset(models.Model):
         }
     )
 
+    asset_description = models.CharField(max_length=100, default='NA')
     type_asset = models.ForeignKey(
         AssetType,
         on_delete=models.CASCADE,

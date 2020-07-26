@@ -58,6 +58,13 @@ export const TechnicalRoutes: Routes = [
           ).then((m) => m.MaintenanceWorkDetailPageModule),
       },
       {
+        path: "asset-registration",
+        loadChildren: () =>
+          import("./asset-registration/asset-registration.module").then(
+            (m) => m.AssetRegistrationPageModule
+          ),
+      },
+      {
         path: "qr-scanner",
         component: QrScannerComponent,
       },

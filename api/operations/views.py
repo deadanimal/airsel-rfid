@@ -13,6 +13,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import (
     Maintenance,
     IssueType,
+    WorkOrder,
     WorkActivity,
     WorkActivityTeam,
     WorkRequest,
@@ -22,6 +23,7 @@ from .models import (
 from .serializers import (
     MaintenanceSerializer,
     IssueTypeSerializer,
+    WorkOrderSerializer,
     WorkActivitySerializer,
     WorkActivityTeamSerializer,
     WorkRequestSerializer,
@@ -100,7 +102,44 @@ class IssueTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Activity.objects.filter(company=company.id)
         """
         return queryset    
- 
+
+class WorkOrderViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = WorkOrder.objects.all()
+    serializer_class = WorkOrderSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'completed_at',
+        'planner_name',
+        'wams_id',
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = WorkOrder.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Company.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Activity.objects.all()
+            else:
+                queryset = Activity.objects.filter(company=company.id)
+        """
+        return queryset 
 
 class WorkActivityViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkActivity.objects.all()

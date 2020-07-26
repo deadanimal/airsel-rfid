@@ -1,12 +1,12 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   Validators,
   FormBuilder,
   FormGroup,
   FormControl,
 } from "@angular/forms";
-import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import swal from "sweetalert2";
+import { Router } from "@angular/router";
+import { AlertController, MenuController } from "@ionic/angular";
 
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
@@ -15,40 +15,15 @@ import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
 
-export enum SelectionType {
-  single = "single",
-  multi = "multi",
-  multiClick = "multiClick",
-  cell = "cell",
-  checkbox = "checkbox",
-}
-
 @Component({
-  selector: "app-approval",
-  templateUrl: "./approval.component.html",
-  styleUrls: ["./approval.component.scss"],
+  selector: "app-asset-registration",
+  templateUrl: "./asset-registration.page.html",
+  styleUrls: ["./asset-registration.page.scss"],
 })
-export class ApprovalComponent implements OnInit {
+export class AssetRegistrationPage implements OnInit {
   // Stepper
   isLinear = false;
   isDisableRipple = true;
-
-  // Modal
-  modal: BsModalRef;
-  modalViewAsset: BsModalRef;
-  modalRegisterAsset: BsModalRef;
-  modalConfig = {
-    keyboard: true,
-    class: "modal-dialog-centered modal-xl",
-    ignoreBackdropClick: true,
-  };
-  modalViewAssetConfig = {
-    keyboard: true,
-    class: "modal-dialog-centered modal-md",
-    ignoreBackdropClick: true,
-  };
-
-  focusSearch;
 
   regions = [];
   organisations = [];
@@ -210,19 +185,6 @@ export class ApprovalComponent implements OnInit {
     { value: "TP", name: "Temperature" },
     { value: "OT", name: "Other" },
   ];
-  approvalstatuses = [
-    { value: "AP", name: "Approve" },
-    { value: "RE", name: "Reject" },
-    { value: "NA", name: "Not Available" },
-  ];
-
-  // Datatable
-  entries: number = 10;
-  selected: any[] = [];
-  temp = [];
-  activeRow: any;
-  rows: any = [];
-  SelectionType = SelectionType;
 
   // Forms
   firstFormGroup: FormGroup;
@@ -235,17 +197,17 @@ export class ApprovalComponent implements OnInit {
   validation_messages = [];
 
   constructor(
-    private formBuilder: FormBuilder,
-    private modalService: BsModalService,
+    public formBuilder: FormBuilder,
+    public alertController: AlertController,
+    public menu: MenuController,
     public assetsService: AssetsService,
     public assetGroupsService: AssetGroupsService,
     public assetTypesService: AssetTypesService,
     public authService: AuthService,
     public organisationsService: OrganisationsService,
-    public regionsService: RegionsService
+    public regionsService: RegionsService,
+    private router: Router
   ) {
-    this.getAssets();
-
     this.firstFormGroup = this.formBuilder.group({
       owning_department: ["", Validators.required],
     });
@@ -301,21 +263,6 @@ export class ApprovalComponent implements OnInit {
     this.seventhFormGroup = this.formBuilder.group({
       po_vendor: ["", Validators.required],
       po_cost: ["", Validators.required],
-    });
-  }
-
-  getAssets() {
-    this.assetsService.get().subscribe((assets) => {
-      if (assets) {
-        this.rows = assets;
-        this.temp = this.rows.map((prop, key) => {
-          return {
-            ...prop,
-            // id: key,
-            no: key,
-          };
-        });
-      }
     });
   }
 
@@ -405,150 +352,59 @@ export class ApprovalComponent implements OnInit {
     );
   }
 
-  entriesChange($event) {
-    this.entries = $event.target.value;
-  }
+  register() {
+    let postAssets = {
+      ...this.firstFormGroup.value,
+      ...this.secondFormGroup.value,
+      ...this.thirdFormGroup.value,
+      ...this.fourthFormGroup.value,
+      ...this.fifthFormGroup.value,
+      ...this.sixthFormGroup.value,
+      ...this.seventhFormGroup.value,
+      // created_by: this.authService.userID
+    };
 
-  filterTable($event) {
-    let val = $event.target.value;
-    this.temp = this.rows.filter(function (d) {
-      for (var key in d) {
-        if (
-          d[key]
-            .toString()
-            .toLowerCase()
-            .indexOf(val.toString().toLowerCase()) !== -1
-        ) {
-          return true;
+    this.assetsService.post(postAssets).subscribe(
+      (res) => {
+        if (res) {
+          console.log("res", res);
+          this.presentAlert("Success", "Your asset successfully registered into the system.");
         }
+      },
+      (err) => {
+        console.error("err", err);
+        this.validation_messages = err.error;
+        this.presentAlert("Error", "There are error occured on your form. Please check your form again.");
+      },
+      () => {
+        console.log("Http request completed");
       }
-      return false;
-    });
-  }
-
-  onSelect({ selected }) {
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
-  }
-
-  onActivate(event) {
-    this.activeRow = event.row;
-  }
-
-  openModal(modalNotification: TemplateRef<any>, row) {
-    this.firstFormGroup.patchValue({
-      ...row,
-    });
-    this.secondFormGroup.patchValue({
-      ...row,
-    });
-    this.thirdFormGroup.patchValue({
-      ...row,
-    });
-    this.fourthFormGroup.patchValue({
-      ...row,
-    });
-    this.fifthFormGroup.patchValue({
-      ...row,
-    });
-    this.sixthFormGroup.patchValue({
-      ...row,
-    });
-    this.seventhFormGroup.patchValue({
-      ...row,
-    });
-
-    this.modal = this.modalService.show(modalNotification, this.modalConfig);
-  }
-
-  openModalViewAsset(modalNotification: TemplateRef<any>) {
-    this.modalViewAsset = this.modalService.show(
-      modalNotification,
-      this.modalViewAssetConfig
     );
   }
 
-  approve(row) {
-    swal.fire({
-      title: "Approved!",
-      text: "Asset registration has been approved",
-      type: "success",
-      buttonsStyling: false,
-      confirmButtonText: "Ok",
-      confirmButtonClass: "btn btn-success btn-sm",
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: [
+        {
+          text: "OK",
+          handler: () => {
+            if (header == "Success") this.homePage("/technical/tabs/tab1");
+          },
+        },
+      ],
     });
+
+    await alert.present();
   }
 
-  reject(row) {
-    swal.fire({
-      title: "Deleted!",
-      text: "Asset registration has been rejected",
-      type: "success",
-      buttonsStyling: false,
-      confirmButtonText: "Ok",
-      confirmButtonClass: "btn btn-success btn-sm",
-    });
+  homePage(path: string) {
+    this.router.navigate([path]);
   }
 
-  register() {
-    this.modal.hide();
-    this.modalViewAsset.hide();
-    swal.fire({
-      title: "Registered!",
-      text: "New asset has been registered",
-      type: "success",
-      buttonsStyling: false,
-      confirmButtonText: "Ok",
-      confirmButtonClass: "btn btn-success btn-sm",
-    });
-  }
-
-  openSearch() {
-    document.body.classList.add("g-navbar-search-showing");
-    setTimeout(function () {
-      document.body.classList.remove("g-navbar-search-showing");
-      document.body.classList.add("g-navbar-search-show");
-    }, 150);
-    setTimeout(function () {
-      document.body.classList.add("g-navbar-search-shown");
-    }, 300);
-  }
-
-  closeSearch() {
-    document.body.classList.remove("g-navbar-search-shown");
-    setTimeout(function () {
-      document.body.classList.remove("g-navbar-search-show");
-      document.body.classList.add("g-navbar-search-hiding");
-    }, 150);
-    setTimeout(function () {
-      document.body.classList.remove("g-navbar-search-hiding");
-      document.body.classList.add("g-navbar-search-hidden");
-    }, 300);
-    setTimeout(function () {
-      document.body.classList.remove("g-navbar-search-hidden");
-    }, 500);
-  }
-
-  statusBadge(status: string) {
-    // ('AP', 'Approve')
-    // ('RE', 'Reject')
-    // ('NA', 'Not Available')
-    if (status == "AP") return "badge badge-success";
-    if (status == "RE") return "badge badge-danger";
-    if (status == "NA") return "badge badge-default";
-  }
-
-  getRegion(value: string) {
-    let result = this.regions.find((obj) => {
-      return obj.id === value;
-    });
-    return result.name;
-  }
-
-  getApprovalStatus(value: string) {
-    let result = this.approvalstatuses.find((obj) => {
-      return obj.value === value;
-    });
-    return result.name;
+  openNotification() {
+    this.menu.enable(true, "menuNotification");
+    this.menu.open("menuNotification");
   }
 }
