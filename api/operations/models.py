@@ -53,9 +53,10 @@ class WorkOrder(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     wams_id = models.CharField(max_length=100, default='NA')
-    description = models.CharField(max_length=100, default='NA')
+    work_order_description = models.CharField(max_length=100, default='NA')
     planner_cd = models.CharField(max_length=100, default='NA')
     planner_name = models.CharField(max_length=100, default='NA')
+    work_order_no = models.CharField(max_length=100, default='NA')
     completed_at = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -77,7 +78,7 @@ class WorkActivity(models.Model):
     maintenance_form = models.ForeignKey(Maintenance, on_delete=models.CASCADE, null=True, related_name='work_activity_maintenance_form')
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, null=True, related_name='work_activity_asset')
 
-    ACTIVITY_TYPE = [
+    WORK_CATEGORY = [
         ('CM', 'Corrective Maintenance'),
         ('CP', 'Compliance'),
         ('DP', 'Disposal'),
@@ -86,7 +87,16 @@ class WorkActivity(models.Model):
         ('PM', 'Preventive Maintenance'),
         ('RD', 'Redesign')
     ]
+    work_category = models.CharField(max_length=2, choices=WORK_CATEGORY, default='IT')
+
+    ACTIVITY_TYPE = [
+        ('PM', 'PREVENTIVE-MAINTENANCE'),
+        ('PI', 'PUMP-INSPECTION')
+        ('MI', 'MOTOR-INSPECTION')
+        ('SP', 'STARTER-PANEL-INSPECTION')
+    ]
     activity_type = models.CharField(max_length=2, choices=ACTIVITY_TYPE, default='IT')
+    activity_description = models.CharField(max_length=100, default='NA')
 
     STATUS = [
         ('BL', 'Backlog'),
