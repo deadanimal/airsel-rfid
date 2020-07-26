@@ -72,10 +72,15 @@ class WorkActivity(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     wams_work_id = models.CharField(max_length=100, default='NA')
-    work_order = models.ForeignKey(WorkOrder, on_delete=models.CASCADE, null=True, related_name='work_order_no')
+    work_order = models.ForeignKey(WorkOrder, on_delete=models.CASCADE, null=True, related_name='work_activity_work_order_no')
     completed_at = models.DateTimeField(blank=True, null=True)
 
-    maintenance_form = models.ForeignKey(Maintenance, on_delete=models.CASCADE, null=True, related_name='work_activity_maintenance_form')
+    maintenance_form = models.ForeignKey(
+        Maintenance,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='work_activity_maintenance_form'
+    )
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE, null=True, related_name='work_activity_asset')
 
     WORK_CATEGORY = [
@@ -91,8 +96,8 @@ class WorkActivity(models.Model):
 
     ACTIVITY_TYPE = [
         ('PM', 'PREVENTIVE-MAINTENANCE'),
-        ('PI', 'PUMP-INSPECTION')
-        ('MI', 'MOTOR-INSPECTION')
+        ('PI', 'PUMP-INSPECTION'),
+        ('MI', 'MOTOR-INSPECTION'),
         ('SP', 'STARTER-PANEL-INSPECTION')
     ]
     activity_type = models.CharField(max_length=2, choices=ACTIVITY_TYPE, default='IT')
@@ -101,7 +106,7 @@ class WorkActivity(models.Model):
     STATUS = [
         ('BL', 'Backlog'),
         ('IP', 'In Progress'),
-        ('NW', 'New')
+        ('NW', 'New'),
         ('CP', 'Completed')
     ]
     status = models.CharField(max_length=2, choices=STATUS, default='NW')
