@@ -38,6 +38,38 @@ const routes: Routes = [
     path: 'maintenance-work-detail',
     loadChildren: () => import('./pages/technical/maintenance-work-detail/maintenance-work-detail.module').then( m => m.MaintenanceWorkDetailPageModule)
   },
+  {
+    path: 'work-activity',
+    loadChildren: () => import('./pages/technical/work-activity/work-activity.module').then( m => m.WorkActivityPageModule)
+  },
+  {
+    path: 'service-history',
+    loadChildren: () => import('./pages/technical/service-history/service-history.module').then( m => m.ServiceHistoryPageModule)
+  },
+  {
+    path: 'work-request-list',
+    loadChildren: () => import('./pages/technical/work-request-list/work-request-list.module').then( m => m.WorkRequestListPageModule)
+  },
+  {
+    path: 'operational-reading-list',
+    loadChildren: () => import('./pages/technical/operational-reading-list/operational-reading-list.module').then( m => m.OperationalReadingListPageModule)
+  },
+  {
+    path: 'operational-reading',
+    loadChildren: () => import('./pages/technical/operational-reading/operational-reading.module').then( m => m.OperationalReadingPageModule)
+  },
+  {
+    path: 'measurement-type',
+    loadChildren: () => import('./pages/technical/measurement-type/measurement-type.module').then( m => m.MeasurementTypePageModule)
+  },
+  {
+    path: 'asset-registration-list',
+    loadChildren: () => import('./pages/technical/asset-registration-list/asset-registration-list.module').then( m => m.AssetRegistrationListPageModule)
+  },
+  {
+    path: 'asset-detail',
+    loadChildren: () => import('./pages/technical/asset-detail/asset-detail.module').then( m => m.AssetDetailPageModule)
+  },
 ];
 @NgModule({
   imports: [

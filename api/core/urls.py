@@ -87,13 +87,28 @@ notifications_router = router.register(
 
 # Operations app
 from operations.views import (
+    OwningOrganizationViewSet,
+    BoViewSet,
     IssueTypeViewSet,
     MaintenanceViewSet,
     OperationalReadingViewSet,
     WorkOrderViewSet,
     WorkActivityViewSet,
     WorkActivityTeamViewSet,
-    WorkRequestViewSet
+    WorkClassViewSet,
+    WorkCategoryViewSet,
+    WorkRequestViewSet,
+    WorkRequestStatusViewSet,
+    MeasurementIdentifierViewSet,
+    MeasurementTypeViewSet
+)
+
+owning_organizations_router = router.register(
+    'owning-organizations', OwningOrganizationViewSet
+)
+
+bos_router = router.register(
+    'bos', BoViewSet
 )
 
 issue_types_router = router.register(
@@ -120,8 +135,28 @@ work_activity_teams_router = router.register(
     'work-activity-teams', WorkActivityTeamViewSet
 )
 
+work_classes_router = router.register(
+    'work-classes', WorkClassViewSet
+)
+
+work_categories_router = router.register(
+    'work-categories', WorkCategoryViewSet
+)
+
 work_requests_router = router.register(
     'work-requests', WorkRequestViewSet
+)
+
+work_request_statuses_router = router.register(
+    'work-request-statuses', WorkRequestStatusViewSet
+)
+
+measurement_identifiers_router = router.register(
+    'measurement-identifiers', MeasurementIdentifierViewSet
+)
+
+measurement_types_router = router.register(
+    'measurement-types', MeasurementTypeViewSet
 )
 
 # Organisations app

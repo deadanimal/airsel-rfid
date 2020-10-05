@@ -2,7 +2,7 @@ import csv
 import requests
 import json
 
-with open('air_sel.csv', mode='r') as csv_file:
+with open('air_sel.csv', mode='r', encoding='utf-8-sig') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     line_count = 0
     for row in csv_reader:
@@ -11,12 +11,13 @@ with open('air_sel.csv', mode='r') as csv_file:
             line_count += 1
         # print(f'\tworks in the {row["Email Address"]}')
         account = {
-            'email': row["Email Address"],
-            'username': row["Email Address"],
-            'password1': 'airselrfid1234',
-            'password2': 'airselrfid1234'
+            'work_category': row["Work Category"],
+            'activity_type': row["Activity Type"],
+            'activity_description': row["Activity Description"],
+            'status': row["Status"],
+            'work_order': row["Work Order"]
         }
         line_count += 1
         #print(json.dumps(account))
-        requests.post('https://airsel-rfid-api.pipe.my/auth/registration/', data=account)
+        requests.post('https://airsel-rfid-api.pipe.my/v1/work-activities/', data=account)
     print(f'Processed {line_count} lines.')

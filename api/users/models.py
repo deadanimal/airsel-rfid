@@ -14,9 +14,15 @@ from core.helpers import PathAndRename
 class CustomUser(AbstractUser):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255, blank=True, default='NA')
-    mobile = PhoneNumberField(blank=True, null=True)
-    nric = models.CharField(max_length=12, blank=True, default='NA')
+    employee_id = models.CharField(max_length=100, default='NA')
+    first_name = models.CharField(max_length=255, blank=True, default='NA')
+    last_name = models.CharField(max_length=255, blank=True, default='NA')
+    ic_number = models.CharField(max_length=14, blank=True, default='NA')
+    email = models.EmailField(blank=True, default='NA')
+    country = models.CharField(max_length=20, default='Malaysia')
+    phone_no = PhoneNumberField(blank=True, null=True)
+    job_title = models.CharField(max_length=50, default='NA')
+    status = models.BooleanField(default=True)
 
     USER_TYPE = [
         ('AM', 'Asset Management System'),
@@ -33,11 +39,9 @@ class CustomUser(AbstractUser):
         default='TC'
     )
 
-    profile_picture = models.ImageField(null=True, upload_to=PathAndRename('images')) 
-
     class Meta:
-        ordering = ['name']
+        ordering = ['first_name']
 
     def __str__(self):
-        return self.name
+        return self.first_name +' '+ self.last_name
 

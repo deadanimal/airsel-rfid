@@ -9,14 +9,61 @@ from rest_framework import serializers
 from django.utils.timezone import now
 
 from .models import (
+    OwningOrganization,
+    Bo,
     Maintenance,
     IssueType,
     WorkOrder,
     WorkActivity,
     WorkActivityTeam,
+    WorkClass,
+    WorkCategory,
     WorkRequest,
+    WorkRequestStatus,
+    MeasurementIdentifier,
+    MeasurementType,
     OperationalReading
 )
+
+from users.serializers import (
+    CustomUserSerializer
+)
+
+from medias.serializers import (
+    MediaSerializer
+)
+
+class OwningOrganizationSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = OwningOrganization
+        fields = '__all__'
+
+
+class OwningOrganizationExtendedSerializer(serializers.ModelSerializer):
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = OwningOrganization
+        fields = '__all__'
+
+
+class BoSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Bo
+        fields = '__all__'
+
+
+class BoExtendedSerializer(serializers.ModelSerializer):
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = Bo
+        fields = '__all__'
+
 
 class MaintenanceSerializer(serializers.ModelSerializer):
 
@@ -44,10 +91,51 @@ class WorkActivitySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class WorkActivityExtendedSerializer(serializers.ModelSerializer):
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = WorkActivity
+        fields = '__all__'
+
+
 class WorkActivityTeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkActivityTeam
+        fields = '__all__'
+
+
+class WorkClassSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = WorkClass
+        fields = '__all__'
+
+
+class WorkClassExtendedSerializer(serializers.ModelSerializer):
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = WorkClass
+        fields = '__all__'
+
+
+class WorkCategorySerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = WorkCategory
+        fields = '__all__'
+
+
+class WorkCategoryExtendedSerializer(serializers.ModelSerializer):
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = WorkCategory
         fields = '__all__'
 
 
@@ -58,8 +146,87 @@ class WorkRequestSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class WorkRequestExtendedSerializer(serializers.ModelSerializer):
+    bo = BoSerializer(read_only=True)
+    creation_user = CustomUserSerializer(read_only=True)
+    planner = CustomUserSerializer(read_only=True)
+    work_class = WorkClassSerializer(read_only=True)
+    work_category = WorkCategorySerializer(read_only=True)
+    requestor = CustomUserSerializer(read_only=True)
+    owning_access_group = OwningOrganizationSerializer(read_only=True)
+    attachment = MediaSerializer(read_only=True)
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = WorkRequest
+        fields = '__all__'
+
+
+class WorkRequestStatusSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = WorkRequestStatus
+        fields = '__all__'
+
+
+class WorkRequestStatusExtendedSerializer(serializers.ModelSerializer):
+    work_request_id = WorkRequestSerializer(read_only=True)
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = WorkRequestStatus
+        fields = '__all__'
+
+
+class MeasurementIdentifierSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = MeasurementIdentifier
+        fields = '__all__'
+
+
+class MeasurementIdentifierExtendedSerializer(serializers.ModelSerializer):
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = MeasurementIdentifier
+        fields = '__all__'
+
+
+class MeasurementTypeSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = MeasurementType
+        fields = '__all__'
+
+
+class MeasurementTypeExtendedSerializer(serializers.ModelSerializer):
+    identifier = MeasurementIdentifierSerializer(read_only=True)
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
+    class Meta:
+        model = MeasurementType
+        fields = '__all__'
+
+
 class OperationalReadingSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = OperationalReading
+        fields = '__all__'
+
+
+class OperationalReadingExtendedSerializer(serializers.ModelSerializer):
+    measurement_identifier = MeasurementIdentifierSerializer(read_only=True)
+    measurement_type = MeasurementTypeSerializer(read_only=True)
+    owning_organization = OwningOrganizationSerializer(read_only=True)
+    record_by = CustomUserSerializer(read_only=True)
+    modified_by = CustomUserSerializer(read_only=True)
+    
     class Meta:
         model = OperationalReading
         fields = '__all__'

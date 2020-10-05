@@ -11,24 +11,108 @@ from rest_framework_extensions.mixins import NestedViewSetMixin
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import (
+    OwningOrganization,
+    Bo,
     Maintenance,
     IssueType,
     WorkOrder,
     WorkActivity,
     WorkActivityTeam,
+    WorkClass,
+    WorkCategory,
     WorkRequest,
+    WorkRequestStatus,
+    MeasurementIdentifier,
+    MeasurementType,
     OperationalReading
 )
 
 from .serializers import (
+    OwningOrganizationSerializer,
+    OwningOrganizationExtendedSerializer,
+    BoSerializer,
+    BoExtendedSerializer,
     MaintenanceSerializer,
     IssueTypeSerializer,
     WorkOrderSerializer,
     WorkActivitySerializer,
+    WorkActivityExtendedSerializer,
     WorkActivityTeamSerializer,
+    WorkClassSerializer,
+    WorkClassExtendedSerializer,
+    WorkCategorySerializer,
+    WorkCategoryExtendedSerializer,
     WorkRequestSerializer,
-    OperationalReadingSerializer
+    WorkRequestExtendedSerializer,
+    WorkRequestStatusSerializer,
+    WorkRequestStatusExtendedSerializer,
+    MeasurementIdentifierSerializer,
+    MeasurementIdentifierExtendedSerializer,
+    MeasurementTypeSerializer,
+    MeasurementTypeExtendedSerializer,
+    OperationalReadingSerializer,
+    OperationalReadingExtendedSerializer
 )
+
+class OwningOrganizationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = OwningOrganization.objects.all()
+    serializer_class = OwningOrganizationSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'name', 'description', 'detail_description', 'record_by', 'modified_by'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = OwningOrganization.objects.all()
+        return queryset
+
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = OwningOrganization.objects.all()
+        serializer_class = OwningOrganizationExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
+
+class BoViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = Bo.objects.all()
+    serializer_class = BoSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'name', 'description', 'status', 'record_by', 'modified_by'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = Bo.objects.all()
+        return queryset
+
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = Bo.objects.all()
+        serializer_class = BoExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
 
 class MaintenanceViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Maintenance.objects.all()
@@ -181,6 +265,14 @@ class WorkActivityViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         """
         return queryset
 
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = WorkActivity.objects.all()
+        serializer_class = WorkActivityExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
 
 class WorkActivityTeamViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkActivityTeam.objects.all()
@@ -221,14 +313,72 @@ class WorkActivityTeamViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return queryset
 
 
+class WorkClassViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = WorkClass.objects.all()
+    serializer_class = WorkClassSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'name', 'description', 'record_by', 'modified_by'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = WorkClass.objects.all()
+        return queryset
+
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = WorkClass.objects.all()
+        serializer_class = WorkClassExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
+
+class WorkCategoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = WorkCategory.objects.all()
+    serializer_class = WorkCategorySerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'name', 'description', 'detail_description', 'status', 'record_by', 'modified_by'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = WorkCategory.objects.all()
+        return queryset
+
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = WorkCategory.objects.all()
+        serializer_class = WorkCategoryExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
+
 class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkRequest.objects.all()
     serializer_class = WorkRequestSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'asset',
-        'issue_type',
-        'created_at'
+        'description', 'long_description', 'record_by', 'modified_by'
     ]
 
     def get_permissions(self):
@@ -259,14 +409,111 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         """
         return queryset  
 
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = WorkRequest.objects.all()
+        serializer_class = WorkRequestExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
+
+class WorkRequestStatusViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = WorkRequestStatus.objects.all()
+    serializer_class = WorkRequestStatusSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'work_request_id', 'status', 'record_by', 'modified_by'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = WorkRequestStatus.objects.all()
+        return queryset
+
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = WorkRequestStatus.objects.all()
+        serializer_class = WorkRequestStatusExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
+
+class MeasurementIdentifierViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = MeasurementIdentifier.objects.all()
+    serializer_class = MeasurementIdentifierSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'name', 'description', 'detail_description', 'record_by', 'modified_by'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = MeasurementIdentifier.objects.all()
+        return queryset
+
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = MeasurementIdentifier.objects.all()
+        serializer_class = MeasurementIdentifierExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
+
+class MeasurementTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = MeasurementType.objects.all()
+    serializer_class = MeasurementTypeSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'identifier', 'name', 'description', 'record_by', 'modified_by'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = MeasurementType.objects.all()
+        return queryset
+
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = MeasurementType.objects.all()
+        serializer_class = MeasurementTypeExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
+
 
 class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = OperationalReading.objects.all()
     serializer_class = OperationalReadingSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'asset',
-        'created_at'
+        'asset_id', 'badge_number', 'record_by', 'modified_by'
     ]
 
     def get_permissions(self):
@@ -296,3 +543,11 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Activity.objects.filter(company=company.id)
         """
         return queryset  
+
+    @action(methods=['GET'], detail=False)
+    def extended(self, request, *args, **kwargs):
+        
+        queryset = OperationalReading.objects.all()
+        serializer_class = OperationalReadingExtendedSerializer(queryset, many=True)
+        
+        return Response(serializer_class.data)
