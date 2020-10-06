@@ -230,11 +230,8 @@ class WorkActivityViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = WorkActivitySerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'completed_at',
-        'asset',
-        'activity_type',
-        'status',
-        'due_date'
+        'record_date',
+        'record_by'
     ]
 
     def get_permissions(self):
