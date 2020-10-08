@@ -4,20 +4,21 @@
       <ion-button (click)="homePage('/technical/tabs/tab1')">
         <ion-icon
           src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem;"
+          style="font-size: 2rem"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title style="font-weight: bold;">
-      TAMS
-    </ion-title>
+    <ion-title style="font-weight: bold"> TAMS Mobile </ion-title>
     <ion-buttons slot="end">
+      <ion-button (click)="clickLogout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
         <ion-badge
           size="small"
           color="danger"
-          style="position: absolute; right: -5px; top: 1px;"
+          style="position: absolute; right: -5px; top: 1px"
           >{{ notificationService.totalnotificationbyuser }}</ion-badge
         >
       </ion-button>
@@ -30,8 +31,8 @@
     <ion-list-header>
       <h3 class="ion-no-margin">
         <ion-icon
-          name="bar-chart-outline"
-          style="display: inline-block; vertical-align: middle;"
+          name="bar-chart"
+          style="display: inline-block; vertical-align: middle"
         ></ion-icon>
         <span
           style="
@@ -48,6 +49,7 @@
             display: inline-block;
             vertical-align: middle;
             margin-left: 0.7rem;
+            font-size: 0.8rem;
           "
           >11</ion-badge
         >
@@ -124,13 +126,13 @@
               <ion-row class="ion-no-padding">
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <p style="color: white;">In Progress</p>
+                    <p style="color: white">In Progress</p>
                   </ion-label>
                 </ion-col>
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <h1 style="color: white;">{{ calculateStatus("IP") }}</h1>
+                    <h1 style="color: white">{{ calculateStatus("IP") }}</h1>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -182,10 +184,7 @@
 
     <ion-list-header>
       <h3 class="ion-no-margin">
-        <ion-icon
-          name="list-outline"
-          style="vertical-align: middle;"
-        ></ion-icon>
+        <ion-icon name="list" style="vertical-align: middle"></ion-icon>
         <span
           style="
             display: inline-block;
@@ -220,7 +219,7 @@
           <ion-card
             class="card-core ion-no-margin"
             mode="ios"
-            (click)="openPage('/technical/work-request')"
+            (click)="openPage('/technical/work-request-list')"
           >
             <ion-card-content class="ion-no-padding">
               <img src="assets/svg/request.svg" />
@@ -239,7 +238,7 @@
           <ion-card
             class="card-core ion-no-margin"
             mode="ios"
-            (click)="openPage('/technical/tabs/tab2')"
+            (click)="openPage('/technical/operational-reading-list')"
           >
             <ion-card-content class="ion-no-padding">
               <img src="assets/svg/reading.svg" />
@@ -256,7 +255,7 @@
           <ion-card
             class="card-core ion-no-margin"
             mode="ios"
-            (click)="openPage('/technical/asset-registration')"
+            (click)="openPage('/technical/asset-registration-list')"
           >
             <ion-card-content class="ion-no-padding">
               <img src="assets/svg/registration.svg" />

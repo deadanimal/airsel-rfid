@@ -1,66 +1,176 @@
 <ion-header mode="ios" class="ion-no-border">
-  <ion-toolbar color="primary" mode="ios" class="ion-no-border toolbar-core">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-button (click)="clickBack()">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem"
+        ></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title style="font-weight: bold;">Work Request</ion-title>
+    <ion-title style="font-weight: bold"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          size="small"
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px"
+          >{{ notificationService.totalnotificationbyuser }}</ion-badge
+        >
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="content-core ion-padding-bottom">
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="takeCamera()">
-      <ion-icon name="camera"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <div class="ion-padding" *ngIf="segmentModal == 'first'">
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list>
+        <ion-fab-button (click)="scanQrCode()">
+          <ion-icon name="scan"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="takeCamera()">
+          <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
 
-  <div class="ion-text-center">
-    <ion-card-title>Create Work Request<br />(WR)</ion-card-title>
+    <ion-grid *ngIf="!capturedSnapURL">
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <ion-col size="3"></ion-col>
+        <ion-col size="6">
+          <div>
+            <ion-img src="assets/image/no-image.png"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col size="3"></ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-card *ngIf="capturedSnapURL">
+      <img [src]="capturedSnapURL" />
+    </ion-card>
+
+    <ion-list class="ion-padding line-input">
+      <ion-item>
+        <ion-label position="stacked">Asset</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Location</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Description</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Detailed Description</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Required By Date</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Downtime Start</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD"></ion-datetime>
+        <ion-datetime displayFormat="HH:mm"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Planner</ion-label>
+        <ion-select>
+          <ion-select-option value="">Please select</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Work Class</ion-label>
+        <ion-select>
+          <ion-select-option value="">Please select</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Work Category</ion-label>
+        <ion-select>
+          <ion-select-option value="">Please select</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Work Priority</ion-label>
+        <ion-select>
+          <ion-select-option value="">Please select</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Requestor</ion-label>
+        <ion-select>
+          <ion-select-option value="">Please select</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Owning Organization</ion-label>
+        <ion-select>
+          <ion-select-option value="">Please select</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-text-center ion-padding">
+      <ion-button color="secondary" (click)="clickBack()">Cancel</ion-button>
+      <ion-button (click)="changeSegment('second')">Next</ion-button>
+    </div>
   </div>
 
-  <ion-grid *ngIf="!capturedSnapURL">
-    <ion-row class="ion-align-items-center ion-justify-content-center">
-      <ion-col size="3"></ion-col>
-      <ion-col size="6">
-        <div>
-          <ion-img src="assets/image/no-image.png"></ion-img>
-        </div>
-      </ion-col>
-      <ion-col size="3"></ion-col>
-    </ion-row>
-  </ion-grid>
+  <div class="ion-padding" *ngIf="segmentModal == 'second'">
+    <h4 class="ion-text-center ion-padding">Contact Informtion</h4>
 
-  <ion-card *ngIf="capturedSnapURL">
-    <img [src]="capturedSnapURL" />
-  </ion-card>
+    <ion-list class="ion-padding line-input">
+      <ion-item>
+        <ion-label position="stacked">First Name</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
 
-  <ion-list class="ion-padding line-input">
-    <ion-item>
-      <ion-label position="stacked">Nama Aset</ion-label>
-      <ion-select placeholder="Sila Pilih" class="ion-text-wrap">
-        <ion-select-option
-          [value]="assetName"
-          *ngFor="let assetName of assetNames"
-          >{{ assetName }}</ion-select-option
-        >
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Last Name</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Jenis Permasalahan</ion-label>
-      <ion-select placeholder="Sila Pilih" class="ion-text-wrap">
-        <ion-select-option>Masalah Kebocoran</ion-select-option>
-        <ion-select-option>Masalah Paip Tersumbat</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Primary Phone</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Huraian</ion-label>
-      <ion-textarea rows="5"></ion-textarea>
-    </ion-item>
-  </ion-list>
+      <ion-item>
+        <ion-label position="stacked">Mobile Phone</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
 
-  <div class="ion-text-center ion-padding">
-    <ion-button (click)="submit()">Submit</ion-button>
+      <ion-item>
+        <ion-label position="stacked">Home Phone</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-text-center ion-padding">
+      <ion-button color="secondary" (click)="changeSegment('first')"
+        >Back</ion-button
+      >
+      <ion-button (click)="submit()">Submit</ion-button>
+    </div>
   </div>
 </ion-content>

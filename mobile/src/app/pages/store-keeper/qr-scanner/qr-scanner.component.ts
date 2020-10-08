@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController, ToastController } from "@ionic/angular";
-import { QRScanner, QRScannerStatus } from "@ionic-native/qr-scanner/ngx";
+// import { QRScanner, QRScannerStatus } from "@ionic-native/qr-scanner/ngx";
 
 @Component({
   selector: "app-qr-scanner",
@@ -18,7 +18,7 @@ export class QrScannerComponent implements OnInit {
     public toastCtrl: ToastController,
     private route: ActivatedRoute,
     private router: Router,
-    private qrScanner: QRScanner
+    // private qrScanner: QRScanner
   ) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -31,11 +31,11 @@ export class QrScannerComponent implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter() {
-    this.scan();
+    // this.scan();
   }
 
   ionViewWillLeave() {
-    this.stopScanning();
+    // this.stopScanning();
   }
 
   backButton() {
@@ -47,7 +47,7 @@ export class QrScannerComponent implements OnInit {
     // this.navCtrl.navigateBack("/inventory/stock-receive");
   }
 
-  scan() {
+  /* scan() {
     (window.document.querySelector("ion-app") as HTMLElement).classList.add(
       "cameraView"
     );
@@ -79,7 +79,7 @@ export class QrScannerComponent implements OnInit {
     );
     this.qrScanner.hide();
     this.qrScanner.destroy();
-  }
+  } */
 
   async presentToast() {
     const toast = await this.toastCtrl.create({
@@ -89,7 +89,7 @@ export class QrScannerComponent implements OnInit {
         {
           text: "New Scan",
           handler: () => {
-            this.scan();
+            // this.scan();
           },
         },
       ],

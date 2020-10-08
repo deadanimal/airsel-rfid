@@ -14,12 +14,12 @@
       <ion-button (click)="homePage('/technical/tabs/tab1')">
         <ion-icon
           src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem;"
+          style="font-size: 2rem"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <div class="ion-text-center ion-text-wrap" style="font-weight: bold;">
-      WORK ACTIVITY INFORMATION
+    <div class="ion-text-center ion-text-wrap" style="font-weight: bold">
+      Work Activity Information
     </div>
     <ion-buttons slot="end">
       <ion-button>
@@ -31,7 +31,7 @@
         <ion-badge
           size="small"
           color="danger"
-          style="position: absolute; right: -5px; top: 1px;"
+          style="position: absolute; right: -5px; top: 1px"
           >{{ notificationService.totalnotificationbyuser }}</ion-badge
         >
       </ion-button>
@@ -43,11 +43,11 @@
   <div class="ion-padding">
     <ion-segment [(ngModel)]="type">
       <ion-segment-button value="pending">
-        <ion-label style="font-weight: bold;">New / In Progress</ion-label>
+        <ion-label style="font-weight: bold">New / In Progress</ion-label>
         <ion-icon name="business"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="completed">
-        <ion-label style="font-weight: bold;">Completed</ion-label>
+        <ion-label style="font-weight: bold">Completed</ion-label>
         <ion-icon name="briefcase"></ion-icon>
       </ion-segment-button>
     </ion-segment>
@@ -105,7 +105,10 @@
             </ion-row>
           </ion-grid>
         </ion-list>
-        <ion-card *ngFor="let pending of pendings" [color]="pendingColor(pending.status)">
+        <ion-card
+          *ngFor="let pending of pendings"
+          [color]="pendingColor(pending.status)"
+        >
           <ion-card-header>
             <ion-fab horizontal="end">
               <ion-fab-button
@@ -116,17 +119,25 @@
                 <ion-icon name="build"></ion-icon>
               </ion-fab-button>
             </ion-fab>
-            <ion-card-title style="color: white;">{{ pending.work_order }}</ion-card-title>
-            <ion-card-subtitle style="color: white;" class="ion-padding-bottom">
-              <p>Due Date: {{ pending.due_date | date }}</p>
-              <p>Completed Date: {{ pending.completed_at | date }}</p>
+            <ion-card-title style="color: white"
+              >Work Activity No: {{ pending.work_order }}</ion-card-title
+            >
+            <ion-card-subtitle style="color: white" class="ion-padding-bottom">
+              <p>
+                Work Activity Type: {{
+                getWorkActivityType(maintenance_work[0].activity_type) }}
+              </p>
+              <p>Required By Date: {{ pending.due_date | date }}</p>
+              <p>Parent Location: Kuala Selangor</p>
+              <p>Badge No: MOTR-0000998</p>
+              <!-- <p>Completed Date: {{ pending.completed_at | date }}</p> -->
             </ion-card-subtitle>
           </ion-card-header>
-          <ion-card-content style="color: white;">
+          <!-- <ion-card-content style="color: white;">
             <div class="ion-text-justify">
               WAMS ID: {{ pending.wams_work_id }}
             </div>
-          </ion-card-content>
+          </ion-card-content> -->
         </ion-card>
       </div>
     </div>
@@ -161,9 +172,7 @@
           <ion-card-title>Work Activity: {{ completed.id }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <div class="ion-text-justify">
-            {{ completed.desc }}
-          </div>
+          <div class="ion-text-justify">{{ completed.desc }}</div>
         </ion-card-content>
       </ion-card>
     </div>

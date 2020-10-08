@@ -1,12 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from "@ionic/angular";
 
-import { AssetDetailPageRoutingModule } from './asset-detail-routing.module';
+import { AssetDetailPageRoutingModule } from "./asset-detail-routing.module";
 
-import { AssetDetailPage } from './asset-detail.page';
+import { AssetDetailPage } from "./asset-detail.page";
+import {
+  MatStepperModule,
+  MatFormFieldModule,
+  MatInputModule,
+} from "@angular/material";
 
 @NgModule({
   imports: [
@@ -14,8 +19,11 @@ import { AssetDetailPage } from './asset-detail.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    AssetDetailPageRoutingModule
+    MatInputModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    AssetDetailPageRoutingModule,
   ],
-  declarations: [AssetDetailPage]
+  declarations: [AssetDetailPage],
 })
 export class AssetDetailPageModule {}

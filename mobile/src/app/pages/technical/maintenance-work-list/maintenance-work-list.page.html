@@ -9,7 +9,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold;">
-      MAINTENANCE WORK
+      Work Activity
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
@@ -36,24 +36,31 @@
             </div>
             <ion-grid>
               <ion-row>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(cmArray, 'NW') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(cmArray, 'IP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(cmArray, 'BL') }}</span
+                    ></ion-badge
+                  >
+                </ion-col>
+                <ion-col size="3">
+                  <ion-badge color="tertiary"
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(cmArray, 'CP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -70,24 +77,31 @@
             </div>
             <ion-grid>
               <ion-row>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(pmArray, 'NW') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(pmArray, 'IP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(pmArray, 'BL') }}</span
+                    ></ion-badge
+                  >
+                </ion-col>
+                <ion-col size="3">
+                  <ion-badge color="tertiary"
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(pmArray, 'CP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -109,24 +123,31 @@
             </div>
             <ion-grid>
               <ion-row>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(itcArray, 'NW') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(itcArray, 'IP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(itcArray, 'BL') }}</span
+                    ></ion-badge
+                  >
+                </ion-col>
+                <ion-col size="3">
+                  <ion-badge color="tertiary"
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(itcArray, 'CP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -145,24 +166,31 @@
             </div>
             <ion-grid>
               <ion-row>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(pdmArray, 'NW') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(pdmArray, 'IP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(pdmArray, 'BL') }}</span
+                    ></ion-badge
+                  >
+                </ion-col>
+                <ion-col size="3">
+                  <ion-badge color="tertiary"
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(pdmArray, 'CP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -184,24 +212,31 @@
             </div>
             <ion-grid>
               <ion-row>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(dArray, 'NW') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(dArray, 'IP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(dArray, 'BL') }}</span
+                    ></ion-badge
+                  >
+                </ion-col>
+                <ion-col size="3">
+                  <ion-badge color="tertiary"
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(dArray, 'CP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -220,24 +255,31 @@
             </div>
             <ion-grid>
               <ion-row>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(cArray, 'NW') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(cArray, 'IP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(cArray, 'BL') }}</span
+                    ></ion-badge
+                  >
+                </ion-col>
+                <ion-col size="3">
+                  <ion-badge color="tertiary"
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(cArray, 'CP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -259,24 +301,31 @@
             </div>
             <ion-grid>
               <ion-row>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(rArray, 'NW') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(rArray, 'IP') }}</span
                     ></ion-badge
                   >
                 </ion-col>
-                <ion-col size="4">
+                <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
                       >{{ calculateTotalStatus(rArray, 'BL') }}</span
+                    ></ion-badge
+                  >
+                </ion-col>
+                <ion-col size="3">
+                  <ion-badge color="tertiary"
+                    ><span style="color: white;"
+                      >{{ calculateTotalStatus(rArray, 'CP') }}</span
                     ></ion-badge
                   >
                 </ion-col>

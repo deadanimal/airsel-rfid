@@ -95,19 +95,30 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',#'django_multitenant.backends.postgresql',#'django.contrib.gis.db.backends.postgis',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'DISABLE_SERVER_SIDE_CURSORS': True
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'airsel-rfid',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',#'django_multitenant.backends.postgresql',#'django.contrib.gis.db.backends.postgis',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'DISABLE_SERVER_SIDE_CURSORS': True
+#     }
+# }
 
-import dj_database_url
-db_from_env = dj_database_url.config(default=config('DATABASE_URL'), conn_max_age=500)
-DATABASES['default'].update(db_from_env)
 
-if any(db_from_env):
-    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+# import dj_database_url
+# db_from_env = dj_database_url.config(default=config('DATABASE_URL'), conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
+
+# if any(db_from_env):
+#     DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 
 AUTH_PASSWORD_VALIDATORS = [

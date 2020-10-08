@@ -65,6 +65,55 @@ export const TechnicalRoutes: Routes = [
           ),
       },
       {
+        path: "work-activity",
+        loadChildren: () =>
+          import("./work-activity/work-activity.module").then(
+            (m) => m.WorkActivityPageModule
+          ),
+      },
+      {
+        path: "service-history",
+        loadChildren: () =>
+          import("./service-history/service-history.module").then(
+            (m) => m.ServiceHistoryPageModule
+          ),
+      },
+      {
+        path: "work-request-list",
+        loadChildren: () =>
+          import("./work-request-list/work-request-list.module").then(
+            (m) => m.WorkRequestListPageModule
+          ),
+      },
+      {
+        path: "operational-reading",
+        loadChildren: () =>
+          import("./operational-reading/operational-reading.module").then(
+            (m) => m.OperationalReadingPageModule
+          ),
+      },
+      {
+        path: "operational-reading-list",
+        loadChildren: () =>
+          import(
+            "./operational-reading-list/operational-reading-list.module"
+          ).then((m) => m.OperationalReadingListPageModule),
+      },
+      {
+        path: "measurement-type",
+        loadChildren: () =>
+          import("./measurement-type/measurement-type.module").then(
+            (m) => m.MeasurementTypePageModule
+          ),
+      },
+      {
+        path: "asset-registration-list",
+        loadChildren: () =>
+          import(
+            "./asset-registration-list/asset-registration-list.module"
+          ).then((m) => m.AssetRegistrationListPageModule),
+      },
+      {
         path: "qr-scanner",
         component: QrScannerComponent,
       },

@@ -205,7 +205,7 @@ export class AssetRegistrationPage implements OnInit {
     public assetGroupsService: AssetGroupsService,
     public assetTypesService: AssetTypesService,
     public authService: AuthService,
-    private notificationService: NotificationsService,
+    public notificationService: NotificationsService,
     public organisationsService: OrganisationsService,
     public regionsService: RegionsService,
     private router: Router

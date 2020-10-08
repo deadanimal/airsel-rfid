@@ -149,7 +149,7 @@ export class HomePage implements OnInit {
     public modalController: ModalController,
     private router: Router,
     private authService: AuthService,
-    private notificationService: NotificationsService,
+    public notificationService: NotificationsService,
     private userService: UsersService,
     private workactivityService: WorkActivitiesService
   ) {

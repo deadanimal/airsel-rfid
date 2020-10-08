@@ -55,7 +55,7 @@ export class MaintenanceWorkListPage implements OnInit {
     public menu: MenuController,
     private router: Router,
     private zone: NgZone,
-    private notificationService: NotificationsService,
+    public notificationService: NotificationsService,
     private workactivityService: WorkActivitiesService
   ) {
     this.getWorkActivities();

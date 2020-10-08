@@ -13,8 +13,8 @@ import { NativeStorage } from "@ionic-native/native-storage/ngx";
 import { Serial } from "@ionic-native/serial/ngx";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
-// import { QRScanner } from "@ionic-native/qr-scanner/ngx";
+// import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
+import { QRScanner } from "@ionic-native/qr-scanner/ngx";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -39,8 +39,8 @@ import { HttpTokenInterceptor } from "./shared/interceptor/http.token.intercepto
     StatusBar,
     Serial,
     SplashScreen,
-    BarcodeScanner,
-    // QRScanner,
+    // BarcodeScanner,
+    QRScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     // {
     //   provide: HTTP_INTERCEPTORS,

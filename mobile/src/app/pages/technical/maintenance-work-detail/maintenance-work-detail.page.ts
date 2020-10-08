@@ -7,7 +7,7 @@ import {
 } from "@ionic/angular";
 import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 
-import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
+import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 
 @Component({
   selector: "app-maintenance-work-detail",
@@ -45,26 +45,26 @@ export class MaintenanceWorkDetailPage implements OnInit {
   // lists
   pendings = [];
   completeds = [
-    {
-      id: "WORKORDER-2020-00011",
-      desc: "Services have been done at Petaling zone at......",
-    },
-    {
-      id: "WORKORDER-2020-00009",
-      desc: "Kuala Lumpur service have been completed at......",
-    },
-    {
-      id: "WORKORDER-2020-00007",
-      desc: "Sepang zone water disruption have been lifted off at......",
-    },
-    {
-      id: "WORKORDER-2020-00006",
-      desc: "Gombak zone have been completely run so far so good......",
-    },
-    {
-      id: "WORKORDER-2020-00005",
-      desc: "Hulu Langat area have back to normal......",
-    },
+    // {
+    //   id: "WORKORDER-2020-00011",
+    //   desc: "Services have been done at Petaling zone at......",
+    // },
+    // {
+    //   id: "WORKORDER-2020-00009",
+    //   desc: "Kuala Lumpur service have been completed at......",
+    // },
+    // {
+    //   id: "WORKORDER-2020-00007",
+    //   desc: "Sepang zone water disruption have been lifted off at......",
+    // },
+    // {
+    //   id: "WORKORDER-2020-00006",
+    //   desc: "Gombak zone have been completely run so far so good......",
+    // },
+    // {
+    //   id: "WORKORDER-2020-00005",
+    //   desc: "Hulu Langat area have back to normal......",
+    // },
   ];
   approvals = [
     {
@@ -98,6 +98,24 @@ export class MaintenanceWorkDetailPage implements OnInit {
       status: "pending",
     },
   ];
+  workactivitytypes = [
+    {
+      value: "PM",
+      display_name: "PREVENTIVE-MAINTENANCE",
+    },
+    {
+      value: "PI",
+      display_name: "PUMP-INSPECTION",
+    },
+    {
+      value: "MI",
+      display_name: "MOTOR-INSPECTION",
+    },
+    {
+      value: "SP",
+      display_name: "STARTER-PANEL-INSPECTION",
+    },
+  ];
 
   constructor(
     public alertController: AlertController,
@@ -105,7 +123,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
     public modalController: ModalController,
     private route: ActivatedRoute,
     private router: Router,
-    private notificationService: NotificationsService,
+    public notificationService: NotificationsService,
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -202,22 +220,31 @@ export class MaintenanceWorkDetailPage implements OnInit {
     await alert.present();
   }
 
+  homePage(path: string) {
+    this.router.navigate([path]);
+  }
+
   clickWorkActivity(work_order) {
     let navigationExtras: NavigationExtras = {
       state: {
-        work_order
-      }
+        work_order,
+      },
     };
-    this.router.navigate(['/technical/work-order'], navigationExtras);
-  }
-
-  homePage(path: string) {
-    this.router.navigate([path]);
+    // this.router.navigate(['/technical/work-order'], navigationExtras);
+    // this.router.navigate(["/technical/qr-scanner"], navigationExtras);
+    this.router.navigate(["/technical/work-activity", navigationExtras]);
   }
 
   pendingColor(status: string) {
     if (status == "NW") return "success";
     if (status == "IP") return "warning";
     if (status == "BL") return "danger";
+  }
+
+  getWorkActivityType(value) {
+    let result = this.workactivitytypes.find((obj) => {
+      return obj.value == value;
+    });
+    return result.display_name;
   }
 }

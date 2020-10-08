@@ -25,7 +25,7 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
     public menu: MenuController,
     private router: Router,
-    private notificationService: NotificationsService,
+    public notificationService: NotificationsService,
     private userService: UsersService
   ) {    
     this.userFormGroup = this.formBuilder.group({

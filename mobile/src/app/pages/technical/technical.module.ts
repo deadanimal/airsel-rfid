@@ -8,6 +8,10 @@ import { IonicModule } from "@ionic/angular";
 import { TechnicalRoutes } from "./technical.routing";
 import { InventoryInfoPageModule } from './inventory-info/inventory-info.module';
 import { QrScannerComponent } from './qr-scanner/qr-scanner.component';
+import { ServiceHistoryPageModule } from './service-history/service-history.module';
+import { WorkRequestPageModule } from './work-request/work-request.module';
+import { OperationalReadingPageModule } from './operational-reading/operational-reading.module';
+import { MeasurementTypePageModule } from './measurement-type/measurement-type.module';
 
 @NgModule({
   declarations: [QrScannerComponent],
@@ -16,6 +20,10 @@ import { QrScannerComponent } from './qr-scanner/qr-scanner.component';
     // BrowserModule,
     CommonModule,
     InventoryInfoPageModule,
+    ServiceHistoryPageModule,
+    WorkRequestPageModule,
+    OperationalReadingPageModule,
+    MeasurementTypePageModule,
     IonicModule.forRoot(),
     LeafletModule.forRoot(),
     RouterModule.forChild(TechnicalRoutes)

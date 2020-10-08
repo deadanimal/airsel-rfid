@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 import { AlertController, MenuController } from '@ionic/angular';
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
+
+import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 
 @Component({
   selector: 'app-work-request',
@@ -21,9 +24,13 @@ export class WorkRequestPage implements OnInit {
   ];
   capturedSnapURL: string;
 
+  segmentModal = "first";
+
   constructor(
     public alertController: AlertController,
     public menu: MenuController,
+    public notificationService: NotificationsService,
+    private router: Router,
     // private barcodeScanner: BarcodeScanner
     private camera: Camera,
   ) { }
@@ -33,6 +40,13 @@ export class WorkRequestPage implements OnInit {
   }
 
   scanQrCode() {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        link: "/technical/work-request",
+      },
+    };
+    this.router.navigate(["/technical/qr-scanner"], navigationExtras);
+
     // this.barcodeScanner
     //   .scan()
     //   .then(barcodeData => {
@@ -70,10 +84,30 @@ export class WorkRequestPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Work Request',
       message: 'Your work request have successfully submitted into the system. Thank you.',
-      buttons: ['OK']
+      buttons: [
+        {
+          text: "OK",
+          handler: () => {
+            this.clickBack();
+          }
+        }
+      ]
     });
 
     await alert.present();  
+  }
+
+  clickBack() {
+    this.router.navigate(["/technical/work-request-list"]);
+  }
+
+  openNotification() {
+    this.menu.enable(true, "menuNotification");
+    this.menu.open("menuNotification");
+  }
+
+  changeSegment(segment: string) {
+    this.segmentModal = segment;
   }
 
 }

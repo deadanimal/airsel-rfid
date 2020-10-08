@@ -99,7 +99,6 @@ from operations.views import (
     WorkCategoryViewSet,
     WorkRequestViewSet,
     WorkRequestStatusViewSet,
-    MeasurementIdentifierViewSet,
     MeasurementTypeViewSet
 )
 
@@ -149,10 +148,6 @@ work_requests_router = router.register(
 
 work_request_statuses_router = router.register(
     'work-request-statuses', WorkRequestStatusViewSet
-)
-
-measurement_identifiers_router = router.register(
-    'measurement-identifiers', MeasurementIdentifierViewSet
 )
 
 measurement_types_router = router.register(

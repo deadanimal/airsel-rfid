@@ -12,6 +12,7 @@ import { UsersService } from 'src/app/shared/services/users/users.service';
 export class WorkOrderPage implements OnInit {
   // Datas
   work_order = {
+    work_order: "",
     activity_type: "",
     asset: "",
     completed_at: "",
@@ -30,7 +31,7 @@ export class WorkOrderPage implements OnInit {
     public menu: MenuController,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UsersService
+    public userService: UsersService
   ) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {

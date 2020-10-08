@@ -22,7 +22,6 @@ from .models import (
     WorkCategory,
     WorkRequest,
     WorkRequestStatus,
-    MeasurementIdentifier,
     MeasurementType,
     OperationalReading
 )
@@ -46,8 +45,6 @@ from .serializers import (
     WorkRequestExtendedSerializer,
     WorkRequestStatusSerializer,
     WorkRequestStatusExtendedSerializer,
-    MeasurementIdentifierSerializer,
-    MeasurementIdentifierExtendedSerializer,
     MeasurementTypeSerializer,
     MeasurementTypeExtendedSerializer,
     OperationalReadingSerializer,
@@ -382,7 +379,7 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [AllowAny]
         else:
-            permission_classes = [AllowAny]
+            permission_classes = [IsAuthenticated]
 
         return [permission() for permission in permission_classes]    
 
@@ -445,36 +442,6 @@ class WorkRequestStatusViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return Response(serializer_class.data)
 
 
-class MeasurementIdentifierViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
-    queryset = MeasurementIdentifier.objects.all()
-    serializer_class = MeasurementIdentifierSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = [
-        'name', 'description', 'detail_description', 'record_by', 'modified_by'
-    ]
-
-    def get_permissions(self):
-        if self.action == 'list':
-            permission_classes = [AllowAny]
-        else:
-            permission_classes = [AllowAny]
-
-        return [permission() for permission in permission_classes]    
-
-    
-    def get_queryset(self):
-        queryset = MeasurementIdentifier.objects.all()
-        return queryset
-
-    @action(methods=['GET'], detail=False)
-    def extended(self, request, *args, **kwargs):
-        
-        queryset = MeasurementIdentifier.objects.all()
-        serializer_class = MeasurementIdentifierExtendedSerializer(queryset, many=True)
-        
-        return Response(serializer_class.data)
-
-
 class MeasurementTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = MeasurementType.objects.all()
     serializer_class = MeasurementTypeSerializer
@@ -517,7 +484,7 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [AllowAny]
         else:
-            permission_classes = [AllowAny]
+            permission_classes = [IsAuthenticated]
 
         return [permission() for permission in permission_classes]    
 
