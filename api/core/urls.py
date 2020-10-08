@@ -221,6 +221,15 @@ users_router = router.register(
     'users', CustomUserViewSet
 )
 
+# Wams app
+from wams.views import (
+    WamsViewSet
+)
+
+wams_router = router.register(
+    'wams', WamsViewSet
+)
+
 urlpatterns = [
     url(r'^email-verification/$',
         TemplateView.as_view(template_name="email_verification.html"),

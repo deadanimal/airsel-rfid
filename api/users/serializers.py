@@ -19,6 +19,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = (
             'id',
+            'employee_id',
             'username',
             'email',
             'first_name',
@@ -26,6 +27,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'phone_no',
             'ic_number',
             'user_type',
+            'job_title',
             'status',
         )
         read_only_fields = ('email', 'id')

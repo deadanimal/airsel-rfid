@@ -259,9 +259,9 @@ class WorkRequestStatus(models.Model):
     work_request_id = models.ForeignKey(WorkRequest, on_delete=models.CASCADE, related_name='work_request_status_work_request_id', null=True)
     status = models.CharField(max_length=50, default='NA')
     
-    record_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_record_by', null=True)
+    record_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='work_request_status_record_by', null=True)
     record_date = models.DateTimeField(auto_now_add=True)
-    modified_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_modified_by', null=True)
+    modified_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='work_request_status_modified_by', null=True)
     modified_date = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -287,7 +287,7 @@ class MeasurementType(models.Model):
         ordering = ['-record_date']
 
     def __str__(self):
-        return self.name
+        return self.measurement_identifier
 
 
 class OperationalReading(models.Model):
