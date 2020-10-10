@@ -20,7 +20,7 @@ def get_employee(url, headers, from_date, to_date):
     response = requests.request("POST", url, data=payload, headers=headers)
     response_xml = response.content
     print('response_xml', response_xml)
-    middleware_response_json = json.loads(
-        json.dumps(xmltodict.parse(response_xml)))
-    return middleware_response_json['env:Envelope']['env:Body']['ouaf:ExtractEmployee']['ouaf:results']
+    return response_xml
+    #middleware_response_json = json.loads(json.dumps(xmltodict.parse(response_xml)))
+    #return middleware_response_json['env:Envelope']['env:Body']['ouaf:ExtractEmployee']['ouaf:results']
     # return middleware_response_json

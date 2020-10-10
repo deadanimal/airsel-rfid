@@ -55,7 +55,7 @@ class WamsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     
     def get_queryset(self):
-         print('Version baru')
+        print('Version baru')
         queryset = Wams.objects.all()
         return queryset
 
@@ -91,6 +91,7 @@ class WamsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         if request_service_name == 'getEmployee':
             middleware_call = get_employee(url_employee, headers, '', '')
+            print(middleware_call)
             json_response = {
                 'result': { k.replace('ouaf:', ''): v for k, v in middleware_call.items() }
             }

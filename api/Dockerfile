@@ -2,6 +2,7 @@ FROM osgeo/gdal:ubuntu-full-latest
 
 ENV APP_ROOT /src
 ENV CONFIG_ROOT /config
+ENV PYTHONUNBUFFERED=1
 
 # Install dependencies
 RUN apt-get update
