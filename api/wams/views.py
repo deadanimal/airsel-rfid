@@ -55,6 +55,7 @@ class WamsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     
     def get_queryset(self):
+         print('Version baru')
         queryset = Wams.objects.all()
         return queryset
 
@@ -63,6 +64,10 @@ class WamsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         call_json = json.loads(request.body)
         request_service_name = call_json['service_name']
+        print('herehehheheh')
+        print('Version baru')
+
+        # print(call_json)
 
         url_employee = 'https://pasb-dev-uwa-iws.oracleindustry.com:443/ouaf/webservices/CM-EMPLOYEE'
         url_work_order_activity = 'https://pasb-dev-uwa-iws.oracleindustry.com:443/ouaf/webservices/CM-WORKORDERACTIVITY'
@@ -78,6 +83,11 @@ class WamsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             'content-type': 'text/xml;charset=UTF-8',
             'authorization': 'Basic ' + base64_auth
         }
+
+        print('header', headers)
+        # print('')
+
+        # print(call_json)
 
         if request_service_name == 'getEmployee':
             middleware_call = get_employee(url_employee, headers, '', '')
@@ -102,7 +112,7 @@ class WamsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         elif request_service_name == 'getAssetSyncOutbound':
             middleware_call = get_assetsyncoutbound(url_asset_sync_outbound, headers, '', '')
-
+            # print(middleware_call)
             middleware_list = []
             for item in middleware_call:
                 new_json = {}
@@ -114,6 +124,7 @@ class WamsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             json_response = {
                 'result': middleware_list#middleware_call
             }
+            # print(json.dump(json_response))
 
         return JsonResponse(json_response)
         
