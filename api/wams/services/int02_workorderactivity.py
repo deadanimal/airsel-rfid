@@ -5,7 +5,7 @@ import xmltodict
 
 def get_workorderactivity(url, headers, from_date, to_date):
 
-    payload = payload = """
+    payload = """
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cm="http://ouaf.oracle.com/webservices/cm/CM-WORKORDERACTIVITY">
    <soapenv:Header/>
    <soapenv:Body>
