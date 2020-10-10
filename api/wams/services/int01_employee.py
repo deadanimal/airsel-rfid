@@ -4,7 +4,7 @@ import xmltodict
 
 
 def get_employee(url, headers, from_date, to_date):
-
+    print('kekjaskjfasf')
     payload = payload = """
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cm="http://ouaf.oracle.com/webservices/cm/CM-EMPLOYEE">
    <soapenv:Header/>
@@ -19,6 +19,7 @@ def get_employee(url, headers, from_date, to_date):
 
     response = requests.request("POST", url, data=payload, headers=headers)
     response_xml = response.content
+    print('response_xml', response_xml)
     middleware_response_json = json.loads(
         json.dumps(xmltodict.parse(response_xml)))
     return middleware_response_json['env:Envelope']['env:Body']['ouaf:ExtractEmployee']['ouaf:results']
