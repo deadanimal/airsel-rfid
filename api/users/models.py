@@ -23,6 +23,9 @@ class CustomUser(AbstractUser):
     phone_no = PhoneNumberField(blank=True, null=True)
     job_title = models.CharField(max_length=50, default='NA')
     status = models.BooleanField(default=True)
+    service_area = models.CharField(max_length=50, blank=True)
+    crewshift_id = models.CharField(max_length=50, blank=True)
+    department = models.CharField(max_length=50, blank=True)
 
     USER_TYPE = [
         ('AM', 'Asset Management System'),
