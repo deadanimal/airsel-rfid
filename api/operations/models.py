@@ -111,6 +111,7 @@ class WorkActivity(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bo_status = models.CharField(max_length=100, default='NA')
     required_by_date = models.DateField(default=datetime.date.today)
+    parent_location = models.CharField(max_length=100, default='NA')
     activity_id = models.CharField(max_length=50, default='NA')
     work_class = models.CharField(max_length=100, default='NA')
     work_category = models.CharField(max_length=100, default='NA')
