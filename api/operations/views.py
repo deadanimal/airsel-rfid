@@ -379,7 +379,7 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [AllowAny]
         else:
-            permission_classes = [IsAuthenticated]
+            permission_classes = [AllowAny]
 
         return [permission() for permission in permission_classes]    
 
@@ -484,7 +484,7 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         if self.action == 'list':
             permission_classes = [AllowAny]
         else:
-            permission_classes = [IsAuthenticated]
+            permission_classes = [AllowAny]
 
         return [permission() for permission in permission_classes]    
 
