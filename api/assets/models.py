@@ -287,25 +287,8 @@ class Asset(models.Model):
         }
     )
 
-    sub_category_1 = models.ForeignKey(
-        AssetGroup,
-        on_delete=models.CASCADE,
-        null=True,
-        related_name='asset_sub_category_1',
-        limit_choices_to={
-            'category': 'S1'
-        }
-    )
-
-    sub_category_2 = models.ForeignKey(
-        AssetGroup,
-        on_delete=models.CASCADE,
-        null=True,
-        related_name='asset_sub_category_2',
-        limit_choices_to={
-            'category': 'S2'
-        }
-    )
+    sub_category_1 = models.CharField(max_length=100, blank=True, default='NA')
+    sub_category_2 = models.CharField(max_length=100, blank=True, default='NA')
 
     asset_description = models.CharField(max_length=100, default='NA')
     type_asset = models.ForeignKey(

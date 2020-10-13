@@ -31,6 +31,7 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = AssetSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
+        'badge_number',
         'purchased_at',
         'is_active',
         'owning_department',
