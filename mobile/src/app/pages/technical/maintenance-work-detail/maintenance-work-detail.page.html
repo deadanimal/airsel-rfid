@@ -11,7 +11,7 @@
   </ion-fab> -->
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
-      <ion-button (click)="homePage('/technical/tabs/tab1')">
+      <ion-button (click)="clickBack()">
         <ion-icon
           src="../../../../assets/icon/air-selangor-icon.svg"
           style="font-size: 2rem"
@@ -19,7 +19,7 @@
       </ion-button>
     </ion-buttons>
     <div class="ion-text-center ion-text-wrap" style="font-weight: bold">
-      Work Activity Information
+      Work Activity Information - {{ status }}
     </div>
     <ion-buttons slot="end">
       <ion-button>
@@ -40,7 +40,31 @@
 </ion-header>
 
 <ion-content class="content-core">
-  <div class="ion-padding">
+  <ion-card *ngFor="let workactivity of workactivities">
+    <ion-card-header>
+      <ion-fab horizontal="end">
+        <ion-fab-button
+          size="small"
+          color="light"
+          (click)="clickWorkActivity(workactivity)"
+        >
+          <ion-icon name="build"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <ion-card-title
+        >Work Activity No: {{ workactivity.activity_id }}</ion-card-title
+      >
+    </ion-card-header>
+    <ion-card-content>
+      <p>Status: {{ workactivity.bo_status }}</p>
+      <p>Asset ID: {{ workactivity.asset_id }}</p>
+      <p>Required By Date: {{ workactivity.required_by_date }}</p>
+      <p>Parent Location: {{ workactivity.parent_location }}</p>
+      <p class="ion-text-justify">Description: {{ workactivity.description }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <div class="ion-padding">
     <ion-segment [(ngModel)]="type">
       <ion-segment-button value="pending">
         <ion-label style="font-weight: bold">New / In Progress</ion-label>
@@ -51,9 +75,9 @@
         <ion-icon name="briefcase"></ion-icon>
       </ion-segment-button>
     </ion-segment>
-  </div>
+  </div> -->
 
-  <div [ngSwitch]="type">
+  <!-- <div [ngSwitch]="type">
     <div *ngSwitchCase="'pending'">
       <div>
         <ion-list class="line-input">
@@ -107,7 +131,7 @@
         </ion-list>
         <ion-card
           *ngFor="let pending of pendings"
-          [color]="pendingColor(pending.status)"
+          [color]="pendingColor(pending.bo_status)"
         >
           <ion-card-header>
             <ion-fab horizontal="end">
@@ -118,31 +142,29 @@
               >
                 <ion-icon name="build"></ion-icon>
               </ion-fab-button>
-            </ion-fab>
-            <ion-card-title style="color: white"
-              >Work Activity No: {{ pending.work_order }}</ion-card-title
-            >
-            <ion-card-subtitle style="color: white" class="ion-padding-bottom">
-              <p>
-                Work Activity Type: {{
-                getWorkActivityType(maintenance_work[0].activity_type) }}
-              </p>
-              <p>Required By Date: {{ pending.due_date | date }}</p>
-              <p>Parent Location: Kuala Selangor</p>
-              <p>Badge No: MOTR-0000998</p>
-              <!-- <p>Completed Date: {{ pending.completed_at | date }}</p> -->
-            </ion-card-subtitle>
-          </ion-card-header>
-          <!-- <ion-card-content style="color: white;">
-            <div class="ion-text-justify">
-              WAMS ID: {{ pending.wams_work_id }}
-            </div>
+            </ion-fab> -->
+  <!-- <ion-card-title>Work Activity No: {{ pending.ACT_ID }}</ion-card-title> -->
+  <!-- <ion-card-title>Work Activity No: {{ pending.activity_id }}</ion-card-title>
+          </ion-card-header> -->
+  <!-- <ion-card-content>
+            <p>Status: {{ pending.BO_STATUS_CD }}</p>
+            <p>Activity Type: {{ pending.ACT_TYPE_CD }}</p>
+            <p>Required By Date: {{ pending.REQUIRED_BY_DT }}</p>
+            <p>Node ID: {{ pending.NODE_ID }}</p>
+            <p class="ion-text-justify">Description: {{ pending.DESCR100 }}</p>
           </ion-card-content> -->
+  <!-- <ion-card-content>
+            <p>Status: {{ pending.bo_status }}</p>
+            <p>Asset ID: {{ pending.asset_id }}</p>
+            <p>Required By Date: {{ pending.required_by_date }}</p>
+            <p>Parent Location: {{ pending.parent_location }}</p>
+            <p class="ion-text-justify">Description: {{ pending.description }}</p>
+          </ion-card-content>
         </ion-card>
       </div>
-    </div>
+    </div> -->
 
-    <div *ngSwitchCase="'completed'">
+  <!-- <div *ngSwitchCase="'completed'">
       <ion-list class="line-input">
         <ion-grid class="ion-padding-start ion-padding-end">
           <ion-row>
@@ -169,12 +191,33 @@
       </ion-list>
       <ion-card *ngFor="let completed of completeds">
         <ion-card-header>
-          <ion-card-title>Work Activity: {{ completed.id }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <div class="ion-text-justify">{{ completed.desc }}</div>
+          <ion-fab horizontal="end">
+            <ion-fab-button
+              size="small"
+              color="light"
+              (click)="clickWorkActivity(completed)"
+            >
+              <ion-icon name="eye"></ion-icon>
+            </ion-fab-button>
+          </ion-fab> -->
+  <!-- <ion-card-title>Work Activity No: {{ completed.ACT_ID }}</ion-card-title> -->
+  <!-- <ion-card-title>Work Activity No: {{ completed.activity_id }}</ion-card-title>
+        </ion-card-header> -->
+  <!-- <ion-card-content>
+          <p>Status: {{ completed.BO_STATUS_CD }}</p>
+          <p>Activity Type: {{ completed.ACT_TYPE_CD }}</p>
+          <p>Required By Date: {{ completed.REQUIRED_BY_DT }}</p>
+          <p>Node ID: {{ completed.NODE_ID }}</p>
+          <p class="ion-text-justify">Description: {{ completed.DESCR100 }}</p>
+        </ion-card-content> -->
+  <!-- <ion-card-content>
+          <p>Status: {{ completed.bo_status }}</p>
+          <p>Asset ID: {{ completed.asset_id }}</p>
+          <p>Required By Date: {{ completed.required_by_date }}</p>
+          <p>Parent Location: {{ completed.parent_location }}</p>
+          <p class="ion-text-justify">Description: {{ completed.description }}</p>
         </ion-card-content>
       </ion-card>
     </div>
-  </div>
+  </div> -->
 </ion-content>

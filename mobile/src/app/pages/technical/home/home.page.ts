@@ -1,3 +1,4 @@
+import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import {
@@ -8,7 +9,7 @@ import {
 import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 
 import { AuthService } from "src/app/shared/services/auth/auth.service";
-import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
+import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { UsersService } from "src/app/shared/services/users/users.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 
@@ -16,6 +17,7 @@ import { WorkActivitiesService } from "src/app/shared/services/work-activities/w
   selector: "app-home",
   templateUrl: "./home.page.html",
   styleUrls: ["./home.page.scss"],
+  providers: [DatePipe],
 })
 export class HomePage implements OnInit {
   type: string = "pending";
@@ -144,6 +146,7 @@ export class HomePage implements OnInit {
   };
 
   constructor(
+    private datePipe: DatePipe,
     public alertController: AlertController,
     public menu: MenuController,
     public modalController: ModalController,
@@ -257,7 +260,22 @@ export class HomePage implements OnInit {
   calculateStatus(status: string) {
     let count = 0;
     for (let i = 0; i < this.workactivities.length; i++) {
-      if (this.workactivities[i].status === status) count++;
+      if (this.workactivities[i].bo_status === status) count++;
+    }
+    return count;
+  }
+
+  calculateToday(status: string) {
+    let count = 0;
+    for (let i = 0; i < this.workactivities.length; i++) {
+      if (this.workactivities[i].bo_status === status) {
+        let received_date = this.datePipe.transform(
+          this.workactivities[i].record_date,
+          "yyyy-MM-dd"
+        );
+        let to_date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+        if (received_date === to_date) count++;
+      }
     }
     return count;
   }

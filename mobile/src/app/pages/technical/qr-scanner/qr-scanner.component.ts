@@ -12,6 +12,7 @@ export class QrScannerComponent implements OnInit {
   scanSubscription;
   scanText: any;
   link: string;
+  workactivityasset: any; // from page work-activity-asset
 
   constructor(
     public menu: MenuController,
@@ -25,6 +26,8 @@ export class QrScannerComponent implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.link = this.router.getCurrentNavigation().extras.state.link;
         console.log("link", this.link);
+
+        if (this.router.getCurrentNavigation().extras.state.asset) this.workactivityasset = this.router.getCurrentNavigation().extras.state.asset;
       }
     });
   }
@@ -49,6 +52,7 @@ export class QrScannerComponent implements OnInit {
       let navigationExtras: NavigationExtras = {
         state: {
           qrcode: this.scanText,
+          asset: this.workactivityasset
         },
       };
       this.router.navigate([this.link], navigationExtras);

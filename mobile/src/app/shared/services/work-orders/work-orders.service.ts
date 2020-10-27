@@ -62,7 +62,7 @@ export class WorkOrdersService {
   }
 
   filter(field: string): Observable<WorkOrdersModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
     return this.http.get<WorkOrdersModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("WorkOrdersModel", res);

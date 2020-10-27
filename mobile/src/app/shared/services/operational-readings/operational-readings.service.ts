@@ -45,8 +45,8 @@ export class OperationalReadingsService {
     );
   }
 
-  update(body: Form): Observable<OperationalReadingsModel> {
-    return this.http.patch<OperationalReadingsModel>(this.url, body).pipe(
+  update(id: string, body: Form): Observable<OperationalReadingsModel> {
+    return this.http.patch<OperationalReadingsModel>(this.url + id + '/', body).pipe(
       tap((res) => {
         console.log("OperationalReadingsModel", res);
       })
@@ -62,7 +62,7 @@ export class OperationalReadingsService {
   }
 
   filter(field: string): Observable<OperationalReadingsModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
     return this.http.get<OperationalReadingsModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("OperationalReadingsModel", res);

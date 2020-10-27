@@ -70,6 +70,10 @@ const routes: Routes = [
     path: 'asset-detail',
     loadChildren: () => import('./pages/technical/asset-detail/asset-detail.module').then( m => m.AssetDetailPageModule)
   },
+  {
+    path: 'work-activity-asset',
+    loadChildren: () => import('./pages/technical/work-activity-asset/work-activity-asset.module').then( m => m.WorkActivityAssetPageModule)
+  },
 ];
 @NgModule({
   imports: [

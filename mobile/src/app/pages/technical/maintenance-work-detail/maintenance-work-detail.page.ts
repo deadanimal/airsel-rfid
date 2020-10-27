@@ -1,4 +1,10 @@
 import { Component, OnInit } from "@angular/core";
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  FormControl,
+} from "@angular/forms";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import {
   AlertController,
@@ -8,6 +14,7 @@ import {
 import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
+import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 
 @Component({
   selector: "app-maintenance-work-detail",
@@ -15,8 +22,7 @@ import { NotificationsService } from "src/app/shared/services/notifications/noti
   styleUrls: ["./maintenance-work-detail.page.scss"],
 })
 export class MaintenanceWorkDetailPage implements OnInit {
-  type: string = "pending";
-  role;
+  // type: string = "pending";
   category: number = 99;
   startdatePending: any;
   enddatePending: any;
@@ -26,119 +32,87 @@ export class MaintenanceWorkDetailPage implements OnInit {
       name: "All",
     },
     {
-      value: "NW",
+      value: "New",
       name: "New",
     },
     {
-      value: "IP",
+      value: "In Progress",
       name: "In Progress",
     },
     {
-      value: "BL",
+      value: "Backlog",
       name: "Backlog",
     },
   ];
   items: any[];
-  data: any;
-  maintenance_work: any;
+  type = "";
+  status = "";
+  // maintenance_work: any;
 
-  // lists
+  // List
   pendings = [];
-  completeds = [
-    // {
-    //   id: "WORKORDER-2020-00011",
-    //   desc: "Services have been done at Petaling zone at......",
-    // },
-    // {
-    //   id: "WORKORDER-2020-00009",
-    //   desc: "Kuala Lumpur service have been completed at......",
-    // },
-    // {
-    //   id: "WORKORDER-2020-00007",
-    //   desc: "Sepang zone water disruption have been lifted off at......",
-    // },
-    // {
-    //   id: "WORKORDER-2020-00006",
-    //   desc: "Gombak zone have been completely run so far so good......",
-    // },
-    // {
-    //   id: "WORKORDER-2020-00005",
-    //   desc: "Hulu Langat area have back to normal......",
-    // },
-  ];
-  approvals = [
-    {
-      dateOfSubmission: "2020-03-03",
-      assetName: "SLUICE VALVE-SLUICE VALVE-GROUND-200-MM",
-      quantity: "11",
-      status: "approve",
-    },
-    {
-      dateOfSubmission: "2020-03-02",
-      assetName: "SLUICE VALVE-SCOUR VALVE-GROUND-150-MM",
-      quantity: "7",
-      status: "reject",
-    },
-    {
-      dateOfSubmission: "2020-03-01",
-      assetName: "MECHANICAL LEVEL INDICATOR-LEVEL INDICATOR-ABOVE GROUND",
-      quantity: "5",
-      status: "reject",
-    },
-    {
-      dateOfSubmission: "2020-03-01",
-      assetName: "MECHANICAL LEVEL INDICATOR-LEVEL INDICATOR-ABOVE GROUND",
-      quantity: "5",
-      status: "pending",
-    },
-    {
-      dateOfSubmission: "2020-03-01",
-      assetName: "MECHANICAL LEVEL INDICATOR-LEVEL INDICATOR-ABOVE GROUND",
-      quantity: "5",
-      status: "pending",
-    },
-  ];
-  workactivitytypes = [
-    {
-      value: "PM",
-      display_name: "PREVENTIVE-MAINTENANCE",
-    },
-    {
-      value: "PI",
-      display_name: "PUMP-INSPECTION",
-    },
-    {
-      value: "MI",
-      display_name: "MOTOR-INSPECTION",
-    },
-    {
-      value: "SP",
-      display_name: "STARTER-PANEL-INSPECTION",
-    },
-  ];
+  completeds = [];
+  workactivities = [];
+
+  // FormGroup
+  workactivityFormGroup: FormGroup;
 
   constructor(
+    public formBuilder: FormBuilder,
     public alertController: AlertController,
     public menu: MenuController,
     public modalController: ModalController,
     private route: ActivatedRoute,
     private router: Router,
     public notificationService: NotificationsService,
+    private workactivityService: WorkActivitiesService
   ) {
+    this.workactivityFormGroup = this.formBuilder.group({
+      id: new FormControl(""),
+      bo_status: new FormControl(""),
+      asset_id: new FormControl(""),
+      asset_type: new FormControl(""),
+      badge_number: new FormControl(""),
+      serial_number: new FormControl(""),
+      detailed_description: new FormControl(""),
+    });
+
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
-        this.data = this.router.getCurrentNavigation().extras.state.type;
-        this.maintenance_work = this.router.getCurrentNavigation().extras.state.maintenance_work;
+        this.type = this.router.getCurrentNavigation().extras.state.type;
+        this.status = this.router.getCurrentNavigation().extras.state.status;
+        this.workactivities = this.router.getCurrentNavigation().extras.state.work_activity;
 
-        this.pendings = this.maintenance_work.filter((data) => {
-          if (data.status.toString().toLowerCase().indexOf("nw") !== -1)
-            return true;
-          if (data.status.toString().toLowerCase().indexOf("ip") !== -1)
-            return true;
-          if (data.status.toString().toLowerCase().indexOf("bl") !== -1)
-            return true;
-          return false;
-        });
+        // this.pendings = this.maintenance_work.filter((data) => {
+        //   if (data.bo_status.toString().indexOf("New") !== -1) return true;
+        //   if (data.bo_status.toString().indexOf("In Progress") !== -1)
+        //     return true;
+        //   if (data.bo_status.toString().indexOf("Backlog") !== -1) return true;
+        //   return false;
+        // });
+
+        // this.completeds = this.maintenance_work.filter((data) => {
+        //   if (data.bo_status.toString().indexOf("Completed") !== -1)
+        //     return true;
+        //   return false;
+        // });
+
+        // filter status based on BO_STATUS_CD from WAMS
+        // this.pendings = this.maintenance_work.filter((data) => {
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("nw") !== -1)
+        //     return true;
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("ip") !== -1)
+        //     return true;
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("bl") !== -1)
+        //     return true;
+        //   return false;
+        // });
+
+        // this.completeds = this.maintenance_work.filter((data) => {
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("active") !== -1)
+        //     return true;
+        //   return false;
+        // });
       }
     });
   }
@@ -158,7 +132,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
 
     this.pendings = this.pendings.filter((pending) => {
       if (this.category === 99) return true;
-      else return pending.status === this.category;
+      else return pending.bo_status === this.category;
     });
   }
 
@@ -224,27 +198,42 @@ export class MaintenanceWorkDetailPage implements OnInit {
     this.router.navigate([path]);
   }
 
-  clickWorkActivity(work_order) {
+  clickWorkActivity(work_activity) {
+    if (work_activity.bo_status == "New") {
+      this.workactivityFormGroup.patchValue({
+        ...work_activity,
+        bo_status: "In Progress",
+      });
+      this.workactivityService
+        .update(work_activity.id, this.workactivityFormGroup.value)
+        .subscribe(
+          (res) => {
+            console.log("res", res);
+          },
+          (err) => {
+            console.error("err", err);
+          }
+        );
+
+      work_activity.status = "In Progress";
+    }
     let navigationExtras: NavigationExtras = {
       state: {
-        work_order,
+        work_activity: work_activity,
       },
     };
     // this.router.navigate(['/technical/work-order'], navigationExtras);
     // this.router.navigate(["/technical/qr-scanner"], navigationExtras);
-    this.router.navigate(["/technical/work-activity", navigationExtras]);
+    this.router.navigate(["/technical/work-activity"], navigationExtras);
   }
 
   pendingColor(status: string) {
-    if (status == "NW") return "success";
-    if (status == "IP") return "warning";
-    if (status == "BL") return "danger";
+    if (status == "New") return "success";
+    if (status == "In Progress") return "warning";
+    if (status == "Backlog") return "danger";
   }
 
-  getWorkActivityType(value) {
-    let result = this.workactivitytypes.find((obj) => {
-      return obj.value == value;
-    });
-    return result.display_name;
+  clickBack() {
+    this.router.navigate(["/technical/maintenance-work-list"]);
   }
 }

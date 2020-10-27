@@ -48,22 +48,42 @@
               <ion-list class="line-input">
                 <ion-item>
                   <ion-label position="stacked">Name</ion-label>
-                  <ion-input formControlName="name"></ion-input>
+                  <ion-input type="text" readonly formControlName="full_name"></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label position="stacked">Title</ion-label>
-                  <ion-input></ion-input>
+                  <ion-input type="text" readonly formControlName="job_title"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Email</ion-label>
+                  <ion-input type="email" readonly formControlName="email"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Phone No</ion-label>
+                  <ion-input type="tel" readonly formControlName="phone_no"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Service Area</ion-label>
+                  <ion-input type="text" readonly formControlName="service_area"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Crewshift ID</ion-label>
+                  <ion-input type="text" readonly formControlName="crewshift_id"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Employee ID</ion-label>
+                  <ion-input type="text" readonly formControlName="employee_id"></ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label position="stacked">Department</ion-label>
-                  <ion-input></ion-input>
-                </ion-item>
-
-                <ion-item>
-                  <ion-label position="stacked">ID</ion-label>
-                  <ion-input formControlName="id"></ion-input>
+                  <ion-input type="text" readonly formControlName="department"></ion-input>
                 </ion-item>
               </ion-list>
             </form>

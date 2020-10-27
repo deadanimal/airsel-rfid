@@ -62,7 +62,7 @@ export class MaintenancesService {
   }
 
   filter(field: string): Observable<MaintenancesModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
     return this.http.get<MaintenancesModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("MaintenancesModel", res);

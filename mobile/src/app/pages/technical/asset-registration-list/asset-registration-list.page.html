@@ -1,0 +1,63 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="homePage('/technical/tabs/tab1')">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold"> Asset Registration </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          size="small"
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px"
+          >{{ notificationService.totalnotificationbyuser }}</ion-badge
+        >
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-core">
+  <div class="ion-padding">
+    <div class="ion-text-center">
+      <ion-button color="primary" (click)="clickNew()">New Asset</ion-button>
+    </div>
+    <ion-card
+      *ngFor="let assetregistration of assetregistrations; let i = index"
+    >
+      <ion-card-header>
+        <ion-fab horizontal="end">
+          <ion-fab-button
+            size="small"
+            color="primary"
+            (click)="clickEdit(assetregistration)"
+          >
+            <ion-icon name="eye"></ion-icon>
+          </ion-fab-button>
+          <!-- <ion-fab-button
+            size="small"
+            color="danger"
+            (click)="clickRemove(i)"
+          >
+            <ion-icon name="trash"></ion-icon>
+          </ion-fab-button> -->
+        </ion-fab>
+        <ion-card-title
+          >Asset ID <br />{{ assetregistration.wams_asset_id }}</ion-card-title
+        >
+      </ion-card-header>
+      <ion-card-content>
+        <p>Badge Number: {{ assetregistration.badge_number }}</p>
+        <p>Description: {{ assetregistration.name }}</p>
+        <p>Submitted Date: {{ assetregistration.created_at | date:'mediumDate' }}</p>
+        <p>Status: CREATED</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

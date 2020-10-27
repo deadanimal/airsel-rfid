@@ -72,6 +72,13 @@ export const TechnicalRoutes: Routes = [
           ),
       },
       {
+        path: "work-activity-asset",
+        loadChildren: () =>
+          import("./work-activity-asset/work-activity-asset.module").then(
+            (m) => m.WorkActivityAssetPageModule
+          ),
+      },
+      {
         path: "service-history",
         loadChildren: () =>
           import("./service-history/service-history.module").then(

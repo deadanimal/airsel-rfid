@@ -1,0 +1,104 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="clickBack()">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          size="small"
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px"
+          >{{ notificationService.totalnotificationbyuser }}</ion-badge
+        >
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-core">
+  <div class="ion-padding">
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="scanQrCode()">
+        <ion-icon name="scan"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+    <ion-list class="line-input" style="padding-top: 100px">
+      <form [formGroup]="operationalreadingFormGroup">
+        <ion-item>
+          <ion-label position="stacked">Asset ID</ion-label>
+          <ion-input
+            type="text"
+            readonly
+            formControlName="asset_id"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Badge Number</ion-label>
+          <ion-input
+            type="text"
+            readonly
+            formControlName="badge_number"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Parent Location</ion-label>
+          <ion-input
+            type="text"
+            readonly
+            formControlName="parent_location"
+          ></ion-input>
+        </ion-item>
+      </form>
+    </ion-list>
+
+    <ion-item lines="none">
+      <ion-label class="ion-text-start">Measurement Type</ion-label>
+      <ion-button (click)="clickAddMeasurementType()">Add</ion-button>
+    </ion-item>
+
+    <ion-card *ngIf="operationalreadingFormGroup.value.measurement_type">
+      <ion-card-header>
+        <ion-fab horizontal="end">
+          <ion-fab-button
+            size="small"
+            color="primary"
+            (click)="clickEdit(operationalreadingFormGroup.value)"
+          >
+            <ion-icon name="create"></ion-icon>
+          </ion-fab-button>
+          <!-- <ion-fab-button
+            size="small"
+            color="danger"
+            (click)="clickRemove(i)"
+          >
+            <ion-icon name="trash"></ion-icon>
+          </ion-fab-button> -->
+        </ion-fab>
+        <ion-card-title
+          >Measurement Type <br /> {{ operationalreadingFormGroup.value.measurement_type }}</ion-card-title
+        >
+      </ion-card-header>
+      <ion-card-content>
+        <p>Reading Date/Time: {{ operationalreadingFormGroup.value.reading_date_time | date }}</p>
+        <p>Current Value: {{ operationalreadingFormGroup.value.current_value }}</p>
+        <p>Created Date: {{ operationalreadingFormGroup.value.record_date | date:'mediumDate' }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="ion-text-center ion-padding">
+      <ion-button color="light" (click)="clickBack()">Cancel</ion-button>
+      <ion-button color="primary" (click)="submit()">Submit</ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -45,6 +45,7 @@
     "cordova-plugin-qrscanner": "^3.0.1",
     "cordovarduino": "0.0.10",
     "core-js": "^2.5.4",
+    "date-fns": "^2.16.1",
     "ionic4-rating": "^1.0.9",
     "leaflet": "^1.6.0",
     "rxjs": "~6.5.1",

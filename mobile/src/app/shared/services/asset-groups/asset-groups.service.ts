@@ -62,7 +62,7 @@ export class AssetGroupsService {
   }
 
   filter(field: string): Observable<AssetGroupsModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
     return this.http.get<AssetGroupsModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("AssetGroupsModel", res);

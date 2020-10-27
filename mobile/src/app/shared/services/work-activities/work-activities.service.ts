@@ -45,8 +45,8 @@ export class WorkActivitiesService {
     );
   }
 
-  update(body: Form): Observable<WorkActivitiesModel> {
-    return this.http.patch<WorkActivitiesModel>(this.url, body).pipe(
+  update(id: string, body: Form): Observable<WorkActivitiesModel> {
+    return this.http.patch<WorkActivitiesModel>(this.url + id + '/', body).pipe(
       tap((res) => {
         console.log("WorkActivitiesModel", res);
       })
@@ -62,7 +62,7 @@ export class WorkActivitiesService {
   }
 
   filter(field: string): Observable<WorkActivitiesModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
     return this.http.get<WorkActivitiesModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("WorkActivitiesModel", res);

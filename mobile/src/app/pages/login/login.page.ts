@@ -44,8 +44,8 @@ export class LoginPage implements OnInit {
     initialSlide: 0,
     // speed: 4000,
     autoplay: {
-      delay: 4000
-    }
+      delay: 4000,
+    },
   };
 
   constructor(
@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
 
     this.validations_form = this.formBuilder.group({
       username: new FormControl(
-        "",
+        "hafez.azman@airselangor.com",
         Validators.compose([
           Validators.required,
           // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
@@ -70,7 +70,7 @@ export class LoginPage implements OnInit {
         ])
       ),
       password: new FormControl(
-        "",
+        "airselrfid@2020",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),
     });
@@ -78,21 +78,23 @@ export class LoginPage implements OnInit {
 
   login() {
     this.isLoading = true;
-    this.authService.obtainToken(this.validations_form.value, this.isLogin).subscribe(
-      () => {
-        // Success
-        this.isLoading = false;
-      },
-      () => {
-        // Failed
-        this.isLoading = false;
-      },
-      () => {
-        // After
-        this.toastr.openToastr("Welcome back");
-        this.navigateByRole(this.authService.userType);
-      }
-    );
+    this.authService
+      .obtainToken(this.validations_form.value, this.isLogin)
+      .subscribe(
+        () => {
+          // Success
+          this.isLoading = false;
+        },
+        () => {
+          // Failed
+          this.isLoading = false;
+        },
+        () => {
+          // After
+          this.toastr.openToastr("Welcome back");
+          this.navigateByRole(this.authService.userType);
+        }
+      );
 
     /* if (
       this.loginForm.username == "technical" ||

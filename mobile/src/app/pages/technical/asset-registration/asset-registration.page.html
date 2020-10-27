@@ -1,7 +1,7 @@
 <ion-header mode="ios" class="ion-no-border">
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
-      <ion-button (click)="homePage('/technical/tabs/tab1')">
+      <ion-button (click)="clickBack()">
         <ion-icon
           src="../../../../assets/icon/air-selangor-icon.svg"
           style="font-size: 2rem;"
@@ -9,7 +9,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold;">
-      ASSET REGISTRATION
+      Asset Registration
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
@@ -65,7 +65,7 @@
         <ng-template matStepLabel>Asset Hierarchy</ng-template>
         <div class="line-input">
           <ion-item>
-            <ion-label position="stacked">Level 1</ion-label>
+            <ion-label position="stacked">Main Operation</ion-label>
             <ion-select placeholder="Please select" formControlName="level_1">
               <ion-select-option
                 *ngFor="let hierarchylevel1 of hierarchylevel1s"
@@ -79,7 +79,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">Level 2</ion-label>
+            <ion-label position="stacked">Region</ion-label>
             <ion-select placeholder="Please select" formControlName="level_2">
               <ion-select-option
                 *ngFor="let region of regions"
@@ -93,7 +93,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">Level 3</ion-label>
+            <ion-label position="stacked">Operation</ion-label>
             <ion-select placeholder="Please select" formControlName="level_3">
               <ion-select-option
                 *ngFor="let hierarchylevel3 of hierarchylevel3s"
@@ -107,7 +107,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">Level 4</ion-label>
+            <ion-label position="stacked">Parent Location</ion-label>
             <ion-input type="text" formControlName="level_4"></ion-input>
             <!-- <small class="validation_messages"
               >{{ validation_messages.level_4 }}</small
@@ -115,7 +115,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">Level 5</ion-label>
+            <ion-label position="stacked">Process/Function</ion-label>
             <ion-select placeholder="Please select" formControlName="level_5">
               <ion-select-option
                 *ngFor="let hierarchylevel5 of hierarchylevel5s"
@@ -129,7 +129,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">Level 6</ion-label>
+            <ion-label position="stacked">Sub-process/Sub-function</ion-label>
             <ion-select placeholder="Please select" formControlName="level_6">
               <ion-select-option
                 *ngFor="let hierarchylevel6 of hierarchylevel6s"
@@ -188,32 +188,14 @@
 
           <ion-item>
             <ion-label position="stacked">Sub-category 1</ion-label>
-            <ion-select
-              placeholder="Please select"
-              formControlName="sub_category_1"
-            >
-              <ion-select-option
-                *ngFor="let groupsubcategory1 of groupsubcategory1s"
-                [value]="groupsubcategory1.id"
-                >{{ groupsubcategory1.name }}</ion-select-option
-              >
-            </ion-select>
+            <ion-input type="text" formControlName="sub_category_1"></ion-input>
             <!-- <small class="validation_messages"
               >{{ validation_messages.sub_category_1 }}</small
             > -->
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Sub-category 2</ion-label>
-            <ion-select
-              placeholder="Please select"
-              formControlName="sub_category_2"
-            >
-              <ion-select-option
-                *ngFor="let groupsubcategory2 of groupsubcategory2s"
-                [value]="groupsubcategory2.id"
-                >{{ groupsubcategory2.name }}</ion-select-option
-              >
-            </ion-select>
+            <ion-input type="text" formControlName="sub_category_2"></ion-input>
             <!-- <small class="validation_messages"
               >{{ validation_messages.sub_category_2 }}</small
             > -->
@@ -631,6 +613,6 @@
 
   <div class="ion-padding ion-text-center">
     <ion-button color="primary" (click)="register()">Register</ion-button>
-    <ion-button color="light" (click)="homePage('/technical/tabs/tab1')">Cancel</ion-button>
+    <ion-button color="light" (click)="clickBack()">Cancel</ion-button>
   </div>
 </ion-content>

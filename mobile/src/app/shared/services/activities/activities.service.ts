@@ -62,7 +62,7 @@ export class ActivitiesService {
   }
 
   filter(field: string): Observable<ActivitiesModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
     return this.http.get<ActivitiesModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("ActivitiesModel", res);

@@ -62,7 +62,7 @@ export class RegionsService {
   }
 
   filter(field: string): Observable<RegionsModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
     return this.http.get<RegionsModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("RegionsModel", res);

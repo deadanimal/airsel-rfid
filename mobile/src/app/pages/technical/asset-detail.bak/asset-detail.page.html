@@ -1,0 +1,231 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="homePage('/technical/tabs/tab1')">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem;"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold;">
+      Asset Detail
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          size="small"
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px;"
+          >{{ notificationService.totalnotificationbyuser }}</ion-badge
+        >
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-core">
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="scanQrCode()">
+      <ion-icon name="scan"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="3"></ion-col>
+      <ion-col size="6">
+        <div>
+          <ion-img src="assets/image/no-image.png"></ion-img>
+        </div>
+      </ion-col>
+      <ion-col size="3"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <form [formGroup]="assetdetailFormGroup">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Equipment info
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list class="line-input">
+          <ion-item>
+            <ion-label position="stacked">RFID ID</ion-label>
+            <ion-input readonly formControlName="rfid_id"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">QR CODE ID</ion-label>
+            <ion-input readonly formControlName="qrcode_id"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Asset ID</ion-label>
+            <ion-input readonly formControlName="id"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-list class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Asset Type</ion-label>
+            <ion-select
+              formControlName="primary_category"
+              placeholder="Please select"
+            >
+              <ion-select-option
+                *ngFor="let assettype of assettypes"
+                [value]="assettype.id"
+                >{{ assettype.name }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Asset Name</ion-label>
+            <ion-input formControlName="asset_name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Specifications</ion-label>
+            <ion-input formControlName="maintenance_specification"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Condition Rating</ion-label>
+            <ion-input formControlName="rating"></ion-input>
+          </ion-item>
+        </ion-list>
+
+        <div class="ion-text-end">
+          <ion-button>Edit</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title style="display: flex; align-items: center;">
+          Asset Location
+          <div class="ion-float-right">
+            <ion-button size="small" routerLink="/technical/asset-location"
+              >Map</ion-button
+            >
+          </div>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Region</ion-label>
+            <ion-select
+              formControlName="level_2"
+              placeholder="Please select region"
+            >
+              <ion-select-option [value]="region" *ngFor="let region of regions"
+                >{{ region }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked"
+              >Treatment Plant / Pump House / NRW / Reservoir</ion-label
+            >
+            <ion-select formControlName="location" placeholder="Please select">
+              <ion-select-option
+                [value]="treatmentPlant"
+                *ngFor="let treatmentPlant of treatmentPlants"
+                >{{ treatmentPlant }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Choose Asset</ion-label>
+            <ion-select formControlName="asset" placeholder="Please select">
+              <ion-select-option [value]="asset" *ngFor="let asset of assets"
+                >{{ asset }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </form>
+
+  <form [formGroup]="operationalreadingFormGroup">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Operational Reading
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Running hours</ion-label>
+            <ion-input
+              type="number"
+              formControlName="running_hours"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Pressure reading</ion-label>
+            <ion-input
+              type="number"
+              formControlName="pressure_reading"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Flow rate</ion-label>
+            <ion-input type="number" formControlName="flow_rate"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </form>
+
+  <div class="ion-padding-start">
+    <ion-card-title>Service History</ion-card-title>
+  </div>
+
+  <ion-slides [options]="sliderConfig">
+    <ion-slide *ngFor="let serviceHistory of serviceHistorys">
+      <div>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>
+              <!-- <div class="ion-float-left"> -->
+              <p>{{ serviceHistory.serviceid }}</p>
+              <!-- </div> -->
+              <!-- <div class="ion-float-right"> -->
+              <!-- <p>{{ serviceHistory.servicedate }}</p> -->
+              <!-- </div> -->
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="ion-text-justify">{{ serviceHistory.servicedesc }}</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-slide>
+  </ion-slides>
+
+  <div class="ion-text-center ion-padding-bottom">
+    <ion-button>Update<br />Asset</ion-button>
+    <ion-button (click)="submit()">Submit</ion-button>
+    <ion-button [routerLink]="['/technical/work-request']"
+      >Create Work<br />Request</ion-button
+    >
+  </div>
+</ion-content>

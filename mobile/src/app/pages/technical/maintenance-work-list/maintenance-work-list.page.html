@@ -4,12 +4,12 @@
       <ion-button (click)="homePage('/technical/tabs/tab1')">
         <ion-icon
           src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem;"
+          style="font-size: 2rem"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title style="font-weight: bold;">
-      Work Activity
+    <ion-title style="font-weight: bold">
+      Work Activity By Work Category
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
@@ -17,9 +17,9 @@
         <ion-badge
           size="small"
           color="danger"
-          style="position: absolute; right: -5px; top: 1px;"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+          style="position: absolute; right: -5px; top: 1px"
+        ></ion-badge
+        ><!--{{ notificationService.totalnotificationbyuser }}-->
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -27,7 +27,281 @@
 
 <ion-content class="content-core">
   <ion-grid>
-    <ion-row class="ion-align-items-center ion-justify-content-center">
+    <ion-row style="border-bottom: 1px solid gainsboro">
+      <ion-col size="6"> </ion-col>
+      <ion-col size="2" class="ion-text-center"><h6>New</h6></ion-col>
+      <ion-col size="2" class="ion-text-center"><h6>In Progress</h6></ion-col>
+      <ion-col size="2" class="ion-text-center"><h6>Backlog</h6></ion-col>
+      <!-- <ion-col size="2" class="ion-text-center"><h6>Completed</h6></ion-col> -->
+    </ion-row>
+    <ion-row style="border-bottom: 1px solid gainsboro">
+      <ion-col size="6" class="ion-text-center">
+        <img
+          src="../../../../assets/inventory/001-extractor.svg"
+          style="width: 30%"
+          class="ion-text-center"
+        />
+        <h6>Corrective Maintenance</h6>
+      </ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'CM', 'New')"
+        ><h2>{{ calculateTotalStatus(cmArray, 'New') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-success)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'CM', 'In Progress')"
+        ><h2>{{ calculateTotalStatus(cmArray, 'In Progress') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-warning)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'CM', 'Backlog')"
+        ><h2>{{ calculateTotalStatus(cmArray, 'Backlog') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-danger)"
+      /></ion-col>
+      <!-- <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'CM', 'Completed')"
+        ><h2>{{ calculateTotalStatus(cmArray, 'Completed') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-primary)"
+      /></ion-col> -->
+    </ion-row>
+    <ion-row style="border-bottom: 1px solid gainsboro">
+      <ion-col size="6" class="ion-text-center">
+        <img
+          src="../../../../assets/inventory/002-faucet.svg"
+          style="width: 30%"
+          class="ion-text-center"
+        />
+        <h6>Preventive Maintenance</h6>
+      </ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'PM', 'New')"
+        ><h2>{{ calculateTotalStatus(pmArray, 'New') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-success)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'PM', 'In Progress')"
+        ><h2>{{ calculateTotalStatus(pmArray, 'In Progress') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-warning)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'PM', 'Backlog')"
+        ><h2>{{ calculateTotalStatus(pmArray, 'Backlog') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-danger)"
+      /></ion-col>
+      <!-- <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'PM', 'Completed')"
+        ><h2>{{ calculateTotalStatus(pmArray, 'Completed') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-primary)"
+      /></ion-col> -->
+    </ion-row>
+    <ion-row style="border-bottom: 1px solid gainsboro">
+      <ion-col size="6" class="ion-text-center">
+        <img
+          src="../../../../assets/inventory/003-faucet-1.svg"
+          style="width: 30%"
+          class="ion-text-center"
+        />
+        <h6>Predictive Maintenance</h6>
+      </ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'PdM', 'New')"
+        ><h2>{{ calculateTotalStatus(pdmArray, 'New') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-success)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'PdM', 'In Progress')"
+        ><h2>{{ calculateTotalStatus(pdmArray, 'In Progress') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-warning)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'PdM', 'Backlog')"
+        ><h2>{{ calculateTotalStatus(pdmArray, 'Backlog') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-danger)"
+      /></ion-col>
+      <!-- <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'PdM', 'Completed')"
+        ><h2>{{ calculateTotalStatus(pdmArray, 'Completed') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-primary)"
+      /></ion-col> -->
+    </ion-row>
+    <ion-row style="border-bottom: 1px solid gainsboro">
+      <ion-col size="6" class="ion-text-center">
+        <img
+          src="../../../../assets/inventory/004-faucet-2.svg"
+          style="width: 30%"
+          class="ion-text-center"
+        />
+        <h6>Installation Testing and Commissioning</h6>
+      </ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'ITC', 'New')"
+        ><h2>{{ calculateTotalStatus(itcArray, 'New') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-success)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'ITC', 'In Progress')"
+        ><h2>{{ calculateTotalStatus(itcArray, 'In Progress') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-warning)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'ITC', 'Backlog')"
+        ><h2>{{ calculateTotalStatus(itcArray, 'Backlog') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-danger)"
+      /></ion-col>
+      <!-- <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'ITC', 'Completed')"
+        ><h2>{{ calculateTotalStatus(itcArray, 'Completed') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-primary)"
+      /></ion-col> -->
+    </ion-row>
+    <ion-row style="border-bottom: 1px solid gainsboro">
+      <ion-col size="6" class="ion-text-center">
+        <img
+          src="../../../../assets/inventory/005-filter.svg"
+          style="width: 30%"
+          class="ion-text-center"
+        />
+        <h6>Disposal</h6>
+      </ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'New')"
+        ><h2>{{ calculateTotalStatus(dArray, 'New') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-success)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'In Progress')"
+        ><h2>{{ calculateTotalStatus(dArray, 'In Progress') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-warning)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'Backlog')"
+        ><h2>{{ calculateTotalStatus(dArray, 'Backlog') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-danger)"
+      /></ion-col>
+      <!-- <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'Completed')"
+        ><h2>{{ calculateTotalStatus(dArray, 'Completed') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-primary)"
+      /></ion-col> -->
+    </ion-row>
+    <ion-row style="border-bottom: 1px solid gainsboro">
+      <ion-col size="6" class="ion-text-center">
+        <img
+          src="../../../../assets/inventory/006-filter-1.svg"
+          style="width: 30%"
+          class="ion-text-center"
+        />
+        <h6>Compliance</h6>
+      </ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'New')"
+        ><h2>{{ calculateTotalStatus(cArray, 'New') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-success)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'In Progress')"
+        ><h2>{{ calculateTotalStatus(cArray, 'In Progress') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-warning)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'Backlog')"
+        ><h2>{{ calculateTotalStatus(cArray, 'Backlog') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-danger)"
+      /></ion-col>
+      <!-- <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'Completed')"
+        ><h2>{{ calculateTotalStatus(cArray, 'Completed') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-primary)"
+      /></ion-col> -->
+    </ion-row>
+    <ion-row style="border-bottom: 1px solid gainsboro">
+      <ion-col size="6" class="ion-text-center">
+        <img
+          src="../../../../assets/inventory/007-filter-2.svg"
+          style="width: 30%"
+          class="ion-text-center"
+        />
+        <h6>Redesign</h6>
+      </ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'New')"
+        ><h2>{{ calculateTotalStatus(rArray, 'New') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-success)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'In Progress')"
+        ><h2>{{ calculateTotalStatus(rArray, 'In Progress') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-warning)"
+      /></ion-col>
+      <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'Backlog')"
+        ><h2>{{ calculateTotalStatus(rArray, 'Backlog') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-danger)"
+      /></ion-col>
+      <!-- <ion-col
+        size="2"
+        class="ion-text-center"
+        (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'Completed')"
+        ><h2>{{ calculateTotalStatus(rArray, 'Completed') }}</h2>
+        <hr style="height: 5px; background-color: var(--ion-color-primary)"
+      /></ion-col> -->
+    </ion-row>
+
+    <!-- <ion-row class="ion-align-items-center ion-justify-content-center">
       <ion-col size="6">
         <ion-card (click)="openPage('technical/maintenance-work-detail', 'CM')">
           <ion-card-content class="ion-text-center">
@@ -39,28 +313,28 @@
                 <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(cmArray, 'NW') }}</span
+                      >{{ calculateTotalStatus(cmArray, 'New') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(cmArray, 'IP') }}</span
+                      >{{ calculateTotalStatus(cmArray, 'In Progress') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(cmArray, 'BL') }}</span
+                      >{{ calculateTotalStatus(cmArray, 'Backlog') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="tertiary"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(cmArray, 'CP') }}</span
+                      >{{ calculateTotalStatus(cmArray, 'Completed') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -80,28 +354,28 @@
                 <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(pmArray, 'NW') }}</span
+                      >{{ calculateTotalStatus(pmArray, 'New') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(pmArray, 'IP') }}</span
+                      >{{ calculateTotalStatus(pmArray, 'In Progress') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(pmArray, 'BL') }}</span
+                      >{{ calculateTotalStatus(pmArray, 'Backlog') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="tertiary"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(pmArray, 'CP') }}</span
+                      >{{ calculateTotalStatus(pmArray, 'Completed') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -126,28 +400,28 @@
                 <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(itcArray, 'NW') }}</span
+                      >{{ calculateTotalStatus(itcArray, 'New') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(itcArray, 'IP') }}</span
+                      >{{ calculateTotalStatus(itcArray, 'In Progress') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(itcArray, 'BL') }}</span
+                      >{{ calculateTotalStatus(itcArray, 'Backlog') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="tertiary"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(itcArray, 'CP') }}</span
+                      >{{ calculateTotalStatus(itcArray, 'Completed') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -169,28 +443,28 @@
                 <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(pdmArray, 'NW') }}</span
+                      >{{ calculateTotalStatus(pdmArray, 'New') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(pdmArray, 'IP') }}</span
+                      >{{ calculateTotalStatus(pdmArray, 'In Progress') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(pdmArray, 'BL') }}</span
+                      >{{ calculateTotalStatus(pdmArray, 'Backlog') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="tertiary"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(pdmArray, 'CP') }}</span
+                      >{{ calculateTotalStatus(pdmArray, 'Completed') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -215,28 +489,28 @@
                 <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(dArray, 'NW') }}</span
+                      >{{ calculateTotalStatus(dArray, 'New') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(dArray, 'IP') }}</span
+                      >{{ calculateTotalStatus(dArray, 'In Progress') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(dArray, 'BL') }}</span
+                      >{{ calculateTotalStatus(dArray, 'Backlog') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="tertiary"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(dArray, 'CP') }}</span
+                      >{{ calculateTotalStatus(dArray, 'Completed') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -258,28 +532,28 @@
                 <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(cArray, 'NW') }}</span
+                      >{{ calculateTotalStatus(cArray, 'New') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(cArray, 'IP') }}</span
+                      >{{ calculateTotalStatus(cArray, 'In Progress') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(cArray, 'BL') }}</span
+                      >{{ calculateTotalStatus(cArray, 'Backlog') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="tertiary"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(cArray, 'CP') }}</span
+                      >{{ calculateTotalStatus(cArray, 'Completed') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -304,28 +578,28 @@
                 <ion-col size="3">
                   <ion-badge color="success"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(rArray, 'NW') }}</span
+                      >{{ calculateTotalStatus(rArray, 'New') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="warning"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(rArray, 'IP') }}</span
+                      >{{ calculateTotalStatus(rArray, 'In Progress') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="danger"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(rArray, 'BL') }}</span
+                      >{{ calculateTotalStatus(rArray, 'Backlog') }}</span
                     ></ion-badge
                   >
                 </ion-col>
                 <ion-col size="3">
                   <ion-badge color="tertiary"
                     ><span style="color: white;"
-                      >{{ calculateTotalStatus(rArray, 'CP') }}</span
+                      >{{ calculateTotalStatus(rArray, 'Completed') }}</span
                     ></ion-badge
                   >
                 </ion-col>
@@ -334,6 +608,6 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 </ion-content>

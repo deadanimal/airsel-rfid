@@ -25,7 +25,7 @@
 
 <ion-content class="content-core ion-padding-bottom">
   <div class="ion-padding" *ngIf="segmentModal == 'first'">
-    <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <!-- <ion-fab vertical="top" horizontal="end" slot="fixed">
       <ion-fab-button>
         <ion-icon name="ellipsis-vertical"></ion-icon>
       </ion-fab-button>
@@ -37,9 +37,9 @@
           <ion-icon name="camera"></ion-icon>
         </ion-fab-button>
       </ion-fab-list>
-    </ion-fab>
+    </ion-fab> -->
 
-    <ion-grid *ngIf="!capturedSnapURL">
+    <!-- <ion-grid *ngIf="!capturedSnapURL">
       <ion-row class="ion-align-items-center ion-justify-content-center">
         <ion-col size="3"></ion-col>
         <ion-col size="6">
@@ -53,85 +53,561 @@
 
     <ion-card *ngIf="capturedSnapURL">
       <img [src]="capturedSnapURL" />
-    </ion-card>
+    </ion-card> -->
 
-    <ion-list class="ion-padding line-input">
-      <ion-item>
-        <ion-label position="stacked">Asset</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+    <ion-list class="ion-padding line-input" style="padding-top: 100px;">
+      <form [formGroup]="workrequestFormGroup">
+        <ion-item>
+          <ion-label position="stacked">Asset</ion-label>
+          <ion-input type="text" formControlName="asset_id"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Location</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Location</ion-label>
+          <ion-input type="text" formControlName="node_id"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Description</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Description</ion-label>
+          <ion-input type="text" formControlName="description"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Detailed Description</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Detailed Description</ion-label>
+          <ion-input type="text" formControlName="long_description"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Required By Date</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD"></ion-datetime>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Required By Date</ion-label>
+          <ion-datetime
+            displayFormat="YYYY-MM-DD"
+            formControlName="required_by_date"
+          ></ion-datetime>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Downtime Start</ion-label>
-        <ion-datetime displayFormat="YYYY-MM-DD"></ion-datetime>
-        <ion-datetime displayFormat="HH:mm"></ion-datetime>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Downtime Start</ion-label>
+          <ion-datetime
+            displayFormat="YYYY-MM-DD"
+            placeholder="Date"
+            formControlName="down_time_start"
+          ></ion-datetime>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Planner</ion-label>
-        <ion-select>
-          <ion-select-option value="">Please select</ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Downtime Start</ion-label>
+          <ion-datetime displayFormat="HH:mm" placeholder="Time"></ion-datetime>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Work Class</ion-label>
-        <ion-select>
-          <ion-select-option value="">Please select</ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Planner</ion-label>
+          <ion-select formControlName="planner">
+            <ion-select-option value="">Please select</ion-select-option>
+            <ion-select-option value="CBS-P1"
+              >MOHD IKRAM BIN RAMLI (CBS-P1)</ion-select-option
+            >
+            <ion-select-option value="CBS-P2"
+              >MOHD NASIR BIN AZIR (CBS-P2)</ion-select-option
+            >
+            <ion-select-option value="DIST-G-P1"
+              >MOHD NAJIB BIN AZIZAN (DIST-GB)</ion-select-option
+            >
+            <ion-select-option value="DIST-G-P2">
+              NIK NOOR AZMIR BIN AB RAHIM (DIST-GB)
+            </ion-select-option>
+            <ion-select-option value="DIST-HL-P1"
+              >JAAFAR BIN OMAR (DIST-HL)</ion-select-option
+            >
+            <ion-select-option value="DIST-HL-P2">
+              MUHAMMAD AKHBAR BIN JON NADZIM (DIST-HL)
+            </ion-select-option>
+            <ion-select-option value="DIST-HQ-P1"
+              >AHMAD SHARUL ISHAK (DIST-HQ)</ion-select-option
+            >
+            <ion-select-option value="DIST-HQ-P2"
+              >MOHD LATIF BIN MADAUN (DIST-HQ)</ion-select-option
+            >
+            <ion-select-option value="DIST-HQ-P3"
+              >FADHLI SHAH BIN HAMDAN (DIST-HQ)</ion-select-option
+            >
+            <ion-select-option value="DIST-HQ-P4">
+              SYAMSUL KAMAL BIN TAJUDIN (DIST-HQ)
+            </ion-select-option>
+            <ion-select-option value="DIST-HS-P1">
+              NIK AHMAD SYMIZUL BIN NIK MUSTAFA (DIST-HS)
+            </ion-select-option>
+            <ion-select-option value="DIST-HS-P2">
+              AZZARUL IZZUDDIN BIN ISHAK (DIST-HS)
+            </ion-select-option>
+            <ion-select-option value="DIST-KG-P1"
+              >ANIZAM BIN SAMSUDIN (DIST-KT)</ion-select-option
+            >
+            <ion-select-option value="DIST-KG-P2"
+              >MD ELHAM BIN SAFIE (DIST-KT)</ion-select-option
+            >
+            <ion-select-option value="DIST-KL-P1">
+              MOHD SHAWALLUDIN BIN KAMSI (DIST-KL)
+            </ion-select-option>
+            <ion-select-option value="DIST-KL-P2">
+              HASNOR BIN ZULKARNAIN @ ZULZALIL (DIST-KL)
+            </ion-select-option>
+            <ion-select-option value="DIST-K-P1"
+              >MOHD AZMI BIN MD NASIR (DIST-KG)</ion-select-option
+            >
+            <ion-select-option value="DIST-K-P2"
+              >MOHAMAD SUPIAN BIN ARSHAD (DIST-KG)</ion-select-option
+            >
+            <ion-select-option value="DIST-KS-P1">
+              MUHAMMAD LOKHMAN BIN CHE AB RAHMAN (DIST-KS)
+            </ion-select-option>
+            <ion-select-option value="DIST-KS-P2">
+              MUHAMAD HERMAN BIN TUMADI (DIST-KS)
+            </ion-select-option>
+            <ion-select-option value="DIST-P-P1">
+              SYED RIZAKRI BIN SYED MOHAMAD RIDZUAN (DIST-PJ)
+            </ion-select-option>
+            <ion-select-option value="DIST-P-P2"
+              >MOHAMMED ZAKRY BIN ISMAIL (DIST-PJ)</ion-select-option
+            >
+            <ion-select-option value="DIST-P-P3"
+              >AZMAN BIN MOHD SALLEH (DIST-PJ)</ion-select-option
+            >
+            <ion-select-option value="DIST-SB-P1"
+              >ISHAK BIN MARNI (DIST-SB)</ion-select-option
+            >
+            <ion-select-option value="DIST-SB-P2"
+              >NOR HANA BT BASIRAN (DIST-SB)</ion-select-option
+            >
+            <ion-select-option value="DIST-SB-P3"
+              >MOHD NASIR BIN SAMAD (DIST-SB)</ion-select-option
+            >
+            <ion-select-option value="DIST-S-P1">
+              MEGAT MOHD WISWAN BIN MGT MAZELAN (DIST-SP)
+            </ion-select-option>
+            <ion-select-option value="DIST-S-P2"
+              >MOHD FARIZ BIN SHARI (DIST-SP)</ion-select-option
+            >
+            <ion-select-option value="ES-DIST-G-P1">
+              AZAHARULZAIMI BIN ZAKARIA (ES-DIST-GB)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-G-P2">
+              MOHAMMAD AMIRUL IZZAT BIN AMINUDDIN (ES-DIST-GB)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HL-P1">
+              MOHAMAD FARIDZ BIN MOHAMAD NASIR (ES-DIST-HL)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HQ-P1">
+              MOHAMMAD FAZILIN BIN MAHMOD (ES-DIST-HQ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HQ-P2">
+              AZURIN BIN AHMAD MURAD (ES-DIST-HQ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HQ-P3">
+              MOHD SHAHRUL BIN ABDUL JALIL (ES-DIST-HQ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HQ-P4">
+              AZIL ZHANIF BIN A.ZULHANY (CBM-HQ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HQ-P5">
+              AHMAD FARHAN BIN MOHAMED SHUKRI (ES-DIST-HQ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HQ-P6">
+              MUHAMAD HAZIQ BIN YUSOF (ES-DIST-HQ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HQ-P8">
+              MOHAMAD HAIRUSSANI BIN ABDUL WAHID (ES-DIST-HQ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HQ-P9">
+              KHAIRULANWAR BIN SUHAIMI (ES-DIST-HQ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HQ-P10">
+              MUHAMMAD HAZIM BIN ZAKARIYA (ES-DIST-HQ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-HS-P1">
+              MUHAMMAD SHAHIR BIN IBRAHIM (ES-DIS-HS)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-KG-P1">
+              KHAIRUL AZMI BIN YAHAYA (ES-DIST-KT)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-KL-P1">
+              AZIZUL HANIF BIN ABD KHALID (ES-DIST-KL)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-KL-P2">
+              MOHD HAFIZ BIN HAMZAH (ES-DIST-KL)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-K-P1">
+              KHAIRUL ANWAR BIN ABD MANAB (ES-DIST-KG)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-K-P2"
+              >ZURAIMEI BIN JAAFAR (ES-DIST-KG)</ion-select-option
+            >
+            <ion-select-option value="ES-DIST-KS-P1">
+              AHMAD ZAMZURI BIN DERAMAN (ES-DIS-KS)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-P-P1">
+              AHMAD HAKIMY ILMUDDIN (ES-DIST-PJ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-P-P2">
+              ASGHA PUTRA BIN MOHD GHAZALI (ES-DIST-PJ)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-SB-P1">
+              SITI MARYAM BINTI JAMAL (ES-DIST-SB)
+            </ion-select-option>
+            <ion-select-option value="ES-DIST-S-P1">
+              HASNUL HADI BIN IBRAHIM (ES-DIST-SP)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P1">
+              MAHADZIR BIN AHMAD NADZRI (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P2">
+              MIOR YAAKOB BIN MIOR ABDUL RAHMAN (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P3"
+              >MOHD FUAD BIN RAZALI (ES-PROD-N)</ion-select-option
+            >
+            <ion-select-option value="ES-PROD-N-P4">
+              AMIRUL IDZUAN BIN MOHAMAD MUHIT (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P5">
+              MOHD HANIFF BIN ISMAIL (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P6">
+              MOHD SHAHRIN BIN DARMIN (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P7">
+              ABDUL AZIZ BIN ABD KARIM (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P8">
+              MUSTARIZAL BIN ABD MALIK (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P9"
+              >ALFIAN BIN ZAINAL (ES-PROD-N)</ion-select-option
+            >
+            <ion-select-option value="ES-PROD-N-P10">
+              KHAIRUL AZMAN BIN KHALID (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P11">
+              AJWAD SAHLAN BIN MOHAMAD ISA (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P12">
+              AHMAD NASRI BIN OTHMAN (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-N-P13">
+              AMIRUL FIKRI BIN MAT AZMAN (ES-PROD-N)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P1">
+              MOHD ASMAWI BIN RAMLI (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P2">
+              MOHAMAD ARIF ZUKHAIRI BIN MOHAJIR (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P3">
+              AHMAD ZUL-HILME RAMLI (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P4">
+              NOR MOHD FAISAL BIN ADNAN (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P5">
+              MOHD AFZAN AFFIQ BIN DAUT (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P6">
+              MOHAMAD ARIF ZUKHAIRI BIN MOHAJIR (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P7"
+              >ANNUAR REJENI (ES-PROD-S)</ion-select-option
+            >
+            <ion-select-option value="ES-PROD-S-P8">
+              MOHAMAD SHAFFIQ BIN ROZAK (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P9">
+              MOHAMAD SYAHIR RUZAINI BIN ROSLI (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P10"
+              >SAFIE BIN SAARI (ES-PROD-S)</ion-select-option
+            >
+            <ion-select-option value="ES-PROD-S-P11"
+              >HUD BIN MOHD SHARIF (ES-PROD-S)</ion-select-option
+            >
+            <ion-select-option value="ES-PROD-S-P12">
+              AMIR HAMZAH BIN KAMARUZAMAN (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P13">
+              MOHD FAUZI BIN AB RAHIM (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P14">
+              MOHD KHAIRUL BIN HAROMI (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P15">
+              KHAIRUL SADIQ BIN ISMAIL (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P16">
+              MOHAMAD SYUKUR BIN ABDULLAH (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P17">
+              MOHAMAD ILYAS NIN MOHD NOH (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="ES-PROD-S-P18">
+              SHOFFIAN AMIN JAAFAR (ES-PROD-S)
+            </ion-select-option>
+            <ion-select-option value="FS-ALL-P1">
+              MUHAMMAD IQWAT FAHMI BIN ABDUL SUKOR (FLEET-ALL REGION)
+            </ion-select-option>
+            <ion-select-option value="FS-G-P1"
+              >NURHIDAYAH BINTI ISMAIL (FLEET-GB)</ion-select-option
+            >
+            <ion-select-option value="FS-HL-P1">
+              MOHAMAD SUKRI BIN ABDUL AZIZ (FLEET-HL)
+            </ion-select-option>
+            <ion-select-option value="FS-HQ-P1"
+              >MOHAMAD SAFUAN BIN IDRIS (FLEET-HQ)</ion-select-option
+            >
+            <ion-select-option value="FS-HQ-P2"
+              >MOHD ZANANI BIN JAMIL (FLEET-HQ)</ion-select-option
+            >
+            <ion-select-option value="FS-HS-P1"
+              >MAZLAN BIN AHMAD (FLEET-HS)</ion-select-option
+            >
+            <ion-select-option value="FS-KG-P1"
+              >MOHD ZOOL HILMI BIN RAUP (FLEET-KT)</ion-select-option
+            >
+            <ion-select-option value="FS-KL-P1"
+              >KHAIRUN NAIM BIN AHMAD (FLEET-KL)</ion-select-option
+            >
+            <ion-select-option value="FS-K-P1"
+              >LOQMAN HAKIM BIN SANSURI (FLEET-KG)</ion-select-option
+            >
+            <ion-select-option value="FS-KS-P1">
+              MOHAMMAD DZUL QOED BIN MUKIBAT (FLEET-KS)
+            </ion-select-option>
+            <ion-select-option value="FS-P-P1">
+              AHMAD RABANI BIN ABDUL HALIM (FLEET-PJ)
+            </ion-select-option>
+            <ion-select-option value="FS-SB-P1"
+              >MOHAMAD TARIQ BIN OTHMAN (FLEET-SB)</ion-select-option
+            >
+            <ion-select-option value="FS-S-P1"
+              >ROSLINA BINTI RAMLI (FLEET-SP)</ion-select-option
+            >
+            <ion-select-option value="FS-WTP-NORTH-P1">
+              SYED SHARIFFUDDIN BIN SYED ABDULLAH (FLEET-WTP-N)
+            </ion-select-option>
+            <ion-select-option value="FS-WTP-NORTH-SOUTH-P1">
+              MOHD NASIR AMAT (FS-WTP-NORTH-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="FS-WTP-SOUTH-P1">
+              MOHD ASRINNIHAR BIN ABDUL RANI (FLEET-WTP-S)
+            </ion-select-option>
+            <ion-select-option value="NRW-DMZ-G-P1">
+              MUHAMMAD SHAHRIZAL BIN BORHAN (DMZ-GB)
+            </ion-select-option>
+            <ion-select-option value="NRW-DMZ-HL-P1"
+              >AMIRU ZAMAN BIN JANTAN (DMZ-HL)</ion-select-option
+            >
+            <ion-select-option value="NRW-DMZ-HQ-P1"
+              >TENGKU ABDUL MAJID (NRW-DMZ-HQ)</ion-select-option
+            >
+            <ion-select-option value="NRW-DMZ-HS-P1">
+              SITI MUSLIHA BINTI MASKOR (NRW-DMZ-HS)
+            </ion-select-option>
+            <ion-select-option value="NRW-DMZ-KG-P1">
+              MOHD ZUKHAIRI BIN ABDUL AZAM (NRW-DMZ-KT)
+            </ion-select-option>
+            <ion-select-option value="NRW-DMZ-KL-P1">
+              HASNIZAM BIN ABU HASAN (NRW-DMZ-KL)
+            </ion-select-option>
+            <ion-select-option value="NRW-DMZ-K-P1">
+              IDZWAN SAZALI BIN SHAFEE (NRW-DMZ-KG)
+            </ion-select-option>
+            <ion-select-option value="NRW-DMZ-KS-P1">
+              MOHD RIZAL BIN SAKIMAN (NRW-DMZ-KS)
+            </ion-select-option>
+            <ion-select-option value="NRW-DMZ-P-P1">
+              SHAHIBUL EZWAN BIN SABRI (NRW-DMZ-PJ)
+            </ion-select-option>
+            <ion-select-option value="NRW-DMZ-SB-P1">
+              NOR AINI BINTI OTHMAN (NRW-DMZ-SB)
+            </ion-select-option>
+            <ion-select-option value="NRW-DMZ-SP-P1"
+              >AZNIYAH BINTI ABU (NRW-DMZ-SP)</ion-select-option
+            >
+            <ion-select-option value="NRW-PT-ALL-P1">
+              ABDUL FATAH BIN MOHD NOR (NRW-PT)
+            </ion-select-option>
+            <ion-select-option value="NRW-PT-ALL-P2">
+              MOHAMAD AMIRUL AIZAD BIN MOHD MARUAI (NRW-PT)
+            </ion-select-option>
+            <ion-select-option value="NRW-PT-ALL-P3">
+              MUHAMMAD NORAFFANDI B. ROHANI (NRW-PT)
+            </ion-select-option>
+            <ion-select-option value="NRW-WBA-HQ-P1"
+              >NORAIN YUSOF (NRW-WBA-HQ)</ion-select-option
+            >
+            <ion-select-option value="SCADA-P1"
+              >MEGAT ASHMIR BIN (SCADA-KT,K,S,HL)</ion-select-option
+            >
+            <ion-select-option value="SCADA-P2">
+              MOHD NASYARUDIN BIN AZIZ (SCADA-G,KS,HS,SB)
+            </ion-select-option>
+            <ion-select-option value="SCADA-P3">
+              AMIRUL FIRDAUS BIN AHMAD (SCADA-P,KL)
+            </ion-select-option>
+            <ion-select-option value="SCADA-P4">
+              NORHISHAM BIN MD ARIPIN (SCADA-ALL-REGION)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-NORTH-P1">
+              MASLIAWATI BINTI SULAIMAN (LAB-NORTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-NORTH-P2">
+              MUHAMMAD HAMIZAN BIN ABD NASIR (LAB-NORTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-NORTH-P3">
+              AMIRA FARAZILA BINTI AHMAD QUZAZI (LAB-NORTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-NORTH-P4">
+              MUHAMMAD DZARIFF BIN KHOIRON NOOR (LAB-NORTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P1">
+              NURUL HUDA BINTI CHE ISA (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P2">
+              AL-MALEK FAHD BIN ABDUL HAMID (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P3">
+              NABILAH BINTI GHAZALI (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P4">
+              NORHAZNI BINTI HASSAN BASRI (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P5">
+              AISAH BANO BINTI SUHIL AHMAD (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P6">
+              DAVIS JAWA ANAK TIUS (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P7">
+              KHAIRUL HADI BIN HAMDAN (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P8"
+              >EL HAFIZ B AYAS (LAB-SOUTH)</ion-select-option
+            >
+            <ion-select-option value="WQ-LAB-SOUTH-P9">
+              MUHAMMAD ALIFF REDZA BIN SARI (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P10">
+              MOHD HANAFFI RIDHUAN (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P11">
+              MOHD FAKHRURRAZI BIN HUSAIN (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P12">
+              NATASHA HUDA BINTI MUHAMAD ZUBIR (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-LAB-SOUTH-P13">
+              SYAHRUNNIZAM BIN BAHARUDDIN (LAB-SOUTH)
+            </ion-select-option>
+            <ion-select-option value="WQ-SUR-HQ-P1">
+              MOHD SHAHRIL BIN AGIL @ MD SUM (WQ-SUR-HQ)
+            </ion-select-option>
+            <ion-select-option value="WQ-SUR-HQ-P2">
+              NURUL BAHIAH BINTI MUHAMAD NOR (WQ-SUR-HQ)
+            </ion-select-option>
+            <ion-select-option value="WQ-SUR-HQ-P5">
+              AZIZAH BINTI HAJI ABU BAKAR (WQ-SUR-HQ)
+            </ion-select-option>
+            <ion-select-option value="WQ-SUR-HQ-P6">
+              MOHD NIZAM BIN HAROMI (WQ-SUR-HQ)
+            </ion-select-option>
+            <ion-select-option value="WQ-SUR-HQ-P9"
+              >Muhd Shafiq Azizi (WQ-M&amp;R)</ion-select-option
+            >
+            <ion-select-option value="WQ-SUR-HQ-P10"
+              >ADEN BIN TAIB (WQ-SUR-HQ)</ion-select-option
+            >
+            <ion-select-option value="WQ-SUR-HQ-P11">
+              SABARIAH BINTI MOHD DIN (WQ-SUR-HQ)
+            </ion-select-option>
+            <ion-select-option value="WQ-SUR-HQ-P12"
+              >RIDZUAN BIN ISHAK (WQ-SUR-HQ)</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Work Category</ion-label>
-        <ion-select>
-          <ion-select-option value="">Please select</ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Work Class</ion-label>
+          <ion-select formControlName="work_class">
+            <ion-select-option value="">Please select</ion-select-option>
+            <ion-select-option value="CAPITAL">CAPITAL</ion-select-option>
+            <ion-select-option value="PLANNED">PLANNED</ion-select-option>
+            <ion-select-option value="UNPLANNED">UNPLANNED</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Work Priority</ion-label>
-        <ion-select>
-          <ion-select-option value="">Please select</ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Work Category</ion-label>
+          <ion-select formControlName="work_category">
+            <ion-select-option value="">Please select</ion-select-option>
+            <ion-select-option value="CALIBRATION"
+              >CALIBRATION</ion-select-option
+            >
+            <ion-select-option value="FLEET COMPLIANCE"
+              >COMPLIANCE</ion-select-option
+            >
+            <ion-select-option value="CORRECTIVE MAINTENANCE"
+              >CORRECTIVE MAINTENANCE</ion-select-option
+            >
+            <ion-select-option value="RETIRE">DISPOSAL</ion-select-option>
+            <ion-select-option value="INSTALLATION TESTING AND COM">
+              INSTALLATION, TESTING AND COMMISSIONING
+            </ion-select-option>
+            <ion-select-option value="LICENCING">LICENCING</ion-select-option>
+            <ion-select-option value="PREDICTIVE MAINTENANCE"
+              >PREDICTIVE MAINTENANCE</ion-select-option
+            >
+            <ion-select-option value="PREVENTIVE MAINTENANCE"
+              >PREVENTIVE MAINTENANCE</ion-select-option
+            >
+            <ion-select-option value="UPGRADE">REDESIGN</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Requestor</ion-label>
-        <ion-select>
-          <ion-select-option value="">Please select</ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Work Priority</ion-label>
+          <ion-select formControlName="work_priority">
+            <ion-select-option value="">Please select</ion-select-option>
+            <ion-select-option value="01">01 - Low</ion-select-option>
+            <ion-select-option value="02">02 - Low</ion-select-option>
+            <ion-select-option value="03">03 - Medium</ion-select-option>
+            <ion-select-option value="04">04 - High</ion-select-option>
+            <ion-select-option value="05">05 - High</ion-select-option>
+            <ion-select-option value="06">06 - Very High</ion-select-option>
+            <ion-select-option value="07">07 - Very High</ion-select-option>
+            <ion-select-option value="08">08 - Very High</ion-select-option>
+            <ion-select-option value="09">09 - Very High</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Owning Organization</ion-label>
-        <ion-select>
-          <ion-select-option value="">Please select</ion-select-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Requestor</ion-label>
+          <ion-input type="text" formControlName="requestor"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Owning Organization</ion-label>
+          <ion-select formControlName="owning_access_group">
+            <ion-select-option value="">Please select</ion-select-option>
+            <ion-select-option value="ES-D">ENGINEERING SERVICES - DISTRIBUTION</ion-select-option>
+            <ion-select-option value="FLEET">FLEET</ion-select-option>
+            <ion-select-option value="NRW">NRW</ion-select-option>
+            <ion-select-option value="PD-N">PRODUCTION NORTHERN</ion-select-option>
+            <ion-select-option value="PD-S">PRODUCTION SOUTHERN</ion-select-option>
+            <ion-select-option value="SCADA">SCADA</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </form>
     </ion-list>
 
     <div class="ion-text-center ion-padding">
-      <ion-button color="secondary" (click)="clickBack()">Cancel</ion-button>
+      <ion-button color="light" (click)="clickBack()">Cancel</ion-button>
       <ion-button (click)="changeSegment('second')">Next</ion-button>
     </div>
   </div>
@@ -140,34 +616,36 @@
     <h4 class="ion-text-center ion-padding">Contact Informtion</h4>
 
     <ion-list class="ion-padding line-input">
-      <ion-item>
-        <ion-label position="stacked">First Name</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+      <form [formGroup]="workrequestFormGroup">
+        <ion-item>
+          <ion-label position="stacked">First Name</ion-label>
+          <ion-input type="text" formControlName="first_name"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Last Name</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Last Name</ion-label>
+          <ion-input type="text" formControlName="last_name"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Primary Phone</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Primary Phone</ion-label>
+          <ion-input type="tel" formControlName="primary_phone"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Mobile Phone</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Mobile Phone</ion-label>
+          <ion-input type="tel" formControlName="mobile_phone"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Home Phone</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Home Phone</ion-label>
+          <ion-input type="tel" formControlName="home_phone"></ion-input>
+        </ion-item>
+      </form>
     </ion-list>
 
     <div class="ion-text-center ion-padding">
-      <ion-button color="secondary" (click)="changeSegment('first')"
+      <ion-button color="light" (click)="changeSegment('first')"
         >Back</ion-button
       >
       <ion-button (click)="submit()">Submit</ion-button>

@@ -5,7 +5,7 @@ import {
   FormGroup,
   FormControl,
 } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AlertController, MenuController } from "@ionic/angular";
 
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
@@ -208,6 +208,7 @@ export class AssetRegistrationPage implements OnInit {
     public notificationService: NotificationsService,
     public organisationsService: OrganisationsService,
     public regionsService: RegionsService,
+    private route: ActivatedRoute,
     private router: Router
   ) {
     this.firstFormGroup = this.formBuilder.group({
@@ -265,6 +266,34 @@ export class AssetRegistrationPage implements OnInit {
     this.seventhFormGroup = this.formBuilder.group({
       po_vendor: ["", Validators.required],
       po_cost: ["", Validators.required],
+    });
+
+    this.route.queryParams.subscribe((params) => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        let assetregistration = this.router.getCurrentNavigation().extras.state
+          .assetregistration;
+        this.firstFormGroup.patchValue({
+          ...assetregistration
+        });
+        this.secondFormGroup.patchValue({
+          ...assetregistration
+        });
+        this.thirdFormGroup.patchValue({
+          ...assetregistration
+        });
+        this.fourthFormGroup.patchValue({
+          ...assetregistration
+        });
+        this.fifthFormGroup.patchValue({
+          ...assetregistration
+        });
+        this.sixthFormGroup.patchValue({
+          ...assetregistration
+        });
+        this.seventhFormGroup.patchValue({
+          ...assetregistration
+        });
+      }
     });
   }
 
@@ -403,6 +432,10 @@ export class AssetRegistrationPage implements OnInit {
 
   homePage(path: string) {
     this.router.navigate([path]);
+  }
+
+  clickBack() {
+    this.router.navigate(["/technical/asset-registration-list"]);
   }
 
   openNotification() {

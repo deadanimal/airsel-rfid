@@ -62,7 +62,7 @@ export class WorkActivityTeamsService {
   }
 
   filter(field: string): Observable<WorkActivityTeamsModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
     return this.http.get<WorkActivityTeamsModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("WorkActivityTeamsModel", res);

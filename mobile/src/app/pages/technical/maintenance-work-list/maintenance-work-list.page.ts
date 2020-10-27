@@ -1,14 +1,19 @@
 import { Component, OnInit, NgZone, ViewChild } from "@angular/core";
 import { Router, NavigationExtras } from "@angular/router";
-import { AlertController, MenuController } from "@ionic/angular";
+import {
+  AlertController,
+  LoadingController,
+  MenuController,
+} from "@ionic/angular";
 import { Chart } from "chart.js";
 import "chartjs-plugin-labels";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
+import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
+import { WamsService } from "src/app/shared/services/wams/wams.service";
 
 am4core.useTheme(am4themes_animated);
 
@@ -49,17 +54,18 @@ export class MaintenanceWorkListPage implements OnInit {
   dArray = [];
   cArray = [];
   rArray = [];
+  workorderactivities = [];
 
   constructor(
     public alertController: AlertController,
+    public loadingController: LoadingController,
     public menu: MenuController,
     private router: Router,
     private zone: NgZone,
     public notificationService: NotificationsService,
-    private workactivityService: WorkActivitiesService
-  ) {
-    this.getWorkActivities();
-  }
+    private workactivityService: WorkActivitiesService,
+    private wamsService: WamsService
+  ) {}
 
   ngOnInit() {}
 
@@ -89,6 +95,7 @@ export class MaintenanceWorkListPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.getWorkActivities();
     // this.createPieChartCM();
     // this.createPieChartPM();
     // this.createPieChartITC();
@@ -100,20 +107,21 @@ export class MaintenanceWorkListPage implements OnInit {
 
   getWorkActivities() {
     // From database
-    // ('CM', 'Corrective Maintenance'),
-    // ('CP', 'Compliance'),
-    // ('DP', 'Disposal'),
-    // ('IT', 'Installation Testing Commisioning'),
-    // ('PD', 'Predictive Maintenance'),
-    // ('PM', 'Preventive Maintenance'),
-    // ('RD', 'Redesign')
+    // FLEET COMPLIANCE -> COMPLIANCE,
+    // CORRECTIVE MAINTENANCE -> CORRECTIVE MAINTENANCE,
+    // RETIRE -> DISPOSAL,
+    // INSTALLATION TESTING AND COM -> INSTALLATION, TESTING AND COMMISSIONING,
+    // PREDICTIVE MAINTENANCE -> PREDICTIVE MAINTENANCE,
+    // PREVENTIVE MAINTENANCE -> PREVENTIVE MAINTENANCE,
+    // UPGRADE -> REDESIGN
+
     this.workactivityService.get().subscribe(
       (res) => {
         // console.log("res", res);
         if (res) {
           this.cmArray = res.filter(function (data) {
             if (
-              data.activity_type.toString().toLowerCase().indexOf("cm") !== -1
+              data.work_category.toString().indexOf("CORRECTIVE MAINTENANCE") !== -1
             )
               return true;
             return false;
@@ -121,7 +129,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.pmArray = res.filter(function (data) {
             if (
-              data.activity_type.toString().toLowerCase().indexOf("pm") !== -1
+              data.work_category.toString().indexOf("PREVENTIVE MAINTENANCE") !== -1
             )
               return true;
             return false;
@@ -129,7 +137,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.itcArray = res.filter(function (data) {
             if (
-              data.activity_type.toString().toLowerCase().indexOf("it") !== -1
+              data.work_category.toString().indexOf("INSTALLATION TESTING AND COM") !== -1
             )
               return true;
             return false;
@@ -137,7 +145,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.pdmArray = res.filter(function (data) {
             if (
-              data.activity_type.toString().toLowerCase().indexOf("pd") !== -1
+              data.work_category.toString().indexOf("PREDICTIVE MAINTENANCE") !== -1
             )
               return true;
             return false;
@@ -145,7 +153,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.dArray = res.filter(function (data) {
             if (
-              data.activity_type.toString().toLowerCase().indexOf("dp") !== -1
+              data.work_category.toString().indexOf("RETIRE") !== -1
             )
               return true;
             return false;
@@ -153,7 +161,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.cArray = res.filter(function (data) {
             if (
-              data.activity_type.toString().toLowerCase().indexOf("cp") !== -1
+              data.work_category.toString().indexOf("FLEET COMPLIANCE") !== -1
             )
               return true;
             return false;
@@ -161,7 +169,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.rArray = res.filter(function (data) {
             if (
-              data.activity_type.toString().toLowerCase().indexOf("rd") !== -1
+              data.work_category.toString().toLowerCase().indexOf("REDESIGN") !== -1
             )
               return true;
             return false;
@@ -175,17 +183,34 @@ export class MaintenanceWorkListPage implements OnInit {
         console.log("Http request is completed");
       }
     );
+
+    // get work-order-activity from WAMS
+    // this.wamsService.getWorkOrderActivity().subscribe(
+    //   (res) => {
+    //     console.log("res", res);
+    //     this.workorderactivities = res.result.filter((obj) => {
+    //       return obj.EMPLOYEE_ID == "303714690157";
+    //     });
+    //     this.cmArray = this.workorderactivities.filter((obj) => {
+    //       return obj.ACT_TYPE_CD == "CORRECTIVE-MAINTENANCE";
+    //     });
+    //   },
+    //   (err) => {
+    //     console.error("err", err);
+    //   }
+    // );
   }
 
   calculateTotalStatus(array: Array<any>, status: string) {
     // From database
-    // ('BL', 'Backlog'),
-    // ('IP', 'In Progress'),
-    // ('NW', 'New')
+    // ('Backlog', 'Backlog'),
+    // ('In Progress', 'In Progress'),
+    // ('New', 'New')
+    // ('Completed', 'Completed')
     if (array.length > 0) {
       let tempArray = array.filter(function (data) {
         if (
-          data.status.toString().toLowerCase().indexOf(status.toLowerCase()) !==
+          data.bo_status.toString().toLowerCase().indexOf(status.toLowerCase()) !==
           -1
         )
           return true;
@@ -679,36 +704,51 @@ export class MaintenanceWorkListPage implements OnInit {
     this.chartr = chart;
   }
 
-  openPage(route: string, type: string) {
+  openPage(route: string, type: string, status: string) {
     let array: any;
     switch (type) {
       case "CM":
-        array = this.cmArray;
+        array = this.cmArray.filter((obj) => {
+          return obj.bo_status == status;
+        });
         break;
       case "PM":
-        array = this.pmArray;
+        array = this.pmArray.filter((obj) => {
+          return obj.bo_status == status;
+        });
         break;
       case "ITC":
-        array = this.itcArray;
+        array = this.itcArray.filter((obj) => {
+          return obj.bo_status == status;
+        });
         break;
       case "PdM":
-        array = this.pdmArray;
+        array = this.pdmArray.filter((obj) => {
+          return obj.bo_status == status;
+        });
         break;
       case "Disposal":
-        array = this.dArray;
+        array = this.dArray.filter((obj) => {
+          return obj.bo_status == status;
+        });
         break;
       case "Compliance":
-        array = this.cArray;
+        array = this.cArray.filter((obj) => {
+          return obj.bo_status == status;
+        });
         break;
       case "Redesign":
-        array = this.rArray;
+        array = this.rArray.filter((obj) => {
+          return obj.bo_status == status;
+        });
         break;
     }
 
     let navigationExtras: NavigationExtras = {
       state: {
         type: type,
-        maintenance_work: array,
+        status: status,
+        work_activity: array,
       },
     };
     this.router.navigate([route], navigationExtras);

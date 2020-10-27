@@ -1,0 +1,92 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="clickDismiss()">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          size="small"
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px"
+          >{{ notificationService.totalnotificationbyuser }}</ion-badge
+        >
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-core">
+  <div class="ion-padding">
+    <ion-list class="line-input">
+      <form [formGroup]="measurementtypeFormGroup">
+        <ion-item>
+          <ion-label position="stacked">Measurement Type</ion-label>
+          <ion-select formControlName="measurement_type">
+            <ion-select-option value="RUNNING HOUR"
+              >RUNNING HOUR</ion-select-option
+            >
+            <ion-select-option value="TEMPERATURE SENSOR"
+              >TEMPERATURE SENSOR</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Reading Date</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" formControlName="reading_date"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Reading Time</ion-label>
+          <ion-datetime displayFormat="HH:mm" formControlName="reading_time"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Current Value</ion-label>
+          <ion-input type="text" formControlName="current_value"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Initial Value</ion-label>
+          <ion-input type="text" formControlName="initial_value"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Owning Organization</ion-label>
+          <ion-select formControlName="owning_organization">
+            <ion-select-option value="">Please select</ion-select-option>
+            <ion-select-option value="ES-D">ENGINEERING SERVICES - DISTRIBUTION</ion-select-option>
+            <ion-select-option value="FLEET">FLEET</ion-select-option>
+            <ion-select-option value="NRW">NRW</ion-select-option>
+            <ion-select-option value="PD-N">PRODUCTION NORTHERN</ion-select-option>
+            <ion-select-option value="PD-S">PRODUCTION SOUTHERN</ion-select-option>
+            <ion-select-option value="SCADA">SCADA</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- <ion-item>
+          <ion-label position="stacked"
+            >Measurement Gauge Meter Reason</ion-label
+          >
+          <ion-textarea
+            rows="5"
+            formControlName="measurement_gauge_meter_reason"
+          ></ion-textarea>
+        </ion-item> -->
+      </form>
+    </ion-list>
+
+    <div class="ion-text-center ion-padding">
+      <ion-button color="light" (click)="clickDismiss()">Cancel</ion-button>
+      <ion-button color="primary" (click)="save()">Save</ion-button>
+    </div>
+  </div>
+</ion-content>

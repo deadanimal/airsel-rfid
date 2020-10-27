@@ -31,10 +31,13 @@ export class ProfilePage implements OnInit {
     this.userFormGroup = this.formBuilder.group({
       id: new FormControl(this.userService.umodel.id),
       email: new FormControl(this.userService.umodel.email),
-      name: new FormControl(this.userService.umodel.name),
-      mobile: new FormControl(this.userService.umodel.mobile),
-      department: new FormControl("ES-DIST-PJ"),
-      title: new FormControl("EN.")
+      employee_id: new FormControl(this.userService.umodel.employee_id),
+      full_name: new FormControl(this.userService.umodel.first_name + ' ' + this.userService.umodel.last_name),
+      phone_no: new FormControl(this.userService.umodel.phone_no),
+      department: new FormControl(this.userService.umodel.department),
+      job_title: new FormControl(this.userService.umodel.job_title),
+      service_area: new FormControl(this.userService.umodel.service_area),
+      crewshift_id: new FormControl(this.userService.umodel.crewshift_id)
     });
   }
 
