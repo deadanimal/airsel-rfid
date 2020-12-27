@@ -23,16 +23,22 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from '@angular/material/input';
 
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
 import { AssetManagementRoutes } from "./asset-management.routing";
 import { RegistrationComponent } from "./registration/registration.component";
 import { ApprovalComponent } from "./approval/approval.component";
 import { DatabaseComponent } from "./database/database.component";
+import { ProcessingComponent } from './processing/processing.component';
+import { RejectedComponent } from './rejected/rejected.component';
+import { RegisteredComponent } from './registered/registered.component';
 
 @NgModule({
-  declarations: [RegistrationComponent, ApprovalComponent, DatabaseComponent],
+  declarations: [RegistrationComponent, ApprovalComponent, DatabaseComponent, ProcessingComponent, RejectedComponent, RegisteredComponent],
   imports: [
     CommonModule,
     NgSelectModule,
+    TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
@@ -54,4 +60,4 @@ import { DatabaseComponent } from "./database/database.component";
     Select2Module
   ],
 })
-export class AssetManagementModule {}
+export class AssetManagementModule { }
