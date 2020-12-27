@@ -19,23 +19,14 @@
 
           <ng-template #popTemplate>
             <h4 class="text-center">Information</h4>
-            <small class="text-justify"
-              >User able to register new asset in bulk by upload excel file. The
+            <small class="text-justify">User able to register new asset in bulk by upload excel file. The
               new data will be listed below for user preview and any error will
               be highlighted for user actions. The registration will be pass to
-              admin for review before adding into the database.</small
-            >
+              admin for review before adding into the database.</small>
           </ng-template>
-          <button
-            type="button"
-            class="btn btn-icon btn-default btn-sm ml-md-4"
-            [popover]="popTemplate"
-            placement="right"
-            [outsideClick]="true"
-          >
-            <span class="btn-inner--icon"
-              ><i class="fas fa-info-circle"></i
-            ></span>
+          <button type="button" class="btn btn-icon btn-default btn-sm ml-md-4" [popover]="popTemplate"
+            placement="right" [outsideClick]="true">
+            <span class="btn-inner--icon"><i class="fas fa-info-circle"></i></span>
           </button>
         </div>
       </div>
@@ -50,47 +41,15 @@
         <div class="card-header py-3 bg-secondary">
           <div class="row">
             <div class="col">
-              <h4 class="m-0">Upload File</h4>
+              <h4 class="m-0">Upload</h4>
             </div>
             <div class="col-auto text-right">
-              <button class="btn btn-default btn-sm">Upload</button>
+              <button class="btn btn-default btn-sm" (click)="openModalUpload(uploadFile)">Upload
+              </button>
             </div>
           </div>
         </div>
-        <!-- <div class="card-body">
-          <div
-            class="dropzone dropzone-single"
-            data-toggle="dropzone"
-            data-dropzone-url="http://"
-          >
-            <div class="fallback">
-              <div class="custom-file">
-                <input
-                  type="file"
-                  class="custom-file-input"
-                  id="dropzoneBasicUpload"
-                />
-                <label class="custom-file-label" for="dropzoneBasicUpload"
-                  >Choose file</label
-                >
-              </div>
-            </div>
-            <div class="dz-preview dz-preview-single">
-              <div class="dz-preview-cover">
-                <img
-                  class="dz-preview-img"
-                  src="..."
-                  alt="..."
-                  data-dz-thumbnail=""
-                />
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <div
-          class="card-body"
-          style="display: flex; justify-content: center; align-items: center;"
-        >
+        <div class="card-body" style="display: flex; justify-content: center; align-items: center;">
           <img src="../../../../../assets/svg/upload.svg" style="width: 60%;" />
         </div>
       </div>
@@ -103,23 +62,14 @@
               <h4 class="m-0">Fill the forms</h4>
             </div>
             <div class="col-auto text-right">
-              <button
-                class="btn btn-default btn-sm"
-                (click)="openModalRegister(asset)"
-              >
+              <button class="btn btn-default btn-sm" (click)="openModalRegister(asset)">
                 Register Asset
               </button>
             </div>
           </div>
         </div>
-        <div
-          class="card-body"
-          style="display: flex; justify-content: center; align-items: center;"
-        >
-          <img
-            src="../../../../../assets/svg/fill_forms.svg"
-            style="width: 70%;"
-          />
+        <div class="card-body" style="display: flex; justify-content: center; align-items: center;">
+          <img src="../../../../../assets/svg/fill_forms.svg" style="width: 70%;" />
         </div>
       </div>
     </div>
@@ -132,344 +82,1493 @@
             </div>
             <div class="col-auto text-right">
               <button class="btn btn-default btn-sm">
-                <a
-                  href="../../../../../assets/file/Asset Registration Blank Template.xlsx"
-                  style="color: white;"
-                  download
-                >
+                <a href="../../../../../assets/file/Asset Registration Blank Template.xlsx" style="color: white;"
+                  download>
                   Download
                 </a>
               </button>
             </div>
           </div>
         </div>
-        <div
-          class="card-body"
-          style="display: flex; justify-content: center; align-items: center;"
-        >
-          <img
-            src="../../../../../assets/svg/download_files.svg"
-            style="width: 68%;"
-          />
+        <div class="card-body" style="display: flex; justify-content: center; align-items: center;">
+          <img src="../../../../../assets/svg/download_files.svg" style="width: 68%;" />
         </div>
       </div>
     </div>
   </div>
 
-  <!-- <div class="row pb-3">
-    <div class="col">
-      <form
-        class="navbar-search navbar-search-light form-inline mr-sm-3"
-        id="navbar-search-main"
-      >
-        <div
-          class="form-group mb-0"
-          [ngClass]="{ focused: focusSearch === true }"
-        >
-          <div class="input-group input-group-alternative input-group-merge">
-            <div class="input-group-prepend">
-              <span class="input-group-text">
-                <i class="fas fa-search"></i>
-              </span>
-            </div>
-            <input
-              class="form-control"
-              placeholder="Search"
-              type="text"
-              (focus)="focusSearch = true"
-              (blur)="focusSearch = false"
-            />
-          </div>
-        </div>
-        <button
-          type="button"
-          class="close"
-          (click)="closeSearch()"
-          data-action="search-close"
-          data-target="#navbar-search-main"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">×</span>
-        </button>
-      </form>
-    </div>
-  </div> -->
-
   <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-header py-3 bg-secondary">
-          <h4 class="m-0">Asset List</h4>
-        </div>
-        <!-- <div class="table-responsive">
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">No.</th>
-                <th scope="col">ID</th>
-                <th scope="col">Asset</th>
-                <th scope="col">Location</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody class="list">
-              <tr>
-                <th scope="row">
-                  1.
-                </th>
-                <td>MOTR-1000001</td>
-                <td>Valve</td>
-                <td>Reservoir</td>
-                <td class="text-right">
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-2 btn-danger btn-sm mr-2"
-                    placement="top"
-                    tooltip="Error data input"
-                    (click)="openModal(asset)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="fas fa-lightbulb"></i
-                    ></span>
+    <div class="col-md-12">
+      <tabset type="pills" class="nav-fill flex-column flex-md-row">
+        <tab heading="Asset Location" [active]="firstTab">
+          <div class="card mt-4">
+            <div class="card-body">
+              <!-- <h5 class="heading">
+                Asset Location
+              </h5> -->
+
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkName"
+                      [(ngModel)]="is_show1.parent_location">
+                    <label class="custom-control-label" for="checkName">
+                      Parent_Location
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkDate"
+                      [(ngModel)]="is_show1.loca_desc">
+                    <label class="custom-control-label" for="checkDate">
+                      Location Desc
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAmount"
+                      [(ngModel)]="is_show1.building">
+                    <label class="custom-control-label" for="checkAmount">
+                      Building
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress1"
+                      [(ngModel)]="is_show1.addr_line1">
+                    <label class="custom-control-label" for="checkAddress1">
+                      Address 1
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress2"
+                      [(ngModel)]="is_show1.addr_line2">
+                    <label class="custom-control-label" for="checkAddress2">
+                      Address 2
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress3"
+                      [(ngModel)]="is_show1.addr_line3">
+                    <label class="custom-control-label" for="checkAddress3">
+                      Address 3
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCity"
+                      [(ngModel)]="is_show1.city">
+                    <label class="custom-control-label" for="checkCity">
+                      City
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkState"
+                      [(ngModel)]="is_show1.state">
+                    <label class="custom-control-label" for="checkState">
+                      State
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkPostcode"
+                      [(ngModel)]="is_show1.postal_code">
+                    <label class="custom-control-label" for="checkPostcode">
+                      Postcode
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCountry"
+                      [(ngModel)]="is_show1.country">
+                    <label class="custom-control-label" for="checkCountry">
+                      Country
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="email_address"
+                      [(ngModel)]="is_show1.tag_no">
+                    <label class="custom-control-label" for="email_address">
+                      Tag Number
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkStatus"
+                      [(ngModel)]="is_show1.service_area">
+                    <label class="custom-control-label" for="checkStatus">
+                      Service Area
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkMethod"
+                      [(ngModel)]="is_show1.maintenance_planner">
+                    <label class="custom-control-label" for="checkMethod">
+                      Maintenance Planner
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReceiptNo"
+                      [(ngModel)]="is_show1.loca_main_contact">
+                    <label class="custom-control-label" for="checkReceiptNo">
+                      Location Main Contact
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReference"
+                      [(ngModel)]="is_show1.loca_mainte_manager">
+                    <label class="custom-control-label" for="checkReference">
+                      Location Maintenance Manager
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReferenceNo"
+                      [(ngModel)]="is_show1.gis_esri_id">
+                    <label class="custom-control-label" for="checkReferenceNo">
+                      GIS/ESRI ID
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTransactionNo"
+                      [(ngModel)]="is_show1.latitude">
+                    <label class="custom-control-label" for="checkTransactionNo">
+                      Latitude
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTotalAmount"
+                      [(ngModel)]="is_show1.longitude">
+                    <label class="custom-control-label" for="checkTotalAmount">
+                      Longitude
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTotalAmount"
+                      [(ngModel)]="is_show1.asset_criticallity">
+                    <label class="custom-control-label" for="checkTotalAmount">
+                      Asset Criticallity
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3 mb-2">
+                <div class="col">
+                  <button class="btn btn-default" (click)="showTable()">
+                    Generate
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-2 btn-info btn-sm"
-                    placement="top"
-                    tooltip="View"
-                    (click)="openModalViewAsset(viewAsset)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="far fa-eye"></i
-                    ></span>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="tableShow1">
+                <div class="col">
+                  <div class="card">
+
+                    <div class="dataTables_wrapper py-4">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <div class="dataTables_length" id="datatable_length">
+                            <label>
+                              Show
+                              <select name="datatable_length" aria-controls="datatable"
+                                class="form-control form-control-sm" (change)="entriesChange($event)">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="-1">All</option>
+                              </select>
+                              records
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                        </div>
+                      </div>
+
+                      <ngx-datatable class="bootstrap" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+                        [rowHeight]="'auto'" [limit]="tableEntries != -1 ? tableEntries : undefined" [rows]="tableTemp"
+                        (activate)="onActivate($event)" id="report_finance">
+                        <ngx-datatable-column [width]="80" [sortable]="true" [resizeable]="false" prop="id_index">
+                          <ng-template ngx-datatable-header-template>
+                            <span>No.</span>
+                          </ng-template>
+
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.id_index}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="created_date"
+                          *ngIf="is_show1.loca_desc">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Location Description</span>
+                          </ng-template>
+
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.created_date}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="180" [sortable]="true" [resizeable]="false" prop="total_amount"
+                          *ngIf="is_show1.building">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Building</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            RM{{row.total_amount / 100 | number: '1.2-2'}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="payment_status"
+                          *ngIf="is_show1.service_area">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Service Area</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span *ngIf="row.payment_status == 'OK'">
+                              Success
+                            </span>
+                            <span *ngIf="row.payment_status == 'PD'">
+                              Pending
+                            </span>
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="receipt_no"
+                          *ngIf="is_show1.maintenance_planner">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Maintenance Planner</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.maintenance_planner}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="transaction_id"
+                          *ngIf="is_show1.latitude">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Latitude</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.transaction_id}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="transaction_id"
+                          *ngIf="is_show1.longitude">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Longitude</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.transaction_id}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="receipt_no"
+                          *ngIf="is_show1.asset_criticallity">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Asset Criticallity</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.receipt_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="receipt_no"
+                          *ngIf="is_show1.loca_main_contact">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Location Main Contact</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.receipt_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="name"
+                          *ngIf="is_show1.parent_location">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Parent Location</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.name}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="address1"
+                          *ngIf="is_show1.addr_line1">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Address 1</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address1}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="address2"
+                          *ngIf="is_show1.addr_line2">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Address 2</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address2}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="address2"
+                          *ngIf="is_show1.addr_line3">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Address 3</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address3}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="city"
+                          *ngIf="is_show1.city">
+                          <ng-template ngx-datatable-header-template>
+                            <span>City</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.city}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="postcode"
+                          *ngIf="is_show1.postal_code">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Postcode</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.postcode}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="state"
+                          *ngIf="is_show1.state">
+                          <ng-template ngx-datatable-header-template>
+                            <span>State</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.state}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="country"
+                          *ngIf="is_show1.country">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Country</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.country}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="country"
+                          *ngIf="is_show1.tag_no">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Tag No</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.tag_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="payment_method"
+                          *ngIf="is_show1.payment_method">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Payment Method</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span *ngIf="row.payment_method == 'DD'">Direct Debit</span>
+                            <span *ngIf="row.payment_method == 'CC'">Credit Card</span>
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="reference"
+                          *ngIf="is_show1.loca_mainte_manager">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Reference ID</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.reference}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="reference_no"
+                          *ngIf="is_show1.gis_esri_id">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Reference No.</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.reference_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="transaction_no"
+                          *ngIf="is_show1.transaction_no">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Transaction No.</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.transaction_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                      </ngx-datatable>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tab>
+
+        <tab heading="Asset Detail" [active]="secondTab">
+          <div class="card mt-4">
+            <div class="card-body">
+              <!-- <h5 class="heading">
+                Asset Location
+              </h5> -->
+
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkName"
+                      [(ngModel)]="is_show1.parent_location">
+                    <label class="custom-control-label" for="checkName">
+                      Parent_Location
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkDate"
+                      [(ngModel)]="is_show1.loca_desc">
+                    <label class="custom-control-label" for="checkDate">
+                      Location Desc
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAmount"
+                      [(ngModel)]="is_show1.building">
+                    <label class="custom-control-label" for="checkAmount">
+                      Building
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress1"
+                      [(ngModel)]="is_show1.addr_line1">
+                    <label class="custom-control-label" for="checkAddress1">
+                      Address 1
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress2"
+                      [(ngModel)]="is_show1.addr_line2">
+                    <label class="custom-control-label" for="checkAddress2">
+                      Address 2
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress3"
+                      [(ngModel)]="is_show1.addr_line3">
+                    <label class="custom-control-label" for="checkAddress3">
+                      Address 3
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCity"
+                      [(ngModel)]="is_show1.city">
+                    <label class="custom-control-label" for="checkCity">
+                      City
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkState"
+                      [(ngModel)]="is_show1.state">
+                    <label class="custom-control-label" for="checkState">
+                      State
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkPostcode"
+                      [(ngModel)]="is_show1.postal_code">
+                    <label class="custom-control-label" for="checkPostcode">
+                      Postcode
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCountry"
+                      [(ngModel)]="is_show1.country">
+                    <label class="custom-control-label" for="checkCountry">
+                      Country
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="email_address"
+                      [(ngModel)]="is_show1.tag_no">
+                    <label class="custom-control-label" for="email_address">
+                      Tag Number
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkStatus"
+                      [(ngModel)]="is_show1.service_area">
+                    <label class="custom-control-label" for="checkStatus">
+                      Service Area
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkMethod"
+                      [(ngModel)]="is_show1.maintenance_planner">
+                    <label class="custom-control-label" for="checkMethod">
+                      Maintenance Planner
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReceiptNo"
+                      [(ngModel)]="is_show1.loca_main_contact">
+                    <label class="custom-control-label" for="checkReceiptNo">
+                      Location Main Contact
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReference"
+                      [(ngModel)]="is_show1.loca_mainte_manager">
+                    <label class="custom-control-label" for="checkReference">
+                      Location Maintenance Manager
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReferenceNo"
+                      [(ngModel)]="is_show1.gis_esri_id">
+                    <label class="custom-control-label" for="checkReferenceNo">
+                      GIS/ESRI ID
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTransactionNo"
+                      [(ngModel)]="is_show1.latitude">
+                    <label class="custom-control-label" for="checkTransactionNo">
+                      Latitude
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTotalAmount"
+                      [(ngModel)]="is_show1.longitude">
+                    <label class="custom-control-label" for="checkTotalAmount">
+                      Longitude
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTotalAmount"
+                      [(ngModel)]="is_show1.asset_criticallity">
+                    <label class="custom-control-label" for="checkTotalAmount">
+                      Asset Criticallity
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3 mb-2">
+                <div class="col">
+                  <button class="btn btn-default" (click)="showTable()">
+                    Generate
                   </button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  2.
-                </th>
-                <td>MOTR-1000002</td>
-                <td>Pump</td>
-                <td>Reservoir 2</td>
-                <td class="text-right">
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-2 btn-danger btn-sm mr-2"
-                    placement="top"
-                    tooltip="Error data input"
-                    (click)="openModal(asset)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="fas fa-lightbulb"></i
-                    ></span>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-2 btn-info btn-sm"
-                    placement="top"
-                    tooltip="View"
-                    (click)="openModalViewAsset(viewAsset)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="far fa-eye"></i
-                    ></span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  3.
-                </th>
-                <td>MOTR-1000003</td>
-                <td>Motor</td>
-                <td>Reservoir 5</td>
-                <td class="text-right">
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-2 btn-info btn-sm"
-                    placement="top"
-                    tooltip="View"
-                    (click)="openModalViewAsset(viewAsset)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="far fa-eye"></i
-                    ></span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  4.
-                </th>
-                <td>MOTR-1000004</td>
-                <td>Motor</td>
-                <td>Pumphouse 2</td>
-                <td class="text-right">
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-2 btn-info btn-sm"
-                    placement="top"
-                    tooltip="View"
-                    (click)="openModalViewAsset(viewAsset)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="far fa-eye"></i
-                    ></span>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  5.
-                </th>
-                <td>MOTR-1000005</td>
-                <td>Motor</td>
-                <td>Pumphouse 4</td>
-                <td class="text-right">
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-2 btn-info btn-sm"
-                    placement="top"
-                    tooltip="View"
-                    (click)="openModalViewAsset(viewAsset)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="far fa-eye"></i
-                    ></span>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div> -->
-        <div class="card-body">
-          <div class="dataTables_wrapper py-4">
-            <div class="row">
-              <div class="col-sm-12 col-md-6">
-                <div class="dataTables_length" id="datatable_length">
-                  <label>
-                    Show
-                    <select
-                      name="datatable_length"
-                      aria-controls="datatable"
-                      class="form-control form-control-sm"
-                      (change)="entriesChange($event)"
-                    >
-                      <option value="10" [selected]="entries == 10">10</option>
-                      <option value="25" [selected]="entries == 25">25</option>
-                      <option value="50" [selected]="entries == 50">50</option>
-                      <option value="-1" [selected]="entries == -1">All</option>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="tableShow1">
+                <div class="col">
+                  <div class="card">
+                    <div class="card-header bg-secondary">
+                      <div class="text-right">
+                        <div class="my-1 mr-4 dropdown" dropdown placement="bottom-right">
+                          <button class="btn btn-outline-default dropdown-toggle" type="button" id="dropdownMenuButton"
+                            dropdownToggle>
+                            Export
+                          </button>
+                          <div aria-labelledby="dropdownMenuButton" *dropdownMenu
+                            class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item">Excel</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="dataTables_wrapper py-4">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <div class="dataTables_length" id="datatable_length">
+                            <label>
+                              Show
+                              <select name="datatable_length" aria-controls="datatable"
+                                class="form-control form-control-sm" (change)="entriesChange($event)">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="-1">All</option>
+                              </select>
+                              records
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                        </div>
+                      </div>
+
+                      <ngx-datatable class="bootstrap" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+                        [rowHeight]="'auto'" [limit]="tableEntries != -1 ? tableEntries : undefined" [rows]="tableTemp"
+                        (activate)="onActivate($event)" id="report_finance">
+                        <ngx-datatable-column [width]="80" [sortable]="true" [resizeable]="false" prop="id_index">
+                          <ng-template ngx-datatable-header-template>
+                            <span>No.</span>
+                          </ng-template>
+
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.id_index}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="created_date"
+                          *ngIf="is_show1.loca_desc">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Location Description</span>
+                          </ng-template>
+
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.created_date}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="180" [sortable]="true" [resizeable]="false" prop="total_amount"
+                          *ngIf="is_show1.building">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Building</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            RM{{row.total_amount / 100 | number: '1.2-2'}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="payment_status"
+                          *ngIf="is_show1.service_area">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Service Area</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span *ngIf="row.payment_status == 'OK'">
+                              Success
+                            </span>
+                            <span *ngIf="row.payment_status == 'PD'">
+                              Pending
+                            </span>
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="receipt_no"
+                          *ngIf="is_show1.maintenance_planner">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Maintenance Planner</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.maintenance_planner}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="transaction_id"
+                          *ngIf="is_show1.latitude">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Latitude</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.transaction_id}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="transaction_id"
+                          *ngIf="is_show1.longitude">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Longitude</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.transaction_id}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="receipt_no"
+                          *ngIf="is_show1.asset_criticallity">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Asset Criticallity</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.receipt_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="receipt_no"
+                          *ngIf="is_show1.loca_main_contact">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Location Main Contact</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.receipt_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="name"
+                          *ngIf="is_show1.parent_location">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Parent Location</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.name}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="address1"
+                          *ngIf="is_show1.addr_line1">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Address 1</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address1}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="address2"
+                          *ngIf="is_show1.addr_line2">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Address 2</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address2}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="address2"
+                          *ngIf="is_show1.addr_line3">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Address 3</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address3}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="city"
+                          *ngIf="is_show1.city">
+                          <ng-template ngx-datatable-header-template>
+                            <span>City</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.city}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="postcode"
+                          *ngIf="is_show1.postal_code">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Postcode</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.postcode}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="state"
+                          *ngIf="is_show1.state">
+                          <ng-template ngx-datatable-header-template>
+                            <span>State</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.state}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="country"
+                          *ngIf="is_show1.country">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Country</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.country}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="country"
+                          *ngIf="is_show1.tag_no">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Tag No</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.tag_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="payment_method"
+                          *ngIf="is_show1.payment_method">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Payment Method</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span *ngIf="row.payment_method == 'DD'">Direct Debit</span>
+                            <span *ngIf="row.payment_method == 'CC'">Credit Card</span>
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="reference"
+                          *ngIf="is_show1.loca_mainte_manager">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Reference ID</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.reference}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="reference_no"
+                          *ngIf="is_show1.gis_esri_id">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Reference No.</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.reference_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="transaction_no"
+                          *ngIf="is_show1.transaction_no">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Transaction No.</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.transaction_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                      </ngx-datatable>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tab>
+
+        <tab heading="Asset Technical Spec" [active]="thirdTab">
+          <div class="card mt-4">
+            <div class="card-body">
+              <!-- <h5 class="heading">
+                Asset Location
+              </h5> -->
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Start Date</label>
+                    <input class="form-control" type="date">
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">End Date</label>
+                    <input class="form-control" type="date">
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Filter Selection</label>
+                    <select class="form-control custom-select">
+                      <option hidden selected>Please select</option>
                     </select>
-                    entries
-                  </label>
+                  </div>
                 </div>
               </div>
-              <div class="col-sm-12 col-md-6">
-                <div id="datatable_filter" class="dataTables_filter">
-                  <label>
-                    <input
-                      type="search"
-                      class="form-control form-control-sm"
-                      placeholder="Search records"
-                      aria-controls="datatable"
-                      (keyup)="filterTable($event)"
-                    />
-                  </label>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkName"
+                      [(ngModel)]="is_show1.parent_location">
+                    <label class="custom-control-label" for="checkName">
+                      Parent_Location
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkDate"
+                      [(ngModel)]="is_show1.loca_desc">
+                    <label class="custom-control-label" for="checkDate">
+                      Location Desc
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAmount"
+                      [(ngModel)]="is_show1.building">
+                    <label class="custom-control-label" for="checkAmount">
+                      Building
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress1"
+                      [(ngModel)]="is_show1.addr_line1">
+                    <label class="custom-control-label" for="checkAddress1">
+                      Address 1
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress2"
+                      [(ngModel)]="is_show1.addr_line2">
+                    <label class="custom-control-label" for="checkAddress2">
+                      Address 2
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress3"
+                      [(ngModel)]="is_show1.addr_line3">
+                    <label class="custom-control-label" for="checkAddress3">
+                      Address 3
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCity"
+                      [(ngModel)]="is_show1.city">
+                    <label class="custom-control-label" for="checkCity">
+                      City
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkState"
+                      [(ngModel)]="is_show1.state">
+                    <label class="custom-control-label" for="checkState">
+                      State
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkPostcode"
+                      [(ngModel)]="is_show1.postal_code">
+                    <label class="custom-control-label" for="checkPostcode">
+                      Postcode
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCountry"
+                      [(ngModel)]="is_show1.country">
+                    <label class="custom-control-label" for="checkCountry">
+                      Country
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="email_address"
+                      [(ngModel)]="is_show1.tag_no">
+                    <label class="custom-control-label" for="email_address">
+                      Tag Number
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkStatus"
+                      [(ngModel)]="is_show1.service_area">
+                    <label class="custom-control-label" for="checkStatus">
+                      Service Area
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkMethod"
+                      [(ngModel)]="is_show1.maintenance_planner">
+                    <label class="custom-control-label" for="checkMethod">
+                      Maintenance Planner
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReceiptNo"
+                      [(ngModel)]="is_show1.loca_main_contact">
+                    <label class="custom-control-label" for="checkReceiptNo">
+                      Location Main Contact
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReference"
+                      [(ngModel)]="is_show1.loca_mainte_manager">
+                    <label class="custom-control-label" for="checkReference">
+                      Location Maintenance Manager
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReferenceNo"
+                      [(ngModel)]="is_show1.gis_esri_id">
+                    <label class="custom-control-label" for="checkReferenceNo">
+                      GIS/ESRI ID
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTransactionNo"
+                      [(ngModel)]="is_show1.latitude">
+                    <label class="custom-control-label" for="checkTransactionNo">
+                      Latitude
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTotalAmount"
+                      [(ngModel)]="is_show1.longitude">
+                    <label class="custom-control-label" for="checkTotalAmount">
+                      Longitude
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="custom-control custom-checkbox">
+                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTotalAmount"
+                      [(ngModel)]="is_show1.asset_criticallity">
+                    <label class="custom-control-label" for="checkTotalAmount">
+                      Asset Criticallity
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3 mb-2">
+                <div class="col">
+                  <button class="btn btn-default" (click)="showTable()">
+                    Generate
+                  </button>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="tableShow1">
+                <div class="col">
+                  <div class="card">
+                    <div class="card-header bg-secondary">
+                      <div class="text-right">
+                        <div class="my-1 mr-4 dropdown" dropdown placement="bottom-right">
+                          <button class="btn btn-outline-default dropdown-toggle" type="button" id="dropdownMenuButton"
+                            dropdownToggle>
+                            Export
+                          </button>
+                          <div aria-labelledby="dropdownMenuButton" *dropdownMenu
+                            class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item">Excel</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="dataTables_wrapper py-4">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <div class="dataTables_length" id="datatable_length">
+                            <label>
+                              Show
+                              <select name="datatable_length" aria-controls="datatable"
+                                class="form-control form-control-sm" (change)="entriesChange($event)">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="-1">All</option>
+                              </select>
+                              records
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                        </div>
+                      </div>
+
+                      <ngx-datatable class="bootstrap" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+                        [rowHeight]="'auto'" [limit]="tableEntries != -1 ? tableEntries : undefined" [rows]="tableTemp"
+                        (activate)="onActivate($event)" id="report_finance">
+                        <ngx-datatable-column [width]="80" [sortable]="true" [resizeable]="false" prop="id_index">
+                          <ng-template ngx-datatable-header-template>
+                            <span>No.</span>
+                          </ng-template>
+
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.id_index}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="created_date"
+                          *ngIf="is_show1.loca_desc">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Location Description</span>
+                          </ng-template>
+
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.created_date}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="180" [sortable]="true" [resizeable]="false" prop="total_amount"
+                          *ngIf="is_show1.building">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Building</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            RM{{row.total_amount / 100 | number: '1.2-2'}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="payment_status"
+                          *ngIf="is_show1.service_area">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Service Area</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span *ngIf="row.payment_status == 'OK'">
+                              Success
+                            </span>
+                            <span *ngIf="row.payment_status == 'PD'">
+                              Pending
+                            </span>
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="receipt_no"
+                          *ngIf="is_show1.maintenance_planner">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Maintenance Planner</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.maintenance_planner}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="transaction_id"
+                          *ngIf="is_show1.latitude">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Latitude</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.transaction_id}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="transaction_id"
+                          *ngIf="is_show1.longitude">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Longitude</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.transaction_id}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="receipt_no"
+                          *ngIf="is_show1.asset_criticallity">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Asset Criticallity</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.receipt_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="receipt_no"
+                          *ngIf="is_show1.loca_main_contact">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Location Main Contact</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.receipt_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="name"
+                          *ngIf="is_show1.parent_location">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Parent Location</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.name}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="address1"
+                          *ngIf="is_show1.addr_line1">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Address 1</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address1}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="address2"
+                          *ngIf="is_show1.addr_line2">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Address 2</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address2}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="address2"
+                          *ngIf="is_show1.addr_line3">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Address 3</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.address3}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="city"
+                          *ngIf="is_show1.city">
+                          <ng-template ngx-datatable-header-template>
+                            <span>City</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.city}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="postcode"
+                          *ngIf="is_show1.postal_code">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Postcode</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.postcode}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="state"
+                          *ngIf="is_show1.state">
+                          <ng-template ngx-datatable-header-template>
+                            <span>State</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.state}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="country"
+                          *ngIf="is_show1.country">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Country</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.country}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="country"
+                          *ngIf="is_show1.tag_no">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Tag No</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.tag_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="payment_method"
+                          *ngIf="is_show1.payment_method">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Payment Method</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span *ngIf="row.payment_method == 'DD'">Direct Debit</span>
+                            <span *ngIf="row.payment_method == 'CC'">Credit Card</span>
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="reference"
+                          *ngIf="is_show1.loca_mainte_manager">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Reference ID</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.reference}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="reference_no"
+                          *ngIf="is_show1.gis_esri_id">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Reference No.</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.reference_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="transaction_no"
+                          *ngIf="is_show1.transaction_no">
+                          <ng-template ngx-datatable-header-template>
+                            <span>Transaction No.</span>
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.transaction_no}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                      </ngx-datatable>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <ngx-datatable
-              class="bootstrap selection-cell"
-              [columnMode]="'force'"
-              [headerHeight]="50"
-              [footerHeight]="50"
-              [rowHeight]="'auto'"
-              [limit]="entries != -1 ? entries : undefined"
-              [rows]="temp"
-              (activate)="onActivate($event)"
-              [scrollbarH]="true"
-            >
-              <ngx-datatable-column>
-                <ng-template ngx-datatable-header-template>
-                  <span>ID</span>
-                </ng-template>
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ row.id }}
-                </ng-template>
-              </ngx-datatable-column>
-              <!-- <ngx-datatable-column>
-                <ng-template ngx-datatable-header-template>
-                  <span>Name</span>
-                </ng-template>
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ row.name }}
-                </ng-template>
-              </ngx-datatable-column> -->
-              <ngx-datatable-column>
-                <ng-template ngx-datatable-header-template>
-                  <span>Asset Type</span>
-                </ng-template>
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ getAssetType(row.type_asset) }}
-                </ng-template>
-              </ngx-datatable-column>
-              <ngx-datatable-column>
-                <ng-template ngx-datatable-header-template>
-                  <span>Category</span>
-                </ng-template>
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ getCategory(row.category) }}
-                </ng-template>
-              </ngx-datatable-column>
-              <ngx-datatable-column>
-                <ng-template ngx-datatable-header-template>
-                  <span>Created At</span>
-                </ng-template>
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ row.created_at | date }}
-                </ng-template>
-              </ngx-datatable-column>
-              <ngx-datatable-column prop="id">
-                <ng-template ngx-datatable-header-template>
-                  <span>Actions</span>
-                </ng-template>
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-2 btn-default btn-sm"
-                    (click)="openModalEdit(asset, row)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="fas fa-edit"></i
-                    ></span>
-                  </button>
-                  <!-- <button
-                    type="button"
-                    class="btn btn-icon btn-2 btn-info btn-sm"
-                    placement="top"
-                    tooltip="View"
-                    (click)="openModalViewAsset(viewAsset)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="fas fa-eye"></i
-                    ></span>
-                  </button> -->
-                </ng-template>
-              </ngx-datatable-column>
-            </ngx-datatable>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col"></div>
-    <div class="col-auto text-rigtht">
-      <button class="btn btn-default" (click)="onSubmit()">Submit</button>
-      <button class="btn btn-secondary">Cancel</button>
+        </tab>
+      </tabset>
     </div>
   </div>
 </div>
@@ -480,54 +1579,30 @@
       Asset
     </h6>
 
-    <button
-      *ngIf="modalRegisterAsset"
-      aria-label="Close"
-      class="close"
-      data-dismiss="modal"
-      type="button"
-      (click)="modalRegisterAsset.hide()"
-    >
+    <button *ngIf="modalRegisterAsset" aria-label="Close" class="close" data-dismiss="modal" type="button"
+      (click)="modalRegisterAsset.hide()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
 
-    <button
-      *ngIf="modal"
-      aria-label="Close"
-      class="close"
-      data-dismiss="modal"
-      type="button"
-      (click)="modal.hide()"
-    >
+    <button *ngIf="modal" aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="modal.hide()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
   </div>
 
   <div class="modal-body">
-    <mat-vertical-stepper
-      [linear]="isLinear"
-      #stepper
-      [disableRipple]="isDisableRipple"
-    >
+    <mat-vertical-stepper [linear]="isLinear" #stepper [disableRipple]="isDisableRipple">
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Asset Owning</ng-template>
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Asset Owning Department</label
-                >
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="owning_department"
-                >
+                <label class="form-control-label">Asset Owning Department</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="owning_department">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let department of departments"
-                    [value]="department.value"
-                    >{{ department.name }}</option
-                  >
+                  <option *ngFor="let department of departments" [value]="department.value">{{ department.name }}
+                  </option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.owning_department
@@ -547,16 +1622,10 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 1</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="level_1"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_1">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let hierarchylevel1 of hierarchylevel1s"
-                    [value]="hierarchylevel1.value"
-                    >{{ hierarchylevel1.name }}</option
-                  >
+                  <option *ngFor="let hierarchylevel1 of hierarchylevel1s" [value]="hierarchylevel1.value">
+                    {{ hierarchylevel1.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.level_1
@@ -566,10 +1635,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 2</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="level_2"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_2">
                   <option value="">Please select</option>
                   <option *ngFor="let region of regions" [value]="region.id">{{
                     region.name
@@ -585,16 +1651,10 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 3</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="level_3"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_3">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let hierarchylevel3 of hierarchylevel3s"
-                    [value]="hierarchylevel3.value"
-                    >{{ hierarchylevel3.name }}</option
-                  >
+                  <option *ngFor="let hierarchylevel3 of hierarchylevel3s" [value]="hierarchylevel3.value">
+                    {{ hierarchylevel3.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.level_3
@@ -604,11 +1664,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 4</label>
-                <input
-                  type="text"
-                  formControlName="level_4"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="level_4" class="form-control form-control-sm" />
                 <!-- <select
                   class="form-control custom-select form-control-sm custom-select-sm"
                   formControlName="level_4"
@@ -630,16 +1686,10 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 5</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="level_5"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_5">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let hierarchylevel5 of hierarchylevel5s"
-                    [value]="hierarchylevel5.value"
-                    >{{ hierarchylevel5.name }}</option
-                  >
+                  <option *ngFor="let hierarchylevel5 of hierarchylevel5s" [value]="hierarchylevel5.value">
+                    {{ hierarchylevel5.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.level_5
@@ -649,16 +1699,10 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Level 6</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="level_6"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_6">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let hierarchylevel6 of hierarchylevel6s"
-                    [value]="hierarchylevel6.value"
-                    >{{ hierarchylevel6.name }}</option
-                  >
+                  <option *ngFor="let hierarchylevel6 of hierarchylevel6s" [value]="hierarchylevel6.value">
+                    {{ hierarchylevel6.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.level_6
@@ -681,16 +1725,11 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Asset Type</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="primary_category"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="primary_category">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let primarycategory of primarycategories"
-                    [value]="primarycategory.id"
-                    >{{ primarycategory.name }}</option
-                  >
+                  <option *ngFor="let primarycategory of primarycategories" [value]="primarycategory.id">
+                    {{ primarycategory.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.primary_category
@@ -700,16 +1739,9 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Asset Identity</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="identity"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="identity">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let identity of identities"
-                    [value]="identity.id"
-                    >{{ identity.name }}</option
-                  >
+                  <option *ngFor="let identity of identities" [value]="identity.id">{{ identity.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.identity
@@ -721,16 +1753,11 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Sub-category 1</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="sub_category_1"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="sub_category_1">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let groupsubcategory1 of groupsubcategory1s"
-                    [value]="groupsubcategory1.id"
-                    >{{ groupsubcategory1.name }}</option
-                  >
+                  <option *ngFor="let groupsubcategory1 of groupsubcategory1s" [value]="groupsubcategory1.id">
+                    {{ groupsubcategory1.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.sub_category_1
@@ -740,16 +1767,11 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Sub-category 2</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="sub_category_2"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="sub_category_2">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let groupsubcategory2 of groupsubcategory2s"
-                    [value]="groupsubcategory2.id"
-                    >{{ groupsubcategory2.name }}</option
-                  >
+                  <option *ngFor="let groupsubcategory2 of groupsubcategory2s" [value]="groupsubcategory2.id">
+                    {{ groupsubcategory2.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.sub_category_2
@@ -773,19 +1795,11 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Asset or Component?</label
-                >
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="type_asset"
-                >
+                <label class="form-control-label">Asset or Component?</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="type_asset">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let typeasset of typeassets"
-                    [value]="typeasset.id"
-                    >{{ typeasset.name }}</option
-                  >
+                  <option *ngFor="let typeasset of typeassets" [value]="typeasset.id">{{ typeasset.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.type_asset
@@ -794,34 +1808,18 @@
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Asset Class/Asset Category</label
-                >
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="category"
-                >
+                <label class="form-control-label">Asset Class/Asset Category</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="category">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let category of categories"
-                    [value]="category.id"
-                    >{{ category.name }}</option
-                  >
+                  <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.category
                 }}</small>
               </div>
-              <div
-                class="form-group"
-                *ngIf="thirdFormGroup.value.category == 'OT'"
-              >
+              <div class="form-group" *ngIf="thirdFormGroup.value.category == 'OT'">
                 <label class="form-control-label">Other category</label>
-                <input
-                  type="text"
-                  formControlName="category_extra"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="category_extra" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.category_extra
                 }}</small>
@@ -829,31 +1827,15 @@
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Hand Over Asset or Procured</label
-                ><br />
+                <label class="form-control-label">Hand Over Asset or Procured</label><br />
                 <div class="custom-control custom-radio custom-control-inline">
-                  <input
-                    type="radio"
-                    id="ah"
-                    name="acquired_by"
-                    class="custom-control-input"
-                    formControlName="acquired_by"
-                    value="AH"
-                  />
-                  <label class="custom-control-label" for="ah"
-                    >Asset Handover</label
-                  >
+                  <input type="radio" id="ah" name="acquired_by" class="custom-control-input"
+                    formControlName="acquired_by" value="AH" />
+                  <label class="custom-control-label" for="ah">Asset Handover</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                  <input
-                    type="radio"
-                    id="pc"
-                    name="acquired_by"
-                    class="custom-control-input"
-                    formControlName="acquired_by"
-                    value="PC"
-                  />
+                  <input type="radio" id="pc" name="acquired_by" class="custom-control-input"
+                    formControlName="acquired_by" value="PC" />
                   <label class="custom-control-label" for="pc">Procured</label>
                 </div>
                 <small class="validation_messages">{{
@@ -878,11 +1860,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Brand</label>
-                <input
-                  type="text"
-                  formControlName="brand"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="brand" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.brand
                 }}</small>
@@ -891,11 +1869,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Model Number</label>
-                <input
-                  type="text"
-                  formControlName="model_no"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="model_no" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.model_no
                 }}</small>
@@ -906,11 +1880,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Site/Capacity 1</label>
-                <input
-                  type="text"
-                  formControlName="size_capacity_1"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="size_capacity_1" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.size_capacity_1
                 }}</small>
@@ -918,14 +1888,8 @@
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Site/Capacity 1 - Unit measurement</label
-                >
-                <input
-                  type="text"
-                  formControlName="size_capacity_1_measurement"
-                  class="form-control form-control-sm"
-                />
+                <label class="form-control-label">Site/Capacity 1 - Unit measurement</label>
+                <input type="text" formControlName="size_capacity_1_measurement" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.size_capacity_1_measurement
                 }}</small>
@@ -936,11 +1900,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Site/Capacity 2</label>
-                <input
-                  type="text"
-                  formControlName="size_capacity_2"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="size_capacity_2" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.size_capacity_2
                 }}</small>
@@ -948,14 +1908,8 @@
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Site/Capacity 2 - Unit measurement</label
-                >
-                <input
-                  type="text"
-                  formControlName="size_capacity_2_measurement"
-                  class="form-control form-control-sm"
-                />
+                <label class="form-control-label">Site/Capacity 2 - Unit measurement</label>
+                <input type="text" formControlName="size_capacity_2_measurement" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.size_capacity_2_measurement
                 }}</small>
@@ -966,11 +1920,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Site/Capacity 3</label>
-                <input
-                  type="text"
-                  formControlName="size_capacity_3"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="size_capacity_3" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.size_capacity_3
                 }}</small>
@@ -978,14 +1928,8 @@
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Site/Capacity 3 - Unit measurement</label
-                >
-                <input
-                  type="text"
-                  formControlName="size_capacity_3_measurement"
-                  class="form-control form-control-sm"
-                />
+                <label class="form-control-label">Site/Capacity 3 - Unit measurement</label>
+                <input type="text" formControlName="size_capacity_3_measurement" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.size_capacity_3_measurement
                 }}</small>
@@ -995,14 +1939,8 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Parent Asset/Plate Number</label
-                >
-                <input
-                  type="text"
-                  formControlName="parent_plate_number"
-                  class="form-control form-control-sm"
-                />
+                <label class="form-control-label">Parent Asset/Plate Number</label>
+                <input type="text" formControlName="parent_plate_number" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.parent_plate_number
                 }}</small>
@@ -1011,11 +1949,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Asset/Plate Number</label>
-                <input
-                  type="text"
-                  formControlName="plate_number"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="plate_number" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.plate_number
                 }}</small>
@@ -1042,11 +1976,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">SCADA ID</label>
-                <input
-                  type="text"
-                  formControlName="scada_id"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="scada_id" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.scada_id
                 }}</small>
@@ -1055,11 +1985,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">External ID</label>
-                <input
-                  type="text"
-                  formControlName="external_id"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="external_id" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.external_id
                 }}</small>
@@ -1070,11 +1996,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Asset Tag Number</label>
-                <input
-                  type="text"
-                  formControlName="tag_number"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="tag_number" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.tag_number
                 }}</small>
@@ -1083,11 +2005,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Pallet Number</label>
-                <input
-                  type="text"
-                  formControlName="pallet_number"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="pallet_number" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.pallet_number
                 }}</small>
@@ -1097,19 +2015,12 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Purchase Date/Installed/Handed Over Date</label
-                >
-                <input
-                  type="text"
-                  formControlName="installed_at"
-                  class="form-control form-control-sm"
-                  bsDatepicker
+                <label class="form-control-label">Purchase Date/Installed/Handed Over Date</label>
+                <input type="text" formControlName="installed_at" class="form-control form-control-sm" bsDatepicker
                   [bsConfig]="{
                     dateInputFormat: 'YYYY-MM-DD',
                     isAnimated: true
-                  }"
-                />
+                  }" />
                 <small class="validation_messages">{{
                   validation_messages.installed_at
                 }}</small>
@@ -1128,30 +2039,15 @@
                   </ul>
                   <small>Note: This value is Mandatory for all assets</small>
                 </ng-template>
-                <label class="form-control-label"
-                  >Condition Rating
-                  <button
-                    type="button"
-                    class="btn btn-icon btn-default btn-sm ml-md-4"
-                    [popover]="popTemplate"
-                    placement="right"
-                    [outsideClick]="true"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="fas fa-info-circle"></i
-                    ></span>
+                <label class="form-control-label">Condition Rating
+                  <button type="button" class="btn btn-icon btn-default btn-sm ml-md-4" [popover]="popTemplate"
+                    placement="right" [outsideClick]="true">
+                    <span class="btn-inner--icon"><i class="fas fa-info-circle"></i></span>
                   </button>
                 </label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="rating"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="rating">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let rating of ratings"
-                    [value]="rating.value"
-                    >{{ rating.name }}</option
-                  >
+                  <option *ngFor="let rating of ratings" [value]="rating.value">{{ rating.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.rating
@@ -1163,16 +2059,9 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Status</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="status"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="status">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let status of statuses"
-                    [value]="status.value"
-                    >{{ status.name }}</option
-                  >
+                  <option *ngFor="let status of statuses" [value]="status.value">{{ status.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.status
@@ -1181,14 +2070,8 @@
             </div>
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Maintenance Specification</label
-                >
-                <input
-                  type="text"
-                  formControlName="maintenance_specification"
-                  class="form-control form-control-sm"
-                />
+                <label class="form-control-label">Maintenance Specification</label>
+                <input type="text" formControlName="maintenance_specification" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.maintenance_specification
                 }}</small>
@@ -1199,11 +2082,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Bill of Material</label>
-                <input
-                  type="text"
-                  formControlName="bill_of_material"
-                  class="form-control form-control-sm"
-                />
+                <input type="text" formControlName="bill_of_material" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.bill_of_material
                 }}</small>
@@ -1212,16 +2091,11 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Measurement Type</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="measuring_type"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="measuring_type">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let measuringtype of measuringtypes"
-                    [value]="measuringtype.value"
-                    >{{ measuringtype.name }}</option
-                  >
+                  <option *ngFor="let measuringtype of measuringtypes" [value]="measuringtype.value">
+                    {{ measuringtype.name }}</option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.measuring_type
@@ -1246,25 +2120,13 @@
               <div class="form-group">
                 <label class="form-control-label">Warranty</label><br />
                 <div class="custom-control custom-radio custom-control-inline">
-                  <input
-                    type="radio"
-                    id="yes"
-                    name="is_warranty"
-                    class="custom-control-input"
-                    formControlName="is_warranty"
-                    value="true"
-                  />
+                  <input type="radio" id="yes" name="is_warranty" class="custom-control-input"
+                    formControlName="is_warranty" value="true" />
                   <label class="custom-control-label" for="yes">Yes</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                  <input
-                    type="radio"
-                    id="no"
-                    name="is_warranty"
-                    class="custom-control-input"
-                    formControlName="is_warranty"
-                    value="false"
-                  />
+                  <input type="radio" id="no" name="is_warranty" class="custom-control-input"
+                    formControlName="is_warranty" value="false" />
                   <label class="custom-control-label" for="no">No</label>
                 </div>
                 <small class="validation_messages">{{
@@ -1275,11 +2137,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Actual Warranty Period</label>
-                <input
-                  type="number"
-                  formControlName="warranty_period_actual"
-                  class="form-control form-control-sm"
-                />
+                <input type="number" formControlName="warranty_period_actual" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.warranty_period_actual
                 }}</small>
@@ -1288,16 +2146,11 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Warranty Vendor Name</label>
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="warranty_vendor"
-                >
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="warranty_vendor">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let organisation of organisations"
-                    [value]="organisation.id"
-                    >{{ organisation.name }}</option
-                  >
+                  <option *ngFor="let organisation of organisations" [value]="organisation.id">{{ organisation.name }}
+                  </option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.warranty_vendor
@@ -1320,19 +2173,11 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="form-control-label"
-                  >Purchase Order Vendor Name</label
-                >
-                <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="po_vendor"
-                >
+                <label class="form-control-label">Purchase Order Vendor Name</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="po_vendor">
                   <option value="">Please select</option>
-                  <option
-                    *ngFor="let organisation of organisations"
-                    [value]="organisation.id"
-                    >{{ organisation.name }}</option
-                  >
+                  <option *ngFor="let organisation of organisations" [value]="organisation.id">{{ organisation.name }}
+                  </option>
                 </select>
                 <small class="validation_messages">{{
                   validation_messages.po_vendor
@@ -1342,11 +2187,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="form-control-label">Purchase Cost</label>
-                <input
-                  type="number"
-                  formControlName="po_cost"
-                  class="form-control form-control-sm"
-                />
+                <input type="number" formControlName="po_cost" class="form-control form-control-sm" />
                 <small class="validation_messages">{{
                   validation_messages.po_cost
                 }}</small>
@@ -1376,41 +2217,21 @@
   </div>
 
   <div class="modal-footer">
-    <button
-      *ngIf="modalRegisterAsset"
-      class="btn btn-default btn-sm mr-auto"
-      type="button"
-      (click)="register()"
-    >
+    <button *ngIf="modalRegisterAsset" class="btn btn-default btn-sm mr-auto" type="button" (click)="register()">
       Register
     </button>
 
-    <button
-      *ngIf="modalEditAsset"
-      class="btn btn-success btn-sm mr-auto"
-      type="button"
-      (click)="update()"
-    >
+    <button *ngIf="modalEditAsset" class="btn btn-success btn-sm mr-auto" type="button" (click)="update()">
       Update
     </button>
 
-    <button
-      *ngIf="modalRegisterAsset"
-      class="btn btn-secondary btn-sm ml-auto"
-      data-dismiss="modal"
-      type="button"
-      (click)="modalRegisterAsset.hide()"
-    >
+    <button *ngIf="modalRegisterAsset" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal" type="button"
+      (click)="modalRegisterAsset.hide()">
       Close
     </button>
 
-    <button
-      *ngIf="modalEditAsset"
-      class="btn btn-secondary btn-sm ml-auto"
-      data-dismiss="modal"
-      type="button"
-      (click)="modalEditAsset.hide()"
-    >
+    <button *ngIf="modalEditAsset" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal" type="button"
+      (click)="modalEditAsset.hide()">
       Close
     </button>
   </div>
@@ -1422,13 +2243,8 @@
       List of Asset
     </h6>
 
-    <button
-      aria-label="Close"
-      class="close"
-      data-dismiss="modalViewAsset"
-      type="button"
-      (click)="modalViewAsset.hide()"
-    >
+    <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
+      (click)="modalViewAsset.hide()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
   </div>
@@ -1447,25 +2263,12 @@
           <tr *ngFor="let asset of assets">
             <td>{{ asset.name }}</td>
             <td>
-              <button
-                *ngIf="asset.error"
-                class="btn btn-icon btn-2 btn-sm btn-danger mr-2"
-                type="button"
-                placement="top"
-                tooltip="Error data input"
-              >
-                <span class="btn-inner--icon"
-                  ><i class="fas fa-lightbulb"></i
-                ></span>
+              <button *ngIf="asset.error" class="btn btn-icon btn-2 btn-sm btn-danger mr-2" type="button"
+                placement="top" tooltip="Error data input">
+                <span class="btn-inner--icon"><i class="fas fa-lightbulb"></i></span>
               </button>
-              <button
-                class="btn btn-icon btn-2 btn-sm btn-info"
-                type="button"
-                (click)="openModal(asset)"
-              >
-                <span class="btn-inner--icon"
-                  ><i class="fas fa-tools"></i
-                ></span>
+              <button class="btn btn-icon btn-2 btn-sm btn-info" type="button" (click)="openModal(asset)">
+                <span class="btn-inner--icon"><i class="fas fa-tools"></i></span>
               </button>
             </td>
           </tr>
@@ -1475,12 +2278,40 @@
   </div>
 
   <div class="modal-footer">
-    <button
-      class="btn btn-secondary btn-sm ml-auto"
-      data-dismiss="modalViewAsset"
-      type="button"
-      (click)="modalViewAsset.hide()"
-    >
+    <button class="btn btn-secondary btn-sm ml-auto" data-dismiss="modalViewAsset" type="button"
+      (click)="modalViewAsset.hide()">
+      Close
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #uploadFile>
+  <div class="modal-header bg-default">
+    <h6 class="modal-title my-auto text-white">
+      List of Asset
+    </h6>
+
+    <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button" (click)="closeModal()">
+      <span aria-hidden="true" class="my-auto text-white"> × </span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <form [formGroup]="fileuploadFormGroup">
+      <div class="form-group">
+        <label class="form-control-label">Upload Excel</label>
+        <input class="form-control" name="excelFile" (click)="onFileChange()" type="file">
+      </div>
+    </form>
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-default btn-sm" (click)="closeModal()">
+      Submit
+    </button>
+    <button class="btn btn-secondary btn-sm" type="button" (click)="closeModal()">
       Close
     </button>
   </div>

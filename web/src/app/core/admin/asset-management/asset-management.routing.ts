@@ -2,6 +2,9 @@ import { Routes } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
 import { ApprovalComponent } from './approval/approval.component';
 import { DatabaseComponent } from './database/database.component';
+import { ProcessingComponent } from './processing/processing.component';
+import { RejectedComponent } from './rejected/rejected.component';
+import { RegisteredComponent } from './registered/registered.component';
 
 export const AssetManagementRoutes: Routes = [
     {
@@ -12,12 +15,21 @@ export const AssetManagementRoutes: Routes = [
                 component: RegistrationComponent
             },
             {
-                path: 'approval',
-                component: ApprovalComponent
-            },
-            {
                 path: 'database',
-                component: DatabaseComponent
+                children: [
+                    {
+                        path: 'processing',
+                        component: ProcessingComponent
+                    },
+                    {
+                        path: 'rejected',
+                        component: RejectedComponent
+                    },
+                    {
+                        path: 'registered',
+                        component: RegisteredComponent
+                    },
+                ]
             }
         ]
     }

@@ -35,6 +35,11 @@ export class RegistrationComponent implements OnInit {
   isLinear = false;
   isDisableRipple = true;
 
+  // Tabs
+  firstTab: boolean = true
+  secondTab: boolean = false
+  thirdTab: boolean = false
+
   // Modal
   modal: BsModalRef;
   modalViewAsset: BsModalRef;
@@ -43,6 +48,11 @@ export class RegistrationComponent implements OnInit {
   modalConfig = {
     keyboard: true,
     class: "modal-dialog-centered modal-xl",
+    ignoreBackdropClick: true,
+  };
+  modalConfigUpload = {
+    keyboard: true,
+    class: "modal-dialog-centered modal-sm",
     ignoreBackdropClick: true,
   };
   modalViewAssetConfig = {
@@ -214,6 +224,30 @@ export class RegistrationComponent implements OnInit {
     { value: "OT", name: "Other" },
   ];
 
+  is_show1 = {
+    parent_location: false, //
+    loca_desc: false, //
+    building: false, //
+    addr_line1: false,  //
+    addr_line2: false, //
+    addr_line3: false, //
+    city: false, //
+    state: false, //
+    postal_code: false, //
+    country: false, //
+    tag_no: false, //
+    service_area: false, //
+    maintenance_planner: false, //
+    loca_main_contact: false, //
+    loca_mainte_manager: false, //
+    gis_esri_id: false, //
+    latitude: false, //
+    longitude: false, //
+    asset_criticallity: false, //
+    cost_center: false
+  }
+  tableShow1 = false
+
   // Datatable
   entries: number = 10;
   selected: any[] = [];
@@ -223,6 +257,7 @@ export class RegistrationComponent implements OnInit {
   SelectionType = SelectionType;
 
   // Forms
+  fileuploadFormGroup: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -302,6 +337,9 @@ export class RegistrationComponent implements OnInit {
       po_vendor: ["", Validators.required],
       po_cost: ["", Validators.required],
     });
+    this.fileuploadFormGroup = this.formBuilder.group({
+      excelFile: ["", Validators.required],
+    })
   }
 
   getAssets() {
@@ -468,6 +506,10 @@ export class RegistrationComponent implements OnInit {
     this.modal = this.modalService.show(modalNotification, this.modalConfig);
   }
 
+  openModalUpload(modalNotification: TemplateRef<any>) {
+    this.modal = this.modalService.show(modalNotification, this.modalConfigUpload);
+  }
+
   openModalViewAsset(modalNotification: TemplateRef<any>) {
     this.modalViewAsset = this.modalService.show(
       modalNotification,
@@ -627,5 +669,62 @@ export class RegistrationComponent implements OnInit {
       return obj.id === value;
     });
     return result.name;
+  }
+
+  tabChecker(path: string) {
+    if (path == 'account') {
+      this.firstTab = true;
+      this.secondTab = false;
+      this.thirdTab = false;
+    }
+    else if (path == 'transaction') {
+      this.firstTab = false;
+      this.secondTab = true;
+      this.thirdTab = false;
+    }
+    else if (path == 'order') {
+      this.firstTab = false;
+      this.secondTab = false;
+      this.thirdTab = true;
+    }
+    else {
+      this.firstTab = true;
+      this.secondTab = false;
+      this.thirdTab = false;
+    }
+  }
+
+  showTable() {
+    let counter = 0
+    for (let x in this.is_show1) {
+      if (this.is_show1[x]) {
+        counter++
+      }
+    }
+
+    if (counter < 6) {
+      this.tableShow1 = true
+    }
+    else {
+      console.log('bluek')
+    }
+  }
+
+  onFileChange(event) {
+    console.log('onFileChange');
+    console.log(event)
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.fileuploadFormGroup.get("excelFile").setValue(file);
+      this.fileuploadFormGroup.get("name").setValue(file.name);
+    }
+  }
+
+  closeModal() {
+    this.modal.hide();
+  }
+
+  submitFileExcel() {
+    console.log(this.fileuploadFormGroup.value);
   }
 }
