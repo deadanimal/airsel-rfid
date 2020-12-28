@@ -9,7 +9,7 @@ from rest_framework import serializers
 from django.utils.timezone import now
 
 from .models import (
-    Asset,
+    Asset,AssetRegistration,
     AssetGroup,
     AssetType,
     Rfid
@@ -19,6 +19,13 @@ class AssetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Asset
+        fields = '__all__'
+
+
+class AssetRegistrationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetRegistration
         fields = '__all__'
 
 

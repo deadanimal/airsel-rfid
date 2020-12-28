@@ -40,6 +40,8 @@ export class RegistrationComponent implements OnInit {
   secondTab: boolean = false
   thirdTab: boolean = false
 
+  tempFileName = false;
+
   // Modal
   modal: BsModalRef;
   modalViewAsset: BsModalRef;
@@ -711,14 +713,31 @@ export class RegistrationComponent implements OnInit {
   }
 
   onFileChange(event) {
-    console.log('onFileChange');
-    console.log(event)
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.fileuploadFormGroup.get("excelFile").setValue(file);
-      this.fileuploadFormGroup.get("name").setValue(file.name);
+      // this.fileuploadFormGroup.get("data_file_link").setValue(file);
+      this.fileuploadFormGroup.get("excelFile").setValue(file.name);
+      this.tempFileName = true;
     }
   }
+
+  // onFileChange(event) {
+  //   console.log('onFileChange');
+  //   console.log(event)
+  //   let af = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel']
+  //   if (event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     // if (!_.includes(af, file.type)) {
+  //     //   alert('Only EXCEL Docs Allowed!');
+  //     // } else {
+  //     this.fileuploadFormGroup = file.name;
+  //     // this.fileUploadForm.get('myfile').setValue(file);
+  //     this.fileuploadFormGroup.get("excelFile").setValue(file);
+  //     // }
+  //     // this.fileuploadFormGroup.get("excelFile").setValue(file);
+  //     // this.fileuploadFormGroup.get("name").setValue(file.name);
+  //   }
+  // }
 
   closeModal() {
     this.modal.hide();

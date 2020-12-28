@@ -13,14 +13,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 from datetime import datetime
 
 from .models import (
-    Asset,
+    Asset,AssetRegistration,
     AssetGroup,
     AssetType,
     Rfid
 )
 
 from .serializers import (
-    AssetSerializer,
+    AssetSerializer,AssetRegistrationSerializer,
     AssetGroupSerializer,
     AssetTypeSerializer,
     RfidSerializer
@@ -233,6 +233,42 @@ class RfidViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     
     def get_queryset(self):
         queryset = Rfid.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset
+
+class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetRegistration.objects.all()
+    serializer_class = AssetRegistrationSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'created_at'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetRegistration.objects.all()
 
         """
         if self.request.user.is_anonymous:

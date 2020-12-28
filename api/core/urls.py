@@ -26,7 +26,7 @@ router = NestedDefaultRouter()
 
 # Asset
 from assets.views import (
-    AssetViewSet,
+    AssetViewSet,AssetRegistrationViewSet,
     AssetGroupViewSet,
     AssetTypeViewSet,
     RfidViewSet
@@ -34,6 +34,10 @@ from assets.views import (
 
 assets_router = router.register(
     'assets', AssetViewSet
+)
+
+assets_registration_router = router.register(
+    'asset-registration', AssetRegistrationViewSet
 )
 
 asset_groups_router = router.register(
