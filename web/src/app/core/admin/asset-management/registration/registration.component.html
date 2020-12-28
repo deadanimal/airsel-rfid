@@ -2301,14 +2301,14 @@
     <form [formGroup]="fileuploadFormGroup">
       <div class="form-group">
         <label class="form-control-label">Upload Excel</label>
-        <input class="form-control" name="excelFile" (click)="onFileChange()" type="file">
+        <input class="form-control" name="excelFile" (change)="onFileChange($event)" type="file">
       </div>
     </form>
 
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-default btn-sm" (click)="closeModal()">
+    <button class="btn btn-default btn-sm" (click)="submitFileExcel()">
       Submit
     </button>
     <button class="btn btn-secondary btn-sm" type="button" (click)="closeModal()">
