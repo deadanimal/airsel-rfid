@@ -287,16 +287,8 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return queryset
 
 
-        # ('CO', 'Completed'),
-        # ('IC':'Incomplete'),
-        # ('PR','Processed'),
-        # ('AP', 'Approved'),
-        # ('RJ', 'Rejected')
-
     @action(methods=['GET'], detail=True)
     def complete_list(self, request, *args, **kwargs):
-        # asset = self.get_object()
-        # asset.approval_status = 'RJ'
 
         asset_list = AssetRegistration.objects.filter(
             Q(status='CO')
@@ -307,8 +299,6 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=True)
     def incomplete_list(self, request, *args, **kwargs):
-        # asset = self.get_object()
-        # asset.approval_status = 'RJ'
 
         asset_list = AssetRegistration.objects.filter(
             Q(status='IC')
@@ -319,8 +309,6 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=True)
     def processed_list(self, request, *args, **kwargs):
-        # asset = self.get_object()
-        # asset.approval_status = 'RJ'
 
         asset_list = AssetRegistration.objects.filter(
             Q(status='PR')
@@ -331,8 +319,6 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=True)
     def approved_list(self, request, *args, **kwargs):
-        # asset = self.get_object()
-        # asset.approval_status = 'RJ'
 
         asset_list = AssetRegistration.objects.filter(
             Q(status='AP')
@@ -343,8 +329,6 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=True)
     def rejected_list(self, request, *args, **kwargs):
-        # asset = self.get_object()
-        # asset.approval_status = 'RJ'
 
         asset_list = AssetRegistration.objects.filter(
             Q(status='RJ')
