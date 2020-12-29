@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { 
-  BsDropdownModule, 
-  ProgressbarModule, 
-  TooltipModule, 
+import {
+  BsDropdownModule,
+  ProgressbarModule,
+  TooltipModule,
   BsDatepickerModule,
   ModalModule,
   PopoverModule,
@@ -44,6 +44,7 @@ import { UtilityUserPrivilegesComponent } from './utility-user-privileges/utilit
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -85,7 +86,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     PopoverModule.forRoot(),
     RatingModule.forRoot(),
     NgxDatatableModule,
-    NgSelectModule
+    NgSelectModule, NgxSpinnerModule
   ]
 })
 export class AdminModule { }
