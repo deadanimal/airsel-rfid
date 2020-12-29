@@ -285,3 +285,55 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Asset.objects.filter(company=company.id)
         """
         return queryset
+
+
+    @action(methods=['GET'], detail=True)
+    def complete_list(self, request, *args, **kwargs):
+
+        asset_list = AssetRegistration.objects.filter(
+            Q(status='CO')
+        ).all()
+
+        serializer = AssetRegistrationSerializer(asset_list)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=True)
+    def incomplete_list(self, request, *args, **kwargs):
+
+        asset_list = AssetRegistration.objects.filter(
+            Q(status='IC')
+        ).all()
+
+        serializer = AssetRegistrationSerializer(asset_list)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=True)
+    def processed_list(self, request, *args, **kwargs):
+
+        asset_list = AssetRegistration.objects.filter(
+            Q(status='PR')
+        ).all()
+
+        serializer = AssetRegistrationSerializer(asset_list)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=True)
+    def approved_list(self, request, *args, **kwargs):
+
+        asset_list = AssetRegistration.objects.filter(
+            Q(status='AP')
+        ).all()
+
+        serializer = AssetRegistrationSerializer(asset_list)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=True)
+    def rejected_list(self, request, *args, **kwargs):
+
+        asset_list = AssetRegistration.objects.filter(
+            Q(status='RJ')
+        ).all()
+
+        serializer = AssetRegistrationSerializer(asset_list)
+        return Response(serializer.data)
+
