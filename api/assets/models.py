@@ -489,7 +489,7 @@ class AssetRegistration(models.Model):
     maintenance_specification = models.CharField(max_length=200, default='NA',null=True, blank=True)
     measurement_type = models.CharField(max_length=200, default='NA',null=True, blank=True)
     warranty = models.CharField(max_length=200, default='NA',null=True, blank=True)
-    acctually_warranty_period = models.CharField(max_length=200, default='NA',null=True, blank=True)
+    actual_warranty_period = models.CharField(max_length=200, default='NA',null=True, blank=True)
     warranty_vendor_name = models.CharField(max_length=200, default='NA',null=True, blank=True)
     bottom_water_level = models.CharField(max_length=200, default='NA',null=True, blank=True)
     closing_torque = models.CharField(max_length=200, default='NA',null=True, blank=True)
@@ -556,6 +556,7 @@ class AssetRegistration(models.Model):
     vehicle_roadtax_renew_date = models.CharField(max_length=200, default='NA',null=True, blank=True)
     vehicle_spad_permit_date_period_from = models.CharField(max_length=200, default='NA',null=True, blank=True)
     voltage = models.CharField(max_length=200, default='NA',null=True, blank=True)
+    asset_status = models.CharField(max_length=200, default='NA',null=True, blank=True)
 
     #Approval
     APPROVAL_STATUS = [

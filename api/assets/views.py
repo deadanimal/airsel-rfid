@@ -287,53 +287,44 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return queryset
 
 
-    @action(methods=['GET'], detail=True)
+    @action(methods=['GET'], detail=False)
     def complete_list(self, request, *args, **kwargs):
 
-        asset_list = AssetRegistration.objects.filter(
-            Q(status='CO')
-        ).all()
+        asset_list = AssetRegistration.objects.filter(status='CO')
 
-        serializer = AssetRegistrationSerializer(asset_list)
+        serializer = AssetRegistrationSerializer(asset_list, many=True)
         return Response(serializer.data)
 
-    @action(methods=['GET'], detail=True)
+    @action(methods=['GET'], detail=False)
     def incomplete_list(self, request, *args, **kwargs):
 
-        asset_list = AssetRegistration.objects.filter(
-            Q(status='IC')
-        ).all()
+        asset_list = AssetRegistration.objects.filter(status='IC')
 
-        serializer = AssetRegistrationSerializer(asset_list)
+        serializer = AssetRegistrationSerializer(asset_list, many=True)
         return Response(serializer.data)
 
-    @action(methods=['GET'], detail=True)
+    @action(methods=['GET'], detail=False)
     def processed_list(self, request, *args, **kwargs):
 
-        asset_list = AssetRegistration.objects.filter(
-            Q(status='PR')
-        ).all()
+        asset_list = AssetRegistration.objects.filter(status='PR')
 
-        serializer = AssetRegistrationSerializer(asset_list)
+        serializer = AssetRegistrationSerializer(asset_list, many=True)
         return Response(serializer.data)
 
-    @action(methods=['GET'], detail=True)
+    @action(methods=['GET'], detail=False)
     def approved_list(self, request, *args, **kwargs):
 
-        asset_list = AssetRegistration.objects.filter(
-            Q(status='AP')
-        ).all()
+        asset_list = AssetRegistration.objects.filter(status='AP')
 
-        serializer = AssetRegistrationSerializer(asset_list)
+        serializer = AssetRegistrationSerializer(asset_list, many=True)
         return Response(serializer.data)
 
-    @action(methods=['GET'], detail=True)
+    @action(methods=['GET'], detail=False)
     def rejected_list(self, request, *args, **kwargs):
 
-        asset_list = AssetRegistration.objects.filter(
-            Q(status='RJ')
-        ).all()
-
-        serializer = AssetRegistrationSerializer(asset_list)
-        return Response(serializer.data)
+        rejected_list_asset_list = AssetRegistration.objects.filter(status='RJ')
+        print('asset_list = ')
+        print(rejected_list_asset_list)
+        rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
+        return Response(rejected_list_serializer.data)
 
