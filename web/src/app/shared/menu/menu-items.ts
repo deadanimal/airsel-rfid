@@ -66,7 +66,8 @@ export const AMROUTES: RouteInfo[] = [
           { path: 'registered', title: 'Registered', type: 'link' },
           { path: 'rejected', title: 'Rejected', type: 'link' }
         ]
-      }
+      },
+      { path: 'badge-no', title: 'Badge No', type: 'link' },
     ]
   },
   {
@@ -182,7 +183,6 @@ export const PLANNEROUTES: RouteInfo[] = [
           { path: 'registered', title: 'Registered', type: 'link' },
         ]
       },
-      { path: 'badge-no', title: 'Badge No', type: 'link' },
     ]
   },
   {

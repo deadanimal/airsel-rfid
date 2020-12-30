@@ -322,11 +322,19 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     @action(methods=['GET'], detail=False)
     def rejected_list(self, request, *args, **kwargs):
 
-        # AssetRegistration.objects.all().delete()
-
         rejected_list_asset_list = AssetRegistration.objects.filter(status='RJ')
         print('asset_list = ')
         print(rejected_list_asset_list)
         rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
         return Response(rejected_list_serializer.data)
 
+
+    @action(methods=['GET'], detail=False)
+    def delete_all_uploaded(self, request, *args, **kwargs):
+
+        AssetRegistration.objects.all().delete()
+
+        print('asset_list = ')
+        print(rejected_list_asset_list)
+        # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
+        # return Response(rejected_list_serializer.data)
