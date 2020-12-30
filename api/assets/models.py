@@ -434,6 +434,7 @@ class AssetRegistration(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     asset_id = models.CharField(max_length=200, default='NA',null=True, blank=True)
+    badge_no = models.CharField(max_length=100, default='NA',null=True, blank=True)
     node_id = models.CharField(max_length=200, default='NA',null=True, blank=True)
     hex_code = models.CharField(max_length=200, default='NA',null=True, blank=True)
     asset_identity = models.CharField(max_length=200, default='NA',null=True, blank=True)
@@ -569,7 +570,7 @@ class AssetRegistration(models.Model):
     status = models.CharField(
         max_length=2,
         choices=APPROVAL_STATUS,
-        default='NA'
+        default='IC'
     )
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

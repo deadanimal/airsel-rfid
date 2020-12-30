@@ -1007,7 +1007,7 @@ export class RegistrationComponent implements OnInit {
       formData.append('vehicle_spad_permit_date_period_from', loopval.vehicle_spad_permit_date_period_from)
       formData.append('voltage', loopval.voltage)
       // console.log('loopval.main_operation = ', loopval.main_operation)
-      console.log('formData = ', formData);
+      // console.log('formData = ', formData);
       // dalam foreach
       assetregserv.post(formData).subscribe(
         (res) => {
@@ -1028,6 +1028,7 @@ export class RegistrationComponent implements OnInit {
       }).then((result) => {
         this.getRegisteredData()
       });
+    this.closeModal()
   }
 
   getRegisteredData() {
