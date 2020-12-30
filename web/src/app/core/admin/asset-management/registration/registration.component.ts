@@ -88,53 +88,48 @@ export class RegistrationComponent implements OnInit {
     { value: "MTRSR", name: "Motor-Slip Ring" },
     { value: "PES", name: "Pump-End Suction" },
     { value: "RSVR", name: "Reservoir" },
-  ];
-  assetowningdepartment = [
-    { value: "UNK1", name: "Unknown1" },
-    { value: "UNK2", name: "Unknown2" },
-    { value: "UNK3", name: "Unknown3" },
-    { value: "UNK4", name: "Unknown4" },
-    { value: "UNK5", name: "Unknown5" },
-  ];
-  mainoperationregister = [
-    { value: "UNK1", name: "Unknown1" },
-    { value: "UNK2", name: "Unknown2" },
-    { value: "UNK3", name: "Unknown3" },
-    { value: "UNK4", name: "Unknown4" },
-    { value: "UNK5", name: "Unknown5" },
-  ];
-  region = [
-    { value: "UNK1", name: "Unknown1" },
-    { value: "UNK2", name: "Unknown2" },
-    { value: "UNK3", name: "Unknown3" },
-    { value: "UNK4", name: "Unknown4" },
-    { value: "UNK5", name: "Unknown5" },
-  ];
-  operation = [
-    { value: "UNK1", name: "Unknown1" },
-    { value: "UNK2", name: "Unknown2" },
-    { value: "UNK3", name: "Unknown3" },
-    { value: "UNK4", name: "Unknown4" },
-    { value: "UNK5", name: "Unknown5" },
-  ];
-  parentlocation = [
-    { value: "UNK1", name: "Unknown1" },
-    { value: "UNK2", name: "Unknown2" },
-    { value: "UNK3", name: "Unknown3" },
-    { value: "UNK4", name: "Unknown4" },
-    { value: "UNK5", name: "Unknown5" },
-  ];
-  hierarchylevel1s = [
-    { value: "CB", name: "Customer Billing Services" },
-    { value: "DB", name: "Distribution" },
-    { value: "FL", name: "Fleet" },
-    { value: "GA", name: "General Admin" },
-    { value: "PD", name: "Production" },
-    { value: "SD", name: "SCADA" },
-    { value: "WQ", name: "Water Quality" },
     { value: "NA", name: "Not Available" },
   ];
-  hierarchylevel3s = [
+  assetowningdepartment = [
+    { value: "CBS", name: "Customer Billing Sevices" },
+    { value: "DB", name: "Distribution" },
+    { value: "ESD", name: "Engineering Services-Distribution" },
+    { value: "FLT", name: "Fleet" },
+    { value: "LND", name: "Land" },
+    { value: "NRW", name: "NRW"},
+    { value: "PN", name: "Production Northern"},
+    { value: "PS", name: "Production Southern"},
+    { value: "SCD", name: "SCADA"},
+    { value: "WQ", name: "Water Quality"},
+    { value: "NA", name: "Not Available" },
+  ];
+  mainoperationregister = [
+    { value: "CBS", name: "Customer Billing Services" },
+    { value: "DB", name: "Distribution" },
+    { value: "GA", name: "General Admin" },
+    { value: "PRD", name: "Production" },
+    { value: "SCD", name: "SCADA" },
+    { value: "WQ", name: "Water Quality"},
+    { value: "FLT", name: "Fleet"},
+    { value: "NA", name: "Not Available" },
+  ];
+  region = [
+    { value: "KS", name: "Kuala Selangor" },
+    { value: "KUL", name: "Kuala Lumpur" },
+    { value: "HL", name: "Hulu Langat" },
+    { value: "SB", name: "Sabak Bernam" },
+    { value: "PTG", name: "Petaling" },
+    { value: "KLT", name: "Kuala Langat"},
+    { value: "HS", name: "Hulu Selangor"},
+    { value: "SP", name: "Sepang"},
+    { value: "GBK", name: "Gombak"},
+    { value: "KLG", name: "Klang"},
+    { value: "NRTH", name: "North"},
+    { value: "STH", name: "South"},
+    { value: "HQ", name: "Headquarters"},
+    { value: "NA", name: "Not Available" },
+  ];
+  operation = [
     { value: "ND", name: "NRW - District Metering Zone" },
     { value: "NT", name: "NRW - Transmission Network" },
     { value: "NW", name: "NRW - Water Balancing Area" },
@@ -149,14 +144,7 @@ export class RegistrationComponent implements OnInit {
     { value: "WS", name: "WQ Sampling Station" },
     { value: "NA", name: "Not Available" },
   ];
-  hierarchylevel4s = [
-    { value: "NR", name: "NRW" },
-    { value: "PH", name: "Pump House" },
-    { value: "RS", name: "Reservoir" },
-    { value: "TP", name: "Treatment Plant Name" },
-    { value: "NA", name: "Not Available" },
-  ];
-  hierarchylevel5s = [
+  parentlocation = [
     { value: "AS", name: "Aeration System" },
     { value: "BR", name: "Balancing Reservoir" },
     { value: "BD", name: "Buildings" },
@@ -183,73 +171,132 @@ export class RegistrationComponent implements OnInit {
     { value: "WA", name: "Water Analysis" },
     { value: "NA", name: "Not Available" },
   ];
-  hierarchylevel6s = [
-    { value: "AP", name: "Actiflo Process" },
-    { value: "AC", name: "Activated Carbon Process" },
-    { value: "AS", name: "Aeration System" },
-    { value: "ES", name: "Alum Process" },
-    { value: "BP", name: "Backwash Process" },
-    { value: "BR", name: "Balancing Reservoir" },
-    { value: "BO", name: "Boat House" },
-    { value: "BU", name: "Buildings" },
-    { value: "CD", name: "Chemical Dosing" },
-    { value: "CM", name: "Chemical Process" },
-    { value: "CP", name: "Chlorination Process" },
-    { value: "CO", name: "Coagulation Process" },
-    { value: "CR", name: "Chemical Room" },
-    { value: "CC", name: "Control Centre" },
-    { value: "CR", name: "Control Room" },
-    { value: "DP", name: "Data Process" },
-    { value: "DS", name: "Distrafication" },
-    { value: "DO", name: "Draw Off Process" },
-    { value: "ES", name: "Earthing System" },
-    { value: "EL", name: "Electrical System" },
-    { value: "FS", name: "Facilities System" },
-    { value: "FP", name: "Filtration Process" },
-    { value: "FW", name: "Filtered Water Sampling" },
-    { value: "FO", name: "Flocculation Process" },
-    { value: "FL", name: "Fluoride Process" },
-    { value: "LB", name: "Laboratory" },
-    { value: "LP", name: "Lime Process" },
-    { value: "OA", name: "Online Analyzer" },
-    { value: "PR", name: "Polymer (Residual) Dosing" },
-    { value: "PA", name: "Poly Aluminium Chloride Process" },
-    { value: "PP", name: "Polymer Process" },
-    { value: "PS", name: "Power Supply" },
-    { value: "RM", name: "Rapid Mixing" },
-    { value: "RE", name: "Residual Emergency Lagoon" },
-    { value: "RT", name: "Residual Thickened Pumping Station" },
-    { value: "RI", name: "Raw Water Intake System" },
-    { value: "RS", name: "Raw Water Pumping System" },
-    { value: "RP", name: "Raw Water Process" },
-    { value: "RE", name: "Raw Water Pipeline" },
-    { value: "RV", name: "Reservoir" },
-    { value: "SS", name: "SCADA System" },
-    { value: "SD", name: "Sedimentation Process" },
-    { value: "SL", name: "Settled Water Process" },
-    { value: "SS", name: "Settled Water Sampling" },
-    { value: "SW", name: "Settled Water Pumping System" },
-    { value: "SB", name: "Sludge Balancing" },
-    { value: "ST", name: "Sludge Treament Process" },
-    { value: "SQ", name: "Solid Liquid Separation" },
-    { value: "SA", name: "Solar System" },
-    { value: "SI", name: "Sodium Alumino Silicate Process" },
-    { value: "SO", name: "Soda Ash Process" },
-    { value: "TA", name: "Tangki Sedit SYABAS" },
-    { value: "TE", name: "Telemetry System" },
-    { value: "TP", name: "Treated Water Process" },
-    { value: "TS", name: "Treated Water Sampling" },
-    { value: "TL", name: "Treated Water Pipeline" },
-    { value: "TW", name: "Treated Water Pumping System" },
-    { value: "TT", name: "Treatment Process" },
-    { value: "WA", name: "Water Analysis" },
-    { value: "WO", name: "Workshop" },
-    { value: "WT", name: "Water Transfer" },
-    { value: "WP", name: "Wash Water Process" },
-    { value: "WR", name: "Wash Water Recovery" },
-    { value: "WS", name: "Wash Water System" },
-    { value: "NA", name: "Not Available" },
-  ];
+  // hierarchylevel1s = [
+  //   { value: "CB", name: "Customer Billing Services" },
+  //   { value: "DB", name: "Distribution" },
+  //   { value: "FL", name: "Fleet" },
+  //   { value: "GA", name: "General Admin" },
+  //   { value: "PD", name: "Production" },
+  //   { value: "SD", name: "SCADA" },
+  //   { value: "WQ", name: "Water Quality" },
+  //   { value: "NA", name: "Not Available" },
+  // ];
+  // hierarchylevel3s = [
+  //   { value: "ND", name: "NRW - District Metering Zone" },
+  //   { value: "NT", name: "NRW - Transmission Network" },
+  //   { value: "NW", name: "NRW - Water Balancing Area" },
+  //   { value: "PH", name: "Pump House" },
+  //   { value: "RS", name: "Reservoir" },
+  //   { value: "VD", name: "Valve - Distribution Main" },
+  //   { value: "VT", name: "Valve - Trunk Main" },
+  //   { value: "WT", name: "Water Treatment Plant" },
+  //   { value: "WL", name: "WQ Laboratory Services" },
+  //   { value: "WO", name: "WQ - Online Analyzer" },
+  //   { value: "WR", name: "WQ - River Monitoring Station" },
+  //   { value: "WS", name: "WQ Sampling Station" },
+  //   { value: "NA", name: "Not Available" },
+  // ];
+  // hierarchylevel4s = [
+  //   { value: "NR", name: "NRW" },
+  //   { value: "PH", name: "Pump House" },
+  //   { value: "RS", name: "Reservoir" },
+  //   { value: "TP", name: "Treatment Plant Name" },
+  //   { value: "NA", name: "Not Available" },
+  // ];
+  // hierarchylevel5s = [
+  //   { value: "AS", name: "Aeration System" },
+  //   { value: "BR", name: "Balancing Reservoir" },
+  //   { value: "BD", name: "Buildings" },
+  //   { value: "CD", name: "Chemical Dosing" },
+  //   { value: "CS", name: "Coagulation System" },
+  //   { value: "DT", name: "Draw of Tower" },
+  //   { value: "ES", name: "Earthing System" },
+  //   { value: "EP", name: "Electrical Panel" },
+  //   { value: "ES", name: "Electrical System" },
+  //   { value: "FS", name: "Filtration Process" },
+  //   { value: "FC", name: "Flocculation" },
+  //   { value: "OR", name: "Off River Storage Reservoir" },
+  //   { value: "RW", name: "Raw Water Process" },
+  //   { value: "SP", name: "Sedimentation Process" },
+  //   { value: "SS", name: "Solar System" },
+  //   { value: "ST", name: "Sludge Treament Process" },
+  //   { value: "SW", name: "Settled Water Process" },
+  //   { value: "TI", name: "Tangki Imbang 3MG" },
+  //   { value: "TO", name: "Tangki Imbangan 4MG (OLD)" },
+  //   { value: "TN", name: "Tangki Imbangan 4MG (NEW)" },
+  //   { value: "TS", name: "Telemetry System" },
+  //   { value: "TP", name: "Treatment Process" },
+  //   { value: "TW", name: "Treated Water Process" },
+  //   { value: "WA", name: "Water Analysis" },
+  //   { value: "NA", name: "Not Available" },
+  // ];
+  // hierarchylevel6s = [
+  //   { value: "AP", name: "Actiflo Process" },
+  //   { value: "AC", name: "Activated Carbon Process" },
+  //   { value: "AS", name: "Aeration System" },
+  //   { value: "ES", name: "Alum Process" },
+  //   { value: "BP", name: "Backwash Process" },
+  //   { value: "BR", name: "Balancing Reservoir" },
+  //   { value: "BO", name: "Boat House" },
+  //   { value: "BU", name: "Buildings" },
+  //   { value: "CD", name: "Chemical Dosing" },
+  //   { value: "CM", name: "Chemical Process" },
+  //   { value: "CP", name: "Chlorination Process" },
+  //   { value: "CO", name: "Coagulation Process" },
+  //   { value: "CR", name: "Chemical Room" },
+  //   { value: "CC", name: "Control Centre" },
+  //   { value: "CR", name: "Control Room" },
+  //   { value: "DP", name: "Data Process" },
+  //   { value: "DS", name: "Distrafication" },
+  //   { value: "DO", name: "Draw Off Process" },
+  //   { value: "ES", name: "Earthing System" },
+  //   { value: "EL", name: "Electrical System" },
+  //   { value: "FS", name: "Facilities System" },
+  //   { value: "FP", name: "Filtration Process" },
+  //   { value: "FW", name: "Filtered Water Sampling" },
+  //   { value: "FO", name: "Flocculation Process" },
+  //   { value: "FL", name: "Fluoride Process" },
+  //   { value: "LB", name: "Laboratory" },
+  //   { value: "LP", name: "Lime Process" },
+  //   { value: "OA", name: "Online Analyzer" },
+  //   { value: "PR", name: "Polymer (Residual) Dosing" },
+  //   { value: "PA", name: "Poly Aluminium Chloride Process" },
+  //   { value: "PP", name: "Polymer Process" },
+  //   { value: "PS", name: "Power Supply" },
+  //   { value: "RM", name: "Rapid Mixing" },
+  //   { value: "RE", name: "Residual Emergency Lagoon" },
+  //   { value: "RT", name: "Residual Thickened Pumping Station" },
+  //   { value: "RI", name: "Raw Water Intake System" },
+  //   { value: "RS", name: "Raw Water Pumping System" },
+  //   { value: "RP", name: "Raw Water Process" },
+  //   { value: "RE", name: "Raw Water Pipeline" },
+  //   { value: "RV", name: "Reservoir" },
+  //   { value: "SS", name: "SCADA System" },
+  //   { value: "SD", name: "Sedimentation Process" },
+  //   { value: "SL", name: "Settled Water Process" },
+  //   { value: "SS", name: "Settled Water Sampling" },
+  //   { value: "SW", name: "Settled Water Pumping System" },
+  //   { value: "SB", name: "Sludge Balancing" },
+  //   { value: "ST", name: "Sludge Treament Process" },
+  //   { value: "SQ", name: "Solid Liquid Separation" },
+  //   { value: "SA", name: "Solar System" },
+  //   { value: "SI", name: "Sodium Alumino Silicate Process" },
+  //   { value: "SO", name: "Soda Ash Process" },
+  //   { value: "TA", name: "Tangki Sedit SYABAS" },
+  //   { value: "TE", name: "Telemetry System" },
+  //   { value: "TP", name: "Treated Water Process" },
+  //   { value: "TS", name: "Treated Water Sampling" },
+  //   { value: "TL", name: "Treated Water Pipeline" },
+  //   { value: "TW", name: "Treated Water Pumping System" },
+  //   { value: "TT", name: "Treatment Process" },
+  //   { value: "WA", name: "Water Analysis" },
+  //   { value: "WO", name: "Workshop" },
+  //   { value: "WT", name: "Water Transfer" },
+  //   { value: "WP", name: "Wash Water Process" },
+  //   { value: "WR", name: "Wash Water Recovery" },
+  //   { value: "WS", name: "Wash Water System" },
+  //   { value: "NA", name: "Not Available" },
+  // ];
   typeassets = [];
   categories = [];
   identities = [];
@@ -309,11 +356,11 @@ export class RegistrationComponent implements OnInit {
   fileuploadFormGroup: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
-  fourthFormGroup: FormGroup;
-  fifthFormGroup: FormGroup;
-  sixthFormGroup: FormGroup;
-  seventhFormGroup: FormGroup;
+  // thirdFormGroup: FormGroup;
+  // fourthFormGroup: FormGroup;
+  // fifthFormGroup: FormGroup;
+  // sixthFormGroup: FormGroup;
+  // seventhFormGroup: FormGroup;
   validation_messages = [];
 
   constructor(
@@ -337,82 +384,84 @@ export class RegistrationComponent implements OnInit {
       asset_identity : ["", Validators.required],
       sub_category_1 : ["", Validators.required],
       sub_category_2 : ["", Validators.required],
+      asset_or_component_type : ["", Validators.required],
+      handed_over_asset_or_procured : ["", Validators.required],
       class_category : ["", Validators.required],
       asset_owning_department : ["", Validators.required],
-      main_operation_register : ["", Validators.required],
-      region_register : ["", Validators.required],
-      operation_register : ["", Validators.required],
-      parent_location_register : ["",Validators.required],
-      process_function_register : ["",Validators.required],
+      main_operation : ["", Validators.required],
+      region : ["", Validators.required],
+      operation : ["", Validators.required],
+      parent_location : ["",Validators.required],
+      process_function : ["",Validators.required],
       sub_process_system : ["",Validators.required],
     });
     this.secondFormGroup = this.formBuilder.group({
-      bottom_water_level_register: ["", Validators.required],
-      brand_register: ["", Validators.required],
-      capacity_size_register: ["", Validators.required],
-      closing_torque_register: ["", Validators.required],
-      communication_protocol_register: ["", Validators.required],
-      coverage_range_register: ["", Validators.required],
-      dimension_register: ["", Validators.required],
-      environmental_performance_register: ["", Validators.required],
-      flow_rate_register: ["", Validators.required],
-      frequency_register: ["", Validators.required],
-      horse_power_register: ["", Validators.required],
-      hysteresis_register: ["", Validators.required],
-      infrastructure_status_register: ["", Validators.required],
-      infrastructure_status_reason_register: ["", Validators.required],
-      inlet_diameter_register: ["", Validators.required],
-      installation_register: ["", Validators.required],
-      insulation_register: ["", Validators.required],
-      legal_name_range_register: ["", Validators.required],
-      manufacturer_register: ["", Validators.required],
-      manufacturer_year_register: ["", Validators.required],
-      manufacture_part_number_register: ["", Validators.required],
-      material_type_register: ["", Validators.required],
-      model_register: ["", Validators.required],
-      motor_current_register: ["", Validators.required],
-      no_of_channel_register: ["", Validators.required],
-      no_of_phases_register: ["", Validators.required],
-      no_of_stage_register: ["", Validators.required],
-      opening_torque_register: ["", Validators.required],
-      outlet_diameter_register: ["", Validators.required],
-      power_supply_type_register: ["", Validators.required],
-      pump_head_register: ["", Validators.required],
-      revolutions_per_minute_register: ["", Validators.required],
-      source_from_register: ["", Validators.required],
-      staging_height_register: ["", Validators.required],
-      supply_location_register: ["", Validators.required],
-      temperature_register: ["", Validators.required],
-      top_water_level_register: ["", Validators.required],
-      type_register: ["", Validators.required],
-      valve_diameter_register: ["", Validators.required],
-      valve_pressure_rating_register: ["", Validators.required],
-      vehicle_chassis_number_register: ["", Validators.required],
-      vehicle_engine_capacity_register: ["", Validators.required],
-      vehicle_engine_number_register: ["", Validators.required],
-      vehicle_insurance_vendor_register: ["", Validators.required],
-      vehicle_model_register: ["", Validators.required],
-      vehicle_insurance_auto_windscreen_insured_register: ["", Validators.required],
-      vehicle_insurance_cover_note_number_register: ["", Validators.required],
-      vehicle_insurance_date_period_from_register: ["", Validators.required],
-      vehicle_insurance_date_period_to_register: ["", Validators.required],
-      vehicle_insurance_no_claim_discount_register: ["", Validators.required],
-      vehicle_insurance_policy_type_register: ["", Validators.required],
-      vehicle_insurance_sum_insured_register: ["", Validators.required],
-      vehicle_insurance_total_premium_register: ["", Validators.required],
-      vehicle_puspakom_date_inspection_register: ["", Validators.required],
-      vehicle_owner_status_register: ["", Validators.required],
-      vehicle_register_date_register: ["", Validators.required],
-      vehicle_roadtax_rate_register: ["", Validators.required],
-      vehicle_puspakom_expired_date_register: ["", Validators.required],
-      vehicle_spad_permit_date_period_to_register: ["", Validators.required],
-      vehicle_roadtax_renew_date_register: ["", Validators.required],
-      vehicle_roadtax_expired_date_register: ["", Validators.required],
-      vehicle_spad_no_license_operator_register: ["", Validators.required],
-      vehicle_spad_permit_date_period_from_register: ["", Validators.required],
-      vehicle_seating_capacity_register: ["", Validators.required],
-      vehicle_registration_owner_register: ["", Validators.required],
-      voltage_register: ["", Validators.required],
+      bottom_water_level: ["", Validators.required],
+      brand: ["", Validators.required],
+      capacity_size: ["", Validators.required],
+      closing_torque: ["", Validators.required],
+      communication_protocol: ["", Validators.required],
+      coverage_range: ["", Validators.required],
+      dimension: ["", Validators.required],
+      environmental_performance: ["", Validators.required],
+      flow_rate: ["", Validators.required],
+      frequency: ["", Validators.required],
+      horse_power: ["", Validators.required],
+      hysteresis: ["", Validators.required],
+      infrastructure_status: ["", Validators.required],
+      infrastructure_status_reason: ["", Validators.required],
+      inlet_diameter: ["", Validators.required],
+      installation: ["", Validators.required],
+      insulation: ["", Validators.required],
+      legal_name: ["", Validators.required],
+      manufacturer: ["", Validators.required],
+      manufacturer_year: ["", Validators.required],
+      manufacture_part_number: ["", Validators.required],
+      material_type: ["", Validators.required],
+      model: ["", Validators.required],
+      motor_current: ["", Validators.required],
+      no_of_channel: ["", Validators.required],
+      no_of_phases: ["", Validators.required],
+      no_of_stage: ["", Validators.required],
+      opening_torque: ["", Validators.required],
+      outlet_diameter: ["", Validators.required],
+      power_supply_type: ["", Validators.required],
+      pump_head: ["", Validators.required],
+      revolutions_per_minute: ["", Validators.required],
+      source_from: ["", Validators.required],
+      staging_height: ["", Validators.required],
+      supply_location: ["", Validators.required],
+      temperature: ["", Validators.required],
+      top_water_level: ["", Validators.required],
+      type: ["", Validators.required],
+      valve_diameter: ["", Validators.required],
+      valve_pressure_rating: ["", Validators.required],
+      vehicle_chassis_number: ["", Validators.required],
+      vehicle_engine_capacity: ["", Validators.required],
+      vehicle_engine_number: ["", Validators.required],
+      vehicle_insurance_vendor: ["", Validators.required],
+      vehicle_model: ["", Validators.required],
+      vehicle_insurance_auto_windscreen_insured: ["", Validators.required],
+      vehicle_insurance_cover_note_number: ["", Validators.required],
+      vehicle_insurance_date_period_from: ["", Validators.required],
+      vehicle_insurance_date_period_to: ["", Validators.required],
+      vehicle_insurance_no_claim_discount: ["", Validators.required],
+      vehicle_insurance_policy_type: ["", Validators.required],
+      vehicle_insurance_sum_insured: ["", Validators.required],
+      vehicle_insurance_total_premium: ["", Validators.required],
+      vehicle_puspakom_date_inspection: ["", Validators.required],
+      vehicle_owner_status: ["", Validators.required],
+      vehicle_register_date: ["", Validators.required],
+      vehicle_roadtax_rate: ["", Validators.required],
+      vehicle_puspakom_expired_date: ["", Validators.required],
+      vehicle_spad_permit_date_period_to: ["", Validators.required],
+      vehicle_roadtax_renew_date: ["", Validators.required],
+      vehicle_roadtax_expired_date: ["", Validators.required],
+      vehicle_spad_no_license_operator: ["", Validators.required],
+      vehicle_spad_permit_date_period_from: ["", Validators.required],
+      vehicle_seating_capacity: ["", Validators.required],
+      vehicle_registration_owner: ["", Validators.required],
+      voltage: ["", Validators.required],
     });
     this.fileuploadFormGroup = this.formBuilder.group({
       excelFile: ["", Validators.required],
@@ -608,21 +657,21 @@ export class RegistrationComponent implements OnInit {
     this.secondFormGroup.patchValue({
       ...row,
     });
-    this.thirdFormGroup.patchValue({
-      ...row,
-    });
-    this.fourthFormGroup.patchValue({
-      ...row,
-    });
-    this.fifthFormGroup.patchValue({
-      ...row,
-    });
-    this.sixthFormGroup.patchValue({
-      ...row,
-    });
-    this.seventhFormGroup.patchValue({
-      ...row,
-    });
+    // this.thirdFormGroup.patchValue({
+    //   ...row,
+    // });
+    // this.fourthFormGroup.patchValue({
+    //   ...row,
+    // });
+    // this.fifthFormGroup.patchValue({
+    //   ...row,
+    // });
+    // this.sixthFormGroup.patchValue({
+    //   ...row,
+    // });
+    // this.seventhFormGroup.patchValue({
+    //   ...row,
+    // });
 
     this.modalEditAsset = this.modalService.show(
       modalNotification,
@@ -634,12 +683,12 @@ export class RegistrationComponent implements OnInit {
     let postAssets = {
       ...this.firstFormGroup.value,
       ...this.secondFormGroup.value,
-      ...this.thirdFormGroup.value,
-      ...this.fourthFormGroup.value,
-      ...this.fifthFormGroup.value,
-      ...this.sixthFormGroup.value,
-      ...this.seventhFormGroup.value,
-      // created_by: this.authService.userID
+      // ...this.thirdFormGroup.value,
+      // ...this.fourthFormGroup.value,
+      // ...this.fifthFormGroup.value,
+      // ...this.sixthFormGroup.value,
+      // ...this.seventhFormGroup.value,
+      created_by: this.authService.userID
     };
 
     this.assetsService.post(postAssets).subscribe(
@@ -650,11 +699,14 @@ export class RegistrationComponent implements OnInit {
             "Your asset have successfully registered.",
             "Register Asset"
           );
+          console.log('Berjaya')
           this.modalRegisterAsset.hide();
           this.getAssets();
         }
       },
       (err) => {
+        console.log('err=',err)
+        //Failed
         console.error("err", err);
         this.validation_messages = err.error;
       },
@@ -668,12 +720,12 @@ export class RegistrationComponent implements OnInit {
     let editAssets = {
       ...this.firstFormGroup.value,
       ...this.secondFormGroup.value,
-      ...this.thirdFormGroup.value,
-      ...this.fourthFormGroup.value,
-      ...this.fifthFormGroup.value,
-      ...this.sixthFormGroup.value,
-      ...this.seventhFormGroup.value,
-      // created_by: this.authService.userID
+      // ...this.thirdFormGroup.value,
+      // ...this.fourthFormGroup.value,
+      // ...this.fifthFormGroup.value,
+      // ...this.sixthFormGroup.value,
+      // ...this.seventhFormGroup.value,
+      created_by: this.authService.userID
     };
 
     this.assetsService.update(this.firstFormGroup.value.id, editAssets).subscribe(
@@ -1002,7 +1054,7 @@ export class RegistrationComponent implements OnInit {
       formData.append('vehicle_insurance_date_period_from', loopval.vehicle_insurance_date_period_from)
       formData.append('vehicle_insurance_policy_type', loopval.vehicle_insurance_policy_type)
       formData.append('vehicle_puspakom_date_inspection', loopval.vehicle_puspakom_date_inspection)
-      formData.append('vehicle_roadtarate', loopval.vehicle_roadtax_rate)
+      formData.append('vehicle_roadtax_rate', loopval.vehicle_roadtax_rate)
       formData.append('vehicle_roadtax_renew_date', loopval.vehicle_roadtax_renew_date)
       formData.append('vehicle_spad_permit_date_period_from', loopval.vehicle_spad_permit_date_period_from)
       formData.append('voltage', loopval.voltage)
