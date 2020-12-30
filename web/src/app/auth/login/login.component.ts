@@ -10,10 +10,10 @@ import swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  
+
   focus
   focus1
-  
+
   constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
@@ -25,12 +25,15 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     let value = this.loginForm.value;
-    
+
     if (value.emailForm == 'AMS') {
       this.router.navigate(['/ams/dashboard']);
     }
     else if (value.emailForm == 'INV') {
       this.router.navigate(['/inv/inventory-dashboard']);
+    }
+    else if (value.emailForm == 'PLANNER') {
+      this.router.navigate(['/planner/dashboard']);
     }
     else {
       swal.fire({

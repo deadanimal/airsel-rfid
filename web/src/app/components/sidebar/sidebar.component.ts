@@ -1,45 +1,56 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AMROUTES, IROUTES } from '../../shared/menu/menu-items';
+import { AMROUTES, IROUTES, PLANNEROUTES } from '../../shared/menu/menu-items';
+import { AuthService } from "src/app/shared/services/auth/auth.service";
 
 var misc: any = {
-  sidebar_mini_active: true
+  sidebar_mini_active: true,
 };
-
 
 @Component({
   selector: "app-sidebar",
   templateUrl: "./sidebar.component.html",
-  styleUrls: ["./sidebar.component.scss"]
+  styleUrls: ["./sidebar.component.scss"],
 })
 export class SidebarComponent implements OnInit {
+  imgLogo = "assets/img/logo/bnm-logo.png";
+
+  public href: string = "";
+
   public menuItems: any[];
   public isCollapsed = true;
+  public menu;
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    // this.menuItems = ROUTES.filter(menuItem => menuItem);
-    if (this.router.url.includes("/ams/")) {
-      this.menuItems = AMROUTES.filter(menuItem => menuItem);
+    this.href = this.router.url.slice(0, 4);
+
+    if (this.href == "/ams") {
+      this.menu = AMROUTES;
+    } else if (this.href == "/inv") {
+      this.menu = IROUTES;
+    } else if (this.href == "/pla") {
+      this.menu = PLANNEROUTES;
     }
-    else if (this.router.url.includes("/inv/")) {
-      this.menuItems = IROUTES.filter(menuItem => menuItem);
-    }
-    this.router.events.subscribe(event => {
+    this.menuItems = this.menu.filter((menuItem) => menuItem);
+    this.router.events.subscribe((event) => {
       this.isCollapsed = true;
     });
   }
+
   onMouseEnterSidenav() {
     if (!document.body.classList.contains("g-sidenav-pinned")) {
       document.body.classList.add("g-sidenav-show");
     }
   }
+
   onMouseLeaveSidenav() {
     if (!document.body.classList.contains("g-sidenav-pinned")) {
       document.body.classList.remove("g-sidenav-show");
     }
   }
+
   minimizeSidebar() {
     const sidenavToggler = document.getElementsByClassName(
       "sidenav-toggler"
