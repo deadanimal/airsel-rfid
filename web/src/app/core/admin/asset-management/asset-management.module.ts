@@ -32,9 +32,12 @@ import { DatabaseComponent } from "./database/database.component";
 import { ProcessingComponent } from './processing/processing.component';
 import { RejectedComponent } from './rejected/rejected.component';
 import { RegisteredComponent } from './registered/registered.component';
+import { NewComponent } from './new/new.component';
+import { ProcessedComponent } from './processed/processed.component';
+import { BadgeNoComponent } from './badge-no/badge-no.component';
 
 @NgModule({
-  declarations: [RegistrationComponent, ApprovalComponent, DatabaseComponent, ProcessingComponent, RejectedComponent, RegisteredComponent],
+  declarations: [RegistrationComponent, ApprovalComponent, DatabaseComponent, ProcessingComponent, RejectedComponent, RegisteredComponent, NewComponent, ProcessedComponent, BadgeNoComponent],
   imports: [
     CommonModule,
     NgSelectModule,
