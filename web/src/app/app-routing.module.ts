@@ -26,6 +26,10 @@ const routes: Routes = [
         loadChildren: './core/admin/admin.module#AdminModule'
       },
       {
+        path: 'planner',
+        loadChildren: './core/admin/admin.module#AdminModule'
+      },
+      {
         path: 'ams',
         loadChildren: './core/admin/admin.module#AdminModule'
       },
@@ -66,4 +70,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

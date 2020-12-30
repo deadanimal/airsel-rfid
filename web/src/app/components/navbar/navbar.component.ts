@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from "@angular/core";
-import { AMROUTES, IROUTES } from "../../shared/menu/menu-items";
+import { AMROUTES, IROUTES, PLANNEROUTES } from "../../shared/menu/menu-items";
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import swal from 'sweetalert2';
 
@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
   // Name
   public name: string = ''
   role: string;
-  
+
   constructor(
     location: Location,
     private element: ElementRef,
@@ -32,27 +32,27 @@ export class NavbarComponent implements OnInit {
   ) {
     this.location = location;
     this.router.events.subscribe((event: Event) => {
-       if (event instanceof NavigationStart) {
-           // Show loading indicator
+      if (event instanceof NavigationStart) {
+        // Show loading indicator
 
-       }
-       if (event instanceof NavigationEnd) {
-           // Hide loading indicator
+      }
+      if (event instanceof NavigationEnd) {
+        // Hide loading indicator
 
-           if (window.innerWidth < 1200) {
-             document.body.classList.remove("g-sidenav-pinned");
-             document.body.classList.add("g-sidenav-hidden");
-             this.sidenavOpen = false;
-           }
-       }
+        if (window.innerWidth < 1200) {
+          document.body.classList.remove("g-sidenav-pinned");
+          document.body.classList.add("g-sidenav-hidden");
+          this.sidenavOpen = false;
+        }
+      }
 
-       if (event instanceof NavigationError) {
-           // Hide loading indicator
+      if (event instanceof NavigationError) {
+        // Hide loading indicator
 
-           // Present error to user
-           console.log(event.error);
-       }
-   });
+        // Present error to user
+        console.log(event.error);
+      }
+    });
 
   }
 
@@ -64,6 +64,10 @@ export class NavbarComponent implements OnInit {
     else if (this.router.url.includes("/inv/")) {
       this.listTitles = IROUTES.filter(listTitle => listTitle);
       this.role = "INV";
+    }
+    else if (this.router.url.includes("/planner/")) {
+      this.listTitles = PLANNEROUTES.filter(listTitle => listTitle);
+      this.role = "PLANNER";
     }
   }
   getTitle() {
@@ -92,33 +96,33 @@ export class NavbarComponent implements OnInit {
       confirmButtonText: 'Yes, logout',
       cancelButtonClass: 'btn btn-secondary'
     }).then((result) => {
-        if (result.value) {
-          this.router.navigate(['/auth/login']);
-        }
+      if (result.value) {
+        this.router.navigate(['/auth/login']);
+      }
     });
   }
 
   openSearch() {
     document.body.classList.add("g-navbar-search-showing");
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-showing");
       document.body.classList.add("g-navbar-search-show");
     }, 150);
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.add("g-navbar-search-shown");
     }, 300);
   }
   closeSearch() {
     document.body.classList.remove("g-navbar-search-shown");
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-show");
       document.body.classList.add("g-navbar-search-hiding");
     }, 150);
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-hiding");
       document.body.classList.add("g-navbar-search-hidden");
     }, 300);
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-hidden");
     }, 500);
   }
