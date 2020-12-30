@@ -19,6 +19,7 @@ import { OrganisationsService } from "src/app/shared/services/organisations/orga
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
 import { NotifyService } from "src/app/shared/handler/notify/notify.service";
 import { AssetsRegistrationService } from 'src/app/shared/services/assets-registration/assets-registration.service';
+import { system } from '@amcharts/amcharts4/core';
 
 export enum SelectionType {
   single = "single",
@@ -243,25 +244,62 @@ export class RegistrationComponent implements OnInit {
 
   is_show1 = {
     parent_location: false, //
-    loca_desc: false, //
+    location_description: false, //
     building: false, //
-    addr_line1: false,  //
-    addr_line2: false, //
-    addr_line3: false, //
+    address_line_1: false,  //
+    address_line_2: false, //
+    address_line_3: false, //
     city: false, //
     state: false, //
     postal_code: false, //
     country: false, //
-    tag_no: false, //
+    tag_number: false, //
     service_area: false, //
     maintenance_planner: false, //
-    loca_main_contact: false, //
-    loca_mainte_manager: false, //
+    location_main_contact: false, //
+    location_asset_maintenance_manager: false, //
     gis_esri_id: false, //
     latitude: false, //
     longitude: false, //
-    asset_criticallity: false, //
-    cost_center: false
+    asset_critically: false, //
+    cost_center: false,
+    // asset_owning_depart: false,
+    sub_process_system: false,
+    brand: false,
+    size_capacity_1: false,
+    size_capacity_2: false,
+    size_capacity_3: false,
+    maintenance_specification: false,
+    asset_owning_department: false,
+    asset_or_component_type: false,
+    badge_no: false,
+    size_capacity_1_unit_measurement: false,
+    size_capacity_2_unit_measurement: false,
+    size_capacity_3_unit_measurement: false,
+    measurement_type: false,
+    main_operation: false,
+    asset_class_asset_category: false,
+    internal_asset_adentity: false,
+    sub_category_1: false,
+    parent_asset_plate_number: false,
+    purchase_date_installed_handed_over_date: false,
+    warranty: false,
+    region: false,
+    handed_over_asset_or_procured: false,
+    asset_primary_category: false,
+    sub_category_2: false,
+    asset_plate_number: false,
+    condition_rating: false,
+    actual_warranty_period: false,
+    operation: false,
+    process_function: false,
+    model_number: false,
+    detailed_description: false,
+    serial_number: false,
+    asset_status: false,
+    warranty_vendor_name: false,
+    asset_tag_number: false,
+    asset_identity: false,
   }
   tableShow1 = false
 
@@ -724,8 +762,8 @@ export class RegistrationComponent implements OnInit {
         counter++
       }
     }
-
-    if (counter < 6) {
+    console.log('counter = ', counter)
+    if (counter > 2) {
       this.tableShow1 = true
     }
     else {
@@ -733,58 +771,7 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  // readExcel() {
-  //   let readFile = new FileReader();
-  //   console.log('readFile = ', readFile)
-  //   readFile.onload = (e) => {
-  //     this.storeData = readFile.result;
-  //     console.log('storeData = ', this.storeData)
-  //     var data = new Uint8Array(this.storeData);
-  //     var arr = new Array();
-  //     for (var i = 0; i != data.length; ++i) {
-  //       arr[i] = String.fromCharCode(data[i]);
-  //     }
-  //     console.log('arr = ', arr)
-  //     var bstr = arr.join("");
-  //     // console.log('bstr = ', bstr);
-  //     var workbook = XLSX.read(bstr, { type: "binary" });
-  //     var first_sheet_name = workbook.SheetNames[0];
-  //     this.worksheet = workbook.Sheets[first_sheet_name];
-  //   }
-  //   readFile.readAsArrayBuffer(this.fileUploaded);
-
-  //   this.jsonData = XLSX.utils.sheet_to_json(this.worksheet, { raw: false });
-  //   this.jsonData = JSON.stringify(this.jsonData);
-  //   const excelData: Blob = new Blob([this.jsonData], { type: "application/json" });
-  //   console.log('excelData = ', excelData);
-  // }
-
   onFileChange(event: any) {
-    // /* wire up file reader */
-    // const target: DataTransfer = <DataTransfer>(event.target);
-    // if (target.files.length !== 1) {
-    //   throw new Error('Cannot use multiple files');
-    // }
-    // const reader: FileReader = new FileReader();
-    // reader.readAsBinaryString(target.files[0]);
-    // reader.onload = (e: any) => {
-    //   /* create workbook */
-    //   const binarystr: string = e.target.result;
-    //   console.log('binarystr = ', binarystr)
-    //   const wb: XLSX.WorkBook = XLSX.read(binarystr, { type: 'binary' });
-    //   console.log('wb = ', wb)
-
-    //   /* selected the first sheet */
-    //   const wsname: string = wb.SheetNames[1];
-    //   console.log('wsname = ', wsname)
-    //   const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-    //   console.log('ws = ', ws)
-
-    //   /* save data */
-    //   const data = XLSX.utils.sheet_to_json(ws); // to get 2d array pass 2nd parameter as object {header: 1}
-    //   console.log(data); // Data will be logged in array format containing objects
-    // };
-
     const target: DataTransfer = <DataTransfer>(event.target);
     if (target.files.length !== 1) throw new Error('Cannot use multiple files');
     const reader: FileReader = new FileReader();
@@ -802,24 +789,6 @@ export class RegistrationComponent implements OnInit {
     };
     reader.readAsBinaryString(target.files[0]);
   }
-
-  // onFileChange(event) {
-  //   console.log('onFileChange');
-  //   console.log(event)
-  //   let af = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel']
-  //   if (event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //     // if (!_.includes(af, file.type)) {
-  //     //   alert('Only EXCEL Docs Allowed!');
-  //     // } else {
-  //     this.fileuploadFormGroup = file.name;
-  //     // this.fileUploadForm.get('myfile').setValue(file);
-  //     this.fileuploadFormGroup.get("excelFile").setValue(file);
-  //     // }
-  //     // this.fileuploadFormGroup.get("excelFile").setValue(file);
-  //     // this.fileuploadFormGroup.get("name").setValue(file.name);
-  //   }
-  // }
 
   closeModal() {
     this.modal.hide();
@@ -978,15 +947,110 @@ export class RegistrationComponent implements OnInit {
   }
 
   getRegisteredData() {
-
-    this.assetsRegistrationService.get().subscribe(
+    let tempData = []
+    this.assetsRegistrationService.getNewRegList().subscribe(
       (res) => {
         console.log("res all data", res);
-        this.tableTemp1 = res
+        res.forEach(function (val) {
+          val['isTick'] = false
+          tempData.push(val)
+        })
+        console.log('tempData = ', tempData)
+        this.tableTemp1 = tempData
       },
       error => {
         console.error("err", error);
       }
     )
+  }
+
+  onChange() {
+    let counter = 0
+    for (let x in this.is_show1) {
+      if (this.is_show1[x]) {
+        counter++
+      }
+    }
+
+    if (counter < 1) {
+      this.tableShow1 = false
+    }
+  }
+  checkRow(selected) {
+    let tempData = []
+    console.log('test test tetst')
+    this.tableTemp1.forEach(
+      (item) => {
+        // console.log(item['id'], ' == ', selected['id'])
+        if (item['id'] == selected['id']) {
+          console.log('isTick = ', item['isTick']);
+          console.log('item b4 = ', item)
+          item['isTick'] = item['isTick']
+          console.log('item after = ', item)
+          tempData.push(item)
+        } else {
+          tempData.push(item)
+        }
+      }
+    )
+    console.log('tempDataqweqe = ', tempData)
+    this.tableTemp1 = tempData
+  }
+
+  confirm(task) {
+    swal.fire({
+      title: 'Are you sure?',
+      text: 'To change the status.',
+      type: 'warning',
+      buttonsStyling: false,
+      showCancelButton: true,
+      confirmButtonText: 'Yes, submit it',
+      confirmButtonClass: 'btn btn-warning',
+      cancelButtonText: 'Cancel',
+      cancelButtonClass: 'btn btn-secondary'
+    }).then((result) => {
+      this.changeStatus(task)
+    })
+  }
+
+  changeStatus(task) {
+    let resData: any
+    console.log('this.task = ', task)
+    let no = 0
+    let assetregser = this.assetsRegistrationService
+    this.tableTemp1.forEach(function (itemVal) {
+
+      if (itemVal['isTick'] == true) {
+        // const updateformData = new FormData();
+        let updateformData: any
+        // updateformData.append('status', 'PR');
+        updateformData = {
+          status: task
+        }
+        console.log('updateformData = ', updateformData)
+        assetregser.update(itemVal['id'], updateformData).subscribe(
+          (res) => {
+            console.log("res = ", res);
+            resData = res
+          },
+          error => {
+            console.error("err", error);
+          }
+        )
+      }
+    })
+    // if (resData.length > 0) {
+
+    swal.fire({
+      title: 'Success',
+      text: 'Successfully Change Status',
+      type: 'success',
+      buttonsStyling: false,
+      confirmButtonText: 'Ok',
+      confirmButtonClass: 'btn btn-success'
+    }).then((result) => {
+      this.getRegisteredData()
+    })
+    // }
   }
 }

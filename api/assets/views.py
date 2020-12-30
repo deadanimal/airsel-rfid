@@ -288,17 +288,9 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
 
     @action(methods=['GET'], detail=False)
-    def complete_list(self, request, *args, **kwargs):
+    def new_register_list(self, request, *args, **kwargs):
 
-        asset_list = AssetRegistration.objects.filter(status='CO')
-
-        serializer = AssetRegistrationSerializer(asset_list, many=True)
-        return Response(serializer.data)
-
-    @action(methods=['GET'], detail=False)
-    def incomplete_list(self, request, *args, **kwargs):
-
-        asset_list = AssetRegistration.objects.filter(status='IC')
+        asset_list = AssetRegistration.objects.filter(Q(status='CO') | Q(status='IC'))
 
         serializer = AssetRegistrationSerializer(asset_list, many=True)
         return Response(serializer.data)
@@ -307,6 +299,14 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     def processed_list(self, request, *args, **kwargs):
 
         asset_list = AssetRegistration.objects.filter(status='PR')
+
+        serializer = AssetRegistrationSerializer(asset_list, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False)
+    def new_processed_list(self, request, *args, **kwargs):
+
+        asset_list = AssetRegistration.objects.filter(status='NP')
 
         serializer = AssetRegistrationSerializer(asset_list, many=True)
         return Response(serializer.data)
@@ -330,11 +330,11 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
 
     @action(methods=['GET'], detail=False)
-    def delete_all_uploaded(self, request, *args, **kwargs):
+    def Remove_all_record(self, request, *args, **kwargs):
 
         AssetRegistration.objects.all().delete()
 
         print('asset_list = ')
-        print(rejected_list_asset_list)
+        # print(rejected_list_asset_list)
         # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
         # return Response(rejected_list_serializer.data)

@@ -563,6 +563,7 @@ class AssetRegistration(models.Model):
     APPROVAL_STATUS = [
         ('CO', 'Completed'),
         ('IC','Incomplete'),
+        ('NP','New Process'),
         ('PR','Processed'),
         ('AP', 'Approved'),
         ('RJ', 'Rejected')
