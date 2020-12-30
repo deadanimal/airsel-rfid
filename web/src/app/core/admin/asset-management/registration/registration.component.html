@@ -1394,26 +1394,191 @@
   </div>
 
   <div class="modal-body">
+
     <mat-vertical-stepper [linear]="isLinear" #stepper [disableRipple]="isDisableRipple">
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel>Asset Owning</ng-template>
+          <ng-template matStepLabel>Asset Registration</ng-template>
+          <h5>Asset Grouping</h5>
           <div class="row">
-            <div class="col">
+            <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Asset Owning Department</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="owning_department">
+                <label class="form-control-label">Asset Primary Category</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="asset_primary_category">
                   <option value="">Please select</option>
-                  <option *ngFor="let department of departments" [value]="department.value">{{ department.name }}
-                  </option>
+                  <option *ngFor="let assetprimarycategory of assetprimarycategory" [value]="assetprimarycategory.value">
+                    {{ assetprimarycategory.name }}</option>
                 </select>
                 <small class="validation_messages">{{
-                  validation_messages.owning_department
+                  validation_messages.asset_primary_category
+                }}</small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Asset Identity</label>
+                <input type="text" formControlName="asset_identity" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Sub-Category 1</label>
+                <input type="text" formControlName="sub_category_1" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Sub-Category 2</label>
+                <input type="text" formControlName="sub_category_2" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <h5>Asset Categorization</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Type</label>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="custom-control custom-checkbox">
+                      <input  type="checkbox" class="custom-control-input" id="assetcategory">
+                      <label class="custom-control-label" for="assetcategory">
+                        Asset
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="custom-control custom-checkbox">
+                      <input  type="checkbox" class="custom-control-input" id="componentcategory">
+                      <label class="custom-control-label" for="componentcategory">
+                        Component
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Status</label>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="custom-control custom-checkbox">
+                      <input  type="checkbox" class="custom-control-input" id="handover">
+                      <label class="custom-control-label" for="handover">
+                        Hand Over Asset
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="custom-control custom-checkbox">
+                      <input  type="checkbox" class="custom-control-input" id="procured">
+                      <label class="custom-control-label" for="procured">
+                        Procured
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Class/Category</label>
+                <input type="text" formControlName="class_category" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <h5>Asset Owning</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Asset Owning Department</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="asset_owning_department">
+                  <option value="">Please select</option>
+                  <option *ngFor="let assetowningdepartment of assetowningdepartment" [value]="assetowningdepartment.value">
+                    {{ assetowningdepartment.name }}</option>
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.asset_owning_department
+                }}</small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Main Operation</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="main_operation_register">
+                  <option value="">Please select</option>
+                  <option *ngFor="let mainoperationregister of mainoperationregister" [value]="mainoperationregister.value">
+                    {{ mainoperationregister.name }}</option>
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.main_operation_register
                 }}</small>
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Region</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="region_register">
+                  <option value="">Please select</option>
+                  <option *ngFor="let region of region" [value]="region.value">
+                    {{ region.name }}</option>
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.region_register
+                }}</small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Operation</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="operation_register">
+                  <option value="">Please select</option>
+                  <option *ngFor="let operation of operation" [value]="operation.value">
+                    {{ operation.name }}</option>
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.operation_register
+                }}</small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Parent Location</label>
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="parent_location_register">
+                  <option value="">Please select</option>
+                  <option *ngFor="let parentlocation of parentlocation" [value]="parentlocation.value">
+                    {{ parentlocation.name }}</option>
+                </select>
+                <small class="validation_messages">{{
+                  validation_messages.parent_location_register
+                }}</small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Process/Function</label>
+                <input type="text" formControlName="process_function_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-control-label">Sub-Process/System</label>
+                <input type="text" formControlName="sub_process_system" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+
           <div>
             <button class="btn btn-sm btn-success" matStepperNext>Next</button>
           </div>
@@ -1421,548 +1586,437 @@
       </mat-step>
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Asset Hierarchy</ng-template>
+          <ng-template matStepLabel>Asset Technical Spec</ng-template>
           <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Level 1</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_1">
-                  <option value="">Please select</option>
-                  <option *ngFor="let hierarchylevel1 of hierarchylevel1s" [value]="hierarchylevel1.value">
-                    {{ hierarchylevel1.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.level_1
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Level 2</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_2">
-                  <option value="">Please select</option>
-                  <option *ngFor="let region of regions" [value]="region.id">{{
-                    region.name
-                  }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.level_2
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Level 3</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_3">
-                  <option value="">Please select</option>
-                  <option *ngFor="let hierarchylevel3 of hierarchylevel3s" [value]="hierarchylevel3.value">
-                    {{ hierarchylevel3.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.level_3
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Level 4</label>
-                <input type="text" formControlName="level_4" class="form-control form-control-sm" />
-                <!-- <select
-                  class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="level_4"
-                >
-                  <option value="">Please select</option>
-                  <option
-                    *ngFor="let hierarchylevel4 of hierarchylevel4s"
-                    [value]="hierarchylevel4.value"
-                    >{{ hierarchylevel4.name }}</option
-                  >
-                </select> -->
-                <small class="validation_messages">{{
-                  validation_messages.level_4
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Level 5</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_5">
-                  <option value="">Please select</option>
-                  <option *ngFor="let hierarchylevel5 of hierarchylevel5s" [value]="hierarchylevel5.value">
-                    {{ hierarchylevel5.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.level_5
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Level 6</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="level_6">
-                  <option value="">Please select</option>
-                  <option *ngFor="let hierarchylevel6 of hierarchylevel6s" [value]="hierarchylevel6.value">
-                    {{ hierarchylevel6.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.level_6
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div>
-            <button class="btn btn-sm btn-danger" matStepperPrevious>
-              Back
-            </button>
-            <button class="btn btn-sm btn-success" matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step [stepControl]="thirdFormGroup">
-        <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>Asset Grouping</ng-template>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Asset Type</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="primary_category">
-                  <option value="">Please select</option>
-                  <option *ngFor="let primarycategory of primarycategories" [value]="primarycategory.id">
-                    {{ primarycategory.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.primary_category
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Asset Identity</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="identity">
-                  <option value="">Please select</option>
-                  <option *ngFor="let identity of identities" [value]="identity.id">{{ identity.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.identity
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Sub-category 1</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="sub_category_1">
-                  <option value="">Please select</option>
-                  <option *ngFor="let groupsubcategory1 of groupsubcategory1s" [value]="groupsubcategory1.id">
-                    {{ groupsubcategory1.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.sub_category_1
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Sub-category 2</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="sub_category_2">
-                  <option value="">Please select</option>
-                  <option *ngFor="let groupsubcategory2 of groupsubcategory2s" [value]="groupsubcategory2.id">
-                    {{ groupsubcategory2.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.sub_category_2
-                }}</small>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <!--<button mat-button matStepperPrevious>Back</button>-->
-            <button class="btn btn-sm btn-danger" matStepperPrevious>
-              Back
-            </button>
-            <button class="btn btn-sm btn-success" matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step [stepControl]="fourthFormGroup">
-        <form [formGroup]="fourthFormGroup">
-          <ng-template matStepLabel>Asset Categorization</ng-template>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Asset or Component?</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="type_asset">
-                  <option value="">Please select</option>
-                  <option *ngFor="let typeasset of typeassets" [value]="typeasset.id">{{ typeasset.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.type_asset
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Asset Class/Asset Category</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="category">
-                  <option value="">Please select</option>
-                  <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.category
-                }}</small>
-              </div>
-              <div class="form-group" *ngIf="thirdFormGroup.value.category == 'OT'">
-                <label class="form-control-label">Other category</label>
-                <input type="text" formControlName="category_extra" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.category_extra
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Hand Over Asset or Procured</label><br />
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" id="ah" name="acquired_by" class="custom-control-input"
-                    formControlName="acquired_by" value="AH" />
-                  <label class="custom-control-label" for="ah">Asset Handover</label>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Bottom Water Level</label>
+                  <input type="text" formControlName="bottom_water_level_register" class="form-control form-control-sm" />
                 </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" id="pc" name="acquired_by" class="custom-control-input"
-                    formControlName="acquired_by" value="PC" />
-                  <label class="custom-control-label" for="pc">Procured</label>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Brand</label>
+                  <input type="text" formControlName="brand_register" class="form-control form-control-sm" />
                 </div>
-                <small class="validation_messages">{{
-                  validation_messages.acquired_by
-                }}</small>
               </div>
-            </div>
-          </div>
-
-          <div>
-            <button class="btn btn-sm btn-danger" matStepperPrevious>
-              Back
-            </button>
-            <button class="btn btn-sm btn-success" matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step [stepControl]="fifthFormGroup">
-        <form [formGroup]="fifthFormGroup">
-          <ng-template matStepLabel>Asset Detailed Description</ng-template>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Brand</label>
-                <input type="text" formControlName="brand" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.brand
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Model Number</label>
-                <input type="text" formControlName="model_no" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.model_no
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Site/Capacity 1</label>
-                <input type="text" formControlName="size_capacity_1" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.size_capacity_1
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Site/Capacity 1 - Unit measurement</label>
-                <input type="text" formControlName="size_capacity_1_measurement" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.size_capacity_1_measurement
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Site/Capacity 2</label>
-                <input type="text" formControlName="size_capacity_2" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.size_capacity_2
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Site/Capacity 2 - Unit measurement</label>
-                <input type="text" formControlName="size_capacity_2_measurement" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.size_capacity_2_measurement
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Site/Capacity 3</label>
-                <input type="text" formControlName="size_capacity_3" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.size_capacity_3
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Site/Capacity 3 - Unit measurement</label>
-                <input type="text" formControlName="size_capacity_3_measurement" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.size_capacity_3_measurement
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Parent Asset/Plate Number</label>
-                <input type="text" formControlName="parent_plate_number" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.parent_plate_number
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Asset/Plate Number</label>
-                <input type="text" formControlName="plate_number" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.plate_number
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Serial Number</label>
-                <input type="text" formControlName="serial_number" class="form-control form-control-sm" />
-                <small class="validation_messages">{{ validation_messages.serial_number }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Vendor Part Number</label>
-                <input type="text" formControlName="vendor_part_no" class="form-control form-control-sm" />
-                <small class="validation_messages">{{ validation_messages.vendor_part_no }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">SCADA ID</label>
-                <input type="text" formControlName="scada_id" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.scada_id
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">External ID</label>
-                <input type="text" formControlName="external_id" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.external_id
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Asset Tag Number</label>
-                <input type="text" formControlName="tag_number" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.tag_number
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Pallet Number</label>
-                <input type="text" formControlName="pallet_number" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.pallet_number
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Purchase Date/Installed/Handed Over Date</label>
-                <input type="text" formControlName="installed_at" class="form-control form-control-sm" bsDatepicker
-                  [bsConfig]="{
-                    dateInputFormat: 'YYYY-MM-DD',
-                    isAnimated: true
-                  }" />
-                <small class="validation_messages">{{
-                  validation_messages.installed_at
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <ng-template #popTemplate>
-                  <h5>Condition Rating</h5>
-                  <ul style="list-style-type: none;">
-                    <li>1 - Very Good</li>
-                    <li>2 - Good</li>
-                    <li>3 - Average</li>
-                    <li>4 - Poor</li>
-                    <li>5 - Replace</li>
-                  </ul>
-                  <small>Note: This value is Mandatory for all assets</small>
-                </ng-template>
-                <label class="form-control-label">Condition Rating
-                  <button type="button" class="btn btn-icon btn-default btn-sm ml-md-4" [popover]="popTemplate"
-                    placement="right" [outsideClick]="true">
-                    <span class="btn-inner--icon"><i class="fas fa-info-circle"></i></span>
-                  </button>
-                </label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="rating">
-                  <option value="">Please select</option>
-                  <option *ngFor="let rating of ratings" [value]="rating.value">{{ rating.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.rating
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Status</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="status">
-                  <option value="">Please select</option>
-                  <option *ngFor="let status of statuses" [value]="status.value">{{ status.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.status
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Maintenance Specification</label>
-                <input type="text" formControlName="maintenance_specification" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.maintenance_specification
-                }}</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Bill of Material</label>
-                <input type="text" formControlName="bill_of_material" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.bill_of_material
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Measurement Type</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="measuring_type">
-                  <option value="">Please select</option>
-                  <option *ngFor="let measuringtype of measuringtypes" [value]="measuringtype.value">
-                    {{ measuringtype.name }}</option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.measuring_type
-                }}</small>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <button class="btn btn-sm btn-danger" matStepperPrevious>
-              Back
-            </button>
-            <button class="btn btn-sm btn-success" matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step [stepControl]="sixthFormGroup">
-        <form [formGroup]="sixthFormGroup">
-          <ng-template matStepLabel>Asset Warranty Information</ng-template>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Warranty</label><br />
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" id="yes" name="is_warranty" class="custom-control-input"
-                    formControlName="is_warranty" value="true" />
-                  <label class="custom-control-label" for="yes">Yes</label>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Capacity Size</label>
+                  <input type="text" formControlName="capacity_size_register" class="form-control form-control-sm" />
                 </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" id="no" name="is_warranty" class="custom-control-input"
-                    formControlName="is_warranty" value="false" />
-                  <label class="custom-control-label" for="no">No</label>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Closing Torque</label>
+                  <input type="text" formControlName="closing_torque_register" class="form-control form-control-sm" />
                 </div>
-                <small class="validation_messages">{{
-                  validation_messages.is_warranty
-                }}</small>
               </div>
             </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Actual Warranty Period</label>
-                <input type="number" formControlName="warranty_period_actual" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.warranty_period_actual
-                }}</small>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Communication Protocol</label>
+                  <input type="text" formControlName="communication_protocol_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Coverage Range</label>
+                  <input type="text" formControlName="coverage_range_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Dimension</label>
+                  <input type="text" formControlName="dimension_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Environmental Performance</label>
+                  <input type="text" formControlName="environmental_performance_register" class="form-control form-control-sm" />
+                </div>
               </div>
             </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Warranty Vendor Name</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="warranty_vendor">
-                  <option value="">Please select</option>
-                  <option *ngFor="let organisation of organisations" [value]="organisation.id">{{ organisation.name }}
-                  </option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.warranty_vendor
-                }}</small>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Flow Rate</label>
+                  <input type="text" formControlName="flow_rate_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">frequency</label>
+                  <input type="text" formControlName="frequency_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Horse Power</label>
+                  <input type="text" formControlName="horse_power_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Hysteresis</label>
+                  <input type="text" formControlName="hysteresis_register" class="form-control form-control-sm" />
+                </div>
               </div>
             </div>
-          </div>
-
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Infrastructure Status</label>
+                  <input type="text" formControlName="infrastructure_status_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Infrastructure Status-Reason</label>
+                  <input type="text" formControlName="infrastructure_status_reason_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Inlet Diameter</label>
+                  <input type="text" formControlName="inlet_diameter_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Installation</label>
+                  <input type="text" formControlName="installation_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Insulation</label>
+                  <input type="text" formControlName="insulation_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Legal Name</label>
+                  <input type="text" formControlName="legal_name_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Manufacturer</label>
+                  <input type="text" formControlName="manufacturer_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Manufacturer Year</label>
+                  <input type="text" formControlName="manufacturer_year_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Manufacturer Part Number</label>
+                  <input type="text" formControlName="manufacture_part_number_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Material Type</label>
+                  <input type="text" formControlName="material_type_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Model</label>
+                  <input type="text" formControlName="model_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Motor Current</label>
+                  <input type="text" formControlName="motor_current_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">No of Channel</label>
+                  <input type="text" formControlName="no_of_channel_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">No of Phases</label>
+                  <input type="text" formControlName="no_of_phases_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">No of Stage</label>
+                  <input type="text" formControlName="no_of_stage_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Opening Torque</label>
+                  <input type="text" formControlName="opening_torque_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Outlet Diameter</label>
+                  <input type="text" formControlName="outlet_diameter_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Power Supply Type</label>
+                  <input type="text" formControlName="power_supply_type_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Pump Head</label>
+                  <input type="text" formControlName="pump_head_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Revolution Per Minute</label>
+                  <input type="text" formControlName="revolutions_per_minute_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Source From</label>
+                  <input type="text" formControlName="source_from_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Staging Height</label>
+                  <input type="text" formControlName="staging_height_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Supply Location</label>
+                  <input type="text" formControlName="supply_location_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Temperature</label>
+                  <input type="text" formControlName="temperature_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Top Water Level</label>
+                  <input type="text" formControlName="top_water_level_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Type</label>
+                  <input type="text" formControlName="type_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Valve Diameter</label>
+                  <input type="text" formControlName="valve_diameter_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Valve Pressure Rating</label>
+                  <input type="text" formControlName="valve_pressure_rating_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Chassis Number</label>
+                  <input type="text" formControlName="vehicle_chassis_number_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Engine Capacity</label>
+                  <input type="text" formControlName="vehicle_engine_capacity_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Engine Number</label>
+                  <input type="text" formControlName="vehicle_engine_number_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Insurance Vendor</label>
+                  <input type="text" formControlName="vehicle_insurance_vendor_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Model</label>
+                  <input type="text" formControlName="vehicle_model_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Insurance Auto Windscreen Insured</label>
+                  <input type="text" formControlName="vehicle_insurance_auto_windscreen_insured_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Insurance Cover Note Number</label>
+                  <input type="text" formControlName="vehicle_insurance_cover_note_number_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Insurance Date Period From</label>
+                  <input type="date" formControlName="vehicle_insurance_date_period_from_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Insurance Date Period To</label>
+                  <input type="date" formControlName="vehicle_insurance_date_period_to_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Insurance No Claim Discount</label>
+                  <input type="text" formControlName="vehicle_insurance_no_claim_discount_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Insurance Policy Type</label>
+                  <input type="text" formControlName="vehicle_insurance_policy_type_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Insurance Sum Insured</label>
+                  <input type="text" formControlName="vehicle_insurance_sum_insured_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Insurance Total Premium</label>
+                  <input type="text" formControlName="vehicle_insurance_total_premium_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Puspakom Date inspection</label>
+                  <input type="date" formControlName="vehicle_puspakom_date_inspection_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Owner Status</label>
+                  <input type="text" formControlName="vehicle_owner_status_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Register Date</label>
+                  <input type="date" formControlName="vehicle_register_date_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Roadtax Rate</label>
+                  <input type="text" formControlName="vehicle_roadtax_rate_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Puspakom Expired Date</label>
+                  <input type="date" formControlName="vehicle_puspakom_expired_date_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Spad Permit Date Period To</label>
+                  <input type="date" formControlName="vehicle_spad_permit_date_period_to_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Roadtax Renew Date</label>
+                  <input type="date" formControlName="vehicle_roadtax_renew_date_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Roadtax Expired Date</label>
+                  <input type="date" formControlName="vehicle_roadtax_expired_date_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Spad No License Operator</label>
+                  <input type="text" formControlName="vehicle_spad_no_license_operator_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Spad Permit Date Period From</label>
+                  <input type="date" formControlName="vehicle_spad_permit_date_period_from_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Seating Capacity</label>
+                  <input type="text" formControlName="vehicle_seating_capacity_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Vehicle Registration Owner</label>
+                  <input type="text" formControlName="vehicle_registration_owner_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Voltage</label>
+                  <input type="text" formControlName="voltage_register" class="form-control form-control-sm" />
+                </div>
+              </div>
+            </div>
           <div>
             <button class="btn btn-sm btn-danger" matStepperPrevious>
               Back
@@ -1971,43 +2025,7 @@
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="seventhFormGroup">
-        <form [formGroup]="seventhFormGroup">
-          <ng-template matStepLabel>PO Detail</ng-template>
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Purchase Order Vendor Name</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="po_vendor">
-                  <option value="">Please select</option>
-                  <option *ngFor="let organisation of organisations" [value]="organisation.id">{{ organisation.name }}
-                  </option>
-                </select>
-                <small class="validation_messages">{{
-                  validation_messages.po_vendor
-                }}</small>
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label class="form-control-label">Purchase Cost</label>
-                <input type="number" formControlName="po_cost" class="form-control form-control-sm" />
-                <small class="validation_messages">{{
-                  validation_messages.po_cost
-                }}</small>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <button class="btn btn-sm btn-danger" matStepperPrevious>
-              Back
-            </button>
-            <button class="btn btn-sm btn-success" matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <!-- <mat-step>
+      <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <p>You are now done.</p>
         <div>
@@ -2016,7 +2034,7 @@
             Reset
           </button>
         </div>
-      </mat-step> -->
+      </mat-step>
     </mat-vertical-stepper>
   </div>
 

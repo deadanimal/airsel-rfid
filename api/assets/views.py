@@ -255,6 +255,10 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = AssetRegistrationSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
+        'asset_id',
+        'badge_no',
+        'node_id',
+        'hex_code',
         'created_at'
     ]
 
