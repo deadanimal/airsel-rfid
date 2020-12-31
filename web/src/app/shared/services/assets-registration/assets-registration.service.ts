@@ -35,6 +35,55 @@ export class AssetsRegistrationService {
     );
   }
 
+  getApprovedList(): Observable<AssetsRegistrationModel[]> {
+    let NewUrl: string = environment.baseUrl + "v1/asset-registration/approved_list/";
+    return this.http.get<any>(NewUrl).pipe(
+      tap((res) => {
+        console.log("AssetsRegistrationModel", res);
+        this.amodels = res;
+      })
+    );
+  }
+
+  getNewRegList(): Observable<AssetsRegistrationModel[]> {
+    let NewUrl: string = environment.baseUrl + "v1/asset-registration/new_register_list/";
+    return this.http.get<any>(NewUrl).pipe(
+      tap((res) => {
+        console.log("AssetsRegistrationModel", res);
+        this.amodels = res;
+      })
+    );
+  }
+
+  getNewProcessedList(): Observable<AssetsRegistrationModel[]> {
+    let NewUrl: string = environment.baseUrl + "v1/asset-registration/new_processed_list/";
+    return this.http.get<any>(NewUrl).pipe(
+      tap((res) => {
+        console.log("AssetsRegistrationModel", res);
+        this.amodels = res;
+      })
+    );
+  }
+  getProcessedList(): Observable<AssetsRegistrationModel[]> {
+    let NewUrl: string = environment.baseUrl + "v1/asset-registration/processed_list/";
+    return this.http.get<any>(NewUrl).pipe(
+      tap((res) => {
+        console.log("AssetsRegistrationModel", res);
+        this.amodels = res;
+      })
+    );
+  }
+
+  getRejectedList(): Observable<AssetsRegistrationModel[]> {
+    let NewUrl: string = environment.baseUrl + "v1/asset-registration/rejected_list/";
+    return this.http.get<any>(NewUrl).pipe(
+      tap((res) => {
+        console.log("AssetsRegistrationModel", res);
+        this.amodels = res;
+      })
+    );
+  }
+
   getOne(id: string): Observable<AssetsRegistrationModel> {
     let urlID = this.url + id + "/";
     return this.http.get<AssetsRegistrationModel>(urlID).pipe(
