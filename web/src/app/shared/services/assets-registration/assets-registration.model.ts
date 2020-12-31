@@ -126,6 +126,7 @@ export class AssetsRegistrationModel {
   public voltage: string;
   public asset_status: string;
   public status: string;
+  public badge_no: string;
 
   public created_at: string;
   public modified_at: string;
@@ -259,6 +260,7 @@ export class AssetsRegistrationModel {
     voltage: string,
     status: string,
     asset_status: string,
+    badge_no: string,
     created_at: string,
     modified_at: string,
   ) {
@@ -390,7 +392,7 @@ export class AssetsRegistrationModel {
     this.voltage = voltage;
     this.status = status;
     this.asset_status = asset_status;
-
+    this.badge_no = badge_no;
     this.created_at = created_at;
     this.modified_at = modified_at;
   }

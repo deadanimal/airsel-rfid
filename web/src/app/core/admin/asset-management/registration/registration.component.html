@@ -107,26 +107,28 @@
                 Asset Location
               </h5> -->
 
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkName"
-                      [(ngModel)]="is_show1.parent_location">
-                    <label class="custom-control-label" for="checkName">
-                      Parent_Location
-                    </label>
-                  </div>
-                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkName"
+                  [(ngModel)]="is_show1.parent_location">
+                <label class="custom-control-label" for="checkName">
+                  Parent Location
+                </label>
+              </div>
+            </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkDate"
-                      [(ngModel)]="is_show1.loca_desc">
-                    <label class="custom-control-label" for="checkDate">
-                      Location Desc
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkDate"
+                  [(ngModel)]="is_show1.location_description">
+                <label class="custom-control-label" for="checkDate">
+                  Location Desc asdasd
+                </label>
+              </div>
+            </div>
 
                 <div class="col-md-3">
                   <div class="custom-control custom-checkbox">
@@ -138,35 +140,35 @@
                   </div>
                 </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress1"
-                      [(ngModel)]="is_show1.addr_line1">
-                    <label class="custom-control-label" for="checkAddress1">
-                      Address 1
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress1"
+                  [(ngModel)]="is_show1.address_line_1">
+                <label class="custom-control-label" for="checkAddress1">
+                  Address 1
+                </label>
+              </div>
+            </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress2"
-                      [(ngModel)]="is_show1.addr_line2">
-                    <label class="custom-control-label" for="checkAddress2">
-                      Address 2
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress2"
+                  [(ngModel)]="is_show1.address_line_2">
+                <label class="custom-control-label" for="checkAddress2">
+                  Address 2
+                </label>
+              </div>
+            </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress3"
-                      [(ngModel)]="is_show1.addr_line3">
-                    <label class="custom-control-label" for="checkAddress3">
-                      Address 3
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress3"
+                  [(ngModel)]="is_show1.address_line_3">
+                <label class="custom-control-label" for="checkAddress3">
+                  Address 3
+                </label>
+              </div>
+            </div>
 
                 <div class="col-md-3">
                   <div class="custom-control custom-checkbox">
@@ -208,15 +210,15 @@
                   </div>
                 </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="email_address"
-                      [(ngModel)]="is_show1.tag_no">
-                    <label class="custom-control-label" for="email_address">
-                      Tag Number
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="email_address"
+                  [(ngModel)]="is_show1.tag_number">
+                <label class="custom-control-label" for="email_address">
+                  Tag Number
+                </label>
+              </div>
+            </div>
 
                 <div class="col-md-3">
                   <div class="custom-control custom-checkbox">
@@ -238,65 +240,63 @@
                   </div>
                 </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReceiptNo"
-                      [(ngModel)]="is_show1.loca_main_contact">
-                    <label class="custom-control-label" for="checkReceiptNo">
-                      Location Main Contact
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkLocMainContra"
+                  [(ngModel)]="is_show1.location_main_contact">
+                <label class="custom-control-label" for="checkLocMainContra">
+                  Location Main Contact
+                </label>
+              </div>
+            </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReference"
-                      [(ngModel)]="is_show1.loca_mainte_manager">
-                    <label class="custom-control-label" for="checkReference">
-                      Location Maintenance Manager
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkLocAssetMainte"
+                  [(ngModel)]="is_show1.location_asset_maintenance_manager">
+                <label class="custom-control-label" for="checkLocAssetMainte">
+                  Location Maintenance Manager
+                </label>
+              </div>
+            </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkReferenceNo"
-                      [(ngModel)]="is_show1.gis_esri_id">
-                    <label class="custom-control-label" for="checkReferenceNo">
-                      GIS/ESRI ID
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkGISESRI"
+                  [(ngModel)]="is_show1.gis_esri_id">
+                <label class="custom-control-label" for="checkGISESRI">
+                  GIS/ESRI ID
+                </label>
+              </div>
+            </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTransactionNo"
-                      [(ngModel)]="is_show1.latitude">
-                    <label class="custom-control-label" for="checkTransactionNo">
-                      Latitude
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkLatitude"
+                  [(ngModel)]="is_show1.latitude">
+                <label class="custom-control-label" for="checkLatitude">
+                  Latitude
+                </label>
+              </div>
+            </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkTotalAmount"
-                      [(ngModel)]="is_show1.longitude">
-                    <label class="custom-control-label" for="checkTotalAmount">
-                      Longitude
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkLongitude"
+                  [(ngModel)]="is_show1.longitude">
+                <label class="custom-control-label" for="checkLongitude">
+                  Longitude
+                </label>
+              </div>
+            </div>
 
-                <div class="col-md-3">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="assetcrit"
-                      [(ngModel)]="is_show1.asset_criticallity">
-                    <label class="custom-control-label" for="assetcrit">
-                      Asset Criticallity
-                    </label>
-                  </div>
-                </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="custom-control custom-checkbox">
+                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssetCritical"
+                  [(ngModel)]="is_show1.asset_critically">
+                <label class="custom-control-label" for="checkAssetCritical">
+                  Asset Criticallity
+                </label>
               </div>
 
               <div class="row mt-3 mb-2">
@@ -1053,6 +1053,16 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col text-right">
+                      <!-- <button class="btn btn-danger" (click)="confirm('RJ')">Reject</button> -->
+                      <button class="btn btn-default" (click)="confirm('NP')">Process</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- </div> -->
               </div>
             </div>
           </div>
