@@ -968,7 +968,7 @@ export class RegistrationComponent implements OnInit {
       formData.append('gis_esri_id', loopval.gis_esri_id)
       formData.append('latitude', loopval.latitude)
       formData.append('longitude', loopval.longitude)
-      formData.append('asset_critically', loopval.asset_criticality)
+      formData.append('asset_criticallity', loopval.asset_criticality)
       formData.append('cost_center', loopval.cost_center)
       formData.append('sub_category_1', loopval.sub_category_1)
       formData.append('sub_category_2', loopval.sub_category_2)
