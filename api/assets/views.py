@@ -342,3 +342,18 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         # print(rejected_list_asset_list)
         # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
         # return Response(rejected_list_serializer.data)
+
+
+    # @action(methods=['GET'], detail=False)
+    # def filter_table_testing(self, request, *args, **kwargs):
+
+    #     qqq = request.GET.get('qqq', '')
+    #     rrr = request.GET.get('rrr', '')
+    #     print('POST = ')
+    #     print('qqq = ',qqq)
+    #     print('rrr = ',rrr)
+
+    #     result = AssetRegistration.objects.filter(asset_identity__icontains=qqq,parent_location__icontains=rrr)
+    #     print('asset_list = ')
+    #     serializer = AssetRegistrationSerializer(result, many=True)
+    #     return Response(serializer.data)

@@ -472,7 +472,7 @@
             <div class="col-md-3 col-sm-6">
               <div class="custom-control custom-checkbox">
                 <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkInternalAssId"
-                  [(ngModel)]="is_show1.internal_asset_indentity">
+                  [(ngModel)]="is_show1.internal_asset_adentity">
                 <label class="custom-control-label" for="checkInternalAssId">
                   Internal Asset Indentity
                 </label>
@@ -501,7 +501,7 @@
                 <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkPurcDateInstHand"
                   [(ngModel)]="is_show1.purchase_date_installed_handed_over_date">
                 <label class="custom-control-label" for="checkPurcDateInstHand">
-                  Purchase Date/Installed/Handed Over Date
+                  Purchase/Installed/Handed Date
                 </label>
               </div>
             </div>
@@ -532,7 +532,7 @@
                 </label>
               </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <!-- <div class="col-md-3 col-sm-6">
               <div class="custom-control custom-checkbox">
                 <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssPriCat"
                   [(ngModel)]="is_show1.asset_primary_category">
@@ -540,7 +540,7 @@
                   Asset Primary Category
                 </label>
               </div>
-            </div>
+            </div> -->
             <div class="col-md-3 col-sm-6">
               <div class="custom-control custom-checkbox">
                 <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSubCat2"
@@ -715,11 +715,12 @@
                     </div>
                   </div>
 
-                  <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'" [headerHeight]="50"
-                    [footerHeight]="50" [rowHeight]="'auto'" [limit]="tableEntries != -1 ? tableEntries : undefined"
-                    [rows]="tableTemp1" (activate)="onActivate($event)">
+                  <ngx-datatable class="bootstrap selection-cell material" [scrollbarV]="true" [scrollbarH]="true"
+                    [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="75"
+                    [limit]="tableEntries != -1 ? tableEntries : undefined" [rows]="tableTemp1"
+                    (activate)="onActivate($event)">
 
-                    <ngx-datatable-column maxWidth="60" [sortable]="false">
+                    <ngx-datatable-column maxWidth="30">
                       <ng-template let-row="row" ngx-datatable-cell-template>
                         <div class="custom-control custom-checkbox">
                           <input type="checkbox" class="custom-control-input" id="customCheck+{{row.id}}"
@@ -730,7 +731,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="80">
+                    <ngx-datatable-column [width]="90">
                       <ng-template ngx-datatable-header-template>
                         <span>Status</span>
                       </ng-template>
@@ -760,8 +761,8 @@
                       </ng-template>
 
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="parent_location" class="form-control"
-                          value="{{row.parent_location}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="parent_location" class="form-control" value="{{row.parent_location}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -772,8 +773,8 @@
                       </ng-template>
 
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="location_description" class="form-control"
-                          value="{{row.location_description}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="location_description" class="form-control" value="{{row.location_description}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -783,7 +784,8 @@
                         <span>building</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="building" class="form-control" value="{{row.building}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="building"
+                          class="form-control" value="{{row.building}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -793,7 +795,8 @@
                         <span>Address Line 1</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="address_line_1" class="form-control" value="{{row.address_line_1}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="address_line_1" class="form-control" value="{{row.address_line_1}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -803,7 +806,8 @@
                         <span>Address Line 2</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="address_line_2" class="form-control" value="{{row.address_line_2}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="address_line_2" class="form-control" value="{{row.address_line_2}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -813,7 +817,8 @@
                         <span>Address Line 3</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="address_line_3" class="form-control" value="{{row.address_line_3}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="address_line_3" class="form-control" value="{{row.address_line_3}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -823,7 +828,8 @@
                         <span>City</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="city" class="form-control" value="{{row.city}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="city"
+                          class="form-control" value="{{row.city}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -833,7 +839,8 @@
                         <span>State</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="state" class="form-control" value="{{row.state}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="state"
+                          class="form-control" value="{{row.state}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -843,7 +850,8 @@
                         <span>Postal Code</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="postal_code" class="form-control" value="{{row.postal_code}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="postal_code" class="form-control" value="{{row.postal_code}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -853,7 +861,8 @@
                         <span>Country</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="country" class="form-control" value="{{row.country}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="country"
+                          class="form-control" value="{{row.country}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -863,7 +872,8 @@
                         <span>Tag Number</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="tag_number" class="form-control" value="{{row.tag_number}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="tag_number"
+                          class="form-control" value="{{row.tag_number}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -873,7 +883,8 @@
                         <span>Service Area</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="service_area" class="form-control" value="{{row.service_area}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="service_area" class="form-control" value="{{row.service_area}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -883,8 +894,8 @@
                         <span>Maintenance Planner</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="maintenance_planner" class="form-control"
-                          value="{{row.maintenance_planner}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="maintenance_planner" class="form-control" value="{{row.maintenance_planner}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -894,8 +905,8 @@
                         <span>Location Main Contact</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="location_main_contact" class="form-control"
-                          value="{{row.location_main_contact}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="location_main_contact" class="form-control" value="{{row.location_main_contact}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -905,7 +916,8 @@
                         <span>Location Asset Maintenance Manager</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="location_asset_maintenance_manager" class="form-control"
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="location_asset_maintenance_manager" class="form-control"
                           value="{{row.location_asset_maintenance_manager}}" />
                       </ng-template>
                     </ngx-datatable-column>
@@ -916,7 +928,8 @@
                         <span>GIS ESRI ID</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="gis_esri_id" class="form-control" value="{{row.gis_esri_id}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="gis_esri_id" class="form-control" value="{{row.gis_esri_id}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -926,7 +939,8 @@
                         <span>latitude</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="latitude" class="form-control" value="{{row.latitude}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="latitude"
+                          class="form-control" value="{{row.latitude}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -936,8 +950,8 @@
                         <span>Asset Criticality</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="asset_critically" class="form-control"
-                          value="{{row.asset_critically}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="asset_critically" class="form-control" value="{{row.asset_critically}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -947,7 +961,8 @@
                         <span>Cost Center</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="cost_center" class="form-control" value="{{row.cost_center}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="cost_center" class="form-control" value="{{row.cost_center}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -957,8 +972,8 @@
                         <span>Asset Owning Depart</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="asset_owning_department" class="form-control"
-                          value="{{row.asset_owning_department}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="asset_owning_department" class="form-control" value="{{row.asset_owning_department}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -968,8 +983,8 @@
                         <span>Sub Process System</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="sub_process_system" class="form-control"
-                          value="{{row.sub_process_system}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="sub_process_system" class="form-control" value="{{row.sub_process_system}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -979,7 +994,8 @@
                         <span>Brand</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="brand" class="form-control" value="{{row.brand}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="brand"
+                          class="form-control" value="{{row.brand}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -989,8 +1005,8 @@
                         <span>Size Capacity 1</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="size_capacity_1" class="form-control"
-                          value="{{row.size_capacity_1}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="size_capacity_1" class="form-control" value="{{row.size_capacity_1}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1001,8 +1017,8 @@
                         <span>Size Capacity 2</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="size_capacity_2" class="form-control"
-                          value="{{row.size_capacity_2}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="size_capacity_2" class="form-control" value="{{row.size_capacity_2}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1012,8 +1028,8 @@
                         <span>Size Capacity 3</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="size_capacity_3" class="form-control"
-                          value="{{row.size_capacity_3}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="size_capacity_3" class="form-control" value="{{row.size_capacity_3}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1023,7 +1039,8 @@
                         <span>Maintenance Specification</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="maintenance_specification" class="form-control"
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="maintenance_specification" class="form-control"
                           value="{{row.maintenance_specification}}" />
                       </ng-template>
                     </ngx-datatable-column>
@@ -1034,8 +1051,8 @@
                         <span>Asset Or Component Type</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="asset_or_component_type" class="form-control"
-                          value="{{row.asset_or_component_type}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="asset_or_component_type" class="form-control" value="{{row.asset_or_component_type}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1045,7 +1062,8 @@
                         <span>Badge No</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="badge_no" class="form-control" value="{{row.badge_no}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="badge_no"
+                          class="form-control" value="{{row.badge_no}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1055,7 +1073,8 @@
                         <span>size_capacity_1_unit_measurement</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="size_capacity_1_unit_measurement" class="form-control"
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="size_capacity_1_unit_measurement" class="form-control"
                           value="{{row.size_capacity_1_unit_measurement}}" />
                       </ng-template>
                     </ngx-datatable-column>
@@ -1066,7 +1085,8 @@
                         <span>size_capacity_2_unit_measurement</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="size_capacity_2_unit_measurement" class="form-control"
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="size_capacity_2_unit_measurement" class="form-control"
                           value="{{row.size_capacity_2_unit_measurement}}" />
                       </ng-template>
                     </ngx-datatable-column>
@@ -1077,7 +1097,8 @@
                         <span>size_capacity_3_unit_measurement</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="size_capacity_3_unit_measurement" class="form-control"
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="size_capacity_3_unit_measurement" class="form-control"
                           value="{{row.size_capacity_3_unit_measurement}}" />
                       </ng-template>
                     </ngx-datatable-column>
@@ -1088,8 +1109,8 @@
                         <span>Measurement Type</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="measurement_type" class="form-control"
-                          value="{{row.measurement_type}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="measurement_type" class="form-control" value="{{row.measurement_type}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1099,7 +1120,8 @@
                         <span>Main Operation</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="main_operation" class="form-control" value="{{row.main_operation}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="main_operation" class="form-control" value="{{row.main_operation}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1109,7 +1131,8 @@
                         <span>Asset Class Asset Category</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="asset_class_asset_category" class="form-control"
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="asset_class_asset_category" class="form-control"
                           value="{{row.asset_class_asset_category}}" />
                       </ng-template>
                     </ngx-datatable-column>
@@ -1120,8 +1143,8 @@
                         <span>Internal Asset Adentity</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="internal_asset_adentity" class="form-control"
-                          value="{{row.internal_asset_adentity}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="internal_asset_adentity" class="form-control" value="{{row.internal_asset_adentity}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1131,7 +1154,8 @@
                         <span>Sub Category 1</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="sub_category_1" class="form-control" value="{{row.sub_category_1}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="sub_category_1" class="form-control" value="{{row.sub_category_1}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1141,7 +1165,8 @@
                         <span>Parent Asset Plate Number</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="parent_asset_plate_number" class="form-control"
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="parent_asset_plate_number" class="form-control"
                           value="{{row.parent_asset_plate_number}}" />
                       </ng-template>
                     </ngx-datatable-column>
@@ -1149,10 +1174,11 @@
                     <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false" prop="created_date"
                       *ngIf="is_show1.purchase_date_installed_handed_over_date">
                       <ng-template ngx-datatable-header-template>
-                        <span>Purchase Date Installed Handed Over Date</span>
+                        <span>Purchase Installed Handed Over Date</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="purchase_date_installed_handed_over_date" class="form-control"
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="purchase_date_installed_handed_over_date" class="form-control"
                           value="{{row.purchase_date_installed_handed_over_date}}" />
                       </ng-template>
                     </ngx-datatable-column>
@@ -1163,7 +1189,8 @@
                         <span>Warranty</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="warranty" class="form-control" value="{{row.warranty}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="warranty"
+                          class="form-control" value="{{row.warranty}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1173,7 +1200,8 @@
                         <span>Region</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="region" class="form-control" value="{{row.region}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="region"
+                          class="form-control" value="{{row.region}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1183,7 +1211,8 @@
                         <span>Handed Over Asset Or Procured</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="handed_over_asset_or_procured" class="form-control"
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="handed_over_asset_or_procured" class="form-control"
                           value="{{row.handed_over_asset_or_procured}}" />
                       </ng-template>
                     </ngx-datatable-column>
@@ -1194,8 +1223,8 @@
                         <span>Asset Primary Category</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="asset_primary_category" class="form-control"
-                          value="{{row.asset_primary_category}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="asset_primary_category" class="form-control" value="{{row.asset_primary_category}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1205,7 +1234,8 @@
                         <span>sub_category_2</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="sub_category_2" class="form-control" value="{{row.sub_category_2}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="sub_category_2" class="form-control" value="{{row.sub_category_2}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1215,8 +1245,8 @@
                         <span>Asset Plate Number</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="asset_plate_number" class="form-control"
-                          value="{{row.asset_plate_number}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="asset_plate_number" class="form-control" value="{{row.asset_plate_number}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1226,8 +1256,8 @@
                         <span>Condition Rating</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="condition_rating" class="form-control"
-                          value="{{row.condition_rating}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="condition_rating" class="form-control" value="{{row.condition_rating}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1237,8 +1267,8 @@
                         <span>Actual Warranty Period</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="actual_warranty_period" class="form-control"
-                          value="{{row.actual_warranty_period}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="actual_warranty_period" class="form-control" value="{{row.actual_warranty_period}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1248,7 +1278,8 @@
                         <span>Operation</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="operation" class="form-control" value="{{row.operation}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)" name="operation"
+                          class="form-control" value="{{row.operation}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1258,8 +1289,8 @@
                         <span>Process Function</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="process_function" class="form-control"
-                          value="{{row.process_function}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="process_function" class="form-control" value="{{row.process_function}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1269,7 +1300,8 @@
                         <span>Model Number</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="model_number" class="form-control" value="{{row.model_number}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="model_number" class="form-control" value="{{row.model_number}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1279,8 +1311,8 @@
                         <span>Detailed Description</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="detailed_description" class="form-control"
-                          value="{{row.detailed_description}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="detailed_description" class="form-control" value="{{row.detailed_description}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1290,7 +1322,8 @@
                         <span>Serial Number</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="serial_number" class="form-control" value="{{row.serial_number}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="serial_number" class="form-control" value="{{row.serial_number}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1300,7 +1333,8 @@
                         <span>Asset Status</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="asset_status" class="form-control" value="{{row.asset_status}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="asset_status" class="form-control" value="{{row.asset_status}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1310,8 +1344,8 @@
                         <span>Warranty Vendor Name</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="warranty_vendor_name" class="form-control"
-                          value="{{row.warranty_vendor_name}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="warranty_vendor_name" class="form-control" value="{{row.warranty_vendor_name}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1321,8 +1355,8 @@
                         <span>Asset Tag Number</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="asset_tag_number" class="form-control"
-                          value="{{row.asset_tag_number}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="asset_tag_number" class="form-control" value="{{row.asset_tag_number}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1332,7 +1366,8 @@
                         <span>Asset Identity</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <input type="text" name="asset_identity" class="form-control" value="{{row.asset_identity}}" />
+                        <input type="text" (keyup)="onKey($event.target.value,$event.target.name,row)"
+                          name="asset_identity" class="form-control" value="{{row.asset_identity}}" />
                       </ng-template>
                     </ngx-datatable-column>
 
@@ -1404,9 +1439,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Asset Primary Category</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="asset_primary_category">
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="asset_primary_category">
                   <option value="">Please select</option>
-                  <option *ngFor="let assetprimarycategory of assetprimarycategory" [value]="assetprimarycategory.value">
+                  <option *ngFor="let assetprimarycategory of assetprimarycategory"
+                    [value]="assetprimarycategory.value">
                     {{ assetprimarycategory.name }}</option>
                 </select>
                 <small class="validation_messages">{{
@@ -1443,7 +1480,7 @@
                 <div class="row">
                   <div class="col-md-3">
                     <div class="custom-control custom-checkbox">
-                      <input  type="checkbox" class="custom-control-input" id="assetcategory">
+                      <input type="checkbox" class="custom-control-input" id="assetcategory">
                       <label class="custom-control-label" for="assetcategory">
                         Asset
                       </label>
@@ -1451,7 +1488,7 @@
                   </div>
                   <div class="col-md-3">
                     <div class="custom-control custom-checkbox">
-                      <input  type="checkbox" class="custom-control-input" id="componentcategory">
+                      <input type="checkbox" class="custom-control-input" id="componentcategory">
                       <label class="custom-control-label" for="componentcategory">
                         Component
                       </label>
@@ -1466,7 +1503,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="custom-control custom-checkbox">
-                      <input  type="checkbox" class="custom-control-input" id="handover">
+                      <input type="checkbox" class="custom-control-input" id="handover">
                       <label class="custom-control-label" for="handover">
                         Hand Over Asset
                       </label>
@@ -1474,7 +1511,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="custom-control custom-checkbox">
-                      <input  type="checkbox" class="custom-control-input" id="procured">
+                      <input type="checkbox" class="custom-control-input" id="procured">
                       <label class="custom-control-label" for="procured">
                         Procured
                       </label>
@@ -1497,9 +1534,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Asset Owning Department</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="asset_owning_department">
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="asset_owning_department">
                   <option value="">Please select</option>
-                  <option *ngFor="let assetowningdepartment of assetowningdepartment" [value]="assetowningdepartment.value">
+                  <option *ngFor="let assetowningdepartment of assetowningdepartment"
+                    [value]="assetowningdepartment.value">
                     {{ assetowningdepartment.name }}</option>
                 </select>
                 <small class="validation_messages">{{
@@ -1510,9 +1549,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Main Operation</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="main_operation_register">
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="main_operation_register">
                   <option value="">Please select</option>
-                  <option *ngFor="let mainoperationregister of mainoperationregister" [value]="mainoperationregister.value">
+                  <option *ngFor="let mainoperationregister of mainoperationregister"
+                    [value]="mainoperationregister.value">
                     {{ mainoperationregister.name }}</option>
                 </select>
                 <small class="validation_messages">{{
@@ -1525,7 +1566,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Region</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="region_register">
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="region_register">
                   <option value="">Please select</option>
                   <option *ngFor="let region of region" [value]="region.value">
                     {{ region.name }}</option>
@@ -1538,7 +1580,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Operation</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="operation_register">
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="operation_register">
                   <option value="">Please select</option>
                   <option *ngFor="let operation of operation" [value]="operation.value">
                     {{ operation.name }}</option>
@@ -1553,7 +1596,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Parent Location</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="parent_location_register">
+                <select class="form-control custom-select form-control-sm custom-select-sm"
+                  formControlName="parent_location_register">
                   <option value="">Please select</option>
                   <option *ngFor="let parentlocation of parentlocation" [value]="parentlocation.value">
                     {{ parentlocation.name }}</option>
@@ -1588,435 +1632,466 @@
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Asset Technical Spec</ng-template>
           <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Bottom Water Level</label>
-                  <input type="text" formControlName="bottom_water_level_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Brand</label>
-                  <input type="text" formControlName="brand_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Capacity Size</label>
-                  <input type="text" formControlName="capacity_size_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Closing Torque</label>
-                  <input type="text" formControlName="closing_torque_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Bottom Water Level</label>
+                <input type="text" formControlName="bottom_water_level_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Communication Protocol</label>
-                  <input type="text" formControlName="communication_protocol_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Coverage Range</label>
-                  <input type="text" formControlName="coverage_range_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Dimension</label>
-                  <input type="text" formControlName="dimension_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Environmental Performance</label>
-                  <input type="text" formControlName="environmental_performance_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Brand</label>
+                <input type="text" formControlName="brand_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Flow Rate</label>
-                  <input type="text" formControlName="flow_rate_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">frequency</label>
-                  <input type="text" formControlName="frequency_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Horse Power</label>
-                  <input type="text" formControlName="horse_power_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Hysteresis</label>
-                  <input type="text" formControlName="hysteresis_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Capacity Size</label>
+                <input type="text" formControlName="capacity_size_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Infrastructure Status</label>
-                  <input type="text" formControlName="infrastructure_status_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Infrastructure Status-Reason</label>
-                  <input type="text" formControlName="infrastructure_status_reason_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Inlet Diameter</label>
-                  <input type="text" formControlName="inlet_diameter_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Installation</label>
-                  <input type="text" formControlName="installation_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Closing Torque</label>
+                <input type="text" formControlName="closing_torque_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Insulation</label>
-                  <input type="text" formControlName="insulation_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Legal Name</label>
-                  <input type="text" formControlName="legal_name_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Manufacturer</label>
-                  <input type="text" formControlName="manufacturer_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Manufacturer Year</label>
-                  <input type="text" formControlName="manufacturer_year_register" class="form-control form-control-sm" />
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Communication Protocol</label>
+                <input type="text" formControlName="communication_protocol_register"
+                  class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Manufacturer Part Number</label>
-                  <input type="text" formControlName="manufacture_part_number_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Material Type</label>
-                  <input type="text" formControlName="material_type_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Model</label>
-                  <input type="text" formControlName="model_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Motor Current</label>
-                  <input type="text" formControlName="motor_current_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Coverage Range</label>
+                <input type="text" formControlName="coverage_range_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">No of Channel</label>
-                  <input type="text" formControlName="no_of_channel_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">No of Phases</label>
-                  <input type="text" formControlName="no_of_phases_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">No of Stage</label>
-                  <input type="text" formControlName="no_of_stage_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Opening Torque</label>
-                  <input type="text" formControlName="opening_torque_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Dimension</label>
+                <input type="text" formControlName="dimension_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Outlet Diameter</label>
-                  <input type="text" formControlName="outlet_diameter_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Power Supply Type</label>
-                  <input type="text" formControlName="power_supply_type_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Pump Head</label>
-                  <input type="text" formControlName="pump_head_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Revolution Per Minute</label>
-                  <input type="text" formControlName="revolutions_per_minute_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Environmental Performance</label>
+                <input type="text" formControlName="environmental_performance_register"
+                  class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Source From</label>
-                  <input type="text" formControlName="source_from_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Staging Height</label>
-                  <input type="text" formControlName="staging_height_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Supply Location</label>
-                  <input type="text" formControlName="supply_location_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Temperature</label>
-                  <input type="text" formControlName="temperature_register" class="form-control form-control-sm" />
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Flow Rate</label>
+                <input type="text" formControlName="flow_rate_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Top Water Level</label>
-                  <input type="text" formControlName="top_water_level_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Type</label>
-                  <input type="text" formControlName="type_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Valve Diameter</label>
-                  <input type="text" formControlName="valve_diameter_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Valve Pressure Rating</label>
-                  <input type="text" formControlName="valve_pressure_rating_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">frequency</label>
+                <input type="text" formControlName="frequency_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Chassis Number</label>
-                  <input type="text" formControlName="vehicle_chassis_number_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Engine Capacity</label>
-                  <input type="text" formControlName="vehicle_engine_capacity_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Engine Number</label>
-                  <input type="text" formControlName="vehicle_engine_number_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Insurance Vendor</label>
-                  <input type="text" formControlName="vehicle_insurance_vendor_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Horse Power</label>
+                <input type="text" formControlName="horse_power_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Model</label>
-                  <input type="text" formControlName="vehicle_model_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Insurance Auto Windscreen Insured</label>
-                  <input type="text" formControlName="vehicle_insurance_auto_windscreen_insured_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Insurance Cover Note Number</label>
-                  <input type="text" formControlName="vehicle_insurance_cover_note_number_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Insurance Date Period From</label>
-                  <input type="date" formControlName="vehicle_insurance_date_period_from_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Hysteresis</label>
+                <input type="text" formControlName="hysteresis_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Insurance Date Period To</label>
-                  <input type="date" formControlName="vehicle_insurance_date_period_to_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Insurance No Claim Discount</label>
-                  <input type="text" formControlName="vehicle_insurance_no_claim_discount_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Insurance Policy Type</label>
-                  <input type="text" formControlName="vehicle_insurance_policy_type_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Insurance Sum Insured</label>
-                  <input type="text" formControlName="vehicle_insurance_sum_insured_register" class="form-control form-control-sm" />
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Infrastructure Status</label>
+                <input type="text" formControlName="infrastructure_status_register"
+                  class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Insurance Total Premium</label>
-                  <input type="text" formControlName="vehicle_insurance_total_premium_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Puspakom Date inspection</label>
-                  <input type="date" formControlName="vehicle_puspakom_date_inspection_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Owner Status</label>
-                  <input type="text" formControlName="vehicle_owner_status_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Register Date</label>
-                  <input type="date" formControlName="vehicle_register_date_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Infrastructure Status-Reason</label>
+                <input type="text" formControlName="infrastructure_status_reason_register"
+                  class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Roadtax Rate</label>
-                  <input type="text" formControlName="vehicle_roadtax_rate_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Puspakom Expired Date</label>
-                  <input type="date" formControlName="vehicle_puspakom_expired_date_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Spad Permit Date Period To</label>
-                  <input type="date" formControlName="vehicle_spad_permit_date_period_to_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Roadtax Renew Date</label>
-                  <input type="date" formControlName="vehicle_roadtax_renew_date_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Inlet Diameter</label>
+                <input type="text" formControlName="inlet_diameter_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Roadtax Expired Date</label>
-                  <input type="date" formControlName="vehicle_roadtax_expired_date_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Spad No License Operator</label>
-                  <input type="text" formControlName="vehicle_spad_no_license_operator_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Spad Permit Date Period From</label>
-                  <input type="date" formControlName="vehicle_spad_permit_date_period_from_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Seating Capacity</label>
-                  <input type="text" formControlName="vehicle_seating_capacity_register" class="form-control form-control-sm" />
-                </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Installation</label>
+                <input type="text" formControlName="installation_register" class="form-control form-control-sm" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Vehicle Registration Owner</label>
-                  <input type="text" formControlName="vehicle_registration_owner_register" class="form-control form-control-sm" />
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label class="form-control-label">Voltage</label>
-                  <input type="text" formControlName="voltage_register" class="form-control form-control-sm" />
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Insulation</label>
+                <input type="text" formControlName="insulation_register" class="form-control form-control-sm" />
               </div>
             </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Legal Name</label>
+                <input type="text" formControlName="legal_name_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Manufacturer</label>
+                <input type="text" formControlName="manufacturer_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Manufacturer Year</label>
+                <input type="text" formControlName="manufacturer_year_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Manufacturer Part Number</label>
+                <input type="text" formControlName="manufacture_part_number_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Material Type</label>
+                <input type="text" formControlName="material_type_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Model</label>
+                <input type="text" formControlName="model_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Motor Current</label>
+                <input type="text" formControlName="motor_current_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">No of Channel</label>
+                <input type="text" formControlName="no_of_channel_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">No of Phases</label>
+                <input type="text" formControlName="no_of_phases_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">No of Stage</label>
+                <input type="text" formControlName="no_of_stage_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Opening Torque</label>
+                <input type="text" formControlName="opening_torque_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Outlet Diameter</label>
+                <input type="text" formControlName="outlet_diameter_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Power Supply Type</label>
+                <input type="text" formControlName="power_supply_type_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Pump Head</label>
+                <input type="text" formControlName="pump_head_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Revolution Per Minute</label>
+                <input type="text" formControlName="revolutions_per_minute_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Source From</label>
+                <input type="text" formControlName="source_from_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Staging Height</label>
+                <input type="text" formControlName="staging_height_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Supply Location</label>
+                <input type="text" formControlName="supply_location_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Temperature</label>
+                <input type="text" formControlName="temperature_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Top Water Level</label>
+                <input type="text" formControlName="top_water_level_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Type</label>
+                <input type="text" formControlName="type_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Valve Diameter</label>
+                <input type="text" formControlName="valve_diameter_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Valve Pressure Rating</label>
+                <input type="text" formControlName="valve_pressure_rating_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Chassis Number</label>
+                <input type="text" formControlName="vehicle_chassis_number_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Engine Capacity</label>
+                <input type="text" formControlName="vehicle_engine_capacity_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Engine Number</label>
+                <input type="text" formControlName="vehicle_engine_number_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Insurance Vendor</label>
+                <input type="text" formControlName="vehicle_insurance_vendor_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Model</label>
+                <input type="text" formControlName="vehicle_model_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Insurance Auto Windscreen Insured</label>
+                <input type="text" formControlName="vehicle_insurance_auto_windscreen_insured_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Insurance Cover Note Number</label>
+                <input type="text" formControlName="vehicle_insurance_cover_note_number_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Insurance Date Period From</label>
+                <input type="date" formControlName="vehicle_insurance_date_period_from_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Insurance Date Period To</label>
+                <input type="date" formControlName="vehicle_insurance_date_period_to_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Insurance No Claim Discount</label>
+                <input type="text" formControlName="vehicle_insurance_no_claim_discount_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Insurance Policy Type</label>
+                <input type="text" formControlName="vehicle_insurance_policy_type_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Insurance Sum Insured</label>
+                <input type="text" formControlName="vehicle_insurance_sum_insured_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Insurance Total Premium</label>
+                <input type="text" formControlName="vehicle_insurance_total_premium_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Puspakom Date inspection</label>
+                <input type="date" formControlName="vehicle_puspakom_date_inspection_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Owner Status</label>
+                <input type="text" formControlName="vehicle_owner_status_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Register Date</label>
+                <input type="date" formControlName="vehicle_register_date_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Roadtax Rate</label>
+                <input type="text" formControlName="vehicle_roadtax_rate_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Puspakom Expired Date</label>
+                <input type="date" formControlName="vehicle_puspakom_expired_date_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Spad Permit Date Period To</label>
+                <input type="date" formControlName="vehicle_spad_permit_date_period_to_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Roadtax Renew Date</label>
+                <input type="date" formControlName="vehicle_roadtax_renew_date_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Roadtax Expired Date</label>
+                <input type="date" formControlName="vehicle_roadtax_expired_date_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Spad No License Operator</label>
+                <input type="text" formControlName="vehicle_spad_no_license_operator_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Spad Permit Date Period From</label>
+                <input type="date" formControlName="vehicle_spad_permit_date_period_from_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Seating Capacity</label>
+                <input type="text" formControlName="vehicle_seating_capacity_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Vehicle Registration Owner</label>
+                <input type="text" formControlName="vehicle_registration_owner_register"
+                  class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="form-control-label">Voltage</label>
+                <input type="text" formControlName="voltage_register" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
           <div>
             <button class="btn btn-sm btn-danger" matStepperPrevious>
               Back

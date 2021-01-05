@@ -17,11 +17,7 @@
         </div>
 
         <div class="col-lg-6 col-5 text-right">
-          <a
-            class="btn btn-sm btn-default text-white"
-            (click)="openModal(addUser)"
-            >Add New User</a
-          >
+          <a class="btn btn-sm btn-default text-white" (click)="openModalNew(addUser)">Add New User</a>
         </div>
       </div>
     </div>
@@ -32,37 +28,20 @@
   <div class="row pb-3">
     <div class="col">
       <div class="mb-2">
-        <form
-          class="navbar-search navbar-search-light form-inline mr-sm-3"
-          id="navbar-search-main"
-        >
-          <div
-            class="form-group mb-0"
-            [ngClass]="{ focused: focusSearch === true }"
-          >
+        <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+          <div class="form-group mb-0" [ngClass]="{ focused: focusSearch === true }">
             <div class="input-group input-group-alternative input-group-merge">
               <div class="input-group-prepend">
                 <span class="input-group-text">
                   <i class="fas fa-search"></i>
                 </span>
               </div>
-              <input
-                class="form-control"
-                placeholder="Search"
-                type="text"
-                (focus)="focusSearch = true"
-                (blur)="focusSearch = false"
-              />
+              <input class="form-control" placeholder="Search" type="text" (focus)="focusSearch = true"
+                (blur)="focusSearch = false" />
             </div>
           </div>
-          <button
-            type="button"
-            class="close"
-            (click)="closeSearch()"
-            data-action="search-close"
-            data-target="#navbar-search-main"
-            aria-label="Close"
-          >
+          <button type="button" class="close" (click)="closeSearch()" data-action="search-close"
+            data-target="#navbar-search-main" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </form>
@@ -117,12 +96,8 @@
                 <div class="dataTables_length" id="datatable_length">
                   <label>
                     Show
-                    <select
-                      name="datatable_length"
-                      aria-controls="datatable"
-                      class="form-control form-control-sm"
-                      (change)="entriesChange($event)"
-                    >
+                    <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm"
+                      (change)="entriesChange($event)">
                       <option value="10" [selected]="entries == 10">10</option>
                       <option value="25" [selected]="entries == 25">25</option>
                       <option value="50" [selected]="entries == 50">50</option>
@@ -135,28 +110,16 @@
               <div class="col-sm-12 col-md-6">
                 <div id="datatable_filter" class="dataTables_filter">
                   <label>
-                    <input
-                      type="search"
-                      class="form-control form-control-sm"
-                      placeholder="Search records"
-                      aria-controls="datatable"
-                      (keyup)="filterTable($event)"
-                    />
+                    <input type="search" class="form-control form-control-sm" placeholder="Search records"
+                      aria-controls="datatable" (keyup)="filterTable($event)" />
                   </label>
                 </div>
               </div>
             </div>
 
-            <ngx-datatable
-              class="bootstrap selection-cell"
-              [columnMode]="'force'"
-              [headerHeight]="50"
-              [footerHeight]="50"
-              [rowHeight]="'auto'"
-              [limit]="entries != -1 ? entries : undefined"
-              [rows]="temp"
-              (activate)="onActivate($event)"
-            >
+            <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'" [headerHeight]="50"
+              [footerHeight]="50" [rowHeight]="'auto'" [limit]="entries != -1 ? entries : undefined" [rows]="temp"
+              (activate)="onActivate($event)">
               <ngx-datatable-column>
                 <ng-template ngx-datatable-header-template>
                   <span>ID</span>
@@ -202,14 +165,8 @@
                   <span>Actions</span>
                 </ng-template>
                 <ng-template let-row="row" ngx-datatable-cell-template>
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-sm"
-                    (click)="openModal(editUser, row)"
-                  >
-                    <span class="btn-inner--icon"
-                      ><i class="fas fa-edit"></i
-                    ></span>
+                  <button type="button" class="btn btn-primary btn-sm" (click)="openModal(editUser, row)">
+                    <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
                   </button>
                 </ng-template>
               </ngx-datatable-column>
@@ -227,13 +184,7 @@
       Add New User
     </h6>
 
-    <button
-      aria-label="Close"
-      class="close"
-      data-dismiss="modal"
-      type="button"
-      (click)="closeModal()"
-    >
+    <button aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="closeModal()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
   </div>
@@ -244,88 +195,50 @@
         <div class="col-lg-6 col-xs-12">
           <div class="form-group">
             <label class="form-control-label">Username</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's username"
-              formControlName="username"
-            />
+            <input class="form-control form-control-sm" placeholder="User's username" formControlName="username" />
             <small class="text-right" style="color: red;">{{ validation_forms.username }}</small>
           </div>
           <div class="form-group">
             <label class="form-control-label">Name</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's name"
-              formControlName="name"
-            />
+            <input class="form-control form-control-sm" placeholder="User's name" formControlName="name" />
             <small class="text-right" style="color: red;">{{ validation_forms.name }}</small>
           </div>
           <div class="form-group">
             <label class="form-control-label">Email</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's email"
-              formControlName="email"
-            />
+            <input class="form-control form-control-sm" placeholder="User's email" formControlName="email" />
             <small class="text-right" style="color: red;">{{ validation_forms.email }}</small>
           </div>
         </div>
         <div class="col-lg-6 col-xs-12">
           <div class="form-group">
             <label class="form-control-label">Office Number</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's office number"
-              formControlName="office_number"
-            />
+            <input class="form-control form-control-sm" placeholder="User's office number"
+              formControlName="office_number" />
             <small class="text-right" style="color: red;">{{ validation_forms.office_number }}</small>
           </div>
           <div class="form-group">
             <label class="form-control-label">Mobile Number</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's mobile number"
-              formControlName="mobile_number"
-            />
+            <input class="form-control form-control-sm" placeholder="User's mobile number"
+              formControlName="mobile_number" />
           </div>
           <div class="form-group">
             <label class="form-control-label">Type</label>
-            <select
-              class="form-control form-control-sm custom-select custom-select-sm"
-              formControlName="user_type"
-            >
+            <select class="form-control form-control-sm custom-select custom-select-sm" formControlName="user_type">
               <option selected hidden>User's type</option>
-              <option
-                *ngFor="let userType of userTypes"
-                [value]="userType.value"
-                >{{ userType.name }}</option
-              >
+              <option *ngFor="let userType of userTypes" [value]="userType.value">{{ userType.name }}</option>
             </select>
             <small class="text-right" style="color: red;">{{ validation_forms.user_type }}</small>
           </div>
           <div class="form-group">
             <label class="form-control-label mr-3">Status</label>
             <div class="custom-control custom-radio custom-control-inline">
-              <input
-                type="radio"
-                id="active"
-                class="custom-control-input"
-                formControlName="is_active"
-                value="true"
-              />
+              <input type="radio" id="active" class="custom-control-input" formControlName="is_active" value="true" />
               <label class="custom-control-label" for="active">Active</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input
-                type="radio"
-                id="notactive"
-                class="custom-control-input"
-                formControlName="is_active"
-                value="false"
-              />
-              <label class="custom-control-label" for="notactive"
-                >Not Active</label
-              >
+              <input type="radio" id="notactive" class="custom-control-input" formControlName="is_active"
+                value="false" />
+              <label class="custom-control-label" for="notactive">Not Active</label>
             </div>
             <small class="text-right" style="color: red;">{{ validation_forms.is_active }}</small>
           </div>
@@ -335,20 +248,10 @@
   </div>
 
   <div class="modal-footer mt--4">
-    <button
-      class="btn btn-primary btn-sm mr-auto"
-      data-dismiss="modal"
-      type="button"
-      (click)="register()"
-    >
+    <button class="btn btn-primary btn-sm mr-auto" data-dismiss="modal" type="button" (click)="register()">
       Add
     </button>
-    <button
-      class="btn btn-secondary btn-sm ml-auto"
-      data-dismiss="modal"
-      type="button"
-      (click)="closeModal()"
-    >
+    <button class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal" type="button" (click)="closeModal()">
       Close
     </button>
   </div>
@@ -360,13 +263,7 @@
       Edit User
     </h6>
 
-    <button
-      aria-label="Close"
-      class="close"
-      data-dismiss="modal"
-      type="button"
-      (click)="closeModal()"
-    >
+    <button aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="closeModal()">
       <span aria-hidden="true" class="text-white m-0"> × </span>
     </button>
   </div>
@@ -377,91 +274,51 @@
         <div class="col-lg-6 col-xs-12">
           <div class="form-group">
             <label class="form-control-label">Username</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's username"
-              formControlName="username"
-              readonly
-            />
+            <input class="form-control form-control-sm" placeholder="User's username" formControlName="username"
+              readonly />
             <small class="text-right" style="color: red;">{{ validation_forms.username }}</small>
           </div>
           <div class="form-group">
             <label class="form-control-label">Name</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's name"
-              formControlName="name"
-              readonly
-            />
+            <input class="form-control form-control-sm" placeholder="User's name" formControlName="name" readonly />
             <small class="text-right" style="color: red;">{{ validation_forms.name }}</small>
           </div>
           <div class="form-group">
             <label class="form-control-label">Email</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's email"
-              formControlName="email"
-              readonly
-            />
+            <input class="form-control form-control-sm" placeholder="User's email" formControlName="email" readonly />
             <small class="text-right" style="color: red;">{{ validation_forms.email }}</small>
           </div>
         </div>
         <div class="col-lg-6 col-xs-12">
           <div class="form-group">
             <label class="form-control-label">Office Number</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's office number"
-              formControlName="office_number"
-            />
+            <input class="form-control form-control-sm" placeholder="User's office number"
+              formControlName="office_number" />
             <small class="text-right" style="color: red;">{{ validation_forms.office_number }}</small>
           </div>
           <div class="form-group">
             <label class="form-control-label">Mobile Number</label>
-            <input
-              class="form-control form-control-sm"
-              placeholder="User's mobile number"
-              formControlName="mobile_number"
-            />
+            <input class="form-control form-control-sm" placeholder="User's mobile number"
+              formControlName="mobile_number" />
           </div>
           <div class="form-group">
             <label class="form-control-label">Type</label>
-            <select
-              class="form-control form-control-sm custom-select custom-select-sm"
-              formControlName="user_type"
-            >
+            <select class="form-control form-control-sm custom-select custom-select-sm" formControlName="user_type">
               <option selected hidden>User's type</option>
-              <option
-                *ngFor="let userType of userTypes"
-                [value]="userType.value"
-                >{{ userType.name }}</option
-              >
+              <option *ngFor="let userType of userTypes" [value]="userType.value">{{ userType.name }}</option>
             </select>
             <small class="text-right" style="color: red;">{{ validation_forms.user_type }}</small>
           </div>
           <div class="form-group">
             <label class="form-control-label mr-3">Status</label>
             <div class="custom-control custom-radio custom-control-inline">
-              <input
-                type="radio"
-                id="active"
-                class="custom-control-input"
-                formControlName="is_active"
-                value="true"
-              />
+              <input type="radio" id="active" class="custom-control-input" formControlName="is_active" value="true" />
               <label class="custom-control-label" for="active">Active</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input
-                type="radio"
-                id="notactive"
-                class="custom-control-input"
-                formControlName="is_active"
-                value="false"
-              />
-              <label class="custom-control-label" for="notactive"
-                >Not Active</label
-              >
+              <input type="radio" id="notactive" class="custom-control-input" formControlName="is_active"
+                value="false" />
+              <label class="custom-control-label" for="notactive">Not Active</label>
             </div>
             <small class="text-right" style="color: red;">{{ validation_forms.is_active }}</small>
           </div>
@@ -471,20 +328,10 @@
   </div>
 
   <div class="modal-footer mt--4">
-    <button
-      class="btn btn-primary btn-sm mr-auto"
-      data-dismiss="modal"
-      type="button"
-      (click)="update()"
-    >
+    <button class="btn btn-primary btn-sm mr-auto" data-dismiss="modal" type="button" (click)="update()">
       Update
     </button>
-    <button
-      class="btn btn-secondary btn-sm ml-auto"
-      data-dismiss="modal"
-      type="button"
-      (click)="closeModal()"
-    >
+    <button class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal" type="button" (click)="closeModal()">
       Close
     </button>
   </div>
