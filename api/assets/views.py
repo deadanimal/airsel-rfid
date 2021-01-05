@@ -342,18 +342,24 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         # print(rejected_list_asset_list)
         # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
         # return Response(rejected_list_serializer.data)
+    
+    @action(methods=['POST'], detail=True)
+    def patch_asset(self, request, *args, **kwargs):
+        asset_request_ = json.loads(request.body)
+        asset_hex_code_ = asset_request_['hex_code']
+        asset_badge_no_ = asset_request_['badge_no']
 
+        asset_ = AssetRegistration.objects.filter(
+            badge_no=asset_badge_no_
+        ).first()
 
-    # @action(methods=['GET'], detail=False)
-    # def filter_table_testing(self, request, *args, **kwargs):
+        asset_.hex_code = asset_hex_code_
+        asset_.save()
 
-    #     qqq = request.GET.get('qqq', '')
-    #     rrr = request.GET.get('rrr', '')
-    #     print('POST = ')
-    #     print('qqq = ',qqq)
-    #     print('rrr = ',rrr)
+        print('asset = ')
+        print(asset_)
 
-    #     result = AssetRegistration.objects.filter(asset_identity__icontains=qqq,parent_location__icontains=rrr)
-    #     print('asset_list = ')
-    #     serializer = AssetRegistrationSerializer(result, many=True)
-    #     return Response(serializer.data)
+        serializer = AssetRegistrationSerializer(asset_)
+        return Response(serializer.data)  
+        # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
+        # return Response(rejected_list_serializer.data) 
