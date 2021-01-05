@@ -392,10 +392,10 @@ export class RegisteredComponent implements OnInit {
       // dalam foreach
       assetregserv.post(formData).subscribe(
         (res) => {
-          console.log("res = ", res);
+          // console.log("res = ", res);
         },
         error => {
-          console.error("err", error);
+          // console.error("err", error);
         }
       )
 
@@ -421,11 +421,11 @@ export class RegisteredComponent implements OnInit {
           val['isTick'] = false
           tempData.push(val)
         })
-        console.log('tempData = ', tempData)
+        // console.log('tempData = ', tempData)
         this.tableTemp1 = tempData
       },
       error => {
-        console.error("err", error);
+        // console.error("err", error);
       }
     )
   }
@@ -449,17 +449,17 @@ export class RegisteredComponent implements OnInit {
       (item) => {
         // console.log(item['id'], ' == ', selected['id'])
         if (item['id'] == selected['id']) {
-          console.log('isTick = ', item['isTick']);
-          console.log('item b4 = ', item)
+          // console.log('isTick = ', item['isTick']);
+          // console.log('item b4 = ', item)
           item['isTick'] = item['isTick']
-          console.log('item after = ', item)
+          // console.log('item after = ', item)
           tempData.push(item)
         } else {
           tempData.push(item)
         }
       }
     )
-    console.log('tempDataqweqe = ', tempData)
+    // console.log('tempDataqweqe = ', tempData)
     this.tableTemp1 = tempData
   }
 
@@ -481,7 +481,7 @@ export class RegisteredComponent implements OnInit {
 
   changeStatus(task) {
     let resData: any
-    console.log('this.task = ', task)
+    // console.log('this.task = ', task)
     let no = 0
     let assetregser = this.assetsRegistrationService
     this.tableTemp1.forEach(function (itemVal) {
@@ -493,14 +493,14 @@ export class RegisteredComponent implements OnInit {
         updateformData = {
           status: task
         }
-        console.log('updateformData = ', updateformData)
+        // console.log('updateformData = ', updateformData)
         assetregser.update(itemVal['id'], updateformData).subscribe(
           (res) => {
-            console.log("res = ", res);
+            // console.log("res = ", res);
             resData = res
           },
           error => {
-            console.error("err", error);
+            // console.error("err", error);
           }
         )
       }

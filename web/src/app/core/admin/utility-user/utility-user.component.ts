@@ -95,7 +95,7 @@ export class UtilityUserComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   getUsers() {
     this.userService.get().subscribe((data) => {
@@ -111,6 +111,7 @@ export class UtilityUserComponent implements OnInit {
     });
   }
 
+
   openModal(modalInventory: TemplateRef<any>, row) {
     if (row) {
       this.userFormGroup.patchValue({
@@ -124,6 +125,10 @@ export class UtilityUserComponent implements OnInit {
         is_active: row.is_active,
       });
     }
+    this.modal = this.modalService.show(modalInventory, this.modalConfig);
+  }
+
+  openModalNew(modalInventory: TemplateRef<any>) {
     this.modal = this.modalService.show(modalInventory, this.modalConfig);
   }
 
