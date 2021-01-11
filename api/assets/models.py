@@ -456,7 +456,7 @@ class AssetRegistration(models.Model):
     gis_esri_id = models.CharField(max_length=200, default='NA',null=True, blank=True)
     latitude = models.CharField(max_length=200, default='NA',null=True, blank=True)
     longitude = models.CharField(max_length=200, default='NA',null=True, blank=True)
-    asset_critically = models.CharField(max_length=200, default='NA',null=True, blank=True)
+    asset_criticality = models.CharField(max_length=200, default='NA',null=True, blank=True)
     cost_center = models.CharField(max_length=200, default='NA',null=True, blank=True)
     asset_owning_department = models.CharField(max_length=200, default='NA',null=True, blank=True)
     main_operation = models.CharField(max_length=200, default='NA',null=True, blank=True)
@@ -467,7 +467,7 @@ class AssetRegistration(models.Model):
     asset_or_component_type = models.CharField(max_length=200, default='NA',null=True, blank=True)
     asset_class_asset_category = models.CharField(max_length=200, default='NA',null=True, blank=True)
     handed_over_asset_or_procured = models.CharField(max_length=200, default='NA',null=True, blank=True)
-    internal_asset_adentity = models.CharField(max_length=200, default='NA',null=True, blank=True)
+    internal_asset_identity = models.CharField(max_length=200, default='NA',null=True, blank=True)
     asset_primary_category = models.CharField(max_length=200, default='NA',null=True, blank=True)
     sub_category_1 = models.CharField(max_length=200, default='NA',null=True, blank=True)
     sub_category_2 = models.CharField(max_length=200, default='NA',null=True, blank=True)
@@ -553,7 +553,7 @@ class AssetRegistration(models.Model):
     vehicle_insurance_date_period_from = models.CharField(max_length=200, default='NA',null=True, blank=True)
     vehicle_insurance_policy_type = models.CharField(max_length=200, default='NA',null=True, blank=True)
     vehicle_puspakom_date_inspection = models.CharField(max_length=200, default='NA',null=True, blank=True)
-    vehicle_roadtarate = models.CharField(max_length=200, default='NA',null=True, blank=True)
+    vehicle_roadtax_rate = models.CharField(max_length=200, default='NA',null=True, blank=True)
     vehicle_roadtax_renew_date = models.CharField(max_length=200, default='NA',null=True, blank=True)
     vehicle_spad_permit_date_period_from = models.CharField(max_length=200, default='NA',null=True, blank=True)
     voltage = models.CharField(max_length=200, default='NA',null=True, blank=True)
@@ -576,3 +576,20 @@ class AssetRegistration(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+
+class AssetBadgeFormat(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    asset_uuid = models.CharField(max_length=100, default='NA')
+    asset_primary_category = models.CharField(max_length=100, default='NA')
+    short = models.CharField(max_length=100, default='NA')
+    description = models.CharField(max_length=100, default='NA')
+    status = models.CharField(max_length=100, default='NA')
+    latest_no = models.CharField(max_length=100, default='NA')
+    # created_at = models.DateTimeField(auto_now_add=True)
+
+    class meta:
+        ordering = ['id']
+    
+    def __str__(self):
+        return self.id

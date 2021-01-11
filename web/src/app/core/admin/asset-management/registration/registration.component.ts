@@ -20,6 +20,7 @@ import { RegionsService } from "src/app/shared/services/regions/regions.service"
 import { NotifyService } from "src/app/shared/handler/notify/notify.service";
 import { AssetsRegistrationService } from 'src/app/shared/services/assets-registration/assets-registration.service';
 import { system } from '@amcharts/amcharts4/core';
+import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 
 export enum SelectionType {
   single = "single",
@@ -45,6 +46,7 @@ export class RegistrationComponent implements OnInit {
   thirdTab: boolean = false
 
   tempFileName = false;
+  resOnkeyData: any
 
   // escell data
   dataFromExcelFile = [];
@@ -319,73 +321,145 @@ export class RegistrationComponent implements OnInit {
   ];
 
   is_show1 = {
-    parent_location: false, //
-    location_description: false, //
-    building: false, //
-    address_line_1: false,  //
-    address_line_2: false, //
-    address_line_3: false, //
-    city: false, //
-    state: false, //
-    postal_code: false, //
-    country: false, //
-    tag_number: false, //
-    service_area: false, //
-    maintenance_planner: false, //
-    location_main_contact: false, //
-    location_asset_maintenance_manager: false, //
-    gis_esri_id: false, //
-    latitude: false, //
-    longitude: false, //
-    asset_critically: false, //
-    cost_center: false,
-    // asset_owning_depart: false,
-    sub_process_system: false,
-    brand: false,
-    size_capacity_1: false,
-    size_capacity_2: false,
-    size_capacity_3: false,
-    maintenance_specification: false,
-    asset_owning_department: false,
-    asset_or_component_type: false,
-    badge_no: false,
-    size_capacity_1_unit_measurement: false,
-    size_capacity_2_unit_measurement: false,
-    size_capacity_3_unit_measurement: false,
-    measurement_type: false,
-    main_operation: false,
-    asset_class_asset_category: false,
-    internal_asset_adentity: false,
-    sub_category_1: false,
-    parent_asset_plate_number: false,
-    purchase_date_installed_handed_over_date: false,
-    warranty: false,
-    region: false,
-    handed_over_asset_or_procured: false,
-    asset_primary_category: false,
-    sub_category_2: false,
-    asset_plate_number: false,
-    condition_rating: false,
-    actual_warranty_period: false,
-    operation: false,
-    process_function: false,
-    model_number: false,
-    detailed_description: false,
-    serial_number: false,
-    asset_status: false,
-    warranty_vendor_name: false,
-    asset_tag_number: false,
-    asset_identity: false,
+    parent_location: true, //
+    location_description: true, //
+    building: true, //
+    address_line_1: true,  //
+    address_line_2: true, //
+    address_line_3: true, //
+    city: true, //
+    state: true, //
+    postal_code: true, //
+    country: true, //
+    tag_number: true, //
+    service_area: true, //
+    maintenance_planner: true, //
+    location_main_contact: true, //
+    location_asset_maintenance_manager: true, //
+    gis_esri_id: true, //
+    latitude: true, //
+    longitude: true, //
+    asset_critically: true, //
+    cost_center: true,
+    // asset_owning_depart: true,
+    sub_process_system: true,
+    brand: true,
+    size_capacity_1: true,
+    size_capacity_2: true,
+    size_capacity_3: true,
+    maintenance_specification: true,
+    asset_owning_department: true,
+    asset_or_component_type: true,
+    badge_no: true,
+    size_capacity_1_unit_measurement: true,
+    size_capacity_2_unit_measurement: true,
+    size_capacity_3_unit_measurement: true,
+    measurement_type: true,
+    main_operation: true,
+    asset_class_asset_category: true,
+    internal_asset_identity: true,
+    sub_category_1: true,
+    parent_asset_plate_number: true,
+    purchase_date_installed_handed_over_date: true,
+    warranty: true,
+    region: true,
+    handed_over_asset_or_procured: true,
+    asset_primary_category: true,
+    sub_category_2: true,
+    asset_plate_number: true,
+    condition_rating: true,
+    actual_warranty_period: true,
+    operation: true,
+    process_function: true,
+    model_number: true,
+    detailed_description: true,
+    serial_number: true,
+    asset_status: true,
+    warranty_vendor_name: true,
+    asset_tag_number: true,
+    asset_identity: true,
+    bottom_water_level: true,
+    closing_torque: true,
+    dimention: true,
+    frequency: true,
+    infrastructure_status: true,
+    installation: true,
+    manufacturer: true,
+    material_type: true,
+    no_of_channel: true,
+    opening_torque: true,
+    pump_head: true,
+    staging_height: true,
+    top_water_level: true,
+    valve_pressure_rating: true,
+    vehicle_engine_number: true,
+    vehicle_insurance_auto_windscreen_insured: true,
+    vehicle_insurance_sum_insured: true,
+    vehicle_owner_status: true,
+    vehicle_puspakom_expired_date: true,
+    vehicle_roadtax_expired_date: true,
+    vehicle_seating_capacity: true,
+    communication_protocol: true,
+    environmental_performance: true,
+    horse_power: true,
+    infrastructure_status_reason: true,
+    insulation: true,
+    manufacturer_year: true,
+    model: true,
+    no_of_phases: true,
+    outlet_diameter: true,
+    revolutions_per_minute: true,
+    supply_location: true,
+    type: true,
+    vehicle_chasis_number: true,
+    vehicle_insurance_vendor: true,
+    vehicle_insurance_cover_note_number: true,
+    vehicle_insurance_no_claim_discount: true,
+    vehicle_insurance_total_premium: true,
+    vehicle_register_date: true,
+    vehicle_spad_permit_date_period_to: true,
+    vehicle_spad_no_license_operator: true,
+    vehicle_registration_owner: true,
+    capacity_size: true,
+    coverage_range: true,
+    flow_rate: true,
+    hysteresis: true,
+    inlet_diameter: true,
+    legal_name: true,
+    manufacture_part_number: true,
+    motor_current: true,
+    no_of_stage: true,
+    power_supply_type: true,
+    source_from: true,
+    temperature: true,
+    valve_diameter: true,
+    vehicle_engine_capacity: true,
+    vehicle_model: true,
+    vehicle_insurance_date_period_from: true,
+    vehicle_insurance_policy_type: true,
+    vehicle_puspakom_date_inspection: true,
+    vehicle_roadtax_rate: true,
+    vehicle_roadtax_renew_date: true,
+    vehicle_spad_permit_date_period_from: true,
+    voltage: true,
+    vehicle_insurance_date_period_to: true
   }
+
   tableShow1 = false
 
   // Datatable
-  entries: number = 10;
+  entries: number = 5;
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [];
   SelectionType = SelectionType;
+
+  // entries: number = 2;
+  // selected: any[] = [];
+  // temp = [];
+  // activeRow: any;
+  rows: any = [];
+  // SelectionType = SelectionType;
   tableTemp1 = [];
   tableTemp2 = [];
   tableTemp3 = [];
@@ -641,19 +715,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   entriesChange($event) {
+    console.log($event)
     this.entries = $event.target.value;
-  }
-
-  filterTable($event) {
-    let val = $event.target.value;
-    this.temp = this.rows.filter(function (d) {
-      for (var key in d) {
-        if (d[key].toLowerCase().indexOf(val) !== -1) {
-          return true;
-        }
-      }
-      return false;
-    });
+    console.log(this.entries)
   }
 
   onSelect({ selected }) {
@@ -1037,7 +1101,7 @@ export class RegistrationComponent implements OnInit {
       formData.append('vehicle_insurance_date_period_from', (loopval.vehicle_insurance_date_period_from != undefined ? loopval.vehicle_insurance_date_period_from : ''))
       formData.append('vehicle_insurance_policy_type', (loopval.vehicle_insurance_policy_type != undefined ? loopval.vehicle_insurance_policy_type : ''))
       formData.append('vehicle_puspakom_date_inspection', (loopval.vehicle_puspakom_date_inspection != undefined ? loopval.vehicle_puspakom_date_inspection : ''))
-      formData.append('vehicle_roadtarate', (loopval.vehicle_roadtax_rate != undefined ? loopval.vehicle_roadtax_rate : ''))
+      formData.append('vehicle_roadtax_rate', (loopval.vehicle_roadtax_rate != undefined ? loopval.vehicle_roadtax_rate : ''))
       formData.append('vehicle_roadtax_renew_date', (loopval.vehicle_roadtax_renew_date != undefined ? loopval.vehicle_roadtax_renew_date : ''))
       formData.append('vehicle_spad_permit_date_period_from', (loopval.vehicle_spad_permit_date_period_from != undefined ? loopval.vehicle_spad_permit_date_period_from : ''))
       formData.append('voltage', (loopval.voltage != undefined ? loopval.voltage : ''))
@@ -1108,12 +1172,10 @@ export class RegistrationComponent implements OnInit {
 
   checkRow(selected) {
     let tempData = []
-    // console.log('test test tetst')
+    console.log('test test tetst')
     this.tableTemp1.forEach(
       (item) => {
-        // console.log(item['id'], ' == ', selected['id'])
         if (item['id'] == selected['id']) {
-          // console.log('isTick = ', item['isTick']);
           // console.log('item b4 = ', item)
           item['isTick'] = item['isTick']
           // console.log('item after = ', item)
@@ -1128,6 +1190,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   confirm(task) {
+
     swal.fire({
       title: 'Are you sure?',
       text: 'To change the status.',
@@ -1139,7 +1202,10 @@ export class RegistrationComponent implements OnInit {
       cancelButtonText: 'Cancel',
       cancelButtonClass: 'btn btn-secondary'
     }).then((result) => {
-      this.changeStatus(task)
+      console.log('result = ', result.value)
+      if (result.value == true) {
+        this.changeStatus(task)
+      }
     })
   }
 
@@ -1185,30 +1251,54 @@ export class RegistrationComponent implements OnInit {
     // }
   }
 
-  onKey(event, asd, row) {
-    console.log('event = ', event);
-    console.log('asd = ', asd);
-    console.log('row = ', row['id']);
-    var cendolName = 'cendol'
+  onKey(event, formName, row) {
+    // console.log('event = ', event);
+    // console.log('formName = ', formName);
+    // console.log('row = ', row['id']);
     let updateformData: any = {}
-    // updateformData.append(asd, event);
+    let updateStatusComplete: any = {}
+    let updateStatus = 'yes'
+    // updateformData.append(formName, event);
     // updateformData = {
     //   cendol: event
     // }
-    updateformData[asd] = event
+    updateformData[formName] = event
 
-    console.log('updateformData = ', updateformData)
     this.assetsRegistrationService.update(row['id'], updateformData).subscribe(
       (res) => {
-        // console.log("res = ", res);
-        // resData = res
+        this.resOnkeyData = res
+        console.log("assetsRegistrationService = ", this.resOnkeyData);
+        for (var key in this.resOnkeyData) {
+          // console.log('-----------')
+          // console.log(this.resOnkeyData[key]);
+          if (this.resOnkeyData[key] == '') {
+            updateStatus = 'no'
+            console.log('+++++++++++++')
+            console.log('----- qweqweqwe -----', key)
+          }
+        }
+        console.log('updateStatus = ', updateStatus)
+        if (updateStatus == 'yes') {
+          updateStatusComplete['status'] = 'CO'
+          this.assetsRegistrationService.update(row['id'], updateStatusComplete).subscribe(
+            (res) => {
+              console.log('yeaahhaaaaaaa CO')
+              this.getRegisteredData()
+            }
+          )
+        } else {
+          updateStatusComplete['status'] = 'IC'
+          this.assetsRegistrationService.update(row['id'], updateStatusComplete).subscribe(
+            (res) => {
+              console.log('yeaahhaaaaaaa IC')
+              this.getRegisteredData()
+            }
+          )
+        }
       },
       error => {
         console.error("err", error);
       }
     )
-
-    // this.getRegisteredData()
-
   }
 }

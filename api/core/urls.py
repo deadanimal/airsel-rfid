@@ -26,14 +26,20 @@ router = NestedDefaultRouter()
 
 # Asset
 from assets.views import (
-    AssetViewSet,AssetRegistrationViewSet,
+    AssetViewSet,
+    AssetRegistrationViewSet,
     AssetGroupViewSet,
     AssetTypeViewSet,
-    RfidViewSet
+    RfidViewSet,
+    AssetBadgeFormatViewSet
 )
 
 assets_router = router.register(
     'assets', AssetViewSet
+)
+
+assets_badge_format_router = router.register(
+    'asset-badge-format', AssetBadgeFormatViewSet
 )
 
 assets_registration_router = router.register(

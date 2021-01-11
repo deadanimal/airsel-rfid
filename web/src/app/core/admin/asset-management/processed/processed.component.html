@@ -38,600 +38,12 @@
 
     <div class="row">
         <div class="col-md-12">
-            <!-- <tabset type="pills" class="nav-fill flex-column flex-md-row">
-          <tab heading="Asset Location" [active]="firstTab"> -->
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h5>Asset Registration</h5>
-                </div>
-                <div class="card-body">
-                    <!-- <h5 class="heading">
-                  Asset Location
-                </h5> -->
-                    <div class="row pb-3">
-                        <div class="col-md-12">
-                            <span>Asset Location</span>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkName"
-                                    [(ngModel)]="is_show1.parent_location">
-                                <label class="custom-control-label" for="checkName">
-                                    Parent Location
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkDate"
-                                    [(ngModel)]="is_show1.location_description">
-                                <label class="custom-control-label" for="checkDate">
-                                    Location Desc asdasd
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAmount" [(ngModel)]="is_show1.building">
-                                <label class="custom-control-label" for="checkAmount">
-                                    Building
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAddress1" [(ngModel)]="is_show1.address_line_1">
-                                <label class="custom-control-label" for="checkAddress1">
-                                    Address 1
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAddress2" [(ngModel)]="is_show1.address_line_2">
-                                <label class="custom-control-label" for="checkAddress2">
-                                    Address 2
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAddress3" [(ngModel)]="is_show1.address_line_3">
-                                <label class="custom-control-label" for="checkAddress3">
-                                    Address 3
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCity"
-                                    [(ngModel)]="is_show1.city">
-                                <label class="custom-control-label" for="checkCity">
-                                    City
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkState" [(ngModel)]="is_show1.state">
-                                <label class="custom-control-label" for="checkState">
-                                    State
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkPostcode" [(ngModel)]="is_show1.postal_code">
-                                <label class="custom-control-label" for="checkPostcode">
-                                    Postcode
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkCountry" [(ngModel)]="is_show1.country">
-                                <label class="custom-control-label" for="checkCountry">
-                                    Country
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="email_address" [(ngModel)]="is_show1.tag_number">
-                                <label class="custom-control-label" for="email_address">
-                                    Tag Number
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkStatus" [(ngModel)]="is_show1.service_area">
-                                <label class="custom-control-label" for="checkStatus">
-                                    Service Area
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkMethod" [(ngModel)]="is_show1.maintenance_planner">
-                                <label class="custom-control-label" for="checkMethod">
-                                    Maintenance Planner
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkLocMainContra" [(ngModel)]="is_show1.location_main_contact">
-                                <label class="custom-control-label" for="checkLocMainContra">
-                                    Location Main Contact
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkLocAssetMainte" [(ngModel)]="is_show1.location_asset_maintenance_manager">
-                                <label class="custom-control-label" for="checkLocAssetMainte">
-                                    Location Maintenance Manager
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkGISESRI" [(ngModel)]="is_show1.gis_esri_id">
-                                <label class="custom-control-label" for="checkGISESRI">
-                                    GIS/ESRI ID
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkLatitude" [(ngModel)]="is_show1.latitude">
-                                <label class="custom-control-label" for="checkLatitude">
-                                    Latitude
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkLongitude" [(ngModel)]="is_show1.longitude">
-                                <label class="custom-control-label" for="checkLongitude">
-                                    Longitude
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssetCritical" [(ngModel)]="is_show1.asset_critically">
-                                <label class="custom-control-label" for="checkAssetCritical">
-                                    Asset Criticallity
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkCostCenter" [(ngModel)]="is_show1.cost_center">
-                                <label class="custom-control-label" for="checkCostCenter">
-                                    Cost Center
-                                </label>
-                            </div>
-                        </div>
-
-                    </div>
-                    <hr />
-                    <div class="row pb-3">
-                        <div class="col-md-12">
-                            <span>Asset Detail</span>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <!-- <div class="col-md-3 col-sm-6">
-                <div class="custom-control custom-checkbox">
-                  <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssOweDep"
-                    [(ngModel)]="is_show1.asset_owning_department">
-                  <label class="custom-control-label" for="checkAssOweDep">
-                    Asset Owning Department
-                  </label>
-                </div>
-              </div> -->
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSubProSys" [(ngModel)]="is_show1.sub_process_system">
-                                <label class="custom-control-label" for="checkSubProSys">
-                                    Sub-Process/System
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkBrand" [(ngModel)]="is_show1.brand">
-                                <label class="custom-control-label" for="checkBrand">
-                                    Brand
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSizeCapa1" [(ngModel)]="is_show1.size_capacity_1">
-                                <label class="custom-control-label" for="checkSizeCapa1">
-                                    Size Capacity 1
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSizeCapa2" [(ngModel)]="is_show1.size_capacity_2">
-                                <label class="custom-control-label" for="checkSizeCapa2">
-                                    Size Capacity 2
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSizeCapa3" [(ngModel)]="is_show1.size_capacity_3">
-                                <label class="custom-control-label" for="checkSizeCapa3">
-                                    Size Capacity 3
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkMainSpec" [(ngModel)]="is_show1.maintenance_specification">
-                                <label class="custom-control-label" for="checkMainSpec">
-                                    Maintenance Specification
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssOweDepa" [(ngModel)]="is_show1.asset_owning_department">
-                                <label class="custom-control-label" for="checkAssOweDepa">
-                                    Asset Owning Department
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssOrCompType" [(ngModel)]="is_show1.asset_or_component_type">
-                                <label class="custom-control-label" for="checkAssOrCompType">
-                                    Asset Component Type
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkBadgeNo" [(ngModel)]="is_show1.badge_no">
-                                <label class="custom-control-label" for="checkBadgeNo">
-                                    Batch No
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSizeCapa1UM" [(ngModel)]="is_show1.size_capacity_1_unit_measurement">
-                                <label class="custom-control-label" for="checkSizeCapa1UM">
-                                    Size apacity 1 Unit
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSizeCapa2UM" [(ngModel)]="is_show1.size_capacity_2_unit_measurement">
-                                <label class="custom-control-label" for="checkSizeCapa2UM">
-                                    Size apacity 2 Unit
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSizeCapa3UM" [(ngModel)]="is_show1.size_capacity_3_unit_measurement">
-                                <label class="custom-control-label" for="checkSizeCapa3UM">
-                                    Size apacity 3 Unit
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkMeasureType" [(ngModel)]="is_show1.measurement_type">
-                                <label class="custom-control-label" for="checkMeasureType">
-                                    Measurement Type
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkMainOperation" [(ngModel)]="is_show1.main_operation">
-                                <label class="custom-control-label" for="checkMainOperation">
-                                    Main Operation
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssClassAssCat" [(ngModel)]="is_show1.asset_class_asset_category">
-                                <label class="custom-control-label" for="checkAssClassAssCat">
-                                    Asset Class/Asset Category
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkInternalAssId" [(ngModel)]="is_show1.internal_asset_adentity">
-                                <label class="custom-control-label" for="checkInternalAssId">
-                                    Internal Asset Indentity
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSubCat1" [(ngModel)]="is_show1.sub_category_1">
-                                <label class="custom-control-label" for="checkSubCat1">
-                                    Sub Category 1
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkParentAssPlateNum" [(ngModel)]="is_show1.parent_asset_plate_number">
-                                <label class="custom-control-label" for="checkParentAssPlateNum">
-                                    Parent Asset/Plate No
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkPurcDateInstHand"
-                                    [(ngModel)]="is_show1.purchase_date_installed_handed_over_date">
-                                <label class="custom-control-label" for="checkPurcDateInstHand">
-                                    Purchase Date/Installed/Handed Over Date
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkWarranty" [(ngModel)]="is_show1.warranty">
-                                <label class="custom-control-label" for="checkWarranty">
-                                    Warranty
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkRegion" [(ngModel)]="is_show1.region">
-                                <label class="custom-control-label" for="checkRegion">
-                                    Region
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkHandedOverAssetProc" [(ngModel)]="is_show1.handed_over_asset_or_procured">
-                                <label class="custom-control-label" for="checkHandedOverAssetProc">
-                                    Handed Over Asset Or Procured
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssPriCat" [(ngModel)]="is_show1.asset_primary_category">
-                                <label class="custom-control-label" for="checkAssPriCat">
-                                    Asset Primary Category
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSubCat2" [(ngModel)]="is_show1.sub_category_2">
-                                <label class="custom-control-label" for="checkSubCat2">
-                                    Sub Category 2
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssPlateNum" [(ngModel)]="is_show1.asset_plate_number">
-                                <label class="custom-control-label" for="checkAssPlateNum">
-                                    Asset Plate Number
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkConditionRate" [(ngModel)]="is_show1.condition_rating">
-                                <label class="custom-control-label" for="checkConditionRate">
-                                    Condition Rating
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkWarrPer" [(ngModel)]="is_show1.actual_warranty_period">
-                                <label class="custom-control-label" for="checkWarrPer">
-                                    Actual Warranty Period
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkOperation" [(ngModel)]="is_show1.operation">
-                                <label class="custom-control-label" for="checkOperation">
-                                    Operation
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkProFunc" [(ngModel)]="is_show1.process_function">
-                                <label class="custom-control-label" for="checkProFunc">
-                                    Process Function
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkModelNum" [(ngModel)]="is_show1.model_number">
-                                <label class="custom-control-label" for="checkModelNum">
-                                    Model Number
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkdetailedDesc" [(ngModel)]="is_show1.detailed_description">
-                                <label class="custom-control-label" for="checkdetailedDesc">
-                                    Detailed Description
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkSerialNum" [(ngModel)]="is_show1.serial_number">
-                                <label class="custom-control-label" for="checkSerialNum">
-                                    Serial Number
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssStatus" [(ngModel)]="is_show1.asset_status">
-                                <label class="custom-control-label" for="checkAssStatus">
-                                    Asset Status
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkWarrStatName" [(ngModel)]="is_show1.warranty_vendor_name">
-                                <label class="custom-control-label" for="checkWarrStatName">
-                                    Warranty Vendor Name
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssTagNum" [(ngModel)]="is_show1.asset_tag_number">
-                                <label class="custom-control-label" for="checkAssTagNum">
-                                    Asset Tag Number
-                                </label>
-                            </div>
-                        </div>
-
-                    </div>
-                    <hr />
-                    <div class="row pb-3">
-                        <div class="col-md-12">
-                            <span>Asset Technical Spec</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssIdentity" [(ngModel)]="is_show1.asset_identity">
-                                <label class="custom-control-label" for="checkAssIdentity">
-                                    Asset Identity
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkAssPriCat" [(ngModel)]="is_show1.asset_primary_category">
-                                <label class="custom-control-label" for="checkAssPriCat">
-                                    Asset Primary Category
-                                </label>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row mt-3 mb-2">
-                        <div class="col">
-                            <button class="btn btn-default" (click)="showTable()">
-                                Generate
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="row" *ngIf="tableShow1">
-                        <div class="col">
-                            <div class="card">
+            <tabset type="pills" class="nav-fill flex-column flex-md-row">
+                <tab heading="Location Registration" [active]="firstTab">
+                    <div class="card mt-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- <div class="card"> -->
                                 <!-- <div class="card-body"> -->
                                 <div class="dataTables_wrapper py-4">
                                     <div class="row">
@@ -673,687 +85,280 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <!-- <ngx-datatable-column [width]="60" [sortable]="true" [resizeable]="false"
-                                            prop="id_index">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>No.</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                {{row.id_index}}--{{row.id}}
-                                            </ng-template>
-                                        </ngx-datatable-column> -->
-
-                                        <ngx-datatable-column [width]="80">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Status</span>
-                                            </ng-template>
-
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <span class="badge badge-info"
-                                                    *ngIf="row.status == 'RJ'">Rejected</span>
-                                                <span class="badge badge-info"
-                                                    *ngIf="row.status == 'AP'">Approved</span>
-                                                <span class="badge badge-info"
-                                                    *ngIf="row.status == 'PR'">Processed</span>
-                                                <span class="badge badge-warning"
-                                                    *ngIf="row.status == 'CO'">Complete</span>
-                                                <span class="badge badge-info"
-                                                    *ngIf="row.status == 'IC'">Incomplete</span>
+                                        <ngx-datatable-column name="No" [width]="30">
+                                            <ng-template let-rowIndex="rowIndex" let-row="row"
+                                                ngx-datatable-cell-template>
+                                                <strong>{{ rowIndex + 1 }}</strong>
                                             </ng-template>
                                         </ngx-datatable-column>
 
                                         <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.parent_location">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Parent Location</span>
-                                            </ng-template>
-
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="parent_location" class="form-control"
-                                                    value="{{row.parent_location}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.location_description">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Location Description</span>
-                                            </ng-template>
-
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="location_description" class="form-control"
-                                                    value="{{row.location_description}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.building">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>building</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="building" class="form-control"
-                                                    value="{{row.building}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.address_line_1">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Address Line 1</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="address_line_1" class="form-control"
-                                                    value="{{row.address_line_1}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.address_line_2">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Address Line 2</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="address_line_2" class="form-control"
-                                                    value="{{row.address_line_2}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.address_line_3">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Address Line 3</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="address_line_3" class="form-control"
-                                                    value="{{row.address_line_3}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.city">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>City</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="city" class="form-control"
-                                                    value="{{row.city}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.state">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>State</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="state" class="form-control"
-                                                    value="{{row.state}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.postal_code">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Postal Code</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="postal_code" class="form-control"
-                                                    value="{{row.postal_code}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.country">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Country</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="country" class="form-control"
-                                                    value="{{row.country}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.tag_number">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Tag Number</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="tag_number" class="form-control"
-                                                    value="{{row.tag_number}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.service_area">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Service Area</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="service_area" class="form-control"
-                                                    value="{{row.service_area}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.maintenance_planner">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Maintenance Planner</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="maintenance_planner" class="form-control"
-                                                    value="{{row.maintenance_planner}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.location_main_contact">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Location Main Contact</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="location_main_contact" class="form-control"
-                                                    value="{{row.location_main_contact}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.location_asset_maintenance_manager">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Location Asset Maintenance Manager</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="location_asset_maintenance_manager"
-                                                    class="form-control"
-                                                    value="{{row.location_asset_maintenance_manager}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.gis_esri_id">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>GIS ESRI ID</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="gis_esri_id" class="form-control"
-                                                    value="{{row.gis_esri_id}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.latitude">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>latitude</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="latitude" class="form-control"
-                                                    value="{{row.latitude}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_critically">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Asset Criticality</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="asset_critically" class="form-control"
-                                                    value="{{row.asset_critically}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.cost_center">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Cost Center</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="cost_center" class="form-control"
-                                                    value="{{row.cost_center}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_owning_department">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Asset Owning Depart</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="asset_owning_department" class="form-control"
-                                                    value="{{row.asset_owning_department}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.sub_process_system">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Sub Process System</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="sub_process_system" class="form-control"
-                                                    value="{{row.sub_process_system}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.brand">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Brand</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="brand" class="form-control"
-                                                    value="{{row.brand}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_1">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Size Capacity 1</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="size_capacity_1" class="form-control"
-                                                    value="{{row.size_capacity_1}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_2">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Size Capacity 2</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="size_capacity_2" class="form-control"
-                                                    value="{{row.size_capacity_2}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_3">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Size Capacity 3</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="size_capacity_3" class="form-control"
-                                                    value="{{row.size_capacity_3}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.maintenance_specification">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Maintenance Specification</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="maintenance_specification" class="form-control"
-                                                    value="{{row.maintenance_specification}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_or_component_type">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Asset Or Component Type</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="asset_or_component_type" class="form-control"
-                                                    value="{{row.asset_or_component_type}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.badge_no">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Badge No</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="badge_no" class="form-control"
-                                                    value="{{row.badge_no}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_1_unit_measurement">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>size_capacity_1_unit_measurement</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="size_capacity_1_unit_measurement"
-                                                    class="form-control"
-                                                    value="{{row.size_capacity_1_unit_measurement}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_2_unit_measurement">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>size_capacity_2_unit_measurement</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="size_capacity_2_unit_measurement"
-                                                    class="form-control"
-                                                    value="{{row.size_capacity_2_unit_measurement}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_3_unit_measurement">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>size_capacity_3_unit_measurement</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="size_capacity_3_unit_measurement"
-                                                    class="form-control"
-                                                    value="{{row.size_capacity_3_unit_measurement}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.measurement_type">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Measurement Type</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="measurement_type" class="form-control"
-                                                    value="{{row.measurement_type}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.main_operation">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Main Operation</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="main_operation" class="form-control"
-                                                    value="{{row.main_operation}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_class_asset_category">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Asset Class Asset Category</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="asset_class_asset_category"
-                                                    class="form-control" value="{{row.asset_class_asset_category}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.internal_asset_adentity">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Internal Asset Adentity</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="internal_asset_adentity" class="form-control"
-                                                    value="{{row.internal_asset_adentity}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.sub_category_1">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Sub Category 1</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="sub_category_1" class="form-control"
-                                                    value="{{row.sub_category_1}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.parent_asset_plate_number">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Parent Asset Plate Number</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="parent_asset_plate_number" class="form-control"
-                                                    value="{{row.parent_asset_plate_number}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date"
-                                            *ngIf="is_show1.purchase_date_installed_handed_over_date">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Purchase Date Installed Handed Over Date</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="purchase_date_installed_handed_over_date"
-                                                    class="form-control"
-                                                    value="{{row.purchase_date_installed_handed_over_date}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.warranty">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Warranty</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="warranty" class="form-control"
-                                                    value="{{row.warranty}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.region">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Region</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="region" class="form-control"
-                                                    value="{{row.region}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.handed_over_asset_or_procured">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Handed Over Asset Or Procured</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="handed_over_asset_or_procured"
-                                                    class="form-control"
-                                                    value="{{row.handed_over_asset_or_procured}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_primary_category">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Asset Primary Category</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="asset_primary_category" class="form-control"
-                                                    value="{{row.asset_primary_category}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.sub_category_2">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>sub_category_2</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="sub_category_2" class="form-control"
-                                                    value="{{row.sub_category_2}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_plate_number">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Asset Plate Number</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="asset_plate_number" class="form-control"
-                                                    value="{{row.asset_plate_number}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.condition_rating">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Condition Rating</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="condition_rating" class="form-control"
-                                                    value="{{row.condition_rating}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.actual_warranty_period">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Actual Warranty Period</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="actual_warranty_period" class="form-control"
-                                                    value="{{row.actual_warranty_period}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.operation">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Operation</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="operation" class="form-control"
-                                                    value="{{row.operation}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.process_function">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Process Function</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="process_function" class="form-control"
-                                                    value="{{row.process_function}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.model_number">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Model Number</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="model_number" class="form-control"
-                                                    value="{{row.model_number}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.detailed_description">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Detailed Description</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="detailed_description" class="form-control"
-                                                    value="{{row.detailed_description}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.serial_number">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Serial Number</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="serial_number" class="form-control"
-                                                    value="{{row.serial_number}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_status">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Asset Status</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="asset_status" class="form-control"
-                                                    value="{{row.asset_status}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.warranty_vendor_name">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Warranty Vendor Name</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="warranty_vendor_name" class="form-control"
-                                                    value="{{row.warranty_vendor_name}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_tag_number">
-                                            <ng-template ngx-datatable-header-template>
-                                                <span>Asset Tag Number</span>
-                                            </ng-template>
-                                            <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="asset_tag_number" class="form-control"
-                                                    value="{{row.asset_tag_number}}" />
-                                            </ng-template>
-                                        </ngx-datatable-column>
-
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_identity">
+                                            prop="created_date">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Identity</span>
                                             </ng-template>
                                             <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="asset_identity" class="form-control"
-                                                    value="{{row.asset_identity}}" />
+                                                {{row.asset_identity}}
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false">
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
                                             <ng-template ngx-datatable-header-template>
-                                                <span></span>
+                                                <span>Parent Location</span>
                                             </ng-template>
                                             <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <span><i class="fa fa-file text-default"></i></span>
+                                                {{row.parent_location}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Location Description</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.location_description}}
                                             </ng-template>
                                         </ngx-datatable-column>
                                     </ngx-datatable>
                                 </div>
 
-                                <div class="card-footer">
-                                    <div class="row">
-                                        <div class="col text-right">
-                                            <button class="btn btn-danger" (click)="confirm('RJ')">Reject</button>
-                                            <button class="btn btn-default" (click)="confirm('AP')">Approve</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- <div class="card-footer"> -->
+                                <!-- <div class="row"> -->
                                 <!-- </div> -->
+                                <!-- </div> -->
+                                <!-- </div> -->
+                                <!-- </div> -->
+                            </div>
+                            <div class="col-md-12 pb-3 pr-4 mt--4 text-right">
+                                <button class="btn btn-danger" (click)="confirm('RJ')">Reject</button>
+                                <button class="btn btn-default" (click)="confirm('AP')">Approve</button>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <!-- </tab>
-  
-          <tab heading="Asset Detail" [active]="secondTab">
-            <div class="card mt-4">
-            </div>
-          </tab>
-  
-          <tab heading="Asset Technical Spec" [active]="thirdTab">
-            <div class="card mt-4">
-            </div>
-          </tab>
-        </tabset> -->
+                </tab>
+
+                <tab heading="Asset Registration" [active]="secondTab">
+                    <div class="card mt-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="dataTables_wrapper py-4">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="dataTables_length" id="datatable_length">
+                                                <label>
+                                                    Show
+                                                    <select name="datatable_length" aria-controls="datatable"
+                                                        class="form-control form-control-sm"
+                                                        (change)="entriesChange($event)">
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                        <option value="-1">All</option>
+                                                    </select>
+                                                    records
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                        </div>
+                                    </div>
+
+                                    <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'"
+                                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                                        [limit]="tableEntries != -1 ? tableEntries : undefined" [rows]="tableTemp1"
+                                        (activate)="onActivate($event)">
+
+                                        <ngx-datatable-column maxWidth="60" [sortable]="false">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        id="customCheck+{{row.id}}" (change)="checkRow(row)"
+                                                        [(ngModel)]="row.isTick">
+                                                    <label class="custom-control-label" for="customCheck+{{row.id}}">
+                                                    </label>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column name="No" [width]="30">
+                                            <ng-template let-rowIndex="rowIndex" let-row="row"
+                                                ngx-datatable-cell-template>
+                                                <strong>{{ rowIndex + 1 }}</strong>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Badge No</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.badge_no}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Asset Identity</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.asset_identity}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Parent Location</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.parent_location}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Location Description</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.location_description}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Location ID</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                            <div class="col-md-12 pb-3 pr-4 mt--4 text-right">
+                                <button class="btn btn-danger" (click)="confirm('RJ')">Reject</button>
+                                <button class="btn btn-default" (click)="confirm('AP')">Approve</button>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+
+                <tab heading="Technical Spec" [active]="thirdTab">
+                    <div class="card mt-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="dataTables_wrapper py-4">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="dataTables_length" id="datatable_length">
+                                                <label>
+                                                    Show
+                                                    <select name="datatable_length" aria-controls="datatable"
+                                                        class="form-control form-control-sm"
+                                                        (change)="entriesChange($event)">
+                                                        <option value="10">10</option>
+                                                        <option value="25">25</option>
+                                                        <option value="50">50</option>
+                                                        <option value="100">100</option>
+                                                        <option value="-1">All</option>
+                                                    </select>
+                                                    records
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                        </div>
+                                    </div>
+
+                                    <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'"
+                                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+                                        [limit]="tableEntries != -1 ? tableEntries : undefined" [rows]="tableTemp1"
+                                        (activate)="onActivate($event)">
+
+                                        <ngx-datatable-column maxWidth="60" [sortable]="false">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        id="customCheck+{{row.id}}" (change)="checkRow(row)"
+                                                        [(ngModel)]="row.isTick">
+                                                    <label class="custom-control-label" for="customCheck+{{row.id}}">
+                                                    </label>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column name="No" [width]="30">
+                                            <ng-template let-rowIndex="rowIndex" let-row="row"
+                                                ngx-datatable-cell-template>
+                                                <strong>{{ rowIndex + 1 }}</strong>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Badge No</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.badge_no}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Asset Identity</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.asset_identity}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Parent Location</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.parent_location}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Location Description</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.location_description}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
+                                            prop="created_date">
+                                            <ng-template ngx-datatable-header-template>
+                                                <span>Location ID</span>
+                                            </ng-template>
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                            <div class="col-md-12 pb-3 pr-4 mt--4 text-right">
+                                <button class="btn btn-danger" (click)="confirm('RJ')">Reject</button>
+                                <button class="btn btn-default" (click)="confirm('AP')">Approve</button>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
         </div>
     </div>
 </div>

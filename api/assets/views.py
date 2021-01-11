@@ -16,14 +16,16 @@ from .models import (
     Asset,AssetRegistration,
     AssetGroup,
     AssetType,
-    Rfid
+    Rfid,
+    AssetBadgeFormat
 )
 
 from .serializers import (
     AssetSerializer,AssetRegistrationSerializer,
     AssetGroupSerializer,
     AssetTypeSerializer,
-    RfidSerializer
+    RfidSerializer,
+    AssetBadgeFormatSerializer
 )
 
 class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -137,7 +139,6 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         serializer = AssetSerializer(asset)
         return Response(serializer.data)
 
-
 class AssetGroupViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetGroup.objects.all()
     serializer_class = AssetGroupSerializer
@@ -175,7 +176,6 @@ class AssetGroupViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         """
         return queryset
 
-
 class AssetTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetType.objects.all()
     serializer_class = AssetTypeSerializer
@@ -212,7 +212,6 @@ class AssetTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Asset.objects.filter(company=company.id)
         """
         return queryset
-
 
 class RfidViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Rfid.objects.all()
@@ -363,3 +362,40 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return Response(serializer.data)  
         # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
         # return Response(rejected_list_serializer.data) 
+
+class AssetBadgeFormatViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetBadgeFormat.objects.all()
+    serializer_class = AssetBadgeFormatSerializer
+    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # filterset_fields = [
+    #     'category',
+    #     'created_at'
+    # ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetBadgeFormat.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset

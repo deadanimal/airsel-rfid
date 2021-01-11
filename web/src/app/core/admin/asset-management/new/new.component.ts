@@ -108,7 +108,7 @@ export class NewComponent implements OnInit {
     measurement_type: false,
     main_operation: false,
     asset_class_asset_category: false,
-    internal_asset_adentity: false,
+    internal_asset_identity: false,
     sub_category_1: false,
     parent_asset_plate_number: false,
     purchase_date_installed_handed_over_date: false,
@@ -383,7 +383,7 @@ export class NewComponent implements OnInit {
       formData.append('vehicle_insurance_date_period_from', loopval.vehicle_insurance_date_period_from)
       formData.append('vehicle_insurance_policy_type', loopval.vehicle_insurance_policy_type)
       formData.append('vehicle_puspakom_date_inspection', loopval.vehicle_puspakom_date_inspection)
-      formData.append('vehicle_roadtarate', loopval.vehicle_roadtax_rate)
+      formData.append('vehicle_roadtax_rate', loopval.vehicle_roadtax_rate)
       formData.append('vehicle_roadtax_renew_date', loopval.vehicle_roadtax_renew_date)
       formData.append('vehicle_spad_permit_date_period_from', loopval.vehicle_spad_permit_date_period_from)
       formData.append('voltage', loopval.voltage)
