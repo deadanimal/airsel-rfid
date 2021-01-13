@@ -584,7 +584,17 @@ class AssetBadgeFormat(models.Model):
     asset_primary_category = models.CharField(max_length=100, default='NA')
     short = models.CharField(max_length=100, default='NA')
     description = models.CharField(max_length=100, default='NA')
-    status = models.CharField(max_length=100, default='NA')
+
+    STATUS_ARRAY = [
+        ('AC', 'Active'),
+        ('IC','Inactive')
+    ]
+    status = models.CharField(
+        max_length=2,
+        choices=STATUS_ARRAY,
+        default='IC'
+    )
+    # status = models.CharField(max_length=100, default='NA')
     latest_no = models.CharField(max_length=100, default='NA')
     # created_at = models.DateTimeField(auto_now_add=True)
 
