@@ -64,6 +64,7 @@ export class RegistrationComponent implements OnInit {
   modal: BsModalRef;
   modalViewAsset: BsModalRef;
   modalRegisterAsset: BsModalRef;
+  ModalAssetAttribute: BsModalRef;
   modalEditAsset: BsModalRef;
   modalConfig = {
     keyboard: true,
@@ -461,11 +462,75 @@ export class RegistrationComponent implements OnInit {
   rows: any = [];
   // SelectionType = SelectionType;
   tableTemp1 = [];
-  tableTemp2 = [];
-  tableTemp3 = [];
+  assetAttribute = [
+    {
+        "id": "3b51c219-4ecd-4ba1-9ed5-ca09a026a81e",
+        "asset_uuid": "NA",
+        "asset_primary_category": "CHAMBER",
+        "short": "CHAM",
+        "description": "Chamber",
+        "status": "Active",
+        "latest_no": "2265"
+    },
+    {
+        "id": "ca55926b-156e-4c25-8049-00a4ce2a3686",
+        "asset_uuid": "NA",
+        "asset_primary_category": "CABINET",
+        "short": "CBNT",
+        "description": "NRW Cabinet",
+        "status": "Active",
+        "latest_no": "6455"
+    },
+    {
+        "id": "4bfb1995-34f4-4637-904f-aef48ae1cc44",
+        "asset_uuid": "NA",
+        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+        "short": "EMFM",
+        "description": "Electromagnetic Flowmeter",
+        "status": "Active",
+        "latest_no": "257"
+    },
+    {
+        "id": "c83b5efa-0cef-4593-b2aa-495e4c76d776",
+        "asset_uuid": "NA",
+        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+        "short": "BPEM",
+        "description": "BATTERY POWERED ELECTROMAGNETIC FLOWMETER",
+        "status": "Inactive",
+        "latest_no": "257"
+    },
+    {
+        "id": "e5926f82-ef76-4dff-af60-0ed6b3090d86",
+        "asset_uuid": "NA",
+        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+        "short": "DEFM",
+        "description": "DELIVERY ELECTRONIC FLOWMETER",
+        "status": "Inactive",
+        "latest_no": "257"
+    },
+    {
+        "id": "99f149aa-43ed-4c85-87a6-4b0ac51b8f5c",
+        "asset_uuid": "NA",
+        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+        "short": "IWFM",
+        "description": "INTERNAL WTP FLOWMETER",
+        "status": "Inactive",
+        "latest_no": "257"
+    },
+    {
+        "id": "91a7f0b5-433b-4e7c-8cfb-a3beeb838fdb",
+        "asset_uuid": "NA",
+        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+        "short": "WBME",
+        "description": "WATER BALANCE METER",
+        "status": "Inactive",
+        "latest_no": "257"
+    }
+  ];
 
   // Forms
   fileuploadFormGroup: FormGroup;
+  assetAttributeGroup: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   // thirdFormGroup: FormGroup;
@@ -488,6 +553,7 @@ export class RegistrationComponent implements OnInit {
     public assetsRegistrationService: AssetsRegistrationService,
     // public spinner: NgxSpinnerService,
   ) {
+    this.getAssetPrimaryCategory()
     this.getAssets();
     this.getRegisteredData()
 
@@ -506,6 +572,46 @@ export class RegistrationComponent implements OnInit {
       parent_location: ["", Validators.required],
       process_function: ["", Validators.required],
       sub_process_system: ["", Validators.required],
+      location_description: ["", Validators.required],
+      building: ["", Validators.required],
+      address_line_1: ["", Validators.required],
+      address_line_2: ["", Validators.required],
+      address_line_3: ["", Validators.required],
+      city: ["", Validators.required],
+      state: ["", Validators.required],
+      postal_code: ["", Validators.required],
+      country: ["", Validators.required],
+      tag_number: ["", Validators.required],
+      service_area: ["", Validators.required],
+      location_main_contact: ["", Validators.required],
+      location_asset_maintenance_manager: ["", Validators.required],
+      maintenance_planner: ["", Validators.required],
+      gis_esri_id: ["", Validators.required],
+      latitude: ["", Validators.required],
+      longitude: ["", Validators.required],
+      asset_critically: ["", Validators.required],
+      cost_center: ["", Validators.required],
+      brand: ["", Validators.required],
+      model_number: ["", Validators.required],
+      size_capacity_1: ["", Validators.required],
+      size_capacity_2: ["", Validators.required],
+      size_capacity_3: ["", Validators.required],
+      size_capacity_1_unit_measurement: ["", Validators.required],
+      size_capacity_2_unit_measurement: ["", Validators.required],
+      size_capacity_3_unit_measurement: ["", Validators.required],
+      parent_asset_plate_number: ["", Validators.required],
+      asset_plate_number: ["", Validators.required],
+      detailed_description: ["", Validators.required],
+      serial_number: ["", Validators.required],
+      asset_tag_number: ["", Validators.required],
+      purchase_date_installed_handed_over_date: ["", Validators.required],
+      condition_rating: ["", Validators.required],
+      status: ["", Validators.required],
+      maintenance_specification: ["", Validators.required],
+      measurement_type: ["", Validators.required],
+      warranty: ["", Validators.required],
+      actual_warranty_period: ["", Validators.required],
+      warranty_vendor_name: ["", Validators.required],
     });
     this.secondFormGroup = this.formBuilder.group({
       bottom_water_level: ["", Validators.required],
@@ -747,6 +853,13 @@ export class RegistrationComponent implements OnInit {
 
   openModalRegister(modalNotification: TemplateRef<any>) {
     this.modalRegisterAsset = this.modalService.show(
+      modalNotification,
+      this.modalConfig
+    );
+  }
+
+  openModalAssetAttribute(modalNotification: TemplateRef<any>) {
+    this.ModalAssetAttribute = this.modalService.show(
       modalNotification,
       this.modalConfig
     );
@@ -1300,5 +1413,11 @@ export class RegistrationComponent implements OnInit {
         console.error("err", error);
       }
     )
+  }
+
+  getAssetPrimaryCategory(){
+    this.assetAttribute.forEach(function(lll,mm){
+      console.log('test test = ',lll.asset_primary_category)
+    })
   }
 }
