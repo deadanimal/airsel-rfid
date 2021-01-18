@@ -464,67 +464,67 @@ export class RegistrationComponent implements OnInit {
   tableTemp1 = [];
   assetAttribute = [
     {
-        "id": "3b51c219-4ecd-4ba1-9ed5-ca09a026a81e",
-        "asset_uuid": "NA",
-        "asset_primary_category": "CHAMBER",
-        "short": "CHAM",
-        "description": "Chamber",
-        "status": "Active",
-        "latest_no": "2265"
+      "id": "3b51c219-4ecd-4ba1-9ed5-ca09a026a81e",
+      "asset_uuid": "NA",
+      "asset_primary_category": "CHAMBER",
+      "short": "CHAM",
+      "description": "Chamber",
+      "status": "Active",
+      "latest_no": "2265"
     },
     {
-        "id": "ca55926b-156e-4c25-8049-00a4ce2a3686",
-        "asset_uuid": "NA",
-        "asset_primary_category": "CABINET",
-        "short": "CBNT",
-        "description": "NRW Cabinet",
-        "status": "Active",
-        "latest_no": "6455"
+      "id": "ca55926b-156e-4c25-8049-00a4ce2a3686",
+      "asset_uuid": "NA",
+      "asset_primary_category": "CABINET",
+      "short": "CBNT",
+      "description": "NRW Cabinet",
+      "status": "Active",
+      "latest_no": "6455"
     },
     {
-        "id": "4bfb1995-34f4-4637-904f-aef48ae1cc44",
-        "asset_uuid": "NA",
-        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-        "short": "EMFM",
-        "description": "Electromagnetic Flowmeter",
-        "status": "Active",
-        "latest_no": "257"
+      "id": "4bfb1995-34f4-4637-904f-aef48ae1cc44",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "EMFM",
+      "description": "Electromagnetic Flowmeter",
+      "status": "Active",
+      "latest_no": "257"
     },
     {
-        "id": "c83b5efa-0cef-4593-b2aa-495e4c76d776",
-        "asset_uuid": "NA",
-        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-        "short": "BPEM",
-        "description": "BATTERY POWERED ELECTROMAGNETIC FLOWMETER",
-        "status": "Inactive",
-        "latest_no": "257"
+      "id": "c83b5efa-0cef-4593-b2aa-495e4c76d776",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "BPEM",
+      "description": "BATTERY POWERED ELECTROMAGNETIC FLOWMETER",
+      "status": "Inactive",
+      "latest_no": "257"
     },
     {
-        "id": "e5926f82-ef76-4dff-af60-0ed6b3090d86",
-        "asset_uuid": "NA",
-        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-        "short": "DEFM",
-        "description": "DELIVERY ELECTRONIC FLOWMETER",
-        "status": "Inactive",
-        "latest_no": "257"
+      "id": "e5926f82-ef76-4dff-af60-0ed6b3090d86",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "DEFM",
+      "description": "DELIVERY ELECTRONIC FLOWMETER",
+      "status": "Inactive",
+      "latest_no": "257"
     },
     {
-        "id": "99f149aa-43ed-4c85-87a6-4b0ac51b8f5c",
-        "asset_uuid": "NA",
-        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-        "short": "IWFM",
-        "description": "INTERNAL WTP FLOWMETER",
-        "status": "Inactive",
-        "latest_no": "257"
+      "id": "99f149aa-43ed-4c85-87a6-4b0ac51b8f5c",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "IWFM",
+      "description": "INTERNAL WTP FLOWMETER",
+      "status": "Inactive",
+      "latest_no": "257"
     },
     {
-        "id": "91a7f0b5-433b-4e7c-8cfb-a3beeb838fdb",
-        "asset_uuid": "NA",
-        "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-        "short": "WBME",
-        "description": "WATER BALANCE METER",
-        "status": "Inactive",
-        "latest_no": "257"
+      "id": "91a7f0b5-433b-4e7c-8cfb-a3beeb838fdb",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "WBME",
+      "description": "WATER BALANCE METER",
+      "status": "Inactive",
+      "latest_no": "257"
     }
   ];
 
@@ -1079,21 +1079,8 @@ export class RegistrationComponent implements OnInit {
 
   submitFileExcel() {
     let assetregserv = this.assetsRegistrationService
-    let toBeSubmitedData: any
-    let no = 0
-    var emptyData = 0;
-
-    // for (const key in this.dataFromExcelFile) {
-    //   console.log('this.dataFromExcelFile[key] = ', this.dataFromExcelFile[key])
-    //   if (this.dataFromExcelFile[key] == "") {
-    //     console.log('=== sini ===')
-    //     emptyData++;
-    //   }
-    // }
 
     this.dataFromExcelFile.forEach(function (loopval, index) {
-
-      console.log('loopval = ', loopval)
 
       let checkStatus = 'CO'
       const formData = new FormData();
@@ -1330,38 +1317,56 @@ export class RegistrationComponent implements OnInit {
     this.tableTemp1.forEach(function (itemVal) {
 
       if (itemVal['isTick'] == true) {
-        // const updateformData = new FormData();
-        let updateformData: any
-        // updateformData.append('status', 'PR');
 
-        updateformData = {
-          status: task
-        }
-        // console.log('updateformData = ', updateformData)
-        assetregser.update(itemVal['id'], updateformData).subscribe(
-          (res) => {
-            // console.log("res = ", res);
-            resData = res
-          },
-          error => {
-            console.error("err", error);
+        console.log('itemVal = ', itemVal.status)
+        if (itemVal.status == 'CO') {
+          // const updateformData = new FormData();
+          let updateformData: any
+          // updateformData.append('status', 'PR');
+
+          updateformData = {
+            status: task
           }
-        )
+          // console.log('updateformData = ', updateformData)
+
+          console.log('---- sini ----')
+          assetregser.update(itemVal['id'], updateformData).subscribe(
+            (res) => {
+              console.log("ttttatttatt = ", res);
+            },
+            error => {
+              console.error("err", error);
+            }
+          )
+        } else {
+          no++
+        }
       }
     })
-    // if (resData.length > 0) {
 
-    swal.fire({
-      title: 'Success',
-      text: 'Successfully Change Status',
-      type: 'success',
-      buttonsStyling: false,
-      confirmButtonText: 'Ok',
-      confirmButtonClass: 'btn btn-success'
-    }).then((result) => {
-      this.getRegisteredData()
-    })
-    // }
+    if (no > 0) {
+      swal.fire({
+        title: 'Warning',
+        text: 'The incomplete data cannot be save.',
+        type: 'warning',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok',
+        confirmButtonClass: 'btn btn-warning'
+      }).then((result) => {
+        this.getRegisteredData()
+      })
+    } else {
+      swal.fire({
+        title: 'Success',
+        text: 'Successfully Change Status',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok',
+        confirmButtonClass: 'btn btn-success'
+      }).then((result) => {
+        this.getRegisteredData()
+      })
+    }
   }
 
   onKey(event, formName, row) {
@@ -1415,9 +1420,9 @@ export class RegistrationComponent implements OnInit {
     )
   }
 
-  getAssetPrimaryCategory(){
-    this.assetAttribute.forEach(function(lll,mm){
-      console.log('test test = ',lll.asset_primary_category)
+  getAssetPrimaryCategory() {
+    this.assetAttribute.forEach(function (lll, mm) {
+      console.log('test test = ', lll.asset_primary_category)
     })
   }
 }

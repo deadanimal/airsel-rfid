@@ -18,7 +18,7 @@ export class AssetsBadgeNoService {
 
   constructor(private http: HttpClient) { }
 
-  post(body): Observable<AssetsBadgeNoModel> {
+  create(body): Observable<AssetsBadgeNoModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
         console.log("AssetsBadgeNoModel", res);
@@ -63,7 +63,8 @@ export class AssetsBadgeNoService {
   }
 
   filter(field: string): Observable<AssetsBadgeNoModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field;
+    // console.log('urlFilter = ', urlFilter)
     return this.http.get<AssetsBadgeNoModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("AssetsBadgeNoModel", res);
