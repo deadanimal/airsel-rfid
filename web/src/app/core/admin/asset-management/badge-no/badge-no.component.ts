@@ -12,6 +12,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { system } from '@amcharts/amcharts4/core';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 import { AssetsBadgeNoService } from 'src/app/shared/services/assets-badge-no/assets-badge-no.service';
+import { AssetTypesService } from 'src/app/shared/services/asset-types/asset-types.service';
 
 export enum SelectionType {
   single = "single",
@@ -31,8 +32,8 @@ export class BadgeNoComponent implements OnInit {
   modal: BsModalRef;
   modalConfig = {
     keyboard: true,
-    class: "modal-dialog-centered modal-xl",
-    ignoreBackdropClick: true,
+    class: "modal-dialog-centered modal-lg",
+    // ignoreBackdropClick: true,
   };
 
   // Datatable
@@ -43,21 +44,42 @@ export class BadgeNoComponent implements OnInit {
   SelectionType = SelectionType;
   rows: any = [];
   tableTemp: any = [];
-
+  assetTypeList: any = [];
+  assTypeList: any
+  assetTypeForm: FormGroup;
+  assetTypeFormDesc: FormGroup;
   constructor(
     public formBuilder: FormBuilder,
-    public assetsBadgeNoService: AssetsBadgeNoService
+    public assetsBadgeNoService: AssetsBadgeNoService,
+    public modalService: BsModalService,
+    public assetTypesService: AssetTypesService
   ) { }
 
   ngOnInit() {
     this.getBadgeNoData()
+    this.getAssetTypeData()
+
+    this.assetTypeForm = this.formBuilder.group({
+      asset_primary_category: ["", Validators.required],
+      short: ["", Validators.required],
+      description: ["", Validators.required],
+      status: ["IC", Validators.required],
+      latest_no: ["", Validators.required]
+    })
+    this.assetTypeFormDesc = this.formBuilder.group({
+      asset_primary_category: ["", Validators.required],
+      short: ["", Validators.required],
+      description: ["", Validators.required],
+      status: ["IC", Validators.required],
+      latest_no: ["", Validators.required]
+    })
   }
 
   getBadgeNoData() {
     let tempData = []
     this.assetsBadgeNoService.getAll().subscribe(
       (res) => {
-        console.log("res all data", res);
+        console.log("getBadgeNoData = ", res);
         // console.log('tempData = ', tempData)
         this.tableTemp = res
       },
@@ -67,10 +89,35 @@ export class BadgeNoComponent implements OnInit {
     )
   }
 
+  getAssetTypeData() {
+    let tempData = []
+    this.assetTypesService.get().subscribe(
+      (res) => {
+        console.log("assetTypesService = ", res);
+        // console.log('tempData = ', tempData)
+        this.assetTypeList = res
+      },
+      error => {
+        console.error("err", error);
+      }
+    )
+  }
+
+  openModal(modalNotification: TemplateRef<any>) {
+    this.getAssetTypeData()
+    // console.log("openModal");
+    this.modal = this.modalService.show(modalNotification, this.modalConfig);
+  }
+
+  closeModal() {
+    this.modal.hide();
+    this.getBadgeNoData()
+  }
+
   entriesChange($event) {
-    console.log($event)
+    // console.log($event)
     this.entries = $event.target.value;
-    console.log(this.entries)
+    // console.log(this.entries)
   }
 
   onSelect({ selected }) {
@@ -82,23 +129,125 @@ export class BadgeNoComponent implements OnInit {
     this.activeRow = event.row;
   }
 
+  submitAssetType() {
+    console.log('assetTypeForm = ', this.assetTypeForm.value)
+
+    this.assetsBadgeNoService.create(this.assetTypeForm.value).subscribe(
+      (res) => {
+        console.log("yeaaayyy = ", res);
+        this.successAlert()
+      },
+      error => {
+        console.error("err", error);
+      }
+    )
+  }
+
+  submitAssetTypeDesc() {
+    console.log('assetTypeForm = ', this.assetTypeFormDesc.value)
+
+    this.assetsBadgeNoService.create(this.assetTypeFormDesc.value).subscribe(
+      (res) => {
+        console.log("yeaaayyy = ", res);
+        this.successAlert()
+      },
+      error => {
+        console.error("err", error);
+      }
+    )
+  }
+
   onKey(event, formName, row) {
-    console.log('event = ', event);
-    console.log('formName = ', formName);
-    console.log('row = ', row['id']);
+    // console.log('event = ', event);
+    // console.log('formName = ', formName);
+    // console.log('row = ', row);
+    let field = "asset_primary_category=" + row.asset_primary_category
+    let noTotal = 0
+    let noActive = 0
+    let noInactive = 0
+
+    this.assetsBadgeNoService.filter(field).subscribe(
+      (res) => {
+        // console.log("assTypeListjhjhj = ", res);
+        this.assTypeList = res
+        noTotal = res.length
+        // console.log('assTypeList = ', this.assTypeList)
+        if (noTotal > 1) {
+          this.assTypeList.forEach(element => {
+            if (event == "AC") {
+              if (element.id != row.id) {
+                console.log('--- iiifff ---', element.id, "==", row.id)
+                this.addOnKeyData('IC', element.id)
+              } else {
+                console.log('--- elseee ---', element.id, "==", row.id)
+                this.addOnKeyData('AC', element.id)
+              }
+            } else {
+              noActive++
+            }
+          });
+        } else {
+          if (event == 'IC') {
+            this.errorAlert()
+          } else {
+            this.addOnKeyData(event, row)
+          }
+        }
+        console.log('dadadasdasda')
+        this.getBadgeNoData()
+      },
+      error => {
+        console.error("err", error);
+      }
+    )
+    console.log('huhuhuhhu')
+
+  }
+
+  addOnKeyData(event, row) {
+    // console.log('noTotal = ', noTotal, '-', noInactive, '-', noActive)
+    console.log('row[id] = ', row)
+
     let updateformData: any = {}
-    updateformData[formName] = event
+    updateformData['status'] = ''
+    updateformData['status'] = event
 
     console.log('updateformData = ', updateformData)
 
-    // this.assetsRegistrationService.update(row['id'], updateformData).subscribe(
-    //   (res) => {
-    //     console.log("assetsRegistrationService = ", res);
-    //   },
-    //   error => {
-    //     console.error("err", error);
-    //   }
-    // )
+    this.assetsBadgeNoService.update(row, updateformData).subscribe(
+      (res) => {
+        // this.getBadgeNoData()
+        // console.log("assetsBadgeNoService = ", res);
+      },
+      error => {
+        console.error("err", error);
+      }
+    )
+
+  }
+
+  successAlert() {
+    swal.fire({
+      title: "Success",
+      text: "Your data successfully inserted into the system",
+      type: "success",
+      buttonsStyling: false,
+      confirmButtonClass: "btn btn-success",
+    }).then((result) => {
+      this.closeModal()
+    });
+  }
+
+  errorAlert() {
+    swal.fire({
+      title: "Warning",
+      text: "Cannot Update Data",
+      type: "warning",
+      buttonsStyling: false,
+      confirmButtonClass: "btn btn-warning",
+    }).then((result) => {
+      // this.closeModal()
+    });
   }
 
 }

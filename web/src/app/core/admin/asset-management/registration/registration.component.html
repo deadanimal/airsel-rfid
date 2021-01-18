@@ -651,7 +651,7 @@ installation<div class="header pb-6">
               </div>
             </div>
 
-            <div class="col-md-3 col-sm-6">
+            <!-- <div class="col-md-3 col-sm-6">
               <div class="custom-control custom-checkbox">
                 <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkBotWatLevel"
                   [(ngModel)]="is_show1.bottom_water_level">
@@ -1305,7 +1305,7 @@ installation<div class="header pb-6">
                   Voltage
                 </label>
               </div>
-            </div>
+            </div> -->
 
           </div>
           <hr />
@@ -2031,7 +2031,7 @@ installation<div class="header pb-6">
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <!-- <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
                       *ngIf="is_show1.bottom_water_level">
                       <ng-template ngx-datatable-header-template>
                         <span>Bottom Water Level</span>
@@ -2762,7 +2762,7 @@ installation<div class="header pb-6">
                         <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="voltage"
                           class="form-control" value="{{row.voltage}}" />
                       </ng-template>
-                    </ngx-datatable-column>
+                    </ngx-datatable-column> -->
 
                     <ngx-datatable-column [width]="140" [resizeable]="false">
                       <ng-template ngx-datatable-header-template>
@@ -2811,7 +2811,8 @@ installation<div class="header pb-6">
       List of Asset
     </h6>
 
-    <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button" (click)="ModalAssetAttribute.hide()">
+    <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
+      (click)="ModalAssetAttribute.hide()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
   </div>
@@ -3438,7 +3439,6 @@ installation<div class="header pb-6">
   </div>
 </ng-template>
 
-
 <ng-template #asset>
   <div class="modal-header bg-default">
     <h6 class="modal-title my-auto text-white">
@@ -3595,8 +3595,7 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Region</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="region">
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="region">
                   <option value="">Please select</option>
                   <option *ngFor="let region of region" [value]="region.value">
                     {{ region.name }}</option>
@@ -3609,8 +3608,7 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Operation</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="operation">
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="operation">
                   <option value="">Please select</option>
                   <option *ngFor="let operation of operation" [value]="operation.value">
                     {{ operation.name }}</option>
@@ -3741,7 +3739,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Location/Asset Maintenance Manager</label>
-                <input type="text" formControlName="location_asset_maintenance_manager" class="form-control form-control-sm" />
+                <input type="text" formControlName="location_asset_maintenance_manager"
+                  class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-6">
@@ -3813,7 +3812,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 1-Unit Measurement</label>
-                <input type="text" formControlName="size_capacity_1_unit_measurement" class="form-control form-control-sm" />
+                <input type="text" formControlName="size_capacity_1_unit_measurement"
+                  class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -3827,7 +3827,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 2-Unit Measurement</label>
-                <input type="text" formControlName="size_capacity_2_unit_measurement" class="form-control form-control-sm" />
+                <input type="text" formControlName="size_capacity_2_unit_measurement"
+                  class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -3841,7 +3842,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 3-Uni Measurement</label>
-                <input type="text" formControlName="size_capacity_3_unit_measurement" class="form-control form-control-sm" />
+                <input type="text" formControlName="size_capacity_3_unit_measurement"
+                  class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -3883,7 +3885,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Purchase Date/Installed/Handed Over</label>
-                <input type="date" formControlName="purchase_date_installed_handed_over_date" class="form-control form-control-sm" />
+                <input type="date" formControlName="purchase_date_installed_handed_over_date"
+                  class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -3976,8 +3979,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Communication Protocol</label>
-                <input type="text" formControlName="communication_protocol"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="communication_protocol" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
@@ -3995,8 +3997,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Environmental Performance</label>
-                <input type="text" formControlName="environmental_performance"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="environmental_performance" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4030,8 +4031,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Infrastructure Status</label>
-                <input type="text" formControlName="infrastructure_status"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="infrastructure_status" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
@@ -4084,8 +4084,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Manufacturer Part Number</label>
-                <input type="text" formControlName="manufacture_part_number"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="manufacture_part_number" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
@@ -4155,8 +4154,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Revolution Per Minute</label>
-                <input type="text" formControlName="revolutions_per_minute"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="revolutions_per_minute" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4208,8 +4206,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Valve Pressure Rating</label>
-                <input type="text" formControlName="valve_pressure_rating"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="valve_pressure_rating" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4217,29 +4214,25 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Chassis Number</label>
-                <input type="text" formControlName="vehicle_chassis_number"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_chassis_number" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Engine Capacity</label>
-                <input type="text" formControlName="vehicle_engine_capacity"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_engine_capacity" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Engine Number</label>
-                <input type="text" formControlName="vehicle_engine_number"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_engine_number" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Insurance Vendor</label>
-                <input type="text" formControlName="vehicle_insurance_vendor"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_insurance_vendor" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4320,15 +4313,13 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Owner Status</label>
-                <input type="text" formControlName="vehicle_owner_status"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_owner_status" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Register Date</label>
-                <input type="date" formControlName="vehicle_register_date"
-                  class="form-control form-control-sm" />
+                <input type="date" formControlName="vehicle_register_date" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4336,8 +4327,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Roadtax Rate</label>
-                <input type="text" formControlName="vehicle_roadtax_rate"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_roadtax_rate" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
@@ -4357,8 +4347,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Roadtax Renew Date</label>
-                <input type="date" formControlName="vehicle_roadtax_renew_date"
-                  class="form-control form-control-sm" />
+                <input type="date" formControlName="vehicle_roadtax_renew_date" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4387,8 +4376,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Seating Capacity</label>
-                <input type="text" formControlName="vehicle_seating_capacity"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_seating_capacity" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4396,8 +4384,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Registration Owner</label>
-                <input type="text" formControlName="vehicle_registration_owner"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_registration_owner" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
