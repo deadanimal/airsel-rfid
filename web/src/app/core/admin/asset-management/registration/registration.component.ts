@@ -84,6 +84,7 @@ export class RegistrationComponent implements OnInit {
 
   focusSearch;
 
+  // Selection
   regions = [];
   organisations = [];
   assetprimarycategory = [
@@ -525,6 +526,16 @@ export class RegistrationComponent implements OnInit {
       "description": "WATER BALANCE METER",
       "status": "Inactive",
       "latest_no": "257"
+    },
+    {
+      "id": "91a7f0b5-433b-4e7c-8cfb-a3beeb838fdb",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "brand": "True",
+      "capacity_size": "False",
+      "closingTorque": "True",
+      "hysteresis": "False",
+      "installation": "False",
+      "manufacturer": "True",
     }
   ];
 
@@ -539,7 +550,216 @@ export class RegistrationComponent implements OnInit {
   // sixthFormGroup: FormGroup;
   // seventhFormGroup: FormGroup;
   validation_messages = [];
+  rowData: any
 
+
+  // Asset Attribute Visibility
+  assetasstributevisible = [
+    {
+      "asset_primary_category": "ACTUATOR",
+      "brand": "true",
+      "capacity_size": "true",
+      "closing_torque": "true",
+      "hysteresis": "true",
+      "installation": "true",
+      "manufacturer": "true",
+      "manufacture_part_number": "true",
+      "manufacturer_year": "true",
+      "model": "true",
+      "opening_torque": "true",
+      "power_supply_type": "true",
+      "revolutions_per_minute": "true",
+      "type": "false",
+      "material_type": "false",
+      "valve_pressure_rating": "false",
+      "horse_power": "false",
+      "temperature": "false",
+      "coverage_range": "false",
+      "voltage": "false",
+      "valve_diameter": "false",
+      "top_water_level": "false",
+      "inlet_diameter": "false",
+      "bottom_water_level": "false",
+      "outlet_diameter": "false",
+      "staging_height": "false",
+      "dimention": "false",
+      "environmental_performance": "false",
+      "no_of_channel": "false",
+      "frequency": "false",
+      "vehicle_chassis_number": "false",
+      "vehicle_engine_capacity": "false",
+      "vehicle_engine_number": "false",
+      "vehicle_insurance_cover_note_number": "false",
+      "vehicle_insurance_date_period_from": "false",
+      "vehicle_insurance_no_claim_discount": "false",
+      "vehicle_insurance_total_premium": "false",
+      "vehicle_insurance_policy_type": "false",
+      "vehicle_insurance_sum_insured": "false",
+      "vehicle_insurance_date_period_to": "false",
+      "vehicle_insurance_auto_windscreen_insured": "false",
+      "vehicle_model": "false",
+      "vehicle_owner_status": "false",
+      "vehicle_puspakom_expired_date": "false",
+      "vehicle_puspakom_date_inspection": "false",
+      "vehicle_register_date": "false",
+      "vehicle_registration_owner": "false",
+      "vehicle_roadtax_rate": "false",
+      "vehicle_roadtax_renew_date": "false",
+      "vehicle_insurance_vendor": "false",
+      "vehicle_seating_capacity": "false",
+      "vehicle_spad_permit_date_period_from": "false",
+      "vehicle_spad_no_license_operator": "false",
+      "vehicle_spad_permit_date_period_to": "false",
+      "motor_current": "false",
+      "insulation": "false",
+      "no_of_phases": "false",
+      "communication_protocol": "false",
+      "flow_rate": "false",
+      "pump_head": "false",
+      "no_of_stage": "false",
+      "infrastructure_status_reason": "false",
+      "infrastructure_status": "false",
+      "legal_name": "false",
+      "source_from": "false",
+      "supply_location": "false",
+    },
+    {
+      "asset_primary_category": "AIR VALVE",
+      "brand": "true",
+      "capacity_size": "true",
+      "closing_torque": "false",
+      "hysteresis": "false",
+      "installation": "true",
+      "manufacturer": "true",
+      "manufacture_part_number": "true",
+      "manufacturer_year": "true",
+      "model": "true",
+      "opening_torque": "false",
+      "power_supply_type": "false",
+      "revolutions_per_minute": "false",
+      "type": "true",
+      "material_type": "true",
+      "valve_pressure_rating": "true",
+      "horse_power": "false",
+      "temperature": "false",
+      "coverage_range": "false",
+      "voltage": "false",
+      "valve_diameter": "true",
+      "top_water_level": "false",
+      "inlet_diameter": "false",
+      "bottom_water_level": "false",
+      "outlet_diameter": "false",
+      "staging_height": "false",
+      "dimention": "false",
+      "environmental_performance": "false",
+      "no_of_channel": "false",
+      "frequency": "false",
+      "vehicle_chassis_number": "false",
+      "vehicle_engine_capacity": "false",
+      "vehicle_engine_number": "false",
+      "vehicle_insurance_cover_note_number": "false",
+      "vehicle_insurance_date_period_from": "false",
+      "vehicle_insurance_no_claim_discount": "false",
+      "vehicle_insurance_total_premium": "false",
+      "vehicle_insurance_policy_type": "false",
+      "vehicle_insurance_sum_insured": "false",
+      "vehicle_insurance_date_period_to": "false",
+      "vehicle_insurance_auto_windscreen_insured": "false",
+      "vehicle_model": "false",
+      "vehicle_owner_status": "false",
+      "vehicle_puspakom_expired_date": "false",
+      "vehicle_puspakom_date_inspection": "false",
+      "vehicle_register_date": "false",
+      "vehicle_registration_owner": "false",
+      "vehicle_roadtax_rate": "false",
+      "vehicle_roadtax_renew_date": "false",
+      "vehicle_insurance_vendor": "false",
+      "vehicle_seating_capacity": "false",
+      "vehicle_spad_permit_date_period_from": "false",
+      "vehicle_spad_no_license_operator": "false",
+      "vehicle_spad_permit_date_period_to": "false",
+      "motor_current": "false",
+      "insulation": "false",
+      "no_of_phases": "false",
+      "communication_protocol": "false",
+      "flow_rate": "false",
+      "pump_head": "false",
+      "no_of_stage": "false",
+      "infrastructure_status_reason": "false",
+      "infrastructure_status": "false",
+      "legal_name": "false",
+      "source_from": "false",
+      "supply_location": "false",
+    },
+    {
+      "asset_primary_category": "AIR VALVE",
+      "brand": "true",
+      "capacity_size": "true",
+      "closing_torque": "false",
+      "hysteresis": "false",
+      "installation": "true",
+      "manufacturer": "true",
+      "manufacture_part_number": "true",
+      "manufacturer_year": "true",
+      "model": "true",
+      "opening_torque": "false",
+      "power_supply_type": "false",
+      "revolutions_per_minute": "true",
+      "type": "false",
+      "material_type": "false",
+      "valve_pressure_rating": "false",
+      "horse_power": "true",
+      "temperature": "true",
+      "coverage_range": "false",
+      "voltage": "true",
+      "valve_diameter": "false",
+      "top_water_level": "false",
+      "inlet_diameter": "false",
+      "bottom_water_level": "false",
+      "outlet_diameter": "false",
+      "staging_height": "false",
+      "dimention": "false",
+      "environmental_performance": "false",
+      "no_of_channel": "false",
+      "frequency": "true",
+      "vehicle_chassis_number": "false",
+      "vehicle_engine_capacity": "false",
+      "vehicle_engine_number": "false",
+      "vehicle_insurance_cover_note_number": "false",
+      "vehicle_insurance_date_period_from": "false",
+      "vehicle_insurance_no_claim_discount": "false",
+      "vehicle_insurance_total_premium": "false",
+      "vehicle_insurance_policy_type": "false",
+      "vehicle_insurance_sum_insured": "false",
+      "vehicle_insurance_date_period_to": "false",
+      "vehicle_insurance_auto_windscreen_insured": "false",
+      "vehicle_model": "false",
+      "vehicle_owner_status": "false",
+      "vehicle_puspakom_expired_date": "false",
+      "vehicle_puspakom_date_inspection": "false",
+      "vehicle_register_date": "false",
+      "vehicle_registration_owner": "false",
+      "vehicle_roadtax_rate": "false",
+      "vehicle_roadtax_renew_date": "false",
+      "vehicle_insurance_vendor": "false",
+      "vehicle_seating_capacity": "false",
+      "vehicle_spad_permit_date_period_from": "false",
+      "vehicle_spad_no_license_operator": "false",
+      "vehicle_spad_permit_date_period_to": "false",
+      "motor_current": "true",
+      "insulation": "true",
+      "no_of_phases": "true",
+      "communication_protocol": "false",
+      "flow_rate": "false",
+      "pump_head": "false",
+      "no_of_stage": "false",
+      "infrastructure_status_reason": "false",
+      "infrastructure_status": "false",
+      "legal_name": "false",
+      "source_from": "false",
+      "supply_location": "false",
+    }
+  ]
   constructor(
     public formBuilder: FormBuilder,
     public modalService: BsModalService,
@@ -620,7 +840,7 @@ export class RegistrationComponent implements OnInit {
       closing_torque: ["", Validators.required],
       communication_protocol: ["", Validators.required],
       coverage_range: ["", Validators.required],
-      dimension: ["", Validators.required],
+      dimention: ["", Validators.required],
       environmental_performance: ["", Validators.required],
       flow_rate: ["", Validators.required],
       frequency: ["", Validators.required],
@@ -683,6 +903,9 @@ export class RegistrationComponent implements OnInit {
     });
     this.fileuploadFormGroup = this.formBuilder.group({
       excelFile: ["", Validators.required],
+    });
+    this.assetAttributeGroup = this.formBuilder.group({
+      asset_identity: [""],
     })
   }
 
@@ -851,17 +1074,31 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
-  openModalRegister(modalNotification: TemplateRef<any>) {
+  openModalRegister(modalNotification: TemplateRef<any>, row) {
     this.modalRegisterAsset = this.modalService.show(
       modalNotification,
-      this.modalConfig
+      this.modalConfig,
+      // this.firstFormGroup.patchValue({
+      //   ...row,
+      // }),
+      // this.secondFormGroup.patchValue({
+      //   ...row,
+      // }),
     );
+
   }
 
-  openModalAssetAttribute(modalNotification: TemplateRef<any>) {
+  openModalAssetAttribute(modalNotification: TemplateRef<any>, row) {
+    // console.log('row ',row)
+    // if(row){
+    //   this.assetAttributeGroup.PatchValue(row);
+    // }
+    this.rowData = ''
+    this.rowData = row
     this.ModalAssetAttribute = this.modalService.show(
       modalNotification,
-      this.modalConfig
+      this.modalConfig,
+
     );
   }
 
