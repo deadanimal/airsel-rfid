@@ -72,63 +72,63 @@ export class RegisteredComponent implements OnInit {
   };
 
   is_show1 = {
-    parent_location: false, //
-    location_description: false, //
-    building: false, //
-    address_line_1: false,  //
-    address_line_2: false, //
-    address_line_3: false, //
-    city: false, //
-    state: false, //
-    postal_code: false, //
-    country: false, //
-    tag_number: false, //
-    service_area: false, //
-    maintenance_planner: false, //
-    location_main_contact: false, //
-    location_asset_maintenance_manager: false, //
-    gis_esri_id: false, //
-    latitude: false, //
-    longitude: false, //
-    asset_critically: false, //
-    cost_center: false,
-    // asset_owning_depart: false,
-    sub_process_system: false,
-    brand: false,
-    size_capacity_1: false,
-    size_capacity_2: false,
-    size_capacity_3: false,
-    maintenance_specification: false,
-    asset_owning_department: false,
-    asset_or_component_type: false,
-    badge_no: false,
-    size_capacity_1_unit_measurement: false,
-    size_capacity_2_unit_measurement: false,
-    size_capacity_3_unit_measurement: false,
-    measurement_type: false,
-    main_operation: false,
-    asset_class_asset_category: false,
-    internal_asset_adentity: false,
-    sub_category_1: false,
-    parent_asset_plate_number: false,
-    purchase_date_installed_handed_over_date: false,
-    warranty: false,
-    region: false,
-    handed_over_asset_or_procured: false,
-    asset_primary_category: false,
-    sub_category_2: false,
-    asset_plate_number: false,
-    condition_rating: false,
-    actual_warranty_period: false,
-    operation: false,
-    process_function: false,
-    model_number: false,
-    detailed_description: false,
-    serial_number: false,
-    asset_status: false,
-    warranty_vendor_name: false,
-    asset_tag_number: false,
-    asset_identity: false,
+    parent_location: true, //
+    location_description: true, //
+    building: true, //
+    address_line_1: true,  //
+    address_line_2: true, //
+    address_line_3: true, //
+    city: true, //
+    state: true, //
+    postal_code: true, //
+    country: true, //
+    tag_number: true, //
+    service_area: true, //
+    maintenance_planner: true, //
+    location_main_contact: true, //
+    location_asset_maintenance_manager: true, //
+    gis_esri_id: true, //
+    latitude: true, //
+    longitude: true, //
+    asset_critically: true, //
+    cost_center: true,
+    // asset_owning_depart: true,
+    sub_process_system: true,
+    brand: true,
+    size_capacity_1: true,
+    size_capacity_2: true,
+    size_capacity_3: true,
+    maintenance_specification: true,
+    asset_owning_department: true,
+    asset_or_component_type: true,
+    badge_no: true,
+    size_capacity_1_unit_measurement: true,
+    size_capacity_2_unit_measurement: true,
+    size_capacity_3_unit_measurement: true,
+    measurement_type: true,
+    main_operation: true,
+    asset_class_asset_category: true,
+    internal_asset_identity: true,
+    sub_category_1: true,
+    parent_asset_plate_number: true,
+    purchase_date_installed_handed_over_date: true,
+    warranty: true,
+    region: true,
+    handed_over_asset_or_procured: true,
+    asset_primary_category: true,
+    sub_category_2: true,
+    asset_plate_number: true,
+    condition_rating: true,
+    actual_warranty_period: true,
+    operation: true,
+    process_function: true,
+    model_number: true,
+    detailed_description: true,
+    serial_number: true,
+    asset_status: true,
+    warranty_vendor_name: true,
+    asset_tag_number: true,
+    asset_identity: true,
   }
   tableShow1 = false
 
@@ -383,7 +383,7 @@ export class RegisteredComponent implements OnInit {
       formData.append('vehicle_insurance_date_period_from', loopval.vehicle_insurance_date_period_from)
       formData.append('vehicle_insurance_policy_type', loopval.vehicle_insurance_policy_type)
       formData.append('vehicle_puspakom_date_inspection', loopval.vehicle_puspakom_date_inspection)
-      formData.append('vehicle_roadtarate', loopval.vehicle_roadtax_rate)
+      formData.append('vehicle_roadtax_rate', loopval.vehicle_roadtax_rate)
       formData.append('vehicle_roadtax_renew_date', loopval.vehicle_roadtax_renew_date)
       formData.append('vehicle_spad_permit_date_period_from', loopval.vehicle_spad_permit_date_period_from)
       formData.append('voltage', loopval.voltage)
@@ -392,10 +392,10 @@ export class RegisteredComponent implements OnInit {
       // dalam foreach
       assetregserv.post(formData).subscribe(
         (res) => {
-          console.log("res = ", res);
+          // console.log("res = ", res);
         },
         error => {
-          console.error("err", error);
+          // console.error("err", error);
         }
       )
 
@@ -421,11 +421,11 @@ export class RegisteredComponent implements OnInit {
           val['isTick'] = false
           tempData.push(val)
         })
-        console.log('tempData = ', tempData)
+        // console.log('tempData = ', tempData)
         this.tableTemp1 = tempData
       },
       error => {
-        console.error("err", error);
+        // console.error("err", error);
       }
     )
   }
@@ -449,17 +449,17 @@ export class RegisteredComponent implements OnInit {
       (item) => {
         // console.log(item['id'], ' == ', selected['id'])
         if (item['id'] == selected['id']) {
-          console.log('isTick = ', item['isTick']);
-          console.log('item b4 = ', item)
+          // console.log('isTick = ', item['isTick']);
+          // console.log('item b4 = ', item)
           item['isTick'] = item['isTick']
-          console.log('item after = ', item)
+          // console.log('item after = ', item)
           tempData.push(item)
         } else {
           tempData.push(item)
         }
       }
     )
-    console.log('tempDataqweqe = ', tempData)
+    // console.log('tempDataqweqe = ', tempData)
     this.tableTemp1 = tempData
   }
 
@@ -481,7 +481,7 @@ export class RegisteredComponent implements OnInit {
 
   changeStatus(task) {
     let resData: any
-    console.log('this.task = ', task)
+    // console.log('this.task = ', task)
     let no = 0
     let assetregser = this.assetsRegistrationService
     this.tableTemp1.forEach(function (itemVal) {
@@ -493,14 +493,14 @@ export class RegisteredComponent implements OnInit {
         updateformData = {
           status: task
         }
-        console.log('updateformData = ', updateformData)
+        // console.log('updateformData = ', updateformData)
         assetregser.update(itemVal['id'], updateformData).subscribe(
           (res) => {
-            console.log("res = ", res);
+            // console.log("res = ", res);
             resData = res
           },
           error => {
-            console.error("err", error);
+            // console.error("err", error);
           }
         )
       }

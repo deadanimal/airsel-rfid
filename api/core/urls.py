@@ -26,18 +26,27 @@ router = NestedDefaultRouter()
 
 # Asset
 from assets.views import (
-    AssetViewSet,AssetRegistrationViewSet,
+    AssetViewSet,
+    AssetRegistrationViewSet,
     AssetGroupViewSet,
     AssetTypeViewSet,
-    RfidViewSet
+    RfidViewSet,
+    AssetBadgeFormatViewSet,
+    AssetAttributeViewSet,
+    AssetAttributeColumnViewSet,
+    AssetLocationViewSet
 )
 
 assets_router = router.register(
     'assets', AssetViewSet
 )
 
-assets_registration_router = router.register(
-    'asset-registration', AssetRegistrationViewSet
+assets_badge_format_router = router.register(
+    'asset-badge-format', AssetBadgeFormatViewSet
+)
+
+assets_attribute_router = router.register(
+    'asset-attribute', AssetAttributeViewSet
 )
 
 asset_groups_router = router.register(
@@ -51,6 +60,19 @@ asset_types_router = router.register(
 rfids_router = router.register(
     'rfids', RfidViewSet
 )
+
+assets_registration_router = router.register(
+    'asset-registration', AssetRegistrationViewSet
+)
+
+assets_attribute_column_router = router.register(
+    'asset-attribute-column', AssetAttributeColumnViewSet
+)
+
+assets_location_router = router.register(
+    'asset-location', AssetLocationViewSet
+)
+
 
 # Locations app
 from locations.views import (
@@ -103,7 +125,13 @@ from operations.views import (
     WorkCategoryViewSet,
     WorkRequestViewSet,
     WorkRequestStatusViewSet,
-    MeasurementTypeViewSet
+    MeasurementTypeViewSet,
+
+    WorkOrderActivityCompletionAssetLocationAssetListViewSet,
+    AssetLocationAssetListServiceHistoriesViewSet,
+    ServiceHistoriesQuestionsViewSet,
+    QuestionsValidValueViewSet,
+    WorkOrderActivityCompletionViewSet
 )
 
 owning_organizations_router = router.register(
@@ -156,6 +184,28 @@ work_request_statuses_router = router.register(
 
 measurement_types_router = router.register(
     'measurement-types', MeasurementTypeViewSet
+)
+
+#### dopied from dev aoi
+
+work_order_activity_completion_router = router.register(
+    'work-order-activity-completion', WorkOrderActivityCompletionViewSet
+)
+
+work_order_activity_completion_asset_location_asset_list_router = router.register(
+    'work-order-activity-completion-asset-location-asset-list', WorkOrderActivityCompletionAssetLocationAssetListViewSet
+)
+
+asset_location_asset_list_service_histories_router = router.register(
+    'asset-location-asset-list-service-histories', AssetLocationAssetListServiceHistoriesViewSet
+)
+
+service_histories_questions_router = router.register(
+    'service-histories-questions', ServiceHistoriesQuestionsViewSet
+)
+
+questions_valid_value_router = router.register(
+    'questions-value-valid', QuestionsValidValueViewSet
 )
 
 # Organisations app

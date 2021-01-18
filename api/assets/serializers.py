@@ -9,10 +9,15 @@ from rest_framework import serializers
 from django.utils.timezone import now
 
 from .models import (
-    Asset,AssetRegistration,
+    Asset,
+    AssetRegistration,
     AssetGroup,
     AssetType,
-    Rfid
+    Rfid,
+    AssetBadgeFormat,
+    AssetAttribute,
+    AssetAttributeColumn,
+    AssetLocation
 )
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -21,6 +26,11 @@ class AssetSerializer(serializers.ModelSerializer):
         model = Asset
         fields = '__all__'
 
+class AssetBadgeFormatSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetBadgeFormat
+        fields = '__all__'
 
 class AssetRegistrationSerializer(serializers.ModelSerializer):
 
@@ -28,13 +38,11 @@ class AssetRegistrationSerializer(serializers.ModelSerializer):
         model = AssetRegistration
         fields = '__all__'
 
-
 class AssetGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetGroup
         fields = '__all__'
-
 
 class AssetTypeSerializer(serializers.ModelSerializer):
 
@@ -42,10 +50,26 @@ class AssetTypeSerializer(serializers.ModelSerializer):
         model = AssetType
         fields = '__all__'
 
-
 class RfidSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rfid
         fields = '__all__'
 
+class AssetAttributeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetAttribute
+        fields = '__all__'
+
+class AssetAttributeColumnSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetAttributeColumn
+        fields = '__all__'
+
+class AssetLocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetLocation
+        fields = '__all__'

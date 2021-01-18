@@ -21,7 +21,12 @@ from .models import (
     WorkRequest,
     WorkRequestStatus,
     MeasurementType,
-    OperationalReading
+    OperationalReading,
+    QuestionsValidValue,
+    ServiceHistoriesQuestions,
+    AssetLocationAssetListServiceHistories,
+    WorkOrderActivityCompletionAssetLocationAssetList,
+    WorkOrderActivityCompletion
 )
 
 from users.serializers import (
@@ -38,7 +43,6 @@ class OwningOrganizationSerializer(serializers.ModelSerializer):
         model = OwningOrganization
         fields = '__all__'
 
-
 class OwningOrganizationExtendedSerializer(serializers.ModelSerializer):
     record_by = CustomUserSerializer(read_only=True)
     modified_by = CustomUserSerializer(read_only=True)
@@ -47,13 +51,11 @@ class OwningOrganizationExtendedSerializer(serializers.ModelSerializer):
         model = OwningOrganization
         fields = '__all__'
 
-
 class BoSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Bo
         fields = '__all__'
-
 
 class BoExtendedSerializer(serializers.ModelSerializer):
     record_by = CustomUserSerializer(read_only=True)
@@ -63,13 +65,11 @@ class BoExtendedSerializer(serializers.ModelSerializer):
         model = Bo
         fields = '__all__'
 
-
 class MaintenanceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Maintenance
         fields = '__all__'
-
 
 class IssueTypeSerializer(serializers.ModelSerializer):
 
@@ -89,7 +89,6 @@ class WorkActivitySerializer(serializers.ModelSerializer):
         model = WorkActivity
         fields = '__all__'
 
-
 class WorkActivityExtendedSerializer(serializers.ModelSerializer):
     record_by = CustomUserSerializer(read_only=True)
     modified_by = CustomUserSerializer(read_only=True)
@@ -98,20 +97,17 @@ class WorkActivityExtendedSerializer(serializers.ModelSerializer):
         model = WorkActivity
         fields = '__all__'
 
-
 class WorkActivityTeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkActivityTeam
         fields = '__all__'
 
-
 class WorkClassSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = WorkClass
         fields = '__all__'
-
 
 class WorkClassExtendedSerializer(serializers.ModelSerializer):
     record_by = CustomUserSerializer(read_only=True)
@@ -121,13 +117,11 @@ class WorkClassExtendedSerializer(serializers.ModelSerializer):
         model = WorkClass
         fields = '__all__'
 
-
 class WorkCategorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = WorkCategory
         fields = '__all__'
-
 
 class WorkCategoryExtendedSerializer(serializers.ModelSerializer):
     record_by = CustomUserSerializer(read_only=True)
@@ -137,13 +131,11 @@ class WorkCategoryExtendedSerializer(serializers.ModelSerializer):
         model = WorkCategory
         fields = '__all__'
 
-
 class WorkRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkRequest
         fields = '__all__'
-
 
 class WorkRequestExtendedSerializer(serializers.ModelSerializer):
     attachment = MediaSerializer(read_only=True)
@@ -154,13 +146,11 @@ class WorkRequestExtendedSerializer(serializers.ModelSerializer):
         model = WorkRequest
         fields = '__all__'
 
-
 class WorkRequestStatusSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = WorkRequestStatus
         fields = '__all__'
-
 
 class WorkRequestStatusExtendedSerializer(serializers.ModelSerializer):
     work_request_id = WorkRequestSerializer(read_only=True)
@@ -171,13 +161,11 @@ class WorkRequestStatusExtendedSerializer(serializers.ModelSerializer):
         model = WorkRequestStatus
         fields = '__all__'
 
-
 class MeasurementTypeSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = MeasurementType
         fields = '__all__'
-
 
 class MeasurementTypeExtendedSerializer(serializers.ModelSerializer):
     record_by = CustomUserSerializer(read_only=True)
@@ -187,18 +175,77 @@ class MeasurementTypeExtendedSerializer(serializers.ModelSerializer):
         model = MeasurementType
         fields = '__all__'
 
-
 class OperationalReadingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OperationalReading
         fields = '__all__'
 
-
 class OperationalReadingExtendedSerializer(serializers.ModelSerializer):
+
     record_by = CustomUserSerializer(read_only=True)
     modified_by = CustomUserSerializer(read_only=True)
     
     class Meta:
         model = OperationalReading
+        fields = '__all__'
+
+# copied from dev api
+
+class WorkOrderActivityCompletionAssetLocationAssetListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = WorkOrderActivityCompletionAssetLocationAssetList
+        fields = '__all__'
+
+class AssetLocationAssetListServiceHistoriesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetLocationAssetListServiceHistories
+        fields = '__all__'
+
+class ServiceHistoriesQuestionsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ServiceHistoriesQuestions
+        fields = '__all__'
+
+class QuestionsValidValueSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = QuestionsValidValue
+        fields = '__all__'
+
+class WorkOrderActivityCompletionSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = WorkOrderActivityCompletion
+		fields = '__all__'
+
+class ServiceHistoriesQuestionsExtendedSerializer(serializers.ModelSerializer):
+    
+    valid_value = QuestionsValidValueSerializer(many=True)
+    class Meta:
+        model = ServiceHistoriesQuestions
+        fields = '__all__'
+
+class AssetLocationAssetListServiceHistoriesExtendedSerializer(serializers.ModelSerializer):
+    
+    question = ServiceHistoriesQuestionsExtendedSerializer(many=True)
+    class Meta:
+        model = AssetLocationAssetListServiceHistories
+        fields = '__all__'
+
+class WorkOrderActivityCompletionAssetLocationAssetListExtendedSerializer(serializers.ModelSerializer):
+
+    service_histories = AssetLocationAssetListServiceHistoriesExtendedSerializer(many=True)
+    class Meta:
+        model = WorkOrderActivityCompletionAssetLocationAssetList
+        fields = '__all__'
+
+class WorkOrderActivityCompletionExtendedSerializer(serializers.ModelSerializer):
+
+    asset_location_asset_list = WorkOrderActivityCompletionAssetLocationAssetListExtendedSerializer(many=True)
+    class Meta:
+        model = WorkOrderActivityCompletion
         fields = '__all__'

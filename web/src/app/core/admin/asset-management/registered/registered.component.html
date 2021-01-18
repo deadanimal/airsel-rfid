@@ -411,7 +411,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="custom-control custom-checkbox">
                                 <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                                    id="checkInternalAssId" [(ngModel)]="is_show1.internal_asset_indentity">
+                                    id="checkInternalAssId" [(ngModel)]="is_show1.internal_asset_identity">
                                 <label class="custom-control-label" for="checkInternalAssId">
                                     Internal Asset Indentity
                                 </label>
@@ -656,10 +656,10 @@
                                         </div>
                                     </div>
 
-                                    <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'"
-                                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
-                                        [limit]="tableEntries != -1 ? tableEntries : undefined" [rows]="tableTemp1"
-                                        (activate)="onActivate($event)">
+                                    <ngx-datatable class="bootstrap selection-cell material" columnMode="force"
+                                        [scrollbarV]="true" [scrollbarH]="true" [headerHeight]="50" [footerHeight]="50"
+                                        [rowHeight]="'auto'" [limit]="tableEntries != -1 ? tableEntries : undefined"
+                                        [rows]="tableTemp1" (activate)="onActivate($event)">
 
                                         <ngx-datatable-column maxWidth="60" [sortable]="false">
                                             <ng-template let-row="row" ngx-datatable-cell-template>
@@ -1084,13 +1084,13 @@
                                         </ngx-datatable-column>
 
                                         <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.internal_asset_adentity">
+                                            prop="created_date" *ngIf="is_show1.internal_asset_identity">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Internal Asset Adentity</span>
                                             </ng-template>
                                             <ng-template let-row="row" ngx-datatable-cell-template>
-                                                <input type="text" name="internal_asset_adentity" class="form-control"
-                                                    value="{{row.internal_asset_adentity}}" />
+                                                <input type="text" name="internal_asset_identity" class="form-control"
+                                                    value="{{row.internal_asset_identity}}" />
                                             </ng-template>
                                         </ngx-datatable-column>
 

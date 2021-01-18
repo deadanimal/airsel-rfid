@@ -33,7 +33,7 @@ export class AssetsRegistrationModel {
   public asset_or_component_type: string;
   public asset_class_asset_category: string;
   public handed_over_asset_or_procured: string;
-  public internal_asset_adentity: string;
+  public internal_asset_identity: string;
   public asset_primary_category: string;
   public sub_category_1: string;
   public sub_category_2: string;
@@ -120,7 +120,7 @@ export class AssetsRegistrationModel {
   public vehicle_insurance_date_period_from: string;
   public vehicle_insurance_policy_type: string;
   public vehicle_puspakom_date_inspection: string;
-  public vehicle_roadtarate: string;
+  public vehicle_roadtax_rate: string;
   public vehicle_roadtax_renew_date: string;
   public vehicle_spad_permit_date_period_from: string;
   public voltage: string;
@@ -166,7 +166,7 @@ export class AssetsRegistrationModel {
     asset_or_component_type: string,
     asset_class_asset_category: string,
     handed_over_asset_or_procured: string,
-    internal_asset_adentity: string,
+    internal_asset_identity: string,
     asset_primary_category: string,
     sub_category_1: string,
     sub_category_2: string,
@@ -254,7 +254,7 @@ export class AssetsRegistrationModel {
     vehicle_insurance_date_period_from: string,
     vehicle_insurance_policy_type: string,
     vehicle_puspakom_date_inspection: string,
-    vehicle_roadtarate: string,
+    vehicle_roadtax_rate: string,
     vehicle_roadtax_renew_date: string,
     vehicle_spad_permit_date_period_from: string,
     voltage: string,
@@ -298,7 +298,7 @@ export class AssetsRegistrationModel {
     this.asset_or_component_type = asset_or_component_type;
     this.asset_class_asset_category = asset_class_asset_category;
     this.handed_over_asset_or_procured = handed_over_asset_or_procured;
-    this.internal_asset_adentity = internal_asset_adentity;
+    this.internal_asset_identity = internal_asset_identity;
     this.asset_primary_category = asset_primary_category;
     this.sub_category_1 = sub_category_1;
     this.sub_category_2 = sub_category_2;
@@ -386,7 +386,7 @@ export class AssetsRegistrationModel {
     this.vehicle_insurance_date_period_from = vehicle_insurance_date_period_from;
     this.vehicle_insurance_policy_type = vehicle_insurance_policy_type;
     this.vehicle_puspakom_date_inspection = vehicle_puspakom_date_inspection;
-    this.vehicle_roadtarate = vehicle_roadtarate;
+    this.vehicle_roadtax_rate = vehicle_roadtax_rate;
     this.vehicle_roadtax_renew_date = vehicle_roadtax_renew_date;
     this.vehicle_spad_permit_date_period_from = vehicle_spad_permit_date_period_from;
     this.voltage = voltage;

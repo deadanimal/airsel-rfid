@@ -1,1 +1,268 @@
-<p>badge-no works!</p>
+<div class="header pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-dark d-inline-block mb-0">
+                        Asset Management - Badge No
+                    </h6>
+
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0)">
+                                    <i class="fas fa-boxes text-dark"> </i>
+                                </a>
+                            </li>
+                        </ol>
+                    </nav>
+
+                    <ng-template #popTemplate>
+                        <h4 class="text-center">Information</h4>
+                        <small class="text-justify">User able to register new asset in bulk by upload excel file. The
+                            new data will be listed below for user preview and any error will
+                            be highlighted for user actions. The registration will be pass to
+                            admin for review before adding into the database.</small>
+                    </ng-template>
+                    <button type="button" class="btn btn-icon btn-default btn-sm ml-md-4" [popover]="popTemplate"
+                        placement="right" [outsideClick]="true">
+                        <span class="btn-inner--icon"><i class="fas fa-info-circle"></i></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-6">Badge No List</div>
+                                    <div class="col-md-6 text-right">
+                                        <button class="btn btn-default" (click)="openModal(addNewAssetType)">Add New
+                                            Asset Type</button>
+                                        <button class="btn btn-default" (click)="openModal(addNewAssetTypeDesc)">Add
+                                            Asset Type Description</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="card-body"> -->
+                            <div class="dataTables_wrapper py-4">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length" id="datatable_length">
+                                            <label>
+                                                Show
+                                                <select name="datatable_length" aria-controls="datatable"
+                                                    class="form-control form-control-sm"
+                                                    (change)="entriesChange($event)">
+                                                    <option value="5">5</option>
+                                                    <option value="10">10</option>
+                                                    <option value="15">15</option>
+                                                    <option value="-1">All</option>
+                                                </select>
+                                                records
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                    </div>
+                                </div>
+
+                                <ngx-datatable class="bootstrap selection-cell" [scrollbarH]="true" [footerHeight]="50"
+                                    [rowHeight]="75" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemp"
+                                    (activate)="onActivate($event)">
+
+                                    <ngx-datatable-column name="No" [width]="30">
+                                        <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                                            <strong>{{ rowIndex + 1 }}</strong>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                    <ngx-datatable-column [sortable]="true" [width]="300" prop="created_date">
+                                        <ng-template ngx-datatable-header-template>
+                                            <span>Asset Type</span>
+                                        </ng-template>
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            {{row.asset_primary_category}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                    <ngx-datatable-column [sortable]="true" [width]="200" prop="created_date">
+                                        <ng-template ngx-datatable-header-template>
+                                            <span>Short Form</span>
+                                        </ng-template>
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            {{row.short}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                    <ngx-datatable-column [sortable]="true" [width]="300" prop="created_date">
+                                        <ng-template ngx-datatable-header-template>
+                                            <span>Asset Type Description</span>
+                                        </ng-template>
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            {{row.description}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                    <ngx-datatable-column [sortable]="true" [width]="200" prop="created_date">
+                                        <ng-template ngx-datatable-header-template>
+                                            <span>Status</span>
+                                        </ng-template>
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <span *ngIf="row.status == 'IC'">
+                                                <select type="text"
+                                                    (change)="onKey($event.target.value,$event.target.name,row)"
+                                                    name="status" class="form-control">
+                                                    <option value="">PLease Choose</option>
+                                                    <option value="AC">Active</option>
+                                                </select>
+                                            </span>
+                                            <span *ngIf="row.status == 'AC'">
+                                                <input class="form-control" disabled value="Active">
+                                            </span>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                    <ngx-datatable-column [sortable]="true" [width]="100" prop="created_date">
+                                        <ng-template ngx-datatable-header-template>
+                                            <span>Last Asset</span>
+                                        </ng-template>
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            {{row.latest_no}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+
+                                </ngx-datatable>
+                            </div>
+
+                            <!-- <div class="card-footer">
+                                <div class="row">
+
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #addNewAssetType>
+    <div class="modal-header bg-default">
+        <h6 class="modal-title my-auto text-white">
+            Create New Asset Type
+        </h6>
+
+        <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button" (click)="closeModal()">
+            <span aria-hidden="true" class="my-auto text-white"> × </span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form [formGroup]="assetTypeForm">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Asset Type</label>
+                    <input class="form-control" formControlName='asset_primary_category' name="asset_primary_category"
+                        type="text">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Short Name</label>
+                    <input class="form-control" formControlName="short" name="short" type="text">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Description</label>
+                    <input class="form-control" formControlName="description" name="description" type="text">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Status</label>
+                    <select class="form-control" formControlName="status" name="status" type="text">
+                        <option value="AC">Active</option>
+                        <option value="IC">Inactive</option>
+                    </select>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Latest No</label>
+                    <input class="form-control" formControlName="latest_no" name="latest_no" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" (click)="submitAssetType()">
+            Submit
+        </button>
+        <button class="btn btn-secondary" type="button" (click)="closeModal()">
+            Close
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #addNewAssetTypeDesc>
+    <div class="modal-header bg-default">
+        <h6 class="modal-title my-auto text-white">
+            Create New Asset Type Description
+        </h6>
+
+        <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button" (click)="closeModal()">
+            <span aria-hidden="true" class="my-auto text-white"> × </span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <form [formGroup]="assetTypeFormDesc">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Asset Type</label>
+                    <select class="form-control" formControlName='asset_primary_category' name="asset_primary_category"
+                        type="text">
+                        <option value="">Please Select Asset Type</option>
+                        <option *ngFor="let asstype of assetTypeList" [value]="asstype.name">
+                            {{asstype.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Short Name</label>
+                    <input class="form-control" formControlName="short" name="short" type="text">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Description</label>
+                    <input class="form-control" formControlName="description" name="description" type="text">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Status</label>
+                    <select class="form-control" formControlName="status" name="status" type="text">
+                        <option value="AC">Active</option>
+                        <option value="IC">Inactive</option>
+                    </select>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="form-control-label">Latest No</label>
+                    <input class="form-control" formControlName="latest_no" name="latest_no" type="text">
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" (click)="submitAssetTypeDesc()">
+            Submit
+        </button>
+        <button class="btn btn-secondary" type="button" (click)="closeModal()">
+            Close
+        </button>
+    </div>
+</ng-template>
