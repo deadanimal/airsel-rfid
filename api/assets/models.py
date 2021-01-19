@@ -147,7 +147,7 @@ class Asset(models.Model):
     warranty_expiration_date = models.CharField(max_length=100, blank=True )
     warranty_detail = models.CharField(max_length=100, blank=True )
     vendor_part_no = models.CharField(max_length=100, blank=True )
-    asset_attributes = models.ManyToManyField(AssetAttribute, null=True,default='')
+    # asset_attributes = models.ManyToManyField(AssetAttribute, null=True,default='')
 
     submitted_datetime = models.DateTimeField(null=True, default=None)
     registered_datetime = models.DateTimeField(null=True, default=None)

@@ -11,18 +11,19 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='AssetAttribute',
-            fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('asset_id', models.CharField(default=0, max_length=100)),
-                ('characteristic_type', models.CharField(default=0, max_length=100)),
-                ('characteristic_value', models.CharField(default=0, max_length=100)),
-                ('adhoc_value', models.CharField(default=0, max_length=100)),
-                ('created_date', models.DateTimeField(auto_now_add=True)),
-                ('modified_date', models.DateTimeField(auto_now=True)),
-            ],
-        ),
+        # migrations.CreateModel(
+        #     name='AssetAttribute',
+        #     fields=[                
+        #         ('id', models.UUIDField(default=uuid.uuid4)),
+        #         # ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
+        #         # ('asset_id', models.CharField(default=0, max_length=100)),
+        #         # ('characteristic_type', models.CharField(default=0, max_length=100)),
+        #         # ('characteristic_value', models.CharField(default=0, max_length=100)),
+        #         # ('adhoc_value', models.CharField(default=0, max_length=100)),
+        #         # ('created_date', models.DateTimeField(auto_now_add=True)),
+        #         # ('modified_date', models.DateTimeField(auto_now=True)),
+        #     ],
+        # ),
         migrations.CreateModel(
             name='AssetAttributeColumn',
             fields=[
