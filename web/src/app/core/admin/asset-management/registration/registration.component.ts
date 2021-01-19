@@ -1074,7 +1074,7 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
-  openModalRegister(modalNotification: TemplateRef<any>, row) {
+  openModalRegister(modalNotification: TemplateRef<any>) {
     this.modalRegisterAsset = this.modalService.show(
       modalNotification,
       this.modalConfig,
