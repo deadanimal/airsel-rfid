@@ -34,7 +34,8 @@ from assets.views import (
     AssetBadgeFormatViewSet,
     AssetAttributeViewSet,
     AssetAttributeColumnViewSet,
-    AssetLocationViewSet
+    AssetLocationViewSet,
+    AssetMeasurementTypeViewSet
 )
 
 assets_router = router.register(
@@ -73,6 +74,9 @@ assets_location_router = router.register(
     'asset-location', AssetLocationViewSet
 )
 
+assets_measurement_type_router = router.register(
+    'asset-measurement-type', AssetMeasurementTypeViewSet
+)
 
 # Locations app
 from locations.views import (
@@ -131,7 +135,7 @@ from operations.views import (
     AssetLocationAssetListServiceHistoriesViewSet,
     ServiceHistoriesQuestionsViewSet,
     QuestionsValidValueViewSet,
-    WorkOrderActivityCompletionViewSet
+    WorkOrderActivityCompletionViewSet,
 )
 
 owning_organizations_router = router.register(

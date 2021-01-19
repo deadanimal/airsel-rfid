@@ -78,49 +78,79 @@ class AssetType(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+class AssetMeasurementType(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    measurement_type = models.CharField(max_length=100, blank=True )
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return self.measurement_type
+
+class AssetAttribute(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    asset_id = models.CharField(max_length=100,default=0)
+    characteristic_type = models.CharField(max_length=100,default=0)
+    characteristic_value = models.CharField(max_length=100,default=0)
+    adhoc_value = models.CharField(max_length=100,default=0)
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return self.characteristic_type + ' ' + self.adhoc_value + ' ' + self.characteristic_value
+
 class Asset(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    asset_id = models.CharField(max_length=100, default='')
-    asset_type = models.CharField(max_length=100, default='')
-    transaction_type = models.CharField(max_length=100, default='')
-    description = models.CharField(max_length=100, default='')
-    bo = models.CharField(max_length=100, default='')
-    bo_status = models.CharField(max_length=100, default='')
-    owning_access_group = models.CharField(max_length=100, default='')
-    effective = models.CharField(max_length=100, default='')
-    node_id = models.CharField(max_length=100, default='')
-    badge_no = models.CharField(max_length=100, default='')
-    
-    serial_no = models.CharField(max_length=100, default='')
-    pallet_no = models.CharField(max_length=100, default='')
-    handed_over_assist = models.CharField(max_length=100, default='')
-    fixed_asset_no = models.CharField(max_length=100, default='')
-    scada_id = models.CharField(max_length=100, default='')
-    condition_rating = models.CharField(max_length=100, default='')
-    maintenance_specification = models.CharField(max_length=100, default='')
-    
-    bom_part_id = models.CharField(max_length=100, default='')
-    attached_to_assist_id = models.CharField(max_length=100, default='')
-    vehicle_identification_num = models.CharField(max_length=100, default='')
-    license_number = models.CharField(max_length=100, default='')
-    purchase_order_num = models.CharField(max_length=100, default='')
-    metrology_firmware = models.CharField(max_length=100, default='')
-    nic_firmware = models.CharField(max_length=100, default='')
-    configuration = models.CharField(max_length=100, default='')
-    warranty_expiration_date = models.CharField(max_length=100, default='')
-    warranty_detail = models.CharField(max_length=100, default='')
-    vendor_part_no = models.CharField(max_length=100, default='')
-    submitted = models.CharField(max_length=100, default='')
-    purchase_order_num = models.CharField(max_length=100, default='')
-    purchase_order_num = models.CharField(max_length=100, default='')
+    asset_id = models.CharField(max_length=100, blank=True )
+    asset_type = models.CharField(max_length=100, blank=True )
+    transaction_type = models.CharField(max_length=100, blank=True )
+    description = models.CharField(max_length=100, blank=True )
+    bo = models.CharField(max_length=100, blank=True )
+    bo_status = models.CharField(max_length=100, blank=True )
 
-    created_by = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,
-        null=True,
-        related_name='asset_created_by'
-    )
+    owning_access_group = models.CharField(max_length=100, blank=True )
+    effective_datetime = models.DateTimeField(auto_now=True)
+    node_id = models.CharField(max_length=100, blank=True )
+    badge_no = models.CharField(max_length=100, blank=True )
+    serial_no = models.CharField(max_length=100, blank=True )
+    pallet_no = models.CharField(max_length=100, blank=True )
+
+    handed_over_assist = models.CharField(max_length=100, blank=True )
+    fixed_asset_no = models.CharField(max_length=100, blank=True )
+    scada_id = models.CharField(max_length=100, blank=True )
+    condition_rating = models.CharField(max_length=100, blank=True )
+    condifence_rating = models.CharField(max_length=100, blank=True)
+
+    maintenance_specification = models.CharField(max_length=100, blank=True )
+    measurement_types = models.ManyToManyField(AssetMeasurementType, null=True,default='')
+    bom_part_id = models.CharField(max_length=100, blank=True )
+    attached_to_assist_id = models.CharField(max_length=100, blank=True )
+    vehicle_identification_num = models.CharField(max_length=100, blank=True )
+    license_number = models.CharField(max_length=100, blank=True )
+
+    purchase_order_num = models.CharField(max_length=100, blank=True )
+    metrology_firmware = models.CharField(max_length=100, blank=True )
+    nic_firmware = models.CharField(max_length=100, blank=True )
+    configuration = models.CharField(max_length=100, blank=True )
+
+    warranty_expiration_date = models.CharField(max_length=100, blank=True )
+    warranty_detail = models.CharField(max_length=100, blank=True )
+    vendor_part_no = models.CharField(max_length=100, blank=True )
+    asset_attributes = models.ManyToManyField(AssetAttribute, null=True,default='')
+
+    submitted_datetime = models.DateTimeField(null=True, default=None)
+    registered_datetime = models.DateTimeField(null=True, default=None)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
@@ -303,18 +333,6 @@ class AssetBadgeFormat(models.Model):
     def __str__(self):
         return self.id
 
-class AssetAttribute(models.Model):
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-    asset_id = models.CharField(max_length=100,default=0)
-    characteristic_type = models.CharField(max_length=100,default=0)
-    characteristic_value = models.CharField(max_length=100,default=0)
-    adhoc_value = models.CharField(max_length=100,default=0)
-
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
-
 class AssetAttributeColumn(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -392,73 +410,82 @@ class AssetAttributeColumn(models.Model):
 class AssetLocation(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    node_id = models.CharField(max_length=200, default='',null=True, blank=True)
-    location_type = models.CharField(max_length=200, default='',null=True, blank=True)
-    location_disposition = models.CharField(max_length=200, default='',null=True, blank=True)
-    bo = models.CharField(max_length=200, default='',null=True, blank=True)
-    description = models.CharField(max_length=200, default='',null=True, blank=True)
-    parent_lo_or_org = models.CharField(max_length=200, default='',null=True, blank=True)
-    work_request_approval_profile = models.CharField(max_length=200, default='',null=True, blank=True)
-    owning_org = models.CharField(max_length=200, default='',null=True, blank=True)
-    building = models.CharField(max_length=200, default='',null=True, blank=True)
-    room = models.CharField(max_length=200, default='',null=True, blank=True)
-    position = models.CharField(max_length=200, default='',null=True, blank=True)
-    country = models.CharField(max_length=200, default='',null=True, blank=True)
-    address_1 = models.CharField(max_length=200, default='',null=True, blank=True)
-    address_2 = models.CharField(max_length=200, default='',null=True, blank=True)
-    address_3 = models.CharField(max_length=200, default='',null=True, blank=True)
-    cross_street = models.CharField(max_length=200, default='',null=True, blank=True)
-    city = models.CharField(max_length=200, default='',null=True, blank=True)
-    suburb = models.CharField(max_length=200, default='',null=True, blank=True)
-    state = models.CharField(max_length=200, default='',null=True, blank=True)
-    postal = models.CharField(max_length=200, default='',null=True, blank=True)
-    location_class = models.CharField(max_length=200, default='',null=True, blank=True)
-    main_contact = models.CharField(max_length=200, default='',null=True, blank=True)
-    maintenance_manager_name = models.CharField(max_length=200, default='',null=True, blank=True)
-    maintenance_manager = models.CharField(max_length=200, default='',null=True, blank=True)
+    node_id = models.CharField(max_length=100, blank=True,default='')
+    location_type = models.CharField(max_length=100, blank=True,default='')
+    location_disposition = models.CharField(max_length=100, blank=True,default='')
+    bo = models.CharField(max_length=100, blank=True,default='')
 
-    planner = models.CharField(max_length=200, default='',null=True, blank=True)
-    cost_center = models.CharField(max_length=200, default='',null=True, blank=True)
-    rcm_system = models.CharField(max_length=200, default='',null=True, blank=True)
-    
-    environment_rating = models.CharField(max_length=200, default='',null=True, blank=True)
-    service_condition = models.CharField(max_length=200, default='',null=True, blank=True)
-    duty_cycle = models.CharField(max_length=200, default='',null=True, blank=True)
-    backlog_group = models.CharField(max_length=200, default='',null=True, blank=True)
-    run_to_failure = models.CharField(max_length=200, default='',null=True, blank=True)
-    breaker = models.CharField(max_length=200, default='',null=True, blank=True)
-    runtime_source = models.CharField(max_length=200, default='',null=True, blank=True)
-    tag_number = models.CharField(max_length=200, default='',null=True, blank=True)
-    site_location = models.CharField(max_length=200, default='',null=True, blank=True)
-    
-    point_id = models.CharField(max_length=200, default='',null=True, blank=True)
-    service_area = models.CharField(max_length=200, default='',null=True, blank=True)
-    latitude = models.CharField(max_length=200, default='',null=True, blank=True)
-    longitude = models.CharField(max_length=200, default='',null=True, blank=True)
-    asset_critically = models.CharField(max_length=200, default='',null=True, blank=True)
-    critically_reason = models.CharField(max_length=200, default='',null=True, blank=True)
-    gis_id = models.CharField(max_length=200, default='',null=True, blank=True)
-    connected_to_location_id = models.CharField(max_length=200, default='',null=True, blank=True)
-    water_asset_categori = models.CharField(max_length=200, default='',null=True, blank=True)
-    land_asset_status = models.CharField(max_length=200, default='',null=True, blank=True)
-    land_ownership_number = models.CharField(max_length=200, default='',null=True, blank=True)
-    take_over_date = models.CharField(max_length=200, default='',null=True, blank=True)
-    take_over_date_source_qt11 = models.CharField(max_length=200, default='',null=True, blank=True)
-    take_over_date_source_ccc = models.CharField(max_length=200, default='',null=True, blank=True)
-    land_area_acre = models.CharField(max_length=200, default='',null=True, blank=True)
-    plan_certified_number = models.CharField(max_length=200, default='',null=True, blank=True)
-    plan_pre_computation_num = models.CharField(max_length=200, default='',null=True, blank=True)
-    plan_as_built_number = models.CharField(max_length=200, default='',null=True, blank=True)
-    quit_rent_bill_number = models.CharField(max_length=200, default='',null=True, blank=True)
-    current_date_of_quit_rent = models.CharField(max_length=200, default='',null=True, blank=True)
-    quit_rent_bill_payment_date = models.CharField(max_length=200, default='',null=True, blank=True)
-    assessment_bill_number = models.CharField(max_length=200, default='',null=True, blank=True)
-    
-    current_rate_of_assessment = models.CharField(max_length=200, default='',null=True, blank=True)
-    assessment_bill_payment_date = models.CharField(max_length=200, default='',null=True, blank=True)
-    lease_expired_date = models.CharField(max_length=200, default='',null=True, blank=True)
-    remarks = models.CharField(max_length=200, default='',null=True, blank=True)
- 
-    submitted_datetime = models.DateTimeField(auto_now_add=True)
-    created_date = models.DateTimeField(auto_now=True)
+    description = models.CharField(max_length=100, blank=True,default='')
+    parent_lo_or_org = models.CharField(max_length=100, blank=True,default='')
+    work_request_approval_profile = models.CharField(max_length=100, blank=True,default='')
+    owning_org = models.CharField(max_length=100, blank=True,default='')
 
+    building = models.CharField(max_length=100, blank=True,default='')
+    room = models.CharField(max_length=100, blank=True,default='')
+    position = models.CharField(max_length=100, blank=True,default='')
+    country = models.CharField(max_length=100, blank=True,default='')
+
+    address_1 = models.CharField(max_length=100, blank=True,default='')
+    address_2 = models.CharField(max_length=100, blank=True,default='')
+    address_3 = models.CharField(max_length=100, blank=True,default='')
+    cross_street = models.CharField(max_length=100, blank=True,default='')
+
+    city = models.CharField(max_length=100, blank=True,default='')
+    suburb = models.CharField(max_length=100, blank=True,default='')
+    state = models.CharField(max_length=100, blank=True,default='')
+    postal = models.CharField(max_length=100, blank=True,default='')
+
+    location_class = models.CharField(max_length=100, blank=True,default='')
+    main_contact = models.CharField(max_length=100, blank=True,default='')
+    maintenance_manager_name = models.CharField(max_length=100, blank=True,default='')
+    maintenance_manager = models.CharField(max_length=100, blank=True,default='')
+    planner = models.CharField(max_length=100, blank=True,default='')
+
+    cost_center = models.CharField(max_length=100, blank=True,default='')
+    rcm_system = models.CharField(max_length=100, blank=True,default='')
+    environment_rating = models.CharField(max_length=100, blank=True,default='')
+    service_condition = models.CharField(max_length=100, blank=True,default='')
+    duty_cycle = models.CharField(max_length=100, blank=True,default='')
+
+    backlog_group = models.CharField(max_length=100, blank=True,default='')
+    run_to_failure = models.CharField(max_length=100, blank=True,default='')
+    breaker = models.CharField(max_length=100, blank=True,default='')
+    runtime_source = models.CharField(max_length=100, blank=True,default='')
+    tag_number = models.CharField(max_length=100, blank=True,default='')
+
+    site_location = models.CharField(max_length=100, blank=True,default='')
+    point_id = models.CharField(max_length=100, blank=True,default='')
+    service_area = models.CharField(max_length=100, blank=True,default='')
+    latitude = models.CharField(max_length=100, blank=True,default='')
+    longitude = models.CharField(max_length=100, blank=True,default='')
+
+    asset_critically = models.CharField(max_length=100, blank=True,default='')
+    criticality_reason = models.CharField(max_length=100, blank=True,default='')
+    gis_id = models.CharField(max_length=100, blank=True,default='')
+    connected_to_location_id = models.CharField(max_length=100, blank=True,default='')
+    water_asset_category = models.CharField(max_length=100, blank=True,default='')
+
+    land_asset_status = models.CharField(max_length=100, blank=True,default='')
+    land_ownership_number = models.CharField(max_length=100, blank=True,default='')
+    take_over_date = models.DateField(null=True)
+    take_over_date_source_qt11 = models.DateField(null=True)
+    take_over_date_source_ccc = models.DateField(null=True)
+
+    land_area_acre = models.CharField(max_length=100, blank=True,default='')
+    plan_certified_number = models.CharField(max_length=100, blank=True,default='')
+    plan_pre_computation_num = models.CharField(max_length=100, blank=True,default='')
+    plan_as_built_number = models.CharField(max_length=100, blank=True,default='')
+
+    quit_rent_bill_number = models.CharField(max_length=100, blank=True,default='')
+    current_date_of_quit_rent = models.CharField(max_length=100, blank=True,default='')
+    quit_rent_bill_payment_date = models.CharField(max_length=100, blank=True,default='')
+    assessment_bill_number = models.CharField(max_length=100, blank=True,default='')
+    
+    current_rate_of_assessment = models.CharField(max_length=100, blank=True,default='')
+    assessment_bill_payment_date = models.CharField(max_length=100, blank=True,default='')
+    lease_expired_date = models.CharField(max_length=100, blank=True,default='')
+    remarks = models.CharField(max_length=100, blank=True,default='')
+
+    submitted_datetime = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)

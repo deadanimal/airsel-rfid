@@ -17,7 +17,8 @@ from .models import (
     AssetBadgeFormat,
     AssetAttribute,
     AssetAttributeColumn,
-    AssetLocation
+    AssetLocation,
+    AssetMeasurementType
 )
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -72,4 +73,10 @@ class AssetLocationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetLocation
+        fields = '__all__'
+
+class AssetMeasurementTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetMeasurementType
         fields = '__all__'
