@@ -1,3 +1,6 @@
+
+import json
+
 from django.shortcuts import render
 from django.db.models import Q
 
@@ -13,7 +16,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from datetime import datetime
 
 from .models import (
-    Asset,AssetRegistration,
+    Asset,
+    AssetRegistration,
     AssetGroup,
     AssetType,
     Rfid,
@@ -40,33 +44,7 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Asset.objects.all()
     serializer_class = AssetSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = [
-        'badge_number',
-        'purchased_at',
-        'is_active',
-        'owning_department',
-        'level_1',
-        'level_2',
-        'level_3',
-        'level_4',
-        'level_5',
-        'level_6',
-        'primary_category',
-        'identity',
-        'sub_category_1',
-        'sub_category_2',
-        'type_asset',
-        'category',
-        'acquired_by',
-        'brand',
-        'model_no',
-        'rating',
-        'status',
-        'measuring_type',
-        'is_warranty',
-        'po_vendor',
-        'location'
-    ]
+    filterset_fields = []
 
     def get_permissions(self):
         if self.action == 'list':

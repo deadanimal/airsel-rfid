@@ -450,9 +450,7 @@ class MeasurementTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = MeasurementType.objects.all()
     serializer_class = MeasurementTypeSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = [
-        'identifier', 'name', 'description', 'record_by', 'modified_by'
-    ]
+    filterset_fields = []
 
     def get_permissions(self):
         if self.action == 'list':
