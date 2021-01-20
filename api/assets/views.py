@@ -29,7 +29,8 @@ from .models import (
 )
 
 from .serializers import (
-    AssetSerializer,AssetRegistrationSerializer,
+    AssetSerializer,
+    AssetRegistrationSerializer,
     AssetGroupSerializer,
     AssetTypeSerializer,
     RfidSerializer,
@@ -37,8 +38,9 @@ from .serializers import (
     AssetAttributeSerializer,
     AssetAttributeColumnSerializer,
     AssetLocationSerializer,
-    AssetMeasurementTypeSerializer
-)
+    AssetMeasurementTypeSerializer,
+    AssetExtendedSerializer
+    )
 
 class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Asset.objects.all()
