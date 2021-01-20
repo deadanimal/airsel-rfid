@@ -489,33 +489,36 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return [permission() for permission in permission_classes]    
 
-    
     def get_queryset(self):
         queryset = OperationalReading.objects.all()
 
-        """
-        if self.request.user.is_anonymous:
-            queryset = Company.objects.none()
+        # FROM APPLICATION/JSON THROUGH API
+        if bool(self.request.data):
+            print("enter bool()")
+            if 'from_date' in self.request.data and 'to_date' in self.request.data:
 
-        else:
-            user = self.request.user
-            company_employee = CompanyEmployee.objects.filter(employee=user)
-            company = company_employee[0].company
-            
-            if company.company_type == 'AD':
-                queryset = Activity.objects.all()
-            else:
-                queryset = Activity.objects.filter(company=company.id)
-        """
-        return queryset  
+                from_date = self.request.data.get('from_date', None)
+                to_date = self.request.data.get('to_date', None)
 
-    @action(methods=['GET'], detail=False)
+                if from_date is not None and to_date is not None:
+                    # print(OperationalReading.objects.filter(submitted_datetime__range=(from_date,to_date)).query)
+                    queryset = OperationalReading.objects.filter(
+                        submitted_datetime__range=(from_date, to_date))
+
+        return queryset
+
+    @action(methods=['POST'], detail=False)
     def extended_all(self, request, *args, **kwargs):
-        
-        queryset = OperationalReading.objects.all()
-        serializer_class = OperationalReadingExtendedSerializer(queryset, many=True)
-        
-        return Response(serializer_class.data)
+
+        from_date = self.request.data['from_date']
+        to_date = self.request.data['to_date']
+
+        if from_date is not None and to_date is not None:
+            queryset = OperationalReading.objects.filter(
+                submitted_datetime__range=(from_date, to_date))
+
+        serializer = OperationalReadingSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 # copied from dev api
 
