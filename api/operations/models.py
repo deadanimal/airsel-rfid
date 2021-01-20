@@ -314,9 +314,6 @@ class OperationalReading(models.Model):
     class meta:
         ordering = ['-created_date']
 
-    def __str__(self):
-        return self.asset_id
-
 #### below is the code copied from dev api
 class QuestionsValidValue(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
