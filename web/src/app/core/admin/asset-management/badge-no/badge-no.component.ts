@@ -79,7 +79,7 @@ export class BadgeNoComponent implements OnInit {
     let tempData = []
     this.assetsBadgeNoService.getAll().subscribe(
       (res) => {
-        console.log("getBadgeNoData = ", res);
+        // console.log("getBadgeNoData = ", res);
         // console.log('tempData = ', tempData)
         this.tableTemp = res
       },
@@ -93,7 +93,7 @@ export class BadgeNoComponent implements OnInit {
     let tempData = []
     this.assetTypesService.get().subscribe(
       (res) => {
-        console.log("assetTypesService = ", res);
+        // console.log("assetTypesService = ", res);
         // console.log('tempData = ', tempData)
         this.assetTypeList = res
       },
@@ -132,13 +132,28 @@ export class BadgeNoComponent implements OnInit {
   submitAssetType() {
     console.log('assetTypeForm = ', this.assetTypeForm.value)
 
+    let createAssetTypeData: any = {}
+    createAssetTypeData['name'] = this.assetTypeForm.value.asset_primary_category
+
     this.assetsBadgeNoService.create(this.assetTypeForm.value).subscribe(
       (res) => {
         console.log("yeaaayyy = ", res);
+        this.saveAssetType(createAssetTypeData)
         this.successAlert()
       },
       error => {
         console.error("err", error);
+      }
+    )
+  }
+
+  saveAssetType(createAssetTypeData) {
+    this.assetTypesService.post(createAssetTypeData).subscribe(
+      (res) => {
+        console.log('res = ', res)
+      },
+      (err) => {
+        console.log('err = ', (err))
       }
     )
   }
@@ -176,10 +191,10 @@ export class BadgeNoComponent implements OnInit {
           this.assTypeList.forEach(element => {
             if (event == "AC") {
               if (element.id != row.id) {
-                console.log('--- iiifff ---', element.id, "==", row.id)
+                // console.log('--- iiifff ---', element.id, "==", row.id)
                 this.addOnKeyData('IC', element.id)
               } else {
-                console.log('--- elseee ---', element.id, "==", row.id)
+                // console.log('--- elseee ---', element.id, "==", row.id)
                 this.addOnKeyData('AC', element.id)
               }
             } else {
@@ -193,34 +208,34 @@ export class BadgeNoComponent implements OnInit {
             this.addOnKeyData(event, row)
           }
         }
-        console.log('dadadasdasda')
+        // console.log('dadadasdasda')
         this.getBadgeNoData()
       },
       error => {
         console.error("err", error);
       }
     )
-    console.log('huhuhuhhu')
+    // console.log('huhuhuhhu')
 
   }
 
   addOnKeyData(event, row) {
     // console.log('noTotal = ', noTotal, '-', noInactive, '-', noActive)
-    console.log('row[id] = ', row)
+    // console.log('row[id] = ', row)
 
     let updateformData: any = {}
     updateformData['status'] = ''
     updateformData['status'] = event
 
-    console.log('updateformData = ', updateformData)
+    // console.log('updateformData = ', updateformData)
 
     this.assetsBadgeNoService.update(row, updateformData).subscribe(
       (res) => {
         // this.getBadgeNoData()
         // console.log("assetsBadgeNoService = ", res);
       },
-      error => {
-        console.error("err", error);
+      (err) => {
+        console.error("err", (err));
       }
     )
 
