@@ -80,3 +80,15 @@ class AssetMeasurementTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = AssetMeasurementType
         fields = '__all__'
+
+class AssetExtendedSerializer(serializers.ModelSerializer):
+
+    measurement_types = AssetMeasurementTypeSerializer(many=True)
+    asset_attributes = AssetAttributeSerializer(many=True)
+    # submitted_datetime = serializers.DateTimeField(format="%Y-%m-%d %H:%m", input_formats=None)
+    # created_date = serializers.DateTimeField(format="%Y-%m-%d %H:%m", input_formats=None)
+    # modified_date = serializers.DateTimeField(format="%Y-%m-%d %H:%m", input_formats=None)
+
+    class Meta:
+        model = Asset
+        fields = '__all__'
