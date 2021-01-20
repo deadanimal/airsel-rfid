@@ -298,28 +298,22 @@ class MeasurementType(models.Model):
 class OperationalReading(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    # asset = models.ForeignKey(
-    #     Asset,
-    #     on_delete=models.CASCADE,
-    #     null=True,
-    #     related_name='operational_reading_asset'
-    # )
-    asset_id = models.CharField(max_length=50, default='NA')
-    badge_number = models.CharField(max_length=50, default='NA')
-    current_value = models.DecimalField(decimal_places=2, max_digits=6, default=0.00)
-    reading_date_time = models.DateTimeField(blank=True, null=True)
-    measurement_identifier = models.CharField(max_length=100, default='NA')
-    measurement_type = models.CharField(max_length=100, default='NA')
-    owning_organization = models.CharField(max_length=50, default='NA')
+    asset_id = models.CharField(max_length=100, blank=True)
+    badge_number = models.CharField(max_length=100, blank=True)
+    current_value = models.CharField(max_length=100, blank=True)
+    measurement_identifier = models.CharField(max_length=100, blank=True)
+    measurement_type = models.CharField(max_length=100, blank=True)
+    initial_value_flag = models.CharField(max_length=100, blank=True)
+    owning_organization = models.CharField(max_length=100, blank=True)
+    reading_datetime = models.DateTimeField(auto_now=True)
 
-    record_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_record_by', null=True)
-    record_date = models.DateTimeField(auto_now_add=True)
-    modified_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_modified_by', null=True)
+    submitted_datetime = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
     class meta:
-        ordering = ['-record_date']
-    
+        ordering = ['-created_date']
+
     def __str__(self):
         return self.asset_id
 
