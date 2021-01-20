@@ -25,12 +25,6 @@
 
 <ion-content class="content-core">
   <div class="ion-padding">
-    <ion-fab vertical="top" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="scanQrCode()">
-        <ion-icon name="scan"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-
     <ion-list class="line-input" style="padding-top: 100px">
       <form [formGroup]="operationalreadingFormGroup">
         <ion-item>
@@ -86,13 +80,23 @@
           </ion-fab-button> -->
         </ion-fab>
         <ion-card-title
-          >Measurement Type <br /> {{ operationalreadingFormGroup.value.measurement_type }}</ion-card-title
+          >Measurement Type <br />
+          {{ operationalreadingFormGroup.value.measurement_type
+          }}</ion-card-title
         >
       </ion-card-header>
       <ion-card-content>
-        <p>Reading Date/Time: {{ operationalreadingFormGroup.value.reading_date_time | date }}</p>
-        <p>Current Value: {{ operationalreadingFormGroup.value.current_value }}</p>
-        <p>Created Date: {{ operationalreadingFormGroup.value.record_date | date:'mediumDate' }}</p>
+        <p>
+          Reading Date/Time: {{
+          operationalreadingFormGroup.value.reading_date_time | date }}
+        </p>
+        <p>
+          Current Value: {{ operationalreadingFormGroup.value.current_value }}
+        </p>
+        <p>
+          Created Date: {{ operationalreadingFormGroup.value.record_date |
+          date:'mediumDate' }}
+        </p>
       </ion-card-content>
     </ion-card>
 

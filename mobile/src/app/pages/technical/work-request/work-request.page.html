@@ -55,7 +55,7 @@
       <img [src]="capturedSnapURL" />
     </ion-card> -->
 
-    <ion-list class="ion-padding line-input" style="padding-top: 100px;">
+    <ion-list class="ion-padding line-input" style="padding-top: 100px">
       <form [formGroup]="workrequestFormGroup">
         <ion-item>
           <ion-label position="stacked">Asset</ion-label>
@@ -74,7 +74,10 @@
 
         <ion-item>
           <ion-label position="stacked">Detailed Description</ion-label>
-          <ion-input type="text" formControlName="long_description"></ion-input>
+          <ion-textarea
+            rows="3"
+            formControlName="long_description"
+          ></ion-textarea>
         </ion-item>
 
         <ion-item>
@@ -595,11 +598,17 @@
           <ion-label position="stacked">Owning Organization</ion-label>
           <ion-select formControlName="owning_access_group">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option value="ES-D">ENGINEERING SERVICES - DISTRIBUTION</ion-select-option>
+            <ion-select-option value="ES-D"
+              >ENGINEERING SERVICES - DISTRIBUTION</ion-select-option
+            >
             <ion-select-option value="FLEET">FLEET</ion-select-option>
             <ion-select-option value="NRW">NRW</ion-select-option>
-            <ion-select-option value="PD-N">PRODUCTION NORTHERN</ion-select-option>
-            <ion-select-option value="PD-S">PRODUCTION SOUTHERN</ion-select-option>
+            <ion-select-option value="PD-N"
+              >PRODUCTION NORTHERN</ion-select-option
+            >
+            <ion-select-option value="PD-S"
+              >PRODUCTION SOUTHERN</ion-select-option
+            >
             <ion-select-option value="SCADA">SCADA</ion-select-option>
           </ion-select>
         </ion-item>
@@ -648,7 +657,9 @@
       <ion-button color="light" (click)="changeSegment('first')"
         >Back</ion-button
       >
-      <ion-button (click)="submit()">Submit</ion-button>
+      <ion-button *ngIf="process != 'view'" (click)="submit()"
+        >Submit</ion-button
+      >
     </div>
   </div>
 </ion-content>
