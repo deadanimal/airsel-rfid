@@ -4,20 +4,18 @@
       <ion-button (click)="clickBack()">
         <ion-icon
           src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem;"
+          style="font-size: 2rem"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title style="font-weight: bold;">
-      Asset Registration
-    </ion-title>
+    <ion-title style="font-weight: bold"> Asset Registration </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
         <ion-badge
           size="small"
           color="danger"
-          style="position: absolute; right: -5px; top: 1px;"
+          style="position: absolute; right: -5px; top: 1px"
           >{{ notificationService.totalnotificationbyuser }}</ion-badge
         >
       </ion-button>
@@ -31,7 +29,7 @@
     #stepper
     [disableRipple]="isDisableRipple"
   >
-    <mat-step [stepControl]="firstFormGroup">
+    <!-- <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Asset Owning</ng-template>
         <div class="line-input">
@@ -47,9 +45,6 @@
                 >{{ department.name }}</ion-select-option
               >
             </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.owning_department }}</small
-            > -->
           </ion-item>
         </div>
 
@@ -73,9 +68,6 @@
                 >{{ hierarchylevel1.name }}</ion-select-option
               >
             </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.level_1 }}</small
-            > -->
           </ion-item>
 
           <ion-item>
@@ -87,9 +79,6 @@
                 >{{ region.name }}</ion-select-option
               >
             </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.level_2 }}</small
-            > -->
           </ion-item>
 
           <ion-item>
@@ -101,17 +90,11 @@
                 >{{ hierarchylevel3.name }}</ion-select-option
               >
             </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.level_3 }}</small
-            > -->
           </ion-item>
 
           <ion-item>
             <ion-label position="stacked">Parent Location</ion-label>
             <ion-input type="text" formControlName="level_4"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.level_4 }}</small
-            > -->
           </ion-item>
 
           <ion-item>
@@ -123,9 +106,6 @@
                 >{{ hierarchylevel5.name }}</ion-select-option
               >
             </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.level_5 }}</small
-            > -->
           </ion-item>
 
           <ion-item>
@@ -137,9 +117,6 @@
                 >{{ hierarchylevel6.name }}</ion-select-option
               >
             </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.level_6 }}</small
-            > -->
           </ion-item>
         </div>
         <div>
@@ -151,7 +128,7 @@
           >
         </div>
       </form>
-    </mat-step>
+    </mat-step> -->
     <mat-step [stepControl]="thirdFormGroup">
       <form [formGroup]="thirdFormGroup">
         <ng-template matStepLabel>Asset Grouping</ng-template>
@@ -174,13 +151,14 @@
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Asset Identity</ion-label>
-            <ion-select placeholder="Please select" formControlName="identity">
+            <ion-input type="text" formControlName="identity"></ion-input>
+            <!-- <ion-select placeholder="Please select" formControlName="identity">
               <ion-select-option
                 *ngFor="let identity of identities"
                 [value]="identity.id"
                 >{{ identity.name }}</ion-select-option
               >
-            </ion-select>
+            </ion-select> -->
             <!-- <small class="validation_messages"
               >{{ validation_messages.identity }}</small
             > -->
@@ -202,14 +180,14 @@
           </ion-item>
         </div>
 
-        <div>
+        <!-- <div>
           <ion-button color="danger" size="small" matStepperPrevious>
             Back
           </ion-button>
           <ion-button color="success" size="small" matStepperNext
             >Next</ion-button
           >
-        </div>
+        </div> -->
       </form>
     </mat-step>
     <mat-step [stepControl]="fourthFormGroup">
@@ -272,13 +250,46 @@
           </div>
         </div>
 
-        <div>
+        <!-- <div>
           <ion-button color="danger" size="small" matStepperPrevious>
             Back
           </ion-button>
           <ion-button color="success" size="small" matStepperNext
             >Next</ion-button
           >
+        </div> -->
+      </form>
+    </mat-step>
+    <mat-step>
+      <form>
+        <ng-template matStepLabel>Asset Location</ng-template>
+        <div class="line-input">
+          <ion-item>
+            <ion-label position="stacked">Main Operation</ion-label>
+            <ion-select placeholder="Please select"> </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Region</ion-label>
+            <ion-select placeholder="Please select">
+              <ion-select-option
+                *ngFor="let region of regions"
+                [value]="region.id"
+                >{{ region.name }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Operation</ion-label>
+            <ion-select placeholder="Please select"> </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Process/Function</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Sub-Process/System</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
         </div>
       </form>
     </mat-step>
@@ -313,7 +324,7 @@
           </ion-item>
           <ion-item>
             <ion-label position="stacked"
-              >Site/Capacity 1 - Unit Measurement</ion-label
+              >Site/Capacity 1 - Measurement</ion-label
             >
             <ion-input
               type="number"
@@ -336,7 +347,7 @@
           </ion-item>
           <ion-item>
             <ion-label position="stacked"
-              >Site/Capacity 2 - Unit Measurement</ion-label
+              >Site/Capacity 2 - Measurement</ion-label
             >
             <ion-input
               type="number"
@@ -359,7 +370,7 @@
           </ion-item>
           <ion-item>
             <ion-label position="stacked"
-              >Site/Capacity 3 - Unit Measurement</ion-label
+              >Site/Capacity 3 - Measurement</ion-label
             >
             <ion-input
               type="number"
@@ -370,23 +381,17 @@
             > -->
           </ion-item>
 
-          <ion-item>
+          <!-- <ion-item>
             <ion-label position="stacked">Parent Asset/Plate Number</ion-label>
             <ion-input
               type="text"
               formControlName="parent_plate_number"
             ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.parent_plate_number }}</small
-            > -->
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Asset/Plate Number</ion-label>
             <ion-input type="text" formControlName="plate_number"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.plate_number }}</small
-            > -->
-          </ion-item>
+          </ion-item> -->
 
           <ion-item>
             <ion-label position="stacked">Serial Number</ion-label>
@@ -395,47 +400,34 @@
               >{{ validation_messages.serial_number }}</small
             > -->
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label position="stacked">Vendor Part Number</ion-label>
             <ion-input type="text" formControlName="vendor_part_no"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.vendor_part_no }}</small
-            > -->
           </ion-item>
-
           <ion-item>
             <ion-label position="stacked">SCADA ID</ion-label>
             <ion-input type="text" formControlName="scada_id"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.scada_id }}</small
-            > -->
           </ion-item>
           <ion-item>
             <ion-label position="stacked">External ID</ion-label>
             <ion-input type="text" formControlName="external_id"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.external_id }}</small
-            > -->
-          </ion-item>
+          </ion-item> -->
 
           <ion-item>
-            <ion-label position="stacked">Asset Tag Number</ion-label>
+            <ion-label position="stacked">Tag Number</ion-label>
             <ion-input type="text" formControlName="tag_number"></ion-input>
             <!-- <small class="validation_messages"
               >{{ validation_messages.tag_number }}</small
             > -->
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label position="stacked">Pallet Number</ion-label>
             <ion-input type="text" formControlName="pallet_number"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.pallet_number }}</small
-            > -->
-          </ion-item>
+          </ion-item> -->
 
           <ion-item>
             <ion-label position="stacked"
-              >Purchase Date/Installed/Handed Over Date</ion-label
+              >Purchased/Installed/Hand Over Date</ion-label
             >
             <ion-datetime
               displayFormat="MMM, DD YYYY"
@@ -472,15 +464,12 @@
               >{{ validation_messages.status }}</small
             > -->
           </ion-item>
-          <ion-item>
+          <!-- <ion-item>
             <ion-label position="stacked">Maintenance Specification</ion-label>
             <ion-input
               type="text"
               formControlName="maintenance_specification"
             ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.maintenance_specification }}</small
-            > -->
           </ion-item>
 
           <ion-item>
@@ -489,9 +478,6 @@
               type="text"
               formControlName="bill_of_material"
             ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.bill_of_material }}</small
-            > -->
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Measurement Type</ion-label>
@@ -505,23 +491,20 @@
                 >{{ measuringtype.name }}</ion-select-option
               >
             </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.measuring_type }}</small
-            > -->
-          </ion-item>
+          </ion-item> -->
         </div>
 
-        <div>
+        <!-- <div>
           <ion-button color="danger" size="small" matStepperPrevious>
             Back
           </ion-button>
           <ion-button color="success" size="small" matStepperNext
             >Next</ion-button
           >
-        </div>
+        </div> -->
       </form>
     </mat-step>
-    <mat-step [stepControl]="sixthFormGroup">
+    <!-- <mat-step [stepControl]="sixthFormGroup">
       <form [formGroup]="sixthFormGroup">
         <ng-template matStepLabel>Asset Warranty Information</ng-template>
         <div class="line-input">
@@ -540,9 +523,6 @@
               <ion-radio slot="start" value="false"></ion-radio>
             </ion-item>
           </ion-radio-group>
-          <!-- <small class="validation_messages"
-            >{{ validation_messages.is_warranty }}</small
-          > -->
 
           <ion-item>
             <ion-label position="stacked">Actual Warranty Period</ion-label>
@@ -550,9 +530,6 @@
               type="number"
               formControlName="warranty_period_actual"
             ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.warranty_period_actual }}</small
-            > -->
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Warranty Vendor Name</ion-label>
@@ -566,9 +543,6 @@
                 >{{ organisation.name }}</ion-select-option
               >
             </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.warranty_vendor }}</small
-            > -->
           </ion-item>
         </div>
 
@@ -581,8 +555,8 @@
           >
         </div>
       </form>
-    </mat-step>
-    <mat-step [stepControl]="seventhFormGroup">
+    </mat-step> -->
+    <!-- <mat-step [stepControl]="seventhFormGroup">
       <form [formGroup]="seventhFormGroup">
         <ng-template matStepLabel>PO Detail</ng-template>
         <div class="line-input">
@@ -595,20 +569,14 @@
                 >{{ organisation.name }}</ion-select-option
               >
             </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.po_vendor }}</small
-            > -->
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Purchase Cost</ion-label>
             <ion-input type="number" formControlName="po_cost"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.po_cost }}</small
-            > -->
           </ion-item>
         </div>
       </form>
-    </mat-step>
+    </mat-step> -->
   </mat-vertical-stepper>
 
   <div class="ion-padding ion-text-center">

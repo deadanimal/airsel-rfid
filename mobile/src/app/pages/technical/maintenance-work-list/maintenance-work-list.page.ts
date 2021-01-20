@@ -121,7 +121,9 @@ export class MaintenanceWorkListPage implements OnInit {
         if (res) {
           this.cmArray = res.filter(function (data) {
             if (
-              data.work_category.toString().indexOf("CORRECTIVE MAINTENANCE") !== -1
+              data.work_category
+                .toString()
+                .indexOf("CORRECTIVE MAINTENANCE") !== -1
             )
               return true;
             return false;
@@ -129,7 +131,9 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.pmArray = res.filter(function (data) {
             if (
-              data.work_category.toString().indexOf("PREVENTIVE MAINTENANCE") !== -1
+              data.work_category
+                .toString()
+                .indexOf("PREVENTIVE MAINTENANCE") !== -1
             )
               return true;
             return false;
@@ -137,7 +141,9 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.itcArray = res.filter(function (data) {
             if (
-              data.work_category.toString().indexOf("INSTALLATION TESTING AND COM") !== -1
+              data.work_category
+                .toString()
+                .indexOf("INSTALLATION TESTING AND COM") !== -1
             )
               return true;
             return false;
@@ -145,16 +151,16 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.pdmArray = res.filter(function (data) {
             if (
-              data.work_category.toString().indexOf("PREDICTIVE MAINTENANCE") !== -1
+              data.work_category
+                .toString()
+                .indexOf("PREDICTIVE MAINTENANCE") !== -1
             )
               return true;
             return false;
           });
 
           this.dArray = res.filter(function (data) {
-            if (
-              data.work_category.toString().indexOf("RETIRE") !== -1
-            )
+            if (data.work_category.toString().indexOf("RETIRE") !== -1)
               return true;
             return false;
           });
@@ -169,7 +175,10 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.rArray = res.filter(function (data) {
             if (
-              data.work_category.toString().toLowerCase().indexOf("REDESIGN") !== -1
+              data.work_category
+                .toString()
+                .toLowerCase()
+                .indexOf("REDESIGN") !== -1
             )
               return true;
             return false;
@@ -210,8 +219,10 @@ export class MaintenanceWorkListPage implements OnInit {
     if (array.length > 0) {
       let tempArray = array.filter(function (data) {
         if (
-          data.bo_status.toString().toLowerCase().indexOf(status.toLowerCase()) !==
-          -1
+          data.bo_status
+            .toString()
+            .toLowerCase()
+            .indexOf(status.toLowerCase()) !== -1
         )
           return true;
         return false;
@@ -704,7 +715,13 @@ export class MaintenanceWorkListPage implements OnInit {
     this.chartr = chart;
   }
 
-  openPage(route: string, type: string, status: string) {
+  openPage(
+    route: string,
+    type: string,
+    status: string,
+    image: string,
+    name: string
+  ) {
     let array: any;
     switch (type) {
       case "CM":
@@ -749,6 +766,8 @@ export class MaintenanceWorkListPage implements OnInit {
         type: type,
         status: status,
         work_activity: array,
+        image: image,
+        name: name,
       },
     };
     this.router.navigate([route], navigationExtras);

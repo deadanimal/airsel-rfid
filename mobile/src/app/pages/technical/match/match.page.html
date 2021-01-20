@@ -1,0 +1,57 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="homePage('/technical/tabs/tab1')">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold"> Match </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px"
+        ></ion-badge>
+        <!--{{ notificationService.totalnotificationbyuser }}-->
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-core">
+  <div class="ion-padding">
+    <ion-list class="line-input">
+      <small style="color: red">* will return badge number value</small>
+      <ion-item>
+        <ion-label>2D Barcode </ion-label>
+        <ion-toggle [(ngModel)]="bBarcode"></ion-toggle>
+      </ion-item>
+
+      <small style="color: red">* will return hex code value</small>
+      <ion-item>
+        <ion-label>RFID </ion-label>
+        <ion-toggle [(ngModel)]="bRfid"></ion-toggle>
+      </ion-item>
+
+      <div class="ion-padding"></div>
+      <ion-item>
+        <ion-label position="stacked">Hex Code</ion-label>
+        <ion-input type="text" [(ngModel)]="hex_code"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Badge Number</ion-label>
+        <ion-input type="text" [(ngModel)]="badge_no"></ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="ion-padding ion-text-center">
+    <ion-button color="light" (click)="cancel()">Cancel</ion-button>
+    <ion-button color="primary" (click)="match()">Match</ion-button>
+  </div>
+</ion-content>
