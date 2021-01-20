@@ -15,10 +15,9 @@ import {
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 
-import { AssetsService } from "src/app/shared/services/assets/assets.service";
+import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { OperationalReadingsService } from "src/app/shared/services/operational-readings/operational-readings.service";
-
 import { MeasurementTypePage } from "../measurement-type/measurement-type.page";
 
 @Component({
@@ -33,6 +32,7 @@ export class OperationalReadingPage implements OnInit {
   myDate = new Date();
 
   measurementtypes = [];
+  process: string;
 
   constructor(
     public alertController: AlertController,
@@ -41,7 +41,7 @@ export class OperationalReadingPage implements OnInit {
     public location: Location,
     public menu: MenuController,
     public modalController: ModalController,
-    private assetService: AssetsService,
+    private assetregistrationService: AssetRegistrationsService,
     public notificationService: NotificationsService,
     private operationalreadingService: OperationalReadingsService,
     private route: ActivatedRoute,
@@ -52,12 +52,14 @@ export class OperationalReadingPage implements OnInit {
     this.operationalreadingFormGroup = this.formBuilder.group({
       asset_id: new FormControl("", Validators.required),
       badge_number: new FormControl("", Validators.required),
-      parent_location: new FormControl("", Validators.required),
+      parent_location: new FormControl(""),
+      current_value: new FormControl(""),
       date: new FormControl(""),
       status: new FormControl("Operational Reading Updated"),
       reading_date_time: new FormControl(""),
+      measurement_identifier: new FormControl(""),
       measurement_type: new FormControl(""),
-      current_value: new FormControl(""),
+      owning_organization: new FormControl(""),
       record_date: new FormControl(
         this.datePipe.transform(this.myDate, "yyyy-MM-dd")
       ),
@@ -65,16 +67,25 @@ export class OperationalReadingPage implements OnInit {
 
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
-        if (this.router.getCurrentNavigation().extras.state.qrcode) {
-          let qrcode = this.router.getCurrentNavigation().extras.state.qrcode;
-          this.assetService
-            .filter("badge_numbera=" + qrcode)
+        // To get process from work request list
+        this.process = this.router.getCurrentNavigation().extras.state.process;
+
+        // To set value based on previous page
+        this.operationalreadingFormGroup.patchValue({
+          ...this.router.getCurrentNavigation().extras.state.operationalreading,
+        });
+
+        if (this.router.getCurrentNavigation().extras.state.badge_no) {
+          let badge_no = this.router.getCurrentNavigation().extras.state
+            .badge_no;
+          this.assetregistrationService
+            .filter("badge_no=" + badge_no)
             .subscribe((res) => {
               console.log("res", res);
               this.operationalreadingFormGroup.patchValue({
-                asset_id: res[0].wams_asset_id,
-                badge_number: res[0].badge_number,
-                parent_location: res[0].level_4,
+                asset_id: res[0].asset_id,
+                badge_number: res[0].badge_no,
+                parent_location: res[0].parent_location,
               });
             });
         }
@@ -84,35 +95,6 @@ export class OperationalReadingPage implements OnInit {
 
   ngOnInit() {
     this.menu.enable(false, "menuNotification");
-    this.scanQrCode();
-  }
-
-  scanQrCode() {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        link: "/technical/operational-reading",
-      },
-    };
-    this.router.navigate(["/technical/qr-scanner"], navigationExtras);
-
-    // this.barcodeScanner
-    //   .scan({ prompt: "Place a QR code to scan inside the scan area" })
-    //   .then((barcodeData) => {
-    //     // alert("Barcode data: " + barcodeData.text);
-    //     if (barcodeData.text == "MOTR-0000998") {
-    //       this.operationalreadingFormGroup.patchValue({
-    //         asset_id: "615771728178A6",
-    //         badge_no: "MOTR-0000998",
-    //         location: "BOOSTER IXORA PUMP HOUSE",
-    //         date: this.datePipe.transform(this.myDate, "yyyy-MM-dd"),
-    //       });
-    //     } else {
-    //       this.presentAlert("Error", "Sorry, asset not found.");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error", err);
-    //   });
   }
 
   async presentAlert(header: string, message: string) {
@@ -167,7 +149,7 @@ export class OperationalReadingPage implements OnInit {
     modal.onDidDismiss().then((value) => {
       this.operationalreadingFormGroup.patchValue({
         ...value.data,
-        reading_date_time: new Date(value.data.reading_date).toISOString()
+        reading_date_time: new Date(value.data.reading_date).toISOString(),
       });
     });
     return await modal.present();

@@ -1,55 +1,69 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import { TabsPage } from './tabs.page';
+import { TabsPage } from "./tabs.page";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: "tab1",
         children: [
           {
-            path: '',
+            path: "",
             loadChildren: () =>
-              import('../home/home.module').then(m => m.HomePageModule)
-          }
-        ]
+              import("../home/home.module").then((m) => m.HomePageModule),
+          },
+        ],
       },
       {
-        path: 'tab2',
+        path: "tab2",
         children: [
           {
-            path: '',
+            path: "",
             loadChildren: () =>
-              import('../asset-detail/asset-detail.module').then(m => m.AssetDetailPageModule)
-          }
-        ]
+              import("../asset-detail-list/asset-detail-list.module").then(
+                (m) => m.AssetDetailListPageModule
+              ),
+          },
+        ],
       },
       {
-        path: 'tab3',
+        path: "tab3",
         children: [
           {
-            path: '',
+            path: "",
             loadChildren: () =>
-              import('../profile/profile.module').then(m => m.ProfilePageModule)
-          }
-        ]
+              import("../match/match.module").then((m) => m.MatchPageModule),
+          },
+        ],
       },
       {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
-      }
-    ]
+        path: "tab4",
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import("../profile/profile.module").then(
+                (m) => m.ProfilePageModule
+              ),
+          },
+        ],
+      },
+      {
+        path: "",
+        redirectTo: "/tabs/tab1",
+        pathMatch: "full",
+      },
+    ],
   },
   {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
-  }
+    path: "",
+    redirectTo: "/tabs/tab1",
+    pathMatch: "full",
+  },
 ];
 
 @NgModule({

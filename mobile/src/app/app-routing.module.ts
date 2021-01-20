@@ -74,6 +74,14 @@ const routes: Routes = [
     path: 'work-activity-asset',
     loadChildren: () => import('./pages/technical/work-activity-asset/work-activity-asset.module').then( m => m.WorkActivityAssetPageModule)
   },
+  {
+    path: 'asset-detail-list',
+    loadChildren: () => import('./pages/technical/asset-detail-list/asset-detail-list.module').then( m => m.AssetDetailListPageModule)
+  },
+  {
+    path: 'match',
+    loadChildren: () => import('./pages/technical/match/match.module').then( m => m.MatchPageModule)
+  },
 ];
 @NgModule({
   imports: [

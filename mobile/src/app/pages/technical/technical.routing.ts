@@ -58,6 +58,13 @@ export const TechnicalRoutes: Routes = [
           ).then((m) => m.MaintenanceWorkDetailPageModule),
       },
       {
+        path: "asset-detail",
+        loadChildren: () =>
+          import("./asset-detail/asset-detail.module").then(
+            (m) => m.AssetDetailPageModule
+          ),
+      },
+      {
         path: "asset-registration",
         loadChildren: () =>
           import("./asset-registration/asset-registration.module").then(

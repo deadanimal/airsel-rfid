@@ -4,20 +4,18 @@
       <ion-button (click)="homePage('/technical/tabs/tab1')">
         <ion-icon
           src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem;"
+          style="font-size: 2rem"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title style="font-weight: bold;">
-      Work Request
-    </ion-title>
+    <ion-title style="font-weight: bold"> Asset Detail </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
         <ion-badge
           size="small"
           color="danger"
-          style="position: absolute; right: -5px; top: 1px;"
+          style="position: absolute; right: -5px; top: 1px"
           >{{ notificationService.totalnotificationbyuser }}</ion-badge
         >
       </ion-button>
@@ -27,16 +25,15 @@
 
 <ion-content class="content-core">
   <div class="ion-padding">
-    <div class="ion-text-center">
-      <ion-button color="primary" (click)="clickNew()">New Request</ion-button>
-    </div>
-    <ion-card *ngFor="let workrequest of workrequests">
+    <h4 class="ion-text-center ion-padding">Asset Details</h4>
+
+    <ion-card *ngFor="let assetregistration of assetregistrations">
       <ion-card-header>
         <ion-fab horizontal="end">
           <ion-fab-button
             size="small"
             color="primary"
-            (click)="clickEdit(workrequest)"
+            (click)="clickEdit(assetregistration)"
           >
             <ion-icon name="document-text"></ion-icon>
           </ion-fab-button>
@@ -48,14 +45,12 @@
             <ion-icon name="trash"></ion-icon>
           </ion-fab-button> -->
         </ion-fab>
-        <ion-card-title>Asset ID <br/>{{ workrequest.asset_id }}</ion-card-title>
+        <ion-card-title>Badge No<br />{{ assetregistration.badge_no }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Required By Date: {{ workrequest.required_by_date }}</p>
-        <p>Work Category: {{ workrequest.work_category }}</p>
-        <p>Work Class: {{ workrequest.work_class }}</p>
-        <p>Work Priority: {{ workrequest.work_priority }}</p>
-        <p>Status: {{ workrequest.bo_status }}</p>
+        <p>Asset Type: {{ assetregistration.asset_primary_category }}</p>
+        <p>Asset Parent Location: {{ assetregistration.parent_location }}</p>
+        <p>Asset Location: {{ assetregistration.location_description }}</p>
       </ion-card-content>
     </ion-card>
   </div>

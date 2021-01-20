@@ -91,7 +91,7 @@ export class LoginPage implements OnInit {
         },
         () => {
           // After
-          this.toastr.openToastr("Welcome back");
+          // this.toastr.openToastr("Welcome back");
           this.navigateByRole(this.authService.userType);
         }
       );
