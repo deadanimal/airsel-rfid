@@ -510,7 +510,7 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return queryset  
 
     @action(methods=['GET'], detail=False)
-    def extended(self, request, *args, **kwargs):
+    def extended_all(self, request, *args, **kwargs):
         
         queryset = OperationalReading.objects.all()
         serializer_class = OperationalReadingExtendedSerializer(queryset, many=True)
