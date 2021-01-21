@@ -113,6 +113,7 @@ class Asset(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     asset_id = models.CharField(max_length=100, blank=True )
+    location_id = models.CharField(max_length=100, blank=True )
     asset_type = models.CharField(max_length=100, blank=True )
     transaction_type = models.CharField(max_length=100, blank=True )
     description = models.CharField(max_length=100, blank=True )
@@ -126,7 +127,7 @@ class Asset(models.Model):
     serial_no = models.CharField(max_length=100, blank=True )
     pallet_no = models.CharField(max_length=100, blank=True )
 
-    handed_over_assist = models.CharField(max_length=100, blank=True )
+    handed_over_asset = models.CharField(max_length=100, blank=True )
     fixed_asset_no = models.CharField(max_length=100, blank=True )
     scada_id = models.CharField(max_length=100, blank=True )
     condition_rating = models.CharField(max_length=100, blank=True )
@@ -135,7 +136,7 @@ class Asset(models.Model):
     maintenance_specification = models.CharField(max_length=100, blank=True )
     measurement_types = models.ManyToManyField(AssetMeasurementType, blank=True)
     bom_part_id = models.CharField(max_length=100, blank=True )
-    attached_to_assist_id = models.CharField(max_length=100, blank=True )
+    attached_to_asset_id = models.CharField(max_length=100, blank=True )
     vehicle_identification_num = models.CharField(max_length=100, blank=True )
     license_number = models.CharField(max_length=100, blank=True )
 
