@@ -133,7 +133,7 @@ class Asset(models.Model):
     condifence_rating = models.CharField(max_length=100, blank=True)
 
     maintenance_specification = models.CharField(max_length=100, blank=True )
-    measurement_types = models.ManyToManyField(AssetMeasurementType, null=True,default='')
+    measurement_types = models.ManyToManyField(AssetMeasurementType, blank=True)
     bom_part_id = models.CharField(max_length=100, blank=True )
     attached_to_assist_id = models.CharField(max_length=100, blank=True )
     vehicle_identification_num = models.CharField(max_length=100, blank=True )
@@ -147,7 +147,7 @@ class Asset(models.Model):
     warranty_expiration_date = models.CharField(max_length=100, blank=True )
     warranty_detail = models.CharField(max_length=100, blank=True )
     vendor_part_no = models.CharField(max_length=100, blank=True )
-    asset_attributes = models.ManyToManyField(AssetAttribute, null=True,default='')
+    asset_attributes = models.ManyToManyField(AssetAttribute, blank=True)
 
     submitted_datetime = models.DateTimeField(null=True, default=None)
     registered_datetime = models.DateTimeField(null=True, default=None)
