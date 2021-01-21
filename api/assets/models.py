@@ -477,7 +477,7 @@ class AssetLocation(models.Model):
     plan_as_built_number = models.CharField(max_length=100, blank=True,default='')
 
     quit_rent_bill_number = models.CharField(max_length=100, blank=True,default='')
-    current_date_of_quit_rent = models.CharField(max_length=100, blank=True,default='')
+    current_rate_of_quit_rent = models.CharField(max_length=100, blank=True,default='')
     quit_rent_bill_payment_date = models.CharField(max_length=100, blank=True,default='')
     assessment_bill_number = models.CharField(max_length=100, blank=True,default='')
     
