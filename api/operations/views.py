@@ -478,7 +478,7 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = OperationalReadingSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'asset_id', 'badge_number', 'initial_value_flag', 'measurement_identifier'
+        'asset_id', 'badge_number'
     ]
 
     def get_permissions(self):
