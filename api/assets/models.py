@@ -113,6 +113,7 @@ class Asset(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     asset_id = models.CharField(max_length=100, blank=True )
+    location_id = models.CharField(max_length=100, blank=True )
     asset_type = models.CharField(max_length=100, blank=True )
     transaction_type = models.CharField(max_length=100, blank=True )
     description = models.CharField(max_length=100, blank=True )
