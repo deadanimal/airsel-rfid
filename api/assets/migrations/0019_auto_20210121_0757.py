@@ -10,9 +10,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(
-            model_name='assetlocation',
-            old_name='current_date_of_quit_rent',
-            new_name='current_rate_of_quit_rent',
-        ),
+        # migrations.RenameField(
+        #     model_name='assetlocation',
+        #     old_name='current_date_of_quit_rent',
+        #     new_name='current_rate_of_quit_rent',
+        # ),
     ]

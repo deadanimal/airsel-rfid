@@ -10,23 +10,23 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(
-            model_name='asset',
-            old_name='attached_to_assist_id',
-            new_name='attached_to_asset_id',
-        ),
-        migrations.RenameField(
-            model_name='asset',
-            old_name='handed_over_assist',
-            new_name='handed_over_asset',
-        ),
-        migrations.RemoveField(
-            model_name='assetlocation',
-            name='current_rate_of_quit_rent',
-        ),
-        migrations.AddField(
-            model_name='assetlocation',
-            name='current_date_of_quit_rent',
-            field=models.CharField(blank=True, default='', max_length=100),
-        ),
+        # migrations.RenameField(
+        #     model_name='asset',
+        #     old_name='attached_to_assist_id',
+        #     new_name='attached_to_asset_id',
+        # ),
+        # migrations.RenameField(
+        #     model_name='asset',
+        #     old_name='handed_over_assist',
+        #     new_name='handed_over_asset',
+        # ),
+        # migrations.RemoveField(
+        #     model_name='assetlocation',
+        #     name='current_rate_of_quit_rent',
+        # ),
+        # migrations.AddField(
+        #     model_name='assetlocation',
+        #     name='current_date_of_quit_rent',
+        #     field=models.CharField(blank=True, default='', max_length=100),
+        # ),
     ]
