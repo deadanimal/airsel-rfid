@@ -189,7 +189,7 @@ REST_FRAMEWORK = {
         
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    # 'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S+00:00"
+    'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S+00:00"
     
 }
 
