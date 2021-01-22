@@ -340,7 +340,7 @@ class ServiceHistoriesQuestions(models.Model):
     short_text = models.CharField(max_length=100, blank=True)
     text = models.CharField(max_length=100, blank=True)
     style = models.CharField(max_length=100, blank=True)
-    valid_value = models.ManyToManyField(QuestionsValidValue, null=True)
+    valid_value = models.ManyToManyField(QuestionsValidValue, blank=True)
     respone = models.CharField(max_length=100, blank=True)
     response_check_box = models.CharField(max_length=100, blank=True)
     response_radio = models.CharField(max_length=100,blank=True)
@@ -362,7 +362,7 @@ class AssetLocationAssetListServiceHistories(models.Model):
     failure_repair = models.CharField(max_length=100, blank=True)
     failure_component = models.CharField(max_length=100, blank=True)
     failure_root_cause = models.CharField(max_length=100, blank=True)
-    question = models.ManyToManyField(ServiceHistoriesQuestions, null=True)
+    question = models.ManyToManyField(ServiceHistoriesQuestions, blank=True)
 
     svc_hist_type_req_fl = models.CharField(max_length=100, blank=True)
 
@@ -378,7 +378,7 @@ class WorkOrderActivityCompletionAssetLocationAssetList(models.Model):
     node_id = models.CharField(max_length=100, blank=True)
     asset_id = models.CharField(max_length=100, blank=True)
     participation = models.CharField(max_length=100, blank=True)
-    service_histories = models.ManyToManyField(AssetLocationAssetListServiceHistories, null=True)
+    service_histories = models.ManyToManyField(AssetLocationAssetListServiceHistories, blank=True)
     measurent_type = models.CharField(max_length=100, blank=True)
     reading_type = models.CharField(max_length=100, blank=True)
     current_value = models.CharField(max_length=100, blank=True)
@@ -399,7 +399,7 @@ class WorkOrderActivityCompletion(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     activityid = models.CharField(max_length=100, blank=True)
     completiondatetime = models.DateTimeField(auto_now=True)
-    asset_location_asset_list = models.ManyToManyField(WorkOrderActivityCompletionAssetLocationAssetList, null=True)
+    asset_location_asset_list = models.ManyToManyField(WorkOrderActivityCompletionAssetLocationAssetList, blank=True)
 
     bo_status_cd = models.CharField(max_length=100, blank=True)
     user_id_1 = models.CharField(max_length=100, blank=True)
