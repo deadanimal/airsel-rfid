@@ -28,9 +28,9 @@ class Migration(migrations.Migration):
         #     name='handed_over_asset',
         #     field=models.CharField(blank=True, max_length=100),
         # ),
-        migrations.AddField(
-            model_name='assetlocation',
-            name='postal',
-            field=models.CharField(blank=True, max_length=100),
-        ),
+        # migrations.AddField(
+        #     model_name='assetlocation',
+        #     name='postal',
+        #     field=models.CharField(blank=True, max_length=100),
+        # ),
     ]
