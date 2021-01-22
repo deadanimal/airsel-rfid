@@ -10,29 +10,29 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='asset',
-            name='attached_to_assist_id',
-        ),
-        migrations.RemoveField(
-            model_name='asset',
-            name='handed_over_assist',
-        ),
-        migrations.AddField(
-            model_name='asset',
-            name='attached_to_asset_id',
-            field=models.CharField(blank=True, max_length=100),
-        ),
-        migrations.AddField(
-            model_name='asset',
-            name='handed_over_asset',
-            field=models.CharField(blank=True, max_length=100),
-        ),
-        migrations.AddField(
-            model_name='asset',
-            name='location_id',
-            field=models.CharField(blank=True, max_length=100),
-        ),
+        # migrations.RemoveField(
+        #     model_name='asset',
+        #     name='attached_to_assist_id',
+        # ),
+        # migrations.RemoveField(
+        #     model_name='asset',
+        #     name='handed_over_assist',
+        # ),
+        # migrations.AddField(
+        #     model_name='asset',
+        #     name='attached_to_asset_id',
+        #     field=models.CharField(blank=True, max_length=100),
+        # ),
+        # migrations.AddField(
+        #     model_name='asset',
+        #     name='handed_over_asset',
+        #     field=models.CharField(blank=True, max_length=100),
+        # ),
+        # migrations.AddField(
+        #     model_name='asset',
+        #     name='location_id',
+        #     field=models.CharField(blank=True, max_length=100),
+        # ),
         migrations.AlterField(
             model_name='asset',
             name='asset_attributes',
