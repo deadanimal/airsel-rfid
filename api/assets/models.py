@@ -431,7 +431,7 @@ class AssetLocation(models.Model):
     city = models.CharField(max_length=100, blank=True)
     suburb = models.CharField(max_length=100, blank=True)
     state = models.CharField(max_length=100, blank=True)
-    state = models.CharField(max_length=100, blank=True)
+    postal = models.CharField(max_length=100, blank=True)
     location_class = models.CharField(max_length=100, blank=True)
 
     main_contact = models.CharField(max_length=100, blank=True)
