@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'organisations',
     'stocks',
     'users',
-    'wams'
+    'wams',
+    'inventory'
 ]
 
 MIDDLEWARE = [
