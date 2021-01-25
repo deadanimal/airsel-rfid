@@ -1,3 +1,6 @@
+
+import json
+
 from django.shortcuts import render
 from django.db.models import Q
 
@@ -13,52 +16,37 @@ from django_filters.rest_framework import DjangoFilterBackend
 from datetime import datetime
 
 from .models import (
-    Asset,AssetRegistration,
+    Asset,
+    AssetRegistration,
     AssetGroup,
     AssetType,
     Rfid,
-    AssetBadgeFormat
+    AssetBadgeFormat,
+    AssetAttribute,
+    AssetAttributeColumn,
+    AssetLocation,
+    AssetMeasurementType
 )
 
 from .serializers import (
-    AssetSerializer,AssetRegistrationSerializer,
+    AssetSerializer,
+    AssetRegistrationSerializer,
     AssetGroupSerializer,
     AssetTypeSerializer,
     RfidSerializer,
-    AssetBadgeFormatSerializer
-)
+    AssetBadgeFormatSerializer,
+    AssetAttributeSerializer,
+    AssetAttributeColumnSerializer,
+    AssetLocationSerializer,
+    AssetMeasurementTypeSerializer,
+    AssetExtendedSerializer
+    )
 
 class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Asset.objects.all()
     serializer_class = AssetSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = [
-        'badge_number',
-        'purchased_at',
-        'is_active',
-        'owning_department',
-        'level_1',
-        'level_2',
-        'level_3',
-        'level_4',
-        'level_5',
-        'level_6',
-        'primary_category',
-        'identity',
-        'sub_category_1',
-        'sub_category_2',
-        'type_asset',
-        'category',
-        'acquired_by',
-        'brand',
-        'model_no',
-        'rating',
-        'status',
-        'measuring_type',
-        'is_warranty',
-        'po_vendor',
-        'location'
-    ]
+    filterset_fields = []
 
     def get_permissions(self):
         if self.action == 'list':
@@ -68,26 +56,55 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return [permission() for permission in permission_classes]    
 
-    
     def get_queryset(self):
         queryset = Asset.objects.all()
 
-        """
-        if self.request.user.is_anonymous:
-            queryset = Asset.objects.none()
+        # FROM APPLICATION/JSON THROUGH API
+        if bool(self.request.data):
+            print("enter bool()")
+            if 'from_date' in self.request.data and 'to_date' in self.request.data and 'transaction_type' in self.request.data:
 
-        else:
-            user = self.request.user
-            company_employee = CompanyEmployee.objects.filter(employee=user)
-            company = company_employee[0].company
-            
-            if company.company_type == 'AD':
-                queryset = Asset.objects.all()
-            else:
-                queryset = Asset.objects.filter(company=company.id)
-        """
-        return queryset    
- 
+                from_date = self.request.data.get('from_date', None)
+                to_date = self.request.data.get('to_date', None)
+                transaction_type_req = self.request.data.get(
+                    'transaction_type', None)
+
+                if from_date is not None and to_date is not None and transaction_type_req is not None:
+                    print(Asset.objects.filter(submitted_datetime__range=(
+                        from_date, to_date), transaction_type=(transaction_type_req)).query)
+                    queryset = Asset.objects.filter(submitted_datetime__range=(
+                        from_date, to_date), transaction_type=(transaction_type_req))
+
+        return queryset
+
+    @action(methods=['POST'], detail=False)
+    def extended_all(self, request, *args, **kwargs):
+        from_date = self.request.data['from_date']
+        to_date = self.request.data['to_date']
+        transaction_type = self.request.data['transaction_type']
+
+        # Note
+        # If transaction_type = ADD, filter by registered_datetime
+        # If transaction_type = UPDATE, filter by submitted_datetime
+
+        if from_date is not None and to_date is not None and transaction_type is not None:
+            if transaction_type == 'ADD':
+                queryset = Asset.objects.filter(registered_datetime__range=(
+                    from_date, to_date)).filter(transaction_type=transaction_type)
+            elif transaction_type == 'UPDATE':
+                queryset = Asset.objects.filter(submitted_datetime__range=(
+                    from_date, to_date)).filter(transaction_type=transaction_type)
+
+        serializer = AssetExtendedSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=True)
+    def extended(self, request, *args, **kwargs):
+        asset_ = self.get_object()
+
+        serializer = AssetExtendedSerializer(asset_)
+        return Response(serializer.data)
+
     @action(methods=['GET'], detail=True)
     def activate(self, request, *args, **kwargs):
         asset = self.get_object()
@@ -366,11 +383,10 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class AssetBadgeFormatViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetBadgeFormat.objects.all()
     serializer_class = AssetBadgeFormatSerializer
-    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    # filterset_fields = [
-    #     'category',
-    #     'created_at'
-    # ]
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'asset_primary_category'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -397,5 +413,156 @@ class AssetBadgeFormatViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Asset.objects.all()
             else:
                 queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset
+
+class AssetAttributeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetAttribute.objects.all()
+    serializer_class = AssetAttributeSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetAttribute.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset
+
+class AssetAttributeColumnViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetAttributeColumn.objects.all()
+    serializer_class = AssetAttributeColumnSerializer
+    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # filterset_fields = [
+    #     'category',
+    #     'created_at'
+    # ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetAttributeColumn.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset
+
+class AssetLocationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetLocation.objects.all()
+    serializer_class = AssetLocationSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # filterset_fields = [
+    #     'category',
+    #     'created_at'
+    # ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetLocation.objects.all()
+
+        # FROM APPLICATION/JSON THROUGH API
+        if bool(self.request.data):
+            print("enter bool()")
+            if 'from_date' in self.request.data and 'to_date' in self.request.data:
+
+                from_date = self.request.data.get('from_date', None)
+                to_date = self.request.data.get('to_date', None)
+
+                if from_date is not None and to_date is not None:
+                    # print(AssetLocation.objects.filter(submitted_datetime__range=(from_date,to_date)).query)
+                    queryset = AssetLocation.objects.filter(
+                        submitted_datetime__range=(from_date, to_date))
+
+        return queryset
+
+    @action(methods=['POST'], detail=False)
+    def extended_all(self, request, *args, **kwargs):
+
+        from_date = self.request.data['from_date']
+        to_date = self.request.data['to_date']
+
+        if from_date is not None and to_date is not None:
+            queryset = AssetLocation.objects.filter(
+                submitted_datetime__range=(from_date, to_date))
+
+        serializer = AssetLocationSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class AssetMeasurementTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetMeasurementType.objects.all()
+    serializer_class = AssetMeasurementTypeSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        queryset = AssetMeasurementType.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Company.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+
+            if company.company_type == 'AD':
+                queryset = AssetMeasurementType.objects.all()
+            else:
+                queryset = AssetMeasurementType.objects.filter(company=company.id)
         """
         return queryset

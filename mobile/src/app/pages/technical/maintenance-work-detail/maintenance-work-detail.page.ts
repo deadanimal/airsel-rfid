@@ -47,6 +47,8 @@ export class MaintenanceWorkDetailPage implements OnInit {
   items: any[];
   type = "";
   status = "";
+  image = "";
+  name = "";
   // maintenance_work: any;
 
   // List
@@ -82,7 +84,8 @@ export class MaintenanceWorkDetailPage implements OnInit {
         this.type = this.router.getCurrentNavigation().extras.state.type;
         this.status = this.router.getCurrentNavigation().extras.state.status;
         this.workactivities = this.router.getCurrentNavigation().extras.state.work_activity;
-
+        this.image = '../../../../assets/technical/' + this.router.getCurrentNavigation().extras.state.image;
+        this.name = this.router.getCurrentNavigation().extras.state.name;
         // this.pendings = this.maintenance_work.filter((data) => {
         //   if (data.bo_status.toString().indexOf("New") !== -1) return true;
         //   if (data.bo_status.toString().indexOf("In Progress") !== -1)

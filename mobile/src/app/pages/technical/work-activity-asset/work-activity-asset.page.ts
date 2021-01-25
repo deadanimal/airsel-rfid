@@ -15,6 +15,7 @@ import {
 
 import { ServiceHistoryPage } from "../service-history/service-history.page";
 
+import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 
@@ -41,6 +42,7 @@ export class WorkActivityAssetPage implements OnInit {
     public menu: MenuController,
     public modalController: ModalController,
     public notificationService: NotificationsService,
+    private assetregistrationService: AssetRegistrationsService,
     private workactivityService: WorkActivitiesService // private barcodeScanner: BarcodeScanner
   ) {
     this.workactivityassetFormGroup = this.formBuilder.group({
@@ -62,15 +64,26 @@ export class WorkActivityAssetPage implements OnInit {
           asset_id: this.workactivityasset.asset_id,
         });
 
-        if (this.router.getCurrentNavigation().extras.state.qrcode) {
-          let qrcode = this.router.getCurrentNavigation().extras.state.qrcode;
-          if (qrcode == this.workactivityasset.badge_number) {
-            this.workactivityassetFormGroup.patchValue({
-              asset_type: this.workactivityasset.asset_type,
-              badge_number: qrcode,
-              serial_number: this.workactivityasset.serial_number,
-              detailed_description: this.workactivityasset.detailed_description,
-            });
+        if (this.router.getCurrentNavigation().extras.state.badge_no) {
+          let badge_no = this.router.getCurrentNavigation().extras.state
+            .badge_no;
+
+          if (badge_no == this.workactivityasset.badge_number) {
+            this.assetregistrationService
+              .filter("badge_no=" + badge_no)
+              .subscribe(
+                (res) => {
+                  this.workactivityassetFormGroup.patchValue({
+                    asset_type: res[0].asset_primary_category,
+                    badge_number: badge_no,
+                    serial_number: res[0].serial_number,
+                    detailed_description: res[0].detailed_description,
+                  });
+                },
+                (err) => {
+                  console.error("err", err);
+                }
+              );
           } else
             this.alertErrorWorkActivityAsset(
               "Work Activity",
@@ -83,37 +96,6 @@ export class WorkActivityAssetPage implements OnInit {
 
   ngOnInit() {
     this.menu.enable(false, "menuNotification");
-    this.scanQrCode();
-  }
-
-  scanQrCode() {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        link: "/technical/work-activity-asset",
-        asset: this.workactivityasset,
-      },
-    };
-    this.router.navigate(["/technical/qr-scanner"], navigationExtras);
-
-    // this.barcodeScanner
-    //   .scan({ prompt: "Place a QR code to scan inside the scan area" })
-    //   .then((barcodeData) => {
-    //     // alert("Barcode data: " + barcodeData.text);
-    //     if (barcodeData.text == "MOTR-0000998") {
-    //       this.workactivityFormGroup.patchValue({
-    //         work_activity_no: "668463846381",
-    //         work_activity_type: "Corrective Maintenance",
-    //         required_by_date: new Date().toISOString(),
-    //         parent_location: "BOOSTER IXORA PUMP HOUSE",
-    //         badge_no: "615771728178A6",
-    //       });
-    //     } else {
-    //       this.presentAlert("Error", "Sorry, asset not found.");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error", err);
-    //   });
   }
 
   async presentAlert(header: string, message: string) {
@@ -206,12 +188,13 @@ export class WorkActivityAssetPage implements OnInit {
           console.log("res", res);
           this.workactivityasset = res;
           this.workactivityassetFormGroup.patchValue({
-            ...res
+            ...res,
           });
-        }, (err) => {
+        },
+        (err) => {
           console.error("err", err);
         }
-      )
+      );
     });
     return await modal.present();
   }

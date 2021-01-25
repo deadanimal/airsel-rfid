@@ -38,7 +38,6 @@ class OwningOrganization(models.Model):
     def __str__(self):
         return self.name
 
-
 class Bo(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -57,7 +56,6 @@ class Bo(models.Model):
     def __str__(self):
         return self.name
 
-
 class Maintenance(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -71,7 +69,6 @@ class Maintenance(models.Model):
     
     def __str__(self):
         return self.serial_num
-
 
 class IssueType(models.Model):
 
@@ -160,7 +157,6 @@ class WorkActivity(models.Model):
         #return "{} {} {}".format(self.name, self.activity, self.created_at)
         return self.activity_id
 
-
 class WorkActivityTeam(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -204,7 +200,6 @@ class WorkClass(models.Model):
     def __str__(self):
         return self.name
 
-
 class WorkCategory(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -223,7 +218,6 @@ class WorkCategory(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class WorkRequest(models.Model):
 
@@ -266,7 +260,6 @@ class WorkRequest(models.Model):
     def __str__(self):
         return self.description
 
-
 class WorkRequestStatus(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -283,7 +276,6 @@ class WorkRequestStatus(models.Model):
 
     def __str__(self):
         return self.status
-
 
 class MeasurementType(models.Model):
     
@@ -303,32 +295,157 @@ class MeasurementType(models.Model):
     def __str__(self):
         return self.measurement_identifier
 
-
 class OperationalReading(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    # asset = models.ForeignKey(
-    #     Asset,
-    #     on_delete=models.CASCADE,
-    #     null=True,
-    #     related_name='operational_reading_asset'
-    # )
-    asset_id = models.CharField(max_length=50, default='NA')
-    badge_number = models.CharField(max_length=50, default='NA')
-    current_value = models.DecimalField(decimal_places=2, max_digits=6, default=0.00)
-    reading_date_time = models.DateTimeField(blank=True, null=True)
-    measurement_identifier = models.CharField(max_length=100, default='NA')
-    measurement_type = models.CharField(max_length=100, default='NA')
-    owning_organization = models.CharField(max_length=50, default='NA')
+    asset_id = models.CharField(max_length=100, blank=True)
+    badge_number = models.CharField(max_length=100, blank=True)
+    current_value = models.CharField(max_length=100, blank=True)
+    measurent_identifier = models.CharField(max_length=100, blank=True)
+    measurent_type = models.CharField(max_length=100, blank=True)
+    initial_value_flag = models.CharField(max_length=100, blank=True)
+    owning_organization = models.CharField(max_length=100, blank=True)
+    reading_datetime = models.DateTimeField(auto_now=True)
 
-    record_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_record_by', null=True)
-    record_date = models.DateTimeField(auto_now_add=True)
-    modified_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_modified_by', null=True)
+    submitted_datetime = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
     class meta:
-        ordering = ['-record_date']
-    
+        ordering = ['-created_date']
+
     def __str__(self):
         return self.asset_id
 
+#### below is the code copied from dev api
+class QuestionsValidValue(models.Model):
+    
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+    seq_valid = models.CharField(max_length=100, blank=True)
+    code_valid = models.CharField(max_length=100, blank=True)
+    short_text_valid = models.CharField(max_length=100, blank=True)
+    text_valid = models.CharField(max_length=100, blank=True)
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+class ServiceHistoriesQuestions(models.Model):
+    
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+    seq = models.CharField(max_length=100, blank=True)
+    code = models.CharField(max_length=100, blank=True)
+    short_text = models.CharField(max_length=100, blank=True)
+    text = models.CharField(max_length=100, blank=True)
+    style = models.CharField(max_length=100, blank=True)
+    valid_value = models.ManyToManyField(QuestionsValidValue, blank=True)
+    respone = models.CharField(max_length=100, blank=True)
+    response_check_box = models.CharField(max_length=100, blank=True)
+    response_radio = models.CharField(max_length=100,blank=True)
+    responseDate = models.DateField(null=True)
+    response_datetime = models.DateTimeField(auto_now=True)
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+class AssetLocationAssetListServiceHistories(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+    service_history_type = models.CharField(max_length=100,blank=True)
+    effective_datetime = models.DateTimeField(auto_now=True)
+    start_date_time = models.DateTimeField(auto_now=True)
+    end_date_time = models.DateTimeField(auto_now=True)
+    comments = models.CharField(max_length=100, blank=True)
+    failure_type = models.CharField(max_length=100, blank=True)
+    failure_mode = models.CharField(max_length=100, blank=True)
+    failure_repair = models.CharField(max_length=100, blank=True)
+    failure_component = models.CharField(max_length=100, blank=True)
+    failure_root_cause = models.CharField(max_length=100, blank=True)
+    question = models.ManyToManyField(ServiceHistoriesQuestions, blank=True)
+
+    svc_hist_type_req_fl = models.CharField(max_length=100, blank=True)
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+class WorkOrderActivityCompletionAssetLocationAssetList(models.Model):
+    
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+    node_id = models.CharField(max_length=100, blank=True)
+    asset_id = models.CharField(max_length=100, blank=True)
+    participation = models.CharField(max_length=100, blank=True)
+    service_histories = models.ManyToManyField(AssetLocationAssetListServiceHistories, blank=True)
+    measurent_type = models.CharField(max_length=100, blank=True)
+    reading_type = models.CharField(max_length=100, blank=True)
+    current_value = models.CharField(max_length=100, blank=True)
+
+    asset_description = models.CharField(max_length=100, blank=True)
+    asset_type = models.CharField(max_length=100, blank=True)
+
+    reading_datetime = models.DateTimeField(auto_now=True)
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+class WorkOrderActivityCompletion(models.Model):
+    
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+    activityid = models.CharField(max_length=100, blank=True)
+    completiondatetime = models.DateTimeField(auto_now=True)
+    asset_location_asset_list = models.ManyToManyField(WorkOrderActivityCompletionAssetLocationAssetList, blank=True)
+
+    bo_status_cd = models.CharField(max_length=100, blank=True)
+    user_id_1 = models.CharField(max_length=100, blank=True)
+    act_type_cd = models.CharField(max_length=100, blank=True)
+    wo_id = models.CharField(max_length=100, blank=True)
+    act_dpos_flg = models.CharField(max_length=100, blank=True)
+    service_class_cd = models.CharField(max_length=100, blank=True)
+    requestor_id = models.CharField(max_length=100, blank=True)
+    required_by_dt = models.CharField(max_length=100, blank=True)
+    work_priority_flg = models.CharField(max_length=100, blank=True)
+    descr100 = models.CharField(max_length=100, blank=True)
+    descrlong = models.CharField(max_length=100, blank=True)
+    w1_descr100_upr = models.CharField(max_length=100, blank=True)
+    held_for_parts_flg = models.CharField(max_length=100, blank=True)
+    anniversary_value = models.CharField(max_length=100, blank=True)
+    emergency_flg = models.CharField(max_length=100, blank=True)
+    act_num = models.CharField(max_length=100, blank=True)
+    planner_cd = models.CharField(max_length=100, blank=True)
+    total_priority = models.CharField(max_length=100, blank=True)
+    total_priority_src_flg = models.CharField(max_length=100, blank=True)
+    node_id_1 = models.CharField(max_length=100, blank=True)
+    asset_id_1 = models.CharField(max_length=100, blank=True)
+    percentage = models.CharField(max_length=100, blank=True)
+    seqno = models.CharField(max_length=100, blank=True)
+    participation_flg = models.CharField(max_length=100, blank=True)
+    cost_center_cd = models.CharField(max_length=100, blank=True)
+    percentage_2 = models.CharField(max_length=100, blank=True)
+    act_resrc_reqmt_id = models.CharField(max_length=100, blank=True)
+    descrlong_1 = models.CharField(max_length=100, blank=True)
+    resrc_src_flg = models.CharField(max_length=100, blank=True)
+    resrc_type_id = models.CharField(max_length=100, blank=True)
+    w1_quantity = models.CharField(max_length=100, blank=True)
+    unit_price = models.CharField(max_length=100, blank=True)
+    w1_duration = models.CharField(max_length=100, blank=True)
+    crew_shift_id = models.CharField(max_length=100, blank=True)
+    sched_duration = models.CharField(max_length=100, blank=True)
+    break_in_dttm = models.CharField(max_length=100, blank=True)
+    actvn_dttm = models.CharField(max_length=100, blank=True)
+    tmpl_act_id = models.CharField(max_length=100, blank=True)
+    maint_sched_id = models.CharField(max_length=100, blank=True)
+    maint_trigger_id = models.CharField(max_length=100, blank=True)
+    status = models.CharField(max_length=100, blank=True)
+
+    submitted_datetime = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']

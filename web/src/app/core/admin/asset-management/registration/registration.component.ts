@@ -465,7 +465,85 @@ export class RegistrationComponent implements OnInit {
   rows: any = [];
   // SelectionType = SelectionType;
   tableTemp1 = [];
+<<<<<<< HEAD
   assetAttribute = [];
+=======
+  assetAttribute = [
+    {
+      "id": "3b51c219-4ecd-4ba1-9ed5-ca09a026a81e",
+      "asset_uuid": "NA",
+      "asset_primary_category": "CHAMBER",
+      "short": "CHAM",
+      "description": "Chamber",
+      "status": "Active",
+      "latest_no": "2265"
+    },
+    {
+      "id": "ca55926b-156e-4c25-8049-00a4ce2a3686",
+      "asset_uuid": "NA",
+      "asset_primary_category": "CABINET",
+      "short": "CBNT",
+      "description": "NRW Cabinet",
+      "status": "Active",
+      "latest_no": "6455"
+    },
+    {
+      "id": "4bfb1995-34f4-4637-904f-aef48ae1cc44",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "EMFM",
+      "description": "Electromagnetic Flowmeter",
+      "status": "Active",
+      "latest_no": "257"
+    },
+    {
+      "id": "c83b5efa-0cef-4593-b2aa-495e4c76d776",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "BPEM",
+      "description": "BATTERY POWERED ELECTROMAGNETIC FLOWMETER",
+      "status": "Inactive",
+      "latest_no": "257"
+    },
+    {
+      "id": "e5926f82-ef76-4dff-af60-0ed6b3090d86",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "DEFM",
+      "description": "DELIVERY ELECTRONIC FLOWMETER",
+      "status": "Inactive",
+      "latest_no": "257"
+    },
+    {
+      "id": "99f149aa-43ed-4c85-87a6-4b0ac51b8f5c",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "IWFM",
+      "description": "INTERNAL WTP FLOWMETER",
+      "status": "Inactive",
+      "latest_no": "257"
+    },
+    {
+      "id": "91a7f0b5-433b-4e7c-8cfb-a3beeb838fdb",
+      "asset_uuid": "NA",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "short": "WBME",
+      "description": "WATER BALANCE METER",
+      "status": "Inactive",
+      "latest_no": "257"
+    },
+    {
+      "id": "91a7f0b5-433b-4e7c-8cfb-a3beeb838fdb",
+      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
+      "brand": "True",
+      "capacity_size": "False",
+      "closingTorque": "True",
+      "hysteresis": "False",
+      "installation": "False",
+      "manufacturer": "True",
+    }
+  ];
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
 
   // Forms
   fileuploadFormGroup: FormGroup;
@@ -478,11 +556,12 @@ export class RegistrationComponent implements OnInit {
   // sixthFormGroup: FormGroup;
   // seventhFormGroup: FormGroup;
   validation_messages = [];
-  rowData : any
+  rowData: any
 
   // Asset Attribute Visibility
   assetattributevisible = [
     {
+<<<<<<< HEAD
       asset_primary_category:"ACTUATOR",
       brand:true,
       capacity_size:true,
@@ -821,6 +900,210 @@ export class RegistrationComponent implements OnInit {
       legal_name:true,
       source_from:true,
       supply_location:true,
+=======
+      "asset_primary_category": "ACTUATOR",
+      "brand": "true",
+      "capacity_size": "true",
+      "closing_torque": "true",
+      "hysteresis": "true",
+      "installation": "true",
+      "manufacturer": "true",
+      "manufacture_part_number": "true",
+      "manufacturer_year": "true",
+      "model": "true",
+      "opening_torque": "true",
+      "power_supply_type": "true",
+      "revolutions_per_minute": "true",
+      "type": "false",
+      "material_type": "false",
+      "valve_pressure_rating": "false",
+      "horse_power": "false",
+      "temperature": "false",
+      "coverage_range": "false",
+      "voltage": "false",
+      "valve_diameter": "false",
+      "top_water_level": "false",
+      "inlet_diameter": "false",
+      "bottom_water_level": "false",
+      "outlet_diameter": "false",
+      "staging_height": "false",
+      "dimention": "false",
+      "environmental_performance": "false",
+      "no_of_channel": "false",
+      "frequency": "false",
+      "vehicle_chassis_number": "false",
+      "vehicle_engine_capacity": "false",
+      "vehicle_engine_number": "false",
+      "vehicle_insurance_cover_note_number": "false",
+      "vehicle_insurance_date_period_from": "false",
+      "vehicle_insurance_no_claim_discount": "false",
+      "vehicle_insurance_total_premium": "false",
+      "vehicle_insurance_policy_type": "false",
+      "vehicle_insurance_sum_insured": "false",
+      "vehicle_insurance_date_period_to": "false",
+      "vehicle_insurance_auto_windscreen_insured": "false",
+      "vehicle_model": "false",
+      "vehicle_owner_status": "false",
+      "vehicle_puspakom_expired_date": "false",
+      "vehicle_puspakom_date_inspection": "false",
+      "vehicle_register_date": "false",
+      "vehicle_registration_owner": "false",
+      "vehicle_roadtax_rate": "false",
+      "vehicle_roadtax_renew_date": "false",
+      "vehicle_insurance_vendor": "false",
+      "vehicle_seating_capacity": "false",
+      "vehicle_spad_permit_date_period_from": "false",
+      "vehicle_spad_no_license_operator": "false",
+      "vehicle_spad_permit_date_period_to": "false",
+      "motor_current": "false",
+      "insulation": "false",
+      "no_of_phases": "false",
+      "communication_protocol": "false",
+      "flow_rate": "false",
+      "pump_head": "false",
+      "no_of_stage": "false",
+      "infrastructure_status_reason": "false",
+      "infrastructure_status": "false",
+      "legal_name": "false",
+      "source_from": "false",
+      "supply_location": "false",
+    },
+    {
+      "asset_primary_category": "AIR VALVE",
+      "brand": "true",
+      "capacity_size": "true",
+      "closing_torque": "false",
+      "hysteresis": "false",
+      "installation": "true",
+      "manufacturer": "true",
+      "manufacture_part_number": "true",
+      "manufacturer_year": "true",
+      "model": "true",
+      "opening_torque": "false",
+      "power_supply_type": "false",
+      "revolutions_per_minute": "false",
+      "type": "true",
+      "material_type": "true",
+      "valve_pressure_rating": "true",
+      "horse_power": "false",
+      "temperature": "false",
+      "coverage_range": "false",
+      "voltage": "false",
+      "valve_diameter": "true",
+      "top_water_level": "false",
+      "inlet_diameter": "false",
+      "bottom_water_level": "false",
+      "outlet_diameter": "false",
+      "staging_height": "false",
+      "dimention": "false",
+      "environmental_performance": "false",
+      "no_of_channel": "false",
+      "frequency": "false",
+      "vehicle_chassis_number": "false",
+      "vehicle_engine_capacity": "false",
+      "vehicle_engine_number": "false",
+      "vehicle_insurance_cover_note_number": "false",
+      "vehicle_insurance_date_period_from": "false",
+      "vehicle_insurance_no_claim_discount": "false",
+      "vehicle_insurance_total_premium": "false",
+      "vehicle_insurance_policy_type": "false",
+      "vehicle_insurance_sum_insured": "false",
+      "vehicle_insurance_date_period_to": "false",
+      "vehicle_insurance_auto_windscreen_insured": "false",
+      "vehicle_model": "false",
+      "vehicle_owner_status": "false",
+      "vehicle_puspakom_expired_date": "false",
+      "vehicle_puspakom_date_inspection": "false",
+      "vehicle_register_date": "false",
+      "vehicle_registration_owner": "false",
+      "vehicle_roadtax_rate": "false",
+      "vehicle_roadtax_renew_date": "false",
+      "vehicle_insurance_vendor": "false",
+      "vehicle_seating_capacity": "false",
+      "vehicle_spad_permit_date_period_from": "false",
+      "vehicle_spad_no_license_operator": "false",
+      "vehicle_spad_permit_date_period_to": "false",
+      "motor_current": "false",
+      "insulation": "false",
+      "no_of_phases": "false",
+      "communication_protocol": "false",
+      "flow_rate": "false",
+      "pump_head": "false",
+      "no_of_stage": "false",
+      "infrastructure_status_reason": "false",
+      "infrastructure_status": "false",
+      "legal_name": "false",
+      "source_from": "false",
+      "supply_location": "false",
+    },
+    {
+      "asset_primary_category": "AIR VALVE",
+      "brand": "true",
+      "capacity_size": "true",
+      "closing_torque": "false",
+      "hysteresis": "false",
+      "installation": "true",
+      "manufacturer": "true",
+      "manufacture_part_number": "true",
+      "manufacturer_year": "true",
+      "model": "true",
+      "opening_torque": "false",
+      "power_supply_type": "false",
+      "revolutions_per_minute": "true",
+      "type": "false",
+      "material_type": "false",
+      "valve_pressure_rating": "false",
+      "horse_power": "true",
+      "temperature": "true",
+      "coverage_range": "false",
+      "voltage": "true",
+      "valve_diameter": "false",
+      "top_water_level": "false",
+      "inlet_diameter": "false",
+      "bottom_water_level": "false",
+      "outlet_diameter": "false",
+      "staging_height": "false",
+      "dimention": "false",
+      "environmental_performance": "false",
+      "no_of_channel": "false",
+      "frequency": "true",
+      "vehicle_chassis_number": "false",
+      "vehicle_engine_capacity": "false",
+      "vehicle_engine_number": "false",
+      "vehicle_insurance_cover_note_number": "false",
+      "vehicle_insurance_date_period_from": "false",
+      "vehicle_insurance_no_claim_discount": "false",
+      "vehicle_insurance_total_premium": "false",
+      "vehicle_insurance_policy_type": "false",
+      "vehicle_insurance_sum_insured": "false",
+      "vehicle_insurance_date_period_to": "false",
+      "vehicle_insurance_auto_windscreen_insured": "false",
+      "vehicle_model": "false",
+      "vehicle_owner_status": "false",
+      "vehicle_puspakom_expired_date": "false",
+      "vehicle_puspakom_date_inspection": "false",
+      "vehicle_register_date": "false",
+      "vehicle_registration_owner": "false",
+      "vehicle_roadtax_rate": "false",
+      "vehicle_roadtax_renew_date": "false",
+      "vehicle_insurance_vendor": "false",
+      "vehicle_seating_capacity": "false",
+      "vehicle_spad_permit_date_period_from": "false",
+      "vehicle_spad_no_license_operator": "false",
+      "vehicle_spad_permit_date_period_to": "false",
+      "motor_current": "true",
+      "insulation": "true",
+      "no_of_phases": "true",
+      "communication_protocol": "false",
+      "flow_rate": "false",
+      "pump_head": "false",
+      "no_of_stage": "false",
+      "infrastructure_status_reason": "false",
+      "infrastructure_status": "false",
+      "legal_name": "false",
+      "source_from": "false",
+      "supply_location": "false",
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
     }
     ];
 
@@ -968,7 +1251,7 @@ export class RegistrationComponent implements OnInit {
       excelFile: ["", Validators.required],
     });
     this.assetAttributeGroup = this.formBuilder.group({
-        asset_identity: [""],
+      asset_identity: [""],
     })
   }
 
@@ -1137,7 +1420,7 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
-  openModalRegister(modalNotification: TemplateRef<any>, row) {
+  openModalRegister(modalNotification: TemplateRef<any>) {
     this.modalRegisterAsset = this.modalService.show(
       modalNotification,
       this.modalConfig,
@@ -1405,21 +1688,8 @@ export class RegistrationComponent implements OnInit {
 
   submitFileExcel() {
     let assetregserv = this.assetsRegistrationService
-    let toBeSubmitedData: any
-    let no = 0
-    var emptyData = 0;
-
-    // for (const key in this.dataFromExcelFile) {
-    //   console.log('this.dataFromExcelFile[key] = ', this.dataFromExcelFile[key])
-    //   if (this.dataFromExcelFile[key] == "") {
-    //     console.log('=== sini ===')
-    //     emptyData++;
-    //   }
-    // }
 
     this.dataFromExcelFile.forEach(function (loopval, index) {
-
-      console.log('loopval = ', loopval)
 
       let checkStatus = 'CO'
       const formData = new FormData();
@@ -1656,38 +1926,56 @@ export class RegistrationComponent implements OnInit {
     this.tableTemp1.forEach(function (itemVal) {
 
       if (itemVal['isTick'] == true) {
-        // const updateformData = new FormData();
-        let updateformData: any
-        // updateformData.append('status', 'PR');
 
-        updateformData = {
-          status: task
-        }
-        // console.log('updateformData = ', updateformData)
-        assetregser.update(itemVal['id'], updateformData).subscribe(
-          (res) => {
-            // console.log("res = ", res);
-            resData = res
-          },
-          error => {
-            console.error("err", error);
+        console.log('itemVal = ', itemVal.status)
+        if (itemVal.status == 'CO') {
+          // const updateformData = new FormData();
+          let updateformData: any
+          // updateformData.append('status', 'PR');
+
+          updateformData = {
+            status: task
           }
-        )
+          // console.log('updateformData = ', updateformData)
+
+          console.log('---- sini ----')
+          assetregser.update(itemVal['id'], updateformData).subscribe(
+            (res) => {
+              console.log("ttttatttatt = ", res);
+            },
+            error => {
+              console.error("err", error);
+            }
+          )
+        } else {
+          no++
+        }
       }
     })
-    // if (resData.length > 0) {
 
-    swal.fire({
-      title: 'Success',
-      text: 'Successfully Change Status',
-      type: 'success',
-      buttonsStyling: false,
-      confirmButtonText: 'Ok',
-      confirmButtonClass: 'btn btn-success'
-    }).then((result) => {
-      this.getRegisteredData()
-    })
-    // }
+    if (no > 0) {
+      swal.fire({
+        title: 'Warning',
+        text: 'The incomplete data cannot be save.',
+        type: 'warning',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok',
+        confirmButtonClass: 'btn btn-warning'
+      }).then((result) => {
+        this.getRegisteredData()
+      })
+    } else {
+      swal.fire({
+        title: 'Success',
+        text: 'Successfully Change Status',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok',
+        confirmButtonClass: 'btn btn-success'
+      }).then((result) => {
+        this.getRegisteredData()
+      })
+    }
   }
 
   onKey(event, formName, row) {
@@ -1741,4 +2029,12 @@ export class RegistrationComponent implements OnInit {
     )
   }
 
+<<<<<<< HEAD
+=======
+  getAssetPrimaryCategory() {
+    this.assetAttribute.forEach(function (lll, mm) {
+      console.log('test test = ', lll.asset_primary_category)
+    })
+  }
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
 }

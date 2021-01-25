@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from "@angular/router";
 import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 import { IonicModule } from "@ionic/angular";
+import { IonCustomScrollbarModule } from 'ion-custom-scrollbar'
 
 import { TechnicalRoutes } from "./technical.routing";
 import { InventoryInfoPageModule } from './inventory-info/inventory-info.module';
@@ -24,6 +25,7 @@ import { MeasurementTypePageModule } from './measurement-type/measurement-type.m
     WorkRequestPageModule,
     OperationalReadingPageModule,
     MeasurementTypePageModule,
+    IonCustomScrollbarModule,
     IonicModule.forRoot(),
     LeafletModule.forRoot(),
     RouterModule.forChild(TechnicalRoutes)

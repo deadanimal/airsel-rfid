@@ -11,7 +11,7 @@ import { AlertController, MenuController } from "@ionic/angular";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 import { format } from "date-fns";
 
-import { AssetsService } from "src/app/shared/services/assets/assets.service";
+import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkRequestsService } from "src/app/shared/services/work-requests/work-requests.service";
@@ -29,12 +29,13 @@ export class WorkRequestPage implements OnInit {
   // Data
   capturedSnapURL: string;
   segmentModal = "first";
+  process: string;
 
   constructor(
     public formBuilder: FormBuilder,
     public alertController: AlertController,
     public menu: MenuController,
-    private assetService: AssetsService,
+    private assetregistrationService: AssetRegistrationsService,
     private authService: AuthService,
     public notificationService: NotificationsService,
     private workrequestService: WorkRequestsService,
@@ -71,22 +72,25 @@ export class WorkRequestPage implements OnInit {
 
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
+        // To get process from work request list
+        this.process = this.router.getCurrentNavigation().extras.state.process;
+
         let workrequest = this.router.getCurrentNavigation().extras.state
           .workrequest;
         this.workrequestFormGroup.patchValue({
           ...workrequest,
         });
 
-        if (this.router.getCurrentNavigation().extras.state.qrcode) {
-          let qrcode = this.router.getCurrentNavigation().extras.state.qrcode;
-          this.assetService.filter("badge_number=" + qrcode).subscribe(
+        if (this.router.getCurrentNavigation().extras.state.badge_no) {
+          let badge_no = this.router.getCurrentNavigation().extras.state.badge_no;
+          this.assetregistrationService.filter("badge_no=" + badge_no).subscribe(
             (res) => {
               // console.log("res", res);
               this.workrequestFormGroup.patchValue({
-                asset_id: res[0].wams_asset_id,
-                node_id: res[0].level_4,
-                description: res[0].asset_description,
-                long_description: res[0].name
+                asset_id: res[0].asset_id,
+                node_id: res[0].node_id,
+                description: "NA",
+                long_description: res[0].detailed_description
               })
             },
             (err) => {
@@ -113,25 +117,6 @@ export class WorkRequestPage implements OnInit {
 
   ngOnInit() {
     this.menu.enable(false, "menuNotification");
-    this.scanQrCode();
-  }
-
-  scanQrCode() {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        link: "/technical/work-request",
-      },
-    };
-    this.router.navigate(["/technical/qr-scanner"], navigationExtras);
-
-    // this.barcodeScanner
-    //   .scan()
-    //   .then(barcodeData => {
-    //     console.log("Barcode data", barcodeData);
-    //   })
-    //   .catch(err => {
-    //     console.log("Error", err);
-    //   });
   }
 
   takeCamera() {

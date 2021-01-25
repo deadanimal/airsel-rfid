@@ -1,4 +1,4 @@
-installation<div class="header pb-6">
+<div class="header pb-6">
   <div class="container-fluid">
     <div class="header-body">
       <div class="row align-items-center py-4">
@@ -651,7 +651,7 @@ installation<div class="header pb-6">
               </div>
             </div>
 
-            <div class="col-md-3 col-sm-6">
+            <!-- <div class="col-md-3 col-sm-6">
               <div class="custom-control custom-checkbox">
                 <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkBotWatLevel"
                   [(ngModel)]="is_show1.bottom_water_level">
@@ -1305,7 +1305,7 @@ installation<div class="header pb-6">
                   Voltage
                 </label>
               </div>
-            </div>
+            </div> -->
 
           </div>
           <hr />
@@ -2031,7 +2031,7 @@ installation<div class="header pb-6">
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <!-- <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
                       *ngIf="is_show1.bottom_water_level">
                       <ng-template ngx-datatable-header-template>
                         <span>Bottom Water Level</span>
@@ -2762,14 +2762,15 @@ installation<div class="header pb-6">
                         <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="voltage"
                           class="form-control" value="{{row.voltage}}" />
                       </ng-template>
-                    </ngx-datatable-column>
+                    </ngx-datatable-column> -->
 
                     <ngx-datatable-column [width]="140" [resizeable]="false">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Attribute</span>
                       </ng-template>
                       <ng-template let-row="row" ngx-datatable-cell-template>
-                        <button class="btn btn-default" (click)="openModalAssetAttribute(assetAttribute, row)">Detail</button>
+                        <button class="btn btn-default"
+                          (click)="openModalAssetAttribute(assetAttribute, row)">Detail</button>
                       </ng-template>
                     </ngx-datatable-column>
                   </ngx-datatable>
@@ -2805,13 +2806,14 @@ installation<div class="header pb-6">
   </div>
 </div>
 
-<ng-template #assetAttribute >
+<ng-template #assetAttribute>
   <div class="modal-header bg-default">
     <h6 class="modal-title my-auto text-white">
       List of Asset
     </h6>
 
-    <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button" (click)="ModalAssetAttribute.hide()">
+    <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
+      (click)="ModalAssetAttribute.hide()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
   </div>
@@ -2823,7 +2825,13 @@ installation<div class="header pb-6">
         <div class="col-md-4">
           <div class="form-group">
             <label class="form-control-label">Asset Identity</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="asset_identity" class="form-control" value="{{rowData.asset_identity}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="asset_identity"
+              class="form-control" value="{{rowData.asset_identity}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -2837,35 +2845,65 @@ installation<div class="header pb-6">
         <div class="col-md-4">
           <div class="form-group">
             <label class="form-control-label">Parent Location</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="parent_location" class="form-control" value="{{rowData.parent_location}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="parent_location"
+              class="form-control" value="{{rowData.parent_location}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].bottom_water_level">
           <div class="form-group">
             <label class="form-control-label">Bottom Water Level</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="bottom_water_level" class="form-control" value="{{rowData.bottom_water_level}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="bottom_water_level"
+              class="form-control" value="{{rowData.bottom_water_level}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].brand">
           <div class="form-group">
             <label class="form-control-label">Brand</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="brand" class="form-control" value="{{rowData.brand}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="brand"
+              class="form-control" value="{{rowData.brand}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].capacity_size">
           <div class="form-group">
             <label class="form-control-label">Capacity Size</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="capacity_size" class="form-control" value="{{rowData.capacity_size}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="capacity_size"
+              class="form-control" value="{{rowData.capacity_size}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].closing_torque">
           <div class="form-group">
             <label class="form-control-label">Closing Torque</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="closing_torque" class="form-control" value="{{rowData.closing_torque}}" />
+=======
+            <!-- <input type="text" formControlName="closing_torque" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="closing_torque"
+              class="form-control" value="{{rowData.closing_torque}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -2879,14 +2917,26 @@ installation<div class="header pb-6">
         <div class="col-md-4" *ngIf="assetprimaryshow[0].coverage_range">
           <div class="form-group">
             <label class="form-control-label">Coverage Range</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="coverage_range" class="form-control" value="{{rowData.coverage_range}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="coverage_range"
+              class="form-control" value="{{rowData.coverage_range}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].dimention">
           <div class="form-group">
             <label class="form-control-label">Dimension</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="dimention" class="form-control" value="{{rowData.dimention}}" />
+=======
+            <!-- <input type="text" formControlName="dimention" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="dimention"
+              class="form-control" value="{{rowData.dimention}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -2900,34 +2950,64 @@ installation<div class="header pb-6">
         <div class="col-md-4" *ngIf="assetprimaryshow[0].flow_rate">
           <div class="form-group">
             <label class="form-control-label">Flow Rate</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="flow_rate" class="form-control" value="{{rowData.flow_rate}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="flow_rate"
+              class="form-control" value="{{rowData.flow_rate}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].frequency">
           <div class="form-group">
             <label class="form-control-label">Frequency</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="frequency" class="form-control" value="{{rowData.Frequency}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="frequency"
+              class="form-control" value="{{rowData.Frequency}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
         <div class="col-md-4" *ngIf="assetprimaryshow[0].horse_power">
           <div class="form-group">
             <label class="form-control-label">Horse Power</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="horse_power" class="form-control" value="{{rowData.horse_power}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="horse_power"
+              class="form-control" value="{{rowData.horse_power}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].hysteresis">
           <div class="form-group">
             <label class="form-control-label">Hysteresis</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="hysteresis" class="form-control" value="{{rowData.hysteresis}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="hysteresis"
+              class="form-control" value="{{rowData.hysteresis}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].infrastructure_status">
           <div class="form-group">
             <label class="form-control-label">Infrastructure Status</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="infrastructure_status" class="form-control" value="{{rowData.infrastructure_status}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="infrastructure_status"
+              class="form-control" value="{{rowData.infrastructure_status}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -2935,55 +3015,92 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Infrastructure Status-Reason</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="infrastructure_status_reason" class="form-control" value="{{rowData.infrastructure_status_reason}}" />
+              name="infrastructure_status_reason" class="form-control"
+              value="{{rowData.infrastructure_status_reason}}" />
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].inlet_diameter">
           <div class="form-group">
             <label class="form-control-label">Inlet Diameter</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="inlet_diameter" class="form-control" value="{{rowData.inlet_diameter}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="inlet_diameter"
+              class="form-control" value="{{rowData.inlet_diameter}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].installation">
           <div class="form-group">
             <label class="form-control-label">Installation</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="installation" class="form-control" value="{{rowData.installation}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="installation"
+              class="form-control" value="{{rowData.installation}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].insulation">
           <div class="form-group">
             <label class="form-control-label">Insulation</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="insulation" class="form-control" value="{{rowData.insulation}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="insulation"
+              class="form-control" value="{{rowData.insulation}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].legal_name">
           <div class="form-group">
             <label class="form-control-label">Legal Name</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="legal_name" class="form-control" value="{{rowData.legal_name}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="legal_name"
+              class="form-control" value="{{rowData.legal_name}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].manufacturer">
           <div class="form-group">
             <label class="form-control-label">Manufacture</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="manufacturer" class="form-control" value="{{rowData.manufacturer}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="manufacturer"
+              class="form-control" value="{{rowData.manufacturer}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].manufacturer_year">
           <div class="form-group">
             <label class="form-control-label">Manufacturer Year</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="manufacturer_year" class="form-control" value="{{rowData.manufacturer_year}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="manufacturer_year"
+              class="form-control" value="{{rowData.manufacturer_year}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -2998,80 +3115,140 @@ installation<div class="header pb-6">
         <div class="col-md-4" *ngIf="assetprimaryshow[0].material_type">
           <div class="form-group">
             <label class="form-control-label">Material Type</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="material_type" class="form-control" value="{{rowData.material_type}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="material_type"
+              class="form-control" value="{{rowData.material_type}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].model">
           <div class="form-group">
             <label class="form-control-label">Model</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="model" class="form-control" value="{{rowData.model}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="model"
+              class="form-control" value="{{rowData.model}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].motor_current">
           <div class="form-group">
             <label class="form-control-label">Motor Current</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="motor_current" class="form-control" value="{{rowData.motor_current}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="motor_current"
+              class="form-control" value="{{rowData.motor_current}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].no_of_channel">
           <div class="form-group">
             <label class="form-control-label">No Of Channel</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="no_of_channel" class="form-control" value="{{rowData.no_of_channel}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="no_of_channel"
+              class="form-control" value="{{rowData.no_of_channel}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].no_of_phases">
           <div class="form-group">
             <label class="form-control-label">No Of Phases</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="no_of_phases" class="form-control" value="{{rowData.no_of_phases}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="no_of_phases"
+              class="form-control" value="{{rowData.no_of_phases}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].no_of_stage">
           <div class="form-group">
             <label class="form-control-label">No Of Stage</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="no_of_stage" class="form-control" value="{{rowData.no_of_stage}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="no_of_stage"
+              class="form-control" value="{{rowData.no_of_stage}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].opening_torque">
           <div class="form-group">
             <label class="form-control-label">Opening Torque</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="opening_torque" class="form-control" value="{{rowData.opening_torque}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="opening_torque"
+              class="form-control" value="{{rowData.opening_torque}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].outlet_diameter">
           <div class="form-group">
             <label class="form-control-label">Outlet Diameter</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="outlet_diameter" class="form-control" value="{{rowData.outlet_diameter}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="outlet_diameter"
+              class="form-control" value="{{rowData.outlet_diameter}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].power_supply_type">
           <div class="form-group">
             <label class="form-control-label">Power Supply Type</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="power_supply_type" class="form-control" value="{{rowData.power_supply_type}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="power_supply_type"
+              class="form-control" value="{{rowData.power_supply_type}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].pump_head">
           <div class="form-group">
             <label class="form-control-label">Pump Head</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="pump_head" class="form-control" value="{{rowData.pump_head}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="pump_head"
+              class="form-control" value="{{rowData.pump_head}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -3086,72 +3263,126 @@ installation<div class="header pb-6">
         <div class="col-md-4" *ngIf="assetprimaryshow[0].source_from">
           <div class="form-group">
             <label class="form-control-label">Source From</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="source_from" class="form-control" value="{{rowData.source_from}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="source_from"
+              class="form-control" value="{{rowData.source_from}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].staging_height">
           <div class="form-group">
             <label class="form-control-label">Staging Height</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="staging_height" class="form-control" value="{{rowData.staging_height}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="staging_height"
+              class="form-control" value="{{rowData.staging_height}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].supply_location">
           <div class="form-group">
             <label class="form-control-label">Supply Location</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="supply_location" class="form-control" value="{{rowData.supply_location}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="supply_location"
+              class="form-control" value="{{rowData.supply_location}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].temperature">
           <div class="form-group">
             <label class="form-control-label">Temperature</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="temperature" class="form-control" value="{{rowData.temperature}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="temperature"
+              class="form-control" value="{{rowData.temperature}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].top_water_level">
           <div class="form-group">
             <label class="form-control-label">Top Water Level</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="top_water_level" class="form-control" value="{{rowData.top_water_level}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="top_water_level"
+              class="form-control" value="{{rowData.top_water_level}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].type">
           <div class="form-group">
             <label class="form-control-label">Type</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="type" class="form-control" value="{{rowData.type}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="type"
+              class="form-control" value="{{rowData.type}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].valve_diameter">
           <div class="form-group">
             <label class="form-control-label">Valve Diameter</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="valve_diameter" class="form-control" value="{{rowData.valve_diameter}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="valve_diameter"
+              class="form-control" value="{{rowData.valve_diameter}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].valve_pressure_rating">
           <div class="form-group">
             <label class="form-control-label">Valve Pressure Rating</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="valve_pressure_rating" class="form-control" value="{{rowData.valve_pressure_rating}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="valve_pressure_rating"
+              class="form-control" value="{{rowData.valve_pressure_rating}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_chassis_number">
           <div class="form-group">
             <label class="form-control-label">Vehicle Chassis Number</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="vehicle_chasis_number" class="form-control" value="{{rowData.vehicle_chasis_number}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_chasis_number"
+              class="form-control" value="{{rowData.vehicle_chasis_number}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -3166,8 +3397,14 @@ installation<div class="header pb-6">
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_engine_number">
           <div class="form-group">
             <label class="form-control-label">Vehicle Engine Number</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="vehicle_engine_number" class="form-control" value="{{rowData.vehicle_engine_number}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_engine_number"
+              class="form-control" value="{{rowData.vehicle_engine_number}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -3182,8 +3419,14 @@ installation<div class="header pb-6">
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_model">
           <div class="form-group">
             <label class="form-control-label">Vehicle Model</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="vehicle_model" class="form-control" value="{{rowData.vehicle_model}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_model"
+              class="form-control" value="{{rowData.vehicle_model}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -3191,7 +3434,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Insurance Auto Windscreen Insured</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_insurance_auto_windscreen_insured" class="form-control" value="{{rowData.vehicle_insurance_auto_windscreen_insured}}" />
+              name="vehicle_insurance_auto_windscreen_insured" class="form-control"
+              value="{{rowData.vehicle_insurance_auto_windscreen_insured}}" />
           </div>
         </div>
 
@@ -3199,7 +3443,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Insurance Cover Note Number</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_insurance_cover_note_number" class="form-control" value="{{rowData.vehicle_insurance_cover_note_number}}" />
+              name="vehicle_insurance_cover_note_number" class="form-control"
+              value="{{rowData.vehicle_insurance_cover_note_number}}" />
           </div>
         </div>
 
@@ -3207,7 +3452,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Insurance Date Period From</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_insurance_date_period_from" class="form-control" value="{{rowData.vehicle_insurance_date_period_from}}" />
+              name="vehicle_insurance_date_period_from" class="form-control"
+              value="{{rowData.vehicle_insurance_date_period_from}}" />
           </div>
         </div>
 
@@ -3215,7 +3461,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Insurance Date Period To</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_insurance_date_period_to" class="form-control" value="{{rowData.vehicle_insurance_date_period_to}}" />
+              name="vehicle_insurance_date_period_to" class="form-control"
+              value="{{rowData.vehicle_insurance_date_period_to}}" />
           </div>
         </div>
 
@@ -3223,7 +3470,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Insurance No Claim Discount</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_insurance_no_claim_discount" class="form-control" value="{{rowData.vehicle_insurance_no_claim_discount}}" />
+              name="vehicle_insurance_no_claim_discount" class="form-control"
+              value="{{rowData.vehicle_insurance_no_claim_discount}}" />
           </div>
         </div>
 
@@ -3231,7 +3479,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Insurance Policy Type</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_insurance_policy_type" class="form-control" value="{{rowData.vehicle_insurance_policy_type}}" />
+              name="vehicle_insurance_policy_type" class="form-control"
+              value="{{rowData.vehicle_insurance_policy_type}}" />
           </div>
         </div>
 
@@ -3239,7 +3488,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Insurance Sum Insured</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_insurance_sum_insured" class="form-control" value="{{rowData.vehicle_insurance_sum_insured}}" />
+              name="vehicle_insurance_sum_insured" class="form-control"
+              value="{{rowData.vehicle_insurance_sum_insured}}" />
           </div>
         </div>
 
@@ -3247,7 +3497,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Insurance Total Premium</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_insurance_total_premium" class="form-control" value="{{rowData.vehicle_insurance_total_premium}}" />
+              name="vehicle_insurance_total_premium" class="form-control"
+              value="{{rowData.vehicle_insurance_total_premium}}" />
           </div>
         </div>
 
@@ -3255,30 +3506,49 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Puspakom Date Inspection</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_puspakom_date_inspection" class="form-control" value="{{rowData.vehicle_puspakom_date_inspection}}" />
+              name="vehicle_puspakom_date_inspection" class="form-control"
+              value="{{rowData.vehicle_puspakom_date_inspection}}" />
           </div>
         </div>
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_owner_status">
           <div class="form-group">
             <label class="form-control-label">Vehicle Owner Status</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="vehicle_owner_status" class="form-control" value="{{rowData.vehicle_owner_status}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_owner_status"
+              class="form-control" value="{{rowData.vehicle_owner_status}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_register_date">
           <div class="form-group">
             <label class="form-control-label">Vehicle Register Date</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="vehicle_register_date" class="form-control" value="{{rowData.vehicle_register_date}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_register_date"
+              class="form-control" value="{{rowData.vehicle_register_date}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_roadtax_rate">
           <div class="form-group">
             <label class="form-control-label">Vehicle Roadtax Rate</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="vehicle_roadtax_rate" class="form-control" value="{{rowData.vehicle.roadtax_rate}}" />
+=======
+            <!-- <input type="text" formControlName="brand" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_roadtax_rate"
+              class="form-control" value="{{rowData.vehicle.roadtax_rate}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
 
@@ -3286,14 +3556,16 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Puspakom Expired Date</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_puspakom_expired_date" class="form-control" value="{{rowData.vehicle_puspakom_expired_date}}" />
+              name="vehicle_puspakom_expired_date" class="form-control"
+              value="{{rowData.vehicle_puspakom_expired_date}}" />
           </div>
         </div>
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_spad_permit_date_period_to">
           <div class="form-group">
             <label class="form-control-label">Vehicle Spad Permit Date Period To</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_spad_permit_date_period_to" class="form-control" value="{{rowData.vehicle_spad_permit_date_period_to}}" />
+              name="vehicle_spad_permit_date_period_to" class="form-control"
+              value="{{rowData.vehicle_spad_permit_date_period_to}}" />
           </div>
         </div>
 
@@ -3309,7 +3581,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Roadtax Expired Date</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_roadtax_expired_date" class="form-control" value="{{rowData.vehicle_roadtax_expired_date}}" />
+              name="vehicle_roadtax_expired_date" class="form-control"
+              value="{{rowData.vehicle_roadtax_expired_date}}" />
           </div>
         </div>
 
@@ -3317,7 +3590,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicel Spad No License Operator</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_spad_no_license_operator" class="form-control" value="{{rowData.vehicle_spad_no_license_operator}}" />
+              name="vehicle_spad_no_license_operator" class="form-control"
+              value="{{rowData.vehicle_spad_no_license_operator}}" />
           </div>
         </div>
 
@@ -3325,7 +3599,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Spad Permit Date Period From</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_spad_permit_date_period_from" class="form-control" value="{{rowData.vehicle_spad_permit_date_period_from}}" />
+              name="vehicle_spad_permit_date_period_from" class="form-control"
+              value="{{rowData.vehicle_spad_permit_date_period_from}}" />
           </div>
         </div>
 
@@ -3333,7 +3608,8 @@ installation<div class="header pb-6">
           <div class="form-group">
             <label class="form-control-label">Vehicle Seating Capacity</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_seating_capacity" class="form-control" value="{{rowData.vehicle-vehicle_seating_capacity}}" />
+              name="vehicle_seating_capacity" class="form-control"
+              value="{{rowData.vehicle-vehicle_seating_capacity}}" />
           </div>
         </div>
 
@@ -3348,8 +3624,14 @@ installation<div class="header pb-6">
         <div class="col-md-4" *ngIf="assetprimaryshow[0].voltage">
           <div class="form-group">
             <label class="form-control-label">Voltage</label>
+<<<<<<< HEAD
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
               name="voltage" class="form-control" value="{{rowData.voltage}}" />
+=======
+            <!-- <input type="text" formControlName="bottom_water_level" class="form-control form-control-sm" /> -->
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="voltage"
+              class="form-control" value="{{rowData.voltage}}" />
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
           </div>
         </div>
       </div>
@@ -3366,7 +3648,6 @@ installation<div class="header pb-6">
     </button>
   </div>
 </ng-template>
-
 
 <ng-template #asset>
   <div class="modal-header bg-default">
@@ -3524,8 +3805,7 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Region</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="region">
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="region">
                   <option value="">Please select</option>
                   <option *ngFor="let region of region" [value]="region.value">
                     {{ region.name }}</option>
@@ -3538,8 +3818,7 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Operation</label>
-                <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="operation">
+                <select class="form-control custom-select form-control-sm custom-select-sm" formControlName="operation">
                   <option value="">Please select</option>
                   <option *ngFor="let operation of operation" [value]="operation.value">
                     {{ operation.name }}</option>
@@ -3670,7 +3949,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Location/Asset Maintenance Manager</label>
-                <input type="text" formControlName="location_asset_maintenance_manager" class="form-control form-control-sm" />
+                <input type="text" formControlName="location_asset_maintenance_manager"
+                  class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-6">
@@ -3742,7 +4022,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 1-Unit Measurement</label>
-                <input type="text" formControlName="size_capacity_1_unit_measurement" class="form-control form-control-sm" />
+                <input type="text" formControlName="size_capacity_1_unit_measurement"
+                  class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -3756,7 +4037,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 2-Unit Measurement</label>
-                <input type="text" formControlName="size_capacity_2_unit_measurement" class="form-control form-control-sm" />
+                <input type="text" formControlName="size_capacity_2_unit_measurement"
+                  class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -3770,7 +4052,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 3-Uni Measurement</label>
-                <input type="text" formControlName="size_capacity_3_unit_measurement" class="form-control form-control-sm" />
+                <input type="text" formControlName="size_capacity_3_unit_measurement"
+                  class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -3812,7 +4095,8 @@ installation<div class="header pb-6">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Purchase Date/Installed/Handed Over</label>
-                <input type="date" formControlName="purchase_date_installed_handed_over_date" class="form-control form-control-sm" />
+                <input type="date" formControlName="purchase_date_installed_handed_over_date"
+                  class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -3905,8 +4189,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Communication Protocol</label>
-                <input type="text" formControlName="communication_protocol"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="communication_protocol" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
@@ -3924,8 +4207,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Environmental Performance</label>
-                <input type="text" formControlName="environmental_performance"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="environmental_performance" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -3959,8 +4241,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Infrastructure Status</label>
-                <input type="text" formControlName="infrastructure_status"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="infrastructure_status" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
@@ -4013,8 +4294,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Manufacturer Part Number</label>
-                <input type="text" formControlName="manufacture_part_number"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="manufacture_part_number" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
@@ -4084,8 +4364,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Revolution Per Minute</label>
-                <input type="text" formControlName="revolutions_per_minute"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="revolutions_per_minute" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4137,8 +4416,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Valve Pressure Rating</label>
-                <input type="text" formControlName="valve_pressure_rating"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="valve_pressure_rating" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4146,29 +4424,25 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Chassis Number</label>
-                <input type="text" formControlName="vehicle_chassis_number"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_chassis_number" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Engine Capacity</label>
-                <input type="text" formControlName="vehicle_engine_capacity"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_engine_capacity" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Engine Number</label>
-                <input type="text" formControlName="vehicle_engine_number"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_engine_number" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Insurance Vendor</label>
-                <input type="text" formControlName="vehicle_insurance_vendor"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_insurance_vendor" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4249,15 +4523,13 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Owner Status</label>
-                <input type="text" formControlName="vehicle_owner_status"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_owner_status" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Register Date</label>
-                <input type="date" formControlName="vehicle_register_date"
-                  class="form-control form-control-sm" />
+                <input type="date" formControlName="vehicle_register_date" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4265,8 +4537,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Roadtax Rate</label>
-                <input type="text" formControlName="vehicle_roadtax_rate"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_roadtax_rate" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">
@@ -4286,8 +4557,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Roadtax Renew Date</label>
-                <input type="date" formControlName="vehicle_roadtax_renew_date"
-                  class="form-control form-control-sm" />
+                <input type="date" formControlName="vehicle_roadtax_renew_date" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4316,8 +4586,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Seating Capacity</label>
-                <input type="text" formControlName="vehicle_seating_capacity"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_seating_capacity" class="form-control form-control-sm" />
               </div>
             </div>
           </div>
@@ -4325,8 +4594,7 @@ installation<div class="header pb-6">
             <div class="col-md-3">
               <div class="form-group">
                 <label class="form-control-label">Vehicle Registration Owner</label>
-                <input type="text" formControlName="vehicle_registration_owner"
-                  class="form-control form-control-sm" />
+                <input type="text" formControlName="vehicle_registration_owner" class="form-control form-control-sm" />
               </div>
             </div>
             <div class="col-md-3">

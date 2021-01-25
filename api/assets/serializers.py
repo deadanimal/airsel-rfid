@@ -14,7 +14,11 @@ from .models import (
     AssetGroup,
     AssetType,
     Rfid,
-    AssetBadgeFormat
+    AssetBadgeFormat,
+    AssetAttribute,
+    AssetAttributeColumn,
+    AssetLocation,
+    AssetMeasurementType
 )
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -23,13 +27,11 @@ class AssetSerializer(serializers.ModelSerializer):
         model = Asset
         fields = '__all__'
 
-
 class AssetBadgeFormatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetBadgeFormat
         fields = '__all__'
-
 
 class AssetRegistrationSerializer(serializers.ModelSerializer):
 
@@ -37,13 +39,11 @@ class AssetRegistrationSerializer(serializers.ModelSerializer):
         model = AssetRegistration
         fields = '__all__'
 
-
 class AssetGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetGroup
         fields = '__all__'
-
 
 class AssetTypeSerializer(serializers.ModelSerializer):
 
@@ -51,10 +51,44 @@ class AssetTypeSerializer(serializers.ModelSerializer):
         model = AssetType
         fields = '__all__'
 
-
 class RfidSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rfid
         fields = '__all__'
 
+class AssetAttributeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetAttribute
+        fields = '__all__'
+
+class AssetAttributeColumnSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetAttributeColumn
+        fields = '__all__'
+
+class AssetLocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetLocation
+        fields = '__all__'
+
+class AssetMeasurementTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetMeasurementType
+        fields = '__all__'
+
+class AssetExtendedSerializer(serializers.ModelSerializer):
+
+    measurement_types = AssetMeasurementTypeSerializer(many=True)
+    asset_attributes = AssetAttributeSerializer(many=True)
+    # submitted_datetime = serializers.DateTimeField(format="%Y-%m-%d %H:%m", input_formats=None)
+    # created_date = serializers.DateTimeField(format="%Y-%m-%d %H:%m", input_formats=None)
+    # modified_date = serializers.DateTimeField(format="%Y-%m-%d %H:%m", input_formats=None)
+
+    class Meta:
+        model = Asset
+        fields = '__all__'

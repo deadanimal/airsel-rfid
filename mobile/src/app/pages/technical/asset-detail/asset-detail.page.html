@@ -1,7 +1,7 @@
 <ion-header mode="ios" class="ion-no-border">
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
-      <ion-button (click)="homePage('/technical/tabs/tab1')">
+      <ion-button (click)="clickBack()">
         <ion-icon
           src="../../../../assets/icon/air-selangor-icon.svg"
           style="font-size: 2rem"
@@ -24,220 +24,161 @@
 </ion-header>
 
 <ion-content class="content-core">
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
+  <!-- <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button (click)="scanQrCode()">
       <ion-icon name="scan"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
-  <mat-vertical-stepper
-    [linear]="isLinear"
-    #stepper
-    [disableRipple]="isDisableRipple"
-  >
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Asset Main</ng-template>
-        <div class="line-input">
-          <div class="row">
-            <ion-item>
-              <ion-label position="stacked">Information</ion-label>
-              <ion-input type="text" formControlName="information"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked">Asset Type</ion-label>
-              <ion-input type="text" formControlName="asset_type"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked">Detail Description</ion-label>
-              <ion-input
-                type="text"
-                formControlName="detail_description"
-              ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked">Status</ion-label>
-              <ion-input type="text" formControlName="status"></ion-input>
-            </ion-item>
-          </div>
-        </div>
+  </ion-fab> -->
+  <div class="ion-padding">
+    <div class="line-input">
+      <ion-item>
+        <ion-label position="stacked">Badge No</ion-label>
+        <ion-input type="text" readonly></ion-input>
+      </ion-item>
 
-        <div>
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
-      </form>
-    </mat-step>
+      <ion-item>
+        <ion-label position="stacked">Asset Type</ion-label>
+        <ion-input
+          type="text"
+          readonly
+          [value]="asset_detail.asset_primary_category"
+        ></ion-input>
+      </ion-item>
 
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Identification</ng-template>
-        <div class="line-input">
-          <div class="row">
-            <ion-item>
-              <ion-label position="stacked">Badge Number</ion-label>
-              <ion-input type="text" formControlName="badge_number"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked">Serial Number</ion-label>
-              <ion-input
-                type="text"
-                formControlName="serial_number"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </div>
+      <ion-item>
+        <ion-label position="stacked">Asset Parent Location</ion-label>
+        <ion-textarea
+          rows="3"
+          readonly
+          [value]="asset_detail.parent_location"
+        ></ion-textarea>
+      </ion-item>
 
-        <div>
-          <ion-button color="danger" size="small" matStepperPrevious
-            >Back</ion-button
-          >
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
-      </form>
-    </mat-step>
+      <ion-item>
+        <ion-label position="stacked">Asset Location</ion-label>
+        <ion-textarea
+          rows="3"
+          readonly
+          [value]="asset_detail.location_description"
+        ></ion-textarea>
+      </ion-item>
 
-    <mat-step [stepControl]="thirdFormGroup">
-      <form [formGroup]="thirdFormGroup">
-        <ng-template matStepLabel>Disposition</ng-template>
-        <div class="line-input">
-          <div class="row">
-            <ion-item>
-              <ion-label position="stacked">Location</ion-label>
-              <ion-input type="text" formControlName="location"></ion-input>
-            </ion-item>
-          </div>
-        </div>
+      <ion-item>
+        <ion-label position="stacked">Brand</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
 
-        <div>
-          <ion-button color="danger" size="small" matStepperPrevious
-            >Back</ion-button
-          >
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
-      </form>
-    </mat-step>
+      <ion-item>
+        <ion-label position="stacked">Capacity/Size</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
 
-    <mat-step [stepControl]="fourthFormGroup">
-      <form [formGroup]="fourthFormGroup">
-        <ng-template matStepLabel>Assesment</ng-template>
-        <div class="line-input">
-          <div class="row">
-            <ion-item>
-              <ion-label position="stacked">Condition Rating</ion-label>
-              <ion-input
-                type="text"
-                formControlName="condition_rating"
-              ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked">Confidence Rating</ion-label>
-              <ion-input
-                type="text"
-                formControlName="confidence_rating"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </div>
+      <div *ngIf="asset_type == 'Pump'">
+        <ion-item>
+          <ion-label position="stacked">Type</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
 
-        <div>
-          <ion-button color="danger" size="small" matStepperPrevious
-            >Back</ion-button
-          >
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
-      </form>
-    </mat-step>
+        <ion-item>
+          <ion-label position="stacked">Flow Rate</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
 
-    <mat-step [stepControl]="fifthFormGroup">
-      <form [formGroup]="fifthFormGroup">
-        <ng-template matStepLabel>Access Control</ng-template>
-        <div class="line-input">
-          <div class="row">
-            <ion-item>
-              <ion-label position="stacked">Owning Organization</ion-label>
-              <ion-input type="text" formControlName="owning_organization"></ion-input>
-            </ion-item>
-          </div>
-        </div>
+        <ion-item>
+          <ion-label position="stacked">Pump Head</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </div>
 
-        <div>
-          <ion-button color="danger" size="small" matStepperPrevious
-            >Back</ion-button
-          >
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
-      </form>
-    </mat-step>
+      <div *ngIf="asset_type == 'Motor'">
+        <ion-item>
+          <ion-label position="stacked">Motor Current</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
 
-    <mat-step [stepControl]="sixthFormGroup">
-      <form [formGroup]="sixthFormGroup">
-        <ng-template matStepLabel>Asset Attributes</ng-template>
-        <ion-card>
-          <ion-fab vertical="top" horizontal="end">
-            <ion-fab-button size="small">
-              <ion-icon name="create"></ion-icon>
-            </ion-fab-button>
-          </ion-fab>
+        <ion-item>
+          <ion-label position="stacked">Frequency</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </div>
 
-          <ion-card-content>
-            <p>AIS-CM-BOARD: LYE</p>
-            <p>INSTALLATION: Suction</p>
-            <p>MANUFACTURER PART NUMBER:</p>
-            <p>MANUFACTURER:</p>
-            <p>MANUFACTURER YEAR:</p>
-            <p>MATERIAL TYPE: DUCTILE IRON</p>
-            <p>MODEL:</p>
-            <p>VALVE DIAMETER: 250MM</p>
-            <p>VALVE-PRESSURE RATING: PN16</p>
-          </ion-card-content>
-        </ion-card>
+      <ion-item>
+        <ion-label position="stacked">Horse-Power (HP)</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
 
-        <div>
-          <ion-button color="danger" size="small" matStepperPrevious
-            >Back</ion-button
-          >
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
-      </form>
-    </mat-step>
+      <ion-item>
+        <ion-label position="stacked">Installation</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
 
-    <mat-step [stepControl]="seventhFormGroup">
-      <form [formGroup]="seventhFormGroup">
-        <ng-template matStepLabel>Asset Warranty</ng-template>
-        <div class="line-input">
-          <div class="row">
-            <ion-item>
-              <ion-label position="stacked">Warranty Term</ion-label>
-              <ion-input type="text" formControlName="warranty_term"></ion-input>
-            </ion-item>
-          </div>
-        </div>
+      <div *ngIf="asset_type == 'Motor'">
+        <ion-item>
+          <ion-label position="stacked">Insulation</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </div>
 
-        <div>
-          <ion-button color="danger" size="small" matStepperPrevious
-            >Back</ion-button
-          >
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
-      </form>
-    </mat-step>
-  </mat-vertical-stepper>
+      <ion-item>
+        <ion-label position="stacked">Manufacturer</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Manufacture Part Number</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Manufacturer Year</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Model</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <div *ngIf="asset_type == 'Pump'">
+        <ion-item>
+          <ion-label position="stacked">Material Type</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">No. of Stage</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </div>
+
+      <div *ngIf="asset_type == 'Motor'">
+        <ion-item>
+          <ion-label position="stacked">No. of Phases</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Revolutions Per Minute (RPM)</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Temperature</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <div *ngIf="asset_type == 'Motor'">
+        <ion-item>
+          <ion-label position="stacked">Voltage</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </div>
+    </div>
+  </div>
 
   <div class="ion-padding ion-text-center">
     <ion-button color="light" (click)="cancel()">Cancel</ion-button>
-    <ion-button color="primary" (click)="save()">Save</ion-button>
+    <ion-button color="primary" (click)="update()">Update</ion-button>
   </div>
 </ion-content>

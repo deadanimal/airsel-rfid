@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import {
+  ActionSheetController,
   AlertController,
   MenuController,
   ModalController,
@@ -16,7 +17,7 @@ import {
 import { ServiceHistoryPage } from "../service-history/service-history.page";
 
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
-import { WorkActivitiesService } from 'src/app/shared/services/work-activities/work-activities.service';
+import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 
 @Component({
   selector: "app-work-activity",
@@ -37,6 +38,7 @@ export class WorkActivityPage implements OnInit {
     public formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     public menu: MenuController,
     public modalController: ModalController,
@@ -62,7 +64,7 @@ export class WorkActivityPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.workactivity = this.router.getCurrentNavigation().extras.state.work_activity;
         this.workactivityFormGroup.patchValue({
-          ...this.workactivity
+          ...this.workactivity,
         });
       }
     });
@@ -70,35 +72,6 @@ export class WorkActivityPage implements OnInit {
 
   ngOnInit() {
     this.menu.enable(false, "menuNotification");
-  }
-
-  scanQrCode() {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        link: "/technical/work-activity",
-      },
-    };
-    this.router.navigate(["/technical/qr-scanner"], navigationExtras);
-
-    // this.barcodeScanner
-    //   .scan({ prompt: "Place a QR code to scan inside the scan area" })
-    //   .then((barcodeData) => {
-    //     // alert("Barcode data: " + barcodeData.text);
-    //     if (barcodeData.text == "MOTR-0000998") {
-    //       this.workactivityFormGroup.patchValue({
-    //         work_activity_no: "668463846381",
-    //         work_activity_type: "Corrective Maintenance",
-    //         required_by_date: new Date().toISOString(),
-    //         parent_location: "BOOSTER IXORA PUMP HOUSE",
-    //         badge_no: "615771728178A6",
-    //       });
-    //     } else {
-    //       this.presentAlert("Error", "Sorry, asset not found.");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error", err);
-    //   });
   }
 
   async presentAlert(header: string, message: string) {
@@ -183,12 +156,96 @@ export class WorkActivityPage implements OnInit {
   }
 
   async clickViewAsset(asset) {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        asset,
-      },
-    };
-    this.router.navigate(["/technical/work-activity-asset"], navigationExtras);
+    // let navigationExtras: NavigationExtras = {
+    //   state: {
+    //     asset,
+    //   },
+    // };
+    // this.router.navigate(["/technical/work-activity-asset"], navigationExtras);
+
+    const actionSheet = await this.actionSheetController.create({
+      header: "Choose method",
+      buttons: [
+        {
+          text: "RFID",
+          icon: "scan",
+          handler: () => {
+            console.log("RFID clicked");
+          },
+        },
+        {
+          text: "QR Code",
+          icon: "qr-code",
+          handler: () => {
+            console.log("QR Code clicked");
+          },
+        },
+        {
+          text: "Badge No.",
+          icon: "search",
+          handler: () => {
+            console.log("Badge No. clicked");
+            this.searchBadgeNo(asset);
+          },
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          icon: "close",
+          handler: () => {
+            console.log("Cancel clicked");
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
+  async searchBadgeNo(asset) {
+    const alert = await this.alertController.create({
+      header: "Badge No.",
+      message: "Enter a badge number to search the asset",
+      inputs: [
+        {
+          name: "badge_no",
+          type: "text",
+          value: asset.badge_number,
+          placeholder: "",
+        },
+      ],
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          },
+        },
+        {
+          text: "Search",
+          handler: (data) => {
+            if (data.badge_no) {
+              let navigationExtras: NavigationExtras = {
+                state: {
+                  badge_no: data.badge_no,
+                  asset,
+                },
+              };
+              this.router.navigate(
+                ["/technical/work-activity-asset"],
+                navigationExtras
+              );
+            } else {
+              this.presentAlert(
+                "Error",
+                "Please enter badge number to find asset detail"
+              );
+            }
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
   clickRemove(index: number) {
