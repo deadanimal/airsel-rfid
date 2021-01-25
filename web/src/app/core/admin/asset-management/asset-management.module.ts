@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
@@ -35,10 +35,14 @@ import { RegisteredComponent } from './registered/registered.component';
 import { NewComponent } from './new/new.component';
 import { ProcessedComponent } from './processed/processed.component';
 import { BadgeNoComponent } from './badge-no/badge-no.component';
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [NgxSpinnerService],
   declarations: [RegistrationComponent, ApprovalComponent, DatabaseComponent, ProcessingComponent, RejectedComponent, RegisteredComponent, NewComponent, ProcessedComponent, BadgeNoComponent],
   imports: [
+    NgxSpinnerModule,
     CommonModule,
     NgSelectModule,
     TabsModule.forRoot(),

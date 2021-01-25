@@ -1,147 +1,120 @@
 export class AssetsModel {
   public id: string;
-  public name: string;
-  public purchased_at: any;
-  public is_active: boolean;
-  public owned_department: string;
-  public hierarchy_level_1: string;
-  public hierarchy_level_2: string;
-  public hierarchy_level_3: string;
-  public hierarchy_level_4: string;
-  public hierarchy_level_5: string;
-  public hierarchy_level_6: string;
-  public type_asset: string;
-  public category: string;
-  public category_extra: string;
-  public is_hand_over: string;
-  public is_procured: string;
-  public internal_detail_indentity: string;
-  public primary_category: string;
-  public grouping_sub_category_1: string;
-  public grouping_sub_category_2: string;
-  public brand: string;
-  public model_no: string;
-  public msize_capcity_1: number;
-  public msize_capcity_1_measurement: number;
-  public msize_capcity_2: number;
-  public msize_capcity_2_measurement: number;
-  public msize_capcity_3: number;
-  public msize_capcity_3_measurement: number;
-  public parent_plate_number: string;
-  public plate_number: string;
+  public asset_id: string;
+  public asset_type: any;
+  public transaction_type: boolean;
+  public description: string;
+  public bo: string;
+  public bo_status: string;
+  public owning_access_group: string;
+  public effective_datetime: string;
+  public node_id: string;
+  public badge_no: string;
+  public serial_no: string;
+  public pallet_no: string;
+  public handed_over_asset: string;
+  public fixed_asset_no: string;
   public scada_id: string;
-  public external_id: string;
-  public tag_number: string;
-  public pallet_number: string;
-  public installed_at: any;
-  public rating: string;
-  public status: string;
+  public condition_rating: string;
+  public condifence_rating: string;
   public maintenance_specification: string;
-  public bill_of_material: string;
-  public measuring_type: string;
-  public is_warranty: boolean;
-  public warranty_period_actual: number;
-  public po_cost: number;
-  public created_at: any;
-  public modified_at: any;
-  public warranty_vendor: any;
-  public po_vendor: any;
+  public bom_part_id: string;
+  public attached_to_asset_id: string;
+  public vehicle_identification_num: string;
+  public license_number: number;
+  public purchase_order_num: number;
+  public location_id: number;
+  public metrology_firmware: number;
+  public nic_firmware: number;
+  public configuration: number;
+  public warranty_expiration_date: string;
+  public warranty_detail: string;
+  public vendor_part_no: string;
+  public owning_access_group_nam: string;
+  public submitted_datetime: string;
+  public registered_datetime: any;
+  public created_date: string;
+  public modified_date: string;
+  public measurement_types: boolean;
+  public asset_attributes: number;
 
   constructor(
     id: string,
-    name: string,
-    purchased_at: any,
-    is_active: boolean,
-    owned_department: string,
-    hierarchy_level_1: string,
-    hierarchy_level_2: string,
-    hierarchy_level_3: string,
-    hierarchy_level_4: string,
-    hierarchy_level_5: string,
-    hierarchy_level_6: string,
-    type_asset: string,
-    category: string,
-    category_extra: string,
-    is_hand_over: string,
-    is_procured: string,
-    internal_detail_indentity: string,
-    primary_category: string,
-    grouping_sub_category_1: string,
-    grouping_sub_category_2: string,
-    brand: string,
-    model_no: string,
-    msize_capcity_1: number,
-    msize_capcity_1_measurement: number,
-    msize_capcity_2: number,
-    msize_capcity_2_measurement: number,
-    msize_capcity_3: number,
-    msize_capcity_3_measurement: number,
-    parent_plate_number: string,
-    plate_number: string,
+    asset_id: string,
+    asset_type: any,
+    transaction_type: boolean,
+    description: string,
+    bo: string,
+    bo_status: string,
+    owning_access_group: string,
+    effective_datetime: string,
+    node_id: string,
+    badge_no: string,
+    serial_no: string,
+    pallet_no: string,
+    handed_over_asset: string,
+    fixed_asset_no: string,
     scada_id: string,
-    external_id: string,
-    tag_number: string,
-    pallet_number: string,
-    installed_at: any,
-    rating: string,
-    status: string,
+    condition_rating: string,
+    condifence_rating: string,
     maintenance_specification: string,
-    bill_of_material: string,
-    measuring_type: string,
-    is_warranty: boolean,
-    warranty_period_actual: number,
-    po_cost: number,
-    created_at: any,
-    modified_at: any,
-    warranty_vendor: any,
-    po_vendor: any
+    bom_part_id: string,
+    attached_to_asset_id: string,
+    vehicle_identification_num: string,
+    license_number: number,
+    purchase_order_num: number,
+    location_id: number,
+    metrology_firmware: number,
+    nic_firmware: number,
+    configuration: number,
+    warranty_expiration_date: string,
+    warranty_detail: string,
+    vendor_part_no: string,
+    owning_access_group_nam: string,
+    submitted_datetime: string,
+    registered_datetime: any,
+    created_date: string,
+    modified_date: string,
+    measurement_types: boolean,
+    asset_attributes: number,
   ) {
     this.id = id;
-    this.name = name;
-    this.purchased_at = purchased_at;
-    this.is_active = is_active;
-    this.owned_department = owned_department;
-    this.hierarchy_level_1 = hierarchy_level_1;
-    this.hierarchy_level_2 = hierarchy_level_2;
-    this.hierarchy_level_3 = hierarchy_level_3;
-    this.hierarchy_level_4 = hierarchy_level_4;
-    this.hierarchy_level_5 = hierarchy_level_5;
-    this.hierarchy_level_6 = hierarchy_level_6;
-    this.type_asset = type_asset;
-    this.category = category;
-    this.category_extra = category_extra;
-    this.is_hand_over = is_hand_over;
-    this.is_procured = is_procured;
-    this.internal_detail_indentity = internal_detail_indentity;
-    this.primary_category = primary_category;
-    this.grouping_sub_category_1 = grouping_sub_category_1;
-    this.grouping_sub_category_2 = grouping_sub_category_2;
-    this.brand = brand;
-    this.model_no = model_no;
-    this.msize_capcity_1 = msize_capcity_1;
-    this.msize_capcity_1_measurement = msize_capcity_1_measurement;
-    this.msize_capcity_2 = msize_capcity_2;
-    this.msize_capcity_2_measurement = msize_capcity_2_measurement;
-    this.msize_capcity_3 = msize_capcity_3;
-    this.msize_capcity_3_measurement = msize_capcity_3_measurement;
-    this.parent_plate_number = parent_plate_number;
-    this.plate_number = plate_number;
+    this.asset_id = asset_id;
+    this.asset_type = asset_type;
+    this.transaction_type = transaction_type;
+    this.description = description;
+    this.bo = bo;
+    this.bo_status = bo_status;
+    this.owning_access_group = owning_access_group;
+    this.effective_datetime = effective_datetime;
+    this.node_id = node_id;
+    this.badge_no = badge_no;
+    this.serial_no = serial_no;
+    this.pallet_no = pallet_no;
+    this.handed_over_asset = handed_over_asset;
+    this.fixed_asset_no = fixed_asset_no;
     this.scada_id = scada_id;
-    this.external_id = external_id;
-    this.tag_number = tag_number;
-    this.pallet_number = pallet_number;
-    this.installed_at = installed_at;
-    this.rating = rating;
-    this.status = status;
+    this.condition_rating = condition_rating;
+    this.condifence_rating = condifence_rating;
     this.maintenance_specification = maintenance_specification;
-    this.bill_of_material = bill_of_material;
-    this.measuring_type = measuring_type;
-    this.is_warranty = is_warranty;
-    this.warranty_period_actual = warranty_period_actual;
-    this.po_cost = po_cost;
-    this.created_at = created_at;
-    this.modified_at = modified_at;
-    this.warranty_vendor = warranty_vendor;
-    this.po_vendor = po_vendor;
+    this.bom_part_id = bom_part_id;
+    this.attached_to_asset_id = attached_to_asset_id;
+    this.vehicle_identification_num = vehicle_identification_num;
+    this.license_number = license_number;
+    this.purchase_order_num = purchase_order_num;
+    this.location_id = location_id;
+    this.metrology_firmware = metrology_firmware;
+    this.nic_firmware = nic_firmware;
+    this.configuration = configuration;
+    this.warranty_expiration_date = warranty_expiration_date;
+    this.warranty_detail = warranty_detail;
+    this.vendor_part_no = vendor_part_no;
+    this.owning_access_group_nam = owning_access_group_nam;
+    this.submitted_datetime = submitted_datetime;
+    this.registered_datetime = registered_datetime;
+    this.created_date = created_date;
+    this.modified_date = modified_date;
+    this.measurement_types = measurement_types;
+    this.asset_attributes = asset_attributes;
   }
 }

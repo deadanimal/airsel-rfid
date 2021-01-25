@@ -452,11 +452,10 @@ class AssetAttributeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class AssetAttributeColumnViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetAttributeColumn.objects.all()
     serializer_class = AssetAttributeColumnSerializer
-    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    # filterset_fields = [
-    #     'category',
-    #     'created_at'
-    # ]
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'asset_type_id'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
