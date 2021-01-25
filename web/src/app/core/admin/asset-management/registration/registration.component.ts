@@ -309,6 +309,8 @@ export class RegistrationComponent implements OnInit {
   typeassets = [];
   categories = [];
   identities = [];
+  assetprimary = [];
+  assetprimaryshow = [];
   primarycategories = [];
   groupsubcategory1s = [];
   groupsubcategory2s = [];
@@ -467,6 +469,9 @@ export class RegistrationComponent implements OnInit {
   rows: any = [];
   // SelectionType = SelectionType;
   tableTemp1 = [];
+<<<<<<< HEAD
+  assetAttribute = [];
+=======
   assetAttribute = [
     {
       "id": "3b51c219-4ecd-4ba1-9ed5-ca09a026a81e",
@@ -542,6 +547,7 @@ export class RegistrationComponent implements OnInit {
       "manufacturer": "True",
     }
   ];
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
 
   // Forms
   fileuploadFormGroup: FormGroup;
@@ -556,10 +562,349 @@ export class RegistrationComponent implements OnInit {
   validation_messages = [];
   rowData: any
 
-
   // Asset Attribute Visibility
-  assetasstributevisible = [
+  assetattributevisible = [
     {
+<<<<<<< HEAD
+      asset_primary_category:"ACTUATOR",
+      brand:true,
+      capacity_size:true,
+      closing_torque:true,
+      hysteresis:true,
+      installation:true,
+      manufacturer:true,
+      manufacture_part_number:true,
+      manufacturer_year:true,
+      model:true,
+      opening_torque:true,
+      power_supply_type:true,
+      revolutions_per_minute:true,
+      type:false,
+      material_type:false,
+      valve_pressure_rating:false,
+      horse_power:false,
+      temperature:false,
+      coverage_range:false,
+      voltage:false,
+      valve_diameter:false,
+      top_water_level:false,
+      inlet_diameter:false,
+      bottom_water_level:true,
+      outlet_diameter:false,
+      staging_height:false,
+      dimention:false,
+      environmental_performance:false,
+      no_of_channel:false,
+      frequency:false,
+      vehicle_chassis_number:false,
+      vehicle_engine_capacity:false,
+      vehicle_engine_number:false,
+      vehicle_insurance_cover_note_number:false,
+      vehicle_insurance_date_period_from:false,
+      vehicle_insurance_no_claim_discount:false,
+      vehicle_insurance_total_premium:false,
+      vehicle_insurance_policy_type:false,
+      vehicle_insurance_sum_insured:false,
+      vehicle_insurance_date_period_to:false,
+      vehicle_insurance_auto_windscreen_insured:false,
+      vehicle_model:false,
+      vehicle_owner_status:false,
+      vehicle_puspakom_expired_date:false,
+      vehicle_puspakom_date_inspection:false,
+      vehicle_register_date:false,
+      vehicle_registration_owner:false,
+      vehicle_roadtax_rate:false,
+      vehicle_roadtax_renew_date:false,
+      vehicle_insurance_vendor:false,
+      vehicle_seating_capacity:false,
+      vehicle_spad_permit_date_period_from:false,
+      vehicle_spad_no_license_operator:false,
+      vehicle_spad_permit_date_period_to:false,
+      motor_current:false,
+      insulation:false,
+      no_of_phases:false,
+      communication_protocol:false,
+      flow_rate:false,
+      pump_head:false,
+      no_of_stage:false,
+      infrastructure_status_reason:false,
+      infrastructure_status:false,
+      legal_name:false,
+      source_from:false,
+      supply_location:false,
+    },
+    {
+      asset_primary_category:"AIR VALVE",
+      brand:true,
+      capacity_size:true,
+      closing_torque:false,
+      hysteresis:false,
+      installation:true,
+      manufacturer:true,
+      manufacture_part_number:true,
+      manufacturer_year:true,
+      model:true,
+      opening_torque:false,
+      power_supply_type:false,
+      revolutions_per_minute:false,
+      type:true,
+      material_type:true,
+      valve_pressure_rating:true,
+      horse_power:false,
+      temperature:false,
+      coverage_range:false,
+      voltage:false,
+      valve_diameter:true,
+      top_water_level:false,
+      inlet_diameter:false,
+      bottom_water_level:false,
+      outlet_diameter:false,
+      staging_height:false,
+      dimention:false,
+      environmental_performance:false,
+      no_of_channel:false,
+      frequency:false,
+      vehicle_chassis_number:false,
+      vehicle_engine_capacity:false,
+      vehicle_engine_number:false,
+      vehicle_insurance_cover_note_number:false,
+      vehicle_insurance_date_period_from:false,
+      vehicle_insurance_no_claim_discount:false,
+      vehicle_insurance_total_premium:false,
+      vehicle_insurance_policy_type:false,
+      vehicle_insurance_sum_insured:false,
+      vehicle_insurance_date_period_to:false,
+      vehicle_insurance_auto_windscreen_insured:false,
+      vehicle_model:false,
+      vehicle_owner_status:false,
+      vehicle_puspakom_expired_date:false,
+      vehicle_puspakom_date_inspection:false,
+      vehicle_register_date:false,
+      vehicle_registration_owner:false,
+      vehicle_roadtax_rate:false,
+      vehicle_roadtax_renew_date:false,
+      vehicle_insurance_vendor:false,
+      vehicle_seating_capacity:false,
+      vehicle_spad_permit_date_period_from:false,
+      vehicle_spad_no_license_operator:false,
+      vehicle_spad_permit_date_period_to:false,
+      motor_current:false,
+      insulation:false,
+      no_of_phases:false,
+      communication_protocol:false,
+      flow_rate:false,
+      pump_head:false,
+      no_of_stage:false,
+      infrastructure_status_reason:false,
+      infrastructure_status:false,
+      legal_name:false,
+      source_from:false,
+      supply_location:false,
+    },
+    {
+      asset_primary_category:"MOTOR-SLIP RING",
+      brand:true,
+      capacity_size:true,
+      closing_torque:false,
+      hysteresis:false,
+      installation:true,
+      manufacturer:true,
+      manufacture_part_number:true,
+      manufacturer_year:true,
+      model:true,
+      opening_torque:false,
+      power_supply_type:false,
+      revolutions_per_minute:true,
+      type:false,
+      material_type:false,
+      valve_pressure_rating:false,
+      horse_power:true,
+      temperature:true,
+      coverage_range:false,
+      voltage:true,
+      valve_diameter:false,
+      top_water_level:false,
+      inlet_diameter:false,
+      bottom_water_level:false,
+      outlet_diameter:false,
+      staging_height:false,
+      dimention:false,
+      environmental_performance:false,
+      no_of_channel:false,
+      frequency:true,
+      vehicle_chassis_number:false,
+      vehicle_engine_capacity:false,
+      vehicle_engine_number:false,
+      vehicle_insurance_cover_note_number:false,
+      vehicle_insurance_date_period_from:false,
+      vehicle_insurance_no_claim_discount:false,
+      vehicle_insurance_total_premium:false,
+      vehicle_insurance_policy_type:false,
+      vehicle_insurance_sum_insured:false,
+      vehicle_insurance_date_period_to:false,
+      vehicle_insurance_auto_windscreen_insured:false,
+      vehicle_model:false,
+      vehicle_owner_status:false,
+      vehicle_puspakom_expired_date:false,
+      vehicle_puspakom_date_inspection:false,
+      vehicle_register_date:false,
+      vehicle_registration_owner:false,
+      vehicle_roadtax_rate:false,
+      vehicle_roadtax_renew_date:false,
+      vehicle_insurance_vendor:false,
+      vehicle_seating_capacity:false,
+      vehicle_spad_permit_date_period_from:false,
+      vehicle_spad_no_license_operator:false,
+      vehicle_spad_permit_date_period_to:false,
+      motor_current:true,
+      insulation:true,
+      no_of_phases:true,
+      communication_protocol:false,
+      flow_rate:false,
+      pump_head:false,
+      no_of_stage:false,
+      infrastructure_status_reason:false,
+      infrastructure_status:false,
+      legal_name:false,
+      source_from:false,
+      supply_location:false,
+    },
+    {
+      asset_primary_category:"PUMP-END SUCTION",
+      brand:true,
+      capacity_size:true,
+      closing_torque:false,
+      hysteresis:false,
+      installation:true,
+      manufacturer:true,
+      manufacture_part_number:true,
+      manufacturer_year:true,
+      model:true,
+      opening_torque:false,
+      power_supply_type:false,
+      revolutions_per_minute:true,
+      type:true,
+      material_type:true,
+      valve_pressure_rating:false,
+      horse_power:true,
+      temperature:true,
+      coverage_range:false,
+      voltage:false,
+      valve_diameter:false,
+      top_water_level:false,
+      inlet_diameter:false,
+      bottom_water_level:false,
+      outlet_diameter:false,
+      staging_height:false,
+      dimention:false,
+      environmental_performance:false,
+      no_of_channel:false,
+      frequency:false,
+      vehicle_chassis_number:false,
+      vehicle_engine_capacity:false,
+      vehicle_engine_number:false,
+      vehicle_insurance_cover_note_number:false,
+      vehicle_insurance_date_period_from:false,
+      vehicle_insurance_no_claim_discount:false,
+      vehicle_insurance_total_premium:false,
+      vehicle_insurance_policy_type:false,
+      vehicle_insurance_sum_insured:false,
+      vehicle_insurance_date_period_to:false,
+      vehicle_insurance_auto_windscreen_insured:false,
+      vehicle_model:false,
+      vehicle_owner_status:false,
+      vehicle_puspakom_expired_date:false,
+      vehicle_puspakom_date_inspection:false,
+      vehicle_register_date:false,
+      vehicle_registration_owner:false,
+      vehicle_roadtax_rate:false,
+      vehicle_roadtax_renew_date:false,
+      vehicle_insurance_vendor:false,
+      vehicle_seating_capacity:false,
+      vehicle_spad_permit_date_period_from:false,
+      vehicle_spad_no_license_operator:false,
+      vehicle_spad_permit_date_period_to:false,
+      motor_current:false,
+      insulation:false,
+      no_of_phases:false,
+      communication_protocol:false,
+      flow_rate:false,
+      pump_head:false,
+      no_of_stage:true,
+      infrastructure_status_reason:false,
+      infrastructure_status:false,
+      legal_name:false,
+      source_from:false,
+      supply_location:false,
+    },
+    {
+      asset_primary_category:"RESERVOIR",
+      brand:false,
+      capacity_size:true,
+      closing_torque:false,
+      hysteresis:false,
+      installation:false,
+      manufacturer:false,
+      manufacture_part_number:false,
+      manufacturer_year:true,
+      model:false,
+      opening_torque:false,
+      power_supply_type:false,
+      revolutions_per_minute:false,
+      type:true,
+      material_type:true,
+      valve_pressure_rating:false,
+      horse_power:false,
+      temperature:false,
+      coverage_range:false,
+      voltage:false,
+      valve_diameter:false,
+      top_water_level:true,
+      inlet_diameter:true,
+      bottom_water_level:true,
+      outlet_diameter:true,
+      staging_height:true,
+      dimention:false,
+      environmental_performance:false,
+      no_of_channel:false,
+      frequency:false,
+      vehicle_chassis_number:false,
+      vehicle_engine_capacity:false,
+      vehicle_engine_number:false,
+      vehicle_insurance_cover_note_number:false,
+      vehicle_insurance_date_period_from:false,
+      vehicle_insurance_no_claim_discount:false,
+      vehicle_insurance_total_premium:false,
+      vehicle_insurance_policy_type:false,
+      vehicle_insurance_sum_insured:false,
+      vehicle_insurance_date_period_to:false,
+      vehicle_insurance_auto_windscreen_insured:false,
+      vehicle_model:false,
+      vehicle_owner_status:false,
+      vehicle_puspakom_expired_date:false,
+      vehicle_puspakom_date_inspection:false,
+      vehicle_register_date:false,
+      vehicle_registration_owner:false,
+      vehicle_roadtax_rate:false,
+      vehicle_roadtax_renew_date:false,
+      vehicle_insurance_vendor:false,
+      vehicle_seating_capacity:false,
+      vehicle_spad_permit_date_period_from:false,
+      vehicle_spad_no_license_operator:false,
+      vehicle_spad_permit_date_period_to:false,
+      motor_current:false,
+      insulation:false,
+      no_of_phases:false,
+      communication_protocol:false,
+      flow_rate:false,
+      pump_head:false,
+      no_of_stage:false,
+      infrastructure_status_reason:true,
+      infrastructure_status:true,
+      legal_name:true,
+      source_from:true,
+      supply_location:true,
+=======
       "asset_primary_category": "ACTUATOR",
       "brand": "true",
       "capacity_size": "true",
@@ -762,8 +1107,10 @@ export class RegistrationComponent implements OnInit {
       "legal_name": "false",
       "source_from": "false",
       "supply_location": "false",
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
     }
-  ]
+    ];
+
   constructor(
     public formBuilder: FormBuilder,
     public modalService: BsModalService,
@@ -779,7 +1126,6 @@ export class RegistrationComponent implements OnInit {
     public assetsAttributeService: AssetsAttributeService,
     private spinner: NgxSpinnerService
   ) {
-    this.getAssetPrimaryCategory()
     this.getAssets();
     this.getRegisteredData()
 
@@ -1095,12 +1441,38 @@ export class RegistrationComponent implements OnInit {
   }
 
   openModalAssetAttribute(modalNotification: TemplateRef<any>, row) {
-    // console.log('row ',row)
-    // if(row){
-    //   this.assetAttributeGroup.PatchValue(row);
-    // }
-    this.rowData = ''
-    this.rowData = row
+    let assetprimary1 = row.asset_primary_category
+    let assetprimary2 = this.assetattributevisible.map(a => a.asset_primary_category);
+    // let result = this.map(({ foo }) => foo)
+
+    console.log ("asset primary =", assetprimary1);
+    console.log ("asset primary other =", assetprimary2);
+
+
+
+    if (assetprimary2.indexOf(assetprimary1) !== -1){
+      console.log("there is match");
+      this.assetprimary = this.assetattributevisible.filter(function(primary) {
+      return primary.asset_primary_category == assetprimary1;})
+      this.rowData = ''
+      this.rowData = row
+
+      this.assetprimaryshow = Object.values(this.assetprimary)
+
+
+      console.log("assetprimary = ", this.assetprimaryshow)
+    }
+    else
+    {
+      console.log("there is no match");
+    }
+    //   {
+    //     for(a in this.assetattributevisible)
+    //     {
+    //       this.assetprimaryshow = a
+    //     }
+    //   }
+
     this.ModalAssetAttribute = this.modalService.show(
       modalNotification,
       this.modalConfig,
@@ -1663,9 +2035,12 @@ export class RegistrationComponent implements OnInit {
     )
   }
 
+<<<<<<< HEAD
+=======
   getAssetPrimaryCategory() {
     this.assetAttribute.forEach(function (lll, mm) {
       console.log('test test = ', lll.asset_primary_category)
     })
   }
+>>>>>>> d92e0fd4f4b3d0a1971555ddaf56f7380febe7a4
 }
