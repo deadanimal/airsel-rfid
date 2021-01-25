@@ -405,6 +405,7 @@ class AssetAttributeColumn(models.Model):
     vehicle_spad_permit_date_period_from = models.BooleanField(default=False)
     voltage = models.BooleanField(default=False)
     asset_status = models.BooleanField(default=False)
+    brand = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

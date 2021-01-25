@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
@@ -19,9 +19,10 @@ import { NgxMapboxGLModule } from "ngx-mapbox-gl";
 import { AppRoutingModule } from "./app-routing.module";
 import { ComponentsModule } from "./components/components.module";
 // import { HttpTokenInterceptor } from "./shared/interceptor/http.token.interceptor";
-
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 @NgModule({
   imports: [
+    NgxSpinnerModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
@@ -40,8 +41,10 @@ import { ComponentsModule } from "./components/components.module";
       //geocoderAccessToken: 'TOKEN' // Optionnal, specify if different from the map access token, can also be set per mgl-geocoder (accessToken input of mgl-geocoder)
     }),
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
   providers: [
+    NgxSpinnerService
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: HttpTokenInterceptor,
@@ -50,4 +53,4 @@ import { ComponentsModule } from "./components/components.module";
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

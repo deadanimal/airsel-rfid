@@ -9,6 +9,7 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import Dropzone from "dropzone";
 import swal from "sweetalert2";
 import * as XLSX from 'xlsx';
+// import { NgxSpinnerService } from "ngx-spinner";
 import { NgxSpinnerService } from "ngx-spinner";
 
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
@@ -19,6 +20,9 @@ import { OrganisationsService } from "src/app/shared/services/organisations/orga
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
 import { NotifyService } from "src/app/shared/handler/notify/notify.service";
 import { AssetsRegistrationService } from 'src/app/shared/services/assets-registration/assets-registration.service';
+import { AssetsLocationService } from 'src/app/shared/services/assets-location/assets-location.service';
+import { AssetsAttributeService } from 'src/app/shared/services/assets-attribute/assets-attribute.service';
+
 import { system } from '@amcharts/amcharts4/core';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 
@@ -771,7 +775,9 @@ export class RegistrationComponent implements OnInit {
     public regionsService: RegionsService,
     public toastr: NotifyService,
     public assetsRegistrationService: AssetsRegistrationService,
-    // public spinner: NgxSpinnerService,
+    public assetsLocationService: AssetsLocationService,
+    public assetsAttributeService: AssetsAttributeService,
+    private spinner: NgxSpinnerService
   ) {
     this.getAssetPrimaryCategory()
     this.getAssets();
@@ -946,17 +952,17 @@ export class RegistrationComponent implements OnInit {
       }
     );
 
-    this.organisationsService.get().subscribe(
-      (res) => {
-        if (res) this.organisations = res;
-      },
-      (err) => {
-        console.error("err", err);
-      },
-      () => {
-        console.log("Http request completed");
-      }
-    );
+    // this.organisationsService.get().subscribe(
+    //   (res) => {
+    //     if (res) this.organisations = res;
+    //   },
+    //   (err) => {
+    //     console.error("err", err);
+    //   },
+    //   () => {
+    //     console.log("Http request completed");
+    //   }
+    // );
 
     this.assetTypesService.get().subscribe(
       (res) => {
@@ -1316,7 +1322,7 @@ export class RegistrationComponent implements OnInit {
 
   submitFileExcel() {
     let assetregserv = this.assetsRegistrationService
-
+    this.spinner.show();
     this.dataFromExcelFile.forEach(function (loopval, index) {
 
       let checkStatus = 'CO'
@@ -1464,7 +1470,7 @@ export class RegistrationComponent implements OnInit {
       )
 
     })
-
+    this.spinner.hide();
     swal
       .fire({
         title: "Success",
