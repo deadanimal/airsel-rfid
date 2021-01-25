@@ -184,11 +184,11 @@ class InventoryPurchaseOrderViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class InventoryGrnViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = InventoryGrn.objects.all()
     serializer_class = InventoryGrnSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = [
-        'category',
-        'created_at'
-    ]
+    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # filterset_fields = [
+    #     'category',
+    #     'created_at'
+    # ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -221,11 +221,11 @@ class InventoryGrnViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class InventoryTransactionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = InventoryTransaction.objects.all()
     serializer_class = InventoryTransactionSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = [
-        'category',
-        'created_at'
-    ]
+    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # filterset_fields = [
+    #     'category',
+    #     'created_at'
+    # ]
 
     def get_permissions(self):
         if self.action == 'list':

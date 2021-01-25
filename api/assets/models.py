@@ -410,6 +410,9 @@ class AssetAttributeColumn(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+    class meta:
+        ordering = ['-asset_type_id']
+
 class AssetLocation(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
