@@ -288,6 +288,40 @@ wams_router = router.register(
     'wams', WamsViewSet
 )
 
+# inventory app
+from inventory.views import (
+    InventoryItemViewSet,
+    InventoryItemUomIntraViewSet,
+    InventoryItemUomInterViewSet,
+    InventoryPurchaseOrderViewSet,
+    InventoryGrnViewSet,
+    InventoryTransactionViewSet,
+)
+
+item_router = router.register(
+    'inventory-item', InventoryItemViewSet
+)
+
+item_intra_router = router.register(
+    'inventory-item-intra', InventoryItemUomIntraViewSet
+)
+
+item_inter_router = router.register(
+    'inventory-item-inter', InventoryItemUomInterViewSet
+)
+
+purchase_order_router = router.register(
+    'inventory-purchase-order', InventoryPurchaseOrderViewSet
+)
+
+grn_router = router.register(
+    'inventory-grn', InventoryGrnViewSet
+)
+
+transaction_router = router.register(
+    'inventory-transaction', InventoryTransactionViewSet
+)
+
 urlpatterns = [
     url(r'^email-verification/$',
         TemplateView.as_view(template_name="email_verification.html"),
