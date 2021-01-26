@@ -305,7 +305,7 @@ class OperationalReading(models.Model):
     measurent_type = models.CharField(max_length=100, blank=True)
     initial_value_flag = models.CharField(max_length=100, blank=True)
     owning_organization = models.CharField(max_length=100, blank=True)
-    reading_datetime = models.DateTimeField()
+    reading_datetime = models.DateTimeField(blank=True)
 
     submitted_datetime = models.DateTimeField(auto_now=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -386,7 +386,7 @@ class WorkOrderActivityCompletionAssetLocationAssetList(models.Model):
     asset_description = models.CharField(max_length=100, blank=True)
     asset_type = models.CharField(max_length=100, blank=True)
 
-    reading_datetime = models.DateTimeField()
+    reading_datetime = models.DateTimeField(blank=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
