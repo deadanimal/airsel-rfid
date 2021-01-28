@@ -477,7 +477,7 @@ class AssetLocation(models.Model):
     quit_rent_bill_payment_date = models.DateField(null=True)
     assessment_bill_number = models.CharField(max_length=100, blank=True)
     current_rate_Of_assesment = models.CharField(max_length=100, blank=True)
-    assessment_bill_payment_date = models.CharField(max_length=100, blank=True)
+    assessment_bill_payment_date = models.DateField(null=True)
     lease_expired_date = models.DateField(null=True)
     remarks = models.CharField(max_length=100, blank=True)
 
