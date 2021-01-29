@@ -22,6 +22,7 @@ import { NotifyService } from "src/app/shared/handler/notify/notify.service";
 import { AssetsRegistrationService } from 'src/app/shared/services/assets-registration/assets-registration.service';
 import { AssetsLocationService } from 'src/app/shared/services/assets-location/assets-location.service';
 import { AssetsAttributeService } from 'src/app/shared/services/assets-attribute/assets-attribute.service';
+import { AssetAttributeColumnService } from 'src/app/shared/services/asset-attribute-column/asset-attribute-column.service';
 
 import { system } from '@amcharts/amcharts4/core';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
@@ -92,8 +93,26 @@ export class RegistrationComponent implements OnInit {
   regions = [];
   organisations = [];
   assetprimarycategory = [
-    { value: "ACTR", name: "Actuator" },
-    { value: "AV", name: "Air Valve" },
+    { value: "ACTUATOR", name: "ACTUATOR" },
+    { value: "ADVANCED PILOT VALVE", name: "ADVANCED PILOT VALVE" },
+    { value: "AIR BLOWER", name: "AIR BLOWER" },
+    { value: "AIR CIRCUIT BREAKER", name: "AIR CIRCUIT BREAKER" },
+    { value: "AIR COMPRESSOR", name: "AIR COMPRESSOR" },
+    { value: "AIR RECEIVE TANK", name: "AIR RECEIVE TANK" },
+    { value: "AIR VALVE", name: "AIR VALVE" },
+    { value: "ALTENATOR", name: "ALTERNATOR" },
+    { value: "ALTITUDE VALVE", name: "ALTITUDE VALVE" },
+    { value: "AMR FLOWMETER", name: "AMR FLOWMETER" },
+    { value: "ANALOG INPUT MODULE", name: "ANALOG INPUT MODULE" },
+    { value: "ANALOG OUTPUT MODULE", name: "ANALOG OUTPUT MODULE" },
+    { value: "AUTOCLAVE", name: "AUTOCLAVE" },
+    { value: "AUTO TITRATOR WITH AUTO SAMPLER", name: "AUTO TITRATOR WITH AUTO SAMPLER" },
+    { value: "BACK PRESSURE VALVE", name: "BACK PRESSURE VALVE" },
+    { value: "BALANCING RESERVOIR", name: "BALANCING RESERVOIR" },
+    { value: "BALL FLOAT VALVE", name: "BALL FLOAT VALVE" },
+    { value: "BALL VALVE", name: "BALL VALVE" },
+    { value: "BANDSCREEN", name: "BANDSCREEN" },
+    { value: "BATTERY CHARGER", name: "BATTERY CHARGER" },
     { value: "MTRSR", name: "Motor-Slip Ring" },
     { value: "PES", name: "Pump-End Suction" },
     { value: "RSVR", name: "Reservoir" },
@@ -559,6 +578,7 @@ export class RegistrationComponent implements OnInit {
   rowData: any
 
   // Asset Attribute Visibility
+  assetattributecolumnapi = [];
   assetattributevisible = [
     {
       "asset_primary_category": "ACTUATOR",
@@ -779,6 +799,7 @@ export class RegistrationComponent implements OnInit {
     public assetsRegistrationService: AssetsRegistrationService,
     public assetsLocationService: AssetsLocationService,
     public assetsAttributeService: AssetsAttributeService,
+    public assetsAttributeColumnService: AssetAttributeColumnService,
     private spinner: NgxSpinnerService
   ) {
     this.getAssets();
@@ -1096,43 +1117,65 @@ export class RegistrationComponent implements OnInit {
   }
 
   openModalAssetAttribute(modalNotification: TemplateRef<any>, row) {
-    let assetprimary1 = row.asset_primary_category
-    let assetprimary2 = this.assetattributevisible.map(a => a.asset_primary_category);
-    // let result = this.map(({ foo }) => foo)
 
-    console.log("asset primary =", assetprimary1);
-    console.log("asset primary other =", assetprimary2);
+    let tempData = [];
+    this.assetsAttributeColumnService.get().subscribe(
+      (res) => {
+        res.forEach(function(assetprimer){
+          // console.log("asset primary uina =",assetprimer);
+          tempData.push(assetprimer)
+        })
+        console.log('oh man = ', tempData)
+        this.assetattributecolumnapi = tempData
+        console.log('oh no = ', this.assetattributecolumnapi)
+        let assetprimary1 = row.asset_primary_category
+        let assetprimary2 = this.assetattributecolumnapi.map(a => a.asset_type_id);
+        // let result = this.map(({ foo }) => foo)
+
+        console.log("asset primary =", assetprimary1);
+        console.log("asset primary other =", assetprimary2);
+
+        this.rowData = ''
+        this.rowData = row
 
 
+        if (assetprimary2.indexOf(assetprimary1) !== -1) {
+          console.log("there is match");
+          this.assetprimary = this.assetattributecolumnapi.filter(function (primary) {
+            return primary.asset_type_id == assetprimary1;
+          })
 
-    if (assetprimary2.indexOf(assetprimary1) !== -1) {
-      console.log("there is match");
-      this.assetprimary = this.assetattributevisible.filter(function (primary) {
-        return primary.asset_primary_category == assetprimary1;
-      })
-      this.rowData = ''
-      this.rowData = row
-
-      this.assetprimaryshow = Object.values(this.assetprimary)
+        this.assetprimaryshow = Object.values(this.assetprimary)
+        console.log("assetprimary = ", this.assetprimaryshow)
 
 
-      console.log("assetprimary = ", this.assetprimaryshow)
-    }
-    else {
-      console.log("there is no match");
-    }
-    //   {
-    //     for(a in this.assetattributevisible)
-    //     {
-    //       this.assetprimaryshow = a
-    //     }
-    //   }
+        }
+        else {
+          console.log("there is no match");
+        }
+        this.ModalAssetAttribute = this.modalService.show(
+          modalNotification,
+          this.modalConfig,
 
-    this.ModalAssetAttribute = this.modalService.show(
-      modalNotification,
-      this.modalConfig,
+        );
+        },
+        error => {
+            console.error("err", error);
+          }
+        )
+        // this.assetAttribute.forEach(function (lll, mm) {
 
-    );
+    // this.assetsRegistrationService.getNewRegList().subscribe(
+    //   (res) => {
+    //     console.log("res all data", res);
+    //     res.forEach(function (val) {
+    //       val['isTick'] = false
+    //       tempData.push(val)
+    //     })
+    //     console.log('tempData = ', tempData)
+    //     this.tableTemp1 = tempData
+
+
   }
 
   openModalEdit(modalNotification: TemplateRef<any>, row) {
@@ -1511,6 +1554,7 @@ export class RegistrationComponent implements OnInit {
 
   getRegisteredData() {
     let tempData = []
+    // this.assetsRegistrationService.get().subscribe(
     this.assetsRegistrationService.getNewRegList().subscribe(
       (res) => {
         console.log("res all data", res);
@@ -1518,7 +1562,7 @@ export class RegistrationComponent implements OnInit {
           val['isTick'] = false
           tempData.push(val)
         })
-        // console.log('tempData = ', tempData)
+        console.log('tempData = ', tempData)
         this.tableTemp1 = tempData
       },
       error => {
@@ -1690,9 +1734,9 @@ export class RegistrationComponent implements OnInit {
     )
   }
 
-  getAssetPrimaryCategory() {
-    this.assetAttribute.forEach(function (lll, mm) {
-      console.log('test test = ', lll.asset_primary_category)
-    })
-  }
+  // getAssetPrimaryCategory() {
+  //   this.assetAttribute.forEach(function (lll, mm) {
+  //     console.log('test test = ', lll.asset_primary_category)
+  //   })
+  // }
 }
