@@ -416,7 +416,7 @@ class AssetAttributeColumn(models.Model):
 
 class AssetLocation(models.Model):
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     location_type = models.CharField(max_length=100, blank=True)
     locatin_disposition = models.CharField(max_length=100, blank=True)
     Bo = models.CharField(max_length=100, blank=True)
