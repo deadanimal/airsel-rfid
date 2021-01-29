@@ -14,7 +14,8 @@ from .models import (
     InventoryItemUomInter,
     InventoryPurchaseOrder,
     InventoryGrn,
-    InventoryTransaction
+    InventoryTransaction,
+    InventoryMaterial
 )
 
 from users.serializers import (
@@ -55,4 +56,10 @@ class InventoryTransactionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InventoryTransaction
+        fields = '__all__'
+
+class InventoryMaterialSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = InventoryMaterial
         fields = '__all__'

@@ -296,6 +296,7 @@ from inventory.views import (
     InventoryPurchaseOrderViewSet,
     InventoryGrnViewSet,
     InventoryTransactionViewSet,
+    InventoryMaterialViewSet
 )
 
 item_router = router.register(
@@ -320,6 +321,10 @@ grn_router = router.register(
 
 transaction_router = router.register(
     'inventory-transaction', InventoryTransactionViewSet
+)
+
+material_request_router = router.register(
+    'inventory-material-request', InventoryMaterialViewSet
 )
 
 urlpatterns = [

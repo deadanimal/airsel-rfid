@@ -20,7 +20,8 @@ from .models import (
     InventoryItemUomInter,
     InventoryPurchaseOrder,
     InventoryGrn,
-    InventoryTransaction
+    InventoryTransaction,
+    InventoryMaterial
 )
 
 from .serializers import (
@@ -29,7 +30,8 @@ from .serializers import (
     InventoryItemUomInterSerializer,
     InventoryPurchaseOrderSerializer,
     InventoryGrnSerializer,
-    InventoryTransactionSerializer
+    InventoryTransactionSerializer,
+    InventoryMaterialSerializer
 )
 # Create your views here.
 
@@ -184,11 +186,11 @@ class InventoryPurchaseOrderViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class InventoryGrnViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = InventoryGrn.objects.all()
     serializer_class = InventoryGrnSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = [
-        'category',
-        'created_at'
-    ]
+    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # filterset_fields = [
+    #     'category',
+    #     'created_at'
+    # ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -221,11 +223,11 @@ class InventoryGrnViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class InventoryTransactionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = InventoryTransaction.objects.all()
     serializer_class = InventoryTransactionSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = [
-        'category',
-        'created_at'
-    ]
+    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # filterset_fields = [
+    #     'category',
+    #     'created_at'
+    # ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -238,6 +240,43 @@ class InventoryTransactionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     
     def get_queryset(self):
         queryset = InventoryTransaction.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset
+        
+class InventoryMaterialViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = InventoryMaterial.objects.all()
+    serializer_class = InventoryMaterialSerializer
+    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # filterset_fields = [
+    #     'category',
+    #     'created_at'
+    # ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = InventoryMaterial.objects.all()
 
         """
         if self.request.user.is_anonymous:

@@ -111,7 +111,7 @@ class AssetAttribute(models.Model):
         ordering = ['-created_date']
 
     def __str__(self):
-        return self.characteristic_type + ' ' + self.adhoc_value + ' ' + self.characteristic_value
+        return ('%s %s %s'%(self.characteristic_type, self.adhoc_value, self.characteristic_value))
 
 class Asset(models.Model):
 
@@ -150,6 +150,7 @@ class Asset(models.Model):
     asset_attributes = models.ManyToManyField(AssetAttribute, blank=True)
 
     owning_access_group_nam = models.CharField(max_length=100, blank=True)
+    specification = models.CharField(max_length=100, blank=True)
 
     submitted_datetime = models.DateTimeField(null=True, default=None)
     registered_datetime = models.DateTimeField(null=True, default=None)
@@ -410,9 +411,12 @@ class AssetAttributeColumn(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
+    class meta:
+        ordering = ['-asset_type_id']
+
 class AssetLocation(models.Model):
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     location_type = models.CharField(max_length=100, blank=True)
     locatin_disposition = models.CharField(max_length=100, blank=True)
     Bo = models.CharField(max_length=100, blank=True)
@@ -473,7 +477,7 @@ class AssetLocation(models.Model):
     quit_rent_bill_payment_date = models.DateField(null=True)
     assessment_bill_number = models.CharField(max_length=100, blank=True)
     current_rate_Of_assesment = models.CharField(max_length=100, blank=True)
-    assessment_bill_payment_date = models.CharField(max_length=100, blank=True)
+    assessment_bill_payment_date = models.DateField(null=True)
     lease_expired_date = models.DateField(null=True)
     remarks = models.CharField(max_length=100, blank=True)
 
