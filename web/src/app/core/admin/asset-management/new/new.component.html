@@ -70,7 +70,7 @@
                                 <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkDate"
                                     [(ngModel)]="is_show1.location_description">
                                 <label class="custom-control-label" for="checkDate">
-                                    Location Desc asdasd
+                                    Location Description
                                 </label>
                             </div>
                         </div>
@@ -642,10 +642,9 @@
                                                     <select name="datatable_length" aria-controls="datatable"
                                                         class="form-control form-control-sm"
                                                         (change)="entriesChange($event)">
+                                                        <option value="5">5</option>
                                                         <option value="10">10</option>
-                                                        <option value="25">25</option>
-                                                        <option value="50">50</option>
-                                                        <option value="100">100</option>
+                                                        <option value="15">15</option>
                                                         <option value="-1">All</option>
                                                     </select>
                                                     records
@@ -656,10 +655,10 @@
                                         </div>
                                     </div>
 
-                                    <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'"
-                                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
-                                        [limit]="tableEntries != -1 ? tableEntries : undefined" [rows]="tableTemp1"
-                                        (activate)="onActivate($event)">
+                                    <ngx-datatable class="bootstrap selection-cell" [scrollbarH]="true"
+                                        [footerHeight]="50" [rowHeight]="75"
+                                        [limit]="entries != -1 ? entries : undefined" [rows]="tableTemp1"
+                                        (activate)="onActivate($event)">>
 
                                         <ngx-datatable-column maxWidth="60" [sortable]="false">
                                             <ng-template let-row="row" ngx-datatable-cell-template>
@@ -673,7 +672,7 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <!-- <ngx-datatable-column [width]="60" [sortable]="true" [resizeable]="false"
+                                        <!-- <ngx-datatable-column [width]="60" [resizeable]="false"
                                             prop="id_index">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>No.</span>
@@ -704,8 +703,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.parent_location">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.parent_location">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Parent Location</span>
                                             </ng-template>
@@ -716,8 +715,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.location_description">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.location_description">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Location Description</span>
                                             </ng-template>
@@ -728,8 +727,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.building">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.building">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>building</span>
                                             </ng-template>
@@ -739,8 +738,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.address_line_1">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.address_line_1">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Address Line 1</span>
                                             </ng-template>
@@ -750,8 +749,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.address_line_2">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.address_line_2">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Address Line 2</span>
                                             </ng-template>
@@ -761,8 +760,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.address_line_3">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.address_line_3">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Address Line 3</span>
                                             </ng-template>
@@ -772,8 +771,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.city">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.city">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>City</span>
                                             </ng-template>
@@ -783,8 +782,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.state">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.state">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>State</span>
                                             </ng-template>
@@ -794,8 +793,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.postal_code">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.postal_code">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Postal Code</span>
                                             </ng-template>
@@ -805,8 +804,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.country">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.country">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Country</span>
                                             </ng-template>
@@ -816,8 +815,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.tag_number">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.tag_number">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Tag Number</span>
                                             </ng-template>
@@ -827,8 +826,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.service_area">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.service_area">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Service Area</span>
                                             </ng-template>
@@ -838,8 +837,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.maintenance_planner">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.maintenance_planner">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Maintenance Planner</span>
                                             </ng-template>
@@ -849,8 +848,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.location_main_contact">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.location_main_contact">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Location Main Contact</span>
                                             </ng-template>
@@ -860,8 +859,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.location_asset_maintenance_manager">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.location_asset_maintenance_manager">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Location Asset Maintenance Manager</span>
                                             </ng-template>
@@ -872,8 +871,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.gis_esri_id">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.gis_esri_id">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>GIS ESRI ID</span>
                                             </ng-template>
@@ -883,8 +882,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.latitude">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.latitude">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>latitude</span>
                                             </ng-template>
@@ -894,8 +893,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_critically">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.asset_critically">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Criticality</span>
                                             </ng-template>
@@ -905,8 +904,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.cost_center">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.cost_center">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Cost Center</span>
                                             </ng-template>
@@ -916,8 +915,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_owning_department">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.asset_owning_department">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Owning Depart</span>
                                             </ng-template>
@@ -927,8 +926,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.sub_process_system">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.sub_process_system">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Sub Process System</span>
                                             </ng-template>
@@ -938,8 +937,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.brand">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.brand">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Brand</span>
                                             </ng-template>
@@ -949,8 +948,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_1">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.size_capacity_1">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Size Capacity 1</span>
                                             </ng-template>
@@ -961,8 +960,8 @@
                                         </ngx-datatable-column>
 
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_2">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.size_capacity_2">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Size Capacity 2</span>
                                             </ng-template>
@@ -972,8 +971,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_3">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.size_capacity_3">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Size Capacity 3</span>
                                             </ng-template>
@@ -983,8 +982,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.maintenance_specification">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.maintenance_specification">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Maintenance Specification</span>
                                             </ng-template>
@@ -994,8 +993,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_or_component_type">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.asset_or_component_type">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Or Component Type</span>
                                             </ng-template>
@@ -1005,8 +1004,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.badge_no">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.badge_no">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Badge No</span>
                                             </ng-template>
@@ -1016,8 +1015,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_1_unit_measurement">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.size_capacity_1_unit_measurement">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>size_capacity_1_unit_measurement</span>
                                             </ng-template>
@@ -1028,8 +1027,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_2_unit_measurement">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.size_capacity_2_unit_measurement">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>size_capacity_2_unit_measurement</span>
                                             </ng-template>
@@ -1040,8 +1039,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.size_capacity_3_unit_measurement">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.size_capacity_3_unit_measurement">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>size_capacity_3_unit_measurement</span>
                                             </ng-template>
@@ -1052,8 +1051,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.measurement_type">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.measurement_type">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Measurement Type</span>
                                             </ng-template>
@@ -1063,8 +1062,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.main_operation">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.main_operation">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Main Operation</span>
                                             </ng-template>
@@ -1074,8 +1073,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_class_asset_category">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.asset_class_asset_category">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Class Asset Category</span>
                                             </ng-template>
@@ -1085,8 +1084,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.internal_asset_identity">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.internal_asset_identity">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Internal Asset Adentity</span>
                                             </ng-template>
@@ -1096,8 +1095,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.sub_category_1">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.sub_category_1">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Sub Category 1</span>
                                             </ng-template>
@@ -1107,8 +1106,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.parent_asset_plate_number">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.parent_asset_plate_number">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Parent Asset Plate Number</span>
                                             </ng-template>
@@ -1118,8 +1117,7 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date"
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
                                             *ngIf="is_show1.purchase_date_installed_handed_over_date">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Purchase Date Installed Handed Over Date</span>
@@ -1131,8 +1129,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.warranty">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.warranty">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Warranty</span>
                                             </ng-template>
@@ -1142,8 +1140,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.region">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.region">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Region</span>
                                             </ng-template>
@@ -1153,8 +1151,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.handed_over_asset_or_procured">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.handed_over_asset_or_procured">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Handed Over Asset Or Procured</span>
                                             </ng-template>
@@ -1165,8 +1163,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_primary_category">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.asset_primary_category">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Primary Category</span>
                                             </ng-template>
@@ -1176,8 +1174,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.sub_category_2">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.sub_category_2">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>sub_category_2</span>
                                             </ng-template>
@@ -1187,8 +1185,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_plate_number">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.asset_plate_number">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Plate Number</span>
                                             </ng-template>
@@ -1198,8 +1196,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.condition_rating">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.condition_rating">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Condition Rating</span>
                                             </ng-template>
@@ -1209,8 +1207,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.actual_warranty_period">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.actual_warranty_period">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Actual Warranty Period</span>
                                             </ng-template>
@@ -1220,8 +1218,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.operation">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.operation">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Operation</span>
                                             </ng-template>
@@ -1231,8 +1229,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.process_function">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.process_function">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Process Function</span>
                                             </ng-template>
@@ -1242,8 +1240,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.model_number">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.model_number">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Model Number</span>
                                             </ng-template>
@@ -1253,8 +1251,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.detailed_description">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.detailed_description">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Detailed Description</span>
                                             </ng-template>
@@ -1264,8 +1262,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.serial_number">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.serial_number">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Serial Number</span>
                                             </ng-template>
@@ -1275,8 +1273,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_status">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.asset_status">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Status</span>
                                             </ng-template>
@@ -1286,8 +1284,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.warranty_vendor_name">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.warranty_vendor_name">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Warranty Vendor Name</span>
                                             </ng-template>
@@ -1297,8 +1295,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_tag_number">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.asset_tag_number">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Tag Number</span>
                                             </ng-template>
@@ -1308,8 +1306,8 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false"
-                                            prop="created_date" *ngIf="is_show1.asset_identity">
+                                        <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                                            *ngIf="is_show1.asset_identity">
                                             <ng-template ngx-datatable-header-template>
                                                 <span>Asset Identity</span>
                                             </ng-template>
@@ -1319,14 +1317,14 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
-                                        <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false">
+                                        <!-- <ngx-datatable-column [width]="140" [resizeable]="false">
                                             <ng-template ngx-datatable-header-template>
                                                 <span></span>
                                             </ng-template>
                                             <ng-template let-row="row" ngx-datatable-cell-template>
                                                 <span><i class="fa fa-file text-default"></i></span>
                                             </ng-template>
-                                        </ngx-datatable-column>
+                                        </ngx-datatable-column> -->
                                     </ngx-datatable>
                                 </div>
 
