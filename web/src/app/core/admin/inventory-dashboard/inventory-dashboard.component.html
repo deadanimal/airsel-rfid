@@ -33,9 +33,7 @@
                 </div>
 
                 <div class="col-auto">
-                  <div
-                    class="icon icon-shape bg-white text-green rounded-circle shadow"
-                  >
+                  <div class="icon icon-shape bg-white text-green rounded-circle shadow">
                     <i class="fas fa-tasks"> </i>
                   </div>
                 </div>
@@ -57,9 +55,7 @@
                 </div>
 
                 <div class="col-auto">
-                  <div
-                    class="icon icon-shape bg-white text-orange rounded-circle shadow"
-                  >
+                  <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
                     <i class="fas fa-spinner"> </i>
                   </div>
                 </div>
@@ -83,9 +79,7 @@
                 </div>
 
                 <div class="col-auto">
-                  <div
-                    class="icon icon-shape bg-white text-red rounded-circle shadow"
-                  >
+                  <div class="icon icon-shape bg-white text-red rounded-circle shadow">
                     <i class="fas fa-stopwatch"> </i>
                   </div>
                 </div>
@@ -109,9 +103,7 @@
                 </div>
 
                 <div class="col-auto">
-                  <div
-                    class="icon icon-shape bg-white text-indigo rounded-circle shadow"
-                  >
+                  <div class="icon icon-shape bg-white text-indigo rounded-circle shadow">
                     <i class="fas fa-boxes"> </i>
                   </div>
                 </div>
@@ -145,16 +137,9 @@
         </div>
         <div>
           <ul class="list-group list-group-flush">
-            <li
-              class="list-group-item"
-              *ngFor="let storeLocation of storeLocations"
-            >
+            <li class="list-group-item" *ngFor="let storeLocation of storeLocations">
               <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  [id]="storeLocation.id"
-                />
+                <input type="checkbox" class="custom-control-input" [id]="storeLocation.id" />
                 <label class="custom-control-label" [for]="storeLocation.id">{{
                   storeLocation.title
                 }}</label>
