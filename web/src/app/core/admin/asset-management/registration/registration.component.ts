@@ -22,6 +22,7 @@ import { NotifyService } from "src/app/shared/handler/notify/notify.service";
 import { AssetsRegistrationService } from 'src/app/shared/services/assets-registration/assets-registration.service';
 import { AssetsLocationService } from 'src/app/shared/services/assets-location/assets-location.service';
 import { AssetsAttributeService } from 'src/app/shared/services/assets-attribute/assets-attribute.service';
+import { AssetAttributeColumnService } from 'src/app/shared/services/asset-attribute-column/asset-attribute-column.service';
 
 import { system } from '@amcharts/amcharts4/core';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
@@ -92,12 +93,246 @@ export class RegistrationComponent implements OnInit {
   regions = [];
   organisations = [];
   assetprimarycategory = [
-    { value: "ACTR", name: "Actuator" },
-    { value: "AV", name: "Air Valve" },
-    { value: "MTRSR", name: "Motor-Slip Ring" },
-    { value: "PES", name: "Pump-End Suction" },
-    { value: "RSVR", name: "Reservoir" },
-    { value: "NA", name: "Not Available" },
+    { value: "ACTUATOR", name: "ACTUATOR" },
+    { value: "ADVANCED PILOT VALVE", name: "ADVANCED PILOT VALVE" },
+    { value: "AIR BLOWER", name: "AIR BLOWER" },
+    { value: "AIR CIRCUIT BREAKER", name: "AIR CIRCUIT BREAKER" },
+    { value: "AIR COMPRESSOR", name: "AIR COMPRESSOR" },
+    { value: "AIR RECEIVER TANK", name: "AIR RECEIVER TANK" },
+    { value: "AIR VALVE", name: "AIR VALVE" },
+    { value: "ALTERNATOR", name: "ALTERNATOR" },
+    { value: "ALTITUDE VALVE", name: "ALTITUDE VALVE" },
+    { value: "AMR FLOWMETER", name: "AMR FLOWMETER" },
+    { value: "ANALOG INPUT MODULE", name: "ANALOG INPUT MODULE" },
+    { value: "ANALOG OUTPUT MODULE", name: "ANALOG OUTPUT MODULE" },
+    { value: "AUTOCLAVE", name: "AUTOCLAVE" },
+    { value: "AUTO TITRATOR WITH AUTO SAMPLER", name: "AUTO TITRATOR WITH AUTO SAMPLER" },
+    { value: "BACK PRESSURE VALVE", name: "BACK PRESSURE VALVE" },
+    { value: "BALANCING RESERVOIR", name: "BALANCING RESERVOIR" },
+    { value: "BALL FLOAT VALVE", name: "BALL FLOAT VALVE" },
+    { value: "BALL VALVE", name: "BALL VALVE" },
+    { value: "BANDSCREEN", name: "BANDSCREEN" },
+    { value: "BATTERY CHARGER", name: "BATTERY CHARGER" },
+    { value: "BIN ACTIVATOR", name: "BIN ACTIVATOR" },
+    { value: "BIOLOGICAL OXYGEN DEMAND APPARATUS", name: "BIOLOGICAL OXYGEN DEMAND APPARATUS" },
+    { value: "BOAT ENGINE", name: "BOAT ENGINE" },
+    { value: "BUILDING", name: "BUILDING" },
+    { value: "BULK METER", name: "BULK METER" },
+    { value: "BUTTERFLY VALVE", name: "BUTTERFLY VALVE" },
+    { value: "CABINET", name: "CABINET" },
+    { value: "CAMERA", name: "CAMERA" },
+    { value: "CAPACITOR BANK", name: "CAPACITOR BANK" },
+    { value: "CENTRAL PROCESSING UNIT MODULE", name: "CENTRAL PROCESSING UNIT MODULE" },
+    { value: "CHAIN BLOCK", name: "CHAIN BLOCK" },
+    { value: "CHECK VALVE", name: "CHECK VALVE" },
+    { value: "CHAMBER", name: "CHAMBER" },
+    { value: "CHECK VALVE", name: "CHECK VALVE" },
+    { value: "CHLORGUARD", name: "CHLORGUARD" },
+    { value: "CHLORINATOR", name: "CHLORINATOR" },
+    { value: "CHLORINE VALVE", name: "CHLORINE VALVE" },
+    { value: "CLARIFIER", name: "CLARIFIER" },
+    { value: "COLORIMETER", name: "COLORIMETER" },
+    { value: "CONDUCTIVITY METER", name: "CONDUCTIVITY METER" },
+    { value: "CONSTANT FLOW VALVE", name: "CONSTANT FLOW VALVE" },
+    { value: "CONTROL PANEL", name: "CONTROL PANEL" },
+    { value: "CONTROL VALVE", name: "CONTROL VALVE" },
+    { value: "CONVEYOR", name: "CONVEYOR" },
+    { value: "CRANE", name: "CRANE" },
+    { value: "DAM CREST", name: "DAM CREST" },
+    { value: "DAMPER", name: "DAMPER" },
+    { value: "DATA LOGGER", name: "DATA LOGGER" },
+    { value: "DECANTER", name: "DECANTER" },
+    { value: "DECANTER CENTRIFUDGE", name: "DECANTER CENTRIFUDGE" },
+    { value: "DEHUMIDIFIER", name: "DEHUMIDIFIER" },
+    { value: "DEIONISED WATER SYSTEM", name: "DEIONISED WATER SYSTEM" },
+    { value: "DELIVERY PRESSURE SWITCH", name: "DELIVERY PRESSURE SWITCH" },
+    { value: "DEPTH SAMPLER", name: "DEPTH SAMPLER" },
+    { value: "DESKTOP COMPUTER", name: "DESKTOP COMPUTER" },
+    { value: "DESICCATOR", name: "DESICCATOR" },
+    { value: "DIAPHRAGM VALVE", name: "DIAPHRAGM VALVE" },
+    { value: "DIFFERENTIAL PRESSURE TRANSMITTER", name: "DIFFERENTIAL PRESSURE TRANSMITTER" },
+    { value: "DIFFUSER", name: "DIFFUSER" },
+    { value: "DIGITAL INDICATOR", name: "DIGITAL INDICATOR" },
+    { value: "DIGITAL INPUT MODULE", name: "DIGITAL INPUT MODULE" },
+    { value: "DIGITAL INPUT OR OUTPUT MODULE", name: "DIGITAL INPUT OR OUTPUT MODULE" },
+    { value: "DIGITAL OUTPUT MODULE", name: "DIGITAL OUTPUT MODULE" },
+    { value: "DISPENSETTE", name: "DISPENSETTE" },
+    { value: "DISSOLVED OXYGEN METER", name: "DISSOLVED OXYGEN METER" },
+    { value: "DISTILLATOR", name: "DISTILLATOR" },
+    { value: "DISTRICT METERING ZONE", name: "DISTRICT METERING ZONE" },
+    { value: "DOSER", name: "DOSER" },
+    { value: "DRONE", name: "DRONE" },
+    { value: "DRUM VALVE", name: "DRUM VALVE" },
+    { value: "DUST COLLECTOR", name: "DUST COLLECTOR" },
+    { value: "EARTHING SYSTEM", name: "EARTHING SYSTEM" },
+    { value: "EJECTOR", name: "EJECTOR" },
+    { value: "ELECTRICAL PANEL", name: "ELECTRICAL PANEL" },
+    { value: "ELECTROMAGNETIC (EM) FLOWMETER", name: "ELECTROMAGNETIC (EM) FLOWMETER" },
+    { value: "ELECTRONIC LEVEL SENSOR", name: "ELECTRONIC LEVEL SENSOR" },
+    { value: "ELECTRONIC PRESSURE TRANSMITTER", name: "ELECTRONIC PRESSURE TRANSMITTER" },
+    { value: "EVAPORATOR", name: "EVAPORATOR" },
+    { value: "EXHAUST FAN", name: "EXHAUST FAN" },
+    { value: "FEEDER", name: "FEEDER" },
+    { value: "FIRE FIGHTING SYSTEM", name: "FIRE FIGHTING SYSTEM" },
+    { value: "FLAT SEAT VALVE", name: "FLAT SEAT VALVE" },
+    { value: "FLOCCULATOR", name: "FLOCCULATOR" },
+    { value: "FLOW CONTROL VALVE", name: "FLOW CONTROL VALVE" },
+    { value: "FOOT VALVE", name: "FOOT VALVE" },
+    { value: "FREEZER", name: "FREEZER" },
+    { value: "FUME CUPBOARD", name: "FUME CUPBOARD" },
+    { value: "GAS CHROMATOGRAPHY-MASS SPECTROMETRY", name: "GAS CHROMATOGRAPHY-MASS SPECTROMETRY" },
+    { value: "GATE VALVE", name: "GATE VALVE" },
+    { value: "GEAR BOX", name: "GEAR BOX" },
+    { value: "GENERATOR SET", name: "GENERATOR SET" },
+    { value: "GPS EQUIPMENT", name: "GPS EQUIPMENT" },
+    { value: "HEAT EXCHANGER", name: "HEAT EXCHANGER" },
+    { value: "HEATING REACTOR", name: "HEATING REACTOR" },
+    { value: "HEAVY VEHICLES-BACKHOE LOADER", name: "HEAVY VEHICLES-BACKHOE LOADER" },
+    { value: "HEAVY VEHICLE-BUS", name: "HEAVY VEHICLES-BUS" },
+    { value: "HEAVY VEHICLES-CARGO LORRY", name: "HEAVY VEHICLES-CARGO LORRY" },
+    { value: "HEAVY VEHICLES-LOADER", name: "HEAVY VEHICLES-LOADER" },
+    { value: "HEAVY VEHICLES-PRIME MOVER", name: "HEAVY VEHICLES-PRIME MOVER" },
+    { value: "HEAVY VEHICLES-TANKER LORRY", name: "HEAVY VEHICLES-TANKER LORRY" },
+    { value: "HEAVY VEHICLES-TIPPER LORRY", name: "HEAVY VEHICLES-TIPPER LORRY" },
+    { value: "HEAVY VEHICLES-TRAILER JUMBO", name: "HEAVY VEHICLES-TRAILER JUMBO" },
+    { value: "HEAVY VEHICLES-TRAILER MACHINE", name: "HEAVY VEHICLES-TRAILER MACHINE" },
+    { value: "HOPPER", name: "HOPPER" },
+    { value: "HOTPLATE", name: "HOTPLATE" },
+    { value: "HUMAN MACHINE INTERFACE-PANEL", name: "HUMAN MACHINE INTERFACE-PANEL" },
+    { value: "HYDROMETER", name: "HYDROMETER" },
+    { value: "HYDROPHONE", name: "HYDROPHONE" },
+    { value: "HYDROPNEUMATIC TANK", name: "HYDROPNEUMATIC TANK" },
+    { value: "INCUBATOR", name: "INCUBATOR" },
+    { value: "INDUCTIVELY COUPLE PLASMA-MASS SPECTROMETRY", name: "INDUCTIVELY COUPLE PLASMA-MASS SPECTROMETRY" },
+    { value: "INDUSTRIAL VEHICLES-COMPACTOR", name: "INDUSTRIAL VEHICLES-COMPACTOR" },
+    { value: "INDUSTRIAL VEHICLES-FORKLIFT", name: "INDUSTRIAL VEHICLES-FORKLIFT" },
+    { value: "INDUSTRIAL VEHICLES-TRACTOR", name: "INDUSTRIAL VEHICLES-TRACTOR" },
+    { value: "INJECTOR", name: "INJECTOR" },
+    { value: "INSERTION FLOWMETER", name: "INSERTION FLOWMETER" },
+    { value: "INSTRUMENTATION PANEL", name: "INSTRUMENTATION PANEL" },
+    { value: "INVERTER", name: "INVERTER" },
+    { value: "ION CHROMATOGRAPHY", name: "ION CHROMATOGRAPHY" },
+    { value: "JAR TEST", name: "JAR TEST" },
+    { value: "LAB BALANCE", name: "LAB BALANCE" },
+    { value: "LABORATORY CABINET", name: "LABORATORY CABINET" },
+    { value: "LABORATORY CHILLER", name: "LABORATORY CHILLER" },
+    { value: "LABORATORY HEATER", name: "LABORATORY HEATER" },
+    { value: "LABORATORY OVEN", name: "LABORATORY OVEN" },
+    { value: "LAPTOP", name: "LAPTOP" },
+    { value: "LEAK DETECTOR", name: "LEAK DETECTOR" },
+    { value: "LEVEL ELECTRODE", name: "LEVEL ELECTRODE" },
+    { value: "LIGHT VEHICLE-CAR", name: "LIGHT VEHICLE-CAR" },
+    { value: "LIGHT VEHICLES-MPV", name: "LIGHT VEHICLES-MPV" },
+    { value: "LIGHT VEHICLES-PANEL VAN", name: "LIGHT VEHICLES-PANEL VAN" },
+    { value: "LIGHT VEHICLES-PICKUP", name: "LIGHT VEHICLES-PICKUP" },
+    { value: "LIGHT VEHICLES-SCHOOL VAN", name: "LIGHT VEHICLES-SCHOOL VAN" },
+    { value: "LIGHT VEHICLES-SUV", name: "LIGHT VEHICLES-SUV" },
+    { value: "LIGHT VEHICLES-VAN", name: "LIGHT VEHICLES-VAN" },
+    { value: "LIGHTING", name: "LIGHTING" },
+    { value: "LOAD CELL", name: "LOAD CELL" },
+    { value: "LOGGER", name: "LOGGER" },
+    { value: "LOW PRESSURE PILOT", name: "LOW PRESSURE PILOT" },
+    { value: "MAGNETIC STIRRER", name: "MAGNETIC STIRRER" },
+    { value: "MECHANICAL FLOWMETER", name: "MECHANICAL FLOWMETER" },
+    { value: "MECHANICAL LEVEL INDICATOR", name: "MECHANICAL LEVEL INDICATOR" },
+    { value: "MECHANICAL SCREEN", name: "MECHANICAL SCREEN" },
+    { value: "MEMBRANE FILTER", name: "MEMBRANE FILTER" },
+    { value: "MICROFILL", name: "MICROFILL" },
+    { value: "MICROPIPETTE", name: "MICROPIPETTE" },
+    { value: "MICROSCOPE", name: "MICROSCOPE" },
+    { value: "MIXER", name: "MIXER" },
+    { value: "MODEM", name: "MODEM" },
+    { value: "MODULATION VALVE", name: "MODULATION VALVE" },
+    { value: "MOISTURE ANALYZER", name: "MOISTURE ANALYZER" },
+    { value: "MOTORCYCLES-MOTORCYCLE", name: "MOTORCYCLES-MOTORCYCLE" },
+    { value: "MOTOR-SLIP RING", name: "MOTOR-SLIP RING" },
+    { value: "MOTOR-SQUIRREL CAGE", name: "MOTOR-SQUIRREL CAGE" },
+    { value: "MULTIPARAMETER", name: "MULTIPARAMETER" },
+    { value: "NESSLERISER", name: "NESSLERISER" },
+    { value: "NITROGEN EVAPORATOR", name: "NITROGEN EVAPORATOR" },
+    { value: "OIL TRAP", name: "OIL TRAP" },
+    { value: "ONLINE ANALYZER", name: "ONLINE ANALYZER" },
+    { value: "PASSENGER HOIST", name: "PASSENGER HOIST" },
+    { value: "PENSTOCK", name: "PENSTOCK" },
+    { value: "PH METER", name: "PH METER" },
+    { value: "PHOTOMETER AND SPECTROMETER", name: "PHOTOMETER AND SPECTROMETER" },
+    { value: "PNEUMATIC VALVE", name: "PNEUMATIC VALVE" },
+    { value: "POWER SUPPLY MODULE", name: "POWER SUPPLY MODULE" },
+    { value: "PRESSURE CHECK UNIT", name: "PRESSURE CHECK UNIT" },
+    { value: "PRESSURE CONTROLLER", name: "PRESSURE CONTROLLER" },
+    { value: "PRESSURE GAUGE", name: "PRESSURE GAUGE" },
+    { value: "PRESSURE REDUCING VALVE", name: "PRESSURE REDUCING VALVE" },
+    { value: "PRESSURE RELIEF VALVE", name: "PRESSURE RELIEF VALVE" },
+    { value: "PRESSURE SWITCH", name: "PRESSURE SWITCH" },
+    { value: "PROGRAMMABLE LOGIC CONTROL", name: "PROGRAMMABLE LOGIC CONTROL" },
+    { value: "PUMP HOUSE", name: "PUMP HOUSE" },
+    { value: "PUMP MAGNETIC DRIVE", name: "PUMP MAGNETIC DRIVE" },
+    { value: "PUMP-CENTRIFUGAL-MULTISTAGE", name: "PUMP-CENTRIFUGAL-MULTISTAGE" },
+    { value: "PUMP-CENTRIFUGAL-SELF-PRIMING", name: "PUMP-CENTRIFUGAL-SELF-PRIMING" },
+    { value: "PUMP-CENTRIFUGAL-SPLIT CASING", name: "PUMP-CENTRIFUGAL-SPLIT CASING" },
+    { value: "PUMP-DRY PIT", name: "PUMP-DRY PIT" },
+    { value: "PUMP-END SUCTION", name: "PUMP-END SUCTION" },
+    { value: "PUMP-METERING", name: "PUMP-METERING" },
+    { value: "PUMP-PNEUMATIC", name: "PUMP-PNEUMATIC" },
+    { value: "PUMP-PRESSURE", name: "PUMP-PRESSURE" },
+    { value: "PUMP-PROGRESSIVE CAVITY", name: "PUMP-PROGRESSIVE CAVITY" },
+    { value: "PUMP-SUBMERSIBLE", name: "PUMP-SUBMERSIBLE" },
+    { value: "PUMP-VACCUM", name: "PUMP-VACCUM" },
+    { value: "QUANTI TRAY SEALER", name: "QUANTI TRAY SEALER" },
+    { value: "RECORDER", name: "RECORDER" },
+    { value: "REFRIGERATED AIR DRYER", name: "REFRIGERATED AIR DRYER" },
+    { value: "REMOTE TELEMETRY UNIT", name: "REMOTE TELEMETRY UNIT" },
+    { value: "RESERVOIR", name: "RESERVOIR" },
+    { value: "RIVER GATE", name: "RIVER GATE" },
+    { value: "RIVER MONITORING SYSTEM", name: "RIVER MONITORING SYSTEM" },
+    { value: "ROTAMETER", name: "ROTAMETER" },
+    { value: "SAMPLING STATION", name: "SAMPLING STATION" },
+    { value: "SAND FILTER", name: "SAND FILTER" },
+    { value: "SCADA PANEL", name: "SCADA PANEL" },
+    { value: "SCOUR VALVE", name: "SCOUR VALVE" },
+    { value: "SCRAPPER", name: "SCRAPPER" },
+    { value: "SERVER", name: "SERVER" },
+    { value: "SIEVE", name: "SIEVE" },
+    { value: "SILO", name: "SILO" },
+    { value: "SIPHON FILTER", name: "SIPHON FILTER" },
+    { value: "SLACKER", name: "SLACKER" },
+    { value: "SLUICE KNIFE VALVE", name: "SLUICE KNIFE VALVE" },
+    { value: "SLUICE VALVE", name: "SLUICE VALVE" },
+    { value: "SOLAR CHARGE CONTROLLER", name: "SOLAR CHARGE CONTROLLER" },
+    { value: "SOLAR PANEL", name: "SOLAR PANEL" },
+    { value: "SOLENOID VALVE", name: "SOLENOID VALVE" },
+    { value: "SPRAY NOZZLE", name: "SPRAY NOZZLE" },
+    { value: "STATIC SCREEN", name: "STATIC SCREEN" },
+    { value: "STOPPER", name: "STOPPER" },
+    { value: "STRAINER FILTER", name: "STRAINER FILTER" },
+    { value: "STROKE CONTROLLER", name: "STROKE CONTROLLER" },
+    { value: "SURGE ANTICIPATING RELIEF VALVE", name: "SURGE ANTICIPATING RELIEF VALVE" },
+    { value: "SURGE ANTICIPATING VALVE", name: "SURGE ANTICIPATING VALVE" },
+    { value: "SURGE VESSEL", name: "SURGE VESSEL" },
+    { value: "SURVEILLANCE CAMERA", name: "SURVEILLANCE CAMERA" },
+    { value: "TABLET", name: "TABLET" },
+    { value: "TACHOMETER", name: "TACHOMETER" },
+    { value: "THICKENER", name: "THICKENER" },
+    { value: "TITRATOR", name: "TITRATOR" },
+    { value: "TOTAL ORGANIC CARBON (TOC)", name: "TOTAL ORGANIC CARBON (TOC)" },
+    { value: "TRANSFORMER", name: "TRANSFORMER" },
+    { value: "TURBIDIMETER", name: "TURBIDIMETER" },
+    { value: "ULTRA PURE WATER SYSTEM", name: "ULTRA PURE WATER SYSTEM" },
+    { value: "ULTRASONIC LEVEL SENSOR", name: "ULTRASONIC LEVEL SENSOR" },
+    { value: "ULTRASONIC PRESSURE TRANSMITTER", name: "ULTRASONIC PRESSURE TRANSMITTER" },
+    { value: "ULTRAVIOLATE LAMPS", name: "ULTRAVIOLATE LAMPS" },
+    { value: "UNINTERRUPTIBLE POWER SUPPLY", name: "UNINTERRUPTIBLE POWER SUPPLY" },
+    { value: "VACUUM CIRCUIT BREAKER", name: "VACUUM CIRCUIT BREAKER" },
+    { value: "VACUUM REGULATOR", name: "VACUUM REGULATOR" },
+    { value: "VENTILATION FAN", name: "VENTILATION FAN" },
+    { value: "VIBRATOR", name: "VIBRATOR" },
+    { value: "VISCOMETER", name: "VISCOMETER" },
+    { value: "WATER BALANCED AREA", name: "WATER BALANCED AREA" },
+    { value: "WATERBATH", name: "WATERBATH" },
+    { value: "WATERCRAFT-BOAT", name: "WATERCRAFT-BOAT" },
+    { value: "WEIGHING SCALE", name: "WEIGHING SCALE" },
+    { value: "WEIGHT CALIBRATION KIT", name: "WEIGHT CALIBRATION KIT" },
+    { value: "NA", name: "NOT AVAILABLE" },
   ];
   assetowningdepartment = [
     { value: "CBS", name: "Customer Billing Sevices" },
@@ -311,6 +546,152 @@ export class RegistrationComponent implements OnInit {
   identities = [];
   assetprimary = [];
   assetprimaryshow = [];
+  assetprimaryselector = [];
+
+  assetprimaryselectorshow =
+  [
+    {
+      // asset_type_id: "",
+      brand: true,
+      capacity_size: true,
+      closing_torque: true,
+      hysteresis: true,
+      installation: true,
+      manufacturer: true,
+      manufacture_part_number: true,
+      manufacturer_year: true,
+      model: true,
+      opening_torque: true,
+      power_supply_type: true,
+      revolutions_per_minute: true,
+      type: true,
+      material_type: true,
+      valve_pressure_rating: true,
+      horse_power: true,
+      temperature: true,
+      coverage_range: true,
+      voltage: true,
+      valve_diameter: true,
+      top_water_level: true,
+      inlet_diameter: true,
+      bottom_water_level: true,
+      outlet_diameter: true,
+      staging_height: true,
+      dimention: true,
+      environmental_performance: true,
+      no_of_channel: true,
+      frequency: true,
+      vehicle_chassis_number: true,
+      vehicle_engine_capacity: true,
+      vehicle_engine_number: true,
+      vehicle_insurance_cover_note_number: true,
+      vehicle_insurance_date_period_from: true,
+      vehicle_insurance_no_claim_discount: true,
+      vehicle_insurance_total_premium: true,
+      vehicle_insurance_policy_type: true,
+      vehicle_insurance_sum_insured: true,
+      vehicle_insurance_date_period_to: true,
+      vehicle_insurance_auto_windscreen_insured: true,
+      vehicle_model: true,
+      vehicle_owner_status: true,
+      vehicle_puspakom_expired_date: true,
+      vehicle_puspakom_date_inspection: true,
+      vehicle_register_date: true,
+      vehicle_registration_owner: true,
+      vehicle_roadtax_rate: true,
+      vehicle_roadtax_renew_date: true,
+      vehicle_insurance_vendor: true,
+      vehicle_seating_capacity: true,
+      vehicle_spad_permit_date_period_from: true,
+      vehicle_spad_no_license_operator: true,
+      vehicle_spad_permit_date_period_to: true,
+      motor_current: true,
+      insulation: true,
+      no_of_phases: true,
+      communication_protocol: true,
+      flow_rate: true,
+      pump_head: true,
+      no_of_stage: true,
+      infrastructure_status_reason: true,
+      infrastructure_status: true,
+      legal_name: true,
+      source_from: true,
+      supply_location: true,
+    }
+  ];
+
+  assetprimaryselectorshowdefault =
+  [
+    {
+      // asset_type_id: "",
+      brand: true,
+      capacity_size: true,
+      closing_torque: true,
+      hysteresis: true,
+      installation: true,
+      manufacturer: true,
+      manufacture_part_number: true,
+      manufacturer_year: true,
+      model: true,
+      opening_torque: true,
+      power_supply_type: true,
+      revolutions_per_minute: true,
+      type: true,
+      material_type: true,
+      valve_pressure_rating: true,
+      horse_power: true,
+      temperature: true,
+      coverage_range: true,
+      voltage: true,
+      valve_diameter: true,
+      top_water_level: true,
+      inlet_diameter: true,
+      bottom_water_level: true,
+      outlet_diameter: true,
+      staging_height: true,
+      dimention: true,
+      environmental_performance: true,
+      no_of_channel: true,
+      frequency: true,
+      vehicle_chassis_number: true,
+      vehicle_engine_capacity: true,
+      vehicle_engine_number: true,
+      vehicle_insurance_cover_note_number: true,
+      vehicle_insurance_date_period_from: true,
+      vehicle_insurance_no_claim_discount: true,
+      vehicle_insurance_total_premium: true,
+      vehicle_insurance_policy_type: true,
+      vehicle_insurance_sum_insured: true,
+      vehicle_insurance_date_period_to: true,
+      vehicle_insurance_auto_windscreen_insured: true,
+      vehicle_model: true,
+      vehicle_owner_status: true,
+      vehicle_puspakom_expired_date: true,
+      vehicle_puspakom_date_inspection: true,
+      vehicle_register_date: true,
+      vehicle_registration_owner: true,
+      vehicle_roadtax_rate: true,
+      vehicle_roadtax_renew_date: true,
+      vehicle_insurance_vendor: true,
+      vehicle_seating_capacity: true,
+      vehicle_spad_permit_date_period_from: true,
+      vehicle_spad_no_license_operator: true,
+      vehicle_spad_permit_date_period_to: true,
+      motor_current: true,
+      insulation: true,
+      no_of_phases: true,
+      communication_protocol: true,
+      flow_rate: true,
+      pump_head: true,
+      no_of_stage: true,
+      infrastructure_status_reason: true,
+      infrastructure_status: true,
+      legal_name: true,
+      source_from: true,
+      supply_location: true,
+    }
+  ];
+
   primarycategories = [];
   groupsubcategory1s = [];
   groupsubcategory2s = [];
@@ -469,81 +850,6 @@ export class RegistrationComponent implements OnInit {
   rows: any = [];
   // SelectionType = SelectionType;
   tableTemp1 = [];
-  assetAttribute = [
-    {
-      "id": "3b51c219-4ecd-4ba1-9ed5-ca09a026a81e",
-      "asset_uuid": "NA",
-      "asset_primary_category": "CHAMBER",
-      "short": "CHAM",
-      "description": "Chamber",
-      "status": "Active",
-      "latest_no": "2265"
-    },
-    {
-      "id": "ca55926b-156e-4c25-8049-00a4ce2a3686",
-      "asset_uuid": "NA",
-      "asset_primary_category": "CABINET",
-      "short": "CBNT",
-      "description": "NRW Cabinet",
-      "status": "Active",
-      "latest_no": "6455"
-    },
-    {
-      "id": "4bfb1995-34f4-4637-904f-aef48ae1cc44",
-      "asset_uuid": "NA",
-      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-      "short": "EMFM",
-      "description": "Electromagnetic Flowmeter",
-      "status": "Active",
-      "latest_no": "257"
-    },
-    {
-      "id": "c83b5efa-0cef-4593-b2aa-495e4c76d776",
-      "asset_uuid": "NA",
-      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-      "short": "BPEM",
-      "description": "BATTERY POWERED ELECTROMAGNETIC FLOWMETER",
-      "status": "Inactive",
-      "latest_no": "257"
-    },
-    {
-      "id": "e5926f82-ef76-4dff-af60-0ed6b3090d86",
-      "asset_uuid": "NA",
-      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-      "short": "DEFM",
-      "description": "DELIVERY ELECTRONIC FLOWMETER",
-      "status": "Inactive",
-      "latest_no": "257"
-    },
-    {
-      "id": "99f149aa-43ed-4c85-87a6-4b0ac51b8f5c",
-      "asset_uuid": "NA",
-      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-      "short": "IWFM",
-      "description": "INTERNAL WTP FLOWMETER",
-      "status": "Inactive",
-      "latest_no": "257"
-    },
-    {
-      "id": "91a7f0b5-433b-4e7c-8cfb-a3beeb838fdb",
-      "asset_uuid": "NA",
-      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-      "short": "WBME",
-      "description": "WATER BALANCE METER",
-      "status": "Inactive",
-      "latest_no": "257"
-    },
-    {
-      "id": "91a7f0b5-433b-4e7c-8cfb-a3beeb838fdb",
-      "asset_primary_category": "ELECTROMAGNETIC (EM) FLOWMETER",
-      "brand": "True",
-      "capacity_size": "False",
-      "closingTorque": "True",
-      "hysteresis": "False",
-      "installation": "False",
-      "manufacturer": "True",
-    }
-  ];
 
   // Forms
   fileuploadFormGroup: FormGroup;
@@ -559,6 +865,8 @@ export class RegistrationComponent implements OnInit {
   rowData: any
 
   // Asset Attribute Visibility
+  assetattributecolumnapi = [];
+  assetprimarycolumnselector = [];
   assetattributevisible = [
     {
       "asset_primary_category": "ACTUATOR",
@@ -779,6 +1087,7 @@ export class RegistrationComponent implements OnInit {
     public assetsRegistrationService: AssetsRegistrationService,
     public assetsLocationService: AssetsLocationService,
     public assetsAttributeService: AssetsAttributeService,
+    public assetsAttributeColumnService: AssetAttributeColumnService,
     private spinner: NgxSpinnerService
   ) {
     this.getAssets();
@@ -1082,6 +1391,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   openModalRegister(modalNotification: TemplateRef<any>) {
+
     this.modalRegisterAsset = this.modalService.show(
       modalNotification,
       this.modalConfig,
@@ -1092,47 +1402,64 @@ export class RegistrationComponent implements OnInit {
       //   ...row,
       // }),
     );
-
   }
 
   openModalAssetAttribute(modalNotification: TemplateRef<any>, row) {
-    let assetprimary1 = row.asset_primary_category
-    let assetprimary2 = this.assetattributevisible.map(a => a.asset_primary_category);
-    // let result = this.map(({ foo }) => foo)
 
-    console.log("asset primary =", assetprimary1);
-    console.log("asset primary other =", assetprimary2);
-
-
-
-    if (assetprimary2.indexOf(assetprimary1) !== -1) {
-      console.log("there is match");
-      this.assetprimary = this.assetattributevisible.filter(function (primary) {
-        return primary.asset_primary_category == assetprimary1;
-      })
-      this.rowData = ''
-      this.rowData = row
-
-      this.assetprimaryshow = Object.values(this.assetprimary)
+    let tempData = [];
+    this.assetsAttributeColumnService.get().subscribe(
+      (res) => {
+        res.forEach(function(assetprimer){
+          // console.log("asset primary uina =",assetprimer);
+          tempData.push(assetprimer)
+        })
+        this.assetattributecolumnapi = tempData
+        let assetprimary1 = row.asset_primary_category
+        let assetprimary2 = this.assetattributecolumnapi.map(a => a.asset_type_id);
+        // let result = this.map(({ foo }) => foo)
 
 
-      console.log("assetprimary = ", this.assetprimaryshow)
-    }
-    else {
-      console.log("there is no match");
-    }
-    //   {
-    //     for(a in this.assetattributevisible)
-    //     {
-    //       this.assetprimaryshow = a
-    //     }
-    //   }
+        this.rowData = ''
+        this.rowData = row
 
-    this.ModalAssetAttribute = this.modalService.show(
-      modalNotification,
-      this.modalConfig,
 
-    );
+        if (assetprimary2.indexOf(assetprimary1) !== -1) {
+          console.log("there is match");
+          this.assetprimary = this.assetattributecolumnapi.filter(function (primary) {
+            return primary.asset_type_id == assetprimary1;
+          })
+
+        this.assetprimaryshow = Object.values(this.assetprimary)
+        console.log("assetprimary = ", this.assetprimaryshow)
+
+
+        }
+        else {
+          console.log("there is no match");
+        }
+        this.ModalAssetAttribute = this.modalService.show(
+          modalNotification,
+          this.modalConfig,
+
+        );
+        },
+        error => {
+            console.error("err", error);
+          }
+        )
+        // this.assetAttribute.forEach(function (lll, mm) {
+
+    // this.assetsRegistrationService.getNewRegList().subscribe(
+    //   (res) => {
+    //     console.log("res all data", res);
+    //     res.forEach(function (val) {
+    //       val['isTick'] = false
+    //       tempData.push(val)
+    //     })
+    //     console.log('tempData = ', tempData)
+    //     this.tableTemp1 = tempData
+
+
   }
 
   openModalEdit(modalNotification: TemplateRef<any>, row) {
@@ -1176,7 +1503,7 @@ export class RegistrationComponent implements OnInit {
       created_by: this.authService.userID
     };
 
-    this.assetsService.post(postAssets).subscribe(
+    this.assetsRegistrationService.post(postAssets).subscribe(
       (res) => {
         if (res) {
           console.log("res", res);
@@ -1184,7 +1511,7 @@ export class RegistrationComponent implements OnInit {
             "Your asset have successfully registered.",
             "Register Asset"
           );
-          console.log('Berjaya')
+          // console.log('Berjaya')
           this.modalRegisterAsset.hide();
           this.getAssets();
         }
@@ -1320,7 +1647,7 @@ export class RegistrationComponent implements OnInit {
       this.tableShow1 = true
     }
     else {
-      console.log('bluek')
+      // console.log('bluek')
     }
   }
 
@@ -1518,7 +1845,7 @@ export class RegistrationComponent implements OnInit {
           val['isTick'] = false
           tempData.push(val)
         })
-        // console.log('tempData = ', tempData)
+        console.log('tempData = ', tempData)
         this.tableTemp1 = tempData
       },
       error => {
@@ -1526,6 +1853,44 @@ export class RegistrationComponent implements OnInit {
       }
     )
   }
+
+ AssetChange() {
+   let tempData = [];
+   this.assetsAttributeColumnService.get().subscribe(
+     (res) => {
+       res.forEach(function(assetprimer){
+         // console.log("asset primary uina =",assetprimer);
+         tempData.push(assetprimer)
+       })
+       this.assetprimarycolumnselector = tempData
+       let assetprimaryregister1 = (<HTMLInputElement>document.getElementById('assetselector')).value;
+       // let assetprimaryregister1 = this.assetprimarycategory.map(b => b.value);
+       let assetprimaryregister2 = this.assetprimarycolumnselector.map(a => a.asset_type_id);
+
+       // console.log("asset = ",assetprimaryregister2);
+
+       if (assetprimaryregister2.indexOf(assetprimaryregister1) !== -1) {
+         console.log("there is match");
+         this.assetprimaryselector = this.assetprimarycolumnselector.filter(function (primary) {
+           return primary.asset_type_id == assetprimaryregister1;
+         })
+
+       this.assetprimaryselectorshow = Object.values(this.assetprimaryselector)
+       console.log("assetprimaryselectshow = ", this.assetprimaryselectorshow)
+
+
+       }
+       else {
+         this.assetprimaryselectorshow = this.assetprimaryselectorshowdefault
+         console.log("there is no match");
+       }
+     },
+     error => {
+         console.error("err", error);
+       }
+     )
+
+ }
 
   onChange() {
     let counter = 0
@@ -1542,7 +1907,7 @@ export class RegistrationComponent implements OnInit {
 
   checkRow(selected) {
     let tempData = []
-    console.log('test test tetst')
+    // console.log('test test tetst')
     this.tableTemp1.forEach(
       (item) => {
         if (item['id'] == selected['id']) {
@@ -1599,10 +1964,10 @@ export class RegistrationComponent implements OnInit {
           }
           // console.log('updateformData = ', updateformData)
 
-          console.log('---- sini ----')
+          // console.log('---- sini ----')
           assetregser.update(itemVal['id'], updateformData).subscribe(
             (res) => {
-              console.log("ttttatttatt = ", res);
+              // console.log("ttttatttatt = ", res);
             },
             error => {
               console.error("err", error);
@@ -1662,7 +2027,7 @@ export class RegistrationComponent implements OnInit {
           if (this.resOnkeyData[key] == '') {
             updateStatus = 'no'
             console.log('+++++++++++++')
-            console.log('----- qweqweqwe -----', key)
+            // console.log('----- qweqweqwe -----', key)
           }
         }
         console.log('updateStatus = ', updateStatus)
@@ -1670,7 +2035,7 @@ export class RegistrationComponent implements OnInit {
           updateStatusComplete['status'] = 'CO'
           this.assetsRegistrationService.update(row['id'], updateStatusComplete).subscribe(
             (res) => {
-              console.log('yeaahhaaaaaaa CO')
+              // console.log('yeaahhaaaaaaa CO')
               this.getRegisteredData()
             }
           )
@@ -1678,7 +2043,7 @@ export class RegistrationComponent implements OnInit {
           updateStatusComplete['status'] = 'IC'
           this.assetsRegistrationService.update(row['id'], updateStatusComplete).subscribe(
             (res) => {
-              console.log('yeaahhaaaaaaa IC')
+              // console.log('yeaahhaaaaaaa IC')
               this.getRegisteredData()
             }
           )
@@ -1690,9 +2055,9 @@ export class RegistrationComponent implements OnInit {
     )
   }
 
-  getAssetPrimaryCategory() {
-    this.assetAttribute.forEach(function (lll, mm) {
-      console.log('test test = ', lll.asset_primary_category)
-    })
-  }
+  // getAssetPrimaryCategory() {
+  //   this.assetAttribute.forEach(function (lll, mm) {
+  //     console.log('test test = ', lll.asset_primary_category)
+  //   })
+  // }
 }
