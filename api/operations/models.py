@@ -332,6 +332,9 @@ class QuestionsValidValue(models.Model):
     class meta:
         ordering = ['-created_date']
 
+    def __str__(self):
+        return ('%s %s'%(self.seq_valid, self.code_valid))
+
 class ServiceHistoriesQuestions(models.Model):
     
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
@@ -349,6 +352,12 @@ class ServiceHistoriesQuestions(models.Model):
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return ('%s %s'%(self.seq, self.code))
 
 class AssetLocationAssetListServiceHistories(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
@@ -372,6 +381,9 @@ class AssetLocationAssetListServiceHistories(models.Model):
     class meta:
         ordering = ['-created_date']
 
+    def __str__(self):
+        return self.service_history_type
+
 class WorkOrderActivityCompletionAssetLocationAssetList(models.Model):
     
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
@@ -393,6 +405,9 @@ class WorkOrderActivityCompletionAssetLocationAssetList(models.Model):
 
     class meta:
         ordering = ['-created_date']
+
+    def __str__(self):
+        return self.node_id
 
 class WorkOrderActivityCompletion(models.Model):
     
