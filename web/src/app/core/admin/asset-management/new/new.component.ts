@@ -222,6 +222,7 @@ export class NewComponent implements OnInit {
     public toastr: NotifyService,
     public assetsRegistrationService: AssetsRegistrationService,
     public assetsBadgeNoService: AssetsBadgeNoService,
+    private spinner: NgxSpinnerService
   ) {
     this.getRegisteredData()
   }
@@ -377,57 +378,132 @@ export class NewComponent implements OnInit {
   }
 
   changeStatus(task) {
+    this.spinner.show();
     let resData: any
-    console.log('this.task = ', task)
+    let badgeFormatdata
+    // console.log('this.task = ', task)
     let no = 0
     let assetregser = this.assetsRegistrationService
-    let badgeFormat = this.assetsBadgeNoService
+    let badgeFormatService = this.assetsBadgeNoService
     this.tableTemp1.forEach(function (itemVal) {
 
       if (itemVal['isTick'] == true) {
         let asspricat = itemVal.asset_primary_category
-        console.log('asspricat = ', asspricat)
-        let field = 'asset_primary_category=' + asspricat
-        console.log('field = ', field)
-        badgeFormat.filter(field).subscribe(
+        let field = 'asset_primary_category=' + asspricat + '&status=AC'
+        // console.log('field = ', field)
+        badgeFormatService.filter(field).subscribe(
           (res) => {
-            console.log('res', res[0])
+            // console.log('res qweqwe', res)
+            badgeFormatdata = res[0]
+            // console.log('badgeFormatdata asdasd = ', badgeFormatdata)
           }
         )
 
-        let updateformData: any
-        // updateformData.append('status', 'PR');
+        setTimeout(function () {
 
-        updateformData = {
-          status: task
-        }
+          // () => {
+          let updateformData: any
+          let updateSkippedNo: any
+          // updateformData.append('status', 'PR');
+          // console.log('badgeFormatdata qweqwe = ', badgeFormatdata)
 
+          var skippedNo = badgeFormatdata.skipped_no
+          // console.log('skippedNo = ', skippedNo)
+          let runNo = 1
+          let firstSkippedNo: any
+          let leftSkippedNo: any
+          let currentNo = ''
 
-        console.log('itemVal = ', itemVal)
-        console.log('updateformData = ', updateformData)
-        // assetregser.update(itemVal['id'], updateformData).subscribe(
-        //   (res) => {
-        //     console.log("res = ", res);
-        //     resData = res
-        //   },
-        //   error => {
-        //     console.error("err", error);
-        //   }
-        // )
+          console.log('badgeFormatdata.skipped_no.length = ', badgeFormatdata.skipped_no.length)
+
+          if (badgeFormatdata.skipped_no.length > 0) {
+            skippedNo.forEach(function (noTest) {
+
+              if (runNo == 1) {
+                // console.log('noTest if = ', noTest)
+                firstSkippedNo = noTest
+                // leftSkippedNo += '"0"'
+              }
+              // else {
+              //   console.log('noTest else = ', noTest)
+              //   // leftSkippedNo += '"' + noTest + '"'
+              // }
+
+              runNo++
+            })
+
+            skippedNo.forEach((element, index) => {
+              if (element == firstSkippedNo) {
+                skippedNo.splice(index, 1)
+              }
+            });
+            leftSkippedNo = skippedNo
+            updateSkippedNo = {
+              skipped_no: leftSkippedNo
+            }
+
+            badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
+              (res) => {
+              },
+              (err) => {
+              }
+            )
+            currentNo = firstSkippedNo
+          } else {
+            // firstSkippedNo = badgeFormatdata.latest_no
+            currentNo = badgeFormatdata.latest_no
+
+            updateSkippedNo = {
+              latest_no: leftSkippedNo
+            }
+
+            badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
+              (res) => {
+              },
+              (err) => {
+              }
+            )
+          }
+
+          let badgeNo = badgeFormatdata.short + '_' + currentNo.padStart(7, '0')
+          updateformData = {
+            status: task,
+            badge_no: badgeNo
+          }
+
+          // console.log('itemVal = ', itemVal)
+          console.log('updateformData = ', updateformData)
+          assetregser.update(itemVal['id'], updateformData).subscribe(
+            (res) => {
+              console.log("res = ", res);
+              resData = res
+            },
+            error => {
+              console.error("err", error);
+            }
+          )
+          // }
+        }, 100);
+
       }
     })
     // if (resData.length > 0) {
+    let spinnerServ = this.spinner
+    this.getRegisteredData()
+    setTimeout(function () {
 
-    swal.fire({
-      title: 'Success',
-      text: 'Successfully Change Status',
-      type: 'success',
-      buttonsStyling: false,
-      confirmButtonText: 'Ok',
-      confirmButtonClass: 'btn btn-success'
-    }).then((result) => {
-      this.getRegisteredData()
-    })
-    // }
+      spinnerServ.hide();
+      swal.fire({
+        title: 'Success',
+        text: 'Successfully Change Status',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok',
+        confirmButtonClass: 'btn btn-success'
+      }).then((result) => {
+      })
+
+
+    }, 1000);
   }
 }

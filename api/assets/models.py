@@ -4,7 +4,7 @@ import uuid
 
 from django.contrib.gis.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.contrib.postgres.fields import ArrayField
 from simple_history.models import HistoricalRecords
 
 from locations.models import (
@@ -328,13 +328,16 @@ class AssetBadgeFormat(models.Model):
     )
     # status = models.CharField(max_length=100, default='NA')
     latest_no = models.CharField(max_length=100, default='NA')
-    # created_at = models.DateTimeField(auto_now_add=True)
+
+    skipped_no = ArrayField(models.CharField(max_length=15), null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
 
     class meta:
-        ordering = ['id']
+        ordering = ['asset_primary_category']
     
     def __str__(self):
-        return self.id
+        return self.asset_primary_category
 
 class AssetAttributeColumn(models.Model):
 
