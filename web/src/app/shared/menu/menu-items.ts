@@ -115,24 +115,33 @@ export const IROUTES: RouteInfo[] = [
     icontype: 'fas fa-dolly-flatbed text-blue',
     isCollapsed: true,
     children: [
-      { path: 'stock-count', title: 'Stock Count', type: 'link' },
-      { path: 'inbound', title: 'Stock Inbound', type: 'link' },
-      { path: 'outbound', title: 'Stock Outbound', type: 'link' },
-      { path: 'store-keeper', title: 'Storekeeper', type: 'link' },
-      { path: 'store-codes', title: 'Store Codes', type: 'link' }
+      {
+        path: 'stock-count',
+        title: 'Stock Count',
+        type: 'sub',
+        isCollapsed: true,
+        children: [
+          { path: 'report', title: 'Report', type: 'link' },
+          { path: 'variance', title: 'Variance', type: 'link' },
+        ]
+      },
+      { path: 'stock-receive-return', title: 'Stock Receive/Return', type: 'link' },
+      { path: 'issuance-reversal', title: 'Stock Issuannce/Reversal', type: 'link' },
+      { path: 'interwarehouse-transfer', title: 'Interwarehouse Transfer', type: 'link' },
+      { path: 'disposal', title: 'Stock Disposal', type: 'link' }
     ]
   },
-  {
-    path: '/inv/big-data',
-    title: 'Big Data',
-    type: 'sub',
-    icontype: 'far fa-chart-bar text-blue',
-    isCollapsed: true,
-    children: [
-      { path: 'tableau', title: 'Tableau', type: 'link' },
-      { path: 'analytics', title: 'Analytics', type: 'link' },
-    ]
-  },
+  // {
+  //   path: '/inv/big-data',
+  //   title: 'Big Data',
+  //   type: 'sub',
+  //   icontype: 'far fa-chart-bar text-blue',
+  //   isCollapsed: true,
+  //   children: [
+  //     { path: 'tableau', title: 'Tableau', type: 'link' },
+  //     { path: 'analytics', title: 'Analytics', type: 'link' },
+  //   ]
+  // },
   {
     path: '/inv/utility',
     title: 'Utility',

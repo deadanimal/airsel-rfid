@@ -110,7 +110,7 @@ class InventoryPurchaseOrder(models.Model):
 
     line_description = models.CharField(max_length=240, default='')
     quantity = models.IntegerField(blank=True, default='0')
-    uom_code = models.CharField(max_length=1, default='')
+    uom_code = models.CharField(max_length=25, default='')
     base_quantity = models.IntegerField(blank=True, default='0')
     base_uom_code = models.CharField(max_length=25, default='')
     requested_date = models.DateTimeField(auto_now=True)
@@ -129,10 +129,11 @@ class InventoryPurchaseOrder(models.Model):
 class InventoryGrn(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    header_interface_number = models.IntegerField(blank=True, default='0')
+    header_interface_number = models.CharField(max_length=100,blank=True, default='0')
     receipt_source_code = models.CharField(max_length=10, default='')
     business_unit = models.CharField(max_length=240, default='')
-    transaction_type = models.CharField(max_length=25, default='')
+    business_type = models.CharField(max_length=240, default='')
+    # transaction_type = models.CharField(max_length=25, default='')
     receipt_number = models.CharField(max_length=30, default='')
     supplier_number = models.CharField(max_length=20, default='')
     supplier_site_code = models.CharField(max_length=35, default='')
@@ -200,7 +201,7 @@ class InventoryMaterial(models.Model):
     destination_sub_inventory = models.CharField(max_length=100, default='')
     destination_locator = models.CharField(max_length=100, default='')
     destination_account = models.CharField(max_length=100, default='')
-    line_number = models.IntegerField()
+    line_number = models.IntegerField(blank=True)
     item = models.CharField(max_length=100)
     # transaction_type = models.CharField(max_length=18, default='')
     # required_date = models.CharField(max_length=100, default='')
