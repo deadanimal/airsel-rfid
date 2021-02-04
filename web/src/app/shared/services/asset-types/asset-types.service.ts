@@ -21,7 +21,6 @@ export class AssetTypesService {
   post(body): Observable<AssetTypesModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
-        console.log("AssetTypesModel", res);
       })
     );
   }
@@ -29,7 +28,6 @@ export class AssetTypesService {
   get(): Observable<AssetTypesModel[]> {
     return this.http.get<any>(this.url).pipe(
       tap((res) => {
-        console.log("AssetTypesModel", res);
         this.atmodels = res;
       })
     );
@@ -39,7 +37,6 @@ export class AssetTypesService {
     let urlID = this.url + id + "/";
     return this.http.get<AssetTypesModel>(urlID).pipe(
       tap((res: AssetTypesModel) => {
-        console.log("AssetTypesModel", res);
         this.atmodel = res;
       })
     );
@@ -48,7 +45,6 @@ export class AssetTypesService {
   update(body: Form): Observable<AssetTypesModel> {
     return this.http.patch<AssetTypesModel>(this.url, body).pipe(
       tap((res) => {
-        console.log("AssetTypesModel", res);
       })
     );
   }
@@ -56,7 +52,6 @@ export class AssetTypesService {
   delete(id: string): Observable<any> {
     return this.http.delete(this.url + id + "/").pipe(
       tap((res) => {
-        console.log("AssetTypesModel", res);
       })
     );
   }
@@ -65,7 +60,6 @@ export class AssetTypesService {
     let urlFilter = this.url + "?" + field + "/";
     return this.http.get<AssetTypesModel[]>(urlFilter).pipe(
       tap((res) => {
-        console.log("AssetTypesModel", res);
       })
     );
   }

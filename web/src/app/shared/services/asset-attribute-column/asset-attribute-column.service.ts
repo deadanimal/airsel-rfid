@@ -21,7 +21,6 @@ export class AssetAttributeColumnService {
   get(): Observable<AssetAttributeColumnModel[]> {
     return this.http.get<any>(this.url).pipe(
       tap((res) => {
-        console.log("AssetAttributeColumnModel", res);
         this.gmodels = res;
       })
     );
