@@ -20,6 +20,8 @@ import { RegionsService } from "src/app/shared/services/regions/regions.service"
 import { NotifyService } from "src/app/shared/handler/notify/notify.service";
 import { AssetsRegistrationService } from 'src/app/shared/services/assets-registration/assets-registration.service';
 import { system } from '@amcharts/amcharts4/core';
+import { AssetsLocationService } from 'src/app/shared/services/assets-location/assets-location.service';
+import { AssetsAttributeService } from 'src/app/shared/services/assets-attribute/assets-attribute.service';
 
 export enum SelectionType {
   single = "single",

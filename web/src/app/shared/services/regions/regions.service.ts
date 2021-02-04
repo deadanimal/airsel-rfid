@@ -21,7 +21,6 @@ export class RegionsService {
   post(body: Form): Observable<RegionsModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
-        console.log("RegionsModel", res);
       })
     );
   }
@@ -29,7 +28,6 @@ export class RegionsService {
   get(): Observable<RegionsModel[]> {
     return this.http.get<any>(this.url).pipe(
       tap((res) => {
-        console.log("RegionsModel", res);
         this.rmodels = res;
       })
     );
@@ -39,7 +37,6 @@ export class RegionsService {
     let urlID = this.url + id + "/";
     return this.http.get<RegionsModel>(urlID).pipe(
       tap((res: RegionsModel) => {
-        console.log("RegionsModel", res);
         this.rmodel = res;
       })
     );
@@ -48,7 +45,6 @@ export class RegionsService {
   update(body: Form): Observable<RegionsModel> {
     return this.http.patch<RegionsModel>(this.url, body).pipe(
       tap((res) => {
-        console.log("RegionsModel", res);
       })
     );
   }
@@ -56,7 +52,6 @@ export class RegionsService {
   delete(id: string): Observable<any> {
     return this.http.delete(this.url + id + "/").pipe(
       tap((res) => {
-        console.log("RegionsModel", res);
       })
     );
   }
@@ -65,7 +60,6 @@ export class RegionsService {
     let urlFilter = this.url + "?" + field + "/";
     return this.http.get<RegionsModel[]>(urlFilter).pipe(
       tap((res) => {
-        console.log("RegionsModel", res);
       })
     );
   }

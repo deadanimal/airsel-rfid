@@ -21,7 +21,6 @@ export class AssetsRegistrationService {
   post(body): Observable<AssetsRegistrationModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
       })
     );
   }
@@ -29,7 +28,6 @@ export class AssetsRegistrationService {
   get(): Observable<AssetsRegistrationModel[]> {
     return this.http.get<any>(this.url).pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
         this.amodels = res;
       })
     );
@@ -39,7 +37,6 @@ export class AssetsRegistrationService {
     let NewUrl: string = environment.baseUrl + "v1/asset-registration/approved_list/";
     return this.http.get<any>(NewUrl).pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
         this.amodels = res;
       })
     );
@@ -49,7 +46,6 @@ export class AssetsRegistrationService {
     let NewUrl: string = environment.baseUrl + "v1/asset-registration/new_register_list/";
     return this.http.get<any>(NewUrl).pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
         this.amodels = res;
       })
     );
@@ -59,7 +55,6 @@ export class AssetsRegistrationService {
     let NewUrl: string = environment.baseUrl + "v1/asset-registration/new_processed_list/";
     return this.http.get<any>(NewUrl).pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
         this.amodels = res;
       })
     );
@@ -68,7 +63,6 @@ export class AssetsRegistrationService {
     let NewUrl: string = environment.baseUrl + "v1/asset-registration/processed_list/";
     return this.http.get<any>(NewUrl).pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
         this.amodels = res;
       })
     );
@@ -78,7 +72,6 @@ export class AssetsRegistrationService {
     let NewUrl: string = environment.baseUrl + "v1/asset-registration/rejected_list/";
     return this.http.get<any>(NewUrl).pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
         this.amodels = res;
       })
     );
@@ -88,7 +81,6 @@ export class AssetsRegistrationService {
     let urlID = this.url + id + "/";
     return this.http.get<AssetsRegistrationModel>(urlID).pipe(
       tap((res: AssetsRegistrationModel) => {
-        console.log("AssetsRegistrationModel", res);
         this.amodel = res;
       })
     );
@@ -98,7 +90,6 @@ export class AssetsRegistrationService {
     let urlTemp = this.url + id + '/'
     return this.http.patch<AssetsRegistrationModel>(urlTemp, body).pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
       })
     );
   }
@@ -106,7 +97,6 @@ export class AssetsRegistrationService {
   delete(id: string): Observable<any> {
     return this.http.delete(this.url + id + "/").pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
       })
     );
   }
@@ -115,7 +105,6 @@ export class AssetsRegistrationService {
     let urlFilter = this.url + "?" + field + "/";
     return this.http.get<AssetsRegistrationModel[]>(urlFilter).pipe(
       tap((res) => {
-        console.log("AssetsRegistrationModel", res);
       })
     );
   }

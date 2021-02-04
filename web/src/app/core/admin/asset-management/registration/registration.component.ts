@@ -415,132 +415,6 @@ export class RegistrationComponent implements OnInit {
     { value: "WA", name: "Water Analysis" },
     { value: "NA", name: "Not Available" },
   ];
-  // hierarchylevel1s = [
-  //   { value: "CB", name: "Customer Billing Services" },
-  //   { value: "DB", name: "Distribution" },
-  //   { value: "FL", name: "Fleet" },
-  //   { value: "GA", name: "General Admin" },
-  //   { value: "PD", name: "Production" },
-  //   { value: "SD", name: "SCADA" },
-  //   { value: "WQ", name: "Water Quality" },
-  //   { value: "NA", name: "Not Available" },
-  // ];
-  // hierarchylevel3s = [
-  //   { value: "ND", name: "NRW - District Metering Zone" },
-  //   { value: "NT", name: "NRW - Transmission Network" },
-  //   { value: "NW", name: "NRW - Water Balancing Area" },
-  //   { value: "PH", name: "Pump House" },
-  //   { value: "RS", name: "Reservoir" },
-  //   { value: "VD", name: "Valve - Distribution Main" },
-  //   { value: "VT", name: "Valve - Trunk Main" },
-  //   { value: "WT", name: "Water Treatment Plant" },
-  //   { value: "WL", name: "WQ Laboratory Services" },
-  //   { value: "WO", name: "WQ - Online Analyzer" },
-  //   { value: "WR", name: "WQ - River Monitoring Station" },
-  //   { value: "WS", name: "WQ Sampling Station" },
-  //   { value: "NA", name: "Not Available" },
-  // ];
-  // hierarchylevel4s = [
-  //   { value: "NR", name: "NRW" },
-  //   { value: "PH", name: "Pump House" },
-  //   { value: "RS", name: "Reservoir" },
-  //   { value: "TP", name: "Treatment Plant Name" },
-  //   { value: "NA", name: "Not Available" },
-  // ];
-  // hierarchylevel5s = [
-  //   { value: "AS", name: "Aeration System" },
-  //   { value: "BR", name: "Balancing Reservoir" },
-  //   { value: "BD", name: "Buildings" },
-  //   { value: "CD", name: "Chemical Dosing" },
-  //   { value: "CS", name: "Coagulation System" },
-  //   { value: "DT", name: "Draw of Tower" },
-  //   { value: "ES", name: "Earthing System" },
-  //   { value: "EP", name: "Electrical Panel" },
-  //   { value: "ES", name: "Electrical System" },
-  //   { value: "FS", name: "Filtration Process" },
-  //   { value: "FC", name: "Flocculation" },
-  //   { value: "OR", name: "Off River Storage Reservoir" },
-  //   { value: "RW", name: "Raw Water Process" },
-  //   { value: "SP", name: "Sedimentation Process" },
-  //   { value: "SS", name: "Solar System" },
-  //   { value: "ST", name: "Sludge Treament Process" },
-  //   { value: "SW", name: "Settled Water Process" },
-  //   { value: "TI", name: "Tangki Imbang 3MG" },
-  //   { value: "TO", name: "Tangki Imbangan 4MG (OLD)" },
-  //   { value: "TN", name: "Tangki Imbangan 4MG (NEW)" },
-  //   { value: "TS", name: "Telemetry System" },
-  //   { value: "TP", name: "Treatment Process" },
-  //   { value: "TW", name: "Treated Water Process" },
-  //   { value: "WA", name: "Water Analysis" },
-  //   { value: "NA", name: "Not Available" },
-  // ];
-  // hierarchylevel6s = [
-  //   { value: "AP", name: "Actiflo Process" },
-  //   { value: "AC", name: "Activated Carbon Process" },
-  //   { value: "AS", name: "Aeration System" },
-  //   { value: "ES", name: "Alum Process" },
-  //   { value: "BP", name: "Backwash Process" },
-  //   { value: "BR", name: "Balancing Reservoir" },
-  //   { value: "BO", name: "Boat House" },
-  //   { value: "BU", name: "Buildings" },
-  //   { value: "CD", name: "Chemical Dosing" },
-  //   { value: "CM", name: "Chemical Process" },
-  //   { value: "CP", name: "Chlorination Process" },
-  //   { value: "CO", name: "Coagulation Process" },
-  //   { value: "CR", name: "Chemical Room" },
-  //   { value: "CC", name: "Control Centre" },
-  //   { value: "CR", name: "Control Room" },
-  //   { value: "DP", name: "Data Process" },
-  //   { value: "DS", name: "Distrafication" },
-  //   { value: "DO", name: "Draw Off Process" },
-  //   { value: "ES", name: "Earthing System" },
-  //   { value: "EL", name: "Electrical System" },
-  //   { value: "FS", name: "Facilities System" },
-  //   { value: "FP", name: "Filtration Process" },
-  //   { value: "FW", name: "Filtered Water Sampling" },
-  //   { value: "FO", name: "Flocculation Process" },
-  //   { value: "FL", name: "Fluoride Process" },
-  //   { value: "LB", name: "Laboratory" },
-  //   { value: "LP", name: "Lime Process" },
-  //   { value: "OA", name: "Online Analyzer" },
-  //   { value: "PR", name: "Polymer (Residual) Dosing" },
-  //   { value: "PA", name: "Poly Aluminium Chloride Process" },
-  //   { value: "PP", name: "Polymer Process" },
-  //   { value: "PS", name: "Power Supply" },
-  //   { value: "RM", name: "Rapid Mixing" },
-  //   { value: "RE", name: "Residual Emergency Lagoon" },
-  //   { value: "RT", name: "Residual Thickened Pumping Station" },
-  //   { value: "RI", name: "Raw Water Intake System" },
-  //   { value: "RS", name: "Raw Water Pumping System" },
-  //   { value: "RP", name: "Raw Water Process" },
-  //   { value: "RE", name: "Raw Water Pipeline" },
-  //   { value: "RV", name: "Reservoir" },
-  //   { value: "SS", name: "SCADA System" },
-  //   { value: "SD", name: "Sedimentation Process" },
-  //   { value: "SL", name: "Settled Water Process" },
-  //   { value: "SS", name: "Settled Water Sampling" },
-  //   { value: "SW", name: "Settled Water Pumping System" },
-  //   { value: "SB", name: "Sludge Balancing" },
-  //   { value: "ST", name: "Sludge Treament Process" },
-  //   { value: "SQ", name: "Solid Liquid Separation" },
-  //   { value: "SA", name: "Solar System" },
-  //   { value: "SI", name: "Sodium Alumino Silicate Process" },
-  //   { value: "SO", name: "Soda Ash Process" },
-  //   { value: "TA", name: "Tangki Sedit SYABAS" },
-  //   { value: "TE", name: "Telemetry System" },
-  //   { value: "TP", name: "Treated Water Process" },
-  //   { value: "TS", name: "Treated Water Sampling" },
-  //   { value: "TL", name: "Treated Water Pipeline" },
-  //   { value: "TW", name: "Treated Water Pumping System" },
-  //   { value: "TT", name: "Treatment Process" },
-  //   { value: "WA", name: "Water Analysis" },
-  //   { value: "WO", name: "Workshop" },
-  //   { value: "WT", name: "Water Transfer" },
-  //   { value: "WP", name: "Wash Water Process" },
-  //   { value: "WR", name: "Wash Water Recovery" },
-  //   { value: "WS", name: "Wash Water System" },
-  //   { value: "NA", name: "Not Available" },
-  // ];
   typeassets = [];
   categories = [];
   identities = [];
@@ -856,223 +730,12 @@ export class RegistrationComponent implements OnInit {
   assetAttributeGroup: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
-  // thirdFormGroup: FormGroup;
-  // fourthFormGroup: FormGroup;
-  // fifthFormGroup: FormGroup;
-  // sixthFormGroup: FormGroup;
-  // seventhFormGroup: FormGroup;
   validation_messages = [];
   rowData: any
 
   // Asset Attribute Visibility
   assetattributecolumnapi = [];
   assetprimarycolumnselector = [];
-  assetattributevisible = [
-    {
-      "asset_primary_category": "ACTUATOR",
-      "brand": "true",
-      "capacity_size": "true",
-      "closing_torque": "true",
-      "hysteresis": "true",
-      "installation": "true",
-      "manufacturer": "true",
-      "manufacture_part_number": "true",
-      "manufacturer_year": "true",
-      "model": "true",
-      "opening_torque": "true",
-      "power_supply_type": "true",
-      "revolutions_per_minute": "true",
-      "type": "false",
-      "material_type": "false",
-      "valve_pressure_rating": "false",
-      "horse_power": "false",
-      "temperature": "false",
-      "coverage_range": "false",
-      "voltage": "false",
-      "valve_diameter": "false",
-      "top_water_level": "false",
-      "inlet_diameter": "false",
-      "bottom_water_level": "false",
-      "outlet_diameter": "false",
-      "staging_height": "false",
-      "dimention": "false",
-      "environmental_performance": "false",
-      "no_of_channel": "false",
-      "frequency": "false",
-      "vehicle_chassis_number": "false",
-      "vehicle_engine_capacity": "false",
-      "vehicle_engine_number": "false",
-      "vehicle_insurance_cover_note_number": "false",
-      "vehicle_insurance_date_period_from": "false",
-      "vehicle_insurance_no_claim_discount": "false",
-      "vehicle_insurance_total_premium": "false",
-      "vehicle_insurance_policy_type": "false",
-      "vehicle_insurance_sum_insured": "false",
-      "vehicle_insurance_date_period_to": "false",
-      "vehicle_insurance_auto_windscreen_insured": "false",
-      "vehicle_model": "false",
-      "vehicle_owner_status": "false",
-      "vehicle_puspakom_expired_date": "false",
-      "vehicle_puspakom_date_inspection": "false",
-      "vehicle_register_date": "false",
-      "vehicle_registration_owner": "false",
-      "vehicle_roadtax_rate": "false",
-      "vehicle_roadtax_renew_date": "false",
-      "vehicle_insurance_vendor": "false",
-      "vehicle_seating_capacity": "false",
-      "vehicle_spad_permit_date_period_from": "false",
-      "vehicle_spad_no_license_operator": "false",
-      "vehicle_spad_permit_date_period_to": "false",
-      "motor_current": "false",
-      "insulation": "false",
-      "no_of_phases": "false",
-      "communication_protocol": "false",
-      "flow_rate": "false",
-      "pump_head": "false",
-      "no_of_stage": "false",
-      "infrastructure_status_reason": "false",
-      "infrastructure_status": "false",
-      "legal_name": "false",
-      "source_from": "false",
-      "supply_location": "false",
-    },
-    {
-      "asset_primary_category": "AIR VALVE",
-      "brand": "true",
-      "capacity_size": "true",
-      "closing_torque": "false",
-      "hysteresis": "false",
-      "installation": "true",
-      "manufacturer": "true",
-      "manufacture_part_number": "true",
-      "manufacturer_year": "true",
-      "model": "true",
-      "opening_torque": "false",
-      "power_supply_type": "false",
-      "revolutions_per_minute": "false",
-      "type": "true",
-      "material_type": "true",
-      "valve_pressure_rating": "true",
-      "horse_power": "false",
-      "temperature": "false",
-      "coverage_range": "false",
-      "voltage": "false",
-      "valve_diameter": "true",
-      "top_water_level": "false",
-      "inlet_diameter": "false",
-      "bottom_water_level": "false",
-      "outlet_diameter": "false",
-      "staging_height": "false",
-      "dimention": "false",
-      "environmental_performance": "false",
-      "no_of_channel": "false",
-      "frequency": "false",
-      "vehicle_chassis_number": "false",
-      "vehicle_engine_capacity": "false",
-      "vehicle_engine_number": "false",
-      "vehicle_insurance_cover_note_number": "false",
-      "vehicle_insurance_date_period_from": "false",
-      "vehicle_insurance_no_claim_discount": "false",
-      "vehicle_insurance_total_premium": "false",
-      "vehicle_insurance_policy_type": "false",
-      "vehicle_insurance_sum_insured": "false",
-      "vehicle_insurance_date_period_to": "false",
-      "vehicle_insurance_auto_windscreen_insured": "false",
-      "vehicle_model": "false",
-      "vehicle_owner_status": "false",
-      "vehicle_puspakom_expired_date": "false",
-      "vehicle_puspakom_date_inspection": "false",
-      "vehicle_register_date": "false",
-      "vehicle_registration_owner": "false",
-      "vehicle_roadtax_rate": "false",
-      "vehicle_roadtax_renew_date": "false",
-      "vehicle_insurance_vendor": "false",
-      "vehicle_seating_capacity": "false",
-      "vehicle_spad_permit_date_period_from": "false",
-      "vehicle_spad_no_license_operator": "false",
-      "vehicle_spad_permit_date_period_to": "false",
-      "motor_current": "false",
-      "insulation": "false",
-      "no_of_phases": "false",
-      "communication_protocol": "false",
-      "flow_rate": "false",
-      "pump_head": "false",
-      "no_of_stage": "false",
-      "infrastructure_status_reason": "false",
-      "infrastructure_status": "false",
-      "legal_name": "false",
-      "source_from": "false",
-      "supply_location": "false",
-    },
-    {
-      "asset_primary_category": "AIR VALVE",
-      "brand": "true",
-      "capacity_size": "true",
-      "closing_torque": "false",
-      "hysteresis": "false",
-      "installation": "true",
-      "manufacturer": "true",
-      "manufacture_part_number": "true",
-      "manufacturer_year": "true",
-      "model": "true",
-      "opening_torque": "false",
-      "power_supply_type": "false",
-      "revolutions_per_minute": "true",
-      "type": "false",
-      "material_type": "false",
-      "valve_pressure_rating": "false",
-      "horse_power": "true",
-      "temperature": "true",
-      "coverage_range": "false",
-      "voltage": "true",
-      "valve_diameter": "false",
-      "top_water_level": "false",
-      "inlet_diameter": "false",
-      "bottom_water_level": "false",
-      "outlet_diameter": "false",
-      "staging_height": "false",
-      "dimention": "false",
-      "environmental_performance": "false",
-      "no_of_channel": "false",
-      "frequency": "true",
-      "vehicle_chassis_number": "false",
-      "vehicle_engine_capacity": "false",
-      "vehicle_engine_number": "false",
-      "vehicle_insurance_cover_note_number": "false",
-      "vehicle_insurance_date_period_from": "false",
-      "vehicle_insurance_no_claim_discount": "false",
-      "vehicle_insurance_total_premium": "false",
-      "vehicle_insurance_policy_type": "false",
-      "vehicle_insurance_sum_insured": "false",
-      "vehicle_insurance_date_period_to": "false",
-      "vehicle_insurance_auto_windscreen_insured": "false",
-      "vehicle_model": "false",
-      "vehicle_owner_status": "false",
-      "vehicle_puspakom_expired_date": "false",
-      "vehicle_puspakom_date_inspection": "false",
-      "vehicle_register_date": "false",
-      "vehicle_registration_owner": "false",
-      "vehicle_roadtax_rate": "false",
-      "vehicle_roadtax_renew_date": "false",
-      "vehicle_insurance_vendor": "false",
-      "vehicle_seating_capacity": "false",
-      "vehicle_spad_permit_date_period_from": "false",
-      "vehicle_spad_no_license_operator": "false",
-      "vehicle_spad_permit_date_period_to": "false",
-      "motor_current": "true",
-      "insulation": "true",
-      "no_of_phases": "true",
-      "communication_protocol": "false",
-      "flow_rate": "false",
-      "pump_head": "false",
-      "no_of_stage": "false",
-      "infrastructure_status_reason": "false",
-      "infrastructure_status": "false",
-      "legal_name": "false",
-      "source_from": "false",
-      "supply_location": "false",
-    }
-  ];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -1413,29 +1076,39 @@ export class RegistrationComponent implements OnInit {
           // console.log("asset primary uina =",assetprimer);
           tempData.push(assetprimer)
         })
-        this.assetattributecolumnapi = tempData
-        let assetprimary1 = row.asset_primary_category
+        this.assetattributecolumnapi = tempData;
+        let assetprimary1 = row.asset_primary_category;
         let assetprimary2 = this.assetattributecolumnapi.map(a => a.asset_type_id);
         // let result = this.map(({ foo }) => foo)
 
 
-        this.rowData = ''
-        this.rowData = row
+        this.rowData = '';
+        this.rowData = row;
 
 
         if (assetprimary2.indexOf(assetprimary1) !== -1) {
-          console.log("there is match");
           this.assetprimary = this.assetattributecolumnapi.filter(function (primary) {
             return primary.asset_type_id == assetprimary1;
           })
 
         this.assetprimaryshow = Object.values(this.assetprimary)
-        console.log("assetprimary = ", this.assetprimaryshow)
+
+        let assetattributekeynum = Object.values(this.assetprimaryshow[0])
+        let assetname = Object.keys(this.assetprimaryshow[0])
+
+        // this.assetprimaryshow[0].forEach(element => {
+        //   if (assetattributekeynum == false) {
+        //     console.log("test success")
+        //     let assetattributeval2 = (<HTMLInputElement>document.getElementById(assetname[element])).value
+        //     assetattributeval2 = null
+        //   }
+        // });
 
 
         }
         else {
           console.log("there is no match");
+          this.assetprimaryshow[0] = this.assetprimaryselectorshowdefault
         }
         this.ModalAssetAttribute = this.modalService.show(
           modalNotification,
@@ -1642,7 +1315,6 @@ export class RegistrationComponent implements OnInit {
         counter++
       }
     }
-    console.log('counter = ', counter)
     if (counter > 2) {
       this.tableShow1 = true
     }
@@ -1840,12 +1512,10 @@ export class RegistrationComponent implements OnInit {
     let tempData = []
     this.assetsRegistrationService.getNewRegList().subscribe(
       (res) => {
-        console.log("res all data", res);
         res.forEach(function (val) {
           val['isTick'] = false
           tempData.push(val)
         })
-        console.log('tempData = ', tempData)
         this.tableTemp1 = tempData
       },
       error => {
@@ -1870,19 +1540,16 @@ export class RegistrationComponent implements OnInit {
        // console.log("asset = ",assetprimaryregister2);
 
        if (assetprimaryregister2.indexOf(assetprimaryregister1) !== -1) {
-         console.log("there is match");
          this.assetprimaryselector = this.assetprimarycolumnselector.filter(function (primary) {
            return primary.asset_type_id == assetprimaryregister1;
          })
 
        this.assetprimaryselectorshow = Object.values(this.assetprimaryselector)
-       console.log("assetprimaryselectshow = ", this.assetprimaryselectorshow)
 
 
        }
        else {
          this.assetprimaryselectorshow = this.assetprimaryselectorshowdefault
-         console.log("there is no match");
        }
      },
      error => {
@@ -2024,7 +1691,7 @@ export class RegistrationComponent implements OnInit {
         for (var key in this.resOnkeyData) {
           // console.log('-----------')
           // console.log(this.resOnkeyData[key]);
-          if (this.resOnkeyData[key] == '') {
+          if (this.resOnkeyData[key] !== null) {
             updateStatus = 'no'
             console.log('+++++++++++++')
             // console.log('----- qweqweqwe -----', key)

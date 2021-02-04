@@ -385,7 +385,8 @@ class AssetBadgeFormatViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = AssetBadgeFormatSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'asset_primary_category'
+        'asset_primary_category',
+        'status'
     ]
 
     def get_permissions(self):
