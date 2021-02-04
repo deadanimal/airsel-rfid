@@ -21,7 +21,6 @@ export class AssetsService {
   post(body): Observable<AssetsModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
-        console.log("AssetsModel", res);
       })
     );
   }
@@ -29,7 +28,6 @@ export class AssetsService {
   get(): Observable<AssetsModel[]> {
     return this.http.get<any>(this.url).pipe(
       tap((res) => {
-        console.log("AssetsModel", res);
         this.amodels = res;
       })
     );
@@ -39,7 +37,6 @@ export class AssetsService {
     let urlID = this.url + id + "/";
     return this.http.get<AssetsModel>(urlID).pipe(
       tap((res: AssetsModel) => {
-        console.log("AssetsModel", res);
         this.amodel = res;
       })
     );
@@ -49,7 +46,6 @@ export class AssetsService {
     let urlTemp = this.url + id + '/'
     return this.http.patch<AssetsModel>(urlTemp, body).pipe(
       tap((res) => {
-        console.log("AssetsModel", res);
       })
     );
   }
@@ -57,7 +53,6 @@ export class AssetsService {
   delete(id: string): Observable<any> {
     return this.http.delete(this.url + id + "/").pipe(
       tap((res) => {
-        console.log("AssetsModel", res);
       })
     );
   }
@@ -66,7 +61,6 @@ export class AssetsService {
     let urlFilter = this.url + "?" + field + "/";
     return this.http.get<AssetsModel[]>(urlFilter).pipe(
       tap((res) => {
-        console.log("AssetsModel", res);
       })
     );
   }

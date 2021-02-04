@@ -1,1 +1,237 @@
-<p>dashboard works!</p>
+<div class="header pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-dark d-inline-block mb-0">
+            Inventory Management
+          </h6>
+
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">
+                  <i class="fas fa-boxes text-dark"> </i>
+                </a>
+              </li>
+            </ol>
+          </nav>
+
+          <ng-template #popTemplate>
+            <h4 class="text-center">Information</h4>
+            <small class="text-justify">User able to register new asset in bulk by upload excel file. The
+              new data will be listed below for user preview and any error will
+              be highlighted for user actions. The registration will be pass to
+              admin for review before adding into the database.</small>
+          </ng-template>
+          <button type="button" class="btn btn-icon btn-default btn-sm ml-md-4" [popover]="popTemplate"
+            placement="right" [outsideClick]="true">
+            <span class="btn-inner--icon"><i class="fas fa-info-circle"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-3 col-md-6">
+    <div class="card card-stats">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h6 class="card-title text-uppercase text-muted mb-0">
+              Available Stock Quantity
+            </h6>
+
+            <span class="h2 font-weight-bold mb-0">
+              350,897
+            </span>
+          </div>
+
+          <div class="col-auto">
+            <div class="icon icon-shape bg-white text-green rounded-circle shadow">
+              <i class="fas fa-tasks"> </i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="col-xl-3 col-md-6">
+  <div class="card card-stats">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <h6 class="card-title text-uppercase text-muted mb-0">
+            Expected Deliveries to Receive
+          </h6>
+
+          <span class="h3 font-weight-bold mb-0">2,356</span>
+        </div>
+
+        <div class="col-auto">
+          <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
+            <i class="fas fa-spinner"> </i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xl-3 col-md-6">
+  <div class="card card-stats">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <h6 class="card-title text-uppercase text-muted mb-0">
+            Last Stock Count Date
+          </h6>
+
+          <span class="h2 font-weight-bold mb-0">
+            29 May 2020
+          </span>
+        </div>
+
+        <div class="col-auto">
+          <div class="icon icon-shape bg-white text-red rounded-circle shadow">
+            <i class="fas fa-stopwatch"> </i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xl-3 col-md-6">
+  <div class="card card-stats">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <h6 class="card-title text-uppercase text-muted mb-0">
+            Next Stock Count Date
+          </h6>
+
+          <span class="h2 font-weight-bold mb-0">
+            01 June 2020
+          </span>
+        </div>
+
+        <div class="col-auto">
+          <div class="icon icon-shape bg-white text-indigo rounded-circle shadow">
+            <i class="fas fa-boxes"> </i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- <div class="container-fluid mt--6"> -->
+  <div class="row">
+    <div class="col-lg-8 col-xs-12">
+      <div class="card">
+        <div class="card-header py-3 bg-secondary">
+          <h5 class="text-muted ls-1 mb-0">Chart</h5>
+          <h5 class="h3 mb-0">Deliveries Received</h5>
+        </div>
+        <div class="card-body p-0">
+          <div id="chartdivone" style="width: 100%; height: 400px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-xs-12">
+      <div class="card">
+        <div class="card-header py-3 bg-secondary">
+          <h5 class="text-muted ls-1 mb-0">Filter</h5>
+          <h5 class="h3 mb-0">Select store location</h5>
+        </div>
+        <div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let storeLocation of storeLocations">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [id]="storeLocation.id" />
+                <label class="custom-control-label" [for]="storeLocation.id">{{
+                  storeLocation.title
+                }}</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-xs-12">
+      <div class="card">
+        <div class="card-header py-3 bg-secondary">
+          <h5 class="text-muted ls-1 mb-0">Chart</h5>
+          <h5 class="h3 mb-0">Stock Value Stored</h5>
+        </div>
+        <div class="card-body p-0">
+          <div id="chartdivtwo" style="height: 500px; width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-xs-12">
+      <div class="card">
+        <div class="card-header py-3 bg-secondary">
+          <h5 class="text-muted ls-1 mb-0">Chart</h5>
+          <h5 class="h3 mb-0">Stock Quantity Stored Based on Category</h5>
+        </div>
+        <div class="card-body p-0">
+          <div id="chartdivmodi" style="height: 500px; width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- </div> -->
+
+
+<!-- <div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-12 col-xl-12 mb-4">
+      <div class="row">
+        <div class="col-12 col-lg-6 mb-0">
+          <div class="card border-light shadow-sm">
+            <div class="card-header border-bottom border-light d-flex justify-content-between">
+              <h2 class="h5 mb-0">Outstanding Revenue</h2>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush list my--3">
+                <li class="list-group-item px-0">
+                  <div class="row align-items-center">
+                    <div class="card-body">
+                      <div class="row d-block d-xl-flex align-items-center">
+                        <center><div class="col-12 col-xl-7 px-xl-0">
+                          <div class="d-none d-sm-block">
+                            <h3 class="mb-1">RM5,393.86</h3>
+                          </div>
+                          <div class="small mt-2">
+                            <span class="text-success font-weight-bold">total outstanding</span>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6 mb-0">
+            <div class="card border-light shadow-sm">
+              <div class="card-body p-2">
+                <div id="chartdiv6"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
