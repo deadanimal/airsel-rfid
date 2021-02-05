@@ -119,7 +119,7 @@ class Asset(models.Model):
     asset_id = models.CharField(max_length=100, blank=True )
     asset_type = models.CharField(max_length=100, blank=True )
     transaction_type = models.CharField(max_length=100, blank=True )
-    description = models.CharField(max_length=100, blank=True)
+    description = models.CharField(max_length=225, blank=True)
     bo = models.CharField(max_length=100, blank=True)
     bo_status = models.CharField(max_length=100, blank=True)
     owning_access_group = models.CharField(max_length=100, null=True, blank=True)
