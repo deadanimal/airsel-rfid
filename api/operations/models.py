@@ -372,8 +372,8 @@ class AssetLocationAssetListServiceHistories(models.Model):
     failure_component = models.CharField(max_length=100, blank=True)
     failure_root_cause = models.CharField(max_length=100, blank=True)
     question = models.ManyToManyField(ServiceHistoriesQuestions, blank=True)
-
     svc_hist_type_req_fl = models.CharField(max_length=100, blank=True)
+    downtime_reason = models.CharField(max_length=100, blank=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -425,9 +425,9 @@ class WorkOrderActivityCompletion(models.Model):
     requestor_id = models.CharField(max_length=100, blank=True)
     required_by_dt = models.CharField(max_length=100, blank=True)
     work_priority_flg = models.CharField(max_length=100, blank=True)
-    descr100 = models.CharField(max_length=100, blank=True)
-    descrlong = models.CharField(max_length=100, blank=True)
-    w1_descr100_upr = models.CharField(max_length=100, blank=True)
+    descr100 = models.CharField(max_length=225, blank=True)
+    descrlong = models.CharField(max_length=225, blank=True)
+    w1_descr100_upr = models.CharField(max_length=225, blank=True)
     held_for_parts_flg = models.CharField(max_length=100, blank=True)
     anniversary_value = models.CharField(max_length=100, blank=True)
     emergency_flg = models.CharField(max_length=100, blank=True)
@@ -457,6 +457,7 @@ class WorkOrderActivityCompletion(models.Model):
     maint_sched_id = models.CharField(max_length=100, blank=True)
     maint_trigger_id = models.CharField(max_length=100, blank=True)
     status = models.CharField(max_length=100, blank=True)
+    owning_organization = models.CharField(max_length=100, blank=True)
 
     submitted_datetime = models.DateTimeField(auto_now=True)
     created_date = models.DateTimeField(auto_now_add=True)
