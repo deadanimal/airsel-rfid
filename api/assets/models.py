@@ -123,7 +123,7 @@ class Asset(models.Model):
     bo = models.CharField(max_length=100, blank=True)
     bo_status = models.CharField(max_length=100, blank=True)
     owning_access_group = models.CharField(max_length=100, null=True, blank=True)
-    effective_datetime = models.DateTimeField(auto_now=True)
+    effective_datetime = models.DateTimeField(null=True)
     node_id = models.CharField(max_length=100, blank=True)
     badge_no = models.CharField(max_length=100, blank=True)
     serial_no = models.CharField(max_length=100, blank=True)
