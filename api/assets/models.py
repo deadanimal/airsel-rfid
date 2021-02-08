@@ -82,7 +82,7 @@ class AssetMeasurementType(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     measurement_type = models.CharField(max_length=100, blank=True )
-
+    action_type = models.CharField(max_length=100, blank=True )
     description = models.CharField(max_length=100, blank=True )
     measurement_identifie = models.CharField(max_length=100, blank=True )
 
@@ -101,7 +101,7 @@ class AssetAttribute(models.Model):
     characteristic_type = models.CharField(max_length=100, blank=True )
     adhoc_value = models.CharField(max_length=100, blank=True )
     characteristic_value = models.CharField(max_length=100, null=True)
-
+    action_type = models.CharField(max_length=100, blank=True )
     characteristic_type_name = models.CharField(max_length=100, null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
