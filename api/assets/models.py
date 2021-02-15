@@ -151,6 +151,7 @@ class Asset(models.Model):
 
     owning_access_group_nam = models.CharField(max_length=100, blank=True)
     specification = models.CharField(max_length=100, blank=True)
+    hex_code = models.CharField(max_length=100, blank=True)
 
     submitted_datetime = models.DateTimeField(null=True, default=None)
     registered_datetime = models.DateTimeField(null=True, default=None)

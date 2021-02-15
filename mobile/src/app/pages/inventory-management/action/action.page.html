@@ -1,0 +1,104 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="homePage('/technical/tabs/tab1')">
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold"> Action </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="clickLogout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          <!-- {{ notificationService.totalnotificationbyuser }} -->
+          10
+        </ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center" style="background-color: blueviolet;">
+            <img src="../../../../assets/inventory/stock-receive.svg" color="success" style="width: 50%;"
+              (click)="goToPage('/inventory-management/stock-receive')" />
+            <div class="ion-padding-top" style="color: black;" (click)="stockReceiveInfo()">Stock Receive <br>/ Return
+              <ion-icon name="information-circle">
+              </ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center" style="background-color: cadetblue;">
+            <img src="../../../../assets/inventory/stock-issuance.svg" style="width: 50%;"
+              (click)="goToPage('/inventory-management/stock-issuance')" />
+            <div class="ion-padding-top" style="color: black;" (click)="stockIssuanceInfo()">Stock Issuance <br>/
+              Reversal <ion-icon name="information-circle"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center" style="background-color: chartreuse;">
+            <img src="../../../../assets/inventory/return.svg" style="width: 50%;"
+              (click)="goToPage('/inventory-management/interwarehouse-transfer')" />
+            <div class="ion-padding-top" style="color: black;" (click)="returnInfo()">Interwarehouse <br> Transfer
+              <ion-icon name="information-circle"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center" style="background-color: coral;">
+            <img src="../../../../assets/inventory/stock-count.svg" style="width: 50%;"
+              (click)="goToPage('/inventory-management/stock-count')" />
+            <div class="ion-padding-top" style="color: black;" (click)="stockCountInfo()">Stock <br> Count <ion-icon
+                name="information-circle">
+              </ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center" style="background-color: aqua;">
+            <img src="../../../../assets/inventory/dispose.svg" style="width: 50%;"
+              (click)="goToPage('/inventory-management/stock-disposal')" />
+            <div class="ion-padding-top" style="color: black;" (click)="disposeInfo()">Stock <br> Disposal <ion-icon
+                name="information-circle">
+              </ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-content class="ion-text-center" style="background-color: thistle;">
+            <img src="../../../../assets/inventory/dispose.svg" style="width: 50%;"
+              (click)="goToPage('/inventory-management/subinventory-transfer')" />
+            <div class="ion-padding-top" style="color: black;" (click)="disposeInfo()">SubInventory <br> Transfer
+              <ion-icon name="information-circle"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

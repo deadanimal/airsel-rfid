@@ -1,0 +1,138 @@
+<ion-header>
+
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="homePage('/technical/tabs/tab1')">
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold"> Inventory </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="clickLogout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          <!-- {{ notificationService.totalnotificationbyuser }} -->
+          10
+        </ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar class="ion-no-border toolbar-core">
+    <ion-segment [(ngModel)]="type">
+      <ion-segment-button value="toreceive">
+        <ion-label style="font-weight: bold;color:black;">To Receive</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="delivered">
+        <ion-label style="font-weight: bold;color:black;">Delivered</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="type">
+    <div *ngSwitchCase="'toreceive'">
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-card>
+            <ion-card-content>
+              <ion-row>
+                <ion-col size="9">
+                  <p>Purchase Order 3231414</p>
+                  <p>Expected Date Of Delivery </p>
+                  <p>on 20 Apr 2021</p>
+                </ion-col>
+                <ion-col size="3" style="padding-top: 15px;" class="ion-text-right">
+                  <ion-button (click)="openListItem()">List</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-card>
+            <ion-card-content>
+              <ion-row>
+                <ion-col size="9">
+                  <p>Purchase Order 5265461</p>
+                  <p>Expected Date Of Delivery </p>
+                  <p>on 20 Apr 2021</p>
+                </ion-col>
+                <ion-col size="3" style="padding-top: 15px;" class="ion-text-right">
+                  <ion-button (click)="openListItem()">List</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-card>
+            <ion-card-content>
+              <ion-row>
+                <ion-col size="9">
+                  <p>Purchase Order 5265461</p>
+                  <p>Expected Date Of Delivery </p>
+                  <p>on 20 Apr 2021</p>
+                </ion-col>
+                <ion-col size="3" style="padding-top: 15px;" class="ion-text-right">
+                  <ion-button (click)="openListItem()">List</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div *ngSwitchCase="'delivered'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" class="ion-text-center">
+            <ion-item>
+              <ion-label position="stacked">Start Date</ion-label>
+              <ion-datetime displayFormat="DD-MM-YYYY" placeholder="Select date"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6" class="ion-text-center">
+            <ion-item>
+              <ion-label position="stacked">End Date</ion-label>
+              <ion-datetime displayFormat="DD-MM-YYYY" placeholder="Select date"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-card>
+        <ion-card-content>
+          <p>Purchase Order 3231414</p>
+          <p>Placed on 04 Apr 2020</p>
+          <p>Paid on 04 Apr 2020</p>
+          <p>Expected Date of Delivery on 20 Apr 2020</p>
+          <hr />
+          <p>CONTACTOR - 32A 240V 4 POLES (SCHNEIDER)</p>
+          <p>EACT000005</p>
+          <p>QTY 2</p>
+          <hr />
+          <p>CONTACTOR (MAGNETIC) - 3TF54 22-OXL2 132kW (SIEMENS)</p>
+          <p>EACT010010</p>
+          <p>QTY 10</p>
+          <hr />
+          <p>CONTACTOR (MAGNETIC) - LC1D50M7</p>
+          <p>EACT010018</p>
+          <p>QTY 1</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
