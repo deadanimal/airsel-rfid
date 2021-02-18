@@ -1120,18 +1120,6 @@ export class RegistrationComponent implements OnInit {
             console.error("err", error);
           }
         )
-        // this.assetAttribute.forEach(function (lll, mm) {
-
-    // this.assetsRegistrationService.getNewRegList().subscribe(
-    //   (res) => {
-    //     console.log("res all data", res);
-    //     res.forEach(function (val) {
-    //       val['isTick'] = false
-    //       tempData.push(val)
-    //     })
-    //     console.log('tempData = ', tempData)
-    //     this.tableTemp1 = tempData
-
 
   }
 

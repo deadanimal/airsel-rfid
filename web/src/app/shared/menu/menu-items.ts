@@ -116,18 +116,19 @@ export const IROUTES: RouteInfo[] = [
     isCollapsed: true,
     children: [
       {
-        path: 'stock-count',
-        title: 'Stock Count',
-        type: 'sub',
-        isCollapsed: true,
-        children: [
-          { path: 'report', title: 'Report', type: 'link' },
-          { path: 'variance', title: 'Variance', type: 'link' },
-        ]
+        path: 'stock-count',title: 'Stock Count', type: 'link'
+        // type: 'sub',
+        // isCollapsed: true,
+        // children: [
+        //   { path: 'report', title: 'Report', type: 'link' },
+        //   { path: 'variance', title: 'Variance', type: 'link' },
+        // ]
       },
       { path: 'stock-receive-return', title: 'Stock Receive/Return', type: 'link' },
       { path: 'issuance-reversal', title: 'Stock Issuannce/Reversal', type: 'link' },
       { path: 'interwarehouse-transfer', title: 'Interwarehouse Transfer', type: 'link' },
+      { path: 'subinventory-transfer', title: 'Sub-Inventory Transfer', type: 'link'},
+      { path: 'transaction-upload', title: 'Transaction Upload', type: 'link'},
       { path: 'disposal', title: 'Stock Disposal', type: 'link' }
     ]
   },

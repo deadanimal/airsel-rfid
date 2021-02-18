@@ -35,6 +35,8 @@ import { DisposalComponent } from './disposal/disposal.component';
 import { ScReportComponent } from './sc-report/sc-report.component';
 import { ScVarianceComponent } from './sc-variance/sc-variance.component';
 import { InventoryManagementRoutes } from './inventory-management.routing';
+import { SubinventoryTransferComponent } from './subinventory-transfer/subinventory-transfer.component';
+import { TransactionUploadComponent } from './transaction-upload/transaction-upload.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -47,7 +49,9 @@ import { InventoryManagementRoutes } from './inventory-management.routing';
     InterwarehouseTransferComponent,
     DisposalComponent,
     ScReportComponent,
-    ScVarianceComponent
+    ScVarianceComponent,
+    SubinventoryTransferComponent,
+    TransactionUploadComponent,
   ],
   imports: [
     NgxSpinnerModule,
