@@ -55,22 +55,24 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private toastr: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.menu.enable(false, "menuNotification");
 
     this.validations_form = this.formBuilder.group({
       username: new FormControl(
-        "hafez.azman@airselangor.com",
+        // "hafez.azman@airselangor.com", /// technician 
+        "testing", // inventory
         Validators.compose([
           Validators.required,
           // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
-          Validators.email,
+          // Validators.email,
         ])
       ),
       password: new FormControl(
-        "airselrfid@2020",
+        // "airselrfid@2020",
+        "PabloEscobar",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),
     });
@@ -81,9 +83,10 @@ export class LoginPage implements OnInit {
     this.authService
       .obtainToken(this.validations_form.value, this.isLogin)
       .subscribe(
-        () => {
+        (res) => {
           // Success
           this.isLoading = false;
+          console.log('res = ', res)
         },
         () => {
           // Failed
@@ -145,6 +148,9 @@ export class LoginPage implements OnInit {
     } else if (userType === "SS") {
       // store supervisor
       this.router.navigate(["/store-supervisor/tabs/tab1"]);
+    } else if (userType === "IV") {
+      // inventory
+      this.router.navigate(["/inventory-management/tabs/tab1"]);
     } else {
       this.wrongCredential();
     }
@@ -167,7 +173,7 @@ export class LoginPage implements OnInit {
         {
           text: "Cancel",
           role: "cancel",
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: "Submit",

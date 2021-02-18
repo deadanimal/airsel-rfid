@@ -82,7 +82,7 @@ class AssetMeasurementType(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     measurement_type = models.CharField(max_length=100, blank=True )
-
+    action_type = models.CharField(max_length=100, blank=True )
     description = models.CharField(max_length=100, blank=True )
     measurement_identifie = models.CharField(max_length=100, blank=True )
 
@@ -101,7 +101,7 @@ class AssetAttribute(models.Model):
     characteristic_type = models.CharField(max_length=100, blank=True )
     adhoc_value = models.CharField(max_length=100, blank=True )
     characteristic_value = models.CharField(max_length=100, null=True)
-
+    action_type = models.CharField(max_length=100, blank=True )
     characteristic_type_name = models.CharField(max_length=100, null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
@@ -119,11 +119,11 @@ class Asset(models.Model):
     asset_id = models.CharField(max_length=100, blank=True )
     asset_type = models.CharField(max_length=100, blank=True )
     transaction_type = models.CharField(max_length=100, blank=True )
-    description = models.CharField(max_length=100, blank=True)
+    description = models.CharField(max_length=225, blank=True)
     bo = models.CharField(max_length=100, blank=True)
     bo_status = models.CharField(max_length=100, blank=True)
     owning_access_group = models.CharField(max_length=100, null=True, blank=True)
-    effective_datetime = models.DateTimeField(auto_now=True)
+    effective_datetime = models.DateTimeField(null=True)
     node_id = models.CharField(max_length=100, blank=True)
     badge_no = models.CharField(max_length=100, blank=True)
     serial_no = models.CharField(max_length=100, blank=True)
@@ -151,6 +151,10 @@ class Asset(models.Model):
 
     owning_access_group_nam = models.CharField(max_length=100, blank=True)
     specification = models.CharField(max_length=100, blank=True)
+    hex_code = models.CharField(max_length=100, blank=True)
+
+    field_1 = models.CharField(max_length=100, blank=True)
+    field_2 = models.CharField(max_length=100, blank=True)
 
     submitted_datetime = models.DateTimeField(null=True, default=None)
     registered_datetime = models.DateTimeField(null=True, default=None)
@@ -488,6 +492,9 @@ class AssetLocation(models.Model):
     main_contact_name = models.CharField(max_length=100, blank=True)
     maintenance_manager_nam = models.CharField(max_length=100, blank=True)
     planner_name = models.CharField(max_length=100, blank=True)
+
+    field_1 = models.CharField(max_length=100, blank=True)
+    field_2 = models.CharField(max_length=100, blank=True)
 
     submitted_datetime = models.DateTimeField(auto_now=True)
     created_date = models.DateTimeField(auto_now_add=True)
