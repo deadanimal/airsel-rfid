@@ -459,6 +459,9 @@ class WorkOrderActivityCompletion(models.Model):
     status = models.CharField(max_length=100, blank=True)
     owning_organization = models.CharField(max_length=100, blank=True)
 
+    field_1 = models.CharField(max_length=100, blank=True)
+    field_2 = models.CharField(max_length=100, blank=True)
+
     submitted_datetime = models.DateTimeField(auto_now=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
