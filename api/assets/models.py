@@ -153,6 +153,9 @@ class Asset(models.Model):
     specification = models.CharField(max_length=100, blank=True)
     hex_code = models.CharField(max_length=100, blank=True)
 
+    field_1 = models.CharField(max_length=100, blank=True)
+    field_2 = models.CharField(max_length=100, blank=True)
+
     submitted_datetime = models.DateTimeField(null=True, default=None)
     registered_datetime = models.DateTimeField(null=True, default=None)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -489,6 +492,9 @@ class AssetLocation(models.Model):
     main_contact_name = models.CharField(max_length=100, blank=True)
     maintenance_manager_nam = models.CharField(max_length=100, blank=True)
     planner_name = models.CharField(max_length=100, blank=True)
+
+    field_1 = models.CharField(max_length=100, blank=True)
+    field_2 = models.CharField(max_length=100, blank=True)
 
     submitted_datetime = models.DateTimeField(auto_now=True)
     created_date = models.DateTimeField(auto_now_add=True)
