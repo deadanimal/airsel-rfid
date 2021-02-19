@@ -324,7 +324,7 @@ class QuestionsValidValue(models.Model):
     seq_valid = models.CharField(max_length=100, blank=True)
     code_valid = models.CharField(max_length=100, blank=True)
     short_text_valid = models.CharField(max_length=100, blank=True)
-    text_valid = models.CharField(max_length=100, blank=True)
+    text_valid = models.CharField(max_length=250, blank=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -348,7 +348,7 @@ class ServiceHistoriesQuestions(models.Model):
     response_check_box = models.CharField(max_length=100, blank=True)
     response_radio = models.CharField(max_length=100,blank=True)
     responseDate = models.DateField(null=True)
-    response_datetime = models.DateTimeField(auto_now=True)
+    response_datetime = models.DateTimeField()
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -363,8 +363,8 @@ class AssetLocationAssetListServiceHistories(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     service_history_type = models.CharField(max_length=100,blank=True)
     effective_datetime = models.DateTimeField(auto_now=True)
-    start_date_time = models.DateTimeField(auto_now=True)
-    end_date_time = models.DateTimeField(auto_now=True)
+    start_date_time = models.DateTimeField()
+    end_date_time = models.DateTimeField()
     comments = models.CharField(max_length=100, blank=True)
     failure_type = models.CharField(max_length=100, blank=True)
     failure_mode = models.CharField(max_length=100, blank=True)
