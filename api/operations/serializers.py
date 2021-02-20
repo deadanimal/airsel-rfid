@@ -26,7 +26,10 @@ from .models import (
     ServiceHistoriesQuestions,
     AssetLocationAssetListServiceHistories,
     WorkOrderActivityCompletionAssetLocationAssetList,
-    WorkOrderActivityCompletion
+    WorkOrderActivityCompletion,
+    ServiceHistory,ServiceHistoryQuestion,ServiceHistoryQuestionValidValue,
+    Planner,MaintenanceManager,WorkRequest,MainOperation,Function,LocationType,
+    SubFunction,CostCenter,Operation
 )
 
 from users.serializers import (
@@ -190,7 +193,7 @@ class OperationalReadingExtendedSerializer(serializers.ModelSerializer):
         model = OperationalReading
         fields = '__all__'
 
-# copied from dev api
+# start copied from dev api
 
 class WorkOrderActivityCompletionAssetLocationAssetListSerializer(serializers.ModelSerializer):
 
@@ -248,4 +251,78 @@ class WorkOrderActivityCompletionExtendedSerializer(serializers.ModelSerializer)
     asset_location_asset_list = WorkOrderActivityCompletionAssetLocationAssetListExtendedSerializer(many=True)
     class Meta:
         model = WorkOrderActivityCompletion
+        fields = '__all__'
+    
+# end copied frm dev api
+
+class ServiceHistorySerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = ServiceHistory
+        fields = '__all__'
+
+class ServiceHistoryQuestionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ServiceHistoryQuestion
+        fields = '__all__'
+
+class ServiceHistoryQuestionValidValueSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ServiceHistoryQuestionValidValue
+        fields = '__all__'
+
+class PlannerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Planner
+        fields = '__all__'
+
+class MaintenanceManagerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MaintenanceManager
+        fields = '__all__'
+
+# class WorkRequestSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = WorkRequest
+#         fields = '__all__'
+
+class MainOperationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MainOperation
+        fields = '__all__'
+
+class FunctionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Function
+        fields = '__all__'
+
+class LocationTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LocationType
+        fields = '__all__'
+
+class SubFunctionSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = SubFunction
+        fields = '__all__'
+
+class CostCenterSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = CostCenter
+        fields = '__all__'
+
+class OperationSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Operation
         fields = '__all__'

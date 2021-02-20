@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { QrScannerComponent } from "./qr-scanner/qr-scanner.component";
 
 export const InventoryManagementRoutes: Routes = [
   {
@@ -44,6 +45,10 @@ export const InventoryManagementRoutes: Routes = [
       {
         path: "subinventory-transfer",
         loadChildren: () => import("./subinventory-transfer/subinventory-transfer.module").then(m => m.SubinventoryTransferPageModule),
+      },
+      {
+        path: "qr-scanner",
+        component: QrScannerComponent,
       },
     ],
   },

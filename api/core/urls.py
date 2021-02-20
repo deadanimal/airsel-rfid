@@ -35,7 +35,9 @@ from assets.views import (
     AssetAttributeViewSet,
     AssetAttributeColumnViewSet,
     AssetLocationViewSet,
-    AssetMeasurementTypeViewSet
+    AssetMeasurementTypeViewSet,
+    AssetLocationSyncViewSet,
+    AssetAttributeFieldViewSet
 )
 
 assets_router = router.register(
@@ -78,11 +80,19 @@ assets_measurement_type_router = router.register(
     'asset-measurement-type', AssetMeasurementTypeViewSet
 )
 
+asset_location_sync_router = router.register(
+    'asset-location-sync', AssetLocationSyncViewSet
+)
+
+asset_attribute_field_router = router.register(
+    'asset-attribute-field', AssetAttributeFieldViewSet
+)
 # Locations app
 from locations.views import (
     RegionViewSet,
     StoreViewSet,
-    LocationViewSet
+    LocationViewSet,
+    StateViewSet
 )
 
 regions_router = router.register(
@@ -95,6 +105,10 @@ stores_router = router.register(
 
 locations_router = router.register(
     'locations', LocationViewSet
+)
+
+states_router = router.register(
+    'states', StateViewSet
 )
 
 # Medias app
@@ -326,6 +340,25 @@ transaction_router = router.register(
 material_request_router = router.register(
     'inventory-material-request', InventoryMaterialViewSet
 )
+
+## employee app
+from employee.views import (
+    EmployeeViewSet,FailureProfileViewSet,ApprovalProfileViewSet
+)
+
+employee_router = router.register(
+    'employee', EmployeeViewSet
+)
+
+failure_profile_router = router.register(
+    'failure-profile', FailureProfileViewSet
+)
+
+approval_profile_router = router.register(
+    'approval-profile', ApprovalProfileViewSet
+)
+
+############################################# url
 
 urlpatterns = [
     url(r'^email-verification/$',
