@@ -5,13 +5,13 @@ import { RouterModule } from "@angular/router";
 import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 import { IonicModule } from "@ionic/angular";
 
-// import { QrScannerComponent } from './qr-scanner/qr-scanner.component';
+import { QrScannerComponent } from './qr-scanner/qr-scanner.component';
 import { InventoryManagementRoutes } from "./inventory-management.routing";
 import { ListItemPageModule } from './list-item/list-item.module';
 
 @NgModule({
   declarations: [
-    // QrScannerComponent
+    QrScannerComponent
   ],
   entryComponents: [],
   imports: [

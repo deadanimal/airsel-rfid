@@ -13,7 +13,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import (
     Store,
     Region,
-    Location
+    Location,
+    State
 )
 
 from .serializers import (
@@ -21,7 +22,8 @@ from .serializers import (
     StoreExtendedSerializer,
     RegionSerializer,
     LocationSerializer,
-    LocationExtendedSerializer
+    LocationExtendedSerializer,
+    StateSerializer
 )
 
 class StoreViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -68,7 +70,6 @@ class StoreViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         
         return Response(serializer_class.data)
 
-
 class RegionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
@@ -101,7 +102,6 @@ class RegionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Store.objects.filter(company=company.id)
         """
         return queryset  
-
 
 class LocationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Location.objects.all()
@@ -147,3 +147,38 @@ class LocationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         
         return Response(serializer_class.data)
 
+class StateViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = State.objects.all()
+    serializer_class = StateSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'code','state'
+    ]
+    
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = State.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Company.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Store.objects.all()
+            else:
+                queryset = Store.objects.filter(company=company.id)
+        """
+        return queryset  

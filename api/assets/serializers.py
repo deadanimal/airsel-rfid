@@ -18,7 +18,9 @@ from .models import (
     AssetAttribute,
     AssetAttributeColumn,
     AssetLocation,
-    AssetMeasurementType
+    AssetMeasurementType,
+    AssetLocationSync,
+    AssetAttributeField
 )
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -91,4 +93,16 @@ class AssetExtendedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Asset
+        fields = '__all__'
+
+class AssetLocationSyncSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetLocationSync
+        fields = '__all__'
+
+class AssetAttributeFieldSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetAttributeField
         fields = '__all__'
