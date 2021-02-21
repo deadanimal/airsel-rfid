@@ -17,6 +17,9 @@ from medias.models import (
 from users.models import (
     CustomUser
 )
+from employee.models import (
+    Employee
+)
 
 from core.helpers import PathAndRename
 
@@ -500,6 +503,9 @@ class WorkOrderActivityCompletion(models.Model):
     class meta:
         ordering = ['-created_date']
 
+    def __str__(self):
+        return ('%s %s'%(self.activityid, self.id))
+
 #### above is the code copied from dev api
 
 #### baru tambah
@@ -642,6 +648,18 @@ class Operation(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     operation = models.CharField(max_length=100, blank=True)
     
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+class WorkActivityEmployee(models.Model):
+
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+    work_order_activity_completion_id = models.ForeignKey(WorkOrderActivityCompletion, on_delete=models.CASCADE, related_name='work_activity_emplyee_work_order_activity_completion_id', null=True)
+    employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_work_activity_employee_id', null=True)
+
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 

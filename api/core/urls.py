@@ -152,7 +152,7 @@ from operations.views import (
 
     ServiceHistoryViewSet,ServiceHistoryQuestionViewSet,ServiceHistoryQuestionValidValueViewSet,
     PlannerViewSet,MaintenanceManagerViewSet,WorkRequestViewSet,MainOperationViewSet,FunctionViewSet,LocationTypeViewSet,
-    SubFunctionViewSet,CostCenterViewSet,OperationViewSet
+    SubFunctionViewSet,CostCenterViewSet,OperationViewSet,WorkActivityEmployeeViewSet
 )
 
 
@@ -241,10 +241,13 @@ work_requests_router = router.register(
 work_request_statuses_router = router.register(
     'work-request-statuses', WorkRequestStatusViewSet
 )
-
 measurement_types_router = router.register(
     'measurement-types', MeasurementTypeViewSet
 )
+work_activity_employee_router = router.register(
+    'work-activity-employee', WorkActivityEmployeeViewSet
+)
+
 
 #### dopied from dev aoi
 
