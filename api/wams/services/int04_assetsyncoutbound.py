@@ -12,7 +12,7 @@ from assets.models import (
 )
 
 
-# malam ni buat format datetime dari wams ke pipe
+# kena bincang dengan aimi untuk manytomanyfield
 def format_datetime(datetime):
 
     # from : 2021-01-29-02.23.31
