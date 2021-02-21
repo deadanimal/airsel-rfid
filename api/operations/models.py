@@ -548,7 +548,7 @@ class ServiceHistoryQuestionValidValue(models.Model):
     point_value = models.CharField(max_length=100, blank=True)
     service_history_question_id = models.CharField(max_length=100, blank=True)
     style = models.CharField(max_length=100, blank=True)
-    service_history_question_id = models.ForeignKey(ServiceHistory, on_delete=models.CASCADE, related_name='service_history_question_valid_value_service_history_id', null=True)
+    service_history_question_id = models.ForeignKey(ServiceHistoryQuestion, on_delete=models.CASCADE, related_name='service_history_question_valid_value_service_history_id', null=True)
 
 
     created_date = models.DateTimeField(auto_now_add=True)
