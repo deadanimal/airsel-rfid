@@ -31,7 +31,7 @@ from .models import (
     WorkOrderActivityCompletion,
     ServiceHistory,ServiceHistoryQuestion,ServiceHistoryQuestionValidValue,
     Planner,MaintenanceManager,WorkRequest,MainOperation,Function,LocationType,
-    SubFunction,CostCenter,Operation
+    SubFunction,CostCenter,Operation,WorkActivityEmployee
 )
 
 from .serializers import (
@@ -65,7 +65,7 @@ from .serializers import (
     WorkOrderActivityCompletionExtendedSerializer,
     ServiceHistorySerializer,ServiceHistoryQuestionSerializer,ServiceHistoryQuestionValidValueSerializer,
     PlannerSerializer,MaintenanceManagerSerializer,WorkRequestSerializer,MainOperationSerializer,FunctionSerializer,LocationTypeSerializer,
-    SubFunctionSerializer,CostCenterSerializer,OperationSerializer
+    SubFunctionSerializer,CostCenterSerializer,OperationSerializer,WorkActivityEmployeeSerializer
 )
 
 class OwningOrganizationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -848,5 +848,23 @@ class OperationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Operation.objects.all()
+
+        return queryset
+
+class WorkActivityEmployeeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = WorkActivityEmployee.objects.all()
+    serializer_class = WorkActivityEmployeeSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        queryset = WorkActivityEmployee.objects.all()
 
         return queryset
