@@ -524,6 +524,8 @@ class ServiceHistoryQuestion(models.Model):
     question_seq = models.CharField(max_length=100, blank=True)
     question_cd = models.CharField(max_length=100, blank=True)
     question_desc = models.CharField(max_length=100, blank=True)
+    service_history_id = models.ForeignKey(ServiceHistory, on_delete=models.CASCADE, related_name='service_history_question_service_history_id', null=True)
+
   
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -538,6 +540,10 @@ class ServiceHistoryQuestionValidValue(models.Model):
     answer_cd = models.CharField(max_length=100, blank=True)
     answer_desc = models.CharField(max_length=100, blank=True)
     point_value = models.CharField(max_length=100, blank=True)
+    service_history_question_id = models.CharField(max_length=100, blank=True)
+    style = models.CharField(max_length=100, blank=True)
+    service_history_question_id = models.ForeignKey(ServiceHistory, on_delete=models.CASCADE, related_name='service_history_question_valid_value_service_history_id', null=True)
+
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)

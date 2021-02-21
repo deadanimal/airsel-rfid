@@ -121,7 +121,7 @@ export class StockReceivePage implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private inventoryGrnService: InventoryGrnService,
-    private formBuilder: FormBuilder
+    // private formBuilder: FormBuilder
   ) { }
 
   private L(...args: any[]) {
@@ -133,54 +133,55 @@ export class StockReceivePage implements OnInit {
   }
 
   ngOnInit() {
-    this.items = this.pendings;
     this.onRegister2DBarcodeListener();
     this.onRegisterRFIDListener();
+    this.items = this.pendings;
 
-    this.stockReceiveForm = this.formBuilder.group({
+    // this.stockReceiveForm = this.formBuilder.group({
 
-      username: new FormControl(
-        // "hafez.azman@airselangor.com", /// technician 
-        "testing", // inventory
-        Validators.compose([
-          Validators.required,
-          // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
-          // Validators.email,
-        ])
-      ),
-      password: new FormControl(
-        // "airselrfid@2020",
-        "PabloEscobar",
-        Validators.compose([Validators.minLength(6), Validators.required])
-      ),
-    })
+    // username: new FormControl(
+    //   // "hafez.azman@airselangor.com", /// technician 
+    //   "testing", // inventory
+    //   Validators.compose([
+    //     Validators.required,
+    //     // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
+    //     // Validators.email,
+    //   ])
+    // ),
+    // password: new FormControl(
+    //   // "airselrfid@2020",
+    //   "PabloEscobar",
+    //   Validators.compose([Validators.minLength(6), Validators.required])
+    // ),
+    // })
   }
 
   updateData(data) {
+    console.log('data = ', data)
     this.ngZone.run(() => {
       this.scanValue = data;
       alert(this.scanValue);
     });
 
-    // start update data with service
-    this.isLoading = true;
-    this.inventoryGrnService.post(this.stockReceiveForm.value).subscribe(
-      (res) => {
-        // Success
-        this.isLoading = false;
-        console.log('res = ', res)
-      },
-      () => {
-        // Failed
-        this.isLoading = false;
-      },
-      () => {
-        // After
-        // this.toastr.openToastr("Welcome back");
-        // this.navigateByRole(this.authService.userType);
-      }
-    );
-    // end
+    // // start update data with service
+    // this.isLoading = true;
+    // this.inventoryGrnService.post(this.stockReceiveForm.value).subscribe(
+    //   (res) => {
+    //     // Success
+    //     this.isLoading = false;
+    //     console.log('res = ', res)
+    //   },
+    //   () => {
+    //     // Failed
+    //     this.isLoading = false;
+    //   },
+    //   () => {
+    //     // After
+    //     // this.toastr.openToastr("Welcome back");
+    //     // this.navigateByRole(this.authService.userType);
+    //   }
+    // );
+    // // end
   }
 
   onRegister2DBarcodeListener() {
