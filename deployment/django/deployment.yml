@@ -17,7 +17,7 @@ spec:
       containers:
       - name: airsel-rfid-api
         # image: afeezaziz/rfid:1.3
-        image: syafiqpipe/airsel-rfid-api:1.0.59 #boleh tambah version
+        image: syafiqpipe/airsel-rfid-api:1.0.60 #boleh tambah version
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
