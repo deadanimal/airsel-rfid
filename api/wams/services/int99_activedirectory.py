@@ -9,8 +9,6 @@ from time import gmtime, strftime
 
 def get_active_directory(username, password):
 
-    username = "rmsuser"
-    password = "5e1W@ter123"
     time_ = str(int(time.time()))
 
     timezone_ = pytz.timezone('Asia/Kuala_Lumpur')
@@ -19,11 +17,8 @@ def get_active_directory(username, password):
     public_key = "9pjCj7PMDLZx7NaD"
     private_key = "ZSMmaAkpQU9y27XWmUYRVbKnyVefV8cg"
 
-    before_sha1 = public_key + '|' + username + '|' + \
-        password + '|' + time_ + '|' + private_key
+    before_sha1 = public_key+username+password+time_+private_key
     after_sha1 = hashlib.sha1(before_sha1.encode())
-
-    print(after_sha1.hexdigest())
 
     request = {
         "key": public_key,
@@ -36,4 +31,4 @@ def get_active_directory(username, password):
     response = requests.post(
         "https://api4.airselangor.com/apimgr/api/2/Authenticate", data=request)
 
-    print(response.json())
+    return response.json()
