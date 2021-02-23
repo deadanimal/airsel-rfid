@@ -397,8 +397,8 @@ class AssetLocationAssetListServiceHistories(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     service_history_type = models.CharField(max_length=100,blank=True)
     effective_datetime = models.DateTimeField(auto_now=True)
-    start_date_time = models.DateTimeField()
-    end_date_time = models.DateTimeField()
+    start_date_time = models.DateTimeField(null=True)
+    end_date_time = models.DateTimeField(null=True)
     comments = models.CharField(max_length=100, blank=True)
     failure_type = models.CharField(max_length=100, blank=True)
     failure_mode = models.CharField(max_length=100, blank=True)
@@ -548,7 +548,7 @@ class ServiceHistoryQuestionValidValue(models.Model):
     point_value = models.CharField(max_length=100, blank=True)
     service_history_question_id = models.CharField(max_length=100, blank=True)
     style = models.CharField(max_length=100, blank=True)
-    service_history_question_id = models.ForeignKey(ServiceHistory, on_delete=models.CASCADE, related_name='service_history_question_valid_value_service_history_id', null=True)
+    service_history_question_id = models.ForeignKey(ServiceHistoryQuestion, on_delete=models.CASCADE, related_name='service_history_question_valid_value_service_history_id', null=True)
 
 
     created_date = models.DateTimeField(auto_now_add=True)

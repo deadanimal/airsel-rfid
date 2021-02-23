@@ -511,7 +511,7 @@ class AssetLocationSync(models.Model):
 
     uuid = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     node_id = models.CharField(max_length=12, blank=True)
-    description = models.CharField(max_length=100, blank=True)
+    description = models.CharField(max_length=255, blank=True)
     
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
