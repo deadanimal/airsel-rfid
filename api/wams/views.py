@@ -349,7 +349,7 @@ class WamsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
             middleware_call = get_active_directory(username, password)
 
-            json_response = {"test": "test"}#middleware_call
+            json_response = middleware_call
 
 
         return JsonResponse(json_response)
