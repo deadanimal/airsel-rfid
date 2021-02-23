@@ -363,7 +363,7 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
         # return Response(rejected_list_serializer.data)
     
-    @action(methods=['POST'], detail=True)
+    @action(methods=['POST'], detail=False)
     def patch_asset(self, request, *args, **kwargs):
         asset_request_ = json.loads(request.body)
         asset_hex_code_ = asset_request_['hex_code']
