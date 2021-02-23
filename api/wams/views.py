@@ -36,6 +36,7 @@ from wams.services.int15_asset import get_asset
 from wams.services.int16_workrequeststatusupdate import get_workrequeststatusupdate
 from wams.services.int18_assetlocation import get_assetlocation
 from wams.services.int19_maintenancemanager import get_maintenancemanager
+from wams.services.int99_activedirectory import get_active_directory
 
 from .models import (
     Wams
@@ -341,6 +342,14 @@ class WamsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             #     'result': middleware_list
             # }
             json_response = middleware_call
+
+        elif request_service_name == 'getActiveDirectory':
+            username = call_json['username'] if call_json['username'] is not None else None
+            password = call_json['password'] if call_json['password'] is not None else None
+
+            middleware_call = get_active_directory(username, password)
+
+            json_response = {"test": "test"}#middleware_call
 
 
         return JsonResponse(json_response)

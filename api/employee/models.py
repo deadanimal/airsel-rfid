@@ -70,6 +70,9 @@ class FailureProfile(models.Model):
     failure_profile = models.CharField(max_length=100, blank=True)
     description = models.CharField(max_length=100, blank=True)
     failure_repair = models.CharField(max_length=100, blank=True)
+    failure_mode = models.CharField(max_length=100, blank=True)
+    failure_comp = models.CharField(max_length=100, blank=True)
+    failure_type = models.CharField(max_length=100, blank=True)
     
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
