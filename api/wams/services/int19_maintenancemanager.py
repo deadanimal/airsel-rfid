@@ -27,19 +27,19 @@ def insert_into_maintenance_manager(dict):
         "user_id": user_id
     }
 
-    maintenance_manager = MaintenanceManager.objects.filter(
+    maintenance_manager_exist = MaintenanceManager.objects.filter(
         **dictionary_maintenance_manager).exists()
 
-    if not maintenance_manager:
+    if not maintenance_manager_exist:
         # maintenance manager does not exist in the database
         maintenance_manager = MaintenanceManager(**dictionary_maintenance_manager)
         maintenance_manager.save()
 
     else:
-        maintenance_manager = MaintenanceManager.objects.filter(**dictionary_maintenance_manager)
-        maintenance_manager.maintenance_manager = maintenance_manager
+        maintenance_manager = MaintenanceManager.objects.get(maintenance_manager=maintenance_manager)
         maintenance_manager.description = description
         maintenance_manager.status = status
+        maintenance_manager.user_id = user_id
         maintenance_manager.save()
 
 

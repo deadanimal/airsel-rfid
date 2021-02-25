@@ -574,11 +574,11 @@ class AssetMeasurementTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class AssetLocationSyncViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetLocationSync.objects.all()
     serializer_class = AssetLocationSyncSerializer
-    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    # filterset_fields = [
-    #     'category',
-    #     'created_at'
-    # ]
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'node_id'
+    ]
+    search_fields = ['$node_id', '$description']
 
     def get_permissions(self):
         if self.action == 'list':

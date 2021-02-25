@@ -711,6 +711,12 @@ class PlannerViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Planner.objects.all()
     serializer_class = PlannerSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'planner',
+        'status',
+        'user_id'
+    ]
+    search_fields = ['$planner', '$user_id']
 
     def get_permissions(self):
         if self.action == 'list':
@@ -729,6 +735,12 @@ class MaintenanceManagerViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = MaintenanceManager.objects.all()
     serializer_class = MaintenanceManagerSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'maintenance_manager',
+        'status',
+        'user_id'
+    ]
+    search_fields = ['$maintenance_manager', '$user_id']
 
     def get_permissions(self):
         if self.action == 'list':
