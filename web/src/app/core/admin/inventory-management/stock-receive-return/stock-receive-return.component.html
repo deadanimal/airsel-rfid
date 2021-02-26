@@ -19,10 +19,8 @@
 
           <ng-template #popTemplate>
             <h4 class="text-center">Information</h4>
-            <small class="text-justify">User able to register new asset in bulk by upload excel file. The
-              new data will be listed below for user preview and any error will
-              be highlighted for user actions. The registration will be pass to
-              admin for review before adding into the database.</small>
+            <small class="text-justify">User able to monitor stock activities in all stores.
+            All information captured in the mobile will be reflected in this module.</small>
           </ng-template>
           <button type="button" class="btn btn-icon btn-default btn-sm ml-md-4" [popover]="popTemplate"
             placement="right" [outsideClick]="true">
@@ -40,21 +38,16 @@
       <div class="card-body">
         <div class="row">
           <div class="col">
-            <h3 class="card-title text-uppercase text-muted mb-0">
+            <h1 class="card-title text-uppercase text-muted mb-0">
               ALL
-            </h3>
-
-            <span class="h4 font-weight-bold mb-0">
-              {{percentvalues[0].percent_all_value}}% Completed
-            </span>
-            <br>
-            <span class="h4 font-weight-bold mb-0">
-              {{taskvalues[0].task_all_value}} Tasks
+            </h1>
+            <span class="h2 font-weight-bold mb-0">
+              {{stock_all}} Tasks
             </span>
           </div>
 
           <div class="col-md-6">
-            <div id="chartdivpercent1" style="width: 125%; height: 100px;"></div>
+            <img src="../../../../../assets/svg/all_receive.svg" style="width: 60%;" />
             <div class="text-right">
               <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockall')">Check</button>
             </div>
@@ -75,19 +68,14 @@
           <h3 class="card-title text-uppercase text-muted mb-0">
             PARTIAL RECEIPT
           </h3>
-
-          <span class="h4 font-weight-bold mb-0">
-            {{ percentvalues[0].percent_partial_value }}% Completed
-          </span>
-          <br>
-          <span class="h4 font-weight-bold mb-0">
-            {{taskvalues[0].task_partial_value}} Tasks
+          <span class="h2 font-weight-bold mb-0">
+            {{stock_partial}} Tasks
           </span>
 
         </div>
 
         <div class="col-md-6">
-          <div id="chartdivpercent2" style="width: 125%; height: 100px;"></div>
+          <img src="../../../../../assets/svg/bill_partial.svg" style="width: 60%;" />
           <div class="text-right">
             <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockpartial')">Check</button>
           </div>
@@ -105,21 +93,16 @@
     <div class="card-body">
       <div class="row">
         <div class="col">
-          <h3 class="card-title text-uppercase text-muted mb-0">
+          <h2 class="card-title text-uppercase text-muted mb-0">
             FULL RECEIPT
-          </h3>
-
-          <span class="h4 font-weight-bold mb-0">
-            {{ percentvalues[0].percent_full_value }}% Completed
-          </span>
-          <br>
-          <span class="h4 font-weight-bold mb-0">
-            {{taskvalues[0].task_full_value}} Tasks
+          </h2>
+          <span class="h2 font-weight-bold mb-0">
+            {{stock_full}} Tasks
           </span>
         </div>
 
         <div class="col-md-6">
-          <div id="chartdivpercent3" style="width: 125%; height: 100px;"></div>
+          <img src="../../../../../assets/svg/bill_full.svg" style="width: 60%;" />
           <div class="text-right">
             <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockfull')">Check</button>
           </div>
@@ -137,21 +120,16 @@
     <div class="card-body">
       <div class="row">
         <div class="col">
-          <h3 class="card-title text-uppercase text-muted mb-0">
+          <h1 class="card-title text-uppercase text-muted mb-0">
             RETURN
-          </h3>
-
-          <span class="h4 font-weight-bold mb-0">
-            {{ percentvalues[0].percent_return_value }}% Completed
-          </span>
-          <br>
-          <span class="h4 font-weight-bold mb-0">
-            {{taskvalues[0].task_return_value}} Tasks
+          </h1>
+          <span class="h2 font-weight-bold mb-0">
+            {{stock_return}} Tasks
           </span>
         </div>
 
         <div class="col-md-6">
-          <div id="chartdivpercent4" style="width: 125%; height: 100px;"></div>
+          <img src="../../../../../assets/svg/stock_return.svg" style="width: 60%;" />
           <div class="text-right">
             <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockreturn')" >Check</button>
           </div>
@@ -196,7 +174,7 @@
         </div>
 
         <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
           (activate)="onActivate($event)">
 
           <ngx-datatable-column [width]="40">
@@ -206,16 +184,16 @@
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
-                <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                  [(ngModel)]="tableShowStock.isTick">
-                <label for="customCheck+{{tableShowStock.id}}">
+                <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRowPO(row)"
+                  [(ngModel)]="tablePO.isTick">
+                <label for="customCheck+{{tablePO.id}}">
                 </label>
               </div>
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="No" [width]="40" id="datatable-header-cell">
-            <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+            <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
@@ -227,7 +205,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_date}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.Delivery_date | date}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -239,7 +217,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.purchase_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.Purchase_order}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -275,7 +253,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.organization}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.ship_to_organization}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -287,7 +265,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.supplier_name}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.supplier_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -326,7 +304,7 @@
               </ng-template>
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <button class="btn btn-default"
-                  (click)="openReceiveInformation(stockpartialreceipt, row)">Detail</button>
+                  (click)="openReceiveInformation(stockall, row)">Detail</button>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -368,7 +346,7 @@
         </div>
 
         <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
           (activate)="onActivate($event)">
 
           <ngx-datatable-column [width]="40">
@@ -378,16 +356,16 @@
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
-                <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                  [(ngModel)]="tableShowStock.isTick">
-                <label for="customCheck+{{tableShowStock.id}}">
+                <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRowPO(row)"
+                  [(ngModel)]="tablePO.isTick">
+                <label for="customCheck+{{tablePO.id}}">
                 </label>
               </div>
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="No" [width]="40" id="datatable-header-cell">
-            <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+            <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
@@ -447,7 +425,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.organization}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.ship_to_organization}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -459,7 +437,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.supplier_name}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.supplier_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -540,7 +518,7 @@
         </div>
 
         <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
           (activate)="onActivate($event)">
 
           <ngx-datatable-column [width]="40">
@@ -550,16 +528,16 @@
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
-                <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                  [(ngModel)]="tableShowStock.isTick">
-                <label for="customCheck+{{tableShowStock.id}}">
+                <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRowPO(row)"
+                  [(ngModel)]="tablePO.isTick">
+                <label for="customCheck+{{tablePO.id}}">
                 </label>
               </div>
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="No" [width]="40" id="datatable-header-cell">
-            <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+            <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
@@ -725,7 +703,7 @@
         </div>
 
         <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-          [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+          [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableGRN"
           (activate)="onActivate($event)">
 
           <ngx-datatable-column maxWidth="40">
@@ -735,16 +713,16 @@
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
-                <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                  [(ngModel)]="tableShowStock.isTick">
-                <label for="customCheck+{{tableShowStock.id}}">
+                <input type="checkbox" id="customCheck+{{tableGRN.id}}" (change)="checkRowGRN(row)"
+                  [(ngModel)]="tableGRN.isTick">
+                <label for="customCheck+{{tableGRN.id}}">
                 </label>
               </div>
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="No" [width]="40" id="datatable-header-cell">
-            <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+            <ng-template let-rowIndex="rowIndex" let-row="tableGRN" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
@@ -756,7 +734,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_date}}</span>
+                <span class="h4 font-weight-bold mb-0"></span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -768,7 +746,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.purchase_order}}</span>
+                <span class="h4 font-weight-bold mb-0"></span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -780,7 +758,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_date}}</span>
+                <span class="h4 font-weight-bold mb-0"></span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -792,7 +770,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.updated_date}}</span>
+                <span class="h4 font-weight-bold mb-0"></span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -804,7 +782,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.organization}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.organization_code}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -816,7 +794,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.supplier_name}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.supplier_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -855,7 +833,7 @@
               </ng-template>
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <button class="btn btn-default"
-                  (click)="openReceiveInformation(stockreturn, row)">Detail</button>
+                  (click)="openReturnInformation(stockreturn, row)">Detail</button>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -881,7 +859,7 @@
 
 </div>
 
-<ng-template #stockreceiveinfo>
+<ng-template #stockall>
   <div class="modal-header bg-default">
     <h6 class="modal-title my-auto text-white">
       Receive Information
@@ -898,58 +876,45 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">PO Number</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.po_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Change Order Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm"  value="{{rowDataPO.change_order_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Change Order Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.change_order_status}}" readonly />
         </div>
       </div>
 
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Description</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
     </div>
 
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Description</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.description}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Procurement BU</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.procurement_bu}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Sold To Legal Entity</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Buyer</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Supplier Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.sold_to_legal_entity}}" readonly />
         </div>
       </div>
     </div>
@@ -957,29 +922,44 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Supplier Site Code</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Buyer</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.buyer}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Supplier Name</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_name}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Supplier Site Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_site_code}}" readonly />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Address Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_name}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Address Line 1</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_line_1}}" readonly />
         </div>
       </div>
-
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Address Line 2</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_line_2}}" readonly />
         </div>
       </div>
     </div>
@@ -988,28 +968,21 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Address Line 3</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_line_3}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">City</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.city}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">State</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Postal Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.state}}" readonly />
         </div>
       </div>
     </div>
@@ -1017,29 +990,46 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Countryr</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Postal Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.postal_code}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Country</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.country}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Contact First Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_first_name}}" readonly />
         </div>
       </div>
 
+    </div>
+
+    <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Contact Last Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_last_name}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Contact Email Address</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_email_address}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Contact Mobile Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_mobile_number}}" readonly />
         </div>
       </div>
     </div>
@@ -1047,29 +1037,22 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Contact Mobile Number</label>
-          <input type="date" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
           <label class="form-control-label">Contact Phone Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_phone_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Supplier Contact</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_contact}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Line Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_number}}" readonly />
         </div>
       </div>
     </div>
@@ -1078,28 +1061,21 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Schedule Number</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.schedule_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Distribution Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.distribution_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Item Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Line Description</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.item_number}}" readonly />
         </div>
       </div>
     </div>
@@ -1107,45 +1083,46 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Line Description</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_description}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Quantity</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.quantity}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">UOM Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.uom_code}}" readonly />
         </div>
       </div>
+
     </div>
 
     <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Base Quantity</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.base_quantity}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Base UOM Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.base_uom_code}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Requested Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Ship To Organization</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.requested_date}}" readonly />
         </div>
       </div>
     </div>
@@ -1153,111 +1130,42 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Ship To Organization</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.ship_to_organization}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Subinventory Code</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.sub_inventory_code}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Ship To Location</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.ship_to_location}}" readonly />
         </div>
       </div>
+    </div>
 
+    <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Line Type</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_type}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Line Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_status}}" readonly />
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Delivery Type</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Order Type</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Updated Date</label>
-          <input type="date" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Organisations</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Supplier Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Updated By</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Rating</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Comments</label>
-          <div class="pl-lg-4">
-            <div class="form-group">
-              <textarea rows="4" class="form-control form-control-alternative" id="commentstock" readonly>A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
       <div class="col-lg">
         <div class="card" name="Items">
           <div class="dataTables_wrapper py-4">
@@ -1283,7 +1191,7 @@
             </div>
 
             <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
               (activate)="onActivate($event)">
 
               <ngx-datatable-column maxWidth="40">
@@ -1293,52 +1201,52 @@
 
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <div>
-                    <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                      [(ngModel)]="tableShowStock.isTick">
-                    <label for="customCheck+{{tableShowStock.id}}">
+                    <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRowPO(row)"
+                      [(ngModel)]="tablePO.isTick">
+                    <label for="customCheck+{{tablePO.id}}">
                     </label>
                   </div>
                 </ng-template>
               </ngx-datatable-column>
 
-              <ngx-datatable-column name="No" [width]="80" id="datatable-header-cell">
-                <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+              <ngx-datatable-column name="No" [width]="auto" id="datatable-header-cell">
+                <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
                   <strong>{{ rowIndex + 1 }}</strong>
                 </ng-template>
               </ngx-datatable-column>
 
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
+              <div class="col-md-6 text-center">
+                <ngx-datatable-column [width]="220" [resizeable]="false">
                   <ng-template ngx-datatable-header-template id="datatable-header-cell">
                     <span>Item</span>
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{row.items}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
 
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
+              <div class="col-md-6 text-center">
+                <ngx-datatable-column [width]="220" [resizeable]="false">
                   <ng-template ngx-datatable-header-template id="datatable-header-cell">
                     <span>Description</span>
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{row.description}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
 
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
+              <div class="col-md-6 text-center">
+                <ngx-datatable-column [width]="auto" [resizeable]="false">
                   <ng-template ngx-datatable-header-template id="datatable-header-cell">
                     <span>Quantity</span>
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{row.quantity}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
@@ -1364,7 +1272,6 @@
         </div>
       </div>
     </div>
-  </div>
 </ng-template>
 
 <ng-template #stockpartialreceipt>
@@ -1384,58 +1291,45 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">PO Number</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.po_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Change Order Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.change_order_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Change Order Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.change_order_status}}" readonly />
         </div>
       </div>
 
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Description</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
     </div>
 
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Description</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.description}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Procurement BU</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.procurement_bu}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Sold To Legal Entity</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Buyer</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Supplier Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.sold_to_legal_entity}}" readonly />
         </div>
       </div>
     </div>
@@ -1443,29 +1337,44 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Supplier Site Code</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Buyer</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.buyer}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Supplier Name</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_name}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Supplier Site Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_site_code}}" readonly />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Address Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_name}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Address Line 1</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_line_1}}" readonly />
         </div>
       </div>
-
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Address Line 2</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_line_2}}" readonly />
         </div>
       </div>
     </div>
@@ -1474,28 +1383,21 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Address Line 3</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_line_3}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">City</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.city}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">State</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Postal Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.state}}" readonly />
         </div>
       </div>
     </div>
@@ -1503,29 +1405,46 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Postal Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.postal_code}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Countryr</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.country}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Contact First Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_first_name}}" readonly />
         </div>
       </div>
 
+    </div>
+
+    <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Contact Last Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_last_name}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Contact Email Address</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_email_address}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Contact Mobile Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_mobile_number}}" readonly />
         </div>
       </div>
     </div>
@@ -1533,29 +1452,22 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Contact Mobile Number</label>
-          <input type="date" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
           <label class="form-control-label">Contact Phone Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_phone_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Supplier Contact</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_contact}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Line Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_number}}" readonly />
         </div>
       </div>
     </div>
@@ -1564,28 +1476,21 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Schedule Number</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.schedule_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Distribution Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.distribution_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Item Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Line Description</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.item_number}}" readonly />
         </div>
       </div>
     </div>
@@ -1593,45 +1498,46 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Line Description</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_description}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Quantity</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="date" class="form-control form-control-sm" value="{{rowDataPO.quantity}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">UOM Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.uom_code}}" readonly />
         </div>
       </div>
+
     </div>
 
     <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Base Quantity</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.base_quantity}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Base UOM Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.base_uom_code}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Requested Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Ship To Organization</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.requested_date}}" readonly />
         </div>
       </div>
     </div>
@@ -1639,127 +1545,42 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Ship To Organization</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.ship_to_organization}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Subinventory Code</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.sub_inventory_code}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Ship To Location</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.ship_to_location}}" readonly />
         </div>
       </div>
+    </div>
 
+    <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Line Type</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_type}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Line Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_status}}" readonly />
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Delivery Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Purchase Order</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Delivery Order</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Good Received</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Updated Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Organisations</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Supplier Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Updated By</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Rating</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Comments</label>
-          <div class="pl-lg-4">
-            <div class="form-group">
-              <textarea rows="4" class="form-control form-control-alternative" id="commentstock" readonly>A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
       <div class="col-lg">
         <div class="card" name="Items">
           <div class="dataTables_wrapper py-4">
@@ -1785,7 +1606,7 @@
             </div>
 
             <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
               (activate)="onActivate($event)">
 
               <ngx-datatable-column maxWidth="40">
@@ -1795,22 +1616,22 @@
 
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <div>
-                    <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                      [(ngModel)]="tableShowStock.isTick">
-                    <label for="customCheck+{{tableShowStock.id}}">
+                    <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRow(row)"
+                      [(ngModel)]="tablePO.isTick">
+                    <label for="customCheck+{{tablePO.id}}">
                     </label>
                   </div>
                 </ng-template>
               </ngx-datatable-column>
 
-              <ngx-datatable-column name="No" [width]="80" id="datatable-header-cell">
-                <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+              <ngx-datatable-column name="No" [width]="auto" id="datatable-header-cell">
+                <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
                   <strong>{{ rowIndex + 1 }}</strong>
                 </ng-template>
               </ngx-datatable-column>
 
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
+              <div class="col-md-6 text-center">
+                <ngx-datatable-column [width]="220" [resizeable]="false">
                   <ng-template ngx-datatable-header-template id="datatable-header-cell">
                     <span>Item</span>
                   </ng-template>
@@ -1821,8 +1642,8 @@
                 </ngx-datatable-column>
               </div>
 
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
+              <div class="col-md-6 text-center">
+                <ngx-datatable-column [width]="220" [resizeable]="false">
                   <ng-template ngx-datatable-header-template id="datatable-header-cell">
                     <span>Description</span>
                   </ng-template>
@@ -1833,8 +1654,8 @@
                 </ngx-datatable-column>
               </div>
 
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
+              <div class="col-md-6 text-center">
+                <ngx-datatable-column [width]="auto" [resizeable]="false">
                   <ng-template ngx-datatable-header-template id="datatable-header-cell">
                     <span>Quantity</span>
                   </ng-template>
@@ -1861,11 +1682,10 @@
     <div class="card-footer">
       <div class="row">
         <div class="col text-right">
-          <button class="btn btn-danger" (click)="confirm('RJ')">close</button>
+          <button class="btn btn-danger" (click)="ModalStockReceive.hide()">close</button>
         </div>
       </div>
     </div>
-  </div>
 </ng-template>
 
 <ng-template #stockfullreceipt>
@@ -1885,58 +1705,45 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">PO Number</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="date" class="form-control form-control-sm" value="{{rowDataPO.po_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Change Order Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.change_order_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Change Order Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.change_order_status}}" readonly />
         </div>
       </div>
 
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Description</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
     </div>
 
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Description</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.description}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Procurement BU</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.procurement_bu}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Sold To Legal Entity</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Buyer</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Supplier Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.sold_to_legal_entity}}" readonly />
         </div>
       </div>
     </div>
@@ -1944,29 +1751,44 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Supplier Site Code</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Buyer</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.buyer}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Supplier Name</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_name}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Supplier Site Code</label>
+          <input type="date" class="form-control form-control-sm" value="{{rowDataPO.supplier_site_code}}" readonly />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Address Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_name}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Address Line 1</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_line_1}}" readonly />
         </div>
       </div>
-
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Address Line 2</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.address_line_2}}" readonly />
         </div>
       </div>
     </div>
@@ -1975,28 +1797,21 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Address Line 3</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="date" class="form-control form-control-sm" value="{{rowDataPO.address_line_3}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">City</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.City}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">State</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Postal Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.po_number}}" readonly />
         </div>
       </div>
     </div>
@@ -2004,29 +1819,46 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Countryr</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Postal Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.postal_code}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Country</label>
+          <input type="date" class="form-control form-control-sm" value="{{rowDataPO.country}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Contact First Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_first_name}}" readonly />
         </div>
       </div>
 
+    </div>
+
+    <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Contact Last Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_last_name}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Contact Email Address</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_email_address}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Contact Mobile Number</label>
+          <input type="date" class="form-control form-control-sm" value="{{rowDataPO.contact_mobile_number}}" readonly />
         </div>
       </div>
     </div>
@@ -2034,29 +1866,22 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Contact Mobile Number</label>
-          <input type="date" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
           <label class="form-control-label">Contact Phone Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.contact_phone_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Supplier Contact</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_contact}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Line Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_number}}" readonly />
         </div>
       </div>
     </div>
@@ -2065,28 +1890,21 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Schedule Number</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="date" class="form-control form-control-sm" value="{{rowDataPO.schedule_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Distribution Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.distribution_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Item Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Line Description</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.item_number}}" readonly />
         </div>
       </div>
     </div>
@@ -2094,45 +1912,46 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Line Description</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_description}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Quantity</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.quantity}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">UOM Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.uom_code}}" readonly />
         </div>
       </div>
+
     </div>
 
     <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Base Quantity</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.base_quantity}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Base UOM Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.base_uom_code}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Requested Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Ship To Organization</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="date" class="form-control form-control-sm" value="{{rowDataPO.requested_date | date}}" readonly />
         </div>
       </div>
     </div>
@@ -2140,127 +1959,42 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Ship To Organization</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.ship_to_organization}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Subinventory Code</label>
-          <input type="date" class="form-control form-control-sm" readonly />
+          <input type="date" class="form-control form-control-sm" value="{{rowDataPO.sub_inventory_code}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Ship To Location</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.ship_to_location}}" readonly />
         </div>
       </div>
+    </div>
 
+    <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Line Type</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_type}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Line Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.line_status}}" readonly />
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Delivery Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Purchase Order</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Delivery Order</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Good Received</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Updated Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Organisation</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Supplier Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Updated By</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Rating</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Comments</label>
-          <div class="pl-lg-4">
-            <div class="form-group">
-              <textarea rows="4" class="form-control form-control-alternative" id="commentstock" readonly>A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
       <div class="col-lg">
         <div class="card" name="Items">
           <div class="dataTables_wrapper py-4">
@@ -2286,7 +2020,7 @@
             </div>
 
             <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
               (activate)="onActivate($event)">
 
               <ngx-datatable-column maxWidth="40">
@@ -2296,52 +2030,52 @@
 
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <div>
-                    <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                      [(ngModel)]="tableShowStock.isTick">
-                    <label for="customCheck+{{tableShowStock.id}}">
+                    <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRow(row)"
+                      [(ngModel)]="InventoryGrnService.isTick">
+                    <label for="customCheck+{{row.id}}">
                     </label>
                   </div>
                 </ng-template>
               </ngx-datatable-column>
 
-              <ngx-datatable-column name="No" [width]="80" id="datatable-header-cell">
-                <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+              <ngx-datatable-column name="No" [width]="auto" id="datatable-header-cell">
+                <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
                   <strong>{{ rowIndex + 1 }}</strong>
                 </ng-template>
               </ngx-datatable-column>
 
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
+              <div class="col-md-6 text-center">
+                <ngx-datatable-column [width]="220" [resizeable]="false">
                   <ng-template ngx-datatable-header-template id="datatable-header-cell">
                     <span>Item</span>
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{rowDataPO.item}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
 
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
+              <div class="col-md-6 text-center">
+                <ngx-datatable-column [width]="220" [resizeable]="false">
                   <ng-template ngx-datatable-header-template id="datatable-header-cell">
                     <span>Description</span>
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{rowDataPO.description}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
 
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
+              <div class="col-md-6 text-center">
+                <ngx-datatable-column [width]="auto" [resizeable]="false">
                   <ng-template ngx-datatable-header-template id="datatable-header-cell">
                     <span>Quantity</span>
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{rowData.quantity}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
@@ -2362,21 +2096,20 @@
     <div class="card-footer">
       <div class="row">
         <div class="col text-right">
-          <button class="btn btn-danger" (click)="confirm('RJ')">close</button>
+          <button class="btn btn-danger" (click)="ModalStockReceive.hide()">close</button>
         </div>
       </div>
     </div>
-  </div>
 </ng-template>
 
 <ng-template #stockreturn>
   <div class="modal-header bg-default">
     <h6 class="modal-title my-auto text-white">
-      Receive Information
+      Return Information
     </h6>
 
     <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
-      (click)="ModalStockReceive.hide()">
+      (click)="ModalStockReturn.hide()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
   </div>
@@ -2386,240 +2119,21 @@
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Header Interface Number</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.header_interface_number}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Receipt Source Code</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Business Unit</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Transaction Type</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Receipt Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Supplier Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Supplier Site Code</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Bill Of Ladding</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Packing Slip</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Carrier Name</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Waybill</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Comments</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Receiver Name</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Interface Line Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Transaction Type</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Auto Transact Code</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Transaction Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Source Document Code</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Header Interface Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Organization Code</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Item Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Document Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Document Line Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Document Schedule Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Document Distribution Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Subinventory</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Quantity</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">UOM</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Locator</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Interface Source Code</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Issue Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.receipt_source_code}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Purchase Order</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Business Unit</label>
+          <input type="text" class="form-control form-control-sm" value="{{tablePO.business_unit}}" readonly />
         </div>
       </div>
     </div>
@@ -2627,15 +2141,22 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Delivery Order</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Transaction Type</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.transaction_type}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Good Receivd</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Receipt Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.receipt_number}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Supplier Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_number}}" readonly />
         </div>
       </div>
     </div>
@@ -2643,15 +2164,22 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Updated Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Supplier Site Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.supplier_site_code}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Organisation</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Bill Of Ladding</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.bill_of_ladding}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Packing Slip</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.packing_slip}}" readonly />
         </div>
       </div>
     </div>
@@ -2659,37 +2187,162 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Supplier Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Carrier Name</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.carrier_name}}" readonly />
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
+          <label class="form-control-label">Waybill</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.way_bill}}" readonly />
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Updated By</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Comments</label>
-          <div class="pl-lg-4">
-            <div class="form-group">
-              <textarea rows="4" class="form-control form-control-alternative" id="commentstock" readonly>A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-            </div>
-          </div>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataPO.comments}}" readonly />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Receiver Name</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.receiver_name}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Interface Line Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.interface_line_number}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Transaction Type</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.transaction_type}}" readonly />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Auto Transact Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.auto_transact_code}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Transaction Date</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.transaction_date}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Source Document Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.source_document_code}}" readonly />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Header Interface Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.header_interface_number}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Organization Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.organization_code}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Item Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.item_number}}" readonly />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Document Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.document_number}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Document Line Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.document_line_number}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Document Schedule Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.document_schedule_number}}" readonly />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Document Distribution Number</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.document_distribution_number}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Subinventory</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.sub_inventory_code}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Quantity</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.quantity}}" readonly />
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">UOM</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.po_line_uom}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Locator</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.locator}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Interface Source Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataGRN.interface_source_code}}" readonly />
         </div>
       </div>
     </div>
@@ -2720,7 +2373,7 @@
             </div>
 
             <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableGRN"
               (activate)="onActivate($event)">
 
               <ngx-datatable-column maxWidth="40">
@@ -2730,16 +2383,16 @@
 
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <div>
-                    <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                      [(ngModel)]="tableShowStock.isTick">
-                    <label for="customCheck+{{tableShowStock.id}}">
+                    <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRowGRN(row)"
+                      [(ngModel)]="tableGRN.isTick">
+                    <label for="customCheck+{{tableGRN.id}}">
                     </label>
                   </div>
                 </ng-template>
               </ngx-datatable-column>
 
               <ngx-datatable-column name="No" [width]="80" id="datatable-header-cell">
-                <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+                <ng-template let-rowIndex="rowIndex" let-row="tableGRN" ngx-datatable-cell-template>
                   <strong>{{ rowIndex + 1 }}</strong>
                 </ng-template>
               </ngx-datatable-column>
@@ -2751,7 +2404,7 @@
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{rowDataGRN.item}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
@@ -2763,7 +2416,7 @@
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{rowDataGRN.description}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
@@ -2775,7 +2428,7 @@
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{rowDataGRN.quantity}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
@@ -2796,7 +2449,7 @@
     <div class="card-footer">
       <div class="row">
         <div class="col text-right">
-          <button class="btn btn-danger" (click)="confirm('RJ')">close</button>
+          <button class="btn btn-danger" (click)="ModalStockReturn.hide()">close</button>
         </div>
       </div>
     </div>

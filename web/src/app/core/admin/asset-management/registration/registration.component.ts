@@ -754,7 +754,7 @@ export class RegistrationComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {
     this.getAssets();
-    this.getRegisteredData()
+    this.getRegisteredData();
 
     this.firstFormGroup = this.formBuilder.group({
       asset_primary_category: ["", Validators.required],
@@ -1074,7 +1074,7 @@ export class RegistrationComponent implements OnInit {
       (res) => {
         res.forEach(function(assetprimer){
           // console.log("asset primary uina =",assetprimer);
-          tempData.push(assetprimer)
+          tempData.push(assetprimer);
         })
         this.assetattributecolumnapi = tempData;
         let assetprimary1 = row.asset_primary_category;

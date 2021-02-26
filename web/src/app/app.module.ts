@@ -21,7 +21,6 @@ import { ComponentsModule } from "./components/components.module";
 import { AssetAttributeColumnModel } from './shared/services/asset-attribute-column/asset-attribute-column.model';
 // import { HttpTokenInterceptor } from "./shared/interceptor/http.token.interceptor";
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
-import { StockReceiveModel} from './shared/services/stock-receives/stock-receives.model';
 @NgModule({
   imports: [
     NgxSpinnerModule,
