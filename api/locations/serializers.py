@@ -11,7 +11,8 @@ from django.utils.timezone import now
 from .models import (
     Store,
     Region,
-    Location
+    Location,
+    State
 )
 
 from users.serializers import (
@@ -52,4 +53,11 @@ class LocationExtendedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Location
+        fields = '__all__'
+    
+
+class StateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = State
         fields = '__all__'

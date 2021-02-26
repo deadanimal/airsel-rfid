@@ -62,8 +62,8 @@ export class LoginPage implements OnInit {
 
     this.validations_form = this.formBuilder.group({
       username: new FormControl(
-        // "hafez.azman@airselangor.com", /// technician 
-        "testing", // inventory
+        "hafez.azman@airselangor.com", /// technician 
+        // "testing", // inventory
         Validators.compose([
           Validators.required,
           // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
@@ -71,8 +71,8 @@ export class LoginPage implements OnInit {
         ])
       ),
       password: new FormControl(
-        // "airselrfid@2020",
-        "PabloEscobar",
+        "airselrfid@2020",
+        // "PabloEscobar",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),
     });

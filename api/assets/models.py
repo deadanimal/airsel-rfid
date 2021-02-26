@@ -66,14 +66,14 @@ class AssetGroup(models.Model):
 class AssetType(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100, default='NA')
-    
-    CATEGORY = [
-        ('AC', 'Asset / Component'),
-        ('AG', 'Asset Category'),
-        ('AT', 'Asset Type (Asset Primary Category)')
-    ]
-    category = models.CharField(max_length=2, choices=CATEGORY, default='AI')
+    asset_bussiness_object = models.CharField(max_length=100, default='NA')
+    asset_type_code = models.CharField(max_length=100, default='NA')
+    asset_type_description = models.CharField(max_length=100, default='NA')
+    status = models.CharField(max_length=100, default='NA')
+    assessment_class = models.CharField(max_length=100, default='NA')
+    profile_failure = models.CharField(max_length=100, default='NA')
+    owned_organisation = models.CharField(max_length=100, default='NA')
+    instance_organisation = models.CharField(max_length=100, default='NA')
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -116,7 +116,7 @@ class AssetAttribute(models.Model):
 class Asset(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    asset_id = models.CharField(max_length=100, blank=True )
+    asset_id = models.CharField(max_length=12, blank=True )
     asset_type = models.CharField(max_length=100, blank=True )
     transaction_type = models.CharField(max_length=100, blank=True )
     description = models.CharField(max_length=225, blank=True)
@@ -124,7 +124,7 @@ class Asset(models.Model):
     bo_status = models.CharField(max_length=100, blank=True)
     owning_access_group = models.CharField(max_length=100, null=True, blank=True)
     effective_datetime = models.DateTimeField(null=True)
-    node_id = models.CharField(max_length=100, blank=True)
+    node_id = models.CharField(max_length=12, blank=True)
     badge_no = models.CharField(max_length=100, blank=True)
     serial_no = models.CharField(max_length=100, blank=True)
     pallet_no = models.CharField(max_length=100, blank=True)
@@ -140,7 +140,7 @@ class Asset(models.Model):
     vehicle_identification_num = models.CharField(max_length=100, blank=True)
     license_number = models.CharField(max_length=100, blank=True)
     purchase_order_num = models.CharField(max_length=100, blank=True)
-    location_id = models.CharField(max_length=100, blank=True)
+    location_id = models.CharField(max_length=12, blank=True)
     metrology_firmware = models.CharField(max_length=100, blank=True)
     nic_firmware = models.CharField(max_length=100, blank=True)
     configuration = models.CharField(max_length=100, blank=True)
@@ -170,9 +170,9 @@ class Asset(models.Model):
 class AssetRegistration(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    asset_id = models.CharField(max_length=200, default='',null=True, blank=True)
+    asset_id = models.CharField(max_length=12, default='',null=True, blank=True)
     badge_no = models.CharField(max_length=100, default='',null=True, blank=True)
-    node_id = models.CharField(max_length=200, default='',null=True, blank=True)
+    node_id = models.CharField(max_length=12, default='',null=True, blank=True)
     hex_code = models.CharField(max_length=200, default='',null=True, blank=True)
     asset_identity = models.CharField(max_length=200, default='',null=True, blank=True)
     parent_location = models.CharField(max_length=200, default='',null=True, blank=True)
@@ -422,7 +422,7 @@ class AssetAttributeColumn(models.Model):
         ordering = ['-asset_type_id']
 
 class AssetLocation(models.Model):
-
+    
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     location_type = models.CharField(max_length=100, blank=True)
     locatin_disposition = models.CharField(max_length=100, blank=True)
@@ -468,7 +468,7 @@ class AssetLocation(models.Model):
     asset_criticality = models.CharField(max_length=100, blank=True)
     criticality_reason = models.CharField(max_length=100, blank=True)
     gis_id = models.CharField(max_length=100, blank=True)
-    connected_to_location_id = models.CharField(max_length=100, blank=True)
+    connected_to_location_id = models.CharField(max_length=12, blank=True)
     water_asset_category = models.CharField(max_length=100, blank=True)
     land_asset_status = models.CharField(max_length=100, blank=True)
     land_ownership_number = models.CharField(max_length=100, blank=True)
@@ -505,3 +505,32 @@ class AssetLocation(models.Model):
 
     def __str__(self):
         return self.work_request_approval_profile
+
+## baru tambah
+class AssetLocationSync(models.Model):
+
+    uuid = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+    node_id = models.CharField(max_length=12, blank=True)
+    description = models.CharField(max_length=255, blank=True)
+    
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+class AssetAttributeField(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    asset_type_id = models.CharField(max_length=100, null=True)
+    code = models.CharField(max_length=100, blank=True )
+    value = models.CharField(max_length=100, blank=True )
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    # def __str__(self):
+    #     return ('%s %s %s'%(self.characteristic_type, self.adhoc_value, self.characteristic_value))

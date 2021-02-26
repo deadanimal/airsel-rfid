@@ -39,7 +39,6 @@ class Store(models.Model):
     def __str__(self):
         return self.name
 
-
 class Region(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -53,7 +52,6 @@ class Region(models.Model):
     
     def __str__(self):
         return self.name
-
 
 class Location(models.Model):
 
@@ -76,3 +74,18 @@ class Location(models.Model):
     def __str__(self):
         return self.name
     
+## baru tambah
+class State(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    code = models.CharField(max_length=100, default='NA')
+    state = models.CharField(max_length=100, default='NA')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['name']
+    
+    def __str__(self):
+        return self.name

@@ -2,6 +2,13 @@ import { Component, OnInit, NgZone } from "@angular/core";
 import { AlertController, ModalController, ActionSheetController } from "@ionic/angular";
 import { ListItemPage } from '../list-item/list-item.page';
 import { NavigationExtras, Router } from "@angular/router";
+import { InventoryGrnService } from 'src/app/shared/services/inventory-grn/inventory-grn.service';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  FormControl,
+} from "@angular/forms";
 
 @Component({
   selector: 'app-stock-receive',
@@ -18,6 +25,9 @@ export class StockReceivePage implements OnInit {
   public scanValue: any;
   bBarcode: boolean = false;
   bRfid: boolean = false;
+
+  // Loading
+  isLoading: boolean = false;
 
   // lists
   pendings = [
@@ -101,12 +111,17 @@ export class StockReceivePage implements OnInit {
     },
   ];
 
+  // Form
+  stockReceiveForm: FormGroup;
+
   constructor(
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     public modalController: ModalController,
     private ngZone: NgZone,
-    private router: Router
+    private router: Router,
+    private inventoryGrnService: InventoryGrnService,
+    // private formBuilder: FormBuilder
   ) { }
 
   private L(...args: any[]) {
@@ -118,51 +133,55 @@ export class StockReceivePage implements OnInit {
   }
 
   ngOnInit() {
-    this.items = this.pendings;
     this.onRegister2DBarcodeListener();
     this.onRegisterRFIDListener();
+    this.items = this.pendings;
+
+    // this.stockReceiveForm = this.formBuilder.group({
+
+    // username: new FormControl(
+    //   // "hafez.azman@airselangor.com", /// technician 
+    //   "testing", // inventory
+    //   Validators.compose([
+    //     Validators.required,
+    //     // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
+    //     // Validators.email,
+    //   ])
+    // ),
+    // password: new FormControl(
+    //   // "airselrfid@2020",
+    //   "PabloEscobar",
+    //   Validators.compose([Validators.minLength(6), Validators.required])
+    // ),
+    // })
   }
-
-  initializeItems(): void {
-    this.pendings = this.items;
-  }
-
-  categorySelect() {
-    this.initializeItems();
-
-    this.pendings = this.pendings.filter((pending) => {
-      if (this.category == "All") return true;
-      else
-        return (
-          pending.type.toLowerCase().indexOf(this.category.toLowerCase()) > -1
-        );
-    });
-  }
-
-  async notesAlert() {
-    const alert = await this.alertController.create({
-      header: "Notes",
-      message:
-        "Your submission is rejected due to wrong asset information. Please resubmit again. Thank you.",
-      buttons: ["OK"],
-    });
-
-    await alert.present();
-  }
-
-  async openListItem() {
-    const modal = await this.modalController.create({
-      component: ListItemPage
-    });
-    return await modal.present();
-  }
-
 
   updateData(data) {
+    console.log('data = ', data)
     this.ngZone.run(() => {
       this.scanValue = data;
       alert(this.scanValue);
     });
+
+    // // start update data with service
+    // this.isLoading = true;
+    // this.inventoryGrnService.post(this.stockReceiveForm.value).subscribe(
+    //   (res) => {
+    //     // Success
+    //     this.isLoading = false;
+    //     console.log('res = ', res)
+    //   },
+    //   () => {
+    //     // Failed
+    //     this.isLoading = false;
+    //   },
+    //   () => {
+    //     // After
+    //     // this.toastr.openToastr("Welcome back");
+    //     // this.navigateByRole(this.authService.userType);
+    //   }
+    // );
+    // // end
   }
 
   onRegister2DBarcodeListener() {

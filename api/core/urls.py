@@ -35,7 +35,9 @@ from assets.views import (
     AssetAttributeViewSet,
     AssetAttributeColumnViewSet,
     AssetLocationViewSet,
-    AssetMeasurementTypeViewSet
+    AssetMeasurementTypeViewSet,
+    AssetLocationSyncViewSet,
+    AssetAttributeFieldViewSet
 )
 
 assets_router = router.register(
@@ -78,11 +80,19 @@ assets_measurement_type_router = router.register(
     'asset-measurement-type', AssetMeasurementTypeViewSet
 )
 
+asset_location_sync_router = router.register(
+    'asset-location-sync', AssetLocationSyncViewSet
+)
+
+asset_attribute_field_router = router.register(
+    'asset-attribute-field', AssetAttributeFieldViewSet
+)
 # Locations app
 from locations.views import (
     RegionViewSet,
     StoreViewSet,
-    LocationViewSet
+    LocationViewSet,
+    StateViewSet
 )
 
 regions_router = router.register(
@@ -95,6 +105,10 @@ stores_router = router.register(
 
 locations_router = router.register(
     'locations', LocationViewSet
+)
+
+states_router = router.register(
+    'states', StateViewSet
 )
 
 # Medias app
@@ -130,13 +144,55 @@ from operations.views import (
     WorkRequestViewSet,
     WorkRequestStatusViewSet,
     MeasurementTypeViewSet,
-
     WorkOrderActivityCompletionAssetLocationAssetListViewSet,
     AssetLocationAssetListServiceHistoriesViewSet,
     ServiceHistoriesQuestionsViewSet,
     QuestionsValidValueViewSet,
     WorkOrderActivityCompletionViewSet,
+
+    ServiceHistoryViewSet,ServiceHistoryQuestionViewSet,ServiceHistoryQuestionValidValueViewSet,
+    PlannerViewSet,MaintenanceManagerViewSet,WorkRequestViewSet,MainOperationViewSet,FunctionViewSet,LocationTypeViewSet,
+    SubFunctionViewSet,CostCenterViewSet,OperationViewSet,WorkActivityEmployeeViewSet
 )
+
+
+service_history_router = router.register(
+    'service-history', ServiceHistoryViewSet
+)
+service_history_question_router = router.register(
+    'service-history-question', ServiceHistoryQuestionViewSet
+)
+service_history_question_valid_value_router = router.register(
+    'service-history-question-valid-value', ServiceHistoryQuestionValidValueViewSet
+)
+planner_router = router.register(
+    'planner', PlannerViewSet
+)
+maintenance_manager_router = router.register(
+    'maintenance-manager', MaintenanceManagerViewSet
+)
+work_request_router = router.register(
+    'work-request', WorkRequestViewSet
+)
+main_operation_router = router.register(
+    'main-operation-organizations', MainOperationViewSet
+)
+function_router = router.register(
+    'function', FunctionViewSet
+)
+location_type_router = router.register(
+    'location-type', LocationTypeViewSet
+)
+sub_function_router = router.register(
+    'sub-function', SubFunctionViewSet
+)
+cost_center_router = router.register(
+    'cost-center', CostCenterViewSet
+)
+operation_router = router.register(
+    'operation', OperationViewSet
+)
+
 
 owning_organizations_router = router.register(
     'owning-organizations', OwningOrganizationViewSet
@@ -185,10 +241,13 @@ work_requests_router = router.register(
 work_request_statuses_router = router.register(
     'work-request-statuses', WorkRequestStatusViewSet
 )
-
 measurement_types_router = router.register(
     'measurement-types', MeasurementTypeViewSet
 )
+work_activity_employee_router = router.register(
+    'work-activity-employee', WorkActivityEmployeeViewSet
+)
+
 
 #### dopied from dev aoi
 
@@ -326,6 +385,25 @@ transaction_router = router.register(
 material_request_router = router.register(
     'inventory-material-request', InventoryMaterialViewSet
 )
+
+## employee app
+from employee.views import (
+    EmployeeViewSet,FailureProfileViewSet,ApprovalProfileViewSet
+)
+
+employee_router = router.register(
+    'employee', EmployeeViewSet
+)
+
+failure_profile_router = router.register(
+    'failure-profile', FailureProfileViewSet
+)
+
+approval_profile_router = router.register(
+    'approval-profile', ApprovalProfileViewSet
+)
+
+############################################# url
 
 urlpatterns = [
     url(r'^email-verification/$',

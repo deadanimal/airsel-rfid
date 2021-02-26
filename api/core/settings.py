@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'stocks',
     'users',
     'wams',
-    'inventory'
+    'inventory',
+    'employee'
 ]
 
 MIDDLEWARE = [
@@ -98,7 +99,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'airsel-rfid',
+#         'NAME': 'airsel-rfid-dev',
 #         'USER': 'postgres',
 #         'PASSWORD': '',
 #         'HOST': 'localhost',
@@ -190,8 +191,12 @@ REST_FRAMEWORK = {
         
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S+00:00"
-    
+    'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S+00:00",
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.AdminRenderer'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5
 }
 
 REST_AUTH_SERIALIZERS = {
