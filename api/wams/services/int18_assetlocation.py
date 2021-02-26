@@ -31,7 +31,7 @@ def insert_into_asset_location_sync(dict):
         asset_location_sync.save()
 
     else:
-        asset_location_sync = AssetLocationSync.objects.filter(node_id=node_id)
+        asset_location_sync = AssetLocationSync.objects.get(node_id=node_id)
         asset_location_sync.description = description
         asset_location_sync.save()
 

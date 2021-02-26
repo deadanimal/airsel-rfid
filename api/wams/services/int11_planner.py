@@ -27,18 +27,18 @@ def insert_into_planner(dict):
         "user_id": user_id
     }
 
-    planner = Planner.objects.filter(**dictionary_planner).exists()
+    planner_exist = Planner.objects.filter(planner=planner).exists()
 
-    if not planner:
+    if not planner_exist:
         # planner does not exist in the database
         planner = Planner(**dictionary_planner)
         planner.save()
 
     else:
-        planner = Planner.objects.filter(**dictionary_planner)
-        planner.planner = planner
+        planner = Planner.objects.get(planner=planner)
         planner.description = description
         planner.status = status
+        planner.user_id = user_id
         planner.save()
 
 
