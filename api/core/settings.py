@@ -192,11 +192,11 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S+00:00",
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.AdminRenderer'
-    ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.AdminRenderer'
+    # ],
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 5
 }
 
 REST_AUTH_SERIALIZERS = {
