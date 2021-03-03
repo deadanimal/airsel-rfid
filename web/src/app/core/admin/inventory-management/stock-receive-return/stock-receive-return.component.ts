@@ -50,6 +50,14 @@ export class StockReceiveReturnComponent implements OnInit, OnDestroy {
   rowDataPO:any
   rowDataGRN:any
 
+ // Create information
+ ModalCreate: BsModalRef;
+ modalConfigCreate = {
+   keyboard: true,
+   class: "modal-dialog-centered modal-lg",
+   ignoreBackdropClick: true,
+ }
+
   // Modal Stock Receive
   ModalStockReceive: BsModalRef;
   modalConfigReceive = {
@@ -65,6 +73,7 @@ export class StockReceiveReturnComponent implements OnInit, OnDestroy {
     class: "modal-dialog-centered modal-lg",
     ignoreBackdropClick: true,
   };
+
 
   // Testing value
   percentvalues =
@@ -215,7 +224,7 @@ checkRowPO(selected) {
   this.tablePO = tempData
 }
 
-checkRow2(selected) {
+checkRowGRN(selected) {
   let tempData = []
   // console.log('test test tetst')
   this.tableGRN.forEach(
@@ -238,6 +247,13 @@ entriesChange($event) {
   console.log($event)
   this.entries = $event.target.value;
   console.log(this.entries)
+}
+
+openCreate(modalNotification: TemplateRef<any>) {
+  this.ModalCreate = this.modalService.show(
+    modalNotification,
+    this.modalConfigCreate,
+  );
 }
 
 openReceiveInformation(modalNotification: TemplateRef<any>, row) {

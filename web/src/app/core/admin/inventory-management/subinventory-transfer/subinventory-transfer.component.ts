@@ -8,6 +8,8 @@ import {
 } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 
+import { InventoryTransactionService } from "src/app/shared/services/inventory-transaction/inventory-transaction.service";
+
 @Component({
   selector: 'app-subinventory-transfer',
   templateUrl: './subinventory-transfer.component.html',
@@ -26,53 +28,16 @@ export class SubinventoryTransferComponent implements OnInit {
   //Data Entries
   entries: number = 5;
 
-  //Testing data
-  tableShowStockCount = [
-    {
-      "id": 1,
-      "transaction_date": "Test1",
-      "organization_code": "Test1",
-      "source_code":"Test1",
-      "item_number":"Test1",
-      "subinventory_code":"Test1",
-    },
-    {
-      "id": 2,
-      "transaction_date": "Test2",
-      "organization_code": "Test2",
-      "source_code":"Test2",
-      "item_number":"Test2",
-      "subinventory_code":"Test2",
-    },
-    {
-      "id": 3,
-      "transaction_date": "Test3",
-      "organization_code": "Test3",
-      "source_code":"Test3",
-      "item_number":"Test3",
-      "subinventory_code":"Test3",
-    },
-    {
-      "id": 4,
-      "transaction_date": "Test4",
-      "organization_code": "Test4",
-      "source_code":"Test4",
-      "item_number":"Test4",
-      "subinventory_code":"Test4",
-    },
-    {
-      "id": 5,
-      "transaction_date": "Test5",
-      "organization_code": "Test5",
-      "source_code":"Test5",
-      "item_number":"Test5",
-      "subinventory_code":"Test5",
-    },
-  ]
+  // Actual Data
+  tableTemptInventoryTransaction = [];
+  rowDataInventoryTransaction: any;
 
   constructor(
     public modalService: BsModalService,
-  ) { }
+    public InventoryTransactionService: InventoryTransactionService,
+  ) {
+      this.getInventoryTransactionData();
+    }
 
   ngOnInit() {}
 
@@ -82,7 +47,25 @@ export class SubinventoryTransferComponent implements OnInit {
     console.log(this.entries)
   }
 
+  getInventoryTransactionData(){
+    let tempData = [];
+    this.InventoryTransactionService.get().subscribe(
+      (res) => {
+        res.forEach(function(result){
+          tempData.push(result)
+        })
+        this.tableTemptInventoryTransaction = tempData;
+        console.log("test1 = ", this.tableTemptInventoryTransaction);
+      },
+      error => {
+        console.error("err, error");
+      }
+    )
+  }
+
   openSubInventory(modalNotification: TemplateRef<any>, row) {
+    this.rowDataInventoryTransaction = '';
+    this.rowDataInventoryTransaction = row;
       this.ModalSubInventory = this.modalService.show(
           modalNotification,
           this.modalConfig,

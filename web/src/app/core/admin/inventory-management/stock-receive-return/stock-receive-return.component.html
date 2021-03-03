@@ -71,7 +71,6 @@
           <span class="h2 font-weight-bold mb-0">
             {{stock_partial}} Tasks
           </span>
-
         </div>
 
         <div class="col-md-6">
@@ -166,7 +165,7 @@
           <div class="form-group">
             <div class="col" id="buttontop">
               <div class="row">
-                <button class="btn btn-success">Create</button>
+                <button class="btn btn-success" (click)="openCreate(create)">Create</button>
                 <button class="btn btn-success">Export</button>
               </div>
             </div>
@@ -859,6 +858,209 @@
 
 </div>
 
+<ng-template #create>
+  <div class="modal-header bg-default">
+    <h6 class="modal-title my-auto text-white">
+      Create Receive Information
+    </h6>
+
+    <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
+      (click)="ModalCreate.hide()">
+      <span aria-hidden="true" class="my-auto text-white"> × </span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Create Date</label>
+          <input type="date" class="form-control form-control-sm"/>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Receive Type</label>
+          <div class="form-group">
+            <select class="form-control custom-select form-control-sm custom-select-sm">
+              <option value="">Please select</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Status</label>
+          <div class="form-group">
+            <select class="form-control custom-select form-control-sm custom-select-sm">
+              <option value="">Please select</option>
+              <!-- <option *ngFor="let assetowningdepartment of assetowningdepartment"
+                [value]="assetowningdepartment.value">testing</option> -->
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Order Type</label>
+          <div class="form-group">
+            <select class="form-control custom-select form-control-sm custom-select-sm">
+              <option value="">Please select</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Updated Date</label>
+          <input type="text" class="form-control form-control-sm" readonly/>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Organisation</label>
+          <div class="form-group">
+            <select class="form-control custom-select form-control-sm custom-select-sm">
+              <option value="">Please select</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Updated By</label>
+          <input type="text" class="form-control form-control-sm" readonly/>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Rating</label>
+          <input type="text" class="form-control form-control-sm" readonly/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Comments</label>
+          <input type="text" class="form-control form-control-sm" readonly/>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg">
+      <div class="card" name="Items">
+        <div class="dataTables_wrapper py-4">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="dataTables_length" id="datatable_length">
+                <h2>Items List</h2>
+                <label>
+                  Show
+                  <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm"
+                    (change)="entriesChange($event)">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="-1">All</option>
+                  </select>
+                  records
+                </label>
+              </div>
+            </div>
+            <div class="col-auto">
+            </div>
+          </div>
+
+          <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+            [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
+            (activate)="onActivate($event)">
+
+            <ngx-datatable-column maxWidth="40">
+              <ng-template ngx-datatable-header-template>
+                <input type="checkbox">
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div>
+                  <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRowPO(row)"
+                    [(ngModel)]="tablePO.isTick">
+                  <label for="customCheck+{{tablePO.id}}">
+                  </label>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="No" [width]="auto" id="datatable-header-cell">
+              <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
+                <strong>{{ rowIndex + 1 }}</strong>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <div class="col-md-6 text-center">
+              <ngx-datatable-column [width]="220" [resizeable]="false">
+                <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                  <span>Item</span>
+                </ng-template>
+
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <input type="text" class="form-control" value="{{row.items}}" readonly />
+                </ng-template>
+              </ngx-datatable-column>
+            </div>
+
+            <div class="col-md-6 text-center">
+              <ngx-datatable-column [width]="220" [resizeable]="false">
+                <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                  <span>Description</span>
+                </ng-template>
+
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <input type="text" class="form-control" value="{{row.description}}" readonly />
+                </ng-template>
+              </ngx-datatable-column>
+            </div>
+
+            <div class="col-md-6 text-center">
+              <ngx-datatable-column [width]="auto" [resizeable]="false">
+                <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                  <span>Quantity</span>
+                </ng-template>
+
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <input type="text" class="form-control" value="{{row.quantity}}" readonly />
+                </ng-template>
+              </ngx-datatable-column>
+            </div>
+
+          </ngx-datatable>
+        </div>
+
+
+      </div>
+    </div>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+      <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+  </div>
+
+</ng-template>
+
 <ng-template #stockall>
   <div class="modal-header bg-default">
     <h6 class="modal-title my-auto text-white">
@@ -893,7 +1095,6 @@
           <input type="text" class="form-control form-control-sm" value="{{rowDataPO.change_order_status}}" readonly />
         </div>
       </div>
-
     </div>
 
     <div class="row">

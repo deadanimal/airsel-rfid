@@ -41,13 +41,8 @@
             <h3 class="card-title text-uppercase text-muted mb-0">
               ALL
             </h3>
-
-            <span class="h4 font-weight-bold mb-0">
-              {{percentvalues[0].percent_all_value}}% Completed
-            </span>
-            <br>
-            <span class="h4 font-weight-bold mb-0">
-              {{taskvalues[0].task_all_value}} Tasks
+            <span class="h2 font-weight-bold mb-0">
+              {{task_issuance_value + task_in_value + task_update_value}} Tasks
             </span>
           </div>
 
@@ -73,15 +68,9 @@
             <h3 class="card-title text-uppercase text-muted mb-0">
               STOCK ISSUANCE
             </h3>
-
-            <span class="h4 font-weight-bold mb-0">
-              {{ percentvalues[0].percent_issuance_value }}% Completed
+            <span class="h2 font-weight-bold mb-0">
+              {{task_issuance_value}} Tasks
             </span>
-            <br>
-            <span class="h4 font-weight-bold mb-0">
-              {{taskvalues[0].task_issuance_value}} Tasks
-            </span>
-
           </div>
 
           <div class="col-md-6">
@@ -106,13 +95,8 @@
             <h3 class="card-title text-uppercase text-muted mb-0">
               STOCK IN
             </h3>
-
-            <span class="h4 font-weight-bold mb-0">
-              {{ percentvalues[0].percent_in_value }}% Completed
-            </span>
-            <br>
-            <span class="h4 font-weight-bold mb-0">
-              {{taskvalues[0].task_in_value}} Tasks
+            <span class="h2 font-weight-bold mb-0">
+              {{task_in_value}} Tasks
             </span>
           </div>
 
@@ -138,13 +122,8 @@
             <h3 class="card-title text-uppercase text-muted mb-0">
               STOCK UPDATE
             </h3>
-
-            <span class="h4 font-weight-bold mb-0">
-              {{ percentvalues[0].percent_update_value }}% Completed
-            </span>
-            <br>
-            <span class="h4 font-weight-bold mb-0">
-              {{taskvalues[0].task_update_value}} Tasks
+            <span class="h2 font-weight-bold mb-0">
+              {{task_update_value}} Tasks
             </span>
           </div>
 
@@ -298,7 +277,7 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="150" [sortable]="true">
+            <ngx-datatable-column [width]="200" [sortable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Stock Type</span>
               </ng-template>
@@ -351,112 +330,101 @@
         </div>
 
         <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStockIssuance"
+          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction"
           (activate)="onActivate($event)">
 
-          <ngx-datatable-column [width]="40">
+          <ngx-datatable-column [width]="50">
             <ng-template ngx-datatable-header-template>
               <input type="checkbox">
             </ng-template>
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
-                <input type="checkbox" id="customCheck+{{tableShowStockIssuance.id}}">
-                <label for="customCheck+{{tableShowStockIssuance.id}}">
+                <input type="checkbox" id="customCheck+{{row.id}}">
+                <label for="customCheck+{{row.id}}">
                 </label>
               </div>
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column  name = "No" [width]="40" id="datatable-header-cell">
+          <ngx-datatable-column [width]="80" id="datatable-header-cell">
+            <ng-template ngx-datatable-header-template id="datatable-header-cell">
+              <span>No</span>
+            </ng-template>
 
-            <ng-template let-rowIndex="rowIndex" let-row="tableShowStockIssuance" ngx-datatable-cell-template>
+            <ng-template let-rowIndex="rowIndex" let-row="tableTemptInventoryTransaction" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="160" [resizeable]="false">
+            <ngx-datatable-column [width]="230" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>MR NUmber</span>
+                <span>Organization Code</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_date}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.ORGANIZATION_CODE}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="230" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>MR Type</span>
+                <span>Source Code</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.purchase_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.SOURCE_CODE}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="230" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Required Date</span>
+                <span>Transaction Date</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.TRANSACTION_DATE | date}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="230" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Requested Quantity</span>
+                <span>Item Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.updated_date}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.ITEM_NUMBER}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="230" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Item</span>
+                <span>Subinventory Code</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.organization}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.SUBINVENTORY_CODE}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="180" [resizeable]="false">
+            <ngx-datatable-column [width]="200" [sortable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Created By</span>
+                <span>Transaction Date</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.supplier_name}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
-            <ngx-datatable-column [width]="120" [sortable]="true">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Stock Type</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <!-- <span class="badge badge-info" *ngIf="row.status == 'TR'">To Receive</span> -->
-                <span class="badge badge-warning">Stock In</span>
-                <!-- <span class="badge badge-success" *ngIf="row.status == 'CO'">Complete</span> -->
+                <span class="h4 font-weight-bold mb-0">{{row.TRANSACTION_DATE | date}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -468,7 +436,7 @@
               </ng-template>
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <button class="btn btn-default"
-                  (click)="openStockIssuance(stockin, row)">Detail</button>
+                  (click)="openStockIn(stockin, row)">Detail</button>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -511,7 +479,7 @@
         </div>
 
         <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStockIssuance"
+          [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableTempMaterialRequest"
           (activate)="onActivate($event)">
 
           <ngx-datatable-column [width]="40">
@@ -521,15 +489,15 @@
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
-                <input type="checkbox" id="customCheck+{{tableShowStockIssuance.id}}">
-                <label for="customCheck+{{tableShowStockIssuance.id}}">
+                <input type="checkbox" id="customCheck+{{tableTempMaterialRequest.id}}">
+                <label for="customCheck+{{tableTempMaterialRequest.id}}">
                 </label>
               </div>
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="No" [width]="40" id="datatable-header-cell">
-            <ng-template let-rowIndex="rowIndex" let-row="tableShowStockIssuance" ngx-datatable-cell-template>
+            <ng-template let-rowIndex="rowIndex" let-row="tableTempMaterialRequest" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
@@ -538,7 +506,7 @@
             <ngx-datatable-column name ="MR Number" [width]="160" [resizeable]="false">
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_date}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.movement_request_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -550,7 +518,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.purchase_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.movement_request_type}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -562,7 +530,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.required_date | date}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -574,7 +542,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.updated_date}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.requested_quantity}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -586,25 +554,25 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.organization}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.item}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="180" [resizeable]="false">
+            <ngx-datatable-column [width]="250" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Created By</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.supplier_name}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.created_by}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="120" [sortable]="true">
+            <ngx-datatable-column [width]="200" [sortable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Stock Type</span>
               </ng-template>
@@ -643,221 +611,6 @@
     </div>
   </div>
 </div>
-
-<ng-template #stockall>
-  <div class="modal-header bg-default">
-    <h6 class="modal-title my-auto text-white">
-      Receive Information
-    </h6>
-
-    <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
-      (click)="ModalStockIssuance.hide()">
-      <span aria-hidden="true" class="my-auto text-white"> × </span>
-    </button>
-  </div>
-
-  <div class="modal-body">
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Delivery Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Purchase Order</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Delivery Order</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Order Type</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Updated Date</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Organisation</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Supplier Name</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Status</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Updated By</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Rating</label>
-          <input type="text" class="form-control form-control-sm" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Comments</label>
-          <div class="pl-lg-4">
-            <div class="form-group">
-              <textarea rows="4" class="form-control form-control-alternative" id="commentstock" readonly>A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg">
-        <div class="card" name="Items">
-          <div class="dataTables_wrapper py-4">
-            <div class="row">
-              <div class="col-sm-12 col-md-6">
-                <div class="dataTables_length" id="datatable_length">
-                  <h2>Items List</h2>
-                  <label>
-                    Show
-                    <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm"
-                      (change)="entriesChange($event)">
-                      <option value="5">5</option>
-                      <option value="10">10</option>
-                      <option value="15">15</option>
-                      <option value="-1">All</option>
-                    </select>
-                    records
-                  </label>
-                </div>
-              </div>
-              <div class="col-auto">
-              </div>
-            </div>
-
-            <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
-              (activate)="onActivate($event)">
-
-              <ngx-datatable-column maxWidth="40">
-                <ng-template ngx-datatable-header-template>
-                  <input type="checkbox">
-                </ng-template>
-
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  <div>
-                    <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                      [(ngModel)]="tableShowStock.isTick">
-                    <label for="customCheck+{{tableShowStock.id}}">
-                    </label>
-                  </div>
-                </ng-template>
-              </ngx-datatable-column>
-
-              <ngx-datatable-column name="No" [width]="80" id="datatable-header-cell">
-                <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
-                  <strong>{{ rowIndex + 1 }}</strong>
-                </ng-template>
-              </ngx-datatable-column>
-
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
-                  <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                    <span>Item</span>
-                  </ng-template>
-
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
-                  </ng-template>
-                </ngx-datatable-column>
-              </div>
-
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
-                  <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                    <span>Description</span>
-                  </ng-template>
-
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
-                  </ng-template>
-                </ngx-datatable-column>
-              </div>
-
-              <div class="col-md-6">
-                <ngx-datatable-column [width]="160" [resizeable]="false">
-                  <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                    <span>Quantity</span>
-                  </ng-template>
-
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
-                  </ng-template>
-                </ngx-datatable-column>
-              </div>
-
-            </ngx-datatable>
-          </div>
-
-
-        </div>
-      </div>
-
-      <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
-        <p style="color: white"> Loading... </p>
-      </ngx-spinner>
-
-    </div>
-
-    <div class="card-footer">
-      <div class="row">
-        <div class="col text-right">
-          <button class="btn btn-danger" (click)="ModalStockIssuance.hide()">close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</ng-template>
 
 <ng-template #stockissuance>
   <div class="modal-header bg-default">
@@ -1183,7 +936,7 @@
     </h6>
 
     <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
-      (click)="ModalStockIssuance.hide()">
+      (click)="ModalStockIn.hide()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
   </div>
@@ -1193,45 +946,22 @@
   <div class="row">
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Movement Request Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Organization Code</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.ORGANIZATION_CODE}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Movement Request Type</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Source Code</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.SOURCE_CODE}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Description</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Required Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Transaction Type</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Status</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Source Header ID</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.SOURCE_HEADER_ID}}" readonly />
       </div>
     </div>
   </div>
@@ -1239,45 +969,22 @@
   <div class="row">
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Source Subinventory</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Transaction Date</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_DATE | date}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Source Locator</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Source Line ID</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.SOURCE_LINE_ID}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Destination Subinventory</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Destination Locator</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Destination Account</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Line Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Transaction Cost Identifier</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_COST_IDENTIFIER}}" readonly />
       </div>
     </div>
   </div>
@@ -1285,45 +992,22 @@
   <div class="row">
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Item</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Item Number</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.ITEM_NUMBER}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Transaction Type</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Subinventory Code</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.SUBINVENTORY_CODE}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Required Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Requested Quantity</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">UOM Name</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Status</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Transaction Quantity</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_QUANTITY}}" readonly />
       </div>
     </div>
   </div>
@@ -1331,45 +1015,22 @@
   <div class="row">
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Source Subinventory</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Transaction UOM</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_UOM}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Source Locator</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Transaction Type Name</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_TYPE_NAME}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Destination Subinventory</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Destination Locator</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Required Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="form-group">
-        <label class="form-control-label">Created By</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Transaction Reference</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_REFERENCE}}" readonly />
       </div>
     </div>
   </div>
@@ -1377,22 +1038,22 @@
   <div class="row">
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Destination Account</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Use Current Cost</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.USE_CURRENT_COST}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Delivery Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Cost Component Code</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.COST_COMPONENT_CODE}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
-        <label class="form-control-label">Purchase Order</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <label class="form-control-label">Cost</label>
+        <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.COST}}" readonly />
       </div>
     </div>
   </div>
@@ -1423,7 +1084,7 @@
             </div>
 
             <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction"
               (activate)="onActivate($event)">
 
               <ngx-datatable-column maxWidth="40">
@@ -1433,16 +1094,16 @@
 
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <div>
-                    <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                      [(ngModel)]="tableShowStock.isTick">
-                    <label for="customCheck+{{tableShowStock.id}}">
+                    <input type="checkbox" id="customCheck+{{tableTemptInventoryTransaction.id}}" (change)="checkRow(row)"
+                      [(ngModel)]="tableTemptInventoryTransaction.isTick">
+                    <label for="customCheck+{{tableTemptInventoryTransaction.id}}">
                     </label>
                   </div>
                 </ng-template>
               </ngx-datatable-column>
 
               <ngx-datatable-column name="No" [width]="80" id="datatable-header-cell">
-                <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+                <ng-template let-rowIndex="rowIndex" let-row="tableTemptInventoryTransaction" ngx-datatable-cell-template>
                   <strong>{{ rowIndex + 1 }}</strong>
                 </ng-template>
               </ngx-datatable-column>
@@ -1512,21 +1173,21 @@
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Movement Request Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.movement_request_number}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Movement Request Type</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.movement_request_type}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Description</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.description}}" readonly />
       </div>
     </div>
   </div>
@@ -1535,21 +1196,21 @@
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Required Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.required_date | date}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Transaction Type</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.transaction_type}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Status</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.status}}" readonly />
       </div>
     </div>
   </div>
@@ -1558,21 +1219,21 @@
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Source Subinventory</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.source_sub_inventory}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Source Locator</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.source_locator}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Destination Subinventory</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.destination_sub_inventory}}" readonly />
       </div>
     </div>
   </div>
@@ -1581,21 +1242,21 @@
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Destination Locator</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.destination_locator}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Destination Account</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.destination_account}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Line Number</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.line_number}}" readonly />
       </div>
     </div>
   </div>
@@ -1604,21 +1265,21 @@
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Item</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.item}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Transaction Type</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.transaction_type}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Required Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.required_date | date}}" readonly />
       </div>
     </div>
   </div>
@@ -1627,21 +1288,21 @@
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Requested Quantity</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.requested_quantity}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">UOM Name</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.uom_name}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Status</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.status}}" readonly />
       </div>
     </div>
   </div>
@@ -1650,21 +1311,21 @@
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Source Subinventory</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.source_sub_inventory}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Source Locator</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.source_locator}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Destination Subinventory</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.destination_sub_inventory}}" readonly />
       </div>
     </div>
   </div>
@@ -1673,21 +1334,21 @@
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Destination Locator</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.destination_locator}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Required Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.required_date | date}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Created By</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.created_by}}" readonly />
       </div>
     </div>
   </div>
@@ -1696,21 +1357,21 @@
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Destination Account</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.destination_account}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Delivery Date</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.delivery_date | date}}" readonly />
       </div>
     </div>
 
     <div class="col">
       <div class="form-group">
         <label class="form-control-label">Purchase Order</label>
-        <input type="text" class="form-control form-control-sm" readonly />
+        <input type="text" class="form-control form-control-sm" value="{{rowDataMaterialRequest.purchase_order}}" readonly />
       </div>
     </div>
   </div>
@@ -1741,7 +1402,7 @@
             </div>
 
             <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
+              [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableTempMaterialRequest"
               (activate)="onActivate($event)">
 
               <ngx-datatable-column maxWidth="40">
@@ -1752,15 +1413,15 @@
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <div>
                     <input type="checkbox" id="customCheck+{{tableShowStock.id}}" (change)="checkRow(row)"
-                      [(ngModel)]="tableShowStock.isTick">
-                    <label for="customCheck+{{tableShowStock.id}}">
+                      [(ngModel)]="tableTempMaterialRequest.isTick">
+                    <label for="customCheck+{{tableTempMaterialRequest.id}}">
                     </label>
                   </div>
                 </ng-template>
               </ngx-datatable-column>
 
               <ngx-datatable-column name="No" [width]="80" id="datatable-header-cell">
-                <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+                <ng-template let-rowIndex="rowIndex" let-row="tableTempMaterialRequest" ngx-datatable-cell-template>
                   <strong>{{ rowIndex + 1 }}</strong>
                 </ng-template>
               </ngx-datatable-column>
@@ -1772,7 +1433,7 @@
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{row.item}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
@@ -1784,7 +1445,7 @@
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{row.description}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>
@@ -1796,7 +1457,7 @@
                   </ng-template>
 
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    <input type="text" class="form-control" value="{{row.delivery_date}}" readonly />
+                    <input type="text" class="form-control" value="{{row.quantity}}" readonly />
                   </ng-template>
                 </ngx-datatable-column>
               </div>

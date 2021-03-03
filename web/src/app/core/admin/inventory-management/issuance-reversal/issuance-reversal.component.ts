@@ -17,6 +17,7 @@ am4core.useTheme(am4themes_material);
 am4core.useTheme(am4themes_animated);
 
 import { InventoryMaterialService} from "src/app/shared/services/inventory-material/inventory-material.service";
+import { InventoryTransactionService } from "src/app/shared/services/inventory-transaction/inventory-transaction.service";
 
 @Component({
   selector: 'app-issuance-reversal',
@@ -35,9 +36,7 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
   tableTempMaterialRequest = [];
   tableTemptInventoryTransaction = [];
   rowDataMaterialRequest: any;
-  rowDataInventoryTransaction: any [];
-
-
+  rowDataInventoryTransaction: any;
 
   // Charts
   chartpie: am4charts.PieChart3D;
@@ -47,105 +46,18 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
 
   // Modal
   ModalStockIssuance: BsModalRef;
-  modalConfig = {
+  modalConfigIssuance = {
     keyboard: true,
     class: "modal-dialog-centered modal-lg",
     ignoreBackdropClick: true,
   };
 
-  // Testing data
-  tableShowStockIssuance = [
-      {
-        "id": 1,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "23-959-4348",
-        "delivery_order": "82-527-1812",
-        "updated_date": "2/1/2021",
-        "organization": "LANGAT 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-      {
-        "id": 2,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "51-406-9702",
-        "delivery_order": "40-682-0480",
-        "updated_date": "2/1/2021",
-        "organization": "SEMENYIH 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-      {
-        "id": 3,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "23-959-4348",
-        "delivery_order": "82-527-1812",
-        "updated_date": "2/1/2021",
-        "organization": "LANGAT 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-      {
-        "id": 4,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "23-959-4348",
-        "delivery_order": "82-527-1812",
-        "updated_date": "2/1/2021",
-        "organization": "LANGAT 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-      {
-        "id": 5,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "23-959-4348",
-        "delivery_order": "82-527-1812",
-        "updated_date": "2/1/2021",
-        "organization": "LANGAT 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-      {
-        "id": 5,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "23-959-4348",
-        "delivery_order": "82-527-1812",
-        "updated_date": "2/1/2021",
-        "organization": "LANGAT 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-      {
-        "id": 5,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "23-959-4348",
-        "delivery_order": "82-527-1812",
-        "updated_date": "2/1/2021",
-        "organization": "LANGAT 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-      {
-        "id": 5,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "23-959-4348",
-        "delivery_order": "82-527-1812",
-        "updated_date": "2/1/2021",
-        "organization": "LANGAT 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-      {
-        "id": 5,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "23-959-4348",
-        "delivery_order": "82-527-1812",
-        "updated_date": "2/1/2021",
-        "organization": "LANGAT 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-      {
-        "id": 5,
-        "delivery_date":"12/2/2021",
-        "purchase_order": "23-959-4348",
-        "delivery_order": "82-527-1812",
-        "updated_date": "2/1/2021",
-        "organization": "LANGAT 2 - STORE",
-        "supplier_name": "Technology Supply Sdn Bhd",
-      },
-    ];
+  ModalStockIn: BsModalRef;
+  modalConfigIn = {
+    keyboard: true,
+    class: "modal-dialog-centered modal-lg",
+    ignoreBackdropClick: true,
+  };
 
   // Testing value
   percentvalues =
@@ -159,25 +71,25 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
     ];
 
   // Testing task
-  taskvalues =
-  [
-    {
-      "task_all_value": 234,
-      "task_issuance_value": 3245,
-      "task_in_value": 3423,
-      "task_update_value": 15
-    }
-  ];
+  task_all_value:number = 0;
+  task_issuance_value:number = 0;
+  task_in_value:number = 0;
+  task_update_value:number = 0;
 
   constructor(
     private zone: NgZone,
     public modalService: BsModalService,
-    public InventoryMaterialService: InventoryMaterialService,){
-
+    public InventoryMaterialService: InventoryMaterialService,
+    public InventoryTransactionService: InventoryTransactionService,
+  ){
+      this.getInventoryTransactionData();
+      this.getInventoryTransactionTotal();
       this.getInventoryMaterialData();
+      this.getInventoryMaterialTotal();
      }
 
   ngOnInit() {
+    // this.initChart();
   }
 
   ngAfterViewInit() {
@@ -185,6 +97,23 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
       this.initChart();
     });
   }
+
+  getInventoryTransactionData(){
+    let tempData = [];
+    this.InventoryTransactionService.get().subscribe(
+      (res) => {
+        res.forEach(function(result){
+          tempData.push(result)
+        })
+        this.tableTemptInventoryTransaction = tempData;
+        console.log("test1 = ", this.tableTemptInventoryTransaction);
+      },
+      error => {
+        console.error("err, error");
+      }
+    )
+  }
+
 
   getInventoryMaterialData(){
     let tempData = [];
@@ -194,11 +123,36 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
           tempData.push(result)
         })
         this.tableTempMaterialRequest = tempData;
-        console.log("test1 = ",this.tableTempMaterialRequest);
       },
       error => {
         console.error("err", error);
       }
+    )
+  }
+
+  getInventoryTransactionTotal(){
+    let sum: number = 0
+    this.InventoryTransactionService.get().subscribe(
+      (res) => {
+        sum = Object.keys(res).length;
+        this.task_in_value = sum;
+        this.initChart();
+
+      }
+
+    )
+    console.log("check",);
+  }
+
+  getInventoryMaterialTotal(){
+    let sum: number = 0
+    this.InventoryMaterialService.get().subscribe(
+      (res) => {
+        sum = Object.keys(res).length;
+        this.task_issuance_value = sum;
+        this.task_update_value = sum;
+        this.initChart();
+      },
     )
   }
 
@@ -210,22 +164,22 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
 
     chartdiv.data = [
       {
-        country: "Stock Issuance",
-        litres: 453,
+        stock_type: "Stock Issuance",
+        task: this.task_issuance_value,
       },
       {
-        country: "Stock In",
-        litres: 567,
+        stock_type: "Stock In",
+        task: this.task_in_value,
       },
       {
-        country: "Stock Update",
-        litres: 676,
+        stock_type: "Stock Update",
+        task: this.task_update_value,
       }
     ];
 
     let series = chartdiv.series.push(new am4charts.PieSeries3D());
-    series.dataFields.value = "litres";
-    series.dataFields.category = "country";
+    series.dataFields.value = "task";
+    series.dataFields.category = "stock_type";
 
     this.chartpie = chartdiv;
   }
@@ -275,7 +229,17 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
     this.rowDataMaterialRequest = row;
     this.ModalStockIssuance = this.modalService.show(
       modalNotification,
-      this.modalConfig,
+      this.modalConfigIssuance,
+
+    );
+  }
+
+  openStockIn(modalNotification: TemplateRef<any>, row) {
+    this.rowDataInventoryTransaction = '';
+    this.rowDataInventoryTransaction = row;
+    this.ModalStockIn = this.modalService.show(
+      modalNotification,
+      this.modalConfigIn,
 
     );
   }

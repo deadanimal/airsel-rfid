@@ -1,4 +1,4 @@
-export class InventoryTransaction {
+export class InventoryTransactionModel {
   public id: string;
   public ORGANIZATION_CODE: string;
   public SOURCE_CODE: string;
