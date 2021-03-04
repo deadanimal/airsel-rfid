@@ -23,6 +23,8 @@ import { StockCountComponent } from './inventory-management/stock-count/stock-co
 import { StockReceiveReturnComponent } from './inventory-management/stock-receive-return/stock-receive-return.component';
 import { IssuanceReversalComponent } from './inventory-management/issuance-reversal/issuance-reversal.component';
 import { InterwarehouseTransferComponent } from './inventory-management/interwarehouse-transfer/interwarehouse-transfer.component';
+import { SubinventoryTransferComponent} from './inventory-management/subinventory-transfer/subinventory-transfer.component';
+import { TransactionUploadComponent } from './inventory-management/transaction-upload/transaction-upload.component';
 import { DisposalComponent } from './inventory-management/disposal/disposal.component';
 import { ScReportComponent } from './inventory-management/sc-report/sc-report.component';
 import { ScVarianceComponent } from './inventory-management/sc-variance/sc-variance.component';
@@ -65,16 +67,17 @@ export const AdminRoutes: Routes = [
                 children: [
                     {
                         path: 'stock-count',
-                        children: [
-                            {
-                                path: 'report',
-                                component: ScReportComponent
-                            },
-                            {
-                                path: 'variance',
-                                component: ScVarianceComponent
-                            }
-                        ]
+                        component: StockCountComponent
+                        // children: [
+                        //     {
+                        //         path: 'report',
+                        //         component: ScReportComponent
+                        //     },
+                        //     {
+                        //         path: 'variance',
+                        //         component: ScVarianceComponent
+                        //     }
+                        // ]
                     },
                     {
                         path: 'stock-receive-return',
@@ -87,6 +90,14 @@ export const AdminRoutes: Routes = [
                     {
                         path: 'interwarehouse-transfer',
                         component: InterwarehouseTransferComponent
+                    },
+                    {
+                        path: 'subinventory-transfer',
+                        component: SubinventoryTransferComponent
+                    },
+                    {
+                        path: 'transaction-upload',
+                        component: TransactionUploadComponent
                     },
                     {
                         path: 'disposal',

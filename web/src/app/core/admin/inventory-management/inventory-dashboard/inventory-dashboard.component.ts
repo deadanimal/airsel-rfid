@@ -39,6 +39,7 @@ export class InventoryDashboardComponent
   chartone: am4charts.XYChart;
   charttwo: am4charts.PieChart3D;
   chartthree: am4charts.XYChart;
+  chartmodify: am4charts.XYChart;
 
   storeLocations = [
     {

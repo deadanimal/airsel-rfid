@@ -1,0 +1,28 @@
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .fa {
+  position: absolute;
+  padding: 7px;
+  pointer-events: none;
+}
+
+.left-addon {
+  left: 20px;
+}
+
+.left-addon input{
+  padding-left: 30px;
+  border-radius: 20px;
+  outline-width: 0px;
+  // padding: 12px 20px 12px 20px;
+  width: 30%;
+  background-repeat: no-repeat;
+  font-size: 16px;
+}
+
+#status{
+  margin-left: auto;
+  margin-right: auto;
+}
