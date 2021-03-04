@@ -4,7 +4,7 @@
       <div class="row align-items-center py-4">
         <div class="col-lg-6 col-7">
           <h6 class="h2 text-dark d-inline-block mb-0">
-            Interwarehouse Transfer
+            Sub-Inventory Transfer
           </h6>
 
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
@@ -35,7 +35,7 @@
 <div class="row">
   <div class="col-sm-3">
     <div class="form-group">
-      <label class="form-control-label" id="modified_label">Transaction Date</label>
+      <label class="form-control-label" id="modified_label">Start Date</label>
       <div class="inner-addon left-addon">
         <input type="date" class="form-control form-control-sm" placeholder="Search"/>
       </div>
@@ -44,10 +44,9 @@
 
   <div class="col-sm-3">
     <div class="form-group">
-      <label class="form-control-label" id="modified_label">Organization Code</label>
+      <label class="form-control-label" id="modified_label">End Date</label>
       <div class="inner-addon left-addon">
-        <i class="fa fa-search"></i>
-        <input type="text" class="form-control form-control-sm" placeholder="Search"/>
+        <input type="date" class="form-control form-control-sm" placeholder="Search"/>
       </div>
     </div>
   </div>
@@ -101,7 +100,7 @@
           </ngx-datatable-column>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="250" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Transaction Date</span>
               </ng-template>
@@ -113,7 +112,7 @@
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="250" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Organization Code</span>
               </ng-template>
@@ -125,7 +124,7 @@
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="180" [resizeable]="false">
+            <ngx-datatable-column [width]="280" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Source Code</span>
               </ng-template>
@@ -137,19 +136,7 @@
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Transaction Quantity</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.TRANSACTION_QUANTITY}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="300" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Item Number</span>
               </ng-template>
@@ -161,25 +148,13 @@
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="300" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Sub-Inventory Code</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <span class="h4 font-weight-bold mb-0">{{row.SUBINVENTORY_CODE}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-md-6">
-            <ngx-datatable-column [width]="180" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Requestor</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.REQUESTOR}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -233,63 +208,47 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
+          <label class="form-control-label">Transaction Date</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_DATE |date}}" readonly />
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
           <label class="form-control-label">Organization Code</label>
           <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.ORGANIZATION_CODE}}" readonly />
         </div>
       </div>
+    </div>
 
+    <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Source Code</label>
           <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.SOURCE_CODE}}" readonly />
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Source Header ID</label>
-          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.SOURCE_HEADER_ID}}" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Transaction Date</label>
-          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_DATE | date}}" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Source Line ID</label>
-          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.SOURCE_LINE_ID}}" readonly />
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Transaction Cost Identifier</label>
-          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_COST_IDENTIFIER}}" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Item Number</label>
           <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.ITEM_NUMBER}}" readonly />
         </div>
       </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Sub-Inventory Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.SUBINVENTORY_CODE}}" readonly />
+        </div>
+      </div>
 
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Sub Inventory Code</label>
-          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.SUBINVENTORY_CODE}}" readonly />
+          <label class="form-control-label">Action</label>
+          <input type="text" class="form-control form-control-sm" readonly />
         </div>
       </div>
     </div>
@@ -320,29 +279,20 @@
 
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Transaction Reference</label>
-          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.TRANSACTION_REFERENCE}}" readonly />
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
           <label class="form-control-label">Use Current Cost</label>
           <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.USE_CURRENT_COST}}" readonly />
         </div>
       </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Cost Compnent Code</label>
-          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.COST_COMPONENT_CODE}}" readonly />
-        </div>
-      </div>
     </div>
 
     <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Cost Component Code</label>
+          <input type="text" class="form-control form-control-sm" value="{{rowDataInventoryTransaction.COST_COMPONENT_CODE}}" readonly />
+        </div>
+      </div>
+
       <div class="col">
         <div class="form-group">
           <label class="form-control-label">Cost</label>

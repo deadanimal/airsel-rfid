@@ -11,11 +11,11 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { InventoryTransactionService } from "src/app/shared/services/inventory-transaction/inventory-transaction.service";
 
 @Component({
-  selector: 'app-interwarehouse-transfer',
-  templateUrl: './interwarehouse-transfer.component.html',
-  styleUrls: ['./interwarehouse-transfer.component.scss']
+  selector: 'app-subinventory-transfer',
+  templateUrl: './subinventory-transfer.component.html',
+  styleUrls: ['./subinventory-transfer.component.scss']
 })
-export class InterwarehouseTransferComponent implements OnInit{
+export class SubinventoryTransferComponent implements OnInit {
 
   // Modal
   ModalSubInventory: BsModalRef;
@@ -28,7 +28,7 @@ export class InterwarehouseTransferComponent implements OnInit{
   //Data Entries
   entries: number = 5;
 
-  //Actual data
+  // Actual Data
   tableTemptInventoryTransaction = [];
   rowDataInventoryTransaction: any;
 
@@ -64,8 +64,8 @@ export class InterwarehouseTransferComponent implements OnInit{
   }
 
   openSubInventory(modalNotification: TemplateRef<any>, row) {
-      this.rowDataInventoryTransaction = '';
-      this.rowDataInventoryTransaction = row;
+    this.rowDataInventoryTransaction = '';
+    this.rowDataInventoryTransaction = row;
       this.ModalSubInventory = this.modalService.show(
           modalNotification,
           this.modalConfig,

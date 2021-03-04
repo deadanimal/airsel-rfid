@@ -754,7 +754,7 @@ export class RegistrationComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {
     this.getAssets();
-    this.getRegisteredData()
+    this.getRegisteredData();
 
     this.firstFormGroup = this.formBuilder.group({
       asset_primary_category: ["", Validators.required],
@@ -1074,7 +1074,7 @@ export class RegistrationComponent implements OnInit {
       (res) => {
         res.forEach(function(assetprimer){
           // console.log("asset primary uina =",assetprimer);
-          tempData.push(assetprimer)
+          tempData.push(assetprimer);
         })
         this.assetattributecolumnapi = tempData;
         let assetprimary1 = row.asset_primary_category;
@@ -1120,18 +1120,6 @@ export class RegistrationComponent implements OnInit {
             console.error("err", error);
           }
         )
-        // this.assetAttribute.forEach(function (lll, mm) {
-
-    // this.assetsRegistrationService.getNewRegList().subscribe(
-    //   (res) => {
-    //     console.log("res all data", res);
-    //     res.forEach(function (val) {
-    //       val['isTick'] = false
-    //       tempData.push(val)
-    //     })
-    //     console.log('tempData = ', tempData)
-    //     this.tableTemp1 = tempData
-
 
   }
 
