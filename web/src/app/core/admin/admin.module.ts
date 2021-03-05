@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {InventoryManagementModule} from './inventory-management/inventory-management.module'
 import { HttpClientModule } from '@angular/common/http';
 import {
   BsDropdownModule,
@@ -35,27 +36,27 @@ import { SettingsComponent } from './settings/settings.component';
 import { ErrorComponent } from './error/error.component';
 import { UtilityUserComponent } from './utility-user/utility-user.component';
 import { UtilityAuditTrailComponent } from './utility-audit-trail/utility-audit-trail.component';
-// import { InventoryStockComponent } from './inventory-stock/inventory-stock.component';
-// import { InventoryInboundComponent } from './inventory-inbound/inventory-inbound.component';
-// import { InventoryOutbondComponent } from './inventory-outbond/inventory-outbond.component';
-// import { InventoryStoreKeeperComponent } from './inventory-store-keeper/inventory-store-keeper.component';
-// import { InventoryStoreCodesComponent } from './inventory-store-codes/inventory-store-codes.component';
+import { InventoryStockComponent } from './inventory-stock/inventory-stock.component';
+import { InventoryInboundComponent } from './inventory-inbound/inventory-inbound.component';
+import { InventoryOutbondComponent } from './inventory-outbond/inventory-outbond.component';
+import { InventoryStoreKeeperComponent } from './inventory-store-keeper/inventory-store-keeper.component';
+import { InventoryStoreCodesComponent } from './inventory-store-codes/inventory-store-codes.component';
 import { UtilityUserPrivilegesComponent } from './utility-user-privileges/utility-user-privileges.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-// import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
+import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
-import { InventoryDashboardComponent } from './inventory-management/inventory-dashboard/inventory-dashboard.component';
-import { StockCountComponent } from './inventory-management/stock-count/stock-count.component';
-import { StockReceiveReturnComponent } from './inventory-management/stock-receive-return/stock-receive-return.component';
-import { IssuanceReversalComponent } from './inventory-management/issuance-reversal/issuance-reversal.component';
-import { InterwarehouseTransferComponent } from './inventory-management/interwarehouse-transfer/interwarehouse-transfer.component';
-import { SubinventoryTransferComponent} from './inventory-management/subinventory-transfer/subinventory-transfer.component';
-import { TransactionUploadComponent } from './inventory-management/transaction-upload/transaction-upload.component';
-import { DisposalComponent } from './inventory-management/disposal/disposal.component';
-import { ScReportComponent } from './inventory-management/sc-report/sc-report.component';
-import { ScVarianceComponent } from './inventory-management/sc-variance/sc-variance.component';
+import { InventoryManagementDashboardComponent } from './inventory-management/inventory-management-dashboard/inventory-management-dashboard.component';
+// import { StockCountComponent } from './inventory-management/stock-count/stock-count.component';
+// import { StockReceiveReturnComponent } from './inventory-management/stock-receive-return/stock-receive-return.component';
+// import { IssuanceReversalComponent } from './inventory-management/issuance-reversal/issuance-reversal.component';
+// import { InterwarehouseTransferComponent } from './inventory-management/interwarehouse-transfer/interwarehouse-transfer.component';
+// import { SubinventoryTransferComponent} from './inventory-management/subinventory-transfer/subinventory-transfer.component';
+// import { TransactionUploadComponent } from './inventory-management/transaction-upload/transaction-upload.component';
+// import { DisposalComponent } from './inventory-management/disposal/disposal.component';
+// import { ScReportComponent } from './inventory-management/sc-report/sc-report.component';
+// import { ScVarianceComponent } from './inventory-management/sc-variance/sc-variance.component';
 
 @NgModule({
   declarations: [
@@ -71,23 +72,22 @@ import { ScVarianceComponent } from './inventory-management/sc-variance/sc-varia
     ErrorComponent,
     UtilityUserComponent,
     UtilityAuditTrailComponent,
-    // InventoryStockComponent,
-    // InventoryInboundComponent,
-    // InventoryOutbondComponent,
-    // InventoryStoreKeeperComponent,
-    // InventoryStoreCodesComponent,
+    InventoryStockComponent,
+    InventoryInboundComponent,
+    InventoryOutbondComponent,
+    InventoryStoreKeeperComponent,
+    InventoryStoreCodesComponent,
     UtilityUserPrivilegesComponent,
-    // InventoryDashboardComponent
-    InventoryDashboardComponent,
-    StockCountComponent,
-    StockReceiveReturnComponent,
-    IssuanceReversalComponent,
-    InterwarehouseTransferComponent,
-    SubinventoryTransferComponent,
-    TransactionUploadComponent,
-    DisposalComponent,
-    ScReportComponent,
-    ScVarianceComponent
+    InventoryDashboardComponent
+    // StockCountComponent,
+    // StockReceiveReturnComponent,
+    // IssuanceReversalComponent,
+    // InterwarehouseTransferComponent,
+    // SubinventoryTransferComponent,
+    // TransactionUploadComponent,
+    // DisposalComponent,
+    // ScReportComponent,
+    // ScVarianceComponent
   ],
   imports: [
     CommonModule,
@@ -108,7 +108,8 @@ import { ScVarianceComponent } from './inventory-management/sc-variance/sc-varia
     RatingModule.forRoot(),
     NgxDatatableModule,
     NgSelectModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    InventoryManagementModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [NgxSpinnerService]
