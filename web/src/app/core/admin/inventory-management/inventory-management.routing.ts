@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
+import { InventoryManagementDashboardComponent } from './inventory-management-dashboard/inventory-management-dashboard.component';
 import { StockCountComponent } from './stock-count/stock-count.component';
 import { StockReceiveReturnComponent } from './stock-receive-return/stock-receive-return.component';
 import { IssuanceReversalComponent } from './issuance-reversal/issuance-reversal.component';
@@ -12,7 +12,7 @@ export const InventoryManagementRoutes: Routes = [
         children: [
             {
                 path: 'inventory-dashboard',
-                component: InventoryDashboardComponent
+                component: InventoryManagementDashboardComponent
             },
             {
                 path: 'inventory',
