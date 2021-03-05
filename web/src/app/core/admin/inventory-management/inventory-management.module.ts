@@ -26,7 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
-import { InventoryDashboardComponent } from './inventory-dashboard/inventory-dashboard.component';
+import { InventoryManagementDashboardComponent } from './inventory-management-dashboard/inventory-management-dashboard.component';
 import { StockCountComponent } from './stock-count/stock-count.component';
 import { StockReceiveReturnComponent } from './stock-receive-return/stock-receive-return.component';
 import { IssuanceReversalComponent } from './issuance-reversal/issuance-reversal.component';
@@ -42,7 +42,7 @@ import { TransactionUploadComponent } from './transaction-upload/transaction-upl
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [NgxSpinnerService],
   declarations: [
-    InventoryDashboardComponent,
+    InventoryManagementDashboardComponent,
     StockCountComponent,
     StockReceiveReturnComponent,
     IssuanceReversalComponent,

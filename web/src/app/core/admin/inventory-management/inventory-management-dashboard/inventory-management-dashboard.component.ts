@@ -21,10 +21,10 @@ am4core.useTheme(am4themes_animated);
 
 @Component({
   selector: "app-inventory-dashboard",
-  templateUrl: "./inventory-dashboard.component.html",
-  styleUrls: ["./inventory-dashboard.component.scss"],
+  templateUrl: "./inventory-management-dashboard.component.html",
+  styleUrls: ["./inventory-management-dashboard.component.scss"],
 })
-export class InventoryDashboardComponent
+export class InventoryManagementDashboardComponent
   implements OnInit, AfterViewInit, OnDestroy {
   // Data
   completedMaintenance = 1420;

@@ -28,7 +28,7 @@ import { TransactionUploadComponent } from './inventory-management/transaction-u
 import { DisposalComponent } from './inventory-management/disposal/disposal.component';
 import { ScReportComponent } from './inventory-management/sc-report/sc-report.component';
 import { ScVarianceComponent } from './inventory-management/sc-variance/sc-variance.component';
-import { InventoryDashboardComponent } from './inventory-management/inventory-dashboard/inventory-dashboard.component';
+import { InventoryManagementDashboardComponent } from './inventory-management/inventory-management-dashboard/inventory-management-dashboard.component';
 
 export const AdminRoutes: Routes = [
     {
@@ -42,10 +42,10 @@ export const AdminRoutes: Routes = [
                 path: 'asset-management',
                 loadChildren: './asset-management/asset-management.module#AssetManagementModule'
             },
-            {
-                path: 'inventory-management',
-                loadChildren: './inventory-management/inventory-management.module#InventoryManagementModule'
-            },
+            // {
+            //     path: 'inventory-management',
+            //     loadChildren: './inventory-management/inventory-management.module#InventoryManagementModule'
+            // },
             {
                 path: 'calendar',
                 component: CalendarComponent
@@ -56,7 +56,7 @@ export const AdminRoutes: Routes = [
             },
             {
                 path: 'inventory-dashboard',
-                component: InventoryDashboardComponent
+                component: InventoryManagementDashboardComponent
             },
             {
                 path: 'error',
