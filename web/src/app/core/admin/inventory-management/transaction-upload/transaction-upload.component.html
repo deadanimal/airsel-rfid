@@ -45,7 +45,7 @@
       <div class="card-body" style="display: flex; justify-content: center; align-items: center;">
         <div class="form-group">
           <label class="form-control-label">Upload File</label>
-          <input class="form-control" name="excelFile" (change)="onFileChange($event)" type="file">
+          <input class="form-control" name="excelFile" type="file">
         </div>
       </div>
 
@@ -63,8 +63,6 @@
       <select class="form-control custom-select form-control-sm custom-select-sm"
         formControlName="asset_owning_department">
         <option value="">Please select</option>
-        <option *ngFor="let assetowningdepartment of assetowningdepartment"
-          [value]="assetowningdepartment.value">testing</option>
       </select>
       <small class="validation_messages"></small>
     </div>

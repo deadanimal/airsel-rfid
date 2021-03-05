@@ -23,7 +23,7 @@ export class InventoryInboundComponent implements OnInit {
   }
 
   rating: number = 4;
-  
+
   constructor(
     private modalService: BsModalService
   ) { }
@@ -50,7 +50,7 @@ export class InventoryInboundComponent implements OnInit {
       document.body.classList.add("g-navbar-search-shown");
     }, 300);
   }
-  
+
   closeSearch() {
     document.body.classList.remove("g-navbar-search-shown");
     setTimeout(function() {
