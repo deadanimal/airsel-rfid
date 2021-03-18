@@ -11,7 +11,7 @@
             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
               <li class="breadcrumb-item">
                 <a href="javascript:void(0)">
-                  <i class="fas fa-boxes text-dark"> </i>
+                  <i class="fas fa-calculator text-dark"> </i>
                 </a>
               </li>
             </ol>
@@ -34,27 +34,33 @@
   </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-8">
-      <div class="form-group mb-4">
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label class="form-control-label" id="modified_label">Start Date</label>
         <div class="inner-addon left-addon">
-          <i class="fa fa-search"></i>
-          <input type="text" id="searchtab" placeholder="Search">
+          <input type="date" class="form-control form-control-sm" id="startdate"/>
         </div>
       </div>
     </div>
 
-  <div class="col">
-    <select class="form-control form-control-sm">
-      <option value="">Select</option>
-      <option value="All">All</option>
-      <option value="Variance Only">Variance Only</option>
-      <option value="None-Variance Only">Non-Variance Only</option>
-    </select>
-  </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <label class="form-control-label" id="modified_label">End Date</label>
+        <div class="inner-addon left-addon">
+          <input type="date" class="form-control form-control-sm" id="enddate"/>
+        </div>
+      </div>
+    </div>
 
-  <div class="col">
-    <button class="btn btn-success">Export</button>
+    <div class="col">
+      <div class = "row" id="buttonmodified">
+        <button class="btn btn-default" (click)="getFilteredTransactionDate()">Search</button>
+        <button class="btn btn-danger" (click)="Reset()">Reset</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -67,8 +73,7 @@
             <div class="dataTables_length" id="datatable_length">
               <label>
                 Show
-                <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm"
-                  (change)="entriesChange($event)">
+                <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm">
                   <option value="5">5</option>
                   <option value="10">10</option>
                   <option value="15">15</option>
@@ -78,65 +83,76 @@
               </label>
             </div>
           </div>
+          <div class="form-group">
+            <div class="col" id="buttontop">
+              <div class="row">
+                <button class="btn btn-success" (click)="openCreate(create)">Create</button>
+                <button class="btn btn-success">Export</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-          [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStockCount"
-          (activate)="onActivate($event)">
+          [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction">
 
-          <ngx-datatable-column maxWidth="40">
+          <!-- <ngx-datatable-column maxWidth="40">
             <ng-template ngx-datatable-header-template>
               <input type="checkbox">
             </ng-template>
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
-                <!-- <input type="checkbox" id="customCheck+{{tableShowStockCount.id}}" (change)="checkRow(row)"
-                  [(ngModel)]="tableShowStock.isTick"> -->
-                <label for="customCheck+{{tableShowStockCount.id}}">
+                <input type="checkbox" id="customCheck+{{tableShowStockCount.id}}" (change)="checkRow(row)"
+                  [(ngModel)]="tableShowStock.isTick">
+                <label for="customCheck+{{tableTemptInventoryTransaction.id}}">
                 </label>
               </div>
             </ng-template>
-          </ngx-datatable-column>
+          </ngx-datatable-column> -->
 
-          <ngx-datatable-column name="No" [width]="80" id="datatable-header-cell">
-            <ng-template let-rowIndex="rowIndex" let-row="tableShowStock" ngx-datatable-cell-template>
+          <ngx-datatable-column [width]="80" id="datatable-header-cell">
+            <ng-template ngx-datatable-header-template id="datatable-header-cell">
+              <span>No</span>
+            </ng-template>
+
+            <ng-template let-rowIndex="rowIndex" let-row="tableTemptInventoryTransaction" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="220" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Organisation</span>
+                <span>Name</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.organisation}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.TRANSACTION_TYPE_NAME}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="220" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Item</span>
+                <span>Subinventory</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.item}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.SUBINVENTORY_CODE}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="220" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Description</span>
+                <span>Organization</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.description}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.ORGANIZATION_CODE}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -144,23 +160,23 @@
           <div class="col-md-6">
             <ngx-datatable-column [width]="250" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Long Description</span>
+                <span>Description</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.long_description}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.TRANSACTION_REFERENCE}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="220" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Quantity</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.quantity}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.TRANSACTION_QUANTITY}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -172,18 +188,7 @@
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.latest_updated_date}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-md-6">
-            <ngx-datatable-column [width]="100" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="fa fa-bell fa-3"></span>
+                <span class="h4 font-weight-bold mb-0">{{row.TRANSACTION_DATE | date}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -211,6 +216,105 @@
   </ngx-spinner>
 
 </div>
+
+<ng-template #create>
+  <div class="modal-header bg-default">
+    <h6 class="modal-title my-auto text-white">
+      Create Stock Count Information
+    </h6>
+
+    <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
+      (click)="ModalCreate.hide()">
+      <span aria-hidden="true" class="my-auto text-white"> × </span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Name</label>
+          <input type="text" class="form-control form-control-sm"/>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Description</label>
+          <input type="text" class="form-control form-control-sm"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Subinventory</label>
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <select class="form-control custom-select form-control-sm custom-select-sm">
+                  <option value="">Please select</option>
+                </select>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="procured">
+                  <label class="custom-control-label">
+                    All Subinventories
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group">
+          <label class="form-control-label">Tolerance Percentage (%)</label>
+          <div class="col">
+            <div class="form-group">
+              <div class="row">
+                <label class="form-control-label">Positive (+)</label>
+                <input type="text" class="form-control form-control-sm"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm">
+            <div class="form-group">
+              <div class="row">
+                <label class="form-control-label">Negative (-)</label>
+                <input type="text" class="form-control form-control-sm"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-control-label">Starting Default Tag</label>
+          <input type="text" class="form-control form-control-sm"/>
+        </div>
+      </div>
+    </div>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+      <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+
+    <div class="card-footer">
+      <div class="row">
+        <div class="col text-center">
+          <button class="btn btn-success" (click)="createTask()">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>
 
 <ng-template #stockcount>
   <div class="modal-header bg-default">

@@ -27,12 +27,12 @@ export class InventoryPurchaseOrderService {
     );
   }
 
-  // update(id: string, body: Form): Observable<InventoryPurchaseOrderModel[]> {
-  //   let urlTemp = this.url + id + '/'
-  //   return this.http.patch<InventoryPurchaseOrderModel>(urlTemp, body).pipe(
-  //     tap((res) => {
-  //       console.log("InventoryPurchaseOrderModel", res);
-  //     })
-  //   );
-  // }
+  update(id: string, body: Form): Observable<InventoryPurchaseOrderModel> {
+    let urlTemp = this.url + id + '/'
+    return this.http.patch<InventoryPurchaseOrderModel>(urlTemp, body).pipe(
+      tap((res) => {
+      })
+    );
+  }
+
 }

@@ -23,6 +23,7 @@ import { AssetsRegistrationService } from 'src/app/shared/services/assets-regist
 import { AssetsLocationService } from 'src/app/shared/services/assets-location/assets-location.service';
 import { AssetsAttributeService } from 'src/app/shared/services/assets-attribute/assets-attribute.service';
 import { AssetAttributeColumnService } from 'src/app/shared/services/asset-attribute-column/asset-attribute-column.service';
+import { AssetsBadgeNoService } from 'src/app/shared/services/assets-badge-no/assets-badge-no.service';
 
 import { system } from '@amcharts/amcharts4/core';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
@@ -751,6 +752,7 @@ export class RegistrationComponent implements OnInit {
     public assetsLocationService: AssetsLocationService,
     public assetsAttributeService: AssetsAttributeService,
     public assetsAttributeColumnService: AssetAttributeColumnService,
+    public assetBadgeNoService : AssetsBadgeNoService,
     private spinner: NgxSpinnerService
   ) {
     this.getAssets();
