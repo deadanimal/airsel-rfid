@@ -44,7 +44,7 @@ export class InventoryManagementDashboardComponent
   storeLocations = [
     {
       id: "shah-alam",
-      title: "SHAH ALAM - CENTRAL STORE",
+      title: "SHAH ALAM - STORE",
     },
     {
       id: "klang",
@@ -198,46 +198,46 @@ export class InventoryManagementDashboardComponent
 
     chartdivtwo.data = [
       {
-        country: "Lithuania",
-        litres: 501.9,
+        subinventory: "Expense",
+        quantity: 501.9,
       },
       {
-        country: "Czech Republic",
-        litres: 301.9,
+        subinventory: "Equipment",
+        quantity: 301.9,
       },
       {
-        country: "Ireland",
-        litres: 201.1,
+        subinventory: "Operation",
+        quantity: 201.1,
       },
       {
-        country: "Germany",
-        litres: 165.8,
+        subinventory: "Corporate",
+        quantity: 165.8,
       },
       {
-        country: "Australia",
-        litres: 139.9,
+        subinventory: "Expense",
+        quantity: 139.9,
       },
       {
-        country: "Austria",
-        litres: 128.3,
+        subinventory: "Equipment",
+        quantity: 128.3,
       },
       {
-        country: "UK",
-        litres: 99,
+        subinventory: "Operation",
+        quantity: 99,
       },
       {
-        country: "Belgium",
-        litres: 60,
+        subinventory: "Corporate",
+        quantity: 60,
       },
       {
-        country: "The Netherlands",
-        litres: 50,
+        subinventory: "Expense",
+        quantity: 50,
       },
     ];
 
     let series = chartdivtwo.series.push(new am4charts.PieSeries3D());
-    series.dataFields.value = "litres";
-    series.dataFields.category = "country";
+    series.dataFields.value = "quantity";
+    series.dataFields.category = "subinventory";
 
     this.charttwo = chartdivtwo;
   }

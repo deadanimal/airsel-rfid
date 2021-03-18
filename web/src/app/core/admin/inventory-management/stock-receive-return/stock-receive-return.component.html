@@ -11,7 +11,7 @@
             <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
               <li class="breadcrumb-item">
                 <a href="javascript:void(0)">
-                  <i class="fas fa-boxes text-dark"> </i>
+                  <i class="fas fa-file-invoice text-dark"> </i>
                 </a>
               </li>
             </ol>
@@ -32,26 +32,28 @@
   </div>
 </div>
 
-<div class="row col-12" id="status">
-  <div class="col-md-3">
-    <div class="card card-stats">
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <h1 class="card-title text-uppercase text-muted mb-0">
-              ALL
-            </h1>
-            <span class="h2 font-weight-bold mb-0">
-              {{stock_all}} Tasks
-            </span>
-          </div>
+<div class="container-fluid mt--6">
 
-          <div class="col-md-6">
-            <img src="../../../../../assets/svg/all_receive.svg" style="width: 60%;" />
-            <div class="text-right">
-              <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockall')">Check</button>
+  <div class="row col-12" id="status">
+    <div class="col-md-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h3 class="card-title text-uppercase text-muted mb-0">
+                FULL RECEIPT
+              </h3>
+              <span class="h2 font-weight-bold mb-0">
+                {{stock_full}} Tasks
+              </span>
             </div>
-            <!-- <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
+
+            <div class="col-md-6">
+              <img src="../../../../../assets/svg/bill_full.svg" style="width: 60%;" />
+              <div class="text-right">
+                <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockfull')">Check</button>
+              </div>
+              <!-- <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
               <i class="fas fa-spinner"> </i>
             </div> -->
           </div>
@@ -60,89 +62,90 @@
     </div>
   </div>
 
-<div class="col-md-3">
-  <div class="card card-stats">
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <h3 class="card-title text-uppercase text-muted mb-0">
-            PARTIAL RECEIPT
-          </h3>
-          <span class="h2 font-weight-bold mb-0">
-            {{stock_partial}} Tasks
-          </span>
-        </div>
+    <div class="col-md-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h3 class="card-title text-uppercase text-muted mb-0">
+                PARTIAL RECEIPT
+              </h3>
+              <span class="h2 font-weight-bold mb-0">
+                {{stock_partial}} Tasks
+              </span>
+            </div>
 
-        <div class="col-md-6">
-          <img src="../../../../../assets/svg/bill_partial.svg" style="width: 60%;" />
-          <div class="text-right">
-            <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockpartial')">Check</button>
+            <div class="col-md-6">
+              <img src="../../../../../assets/svg/bill_partial.svg" style="width: 60%;" />
+              <div class="text-right">
+                <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockpartial')">Check</button>
+              </div>
+              <!-- <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
+                <i class="fas fa-spinner"> </i>
+              </div> -->
+            </div>
           </div>
-          <!-- <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
-            <i class="fas fa-spinner"> </i>
-          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h3 class="card-title text-uppercase text-muted mb-0">
+                Miscellaneous Receipt
+              </h3>
+              <span class="h2 font-weight-bold mb-0">
+                {{stock_miscellaneous}} Tasks
+              </span>
+            </div>
+
+            <div class="col-md-6">
+              <img src="../../../../../assets/svg/miscellaneous-receipt.svg" style="width: 60%;" />
+              <div class="text-right">
+                <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockmiscellaneous')">Check</button>
+              </div>
+              <!-- <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
+                <i class="fas fa-spinner"> </i>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h3 class="card-title text-uppercase text-muted mb-0">
+                STOCK RETURN
+              </h3>
+              <span class="h2 font-weight-bold mb-0">
+                {{stock_return}} Tasks
+              </span>
+            </div>
+
+            <div class="col-md-6">
+              <img src="../../../../../assets/svg/stock_return.svg" style="width: 60%;" />
+              <div class="text-right">
+                <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockreturn')" >Check</button>
+              </div>
+              <!-- <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
+                <i class="fas fa-spinner"> </i>
+              </div> -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="col-md-3">
-  <div class="card card-stats">
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <h2 class="card-title text-uppercase text-muted mb-0">
-            FULL RECEIPT
-          </h2>
-          <span class="h2 font-weight-bold mb-0">
-            {{stock_full}} Tasks
-          </span>
-        </div>
-
-        <div class="col-md-6">
-          <img src="../../../../../assets/svg/bill_full.svg" style="width: 60%;" />
-          <div class="text-right">
-            <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockfull')">Check</button>
-          </div>
-          <!-- <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
-            <i class="fas fa-spinner"> </i>
-          </div> -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-md-3">
-  <div class="card card-stats">
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <h1 class="card-title text-uppercase text-muted mb-0">
-            RETURN
-          </h1>
-          <span class="h2 font-weight-bold mb-0">
-            {{stock_return}} Tasks
-          </span>
-        </div>
-
-        <div class="col-md-6">
-          <img src="../../../../../assets/svg/stock_return.svg" style="width: 60%;" />
-          <div class="text-right">
-            <button class="btn btn-outline-info btn-sm" (click)="detailSelector('stockreturn')" >Check</button>
-          </div>
-          <!-- <div class="icon icon-shape bg-white text-orange rounded-circle shadow">
-            <i class="fas fa-spinner"> </i>
-          </div> -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<div class="row" *ngIf="Stock_All" id="status">
+<div class="row" *ngIf="table_selection[0].Stock_Miscellaneous" [@inOutAnimation] id="status">
   <div class="col">
     <div class="card">
       <div class="dataTables_wrapper py-4">
@@ -191,76 +194,68 @@
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column name="No" [width]="40" id="datatable-header-cell">
+          <ngx-datatable-column [width]="60" [resizeable]="false">
+            <ng-template ngx-datatable-header-template id="datatable-header-cell">
+              <span>No</span>
+            </ng-template>
+
             <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="160" [resizeable]="false">
+            <ngx-datatable-column [width]="100" [resizeable]="false">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Status</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="badge badge-info">In process</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-auto">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Delivery Date</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.Delivery_date | date}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.delivery_date | date}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Purchase Order</span>
+                <span>PO Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.Purchase_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.po_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="260" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Delivery Order</span>
+                <span>Description</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.description}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Updated Date</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.updated_date}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Organization</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.ship_to_organization}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
-            <ngx-datatable-column [width]="180" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Supplier Name</span>
+                <span>Supplier Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
@@ -270,28 +265,53 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="120" [sortable]="true">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Status</span>
+                <span>Item Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <!-- <span class="badge badge-info" *ngIf="row.status == 'TR'">To Receive</span> -->
-                <span class="badge badge-info">To Receive</span>
-                <!-- <span class="badge badge-success" *ngIf="row.status == 'CO'">Complete</span> -->
+                <span class="h4 font-weight-bold mb-0">{{row.item_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="150" [resizeable]="true">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Quantity</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="h4 font-weight-bold mb-0">{{row.quantity}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-auto">
+            <ngx-datatable-column [width]="150" [sortable]="true">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Sub Inventory Code</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="h4 font-weight-bold mb-0">{{row.sub_inventory_code}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-auto">
+            <ngx-datatable-column [width]="130" [resizeable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Rating</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-                  name="location_description" class="form-control" value="{{row.location_description}}" readonly />
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -310,12 +330,20 @@
 
         </ngx-datatable>
       </div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col text-center">
+            <!-- <button class="btn btn-danger" (click)="confirm('RJ')">Reject</button> -->
+            <button class="btn btn-success" (click)="confirmPO('NP')">Submit to ERP</button>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
 </div>
 
-<div class="row" *ngIf="Stock_Partial" id="status">
+<div class="row" *ngIf="table_selection[0].Stock_Partial" [@inOutAnimation] id="status">
   <div class="col">
     <div class="card">
       <div class="dataTables_wrapper py-4">
@@ -336,7 +364,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col" id="buttontop">
+            <div class="col" id="buttonexp">
               <div class="row">
                 <button class="btn btn-success">Export</button>
               </div>
@@ -363,76 +391,68 @@
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column name="No" [width]="40" id="datatable-header-cell">
+          <ngx-datatable-column [width]="60" [resizeable]="false">
+            <ng-template ngx-datatable-header-template id="datatable-header-cell">
+              <span>No</span>
+            </ng-template>
+
             <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="160" [resizeable]="false">
+            <ngx-datatable-column [width]="100" [resizeable]="false">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Status</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="badge badge-info">In process</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-auto">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Delivery Date</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_date}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.delivery_date | date}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Purchase Order</span>
+                <span>PO Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.purchase_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.po_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="260" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Delivery Order</span>
+                <span>Description</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.description}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Updated Date</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.updated_date}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Organization</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.ship_to_organization}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
-            <ngx-datatable-column [width]="180" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Supplier Name</span>
+                <span>Supplier Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
@@ -442,28 +462,53 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="120" [sortable]="true">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Order Type</span>
+                <span>Item Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <!-- <span class="badge badge-info" *ngIf="row.status == 'TR'">To Receive</span> -->
-                <span class="badge badge-warning">Partial receipt</span>
-                <!-- <span class="badge badge-success" *ngIf="row.status == 'CO'">Complete</span> -->
+                <span class="h4 font-weight-bold mb-0">{{row.item_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="150" [resizeable]="true">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Quantity</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="h4 font-weight-bold mb-0">{{row.quantity}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-auto">
+            <ngx-datatable-column [width]="150" [sortable]="true">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Sub Inventory Code</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="h4 font-weight-bold mb-0">{{row.sub_inventory_code}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-auto">
+            <ngx-datatable-column [width]="130" [resizeable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Rating</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-                  name="location_description" class="form-control" value="{{row.location_description}}" readonly />
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -475,7 +520,7 @@
               </ng-template>
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <button class="btn btn-default"
-                  (click)="openReceiveInformation(stockpartialreceipt, row)">Detail</button>
+                  (click)="openPartialFullReceiptInformation(stockpartialreceipt, row)">Detail</button>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -487,7 +532,7 @@
   </div>
 </div>
 
-<div class="row" *ngIf="Stock_Full" id="status">
+<div class="row" *ngIf="table_selection[0].Stock_Full" [@inOutAnimation] id="status">
   <div class="col">
     <div class="card">
       <div class="dataTables_wrapper py-4">
@@ -508,7 +553,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col" id="buttontop">
+            <div class="col" id="buttonexp">
               <div class="row">
                 <button class="btn btn-success">Export</button>
               </div>
@@ -535,107 +580,124 @@
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column name="No" [width]="40" id="datatable-header-cell">
+          <ngx-datatable-column [width]="60" [resizeable]="false">
+            <ng-template ngx-datatable-header-template id="datatable-header-cell">
+              <span>No</span>
+            </ng-template>
+
             <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
 
-          <div class="col">
-            <ngx-datatable-column [width]="160" [resizeable]="false">
+          <div class="col-auto">
+            <ngx-datatable-column [width]="100" [resizeable]="false">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Status</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="badge badge-info">In process</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-auto">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Delivery Date</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_date}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.Delivery_date | date}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Purchase Order</span>
+                <span>PO Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.purchase_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.po_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="260" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Delivery Order</span>
+                <span>Description</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.delivery_order}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.description}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Updated Date</span>
+                <span>Supplier Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.updated_date}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.supplier_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Organization</span>
+                <span>Item Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.organization}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.item_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="180" [resizeable]="false">
+            <ngx-datatable-column [width]="150" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Supplier Name</span>
+                <span>Quantity</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.supplier_name}}</span>
+                <span class="h4 font-weight-bold mb-0">{{row.quantity}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="120" [sortable]="true">
+            <ngx-datatable-column [width]="150" [sortable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Order Type</span>
+                <span>Sub Inventory Code</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <!-- <span class="badge badge-info" *ngIf="row.status == 'TR'">To Receive</span> -->
-                <span class="badge badge-success">Full receipt</span>
-                <!-- <span class="badge badge-success" *ngIf="row.status == 'CO'">Complete</span> -->
+                <span class="h4 font-weight-bold mb-0">{{row.sub_inventory_code}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="150" [resizeable]="true">
+            <ngx-datatable-column [width]="130" [resizeable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Rating</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-                  name="location_description" class="form-control" value="{{row.location_description}}" readonly />
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -647,7 +709,7 @@
               </ng-template>
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <button class="btn btn-default"
-                  (click)="openReceiveInformation(stockfullreceipt, row)">Detail</button>
+                  (click)="openPartialFullReceiptInformation(stockfullreceipt, row)">Detail</button>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -655,24 +717,12 @@
         </ngx-datatable>
       </div>
 
-      <!-- <div class="card-footer">
-        <div class="row">
-          <div class="col text-center">
-            <button class="btn btn-success" (click)="confirm('NP')">Submit to ERP</button>
-          </div>
-        </div>
-      </div> -->
-
     </div>
   </div>
 
-  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
-    <p style="color: white"> Loading... </p>
-  </ngx-spinner>
-
 </div>
 
-<div class="row" *ngIf="Stock_Return" id="status">
+<div class="row" *ngIf="table_selection[0].Stock_Return" [@inOutAnimation] id="status">
   <div class="col">
     <div class="card">
       <div class="dataTables_wrapper py-4">
@@ -693,7 +743,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col" id="buttontop">
+            <div class="col" id="buttonexp">
               <div class="row">
                 <button class="btn btn-success">Export</button>
               </div>
@@ -720,20 +770,72 @@
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column name="No" [width]="40" id="datatable-header-cell">
+          <ngx-datatable-column [width]="80" id="datatable-header-cell">
+            <ng-template ngx-datatable-header-template id="datatable-header-cell">
+              <span>No</span>
+            </ng-template>
+
             <ng-template let-rowIndex="rowIndex" let-row="tableGRN" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
           </ngx-datatable-column>
 
-          <div class="col-md-6">
-            <ngx-datatable-column [width]="160" [resizeable]="false">
+          <div class="col-auto">
+            <ngx-datatable-column [width]="100" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Issue Date</span>
+                <span>Status</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0"></span>
+                <span class="badge badge-info">In process</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-md-6">
+            <ngx-datatable-column [width]="220" [resizeable]="false">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Header Interface Number</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="h4 font-weight-bold mb-0">{{row.header_interface_number}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-md-6">
+            <ngx-datatable-column [width]="220" [resizeable]="false">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Item Number</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="h4 font-weight-bold mb-0">{{row.item_number}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-md-6">
+            <ngx-datatable-column [width]="220" [resizeable]="false">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Transaction Type</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="h4 font-weight-bold mb-0">{{row.transaction_type}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+          </div>
+
+          <div class="col-md-6">
+            <ngx-datatable-column [width]="220" [resizeable]="false">
+              <ng-template ngx-datatable-header-template id="datatable-header-cell">
+                <span>Receipt Number</span>
+              </ng-template>
+
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="h4 font-weight-bold mb-0">{{row.receipt_number}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
@@ -741,55 +843,7 @@
           <div class="col-md-6">
             <ngx-datatable-column [width]="200" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Purchase Order</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0"></span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Delivery Order</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0"></span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Updated Date</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0"></span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-md-6">
-            <ngx-datatable-column [width]="200" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Organization</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.organization_code}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-md-6">
-            <ngx-datatable-column [width]="180" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Supplier Name</span>
+                <span>Supplier Number</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
@@ -799,31 +853,16 @@
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="120" [sortable]="true">
+            <ngx-datatable-column [width]="190" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Status</span>
+                <span>Transaction Date</span>
               </ng-template>
 
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <!-- <span class="badge badge-info" *ngIf="row.status == 'TR'">To Receive</span> -->
-                <span class="badge badge-info">To Receive</span>
-                <!-- <span class="badge badge-success" *ngIf="row.status == 'CO'">Complete</span> -->
+                <span class="h4 font-weight-bold mb-0">{{row.transaction_date | date}}</span>
               </ng-template>
             </ngx-datatable-column>
           </div>
-
-          <!-- <div class="col-md-6">
-            <ngx-datatable-column [width]="150" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Rating</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-                  name="location_description" class="form-control" value="{{row.location_description}}" readonly />
-              </ng-template>
-            </ngx-datatable-column>
-          </div> -->
 
           <div class="col-md-6">
             <ngx-datatable-column [width]="auto" [resizeable]="false">
@@ -844,7 +883,7 @@
         <div class="row">
           <div class="col text-center">
             <!-- <button class="btn btn-danger" (click)="confirm('RJ')">Reject</button> -->
-            <button class="btn btn-success" (click)="confirm('NP')">Submit to ERP</button>
+            <button class="btn btn-success" (click)="confirmGRN('NP')">Submit to ERP</button>
           </div>
         </div>
       </div>
@@ -872,16 +911,9 @@
 
   <div class="modal-body">
     <div class="row">
-      <div class="col">
+      <div class="col-md-6">
         <div class="form-group">
-          <label class="form-control-label">Create Date</label>
-          <input type="date" class="form-control form-control-sm"/>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Receive Type</label>
+          <label class="form-control-label">Organization</label>
           <div class="form-group">
             <select class="form-control custom-select form-control-sm custom-select-sm">
               <option value="">Please select</option>
@@ -894,20 +926,16 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Status</label>
+          <label class="form-control-label">Item</label>
           <div class="form-group">
-            <select class="form-control custom-select form-control-sm custom-select-sm">
-              <option value="">Please select</option>
-              <!-- <option *ngFor="let assetowningdepartment of assetowningdepartment"
-                [value]="assetowningdepartment.value">testing</option> -->
-            </select>
+            <input type="text" class="form-control form-control-sm" readonly/>
           </div>
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Order Type</label>
+          <label class="form-control-label">Subinventory</label>
           <div class="form-group">
             <select class="form-control custom-select form-control-sm custom-select-sm">
               <option value="">Please select</option>
@@ -920,137 +948,47 @@
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Updated Date</label>
+          <label class="form-control-label">Quantity</label>
           <input type="text" class="form-control form-control-sm" readonly/>
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Organisation</label>
+          <label class="form-control-label">Account</label>
           <div class="form-group">
-            <select class="form-control custom-select form-control-sm custom-select-sm">
-              <option value="">Please select</option>
-            </select>
+            <input type="text" class="form-control form-control-sm" readonly/>
           </div>
         </div>
       </div>
     </div>
 
+    <label>Record Lots and Serial Number</label>
+    <h4>Serial Number</h4>
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Updated By</label>
+          <label class="form-control-label">From</label>
           <input type="text" class="form-control form-control-sm" readonly/>
         </div>
       </div>
 
       <div class="col">
         <div class="form-group">
-          <label class="form-control-label">Rating</label>
-          <input type="text" class="form-control form-control-sm" readonly/>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <label class="form-control-label">Comments</label>
-          <input type="text" class="form-control form-control-sm" readonly/>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg">
-      <div class="card" name="Items">
-        <div class="dataTables_wrapper py-4">
-          <div class="row">
-            <div class="col-sm-12 col-md-6">
-              <div class="dataTables_length" id="datatable_length">
-                <h2>Items List</h2>
-                <label>
-                  Show
-                  <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm"
-                    (change)="entriesChange($event)">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="-1">All</option>
-                  </select>
-                  records
-                </label>
-              </div>
-            </div>
-            <div class="col-auto">
-            </div>
+          <label class="form-control-label">To</label>
+          <div class="form-group">
+            <input type="text" class="form-control form-control-sm" readonly/>
           </div>
-
-          <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-            [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
-            (activate)="onActivate($event)">
-
-            <ngx-datatable-column maxWidth="40">
-              <ng-template ngx-datatable-header-template>
-                <input type="checkbox">
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <div>
-                  <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRowPO(row)"
-                    [(ngModel)]="tablePO.isTick">
-                  <label for="customCheck+{{tablePO.id}}">
-                  </label>
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
-
-            <ngx-datatable-column name="No" [width]="auto" id="datatable-header-cell">
-              <ng-template let-rowIndex="rowIndex" let-row="tablePO" ngx-datatable-cell-template>
-                <strong>{{ rowIndex + 1 }}</strong>
-              </ng-template>
-            </ngx-datatable-column>
-
-            <div class="col-md-6 text-center">
-              <ngx-datatable-column [width]="220" [resizeable]="false">
-                <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                  <span>Item</span>
-                </ng-template>
-
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  <input type="text" class="form-control" value="{{row.items}}" readonly />
-                </ng-template>
-              </ngx-datatable-column>
-            </div>
-
-            <div class="col-md-6 text-center">
-              <ngx-datatable-column [width]="220" [resizeable]="false">
-                <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                  <span>Description</span>
-                </ng-template>
-
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  <input type="text" class="form-control" value="{{row.description}}" readonly />
-                </ng-template>
-              </ngx-datatable-column>
-            </div>
-
-            <div class="col-md-6 text-center">
-              <ngx-datatable-column [width]="auto" [resizeable]="false">
-                <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                  <span>Quantity</span>
-                </ng-template>
-
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  <input type="text" class="form-control" value="{{row.quantity}}" readonly />
-                </ng-template>
-              </ngx-datatable-column>
-            </div>
-
-          </ngx-datatable>
         </div>
+      </div>
+    </div>
 
-
+    <div class="card-footer">
+      <div class="row">
+        <div class="col text-right">
+          <button class="btn btn-default" (click)="sendTask()">Send task</button>
+          <button class="btn btn-danger" (click)="ModalCreate.hide()">close</button>
+        </div>
       </div>
     </div>
 
@@ -1367,7 +1305,7 @@
       </div>
     </div>
 
-      <div class="col-lg">
+      <div class="col-lg" *ngIf="false">
         <div class="card" name="Items">
           <div class="dataTables_wrapper py-4">
             <div class="row">
@@ -1482,7 +1420,7 @@
     </h6>
 
     <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
-      (click)="ModalStockReceive.hide()">
+      (click)="ModalPartialFull.hide()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
   </div>
@@ -1782,7 +1720,7 @@
       </div>
     </div>
 
-      <div class="col-lg">
+      <div class="col-lg" *ngIf="false">
         <div class="card" name="Items">
           <div class="dataTables_wrapper py-4">
             <div class="row">
@@ -1883,7 +1821,7 @@
     <div class="card-footer">
       <div class="row">
         <div class="col text-right">
-          <button class="btn btn-danger" (click)="ModalStockReceive.hide()">close</button>
+          <button class="btn btn-danger" (click)="ModalPartialFull.hide()">close</button>
         </div>
       </div>
     </div>
@@ -1892,11 +1830,11 @@
 <ng-template #stockfullreceipt>
   <div class="modal-header bg-default">
     <h6 class="modal-title my-auto text-white">
-      Receive Information
+      Stock Full Receipt Information
     </h6>
 
     <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
-      (click)="ModalStockReceive.hide()">
+      (click)="ModalPartialFull.hide()">
       <span aria-hidden="true" class="my-auto text-white"> × </span>
     </button>
   </div>
@@ -2196,7 +2134,7 @@
       </div>
     </div>
 
-      <div class="col-lg">
+      <div class="col-lg" *ngIf="false">
         <div class="card" name="Items">
           <div class="dataTables_wrapper py-4">
             <div class="row">
@@ -2297,7 +2235,8 @@
     <div class="card-footer">
       <div class="row">
         <div class="col text-right">
-          <button class="btn btn-danger" (click)="ModalStockReceive.hide()">close</button>
+          <button class="btn btn-default" (click)="sendTask()">Send task</button>
+          <button class="btn btn-danger" (click)="ModalPartialFull.hide()">close</button>
         </div>
       </div>
     </div>
@@ -2549,7 +2488,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg">
+      <div class="col-lg" *ngIf="false">
         <div class="card" name="Items">
           <div class="dataTables_wrapper py-4">
             <div class="row">

@@ -27,4 +27,11 @@ export class InventoryGrnService {
     );
   }
 
+  update(id: string, body: Form): Observable<InventoryGrnModel> {
+    let urlTemp = this.url + id + '/'
+    return this.http.patch<InventoryGrnModel>(urlTemp, body).pipe(
+      tap((res) => {
+      })
+    );
+  }
 }
