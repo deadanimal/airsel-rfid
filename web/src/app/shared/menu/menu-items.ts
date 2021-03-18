@@ -115,6 +115,9 @@ export const IROUTES: RouteInfo[] = [
     icontype: 'fas fa-dolly-flatbed text-blue',
     isCollapsed: true,
     children: [
+      { path: 'stock-receive-return', title: 'Stock Receive/Return', type: 'link' },
+      { path: 'issuance-reversal', title: 'Stock Issuannce/Reversal', type: 'link' },
+      { path: 'interwarehouse-transfer', title: 'Interwarehouse Transfer', type: 'link' },
       {
         path: 'stock-count',title: 'Stock Count', type: 'link'
         // type: 'sub',
@@ -124,12 +127,9 @@ export const IROUTES: RouteInfo[] = [
         //   { path: 'variance', title: 'Variance', type: 'link' },
         // ]
       },
-      { path: 'stock-receive-return', title: 'Stock Receive/Return', type: 'link' },
-      { path: 'issuance-reversal', title: 'Stock Issuannce/Reversal', type: 'link' },
-      { path: 'interwarehouse-transfer', title: 'Interwarehouse Transfer', type: 'link' },
+      { path: 'disposal', title: 'Stock Disposal', type: 'link' },
       { path: 'subinventory-transfer', title: 'Sub-Inventory Transfer', type: 'link'},
-      { path: 'transaction-upload', title: 'Transaction Upload', type: 'link'},
-      { path: 'disposal', title: 'Stock Disposal', type: 'link' }
+      { path: 'transaction-upload', title: 'Transaction Upload', type: 'link'}
     ]
   },
   // {

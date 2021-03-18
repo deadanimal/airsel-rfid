@@ -11,6 +11,9 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import * as moment from "moment";
 import * as L from "leaflet";
+import swal from "sweetalert2";
+import { NgxSpinnerService } from "ngx-spinner";
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -25,30 +28,50 @@ import { InventoryGrnService} from "src/app/shared/services/inventory-grn/invent
 @Component({
   selector: 'app-stock-receive-return',
   templateUrl: './stock-receive-return.component.html',
-  styleUrls: ['./stock-receive-return.component.scss']
+  styleUrls: ['./stock-receive-return.component.scss'],
+  animations: [
+    trigger(
+      'inOutAnimation',
+      [
+        transition(
+          ':enter',
+          [
+            style({ opacity: 0 }),
+            animate('1s ease-out',
+                    style({ opacity: 1 }))
+          ]
+        )
+      ]
+    )
+  ]
 })
 export class StockReceiveReturnComponent implements OnInit, OnDestroy {
 
   // Tables Selection
-  Stock_All: boolean = false;
-  Stock_Partial: boolean = false;
-  Stock_Full: boolean = false;
-  Stock_Return: boolean = false;
+  table_selection = [{
+    Stock_Full: true,
+    Stock_Partial: false,
+    Stock_Miscellaneous: false,
+    Stock_Return: false
+  }]
 
   // Tasks
-  stock_all: number = 0;
-  stock_partial: number = 0;
   stock_full: number = 0;
+  stock_partial: number = 0;
+  stock_miscellaneous: number = 0;
   stock_return: number = 0;
 
   // Data entries
   entries: number = 5;
 
-  //Real Data
+  // Real Data
   tablePO = [];
   tableGRN = [];
   rowDataPO:any
   rowDataGRN:any
+
+  // Declare modal
+  modal: BsModalRef;
 
  // Create information
  ModalCreate: BsModalRef;
@@ -66,6 +89,14 @@ export class StockReceiveReturnComponent implements OnInit, OnDestroy {
     ignoreBackdropClick: true,
   };
 
+  // Modal Partial and Full Receipt
+  ModalPartialFull: BsModalRef;
+  modalConfigPartialFull = {
+    keyboard: true,
+    class: "modal-dialog-centered modal-lg",
+    ignoreBackdropClick: true,
+  }
+
   // Modal Stock Return
   ModalStockReturn: BsModalRef;
   modalConfigReturn = {
@@ -79,9 +110,9 @@ export class StockReceiveReturnComponent implements OnInit, OnDestroy {
   percentvalues =
     [
       {
-        "percent_all_value": 0,
-        "percent_partial_value": 0,
         "percent_full_value": 0,
+        "percent_partial_value": 0,
+        "percent_miscellaneous_value": 0,
         "percent_return_value":0
       }
     ];
@@ -90,9 +121,9 @@ export class StockReceiveReturnComponent implements OnInit, OnDestroy {
   taskvalues =
   [
     {
-      "task_all_value": 0,
-      "task_partial_value": 0,
       "task_full_value": 0,
+      "task_partial_value": 0,
+      "task_miscellaneous_value": 0,
       "task_return_value": 0
     }
   ];
@@ -102,7 +133,8 @@ export class StockReceiveReturnComponent implements OnInit, OnDestroy {
     private zone: NgZone,
     public modalService: BsModalService,
     public InventoryPurchaseOrderService: InventoryPurchaseOrderService,
-    public InventoryGrnService: InventoryGrnService,){
+    public InventoryGrnService: InventoryGrnService,
+    private spinner: NgxSpinnerService){
 
       this.getInventoryPurchaseOrderData();
       this.getInventoryPurchaseOrderTotal();
@@ -114,40 +146,62 @@ export class StockReceiveReturnComponent implements OnInit, OnDestroy {
 
 
 detailSelector(path: string) {
-  if (path == 'stockall') {
-    this.Stock_All = true;
-    this.Stock_Partial = false;
-    this.Stock_Full = false;
-    this.Stock_Return = false;
-    console.log("success");
+  let tableTemp = [];
+
+  if (path == 'stockmiscellaneous') {
+    tableTemp = [{
+      Stock_Full: false,
+      Stock_Partial: false,
+      Stock_Miscellaneous: true,
+      Stock_Return: false
+    }]
+
+    this.table_selection = tableTemp;
   }
   else if (path == 'stockpartial') {
-    this.Stock_All = false;
-    this.Stock_Partial = true;
-    this.Stock_Full = false;
-    this.Stock_Return = false;
+    tableTemp = [{
+      Stock_Full: false,
+      Stock_Partial: true,
+      Stock_Miscellaneous: false,
+      Stock_Return: false
+    }]
+    this.table_selection = tableTemp;
   }
   else if (path == 'stockfull') {
-    this.Stock_All = false;
-    this.Stock_Partial = false;
-    this.Stock_Full = true;
-    this.Stock_Return = false;
+    tableTemp = [{
+      Stock_Full: true,
+      Stock_Partial: false,
+      Stock_Miscellaneous: false,
+      Stock_Return: false
+    }]
+    this.table_selection = tableTemp;
   }
   else if (path == 'stockreturn') {
-    this.Stock_All = false;
-    this.Stock_Partial = false;
-    this.Stock_Full = false;
-    this.Stock_Return = true;
+    tableTemp = [{
+      Stock_Full: false,
+      Stock_Partial: false,
+      Stock_Miscellaneous: false,
+      Stock_Return: true
+    }]
+    this.table_selection = tableTemp;
+    console.log("checking",this.table_selection);
   }
   else {
-    this.Stock_All = false;
-    this.Stock_Partial = false;
-    this.Stock_Full = false;
-    this.Stock_Return = false;
+    tableTemp = [{
+      Stock_Full: false,
+      Stock_Partial: false,
+      Stock_Miscellaneous: false,
+      Stock_Return: false
+    }]
+    this.table_selection = tableTemp;
   }
 }
 
 ngOnDestroy() {}
+
+closeModal() {
+  this.modal.hide();
+}
 
 getInventoryPurchaseOrderData(){
   let tempData = [];
@@ -170,7 +224,7 @@ getInventoryPurchaseOrderTotal(){
   this.InventoryPurchaseOrderService.get().subscribe(
     (res) => {
       sum = Object.keys(res).length;
-      this.stock_all = sum;
+      this.stock_miscellaneous = sum;
       this.stock_partial = sum;
       this.stock_full = sum;
     }
@@ -205,6 +259,22 @@ getInventoryGrnTotal(){
   )
 }
 
+sendTask() {
+  let assetregserv = this.InventoryPurchaseOrderService
+  this.spinner.show();
+
+  this.spinner.hide();
+  swal
+  .fire({
+    title: "Success",
+    text: "The task has been send",
+    type: "success",
+  }).then((result) => {
+    this.getInventoryPurchaseOrderData()
+  });
+  this.closeModal()
+}
+
 checkRowPO(selected) {
   let tempData = []
   // console.log('test test tetst')
@@ -224,6 +294,7 @@ checkRowPO(selected) {
   this.tablePO = tempData
 }
 
+
 checkRowGRN(selected) {
   let tempData = []
   // console.log('test test tetst')
@@ -241,6 +312,166 @@ checkRowGRN(selected) {
   )
   // console.log('tempDataqweqe = ', tempData)
   this.tableGRN = tempData
+}
+
+confirmPO(task) {
+
+  swal.fire({
+    title: 'Are you sure?',
+    text: 'To change the status.',
+    type: 'warning',
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: 'Yes, submit it',
+    confirmButtonClass: 'btn btn-warning',
+    cancelButtonText: 'Cancel',
+    cancelButtonClass: 'btn btn-secondary'
+  }).then((result) => {
+    console.log('result = ', result.value)
+    if (result.value == true) {
+      this.changeStatusPO(task)
+    }
+  })
+}
+
+confirmGRN(task) {
+
+  swal.fire({
+    title: 'Are you sure?',
+    text: 'To change the status.',
+    type: 'warning',
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: 'Yes, submit it',
+    confirmButtonClass: 'btn btn-warning',
+    cancelButtonText: 'Cancel',
+    cancelButtonClass: 'btn btn-secondary'
+  }).then((result) => {
+    console.log('result = ', result.value)
+    if (result.value == true) {
+      this.changeStatusGRN(task)
+    }
+  })
+}
+
+changeStatusPO(task) {
+  let resData: any
+  // console.log('this.task = ', task)
+  let no = 0
+  let purchaseorder = this.InventoryPurchaseOrderService
+  this.tablePO.forEach(function (itemVal) {
+
+    if (itemVal['isTick'] == true) {
+
+      console.log('itemVal = ', itemVal.status)
+      if (itemVal.status == 'CO') {
+        // const updateformData = new FormData();
+        let updateformData: any
+        // updateformData.append('status', 'PR');
+
+        updateformData = {
+          status: task
+        }
+        // console.log('updateformData = ', updateformData)
+
+        // console.log('---- sini ----')
+        purchaseorder.update(itemVal['id'], updateformData).subscribe(
+          (res) => {
+            // console.log("ttttatttatt = ", res);
+          },
+          error => {
+            console.error("err", error);
+          }
+        )
+      } else {
+        no++
+      }
+    }
+  })
+
+  if (no > 0) {
+    swal.fire({
+      title: 'Warning',
+      text: 'The incomplete data cannot be save.',
+      type: 'warning',
+      buttonsStyling: false,
+      confirmButtonText: 'Ok',
+      confirmButtonClass: 'btn btn-warning'
+    }).then((result) => {
+      this.getInventoryPurchaseOrderData()
+    })
+  } else {
+    swal.fire({
+      title: 'Success',
+      text: 'Successfully Change Status',
+      type: 'success',
+      buttonsStyling: false,
+      confirmButtonText: 'Ok',
+      confirmButtonClass: 'btn btn-success'
+    }).then((result) => {
+      this.getInventoryPurchaseOrderData()
+    })
+  }
+}
+
+changeStatusGRN(task) {
+  let resData: any
+  // console.log('this.task = ', task)
+  let no = 0
+  let goodreceivenote = this.InventoryGrnService
+  this.tableGRN.forEach(function (itemVal) {
+
+    if (itemVal['isTick'] == true) {
+
+      console.log('itemVal = ', itemVal.status)
+      if (itemVal.status == 'CO') {
+        // const updateformData = new FormData();
+        let updateformData: any
+        // updateformData.append('status', 'PR');
+
+        updateformData = {
+          status: task
+        }
+        // console.log('updateformData = ', updateformData)
+
+        // console.log('---- sini ----')
+        goodreceivenote.update(itemVal['id'], updateformData).subscribe(
+          (res) => {
+            // console.log("ttttatttatt = ", res);
+          },
+          error => {
+            console.error("err", error);
+          }
+        )
+      } else {
+        no++
+      }
+    }
+  })
+
+  if (no > 0) {
+    swal.fire({
+      title: 'Warning',
+      text: 'The incomplete data cannot be save.',
+      type: 'warning',
+      buttonsStyling: false,
+      confirmButtonText: 'Ok',
+      confirmButtonClass: 'btn btn-warning'
+    }).then((result) => {
+      this.getInventoryGrnData()
+    })
+  } else {
+    swal.fire({
+      title: 'Success',
+      text: 'Successfully Change Status',
+      type: 'success',
+      buttonsStyling: false,
+      confirmButtonText: 'Ok',
+      confirmButtonClass: 'btn btn-success'
+    }).then((result) => {
+      this.getInventoryGrnData()
+    })
+  }
 }
 
 entriesChange($event) {
@@ -265,6 +496,15 @@ openReceiveInformation(modalNotification: TemplateRef<any>, row) {
 
     );
   }
+
+openPartialFullReceiptInformation(modalNotification: TemplateRef<any>, row) {
+  this.rowDataPO = '';
+  this.rowDataPO = row;
+  this.ModalPartialFull = this.modalService.show(
+    modalNotification,
+    this.modalConfigPartialFull,
+  )
+}
 
 openReturnInformation(modalNotification: TemplateRef<any>, row) {
     this.rowDataGRN = '';
