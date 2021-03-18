@@ -638,7 +638,7 @@ class WorkOrderActivityCompletionViewSet(NestedViewSetMixin, viewsets.ModelViewS
 
         if from_date is not None and to_date is not None:
             queryset = WorkOrderActivityCompletion.objects.filter(
-                completiondatetime__range=(from_date, to_date))
+                submitted_datetime__range=(from_date, to_date))
 
         serializer = WorkOrderActivityCompletionExtendedSerializer(
             queryset, many=True)

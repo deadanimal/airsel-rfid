@@ -267,14 +267,14 @@ CELERY_BEAT_SCHEDULE = {}
 # INT18-hh:45
 # INT19-hh:50
 CRONJOBS = [
-    ('0 * * * *', 'wams.crons.int01_employee_cron.int01_employee_cron'),
-    ('5 * * * *', 'wams.crons.int02_workorderactivity_cron.int02_workorderactivity_cron'),
-    ('10 * * * *', 'wams.crons.int04_assetsyncoutbound_cron.int04_assetsyncoutbound_cron'),
-    ('15 * * * *', 'wams.crons.int07_servicehistorytype_cron.int07_servicehistorytype_cron'),
-    ('20 * * * *', 'wams.crons.int08_failureprofile_cron.int08_failureprofile_cron'),
-    ('25 * * * *', 'wams.crons.int09_measurementtype_cron.int09_measurementtype_cron'),
-    ('30 * * * *', 'wams.crons.int11_planner_cron.int11_planner_cron'),
-    ('40 * * * *', 'wams.crons.int16_workrequeststatusupdate_cron.int16_workrequeststatusupdate_cron'),
-    ('45 * * * *', 'wams.crons.int18_assetlocation_cron.int18_assetlocation_cron'),
-    ('50 * * * *', 'wams.crons.int19_maintenancemanager_cron.int19_maintenancemanager_cron')
+    ('* * * * *', 'wams.crons.int01_employee_cron'),
+    # ('5 * * * *', 'wams.crons.int02_workorderactivity_cron.int02_workorderactivity_cron'),
+    # ('10 * * * *', 'wams.crons.int04_assetsyncoutbound_cron.int04_assetsyncoutbound_cron'),
+    # ('15 * * * *', 'wams.crons.int07_servicehistorytype_cron.int07_servicehistorytype_cron'),
+    # ('20 * * * *', 'wams.crons.int08_failureprofile_cron.int08_failureprofile_cron'),
+    # ('25 * * * *', 'wams.crons.int09_measurementtype_cron.int09_measurementtype_cron'),
+    # ('30 * * * *', 'wams.crons.int11_planner_cron.int11_planner_cron'),
+    # ('40 * * * *', 'wams.crons.int16_workrequeststatusupdate_cron.int16_workrequeststatusupdate_cron'),
+    # ('45 * * * *', 'wams.crons.int18_assetlocation_cron.int18_assetlocation_cron'),
+    # ('50 * * * *', 'wams.crons.int19_maintenancemanager_cron.int19_maintenancemanager_cron')
 ]

@@ -21,7 +21,7 @@ WORKDIR ${APP_ROOT}
 ADD / ${APP_ROOT}
 
 # RUN crontab <<< '# new crontab'
-RUN python manage.py crontab add
-RUN python manage.py crontab show
+RUN python3 manage.py crontab add
+RUN python3 manage.py crontab show
 
 ENTRYPOINT ["./gunicorn_starter.sh"]
