@@ -15,6 +15,8 @@ import am4themes_material from "@amcharts/amcharts4/themes/material";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 am4core.useTheme(am4themes_material);
 am4core.useTheme(am4themes_animated);
+import swal from "sweetalert2";
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 import { InventoryMaterialService} from "src/app/shared/services/inventory-material/inventory-material.service";
 import { InventoryTransactionService } from "src/app/shared/services/inventory-transaction/inventory-transaction.service";
@@ -22,7 +24,22 @@ import { InventoryTransactionService } from "src/app/shared/services/inventory-t
 @Component({
   selector: 'app-issuance-reversal',
   templateUrl: './issuance-reversal.component.html',
-  styleUrls: ['./issuance-reversal.component.scss']
+  styleUrls: ['./issuance-reversal.component.scss'],
+  animations: [
+    trigger(
+      'inOutAnimation',
+      [
+        transition(
+          ':enter',
+          [
+            style({ opacity: 0 }),
+            animate('1s ease-out',
+                    style({ opacity: 1 }))
+          ]
+        )
+      ]
+    )
+  ]
 })
 export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy{
 
@@ -136,6 +153,7 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
       (res) => {
         sum = Object.keys(res).length;
         this.task_in_value = sum;
+        this.task_update_value = sum;
         this.initChart();
 
       }
@@ -150,7 +168,6 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
       (res) => {
         sum = Object.keys(res).length;
         this.task_issuance_value = sum;
-        this.task_update_value = sum;
         this.initChart();
       },
     )
@@ -221,6 +238,105 @@ export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy
       this.Stock_Issuance = false;
       this.Stock_In = false;
       this.Stock_Update = false;
+    }
+  }
+
+  checkRowINVTran(selected) {
+    let tempData = []
+    // console.log('test test tetst')
+    this.tableTemptInventoryTransaction.forEach(
+      (item) => {
+        if (item['id'] == selected['id']) {
+          // console.log('item b4 = ', item)
+          item['isTick'] = item['isTick']
+          // console.log('item after = ', item)
+          tempData.push(item)
+        } else {
+          tempData.push(item)
+        }
+      }
+    )
+    // console.log('tempDataqweqe = ', tempData)
+    this.tableTemptInventoryTransaction = tempData
+  }
+
+  confirmINVTran(task) {
+
+    swal.fire({
+      title: 'Are you sure?',
+      text: 'To change the status.',
+      type: 'warning',
+      buttonsStyling: false,
+      showCancelButton: true,
+      confirmButtonText: 'Yes, submit it',
+      confirmButtonClass: 'btn btn-warning',
+      cancelButtonText: 'Cancel',
+      cancelButtonClass: 'btn btn-secondary'
+    }).then((result) => {
+      console.log('result = ', result.value)
+      if (result.value == true) {
+        this.changeStatusINVTran(task)
+      }
+    })
+  }
+
+  changeStatusINVTran(task) {
+    let resData: any
+    // console.log('this.task = ', task)
+    let no = 0
+    let inventorytransaction = this.InventoryTransactionService
+    this.tableTemptInventoryTransaction.forEach(function (itemVal) {
+
+      if (itemVal['isTick'] == true) {
+
+        console.log('itemVal = ', itemVal.status)
+        if (itemVal.status == 'CO') {
+          // const updateformData = new FormData();
+          let updateformData: any
+          // updateformData.append('status', 'PR');
+
+          updateformData = {
+            status: task
+          }
+          // console.log('updateformData = ', updateformData)
+
+          // console.log('---- sini ----')
+          inventorytransaction.update(itemVal['id'], updateformData).subscribe(
+            (res) => {
+              // console.log("ttttatttatt = ", res);
+            },
+            error => {
+              console.error("err", error);
+            }
+          )
+        } else {
+          no++
+        }
+      }
+    })
+
+    if (no > 0) {
+      swal.fire({
+        title: 'Warning',
+        text: 'The incomplete data cannot be save.',
+        type: 'warning',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok',
+        confirmButtonClass: 'btn btn-warning'
+      }).then((result) => {
+        this.getInventoryTransactionData()
+      })
+    } else {
+      swal.fire({
+        title: 'Success',
+        text: 'Successfully Change Status',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok',
+        confirmButtonClass: 'btn btn-success'
+      }).then((result) => {
+        this.getInventoryTransactionData()
+      })
     }
   }
 

@@ -1,4 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from "@angular/core";
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  FormControl,
+} from "@angular/forms";
+import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import Dropzone from "dropzone";
+import swal from "sweetalert2";
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-disposal',
@@ -6,10 +16,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./disposal.component.scss']
 })
 export class DisposalComponent implements OnInit {
+  //Modal
+  modal:BsModalRef;
+  modalConfig: {
+    keyboard:true,
+    class: "modal-dialog-centered modal-xl",
+    ignoreBackdropClick: true,
+  }
 
-  constructor() { }
+  constructor(
+    public modalService: BsModalService,
+  ) { }
 
   ngOnInit() {
+  }
+
+  openModalUpload(modalNotification: TemplateRef<any>) {
+    this.modal = this.modalService.show(modalNotification, this.modalConfig);
   }
 
 }

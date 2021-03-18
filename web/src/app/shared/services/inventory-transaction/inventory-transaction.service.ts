@@ -28,4 +28,20 @@ export class InventoryTransactionService {
     );
   }
 
+  update(id: string, body: Form): Observable<InventoryTransactionModel> {
+    let urlTemp = this.url + id + '/'
+    return this.http.patch<InventoryTransactionModel>(urlTemp, body).pipe(
+      tap((res) => {
+      })
+    );
+  }
+
+  filter(field:string): Observable<InventoryTransactionModel[]> {
+    let urlFilter = this.url + "?" + field + "/";
+    return this.http.get<InventoryTransactionModel[]>(urlFilter).pipe(
+      tap((res)=>{
+      })
+    );
+  }
+
 }
