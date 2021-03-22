@@ -2,7 +2,7 @@ import csv
 import requests
 import json
 
-with open('table_asset_location3.csv', mode='r', encoding='utf-8-sig') as csv_file:
+with open('asset_location_090320162300.csv', mode='r', encoding='utf-8-sig') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     line_count = 0
     for row in csv_reader:
@@ -12,7 +12,7 @@ with open('table_asset_location3.csv', mode='r', encoding='utf-8-sig') as csv_fi
         # print(f'\tworks in the {row["Email Address"]}')
         
         account = {
-            'id': row["id"],
+            # 'id': row["id"],
             'location_type': row["location_type"],
             'locatin_disposition': row["locatin_disposition"],
             'Bo': row["Bo"],
@@ -77,15 +77,16 @@ with open('table_asset_location3.csv', mode='r', encoding='utf-8-sig') as csv_fi
             'main_contact_name': row["main_contact_name"],
             'maintenance_manager_nam': row["maintenance_manager_nam"],
             'planner_name': row["planner_name"],
-            'submitted_datetime': row["submitted_datetime"],
-            'created_date': row["created_date"],
-            'modified_date': row["modified_date"],
+            # 'submitted_datetime': row["submitted_datetime"],
+            # 'created_date': row["created_date"],
+            # 'modified_date': row["modified_date"],
         }
 
         line_count += 1
-        #print(json.dumps(account))
+        # print(json.dumps(account))
         # print(f'Processed {account} lines.')
-        requests.post('https://airsel-rfid-api.pipe.my/v1/asset-location/', data=account)
+        r = requests.post('https://airsel-rfid-api.pipe.my/v1/asset-location/', data=account)
+        print('status = ', r.status_code)
     # print(f'Processed {line_count} lines.')
     #     'http://127.0.0.1:8000/v1/asset-location/'
         # requests.post('http://127.0.0.1:8000/v1/asset-location/', data=account)
