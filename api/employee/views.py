@@ -26,6 +26,11 @@ class EmployeeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'employee_id', 'username', 'email', 'first_name', 'last_name', 'ic_number',
+        'user_type', 'bo_status_cd', 'hr_employee_number', 'staff_no', 'region', 'is_wams', 
+        'is_ad', 'is_erp'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
