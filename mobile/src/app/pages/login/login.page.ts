@@ -11,8 +11,12 @@ import {
   MenuController,
   ToastController,
 } from "@ionic/angular";
+
 import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { EmployeeService } from "src/app/shared/services/employee/employee.service";
 import { NotificationService } from "src/app/shared/handler/notification/notification.service";
+import { UsersService } from "src/app/shared/services/users/users.service";
+import { WamsService } from "src/app/shared/services/wams/wams.service";
 
 @Component({
   selector: "app-login",
@@ -24,8 +28,8 @@ export class LoginPage implements OnInit {
   validations_form: FormGroup;
   validation_messages = {
     username: [
-      { type: "required", message: "Email is required." },
-      { type: "pattern", message: "Please enter a valid email." },
+      { type: "required", message: "Username is required." },
+      { type: "pattern", message: "Please enter a valid username." },
     ],
     password: [
       { type: "required", message: "Password is required." },
@@ -53,17 +57,22 @@ export class LoginPage implements OnInit {
     public menu: MenuController,
     private router: Router,
     private authService: AuthService,
+    private employeeService: EmployeeService,
+    private userService: UsersService,
+    private wamsService: WamsService,
     private formBuilder: FormBuilder,
     private toastr: NotificationService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.menu.enable(false, "menuNotification");
 
+    // "username": "hafez_azman",
+    // "password": "5e1AIS04556"
+
     this.validations_form = this.formBuilder.group({
       username: new FormControl(
-        "hafez.azman@airselangor.com", /// technician 
-        // "testing", // inventory
+        "",
         Validators.compose([
           Validators.required,
           // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
@@ -71,7 +80,7 @@ export class LoginPage implements OnInit {
         ])
       ),
       password: new FormControl(
-        "airselrfid@2020",
+        "",
         // "PabloEscobar",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),
@@ -80,22 +89,96 @@ export class LoginPage implements OnInit {
 
   login() {
     this.isLoading = true;
+
+    // to login AD AIR SELANGOR
+    let bodyAD = {
+      service_name: "getActiveDirectory",
+      username: this.validations_form.value.username,
+      password: this.validations_form.value.password,
+    };
+    // STEP 1
     this.authService
       .obtainToken(this.validations_form.value, this.isLogin)
       .subscribe(
         (res) => {
           // Success
+          // STEP 2
           this.isLoading = false;
-          console.log('res = ', res)
+          this.navigateByRole(this.authService.userType);
         },
-        () => {
+        (err) => {
           // Failed
+          // STEP 3
           this.isLoading = false;
+          console.error("err", err);
+          this.wamsService.getService(bodyAD).subscribe(
+            (resAD) => {
+              // to find employee detail in table employee
+              if (resAD.status == "valid") {
+                this.employeeService
+                  .filter("hr_employee_number=" + resAD.staff_no)
+                  .subscribe(
+                    (resEmp) => {
+                      // to create user account in PIPE who AD is valid
+                      // STEP 4
+                      if (resEmp.length > 0) {
+                        let bodyPIPE = {
+                          username: this.validations_form.value.username,
+                          email: resAD.email ? resAD.email : "",
+                          password1: this.validations_form.value.password,
+                          password2: this.validations_form.value.password,
+                        };
+                        this.authService.registerAccount(bodyPIPE).subscribe(
+                          (resPIPE) => {
+                            if (resPIPE) {
+                              resAD["first_name"] = resAD.name;
+                              resAD["status"] = true;
+                              resAD["department"] = "";
+                              resAD["employee_id"] = resEmp[0].uuid;
+                              this.userService
+                                .update(resAD, resPIPE.user.pk)
+                                .subscribe((resPIPE) => {
+                                  this.retryLogin();
+                                });
+                            }
+                          },
+                          (err) => {
+                            console.error("err", err);
+                          }
+                        );
+                      }
+                    },
+                    (err) => {
+                      console.error("err", err);
+                    }
+                  );
+              } else {
+                // to create user account in PIPE who AD is invalid
+                // STEP 5
+                let bodyPIPE = {
+                  username: this.validations_form.value.username,
+                  // email: "",
+                  password1: this.validations_form.value.password,
+                  password2: this.validations_form.value.password,
+                };
+                this.authService.registerAccount(bodyPIPE).subscribe(
+                  (resPIPE) => {
+                    this.retryLogin();
+                  },
+                  (err) => {
+                    console.error("err", err);
+                  }
+                );
+              }
+            },
+            (err) => {
+              console.error("err", err);
+            }
+          );
         },
         () => {
           // After
           // this.toastr.openToastr("Welcome back");
-          this.navigateByRole(this.authService.userType);
         }
       );
 
@@ -126,6 +209,25 @@ export class LoginPage implements OnInit {
     } else {
       alert("wrong user!");
     } */
+  }
+
+  retryLogin() {
+    this.authService
+      .obtainToken(this.validations_form.value, this.isLogin)
+      .subscribe(
+        (res) => {
+          // Success
+          // STEP 2
+          this.isLoading = false;
+          this.navigateByRole(this.authService.userType);
+        },
+        (err) => {
+          // Failed
+          // STEP 3
+          this.isLoading = false;
+        },
+        () => {}
+      );
   }
 
   navigateByRole(userType: string) {
@@ -173,7 +275,7 @@ export class LoginPage implements OnInit {
         {
           text: "Cancel",
           role: "cancel",
-          handler: () => { },
+          handler: () => {},
         },
         {
           text: "Submit",

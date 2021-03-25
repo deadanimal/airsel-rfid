@@ -45,8 +45,9 @@ export class UsersService {
     );
   }
 
-  update(body: Form): Observable<UsersModel> {
-    return this.http.patch<UsersModel>(this.url, body).pipe(
+  update(body, id: string): Observable<UsersModel> {
+    let urlUpdate = this.url + id + "/";
+    return this.http.patch<UsersModel>(urlUpdate, body).pipe(
       tap((res) => {
         console.log("UsersModel", res);
       })
