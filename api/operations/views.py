@@ -382,7 +382,7 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = WorkRequestSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'description', 'long_description'
+        'description', 'long_description','node_id','asset_id','required_by_date'
     ]
 
     def get_permissions(self):
