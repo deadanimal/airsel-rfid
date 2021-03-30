@@ -1,14 +1,18 @@
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
 #status{
   margin-left: auto;
   margin-right: auto;
 }
 
 #buttontop {
-  left: 50px;
+  right: 35px;
 }
 
 #buttonexp {
-  left: 150px;
+  right: 20px;
 }
 
 #datatable-header-cell{

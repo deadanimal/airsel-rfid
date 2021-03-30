@@ -178,14 +178,11 @@
           </div>
         </div>
 
-        <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+        <ngx-datatable class="bootstrap" [footerHeight]="50" [columnMode]="ColumnMode.force"
           [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableTempMaterialRequest"
           (activate)="onActivate($event)">
 
-          <ngx-datatable-column [width]="40">
-            <ng-template ngx-datatable-header-template>
-              <input type="checkbox">
-            </ng-template>
+          <ngx-datatable-column [width]="30">
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
@@ -279,7 +276,7 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="auto" [resizeable]="false">
+            <ngx-datatable-column [width]="125" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Action</span>
               </ng-template>
@@ -317,14 +314,11 @@
           </div>
         </div>
 
-        <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+        <ngx-datatable class="bootstrap" [footerHeight]="50" [columnMode]="ColumnMode.force"
           [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction"
           (activate)="onActivate($event)">
 
-          <ngx-datatable-column [width]="50">
-            <ng-template ngx-datatable-header-template>
-              <input type="checkbox">
-            </ng-template>
+          <ngx-datatable-column [width]="30">
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
@@ -394,18 +388,6 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="230" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Subinventory Code</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.SUBINVENTORY_CODE}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
             <ngx-datatable-column [width]="200" [sortable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Transaction Date</span>
@@ -418,7 +400,7 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="auto" [resizeable]="false">
+            <ngx-datatable-column [width]="125" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Action</span>
               </ng-template>
@@ -434,8 +416,8 @@
 
       <div class="card-footer">
         <div class="row">
-          <div class="col" id="submit">
-            <button class="btn btn-success" (click)="confirmINVTran('NP')">Submit to ERP</button>
+          <div class="col text-center">
+            <button class="btn btn-success" (click)="confirmPO('NP')">Submit to ERP</button>
           </div>
         </div>
       </div>
@@ -466,14 +448,11 @@
           </div>
         </div>
 
-        <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+        <ngx-datatable class="bootstrap" [footerHeight]="50" [columnMode]="ColumnMode.force" 
           [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction"
           (activate)="onActivate($event)">
 
-          <ngx-datatable-column [width]="50">
-            <ng-template ngx-datatable-header-template>
-              <input type="checkbox">
-            </ng-template>
+          <ngx-datatable-column [width]="30" [sortable]="false">
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
@@ -484,7 +463,7 @@
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column [width]="80" id="datatable-header-cell">
+          <ngx-datatable-column [width]="80" [sortable]="false" id="datatable-header-cell">
             <ng-template ngx-datatable-header-template id="datatable-header-cell">
               <span>No</span>
             </ng-template>
@@ -543,18 +522,6 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="230" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Subinventory Code</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.SUBINVENTORY_CODE}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
             <ngx-datatable-column [width]="200" [sortable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Transaction Date</span>
@@ -567,7 +534,7 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="auto" [resizeable]="false">
+            <ngx-datatable-column [width]="125" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Action</span>
               </ng-template>
@@ -583,8 +550,8 @@
 
       <div class="card-footer">
         <div class="row">
-          <div class="col" id="submit">
-            <button class="btn btn-success" (click)="confirmINVTran('NP')">Submit to ERP</button>
+          <div class="col text-center">
+            <button class="btn btn-success" (click)="confirmPO('NP')">Submit to ERP</button>
           </div>
         </div>
       </div>
@@ -839,7 +806,7 @@
               </div>
             </div>
 
-            <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+            <ngx-datatable class="bootstrap" [footerHeight]="50"
               [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableTempMaterialRequest"
               (activate)="onActivate($event)">
 
@@ -1073,14 +1040,11 @@
               </div>
             </div>
 
-            <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+            <ngx-datatable class="bootstrap" [footerHeight]="50"
               [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction"
               (activate)="onActivate($event)">
 
               <ngx-datatable-column maxWidth="40">
-                <ng-template ngx-datatable-header-template>
-                  <input type="checkbox">
-                </ng-template>
 
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <div>
@@ -1307,7 +1271,7 @@
               </div>
             </div>
 
-            <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+            <ngx-datatable class="bootstrap" [footerHeight]="50"
               [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction"
               (activate)="onActivate($event)">
 

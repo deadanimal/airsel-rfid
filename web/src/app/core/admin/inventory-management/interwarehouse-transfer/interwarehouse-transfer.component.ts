@@ -10,6 +10,7 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import swal from "sweetalert2";
 
 import { InventoryTransactionService } from "src/app/shared/services/inventory-transaction/inventory-transaction.service";
+import { ColumnMode } from "@swimlane/ngx-datatable";
 
 @Component({
   selector: 'app-interwarehouse-transfer',
@@ -17,6 +18,9 @@ import { InventoryTransactionService } from "src/app/shared/services/inventory-t
   styleUrls: ['./interwarehouse-transfer.component.scss']
 })
 export class InterwarehouseTransferComponent implements OnInit{
+
+  // Setting up datatable
+  ColumnMode = ColumnMode;
 
   // Modal
   ModalSubInventory: BsModalRef;

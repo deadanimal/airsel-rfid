@@ -74,25 +74,25 @@
           </div>
         </div>
 
-        <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+        <ngx-datatable class="bootstrap" [footerHeight]="50" [columnMode]="ColumnMode.force" [scrollbarH]="true"
           [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction">
 
-          <ngx-datatable-column maxWidth="40">
-            <ng-template ngx-datatable-header-template>
-              <input type="checkbox">
-            </ng-template>
+          <ngx-datatable-column [width]="30">
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
-                <!-- <input type="checkbox" id="customCheck+{{tableShowStockCount.id}}" (change)="checkRow(row)"
-                  [(ngModel)]="tableShowStock.isTick"> -->
-                <label for="customCheck+{{tableTemptInventoryTransaction.id}}">
+                <input type="checkbox" id="customCheck+{{row.id}}">
+                <label for="customCheck+{{row.id}}">
                 </label>
               </div>
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column name="No" [width]="80" id="datatable-header-cell">
+          <ngx-datatable-column [width]="80" id="datatable-header-cell">
+            <ng-template ngx-datatable-header-template id="datatable-header-cell">
+              <span>No</span>
+            </ng-template>
+
             <ng-template let-rowIndex="rowIndex" let-row="tableTemptInventoryTransaction" ngx-datatable-cell-template>
               <strong>{{ rowIndex + 1 }}</strong>
             </ng-template>
@@ -159,19 +159,7 @@
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="230" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Sub-Inventory Code</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.SUBINVENTORY_CODE}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-md-6">
-            <ngx-datatable-column [width]="auto" [resizeable]="false">
+            <ngx-datatable-column [width]="120" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Action</span>
               </ng-template>
@@ -362,7 +350,7 @@
               </div>
             </div>
 
-            <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+            <ngx-datatable class="bootstrap" [footerHeight]="50"
               [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableShowStock"
               (activate)="onActivate($event)">
 

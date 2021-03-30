@@ -95,7 +95,7 @@
           <div class="row">
             <div class="col">
               <h3 class="card-title text-uppercase text-muted mb-0">
-                Miscellaneous Receipt
+                OTHER RECEIPT
               </h3>
               <span class="h2 font-weight-bold mb-0">
                 {{stock_miscellaneous}} Tasks
@@ -150,7 +150,7 @@
     <div class="card">
       <div class="dataTables_wrapper py-4">
         <div class="row">
-          <div class="col-lg-10">
+          <div class="col">
             <div class="dataTables_length" id="datatable_length">
               <label>
                 Show
@@ -166,7 +166,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col" id="buttontop">
+            <div class="col text-right" id="buttontop">
               <div class="row">
                 <button class="btn btn-success" (click)="openCreate(create)">Create</button>
                 <button class="btn btn-success">Export</button>
@@ -175,14 +175,11 @@
           </div>
         </div>
 
-        <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+        <ngx-datatable class="bootstrap" [footerHeight]="50" [columnMode]="ColumnMode.force"
           [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
           (activate)="onActivate($event)">
 
-          <ngx-datatable-column [width]="40">
-            <ng-template ngx-datatable-header-template>
-              <input type="checkbox">
-            </ng-template>
+          <ngx-datatable-column [width]="30">
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
@@ -289,18 +286,6 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="150" [sortable]="true">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Sub Inventory Code</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.sub_inventory_code}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
             <ngx-datatable-column [width]="130" [resizeable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Rating</span>
@@ -317,7 +302,7 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="auto" [resizeable]="false">
+            <ngx-datatable-column [width]="125" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Action</span>
               </ng-template>
@@ -348,7 +333,7 @@
     <div class="card">
       <div class="dataTables_wrapper py-4">
         <div class="row">
-          <div class="col-lg-10">
+          <div class="col">
             <div class="dataTables_length" id="datatable_length">
               <label>
                 Show
@@ -364,22 +349,17 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col" id="buttonexp">
-              <div class="row">
-                <button class="btn btn-success">Export</button>
-              </div>
+            <div class="col text-right" id="buttonexp">
+              <button class="btn btn-success">Export</button>
             </div>
           </div>
         </div>
 
-        <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+        <ngx-datatable class="bootstrap" [footerHeight]="50" [columnMode]="ColumnMode.force"
           [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
           (activate)="onActivate($event)">
 
-          <ngx-datatable-column [width]="40">
-            <ng-template ngx-datatable-header-template>
-              <input type="checkbox">
-            </ng-template>
+          <ngx-datatable-column [width]="30">
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
@@ -486,18 +466,6 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="150" [sortable]="true">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Sub Inventory Code</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.sub_inventory_code}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
             <ngx-datatable-column [width]="130" [resizeable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Rating</span>
@@ -514,7 +482,7 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="auto" [resizeable]="false">
+            <ngx-datatable-column [width]="125" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Action</span>
               </ng-template>
@@ -537,7 +505,7 @@
     <div class="card">
       <div class="dataTables_wrapper py-4">
         <div class="row">
-          <div class="col-lg-10">
+          <div class="col">
             <div class="dataTables_length" id="datatable_length">
               <label>
                 Show
@@ -553,22 +521,17 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col" id="buttonexp">
-              <div class="row">
-                <button class="btn btn-success">Export</button>
-              </div>
+            <div class="col text-right" id="buttonexp">
+              <button class="btn btn-success">Export</button>
             </div>
           </div>
         </div>
 
-        <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+        <ngx-datatable class="bootstrap" [footerHeight]="50" [columnMode]="ColumnMode.force"
           [rowHeight]="auto" [scrollbarH]="true" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
           (activate)="onActivate($event)">
 
-          <ngx-datatable-column [width]="40">
-            <ng-template ngx-datatable-header-template>
-              <input type="checkbox">
-            </ng-template>
+          <ngx-datatable-column [width]="30">
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
@@ -675,18 +638,6 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="150" [sortable]="true">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Sub Inventory Code</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.sub_inventory_code}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-auto">
             <ngx-datatable-column [width]="130" [resizeable]="true">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Rating</span>
@@ -703,7 +654,7 @@
           </div>
 
           <div class="col-auto">
-            <ngx-datatable-column [width]="auto" [resizeable]="false">
+            <ngx-datatable-column [width]="125" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Action</span>
               </ng-template>
@@ -727,7 +678,7 @@
     <div class="card">
       <div class="dataTables_wrapper py-4">
         <div class="row">
-          <div class="col-sm-16 col-md-10">
+          <div class="col">
             <div class="dataTables_length" id="datatable_length">
               <label>
                 Show
@@ -743,28 +694,23 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col" id="buttonexp">
-              <div class="row">
-                <button class="btn btn-success">Export</button>
-              </div>
+            <div class="col text-right" id="buttonexp">
+              <button class="btn btn-success">Export</button>
             </div>
           </div>
         </div>
 
-        <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-          [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableGRN"
+        <ngx-datatable class="bootstrap" [footerHeight]="50" [columnMode]="ColumnMode.force"
+          [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableGRN" [scrollbarH]="true"
           (activate)="onActivate($event)">
 
-          <ngx-datatable-column maxWidth="40">
-            <ng-template ngx-datatable-header-template>
-              <input type="checkbox">
-            </ng-template>
+          <ngx-datatable-column [width]="30">
 
             <ng-template let-row="row" ngx-datatable-cell-template>
               <div>
-                <input type="checkbox" id="customCheck+{{tableGRN.id}}" (change)="checkRowGRN(row)"
-                  [(ngModel)]="tableGRN.isTick">
-                <label for="customCheck+{{tableGRN.id}}">
+                <input type="checkbox" id="customCheck+{{tablePO.id}}" (change)="checkRowPO(row)"
+                  [(ngModel)]="tablePO.isTick">
+                <label for="customCheck+{{tablePO.id}}">
                 </label>
               </div>
             </ng-template>
@@ -865,7 +811,7 @@
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="auto" [resizeable]="false">
+            <ngx-datatable-column [width]="125" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Action</span>
               </ng-template>
@@ -1329,7 +1275,7 @@
               </div>
             </div>
 
-            <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+            <ngx-datatable class="bootstrap" [footerHeight]="50"
               [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
               (activate)="onActivate($event)">
 
@@ -1744,7 +1690,7 @@
               </div>
             </div>
 
-            <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+            <ngx-datatable class="bootstrap" [footerHeight]="50"
               [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
               (activate)="onActivate($event)">
 
@@ -2158,7 +2104,7 @@
               </div>
             </div>
 
-            <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+            <ngx-datatable class="bootstrap" [footerHeight]="50"
               [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tablePO"
               (activate)="onActivate($event)">
 
@@ -2512,7 +2458,7 @@
               </div>
             </div>
 
-            <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
+            <ngx-datatable class="bootstrap" [footerHeight]="50"
               [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableGRN"
               (activate)="onActivate($event)">
 

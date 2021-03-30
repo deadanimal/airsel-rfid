@@ -12,6 +12,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 
 import { InventoryTransactionService } from "src/app/shared/services/inventory-transaction/inventory-transaction.service";
 
+import { ColumnMode,SelectionType} from "@swimlane/ngx-datatable";
+
 @Component({
   selector: 'app-stock-count',
   templateUrl: './stock-count.component.html',
@@ -19,7 +21,11 @@ import { InventoryTransactionService } from "src/app/shared/services/inventory-t
 })
 export class StockCountComponent implements OnInit{
 
-  //Data entries
+  // Setting up datatable
+  ColumnMode = ColumnMode;
+  SelectionType = SelectionType;
+
+  // Data entries
   entries: number = 5;
 
   // Declare modal
@@ -124,6 +130,8 @@ export class StockCountComponent implements OnInit{
           var transaction_sub = transaction.TRANSACTION_DATE;
           var tran = new Date(transaction_sub);
           var match = `${tran.getFullYear()}-${tran.getMonth()+1}-${tran.getDate()}`;
+          console.log("match = ", match);
+          console.log("selected date = ", match >= tran_conv_date_start && match <= tran_conv_date_end);
 
           // filter this dates by startDate and endDate
           return match >= tran_conv_date_start && match <= tran_conv_date_end;
