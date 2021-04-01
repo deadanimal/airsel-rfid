@@ -69,11 +69,12 @@
     <div class="card">
       <div class="dataTables_wrapper py-4">
         <div class="row">
-          <div class="col-sm-16 col-md-10">
+          <div class="col">
             <div class="dataTables_length" id="datatable_length">
               <label>
                 Show
-                <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm">
+                <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm"
+                  (change)="entriesChange($event)">
                   <option value="5">5</option>
                   <option value="10">10</option>
                   <option value="15">15</option>
