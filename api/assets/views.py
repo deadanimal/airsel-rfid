@@ -49,8 +49,36 @@ from .serializers import (
 class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Asset.objects.all()
     serializer_class = AssetSerializer
+    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    # filterset_fields = []
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = []
+    filterset_fields = [
+        'asset_id',
+        'badge_no',
+        'node_id',
+        'hex_code',
+    ]
+
+    @action(methods=['POST'], detail=False)
+    def patch_asset(self, request, *args, **kwargs):
+        asset_request_ = json.loads(request.body)
+        asset_hex_code_ = asset_request_['hex_code']
+        asset_badge_no_ = asset_request_['badge_no']
+
+        asset_ = Asset.objects.filter(
+            badge_no=asset_badge_no_
+        ).first()
+
+        asset_.hex_code = asset_hex_code_
+        asset_.save()
+
+        print('asset =')
+        print(asset_)
+
+        serializer = AssetSerializer(asset_)
+        return Response(serializer.data)  
+        # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
+        # return Response(rejected_list_serializer.data) 
 
     def get_permissions(self):
         if self.action == 'list':
@@ -376,7 +404,7 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         asset_.hex_code = asset_hex_code_
         asset_.save()
 
-        print('asset = ')
+        print('asset =')
         print(asset_)
 
         serializer = AssetRegistrationSerializer(asset_)

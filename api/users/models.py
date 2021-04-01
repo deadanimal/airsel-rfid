@@ -11,10 +11,12 @@ from simple_history.models import HistoricalRecords
 
 from core.helpers import PathAndRename
 
+# from employee.models import Employee
+
 class CustomUser(AbstractUser):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    employee_id = models.CharField(max_length=100, default='NA')
+    employee_id = models.ForeignKey('employee.Employee', on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_employee_id', default=None, null=True)
     first_name = models.CharField(max_length=255, blank=True, default='NA')
     last_name = models.CharField(max_length=255, blank=True, default='NA')
     ic_number = models.CharField(max_length=14, blank=True, default='NA')

@@ -34,7 +34,7 @@ export class AuthService {
 
   constructor(private jwtService: JwtService, private http: HttpClient) {}
 
-  registerAccount(body: Form): Observable<any> {
+  registerAccount(body): Observable<any> {
     return this.http.post<any>(this.urlRegister, body).pipe(
       tap((res) => {
         console.log("Registration: ", res);

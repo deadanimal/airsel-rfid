@@ -13,9 +13,17 @@ export class WamsService {
 
   constructor(private http: HttpClient) {}
 
+  getService(body): Observable<any> {
+    return this.http.post<any>(this.url, body).pipe(
+      tap((res) => {
+        console.log(body.service_name, res);
+      })
+    );
+  }
+
   getEmployee(): Observable<any> {
     let body = {
-      'service_name': 'getEmployee'
+      service_name: "getEmployee",
     };
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
@@ -26,7 +34,7 @@ export class WamsService {
 
   getWorkOrderActivity(): Observable<any> {
     let body = {
-      'service_name': 'getWorkOrderActivity'
+      service_name: "getWorkOrderActivity",
     };
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
@@ -37,7 +45,7 @@ export class WamsService {
 
   getAssetSyncOutbound(): Observable<any> {
     let body = {
-      'service_name': 'getAssetSyncOutbound'
+      service_name: "getAssetSyncOutbound",
     };
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
