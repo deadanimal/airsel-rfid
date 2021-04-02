@@ -1,3 +1,7 @@
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
 .inner-addon {
   position: relative;
 }
@@ -41,7 +45,7 @@
 }
 
 #buttontop {
-  left: 50px;
+  right: 35px;
 }
 
 #input-tolerance{

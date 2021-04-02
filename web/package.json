@@ -30,7 +30,7 @@
     "@fullcalendar/daygrid": "^4.3.0",
     "@fullcalendar/interaction": "4.3.0",
     "@ng-select/ng-select": "^3.0.0",
-    "@swimlane/ngx-datatable": "15.0.2",
+    "@swimlane/ngx-datatable": "^15.0.2",
     "@types/leaflet.markercluster": "^1.4.2",
     "@types/mapbox-gl": "^1.11.0",
     "acorn": "^7.1.1",
