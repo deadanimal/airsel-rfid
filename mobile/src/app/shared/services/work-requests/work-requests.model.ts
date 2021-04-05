@@ -21,6 +21,7 @@ export class WorkRequestsModel {
   public node_id: string;
   public asset_id: string;
   public attachment: string;
+  public status: string;
   public record_by: string;
   public record_date: any;
   public modified_by: string;
@@ -49,6 +50,7 @@ export class WorkRequestsModel {
     node_id: string,
     asset_id: string,
     attachment: string,
+    status: string,
     record_by: string,
     record_date: any,
     modified_by: string,
@@ -80,5 +82,6 @@ export class WorkRequestsModel {
     this.record_date = record_date;
     this.modified_by = modified_by;
     this.modified_date = modified_date;
+    this.status = status;
   }
 }

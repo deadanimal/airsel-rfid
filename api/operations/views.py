@@ -353,7 +353,7 @@ class WorkCategoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = WorkCategorySerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'name', 'description', 'detail_description', 'status', 'record_by', 'modified_by'
+        'work_category'
     ]
 
     def get_permissions(self):

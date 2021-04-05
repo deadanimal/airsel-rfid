@@ -16,7 +16,7 @@ export class AssetsService {
   public amodels: AssetsModel[] = [];
   public amodel: AssetsModel;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   post(body): Observable<AssetsModel> {
     return this.http.post<any>(this.url, body).pipe(
@@ -67,6 +67,16 @@ export class AssetsService {
     return this.http.get<AssetsModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("AssetsModel", res);
+      })
+    );
+  }
+
+  getOneExtended(id: string): Observable<AssetsModel> {
+    let urlID = this.url + id + "/extended/";
+    return this.http.get<AssetsModel>(urlID).pipe(
+      tap((res: AssetsModel) => {
+        console.log("AssetsModel", res);
+        this.amodel = res;
       })
     );
   }

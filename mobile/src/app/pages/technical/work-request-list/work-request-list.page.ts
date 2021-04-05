@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, NgZone } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import {
   ActionSheetController,
@@ -11,6 +11,7 @@ import { WorkRequestPage } from "../work-request/work-request.page";
 
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkRequestsService } from "src/app/shared/services/work-requests/work-requests.service";
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
 
 @Component({
   selector: "app-work-request-list",
@@ -21,22 +22,46 @@ export class WorkRequestListPage implements OnInit {
   // List
   workrequests = [];
 
+  // data
+  private logs = new Array<string>();
+  public scanValue: any;
+  bBarcode: boolean = false;
+  bRfid: boolean = false;
+  badge_number = ''
+
   constructor(
     private route: ActivatedRoute,
+    private ngZone: NgZone,
     private router: Router,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     public menu: MenuController,
     public modalController: ModalController,
     public notificationService: NotificationsService,
-    private workrequestService: WorkRequestsService
-  ) {}
+    private workrequestService: WorkRequestsService,
+    private assetsService: AssetsService
+  ) { }
+
+  private L(...args: any[]) {
+    let v = args.join(" ");
+    console.log(v);
+    this.ngZone.run(() => {
+      this.logs.push(v);
+    });
+  }
+
+  ngOnInit() {
+    // broadcaster._debug = true;
+    this.onRegister2DBarcodeListener();
+    this.onRegisterRFIDListener();
+  }
 
   getWorkRequest() {
     this.workrequestService.get().subscribe(
       (res) => {
-        console.log("res", res);
-        this.workrequests = res;
+        console.log("workrequest = ", res);
+        let workreq = res;
+        this.addGetBadgeNumber(workreq)
       },
       (err) => {
         console.error("err", err);
@@ -44,11 +69,31 @@ export class WorkRequestListPage implements OnInit {
     );
   }
 
+  addGetBadgeNumber(workReqData) {
+    // console.log("---- sini -----")
+    let getAssetsService = this.assetsService
+    workReqData.forEach(element => {
+
+      let asset_id = element.asset_id
+      console.log("element = ", element)
+      element.badge_no = ''
+      getAssetsService.filter("asset_id=" + asset_id).subscribe(
+        (res) => {
+          console.log("res asset service = ", res)
+          element.badge_no = res[0].badge_no
+        },
+        (err) => {
+          console.log("err asset service = ", err)
+        }
+      )
+      this.workrequests.push(element)
+
+    });
+  }
+
   ionViewDidEnter() {
     this.getWorkRequest();
   }
-
-  ngOnInit() {}
 
   homePage(path: string) {
     this.router.navigate([path]);
@@ -78,6 +123,8 @@ export class WorkRequestListPage implements OnInit {
           icon: "scan",
           handler: () => {
             console.log("RFID clicked");
+            this.bBarcode = false;
+            this.bRfid = true;
           },
         },
         {
@@ -85,6 +132,8 @@ export class WorkRequestListPage implements OnInit {
           icon: "qr-code",
           handler: () => {
             console.log("QR Code clicked");
+            this.bBarcode = true;
+            this.bRfid = false;
           },
         },
         {
@@ -174,7 +223,103 @@ export class WorkRequestListPage implements OnInit {
     this.router.navigate(["/technical/work-request"], navigationExtras);
   }
 
+  updateData(data) {
+    this.ngZone.run(() => {
+      this.scanValue = data;
+      alert(this.scanValue);
+
+      this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
+        (res) => {
+          console.log("res assetlsService = ", res)
+
+          if (res[0].badge_no) {
+            let navigationExtras: NavigationExtras = {
+              state: {
+                badge_no: res[0].badge_no,
+              },
+            };
+            this.router.navigate(
+              ["/technical/work-request"],
+              navigationExtras
+            );
+          } else {
+            this.presentAlert(
+              "Error",
+              "Please enter badge number to find asset detail"
+            );
+          }
+        },
+        (err) => {
+          console.log("err assetlsService = ", err)
+        }
+      )
+
+    });
+  }
+
+  updateData2(data) {
+    this.ngZone.run(() => {
+      this.scanValue = data;
+      alert(this.scanValue);
+      if (this.scanValue.badge_no) {
+        let navigationExtras: NavigationExtras = {
+          state: {
+            badge_no: this.scanValue.badge_no,
+          },
+        };
+        this.router.navigate(
+          ["/technical/work-request"],
+          navigationExtras
+        );
+      } else {
+        this.presentAlert(
+          "Error",
+          "Please enter badge number to find asset detail"
+        );
+      }
+
+    });
+  }
+
   clickRemove(index: number) {
     this.workrequests.splice(index, 1);
+  }
+
+  onRegister2DBarcodeListener() {
+    console.log("[register onRegister2DBarcodeListener] ");
+    const ev = "com.scanner.broadcast";
+    var isGlobal = true;
+
+    var listener = (event) => {
+      console.log(JSON.stringify(event));
+
+      if (event.SCAN_STATE == "success") {
+        this.ngZone.run(() => {
+          if (this.bBarcode) {
+            this.updateData2(event.data);
+          }
+        });
+      }
+    };
+    // broadcaster.addEventListener(ev, isGlobal, listener);
+  }
+
+  onRegisterRFIDListener() {
+    console.log("[register onRegisterRFIDListener] ");
+    const ev = "android.intent.action.scanner.RFID";
+    var isGlobal = true;
+
+    var listener = (event) => {
+      console.log(JSON.stringify(event));
+
+      if (event.SCAN_STATE == "success") {
+        this.ngZone.run(() => {
+          if (this.bRfid) {
+            this.updateData(event.data);
+          }
+        });
+      }
+    };
+    // broadcaster.addEventListener(ev, isGlobal, listener);
   }
 }

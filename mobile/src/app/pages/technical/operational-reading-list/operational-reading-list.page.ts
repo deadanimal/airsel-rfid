@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+declare var broadcaster: any;
+
+import { Component, NgZone, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import {
   ActionSheetController,
@@ -9,6 +11,8 @@ import {
 
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { OperationalReadingsService } from "src/app/shared/services/operational-readings/operational-readings.service";
+import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
 
 @Component({
   selector: "app-operational-reading-list",
@@ -19,7 +23,16 @@ export class OperationalReadingListPage implements OnInit {
   // List
   operationalreadings = [];
 
+  // data 
+  private logs = new Array<string>();
+  public scanValue: any;
+  badge_no: any;
+  hex_code: any;
+  bBarcode: boolean = false;
+  bRfid: boolean = false;
+
   constructor(
+    private ngZone: NgZone,
     private route: ActivatedRoute,
     private router: Router,
     public actionSheetController: ActionSheetController,
@@ -27,8 +40,78 @@ export class OperationalReadingListPage implements OnInit {
     public menu: MenuController,
     public modalController: ModalController,
     public notificationService: NotificationsService,
-    private operationalreadingService: OperationalReadingsService
-  ) {}
+    private assetregistrationService: AssetRegistrationsService,
+    private operationalreadingService: OperationalReadingsService,
+    private assetsService: AssetsService
+  ) { }
+
+  private L(...args: any[]) {
+    let v = args.join(" ");
+    console.log(v);
+    this.ngZone.run(() => {
+      this.logs.push(v);
+    });
+  }
+
+  ngOnInit() {
+    broadcaster._debug = true;
+    this.onRegister2DBarcodeListener();
+    this.onRegisterRFIDListener();
+  }
+
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ["OK"],
+    });
+
+    await alert.present();
+  }
+
+  onRegister2DBarcodeListener() {
+    console.log("[register onRegister2DBarcodeListener] ");
+    const ev = "com.scanner.broadcast";
+    var isGlobal = true;
+
+    var listener = (event) => {
+      console.log(JSON.stringify(event));
+
+      if (event.SCAN_STATE == "success") {
+        this.ngZone.run(() => {
+          console.log("this.bBarcode = ", this.bBarcode)
+          if (this.bBarcode) {
+            this.updateData2(event.data);
+          }
+        });
+      }
+    };
+    broadcaster.addEventListener(ev, isGlobal, listener);
+  }
+
+  onRegisterRFIDListener() {
+    console.log("[register onRegisterRFIDListener] ");
+    const ev = "android.intent.action.scanner.RFID";
+    var isGlobal = true;
+    console.log("this.bRfid 1 = ", this.bRfid)
+
+    var listener = (event) => {
+      console.log("sini 1")
+      console.log(JSON.stringify(event));
+
+      if (event.SCAN_STATE == "success") {
+        console.log("sini 2")
+        this.ngZone.run(() => {
+          console.log("this.bRfid = ", this.bRfid)
+          if (this.bRfid) {
+            console.log("sini 3")
+            this.updateData(event.data);
+          }
+        });
+      }
+    };
+    broadcaster.addEventListener(ev, isGlobal, listener);
+  }
 
   getOperationalReading() {
     this.operationalreadingService.get().subscribe(
@@ -55,8 +138,6 @@ export class OperationalReadingListPage implements OnInit {
     this.getOperationalReading();
   }
 
-  ngOnInit() {}
-
   homePage(path: string) {
     this.router.navigate([path]);
   }
@@ -76,21 +157,27 @@ export class OperationalReadingListPage implements OnInit {
           text: "RFID",
           icon: "scan",
           handler: () => {
-            console.log("RFID clicked");
+            this.bRfid = true
+            this.bBarcode = false
+            console.log("OPL RFID clicked");
+            this.onRegisterRFIDListener()
           },
         },
         {
           text: "QR Code",
           icon: "qr-code",
           handler: () => {
-            console.log("QR Code clicked");
+            this.bRfid = true
+            this.bBarcode = false
+            console.log("OPL QR Code clicked");
+            this.onRegister2DBarcodeListener()
           },
         },
         {
           text: "Badge No.",
           icon: "search",
           handler: () => {
-            console.log("Badge No. clicked");
+            console.log("OPL Badge No. clicked");
             this.searchBadgeNo();
           },
         },
@@ -99,7 +186,7 @@ export class OperationalReadingListPage implements OnInit {
           role: "cancel",
           icon: "close",
           handler: () => {
-            console.log("Cancel clicked");
+            console.log("OPL Cancel clicked");
           },
         },
       ],
@@ -152,16 +239,6 @@ export class OperationalReadingListPage implements OnInit {
     await alert.present();
   }
 
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ["OK"],
-    });
-
-    await alert.present();
-  }
-
   async clickEdit(operationalreading) {
     let navigationExtras: NavigationExtras = {
       state: {
@@ -175,5 +252,68 @@ export class OperationalReadingListPage implements OnInit {
 
   clickRemove(index: number) {
     this.operationalreadings.splice(index, 1);
+  }
+
+  updateData(data) {
+    console.log("sini 4")
+    this.ngZone.run(() => {
+      this.scanValue = data;
+      console.log("sini 5 scanned data = ", this.scanValue);
+
+      this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
+        (res) => {
+          console.log("res assetlsService = ", res)
+
+          if (res[0].badge_no) {
+            let navigationExtras: NavigationExtras = {
+              state: {
+                badge_no: "SLUV-0009495",//res[0].badge_no,
+              },
+            };
+            console.log("navigationExtras = ", navigationExtras)
+            this.router.navigate(
+              ["/technical/work-request"],
+              navigationExtras
+            );
+          } else {
+            this.presentAlert(
+              "Error",
+              "Data not valid in database"
+            );
+          }
+
+        },
+        (err) => {
+          console.log("err assetlsService = ", err)
+        }
+      )
+
+    });
+  }
+
+  updateData2(data) {
+    console.log("updateData2")
+    this.ngZone.run(() => {
+      this.scanValue = "SLUV-0009495" // data;
+      console.log("updateData2 = ", this.scanValue);
+
+      if (this.scanValue.badge_no) {
+        let navigationExtras: NavigationExtras = {
+          state: {
+            badge_no: this.scanValue.badge_no,
+          },
+        };
+        this.router.navigate(
+          ["/technical/work-request"],
+          navigationExtras
+        );
+      } else {
+        this.presentAlert(
+          "Error",
+          "Data not valid in database"
+        );
+      }
+
+    });
   }
 }
