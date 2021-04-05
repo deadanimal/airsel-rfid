@@ -14,6 +14,7 @@ import * as L from "leaflet";
 import swal from "sweetalert2";
 import { NgxSpinnerService } from "ngx-spinner";
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { ColumnMode,SelectionType } from "@swimlane/ngx-datatable";
 
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -46,6 +47,9 @@ import { InventoryGrnService} from "src/app/shared/services/inventory-grn/invent
   ]
 })
 export class StockReceiveReturnComponent implements OnInit, OnDestroy {
+
+  // Setting up datatable
+  ColumnMode = ColumnMode;
 
   // Tables Selection
   table_selection = [{

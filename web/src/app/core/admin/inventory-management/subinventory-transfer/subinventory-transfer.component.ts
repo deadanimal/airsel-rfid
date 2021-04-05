@@ -10,6 +10,7 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import swal from "sweetalert2";
 
 import { InventoryTransactionService } from "src/app/shared/services/inventory-transaction/inventory-transaction.service";
+import { ColumnMode} from "@swimlane/ngx-datatable";
 
 @Component({
   selector: 'app-subinventory-transfer',
@@ -17,6 +18,10 @@ import { InventoryTransactionService } from "src/app/shared/services/inventory-t
   styleUrls: ['./subinventory-transfer.component.scss']
 })
 export class SubinventoryTransferComponent implements OnInit {
+
+  // Setting up datatable
+  ColumnMode = ColumnMode;
+  selected = [];
 
   // Declared Modal
   modal: BsModalRef;
@@ -112,6 +117,10 @@ export class SubinventoryTransferComponent implements OnInit {
       }
     )
   }
+
+  // onSelect() {
+  //   document.getElementById("").checked = true;
+  // }
 
   Reset(){
     this.getInventoryTransactionData()

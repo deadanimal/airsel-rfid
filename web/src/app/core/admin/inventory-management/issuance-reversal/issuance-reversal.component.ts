@@ -17,6 +17,7 @@ am4core.useTheme(am4themes_material);
 am4core.useTheme(am4themes_animated);
 import swal from "sweetalert2";
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { ColumnMode } from "@swimlane/ngx-datatable";
 
 import { InventoryMaterialService} from "src/app/shared/services/inventory-material/inventory-material.service";
 import { InventoryTransactionService } from "src/app/shared/services/inventory-transaction/inventory-transaction.service";
@@ -42,6 +43,9 @@ import { InventoryTransactionService } from "src/app/shared/services/inventory-t
   ]
 })
 export class IssuanceReversalComponent implements OnInit,AfterViewInit,OnDestroy{
+  //Setting up datatable
+  ColumnMode = ColumnMode;
+
 
   // Tables Selection
   Stock_All: boolean = true;

@@ -728,7 +728,11 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="No" [width]="30">
+                    <ngx-datatable-column [width]="40">
+                      <ng-template ngx-datatable-header-template>
+                        <span>No</span>
+                      </ng-template>
+
                       <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
                         <strong>{{ rowIndex + 1 }}</strong>
                       </ng-template>

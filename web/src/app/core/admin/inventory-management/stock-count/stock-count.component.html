@@ -69,11 +69,12 @@
     <div class="card">
       <div class="dataTables_wrapper py-4">
         <div class="row">
-          <div class="col-sm-16 col-md-10">
+          <div class="col">
             <div class="dataTables_length" id="datatable_length">
               <label>
                 Show
-                <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm">
+                <select name="datatable_length" aria-controls="datatable" class="form-control form-control-sm"
+                  (change)="entriesChange($event)">
                   <option value="5">5</option>
                   <option value="10">10</option>
                   <option value="15">15</option>
@@ -84,7 +85,7 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col" id="buttontop">
+            <div class="col text-right" id="buttontop">
               <div class="row">
                 <button class="btn btn-success" (click)="openCreate(create)">Create</button>
                 <button class="btn btn-success">Export</button>
@@ -93,8 +94,8 @@
           </div>
         </div>
 
-        <ngx-datatable class="bootstrap selection-cell" [footerHeight]="50"
-          [rowHeight]="auto" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction">
+        <ngx-datatable  class="bootstrap" [scrollbarH]="true" [columnMode]="ColumnMode.force" [headerHeight]="50"
+         [rowHeight]="auto" [footerHeight]="50" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemptInventoryTransaction">
 
           <!-- <ngx-datatable-column maxWidth="40">
             <ng-template ngx-datatable-header-template>
@@ -158,18 +159,6 @@
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="250" [resizeable]="false">
-              <ng-template ngx-datatable-header-template id="datatable-header-cell">
-                <span>Description</span>
-              </ng-template>
-
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <span class="h4 font-weight-bold mb-0">{{row.TRANSACTION_REFERENCE}}</span>
-              </ng-template>
-            </ngx-datatable-column>
-          </div>
-
-          <div class="col-md-6">
             <ngx-datatable-column [width]="220" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Quantity</span>
@@ -194,7 +183,7 @@
           </div>
 
           <div class="col-md-6">
-            <ngx-datatable-column [width]="auto" [resizeable]="false">
+            <ngx-datatable-column [width]="125" [resizeable]="false">
               <ng-template ngx-datatable-header-template id="datatable-header-cell">
                 <span>Action</span>
               </ng-template>

@@ -9,6 +9,7 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import Dropzone from "dropzone";
 import swal from "sweetalert2";
 import * as XLSX from 'xlsx';
+import { ColumnMode } from "@swimlane/ngx-datatable";
 
 @Component({
   selector: 'app-disposal',
@@ -16,7 +17,11 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./disposal.component.scss']
 })
 export class DisposalComponent implements OnInit {
-  //Modal
+
+  // Setting up datatable
+  ColumnMode = ColumnMode;
+
+  // Modal
   modal:BsModalRef;
   modalConfig: {
     keyboard:true,
