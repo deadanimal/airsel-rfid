@@ -1026,7 +1026,7 @@ export class RegistrationComponent implements OnInit {
 
   entriesChange($event) {
     console.log($event)
-    this.entries = $event.target.value;
+    this.entries = +$event.target.value;
     console.log(this.entries)
   }
 
