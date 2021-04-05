@@ -6,7 +6,7 @@ export class AssetsModel {
   public qrcode: string;
   public purchased_at: string;
   public is_active: boolean;
-  public badge_number: string;
+  public badge_no: string;
   public owning_department: string;
   public level_1: string;
   public level_2: string;
@@ -18,7 +18,7 @@ export class AssetsModel {
   public identity: string;
   public sub_category_1: string;
   public sub_category_2: string;
-  public asset_description: string;
+  public description: string;
   public type_asset: string;
   public category: string;
   public acquired_by: string;
@@ -58,6 +58,9 @@ export class AssetsModel {
   public reject_remark: string;
   public created_at: string;
   public modified_at: string;
+  public asset_id: string;
+  public node_id: string;
+  public measurement_types: []
 
   constructor(
     id: string,
@@ -67,7 +70,7 @@ export class AssetsModel {
     qrcode: string,
     purchased_at: string,
     is_active: boolean,
-    badge_number: string,
+    badge_no: string,
     owning_department: string,
     level_1: string,
     level_2: string,
@@ -79,7 +82,7 @@ export class AssetsModel {
     identity: string,
     sub_category_1: string,
     sub_category_2: string,
-    asset_description: string,
+    description: string,
     type_asset: string,
     category: string,
     acquired_by: string,
@@ -118,7 +121,10 @@ export class AssetsModel {
     approval_at: string,
     reject_remark: string,
     created_at: string,
-    modified_at: string
+    modified_at: string,
+    asset_id: string,
+    node_id: string,
+    measurement_types: []
   ) {
     this.id = id;
     this.name = name;
@@ -127,7 +133,7 @@ export class AssetsModel {
     this.qrcode = qrcode;
     this.purchased_at = purchased_at;
     this.is_active = is_active;
-    this.badge_number = badge_number;
+    this.badge_no = badge_no;
     this.owning_department = owning_department;
     this.level_1 = level_1;
     this.level_2 = level_2;
@@ -139,7 +145,7 @@ export class AssetsModel {
     this.identity = identity;
     this.sub_category_1 = sub_category_1;
     this.sub_category_2 = sub_category_2;
-    this.asset_description = asset_description;
+    this.description = description;
     this.type_asset = type_asset;
     this.category = category;
     this.acquired_by = acquired_by;
@@ -179,5 +185,8 @@ export class AssetsModel {
     this.reject_remark = reject_remark;
     this.created_at = created_at;
     this.modified_at = modified_at;
+    this.asset_id = asset_id;
+    this.node_id = node_id;
+    this.measurement_types = measurement_types;
   }
 }

@@ -2,22 +2,15 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="clickBack()">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold"></ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -28,47 +21,84 @@
     <ion-list class="line-input" style="padding-top: 100px">
       <form [formGroup]="operationalreadingFormGroup">
         <ion-item>
-          <ion-label position="stacked">Asset ID</ion-label>
-          <ion-input
-            type="text"
-            readonly
-            formControlName="asset_id"
-          ></ion-input>
+          <ion-label position="stacked">Asset Description</ion-label>
+          <ion-input type="text" readonly formControlName="asset_description"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Badge Number</ion-label>
-          <ion-input
-            type="text"
-            readonly
-            formControlName="badge_number"
-          ></ion-input>
+          <ion-input type="text" readonly formControlName="badge_number"></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">Parent Location</ion-label>
-          <ion-input
-            type="text"
-            readonly
-            formControlName="parent_location"
-          ></ion-input>
+          <ion-label position="stacked">Location</ion-label>
+          <ion-input type="text" formControlName="location" readonly></ion-input>
         </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Measurement Type</ion-label>
+          <!-- <ion-input type="text" formControlName="measurent_type"></ion-input> -->
+
+          <ion-select formControlName="measurent_type">
+            <ion-select-option value="">Please select</ion-select-option>
+            <ion-select-option *ngFor="let choice of MeasurementTypeData" [value]="choice.id">
+              {{choice.measurement_type}}
+            </ion-select-option>
+          </ion-select>
+          <!-- <ion-select formControlName="measurent_type">
+            <ion-select-option selected value="RUNNING-HOUR">RUNNING HOUR</ion-select-option>
+            <ion-select-option value="TEMPERATURE-SENSOR">TEMPERATURE SENSOR</ion-select-option>
+          </ion-select> -->
+
+          <!-- 
+            1. Call data from /measurement-types
+            2. Save @ variable
+            3. Contoh measurements
+           -->
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label position="stacked">Reading Date</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss" formControlName="reading_datetime"></ion-datetime>
+        </ion-item>
+
+        <!-- <ion-item>
+          <ion-label position="stacked">Reading Time</ion-label>
+          <ion-datetime displayFormat="HH:mm" formControlName="reading_time"></ion-datetime>
+        </ion-item> -->
+
+        <ion-item>
+          <ion-label position="stacked">Current Value</ion-label>
+          <ion-input type="text" formControlName="current_value"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Initial Value</ion-label>
+          <ion-input type="text" formControlName="initial_value_flag"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Owning Organization</ion-label>
+          <ion-select formControlName="owning_organization">
+            <ion-select-option *ngFor="let ownog of OwningOrganisationsList" [value]="ownog.description">
+              {{ownog.name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
       </form>
     </ion-list>
 
-    <ion-item lines="none">
+    <!-- <ion-item lines="none">
       <ion-label class="ion-text-start">Measurement Type</ion-label>
       <ion-button (click)="clickAddMeasurementType()">Add</ion-button>
-    </ion-item>
+    </ion-item> -->
 
     <ion-card *ngIf="operationalreadingFormGroup.value.measurement_type">
       <ion-card-header>
         <ion-fab horizontal="end">
-          <ion-fab-button
-            size="small"
-            color="primary"
-            (click)="clickEdit(operationalreadingFormGroup.value)"
-          >
+          <ion-fab-button size="small" color="primary" (click)="clickEdit(operationalreadingFormGroup.value)">
             <ion-icon name="create"></ion-icon>
           </ion-fab-button>
           <!-- <ion-fab-button
@@ -79,11 +109,9 @@
             <ion-icon name="trash"></ion-icon>
           </ion-fab-button> -->
         </ion-fab>
-        <ion-card-title
-          >Measurement Type <br />
+        <ion-card-title>Measurement Type <br />
           {{ operationalreadingFormGroup.value.measurement_type
-          }}</ion-card-title
-        >
+          }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p>

@@ -27,7 +27,7 @@ export class MatchPage implements OnInit {
     private assetregistrationService: AssetRegistrationsService,
     public notificationService: NotificationsService,
     private router: Router
-  ) {}
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");

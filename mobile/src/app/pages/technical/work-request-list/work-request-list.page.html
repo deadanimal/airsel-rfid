@@ -2,10 +2,7 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="homePage('/technical/tabs/tab1')">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem;"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem;"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold;">
@@ -14,12 +11,8 @@
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px;"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px;">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -33,11 +26,7 @@
     <ion-card *ngFor="let workrequest of workrequests">
       <ion-card-header>
         <ion-fab horizontal="end">
-          <ion-fab-button
-            size="small"
-            color="primary"
-            (click)="clickEdit(workrequest)"
-          >
+          <ion-fab-button size="small" color="primary" (click)="clickEdit(workrequest)">
             <ion-icon name="document-text"></ion-icon>
           </ion-fab-button>
           <!-- <ion-fab-button
@@ -48,14 +37,14 @@
             <ion-icon name="trash"></ion-icon>
           </ion-fab-button> -->
         </ion-fab>
-        <ion-card-title>Asset ID <br/>{{ workrequest.asset_id }}</ion-card-title>
+        <ion-card-title>Badge Number <br />{{ workrequest.badge_no }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <p>Required By Date: {{ workrequest.required_by_date }}</p>
         <p>Work Category: {{ workrequest.work_category }}</p>
         <p>Work Class: {{ workrequest.work_class }}</p>
         <p>Work Priority: {{ workrequest.work_priority }}</p>
-        <p>Status: {{ workrequest.bo_status }}</p>
+        <p>Status: {{ workrequest.status | titlecase }}</p>
       </ion-card-content>
     </ion-card>
   </div>

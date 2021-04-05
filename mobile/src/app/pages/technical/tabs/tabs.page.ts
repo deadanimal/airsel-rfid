@@ -20,7 +20,7 @@ export class TabsPage implements OnInit {
     public alertController: AlertController,
     private ngZone: NgZone,
     private router: Router
-  ) {}
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");

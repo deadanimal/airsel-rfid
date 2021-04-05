@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
     private wamsService: WamsService,
     private formBuilder: FormBuilder,
     private toastr: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.menu.enable(false, "menuNotification");
@@ -72,7 +72,8 @@ export class LoginPage implements OnInit {
 
     this.validations_form = this.formBuilder.group({
       username: new FormControl(
-        "",
+        "fadhillah",
+        // "",
         Validators.compose([
           Validators.required,
           // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
@@ -80,8 +81,8 @@ export class LoginPage implements OnInit {
         ])
       ),
       password: new FormControl(
-        "",
-        // "PabloEscobar",
+        "415F@dhill@h",
+        // "",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),
     });
@@ -102,6 +103,8 @@ export class LoginPage implements OnInit {
       .subscribe(
         (res) => {
           // Success
+
+          console.log("resAD = ", res)
           // STEP 2
           this.isLoading = false;
           this.navigateByRole(this.authService.userType);
@@ -113,6 +116,7 @@ export class LoginPage implements OnInit {
           console.error("err", err);
           this.wamsService.getService(bodyAD).subscribe(
             (resAD) => {
+              console.log("resAD = ", resAD)
               // to find employee detail in table employee
               if (resAD.status == "valid") {
                 this.employeeService
@@ -152,24 +156,25 @@ export class LoginPage implements OnInit {
                       console.error("err", err);
                     }
                   );
-              } else {
-                // to create user account in PIPE who AD is invalid
-                // STEP 5
-                let bodyPIPE = {
-                  username: this.validations_form.value.username,
-                  // email: "",
-                  password1: this.validations_form.value.password,
-                  password2: this.validations_form.value.password,
-                };
-                this.authService.registerAccount(bodyPIPE).subscribe(
-                  (resPIPE) => {
-                    this.retryLogin();
-                  },
-                  (err) => {
-                    console.error("err", err);
-                  }
-                );
               }
+              // else {
+              //   // to create user account in PIPE who AD is invalid
+              //   // STEP 5
+              //   let bodyPIPE = {
+              //     username: this.validations_form.value.username,
+              //     // email: "",
+              //     password1: this.validations_form.value.password,
+              //     password2: this.validations_form.value.password,
+              //   };
+              //   this.authService.registerAccount(bodyPIPE).subscribe(
+              //     (resPIPE) => {
+              //       this.retryLogin();
+              //     },
+              //     (err) => {
+              //       console.error("err", err);
+              //     }
+              //   );
+              // }
             },
             (err) => {
               console.error("err", err);
@@ -226,7 +231,7 @@ export class LoginPage implements OnInit {
           // STEP 3
           this.isLoading = false;
         },
-        () => {}
+        () => { }
       );
   }
 
@@ -275,7 +280,7 @@ export class LoginPage implements OnInit {
         {
           text: "Cancel",
           role: "cancel",
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: "Submit",

@@ -16,6 +16,12 @@ import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkRequestsService } from "src/app/shared/services/work-requests/work-requests.service";
 import { UsersService } from "src/app/shared/services/users/users.service";
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
+import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
+import { PlannerService } from 'src/app/shared/services/planner/planner.service';
+import { WorkClassService } from 'src/app/shared/services/work-class/work-class.service';
+import { WorkCategoryService } from 'src/app/shared/services/work-categories/work-categories.service';
+import { OwningorganisationsService } from 'src/app/shared/services/owning-organisations/owning-organisations.service';
 
 @Component({
   selector: "app-work-request",
@@ -30,12 +36,21 @@ export class WorkRequestPage implements OnInit {
   capturedSnapURL: string;
   segmentModal = "first";
   process: string;
+  workrequestData: any
+  assetLocatioSyncData: any
+  plannerData: any
+  workClassData: any
+  workCategoryData: any
+  owningOrganisationData: any
+
+  //  Username: fadhillah
+  //  pw: 415F@dhill@h
 
   constructor(
     public formBuilder: FormBuilder,
     public alertController: AlertController,
     public menu: MenuController,
-    private assetregistrationService: AssetRegistrationsService,
+    private plannerService: PlannerService,
     private authService: AuthService,
     public notificationService: NotificationsService,
     private workrequestService: WorkRequestsService,
@@ -43,17 +58,22 @@ export class WorkRequestPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     // private barcodeScanner: BarcodeScanner
-    private camera: Camera
+    private camera: Camera,
+    private assetsService: AssetsService,
+    private assetLocatioSyncService: AssetLocatioSyncService,
+    private WorkClassService: WorkClassService,
+    private workCategoryService: WorkCategoryService,
+    private owningorganisationsService: OwningorganisationsService
   ) {
     this.workrequestFormGroup = this.formBuilder.group({
       id: new FormControl(""),
       description: new FormControl(""),
       long_description: new FormControl(""),
       required_by_date: new FormControl(""),
+      bo: new FormControl(""),
       bo_status: new FormControl("CREATED"),
-      // creation_date_time: new FormControl(""),
       creation_user: new FormControl(""),
-      down_time_start: new FormControl(""),
+      downtime_start: new FormControl(""),
       planner: new FormControl(""),
       work_class: new FormControl(""),
       work_category: new FormControl(""),
@@ -67,7 +87,10 @@ export class WorkRequestPage implements OnInit {
       home_phone: new FormControl(""),
       node_id: new FormControl(""),
       asset_id: new FormControl(""),
-      // attachment: new FormControl(""),
+      asset_description: new FormControl(""),
+      status: new FormControl("new work request"),
+      location: new FormControl(""),
+      approval_profile: new FormControl("")
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -80,28 +103,41 @@ export class WorkRequestPage implements OnInit {
         this.workrequestFormGroup.patchValue({
           ...workrequest,
         });
-
+        console.log("qweqwe", workrequest)
         if (this.router.getCurrentNavigation().extras.state.badge_no) {
+          console.log("test test qqqq")
           let badge_no = this.router.getCurrentNavigation().extras.state.badge_no;
-          this.assetregistrationService.filter("badge_no=" + badge_no).subscribe(
+          // let current_node_id = this.router.getCurrentNavigation().extras.state.node_id;
+          console.log("badge_no = ", badge_no)
+          this.assetsService.filter("badge_no=" + badge_no).subscribe(
             (res) => {
-              // console.log("res", res);
+              console.log("qwe 123123123", res);
+              this.getAssetLocationSync(res[0].node_id)
+              this.workrequestData = res
+              console.log("workrequestData = ", this.workrequestData[0])
               this.workrequestFormGroup.patchValue({
+                asset_description: res[0].description,
                 asset_id: res[0].asset_id,
-                node_id: res[0].node_id,
-                description: "NA",
-                long_description: res[0].detailed_description
+                // description: "NA",
+                // long_description: res[0].detailed_description
               })
             },
             (err) => {
               console.error("err", err);
             }
           );
+        } else {
+          console.log('asdasd 456456456 ', workrequest.node_id)
+          this.getAssetLocationSync(workrequest.node_id)
         }
+
       } else {
+        console.log("test testt wwww = ", this.router.getCurrentNavigation().extras.state)
         this.userService.getOne(this.authService.userID).subscribe(
           (res) => {
-            // console.log("res", res);
+            console.log('zxczxc 678678678 ')
+            // this.getAssetLocationSync(res[0].node_id)
+            console.log("res test test = ", res);
             this.workrequestFormGroup.patchValue({
               creation_user: res.first_name + " " + res.last_name,
               requestor: res.first_name + " " + res.last_name,
@@ -116,7 +152,80 @@ export class WorkRequestPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getPlannerList()
+    this.getWorkClassList()
+    this.getWorkCategoryList()
+    this.getOwningOrganisationList()
     this.menu.enable(false, "menuNotification");
+  }
+
+  getAssetLocationSync(node_id) {
+    // setInterval(() => {
+    console.log("test node_id => ", node_id)
+    this.assetLocatioSyncService.filter("node_id=" + node_id).subscribe(
+      (res) => {
+        console.log("res assetlsService = ", res)
+
+        this.workrequestFormGroup.patchValue({
+          location: res[0].description,
+          // node_id: res[0].node_id,
+          // description: "NA",
+          // long_description: res[0].detailed_description
+        })
+      },
+      (err) => {
+        console.log("err assetlsService = ", err)
+      }
+    )
+    // }, 10000);
+  }
+
+  getPlannerList() {
+    this.plannerService.get().subscribe(
+      (res) => {
+        console.log("plannerService = ", res)
+        this.plannerData = res
+      },
+      (err) => {
+        console.log("err plannerService = ", err)
+      }
+    )
+  }
+
+  getWorkClassList() {
+    this.WorkClassService.get().subscribe(
+      (res) => {
+        console.log("WorkClassService = ", res)
+        this.workClassData = res
+      },
+      (err) => {
+        console.log("err WorkClassService = ", err)
+      }
+    )
+  }
+
+  getWorkCategoryList() {
+    this.workCategoryService.get().subscribe(
+      (res) => {
+        console.log("workCategoryService = ", res)
+        this.workCategoryData = res
+      },
+      (err) => {
+        console.log("err workCategoryService = ", err)
+      }
+    )
+  }
+
+  getOwningOrganisationList() {
+    this.owningorganisationsService.get().subscribe(
+      (res) => {
+        console.log("owningorganisationsService = ", res)
+        this.owningOrganisationData = res
+      },
+      (err) => {
+        console.log("err owningorganisationsService = ", err)
+      }
+    )
   }
 
   takeCamera() {
@@ -143,6 +252,7 @@ export class WorkRequestPage implements OnInit {
   }
 
   async submit() {
+    console.log("workrequestFormGroup = ", this.workrequestFormGroup)
     this.workrequestFormGroup.patchValue({
       // creation_user: this.authService.userID,
       required_by_date: format(

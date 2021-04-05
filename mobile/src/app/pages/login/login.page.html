@@ -34,18 +34,12 @@
     <h3 class="ion-margin-start">Sign in</h3>
     <ion-item lines="none">
       <ion-label position="stacked">Username</ion-label>
-      <ion-input
-        type="text"
-        formControlName="username"
-        placeholder="Your username"
-      ></ion-input>
+      <ion-input type="text" formControlName="username" placeholder="Your username"></ion-input>
     </ion-item>
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.username">
-        <div
-          class="error-message"
-          *ngIf="validations_form.get('username').hasError(validation.type) && (validations_form.get('username').dirty || validations_form.get('username').touched)"
-        >
+        <div class="error-message"
+          *ngIf="validations_form.get('username').hasError(validation.type) && (validations_form.get('username').dirty || validations_form.get('username').touched)">
           {{ validation.message }}
         </div>
       </ng-container>
@@ -53,53 +47,36 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">Password</ion-label>
-      <ion-input
-        type="password"
-        formControlName="password"
-        placeholder="Password"
-      ></ion-input>
+      <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
     </ion-item>
     <ion-grid>
       <ion-row>
         <ion-col class="ion-padding-start" size="6">
           <ion-item lines="none" class="ion-no-padding">
-            <ion-checkbox [(ngModel)]="isLogin" [ngModelOptions]="{standalone: true}" slot="start" class="ion-no-margin"></ion-checkbox>
-            <ion-label><p>Stay Login?</p></ion-label>
+            <ion-checkbox [(ngModel)]="isLogin" [ngModelOptions]="{standalone: true}" slot="start"
+              class="ion-no-margin"></ion-checkbox>
+            <ion-label>
+              <p>Stay Login?</p>
+            </ion-label>
           </ion-item>
         </ion-col>
         <ion-col class="ion-text-right" size="6">
           <ion-item lines="none" class="ion-no-padding">
-            <ion-label class="ion-text-right"
-              ><p>
+            <ion-label class="ion-text-right">
+              <p>
                 <a (click)="navigateForgotPage()">Forgot Password </a>
-              </p></ion-label
-            >
+              </p>
+            </ion-label>
           </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-button
-      *ngIf="!isLoading"
-      shape="round"
-      expand="block"
-      color="primary"
-      mode="ios"
-      class="ion-margin-start ion-margin-end ion-margin-top"
-      [disabled]="!validations_form.valid"
-      (click)="login()"
-    >
+    <ion-button *ngIf="!isLoading" shape="round" expand="block" color="primary" mode="ios"
+      class="ion-margin-start ion-margin-end ion-margin-top" [disabled]="!validations_form.valid" (click)="login()">
       Sign in
     </ion-button>
-    <ion-button
-      disabled
-      *ngIf="isLoading"
-      type="submit"
-      shape="round"
-      expand="block"
-      color="primary"
-      mode="ios"
-      class="ion-margin-start ion-margin-end ion-margin-top"
-    >
+    <ion-button disabled *ngIf="isLoading" type="submit" shape="round" expand="block" color="primary" mode="ios"
+      class="ion-margin-start ion-margin-end ion-margin-top">
       <ion-spinner name="bubbles"></ion-spinner>
     </ion-button>
   </form>
