@@ -44,6 +44,8 @@ def insert_into_planner(dict):
 
 def get_planner(from_date, to_date):
 
+    Planner.objects.all().delete()
+    
     payload = {
         "from_date": from_date,
         "to_date": to_date

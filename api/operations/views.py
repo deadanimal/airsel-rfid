@@ -31,7 +31,9 @@ from .models import (
     WorkOrderActivityCompletion,
     ServiceHistory,ServiceHistoryQuestion,ServiceHistoryQuestionValidValue,
     Planner,MaintenanceManager,WorkRequest,MainOperation,Function,LocationType,
-    SubFunction,CostCenter,Operation,WorkActivityEmployee
+    SubFunction,CostCenter,Operation,WorkActivityEmployee,
+    WorkOrderActivityCompletionAssetLocationAssetListInbound,
+    AssetLocationAssetListServiceHistoriesInbound
 )
 
 from .serializers import (
@@ -65,7 +67,9 @@ from .serializers import (
     WorkOrderActivityCompletionExtendedSerializer,
     ServiceHistorySerializer,ServiceHistoryQuestionSerializer,ServiceHistoryQuestionValidValueSerializer,
     PlannerSerializer,MaintenanceManagerSerializer,WorkRequestSerializer,MainOperationSerializer,FunctionSerializer,LocationTypeSerializer,
-    SubFunctionSerializer,CostCenterSerializer,OperationSerializer,WorkActivityEmployeeSerializer
+    SubFunctionSerializer,CostCenterSerializer,OperationSerializer,WorkActivityEmployeeSerializer,
+    WorkOrderActivityCompletionAssetLocationAssetListInboundSerializer,
+    AssetLocationAssetListServiceHistoriesInboundSerializer
 )
 
 class OwningOrganizationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -878,5 +882,41 @@ class WorkActivityEmployeeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = WorkActivityEmployee.objects.all()
+
+        return queryset
+
+class WorkOrderActivityCompletionAssetLocationAssetListInboundViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.all()
+    serializer_class = WorkOrderActivityCompletionAssetLocationAssetListInboundSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        queryset = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.all()
+
+        return queryset
+
+class AssetLocationAssetListServiceHistoriesInboundViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetLocationAssetListServiceHistoriesInbound.objects.all()
+    serializer_class = AssetLocationAssetListServiceHistoriesInboundSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        queryset = AssetLocationAssetListServiceHistoriesInbound.objects.all()
 
         return queryset

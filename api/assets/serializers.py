@@ -20,7 +20,9 @@ from .models import (
     AssetLocation,
     AssetMeasurementType,
     AssetLocationSync,
-    AssetAttributeField
+    AssetAttributeField,
+    AssetMeasurementTypeInbound,
+    AssetAttributeInbound
 )
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -105,4 +107,16 @@ class AssetAttributeFieldSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetAttributeField
+        fields = '__all__'
+
+class AssetMeasurementTypeInboundSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetMeasurementTypeInbound
+        fields = '__all__'
+
+class AssetAttributeInboundSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetAttributeInbound
         fields = '__all__'
