@@ -37,6 +37,8 @@ def insert_into_failure_profile(dict):
 
 def get_failureprofile():
 
+    FailureProfile.objects.all().delete()
+
     r = requests.post("http://139.59.125.201/getFailureProfile.php")
 
     json_dictionary = json.loads(r.content)

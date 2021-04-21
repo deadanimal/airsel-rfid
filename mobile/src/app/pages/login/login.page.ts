@@ -72,6 +72,7 @@ export class LoginPage implements OnInit {
 
     this.validations_form = this.formBuilder.group({
       username: new FormControl(
+        // "haziq_y",
         "fadhillah",
         // "",
         Validators.compose([
@@ -81,6 +82,7 @@ export class LoginPage implements OnInit {
         ])
       ),
       password: new FormControl(
+        // "5e1AIS04339",
         "415F@dhill@h",
         // "",
         Validators.compose([Validators.minLength(6), Validators.required])
@@ -117,23 +119,29 @@ export class LoginPage implements OnInit {
           this.wamsService.getService(bodyAD).subscribe(
             (resAD) => {
               console.log("resAD = ", resAD)
+              console.log("sini 1")
               // to find employee detail in table employee
               if (resAD.status == "valid") {
                 this.employeeService
                   .filter("hr_employee_number=" + resAD.staff_no)
                   .subscribe(
                     (resEmp) => {
+                      console.log("sini 2")
                       // to create user account in PIPE who AD is valid
                       // STEP 4
                       if (resEmp.length > 0) {
+                        console.log("sini 3")
                         let bodyPIPE = {
                           username: this.validations_form.value.username,
                           email: resAD.email ? resAD.email : "",
                           password1: this.validations_form.value.password,
                           password2: this.validations_form.value.password,
                         };
+                        console.log("bodyPIPE = ", bodyPIPE)
                         this.authService.registerAccount(bodyPIPE).subscribe(
                           (resPIPE) => {
+
+                            console.log("sini 4")
                             if (resPIPE) {
                               resAD["first_name"] = resAD.name;
                               resAD["status"] = true;

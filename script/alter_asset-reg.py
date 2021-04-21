@@ -2,7 +2,7 @@ import csv
 import requests
 import json
 
-with open('rfid-tag-ph-pj-PH-PETALING.csv', mode='r', encoding='utf-8-sig') as csv_file:
+with open('RFID-TAGS-HuluLangat-16042021.csv', mode='r', encoding='utf-8-sig') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     line_count = 0
     for row in csv_reader:

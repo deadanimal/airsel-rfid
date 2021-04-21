@@ -98,23 +98,21 @@
 
         <ion-item>
           <ion-label position="stacked">Work Class</ion-label>
-          <ion-select formControlName="work_class">
+          <ion-select formControlName="work_class" (ionChange)='onChangeWorkClass($event.target.value)'>
             <ion-select-option value="">Please select</ion-select-option>
             <ion-select-option *ngFor="let wcd of workClassData" [value]="wcd.name">
               {{wcd.name}}
             </ion-select-option>
-            <!-- <ion-select-option value="CAPITAL">CAPITAL</ion-select-option>
-            <ion-select-option value="PLANNED">PLANNED</ion-select-option>
-            <ion-select-option value="UNPLANNED">UNPLANNED</ion-select-option> -->
           </ion-select>
         </ion-item>
 
+        <!-- capital -->
         <ion-item>
           <ion-label position="stacked">Work Category</ion-label>
           <ion-select formControlName="work_category">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option *ngFor="let wcatd of workCategoryData" [value]="wcatd.work_category">
-              {{wcatd.work_category}}
+            <ion-select-option *ngFor="let wcatd of workCategoryDataqwe" [value]="wcatd.value">
+              {{wcatd.value}}
             </ion-select-option>
           </ion-select>
         </ion-item>

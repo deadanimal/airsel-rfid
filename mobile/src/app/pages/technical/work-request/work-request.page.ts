@@ -22,6 +22,7 @@ import { PlannerService } from 'src/app/shared/services/planner/planner.service'
 import { WorkClassService } from 'src/app/shared/services/work-class/work-class.service';
 import { WorkCategoryService } from 'src/app/shared/services/work-categories/work-categories.service';
 import { OwningorganisationsService } from 'src/app/shared/services/owning-organisations/owning-organisations.service';
+import { WamsService } from "src/app/shared/services/wams/wams.service";
 
 @Component({
   selector: "app-work-request",
@@ -42,6 +43,14 @@ export class WorkRequestPage implements OnInit {
   workClassData: any
   workCategoryData: any
   owningOrganisationData: any
+  filterDataCapital = [
+    { value: "INSTALLATION TESTING AND COMMISSIONING" },
+    { value: "REDESIGN" }
+  ]
+  filterDataPlanned = [{ value: "CORRECTIVE MAINTENANCE" }, { value: "FLEET COMPLIANCE" }, { value: "INSTALLATION TESTING AND COMMISSIONING" }, { value: "PREVENTIVE MAINTENANCE" }, { value: "PREDICTIVE MAINTENANCE" }]
+  filterDataUnplanned = [{ value: "DISPOSAL" }, { value: "REDESIGN" }]
+  work_class_ngmodel = '0'
+  workCategoryDataqwe = []
 
   //  Username: fadhillah
   //  pw: 415F@dhill@h
@@ -63,7 +72,8 @@ export class WorkRequestPage implements OnInit {
     private assetLocatioSyncService: AssetLocatioSyncService,
     private WorkClassService: WorkClassService,
     private workCategoryService: WorkCategoryService,
-    private owningorganisationsService: OwningorganisationsService
+    private owningorganisationsService: OwningorganisationsService,
+    private wamsService: WamsService
   ) {
     this.workrequestFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -111,19 +121,32 @@ export class WorkRequestPage implements OnInit {
           console.log("badge_no = ", badge_no)
           this.assetsService.filter("badge_no=" + badge_no).subscribe(
             (res) => {
-              console.log("qwe 123123123", res);
-              this.getAssetLocationSync(res[0].node_id)
-              this.workrequestData = res
-              console.log("workrequestData = ", this.workrequestData[0])
-              this.workrequestFormGroup.patchValue({
-                asset_description: res[0].description,
-                asset_id: res[0].asset_id,
-                // description: "NA",
-                // long_description: res[0].detailed_description
-              })
+              console.log("qwe 123123123", res.length);
+              if (res.length > 0) {
+                this.getAssetLocationSync(res[0].node_id)
+                this.workrequestData = res
+                console.log("workrequestData = ", this.workrequestData[0])
+                this.workrequestFormGroup.patchValue({
+                  asset_description: res[0].description,
+                  asset_id: res[0].asset_id,
+                  // description: "NA",
+                  // long_description: res[0].detailed_description
+                })
+              } else {
+                this.presentAlert(
+                  "Error",
+                  "Badge number not found, Please enter correct badge number."
+                );
+                this.router.navigate(
+                  ["/technical/work-request-list"]
+                );
+              }
             },
             (err) => {
               console.error("err", err);
+              this.router.navigate(
+                ["/technical/work-request-list"]
+              );
             }
           );
         } else {
@@ -157,6 +180,20 @@ export class WorkRequestPage implements OnInit {
     this.getWorkCategoryList()
     this.getOwningOrganisationList()
     this.menu.enable(false, "menuNotification");
+  }
+
+  onChangeWorkClass(data) {
+    console.log("checkWorkClass =", data, "=")
+    if (data == "CAPITAL") {
+      console.log("capp")
+      this.workCategoryDataqwe = this.filterDataCapital
+    } else if (data == "PLANNED") {
+      console.log("plann")
+      this.workCategoryDataqwe = this.filterDataPlanned
+    } else {
+      console.log("unpla")
+      this.workCategoryDataqwe = this.filterDataUnplanned
+    }
   }
 
   getAssetLocationSync(node_id) {
@@ -303,5 +340,15 @@ export class WorkRequestPage implements OnInit {
 
   changeSegment(segment: string) {
     this.segmentModal = segment;
+  }
+
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ["OK"],
+    });
+
+    await alert.present();
   }
 }

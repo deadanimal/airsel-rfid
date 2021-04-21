@@ -52,8 +52,8 @@ export class WorkRequestListPage implements OnInit {
 
   ngOnInit() {
     // broadcaster._debug = true;
-    this.onRegister2DBarcodeListener();
-    this.onRegisterRFIDListener();
+    // this.onRegister2DBarcodeListener();
+    // this.onRegisterRFIDListener();
   }
 
   getWorkRequest() {
@@ -71,6 +71,7 @@ export class WorkRequestListPage implements OnInit {
 
   addGetBadgeNumber(workReqData) {
     // console.log("---- sini -----")
+    this.workrequests = []
     let getAssetsService = this.assetsService
     workReqData.forEach(element => {
 
@@ -179,6 +180,7 @@ export class WorkRequestListPage implements OnInit {
         {
           text: "Search",
           handler: (data) => {
+            console.log("data.badge_no = ", data.badge_no)
             if (data.badge_no) {
               let navigationExtras: NavigationExtras = {
                 state: {
@@ -223,103 +225,103 @@ export class WorkRequestListPage implements OnInit {
     this.router.navigate(["/technical/work-request"], navigationExtras);
   }
 
-  updateData(data) {
-    this.ngZone.run(() => {
-      this.scanValue = data;
-      alert(this.scanValue);
+  // updateData(data) {
+  //   this.ngZone.run(() => {
+  //     this.scanValue = data;
+  //     alert(this.scanValue);
 
-      this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
-        (res) => {
-          console.log("res assetlsService = ", res)
+  //     this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
+  //       (res) => {
+  //         console.log("res assetlsService = ", res)
 
-          if (res[0].badge_no) {
-            let navigationExtras: NavigationExtras = {
-              state: {
-                badge_no: res[0].badge_no,
-              },
-            };
-            this.router.navigate(
-              ["/technical/work-request"],
-              navigationExtras
-            );
-          } else {
-            this.presentAlert(
-              "Error",
-              "Please enter badge number to find asset detail"
-            );
-          }
-        },
-        (err) => {
-          console.log("err assetlsService = ", err)
-        }
-      )
+  //         if (res[0].badge_no) {
+  //           let navigationExtras: NavigationExtras = {
+  //             state: {
+  //               badge_no: res[0].badge_no,
+  //             },
+  //           };
+  //           this.router.navigate(
+  //             ["/technical/work-request"],
+  //             navigationExtras
+  //           );
+  //         } else {
+  //           this.presentAlert(
+  //             "Error",
+  //             "Please enter badge number to find asset detail"
+  //           );
+  //         }
+  //       },
+  //       (err) => {
+  //         console.log("err assetlsService = ", err)
+  //       }
+  //     )
 
-    });
-  }
+  //   });
+  // }
 
-  updateData2(data) {
-    this.ngZone.run(() => {
-      this.scanValue = data;
-      alert(this.scanValue);
-      if (this.scanValue.badge_no) {
-        let navigationExtras: NavigationExtras = {
-          state: {
-            badge_no: this.scanValue.badge_no,
-          },
-        };
-        this.router.navigate(
-          ["/technical/work-request"],
-          navigationExtras
-        );
-      } else {
-        this.presentAlert(
-          "Error",
-          "Please enter badge number to find asset detail"
-        );
-      }
+  // updateData2(data) {
+  //   this.ngZone.run(() => {
+  //     this.scanValue = data;
+  //     alert(this.scanValue);
+  //     if (this.scanValue.badge_no) {
+  //       let navigationExtras: NavigationExtras = {
+  //         state: {
+  //           badge_no: this.scanValue.badge_no,
+  //         },
+  //       };
+  //       this.router.navigate(
+  //         ["/technical/work-request"],
+  //         navigationExtras
+  //       );
+  //     } else {
+  //       this.presentAlert(
+  //         "Error",
+  //         "Please enter badge number to find asset detail"
+  //       );
+  //     }
 
-    });
-  }
+  //   });
+  // }
 
   clickRemove(index: number) {
     this.workrequests.splice(index, 1);
   }
 
-  onRegister2DBarcodeListener() {
-    console.log("[register onRegister2DBarcodeListener] ");
-    const ev = "com.scanner.broadcast";
-    var isGlobal = true;
+  // onRegister2DBarcodeListener() {
+  //   console.log("[register onRegister2DBarcodeListener] ");
+  //   const ev = "com.scanner.broadcast";
+  //   var isGlobal = true;
 
-    var listener = (event) => {
-      console.log(JSON.stringify(event));
+  //   var listener = (event) => {
+  //     console.log(JSON.stringify(event));
 
-      if (event.SCAN_STATE == "success") {
-        this.ngZone.run(() => {
-          if (this.bBarcode) {
-            this.updateData2(event.data);
-          }
-        });
-      }
-    };
-    // broadcaster.addEventListener(ev, isGlobal, listener);
-  }
+  //     if (event.SCAN_STATE == "success") {
+  //       this.ngZone.run(() => {
+  //         if (this.bBarcode) {
+  //           this.updateData2(event.data);
+  //         }
+  //       });
+  //     }
+  //   };
+  //   // broadcaster.addEventListener(ev, isGlobal, listener);
+  // }
 
-  onRegisterRFIDListener() {
-    console.log("[register onRegisterRFIDListener] ");
-    const ev = "android.intent.action.scanner.RFID";
-    var isGlobal = true;
+  // onRegisterRFIDListener() {
+  //   console.log("[register onRegisterRFIDListener] ");
+  //   const ev = "android.intent.action.scanner.RFID";
+  //   var isGlobal = true;
 
-    var listener = (event) => {
-      console.log(JSON.stringify(event));
+  //   var listener = (event) => {
+  //     console.log(JSON.stringify(event));
 
-      if (event.SCAN_STATE == "success") {
-        this.ngZone.run(() => {
-          if (this.bRfid) {
-            this.updateData(event.data);
-          }
-        });
-      }
-    };
-    // broadcaster.addEventListener(ev, isGlobal, listener);
-  }
+  //     if (event.SCAN_STATE == "success") {
+  //       this.ngZone.run(() => {
+  //         if (this.bRfid) {
+  //           this.updateData(event.data);
+  //         }
+  //       });
+  //     }
+  //   };
+  //   // broadcaster.addEventListener(ev, isGlobal, listener);
+  // }
 }

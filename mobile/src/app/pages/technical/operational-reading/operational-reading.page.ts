@@ -68,7 +68,7 @@ export class OperationalReadingPage implements OnInit {
       measurent_identifier: new FormControl(""),
       measurent_type: new FormControl(""),
       initial_value_flag: new FormControl(""),
-      owning_organization: new FormControl("New Operational Reading Submitted"),
+      owning_organization: new FormControl(""),
       reading_datetime: new FormControl(""),
       submitted_datetime: new FormControl(""),
       created_date: new FormControl(""),

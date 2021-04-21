@@ -534,3 +534,39 @@ class AssetAttributeField(models.Model):
 
     # def __str__(self):
     #     return ('%s %s %s'%(self.characteristic_type, self.adhoc_value, self.characteristic_value))
+
+
+class AssetMeasurementTypeInbound(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    measurement_type = models.CharField(max_length=100, blank=True )
+    action_type = models.CharField(max_length=100, blank=True )
+    description = models.CharField(max_length=250, blank=True )
+    measurement_identifie = models.CharField(max_length=100, blank=True )
+    asset_id = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name='asset_measurement_type_inbound_asset_id', null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return self.measurement_type
+
+class AssetAttributeInbound(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    characteristic_type = models.CharField(max_length=100, blank=True )
+    adhoc_value = models.CharField(max_length=100, blank=True )
+    characteristic_value = models.CharField(max_length=100, null=True)
+    action_type = models.CharField(max_length=100, blank=True )
+    characteristic_type_name = models.CharField(max_length=100, null=True)
+    asset_id = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name='asset_attribute_inbound_asset_id', null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return ('%s %s %s'%(self.characteristic_type, self.adhoc_value, self.characteristic_value))

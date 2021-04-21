@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'airsel-rfid-dev',
+#         'NAME': 'airsel-rfid-dev3',
 #         'USER': 'postgres',
 #         'PASSWORD': '',
 #         'HOST': 'localhost',

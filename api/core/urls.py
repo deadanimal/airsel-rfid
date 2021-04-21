@@ -37,7 +37,9 @@ from assets.views import (
     AssetLocationViewSet,
     AssetMeasurementTypeViewSet,
     AssetLocationSyncViewSet,
-    AssetAttributeFieldViewSet
+    AssetAttributeFieldViewSet,
+    AssetMeasurementTypeInboundViewSet,
+    AssetAttributeInboundViewSet
 )
 
 assets_router = router.register(
@@ -87,6 +89,17 @@ asset_location_sync_router = router.register(
 asset_attribute_field_router = router.register(
     'asset-attribute-field', AssetAttributeFieldViewSet
 )
+
+asset_measurement_type_inbound_router = router.register(
+    'asset-measurement-type-inbound',AssetMeasurementTypeInboundViewSet
+)
+
+asset_attribute_inbound_router = router.register(
+    'asset-attribute-inbound', AssetAttributeInboundViewSet
+)
+
+
+
 # Locations app
 from locations.views import (
     RegionViewSet,
@@ -149,12 +162,12 @@ from operations.views import (
     ServiceHistoriesQuestionsViewSet,
     QuestionsValidValueViewSet,
     WorkOrderActivityCompletionViewSet,
-
     ServiceHistoryViewSet,ServiceHistoryQuestionViewSet,ServiceHistoryQuestionValidValueViewSet,
     PlannerViewSet,MaintenanceManagerViewSet,WorkRequestViewSet,MainOperationViewSet,FunctionViewSet,LocationTypeViewSet,
-    SubFunctionViewSet,CostCenterViewSet,OperationViewSet,WorkActivityEmployeeViewSet
+    SubFunctionViewSet,CostCenterViewSet,OperationViewSet,WorkActivityEmployeeViewSet,
+    WorkOrderActivityCompletionAssetLocationAssetListInboundViewSet,
+    AssetLocationAssetListServiceHistoriesInboundViewSet
 )
-
 
 service_history_router = router.register(
     'service-history', ServiceHistoryViewSet
@@ -261,6 +274,14 @@ work_order_activity_completion_asset_location_asset_list_router = router.registe
 
 asset_location_asset_list_service_histories_router = router.register(
     'asset-location-asset-list-service-histories', AssetLocationAssetListServiceHistoriesViewSet
+)
+
+work_order_activity_completion_asset_location_asset_list_inbound_router = router.register(
+    'work-order-activity-completion-asset-location-asset-list-inbound', WorkOrderActivityCompletionAssetLocationAssetListInboundViewSet
+)
+
+asset_location_asset_list_service_histories_inbound_router = router.register(
+    'asset-location-asset-list-service-histories-inbound', AssetLocationAssetListServiceHistoriesInboundViewSet
 )
 
 service_histories_questions_router = router.register(

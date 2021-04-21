@@ -1,4 +1,4 @@
-declare var broadcaster: any;
+// declare var broadcaster: any;
 
 import { Component, NgZone, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
@@ -54,7 +54,7 @@ export class OperationalReadingListPage implements OnInit {
   }
 
   ngOnInit() {
-    broadcaster._debug = true;
+    // broadcaster._debug = true;
     this.onRegister2DBarcodeListener();
     this.onRegisterRFIDListener();
   }
@@ -86,7 +86,7 @@ export class OperationalReadingListPage implements OnInit {
         });
       }
     };
-    broadcaster.addEventListener(ev, isGlobal, listener);
+    // broadcaster.addEventListener(ev, isGlobal, listener);
   }
 
   onRegisterRFIDListener() {
@@ -110,7 +110,7 @@ export class OperationalReadingListPage implements OnInit {
         });
       }
     };
-    broadcaster.addEventListener(ev, isGlobal, listener);
+    // broadcaster.addEventListener(ev, isGlobal, listener);
   }
 
   getOperationalReading() {
@@ -264,10 +264,10 @@ export class OperationalReadingListPage implements OnInit {
         (res) => {
           console.log("res assetlsService = ", res)
 
-          if (res[0].badge_no) {
+          if (res[0].badge_no == '') {
             let navigationExtras: NavigationExtras = {
               state: {
-                badge_no: "SLUV-0009495",//res[0].badge_no,
+                badge_no: res[0].badge_no,
               },
             };
             console.log("navigationExtras = ", navigationExtras)
@@ -297,7 +297,7 @@ export class OperationalReadingListPage implements OnInit {
       this.scanValue = "SLUV-0009495" // data;
       console.log("updateData2 = ", this.scanValue);
 
-      if (this.scanValue.badge_no) {
+      if (this.scanValue.badge_no == '') {
         let navigationExtras: NavigationExtras = {
           state: {
             badge_no: this.scanValue.badge_no,
