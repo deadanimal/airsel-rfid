@@ -415,8 +415,8 @@ class AssetLocationAssetListServiceHistories(models.Model):
     class meta:
         ordering = ['-created_date']
 
-    def __str__(self):
-        return self.service_history_type
+    # def __str__(self):
+    #     return self.service_history_type
 
 class WorkOrderActivityCompletionAssetLocationAssetList(models.Model):
     
@@ -428,7 +428,6 @@ class WorkOrderActivityCompletionAssetLocationAssetList(models.Model):
     measurent_type = models.CharField(max_length=100, blank=True)
     reading_type = models.CharField(max_length=100, blank=True)
     current_value = models.CharField(max_length=100, blank=True)
-
     asset_description = models.CharField(max_length=100, blank=True)
     asset_type = models.CharField(max_length=100, blank=True)
 
@@ -440,8 +439,8 @@ class WorkOrderActivityCompletionAssetLocationAssetList(models.Model):
     class meta:
         ordering = ['-created_date']
 
-    def __str__(self):
-        return self.node_id
+    # def __str__(self):
+    #     return self.uuid
 
 class WorkOrderActivityCompletion(models.Model):
     
@@ -694,6 +693,7 @@ class AssetLocationAssetListServiceHistoriesInbound(models.Model):
     activityid = models.CharField(max_length=100, blank=True)
     service_history_type = models.CharField(max_length=100,blank=True)
     effective_datetime = models.DateTimeField(auto_now=True)
+    asset_id = models.CharField(max_length=12, blank=True)
     start_date_time = models.DateTimeField(null=True)
     end_date_time = models.DateTimeField(null=True)
     comments = models.CharField(max_length=100, blank=True)

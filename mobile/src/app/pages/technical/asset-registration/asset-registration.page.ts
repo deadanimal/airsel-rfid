@@ -15,6 +15,14 @@ import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { AssetRegistrationsService } from 'src/app/shared/services/asset-registrations/asset-registrations.service';
+import { StatesService } from 'src/app/shared/services/state/states.service';
+
+class Port {
+  public id: number;
+  public name: string;
+}
 
 @Component({
   selector: "app-asset-registration",
@@ -26,7 +34,9 @@ export class AssetRegistrationPage implements OnInit {
   isLinear = false;
   isDisableRipple = true;
 
+  typeassets = [];
   regions = [];
+  states = [];
   organisations = [];
   departments = [
     { value: "CB", name: "Customer Billing Services" },
@@ -167,24 +177,126 @@ export class AssetRegistrationPage implements OnInit {
     { value: "WS", name: "Wash Water System" },
     { value: "NA", name: "Not Available" },
   ];
-  typeassets = [];
   categories = [];
   identities = [];
   primarycategories = [];
   groupsubcategory1s = [];
   groupsubcategory2s = [];
-  ratings = [
-    { value: "1", name: "1 - Very Good" },
-    { value: "2", name: "2 - Good" },
-    { value: "3", name: "3 - Average" },
-    { value: "4", name: "4 - Popover" },
-    { value: "5", name: "5 - Replace" },
-  ];
   statuses = [{ value: "NA", name: "Not Available" }];
   measuringtypes = [
     { value: "FM", name: "Flow Meter Readings" },
     { value: "TP", name: "Temperature" },
     { value: "OT", name: "Other" },
+  ];
+
+  // hide show div
+  parentLocaDiv = 0;
+  assetLocDiv = 0;
+  port: Port;
+  segmentModal = "first";
+  process = "create";
+
+  // state data
+  stateList = [
+    { id: 'JHR', name: 'Johor' },
+    { id: 'KDH', name: 'Kedah' },
+    { id: 'KEL', name: 'Kelantan' },
+    { id: 'KUL', name: 'Kuala Lumpur' },
+    { id: 'LBN', name: 'Labuan' },
+    { id: 'MLK', name: 'Melaka' },
+    { id: 'NSN', name: 'Negeri Sembilan' },
+    { id: 'PHG', name: 'Pahang' },
+    { id: 'PJY', name: 'Putrajaya' },
+    { id: 'PLS', name: 'Perlis' },
+    { id: 'PNG', name: 'Penang' },
+    { id: 'PRK', name: 'Perak' },
+    { id: 'SBH', name: 'Sabah' },
+    { id: 'SGR', name: 'Selangor' },
+    { id: 'SWK', name: 'Serawak' },
+    { id: 'TRG', name: 'Terengganu' },
+  ];
+
+  // service area
+  servAreaList = [
+    { id: 'GOMBAK', name: 'GOMBAK' },
+    { id: 'HEADQUARTERS', name: 'HEADQUARTERS' },
+    { id: 'HULU-LANGAT', name: 'HULU LANGAT' },
+    { id: 'HULU-SELANGOR', name: 'HULU SELANGOR' },
+    { id: 'KLANG', name: 'KLANG' },
+    { id: 'KUALA-LANGAT', name: 'KUALA LANGAT' },
+    { id: 'KUALA-LUMPUR', name: 'KUALA LUMPUR' },
+    { id: 'KUALA-SELANGOR', name: 'KUALA SELANGOR' },
+    { id: 'NORTH', name: 'NORTH' },
+    { id: 'PETALING', name: 'PETALING' },
+    { id: 'SABAK-BERNAM', name: 'SABAK BERNAM' },
+    { id: 'SEPANG', name: 'SEPANG' },
+    { id: 'SOUTH', name: 'SOUTH' },
+  ];
+
+  // asset criticality
+  assCriticalList = [
+    { id: '01', name: '01 Asset Failure Low Impact' },
+    { id: '02', name: '02' },
+    { id: '03', name: '02' },
+    { id: '04', name: '02' },
+    { id: '05', name: '02' },
+    { id: '06', name: '02' },
+    { id: '07', name: '02' },
+    { id: '08', name: '02' },
+    { id: '09', name: '09 Highest' }
+  ];
+
+  // asset owning department
+  assOwningDepartList = [
+    { id: 'CBD', name: 'CUSTOMER BILLING SERVICES' },
+    { id: 'DISTRIBUTION', name: 'DISTRIBUTION' },
+    { id: 'ES-D', name: 'ENGINEERING SERVICES – DISTRIBUTION' },
+    { id: 'FLEET', name: 'FLEET' },
+    { id: 'LAND', name: 'LAND' },
+    { id: 'NRW', name: 'NRW' },
+    { id: 'PD-N', name: 'PRODUCTION NORTHERN' },
+    { id: 'PD-S', name: 'PRODUCTION SOUTHERN' },
+    { id: 'SCADA', name: 'SCADA' },
+    { id: 'WQ', name: 'WATER QUALITY' }
+  ];
+
+  // main operation
+  mainOperationList = [
+    { id: 'CUSTOMER-BILLING-SERVICES', name: 'CUSTOMER BILLING SERVICES' },
+    { id: 'DISTRIBUTION', name: 'DISTRIBUTION' },
+    { id: 'GENERAL-ADMIN', name: 'GENERAL ADMIN' },
+    { id: 'PRODUCTION', name: 'PRODUCTION' },
+    { id: 'SCADA', name: 'SCADA' },
+    { id: 'WATER-QUALITY', name: 'WATER QUALITY' },
+    { id: 'FLEET', name: 'FLEET' },
+  ];
+
+  // condition rating
+  conditionRatingList = [
+    { id: 1, name: 'Very Good' },
+    { id: 2, name: 'Good' },
+    { id: 3, name: 'Average' },
+    { id: 4, name: 'Poor' },
+    { id: 5, name: 'Replace' },
+  ];
+
+  // warranty
+  warrantyList = [
+    { id: 'Available', name: 'Y' },
+    { id: 'Not-Available', name: 'N' },
+  ];
+
+  // search region
+  ports = [
+    { id: 1, name: 'Tokai' },
+    { id: 2, name: 'Vladivostok' },
+    { id: 3, name: 'Navlakhi' }
+  ];
+
+  // asset // component
+  assetOrCompList = [
+    { id: 'Asset', name: 'Asset' },
+    { id: 'Component', name: 'Component' },
   ];
 
   // Forms
@@ -195,6 +307,7 @@ export class AssetRegistrationPage implements OnInit {
   fifthFormGroup: FormGroup;
   sixthFormGroup: FormGroup;
   seventhFormGroup: FormGroup;
+  warrantyFormGroup: FormGroup;
   validation_messages = [];
 
   constructor(
@@ -209,67 +322,143 @@ export class AssetRegistrationPage implements OnInit {
     public organisationsService: OrganisationsService,
     public regionsService: RegionsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private assetRegistrationsService: AssetRegistrationsService,
+    private statesService: StatesService
   ) {
+    // console.log("parentLocaDiv = ", this.parentLocaDiv)
     this.firstFormGroup = this.formBuilder.group({
-      owning_department: ["", Validators.required],
+      asset_primary_category: [""], // primary cat
+      asset_identity: [""],
+      sub_category_1: [""],
+      sub_category_2: [""],
     });
     this.secondFormGroup = this.formBuilder.group({
-      level_1: ["", Validators.required],
-      level_2: ["", Validators.required],
-      level_3: ["", Validators.required],
-      level_4: ["", Validators.required],
-      level_5: ["", Validators.required],
-      level_6: ["", Validators.required],
+      asset_or_component_type: [""],
+      asset_class_asset_category: [""],
+      handed_over_asset_or_procured: [""],
     });
     this.thirdFormGroup = this.formBuilder.group({
-      identity: ["", Validators.required],
-      primary_category: ["", Validators.required],
-      sub_category_1: ["", Validators.required],
-      sub_category_2: ["", Validators.required],
+      asset_owning_department: [""],
+      main_operation: [""],
+      region: [""],
+      operation: [""],
+      parent_location: [""],
     });
     this.fourthFormGroup = this.formBuilder.group({
-      type_asset: ["", Validators.required],
-      category: ["", Validators.required],
-      // category_extra: [""], // required IF category is 'OT'
-      acquired_by: [""],
+      location_description: [""],
+      building: [""],
+      address_line_1: [""],
+      address_line_2: [""],
+      address_line_3: [""],
+      city: [""],
+      state: [""],
+      postal_code: [""],
+      country: [""],
+      tag_number: [""],
+      service_area: [""],
+      location_main_contact: [""],
+      location_asset_maintenance_manager: [""],
+      maintenance_planner: [""],
+      gis_esri_id: [""],
+      latitude: [""],
+      longitude: [""],
+      asset_criticality: [""],
+      cost_center: [""],
     });
     this.fifthFormGroup = this.formBuilder.group({
-      brand: ["", Validators.required],
-      model_no: ["", Validators.required],
-      size_capacity_1: ["", Validators.required],
-      size_capacity_1_measurement: ["", Validators.required],
-      size_capacity_2: ["", Validators.required],
-      size_capacity_2_measurement: ["", Validators.required],
-      size_capacity_3: ["", Validators.required],
-      size_capacity_3_measurement: ["", Validators.required],
-      parent_plate_number: ["", Validators.required],
-      plate_number: ["", Validators.required],
-      serial_number: ["", Validators.required],
-      vendor_part_no: ["", Validators.required],
-      scada_id: ["", Validators.required],
-      external_id: ["", Validators.required],
-      tag_number: ["", Validators.required],
-      pallet_number: ["", Validators.required],
-      installed_at: ["", Validators.required],
-      rating: ["", Validators.required],
-      status: ["", Validators.required],
-      maintenance_specification: ["", Validators.required],
-      bill_of_material: ["", Validators.required],
-      measuring_type: ["", Validators.required],
+      size_capacity_1: [""],
+      size_capacity_1_unit_measurement: [""],
+      size_capacity_2: [""],
+      size_capacity_2_unit_measurement: [""],
+      size_capacity_3: [""],
+      size_capacity_3_unit_measurement: [""],
+      detailed_description: [""],
+      serial_number: [""],
+      asset_tag_number: [""],
+      purchase_date_installed_handed_over_date: [""],
+      condition_rating: [""],
+      status: [""],
+      maintenance_specification: [""],
+      measurement_type: [""],
+      warranty: [""],
+      actual_warranty_period: [""],
+      warranty_vendor_name: [""],
     });
     this.sixthFormGroup = this.formBuilder.group({
-      is_warranty: ["", Validators.required],
-      warranty_period_actual: ["", Validators.required],
-      warranty_vendor: ["", Validators.required],
-    });
-    this.seventhFormGroup = this.formBuilder.group({
-      po_vendor: ["", Validators.required],
-      po_cost: ["", Validators.required],
+      bottom_water_level: [""],
+      brand: [""],
+      capacity_size: [""],
+      closing_torque: [""],
+      communication_protocol: [""],
+      coverage_range: [""],
+      dimention: [""],
+      environmental_performance: [""],
+      flow_rate: [""],
+      frequency: [""],
+      horse_power: [""],
+      hysteresis: [""],
+      infrastructure_status: [""],
+      infrastructure_status_reason: [""],
+      inlet_diameter: [""],
+      installation: [""],
+      insulation: [""],
+      legal_name: [""],
+      manufacturer: [""],
+      manufacturer_year: [""],
+      manufacture_part_number: [""],
+      material_type: [""],
+      model: [""],
+      motor_current: [""],
+      no_of_channel: [""],
+      no_of_phases: [""],
+      no_of_stage: [""],
+      opening_torque: [""],
+      outlet_diameter: [""],
+      power_supply_type: [""],
+      pump_head: [""],
+      revolutions_per_minute: [""],
+      source_from: [""],
+      staging_height: [""],
+      supply_location: [""],
+      temperature: [""],
+      top_water_level: [""],
+      type: [""],
+      valve_diameter: [""],
+      valve_pressure_rating: [""],
+      vehicle_chasis_number: [""],
+      vehicle_engine_capacity: [""],
+      vehicle_engine_number: [""],
+      vehicle_insurance_vendor: [""],
+      vehicle_model: [""],
+      vehicle_insurance_auto_windscreen_insured: [""],
+      vehicle_insurance_cover_note_number: [""],
+      vehicle_insurance_date_period_from: [""],
+      vehicle_insurance_date_period_to: [""],
+      vehicle_insurance_no_claim_discount: [""],
+      vehicle_insurance_policy_type: [""],
+      vehicle_insurance_sum_insured: [""],
+      vehicle_insurance_total_premium: [""],
+      vehicle_puspakom_date_inspection: [""],
+      vehicle_owner_status: [""],
+      vehicle_register_date: [""],
+      vehicle_roadtax_rate: [""],
+      vehicle_puspakom_expired_date: [""],
+      vehicle_spad_permit_date_period_to: [""],
+      vehicle_roadtax_renew_date: [""],
+      vehicle_roadtax_expired_date: [""],
+      vehicle_spad_no_license_operator: [""],
+      vehicle_spad_permit_date_period_from: [""],
+      vehicle_seating_capacity: [""],
+      vehicle_registration_owner: [""],
+      voltage: [""],
+      status: ["IC"]
     });
 
+    /// get data form asset reg list
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
+        this.process = 'view';
         let assetregistration = this.router.getCurrentNavigation().extras.state
           .assetregistration;
         this.firstFormGroup.patchValue({
@@ -290,16 +479,24 @@ export class AssetRegistrationPage implements OnInit {
         this.sixthFormGroup.patchValue({
           ...assetregistration
         });
-        this.seventhFormGroup.patchValue({
-          ...assetregistration
-        });
+
       }
     });
   }
 
   ngOnInit() {
+
+    this.getRegion()
+    this.getState()
+    this.getOrganisations()
+    this.getAssetType()
+    this.getAssetGroup()
+  }
+
+  getRegion() {
     this.regionsService.get().subscribe(
       (res) => {
+        console.log("regions = ", res)
         if (res) this.regions = res;
       },
       (err) => {
@@ -309,7 +506,24 @@ export class AssetRegistrationPage implements OnInit {
         console.log("Http request completed");
       }
     );
+  }
 
+  getState() {
+    this.statesService.get().subscribe(
+      (res) => {
+        console.log("states = ", res)
+        if (res) this.states = res;
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
+  }
+
+  getOrganisations() {
     this.organisationsService.get().subscribe(
       (res) => {
         if (res) this.organisations = res;
@@ -321,7 +535,9 @@ export class AssetRegistrationPage implements OnInit {
         console.log("Http request completed");
       }
     );
+  }
 
+  getAssetType() {
     this.assetTypesService.get().subscribe(
       (res) => {
         if (res) {
@@ -351,7 +567,9 @@ export class AssetRegistrationPage implements OnInit {
         console.log("Http request completed");
       }
     );
+  }
 
+  getAssetGroup() {
     this.assetGroupsService.get().subscribe(
       (res) => {
         if (res) {
@@ -391,20 +609,24 @@ export class AssetRegistrationPage implements OnInit {
       ...this.fourthFormGroup.value,
       ...this.fifthFormGroup.value,
       ...this.sixthFormGroup.value,
-      ...this.seventhFormGroup.value,
+      // ...this.seventhFormGroup.value,
       // created_by: this.authService.userID
     };
 
-    this.assetsService.post(postAssets).subscribe(
+    console.log('postAssets = ', postAssets);
+    // this.assetsService.post(postAssets).subscribe( 
+    this.assetRegistrationsService.post(postAssets).subscribe(
       (res) => {
         if (res) {
-          console.log("res", res);
+          console.log("register_res = ", res);
           this.presentAlert("Success", "Your asset successfully registered into the system.");
+        } else {
+          console.log('eweqqweeq');
         }
       },
       (err) => {
-        console.error("err", err);
-        this.validation_messages = err.error;
+        console.error("register_rerr", err);
+        // this.validation_messages = err.error;
         this.presentAlert("Error", "There are error occured on your form. Please check your form again.");
       },
       () => {
@@ -441,5 +663,32 @@ export class AssetRegistrationPage implements OnInit {
   openNotification() {
     this.menu.enable(true, "menuNotification");
     this.menu.open("menuNotification");
+  }
+
+  onChangeParent(event) {
+    if (event == 0) {
+      this.parentLocaDiv = 0
+    } else {
+      this.parentLocaDiv = 1
+    }
+  }
+
+  onChangeAssLoc(event) {
+    if (event == 0) {
+      this.assetLocDiv = 0
+    } else {
+      this.assetLocDiv = 1
+    }
+  }
+
+  portChange(event: {
+    component: IonicSelectableComponent,
+    value: any
+  }) {
+    console.log('port:', event.value);
+  }
+
+  changeSegment(segment) {
+    this.segmentModal = segment;
   }
 }

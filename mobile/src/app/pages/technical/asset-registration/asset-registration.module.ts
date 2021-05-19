@@ -9,6 +9,8 @@ import { AssetRegistrationPageRoutingModule } from './asset-registration-routing
 import { AssetRegistrationPage } from './asset-registration.page';
 import { MatStepperModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
+import { IonicSelectableModule } from 'ionic-selectable';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,8 +20,9 @@ import { MatStepperModule, MatFormFieldModule, MatInputModule } from '@angular/m
     MatInputModule,
     MatStepperModule,
     MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IonicSelectableModule
   ],
   declarations: [AssetRegistrationPage]
 })
-export class AssetRegistrationPageModule {}
+export class AssetRegistrationPageModule { }

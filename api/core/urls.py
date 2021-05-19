@@ -39,7 +39,11 @@ from assets.views import (
     AssetLocationSyncViewSet,
     AssetAttributeFieldViewSet,
     AssetMeasurementTypeInboundViewSet,
-    AssetAttributeInboundViewSet
+    AssetAttributeInboundViewSet,
+    AssetServiceHistoryViewSet,
+    AssetMaintenanceSpecViewSet,
+    AssetAttributeReferenceViewSet,
+    AssetAttributePredefineViewSet
 )
 
 assets_router = router.register(
@@ -96,6 +100,22 @@ asset_measurement_type_inbound_router = router.register(
 
 asset_attribute_inbound_router = router.register(
     'asset-attribute-inbound', AssetAttributeInboundViewSet
+)
+
+asset_service_history = router.register(
+    'asset-service-history', AssetServiceHistoryViewSet
+)
+
+asset_maintenance_spec = router.register(
+    'asset-maintenance-spec', AssetMaintenanceSpecViewSet
+)
+
+asset_attribute_reference = router.register(
+    'asset-attribute-reference', AssetAttributeReferenceViewSet
+)
+
+asset_attribute_predefine = router.register(
+    'asset-attribute-predefine', AssetAttributePredefineViewSet
 )
 
 
@@ -371,8 +391,8 @@ wams_router = router.register(
 # inventory app
 from inventory.views import (
     InventoryItemViewSet,
-    InventoryItemUomIntraViewSet,
-    InventoryItemUomInterViewSet,
+    # InventoryItemUomIntraViewSet,
+    # InventoryItemUomInterViewSet,
     InventoryPurchaseOrderViewSet,
     InventoryGrnViewSet,
     InventoryTransactionViewSet,
@@ -383,13 +403,13 @@ item_router = router.register(
     'inventory-item', InventoryItemViewSet
 )
 
-item_intra_router = router.register(
-    'inventory-item-intra', InventoryItemUomIntraViewSet
-)
+# item_intra_router = router.register(
+#     'inventory-item-intra', InventoryItemUomIntraViewSet
+# )
 
-item_inter_router = router.register(
-    'inventory-item-inter', InventoryItemUomInterViewSet
-)
+# item_inter_router = router.register(
+#     'inventory-item-inter', InventoryItemUomInterViewSet
+# )
 
 purchase_order_router = router.register(
     'inventory-purchase-order', InventoryPurchaseOrderViewSet

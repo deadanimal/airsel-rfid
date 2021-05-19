@@ -51,7 +51,7 @@ def get_maintenancemanager(from_date, to_date):
     }
 
     r = requests.post(
-        "http://139.59.125.201/getMaintenanceManager.php", data=payload)
+        "http://174.138.28.157/getMaintenanceManager.php", data=payload)
 
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:

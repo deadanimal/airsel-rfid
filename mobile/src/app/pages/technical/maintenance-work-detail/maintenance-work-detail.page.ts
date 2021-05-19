@@ -49,7 +49,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
   status = "";
   image = "";
   name = "";
-  // maintenance_work: any;
+  maintenance_work: any;
 
   // List
   pendings = [];
@@ -86,36 +86,37 @@ export class MaintenanceWorkDetailPage implements OnInit {
         this.workactivities = this.router.getCurrentNavigation().extras.state.work_activity;
         this.image = '../../../../assets/technical/' + this.router.getCurrentNavigation().extras.state.image;
         this.name = this.router.getCurrentNavigation().extras.state.name;
-        // this.pendings = this.maintenance_work.filter((data) => {
-        //   if (data.bo_status.toString().indexOf("New") !== -1) return true;
-        //   if (data.bo_status.toString().indexOf("In Progress") !== -1)
-        //     return true;
-        //   if (data.bo_status.toString().indexOf("Backlog") !== -1) return true;
-        //   return false;
-        // });
 
-        // this.completeds = this.maintenance_work.filter((data) => {
-        //   if (data.bo_status.toString().indexOf("Completed") !== -1)
-        //     return true;
-        //   return false;
-        // });
+        this.pendings = this.maintenance_work.filter((data) => {
+          if (data.bo_status.toString().indexOf("New") !== -1) return true;
+          if (data.bo_status.toString().indexOf("In Progress") !== -1)
+            return true;
+          if (data.bo_status.toString().indexOf("Backlog") !== -1) return true;
+          return false;
+        });
+
+        this.completeds = this.maintenance_work.filter((data) => {
+          if (data.bo_status.toString().indexOf("Completed") !== -1)
+            return true;
+          return false;
+        });
 
         // filter status based on BO_STATUS_CD from WAMS
-        // this.pendings = this.maintenance_work.filter((data) => {
-        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("nw") !== -1)
-        //     return true;
-        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("ip") !== -1)
-        //     return true;
-        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("bl") !== -1)
-        //     return true;
-        //   return false;
-        // });
+        this.pendings = this.maintenance_work.filter((data) => {
+          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("nw") !== -1)
+            return true;
+          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("ip") !== -1)
+            return true;
+          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("bl") !== -1)
+            return true;
+          return false;
+        });
 
-        // this.completeds = this.maintenance_work.filter((data) => {
-        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("active") !== -1)
-        //     return true;
-        //   return false;
-        // });
+        this.completeds = this.maintenance_work.filter((data) => {
+          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("active") !== -1)
+            return true;
+          return false;
+        });
       }
     });
   }
@@ -183,7 +184,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
         {
           text: "Cancel",
           role: "cancel",
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: "Yes, logout it!",

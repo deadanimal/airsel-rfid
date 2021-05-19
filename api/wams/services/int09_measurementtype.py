@@ -35,7 +35,7 @@ def get_measurementtype():
 
     MeasurementType.objects.all().delete()
 
-    r = requests.post("http://139.59.125.201/getMeasurementType.php")
+    r = requests.post("http://174.138.28.157/getMeasurementType.php")
 
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:

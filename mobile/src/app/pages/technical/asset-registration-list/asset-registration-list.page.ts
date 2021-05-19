@@ -4,6 +4,7 @@ import { MenuController, ModalController } from "@ionic/angular";
 
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
+import { AssetRegistrationsService } from 'src/app/shared/services/asset-registrations/asset-registrations.service';
 
 @Component({
   selector: "app-asset-registration-list",
@@ -20,11 +21,12 @@ export class AssetRegistrationListPage implements OnInit {
     public menu: MenuController,
     public modalController: ModalController,
     private assetService: AssetsService,
-    public notificationService: NotificationsService
-  ) {}
+    public notificationService: NotificationsService,
+    private assetRegistrationsService: AssetRegistrationsService
+  ) { }
 
   getAsset() {
-    this.assetService.get().subscribe(
+    this.assetRegistrationsService.get().subscribe(
       (res) => {
         console.log("res", res);
         this.assetregistrations = res;
@@ -39,7 +41,7 @@ export class AssetRegistrationListPage implements OnInit {
     this.getAsset();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   homePage(path: string) {
     this.router.navigate([path]);

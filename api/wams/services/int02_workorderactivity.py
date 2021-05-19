@@ -7,18 +7,25 @@ import xmltodict
 
 from employee.models import Employee
 
+from assets.models import (
+    Asset,
+    AssetType,
+    AssetServiceHistory
+)
+
 from operations.models import (
     WorkOrderActivityCompletion,
     WorkActivityEmployee,
     WorkOrderActivityCompletionAssetLocationAssetList,
-    AssetLocationAssetListServiceHistories
+    AssetLocationAssetListServiceHistories,
+    WorkOrderActivityCompletionAssetLocationAssetListInbound,
+    AssetLocationAssetListServiceHistoriesInbound
 )
 
 # kena bincang dengan aimi pasal WorkOrderActivityCompletionAssetLocationAssetList
 
 
 def insert_into_work_order_activity(dict):
-
     # print("insert_into_work_order_activity", dict)
     # find in the database first
     # if do not exist, insert data into database
@@ -74,6 +81,24 @@ def insert_into_work_order_activity(dict):
     # for AssetLocationAssetListServiceHistories
     service_history_type = dict['SVC_HIST_TYPE_CD'] if 'SVC_HIST_TYPE_CD' in dict else ""
     svc_hist_type_req_fl = dict['SVC_HIST_TYPE_REQ_FLG'] if 'SVC_HIST_TYPE_REQ_FLG' in dict else ""
+
+    # # print(asset_id)
+    # get_asset_data = Asset.objects.filter(asset_id=asset_id).values()
+    # # print("get_asset_data = ")
+    # # print(get_asset_data[0]['asset_type'])
+    # asset_asset_type = get_asset_data[0]['asset_type']
+    # get_asset_type_data = AssetType.objects.filter(asset_type_code=asset_asset_type).values()
+    # asset_type_id = get_asset_type_data[0]['id']
+    # # print('asset_type_id = ', asset_type_id)
+    # get_asset_type_sh_data = AssetType.asset_service_history.through.objects.filter(assettype_id=asset_type_id).values()
+
+    # print(service_history_type," = ",svc_hist_type_req_fl)
+    # # print("get_asset_type_sh_data = ",get_asset_type_sh_data)
+
+    # for data_val in get_asset_type_sh_data:
+    #     # print("data_val = ",data_val['assetservicehistory_id'])
+    #     service_history_ash = AssetServiceHistory.objects.filter(id=data_val['assetservicehistory_id']).values()
+    #     print(service_history_type," == ",service_history_ash[0]['asset_service_history'])
 
     dictionary_work_order_activity_completion = {
         "activityid": activityid,
@@ -132,7 +157,6 @@ def insert_into_work_order_activity(dict):
     # WorkOrderActivityCompletion operation
     if not workorderactivitycompletion:
         # insert data into database
-        # print("insert")
         workorderactivitycompletion = WorkOrderActivityCompletion(
             **dictionary_work_order_activity_completion)
         workorderactivitycompletion.save()
@@ -152,33 +176,133 @@ def insert_into_work_order_activity(dict):
             employee_id=employee, work_order_activity_completion_id=workorderactivitycompletion)
         workactivityemployee.save()
 
-    # WorkOrderActivityCompletionAssetLocationAssetList operation
+    ## check data make sure not empty
     if node_id != "" and asset_id != "":
-        woacalal = WorkOrderActivityCompletionAssetLocationAssetList(
-            **dictionary_work_order_activity_completion_asset_location_asset_list)
+
+        ## check if exist in inbound activity_id and asset_id
+        check_woacalali = {
+            "asset_id": asset_id,
+            "activityid":activityid
+        }
+        woacalali_exist = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.filter(**check_woacalali).exists()
+        dictionary_work_order_activity_completion_asset_location_asset_list_inbound = {
+            "node_id": node_id,
+            "asset_id": asset_id,
+            "activityid":activityid
+        }
+        print("dictionary_work_order_activity_completion_asset_location_asset_list_inbound = ",dictionary_work_order_activity_completion_asset_location_asset_list_inbound)
+        # woacalali_exist = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.filter(activityid=activityid).exists()
+        woacalal = WorkOrderActivityCompletionAssetLocationAssetListInbound(
+            **dictionary_work_order_activity_completion_asset_location_asset_list_inbound)
         woacalal.save()
 
-    # AssetLocationAssetListServiceHistories operation
-    if service_history_type != "" and svc_hist_type_req_fl != "":
+        print("woacalali ==== ",woacalal)
+
+        # WorkOrderActivityCompletionAssetLocationAssetList operation
+        if not woacalali_exist:
+
+            print("here 3333")
+            ## save data woacalali
+            woacalal_save = WorkOrderActivityCompletionAssetLocationAssetList(
+                **dictionary_work_order_activity_completion_asset_location_asset_list)
+            woacalal_save.save()
+
+            print("woacalal data ==== ",woacalal)
+
+            # save into woac table
+            new_woacalal = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(asset_id=asset_id)
+            woac_table = WorkOrderActivityCompletion.objects.get(activityid=activityid)
+            woac_table.asset_location_asset_list.add(new_woacalal)
+             
+    # check for asset location asset list service history
+    if node_id != "" and asset_id != "":
+
+        ## check if exist in asset location asset list service history inbound for asset_id, activity_id, service_history_type
+        check_alalsh = {
+            "asset_id": asset_id,
+            # "activityid":activityid,
+            # "service_history_type":service_history_type
+        }
+        alalshi_exist = AssetLocationAssetListServiceHistoriesInbound.objects.filter(**check_alalsh).exists()
+        print("alalshi_exist = ",alalshi_exist)
+        ## insert in a 
+        dictionary_asset_location_asset_list_service_histories_inbound = {
+            "service_history_type": service_history_type,
+            "svc_hist_type_req_fl": svc_hist_type_req_fl,
+            "asset_id": asset_id,
+            "activityid":activityid,
+        }
+
+        alalshi_insert = AssetLocationAssetListServiceHistoriesInbound(
+            **dictionary_asset_location_asset_list_service_histories_inbound)
+        alalshi_insert.save()
+
+        # check AssetLocationAssetListServiceHistories operation
+        # AssetLocationAssetListServiceHistories operation
+        # if service_history_type != "" and svc_hist_type_req_fl != "":
+
         alalsh = AssetLocationAssetListServiceHistories(
             **dictionary_asset_location_asset_list_service_histories)
         alalsh.save()
 
+        # woacalali_table = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.get(node_id=node_id,asset_id=asset_id)
+        # print("woacalal_table = ",woacalali_table)
+        # for woacalali_value in woacalali_table:
+            # woacalali_table.service_histories.add(alalsh)    
+
+        # print(asset_id)
+        get_asset_data = Asset.objects.filter(asset_id=asset_id).values()
+        # print("get_asset_data = ")
+        # print(get_asset_data[0]['asset_type'])
+        asset_asset_type = get_asset_data[0]['asset_type']
+        get_asset_type_data = AssetType.objects.filter(asset_type_code=asset_asset_type).values()
+        asset_type_id = get_asset_type_data[0]['id']
+        # print('asset_type_id = ', asset_type_id)
+        get_asset_type_sh_data = AssetType.asset_service_history.through.objects.filter(assettype_id=asset_type_id).values()
+
+        print(service_history_type," = ",svc_hist_type_req_fl)
+        # print("get_asset_type_sh_data = ",get_asset_type_sh_data)
+
+        fill_the_data = "no"
+        for data_val in get_asset_type_sh_data:
+            # print("data_val = ",data_val['assetservicehistory_id'])
+            service_history_ash = AssetServiceHistory.objects.filter(id=data_val['assetservicehistory_id']).values()
+            print(service_history_type," == ",service_history_ash[0]['asset_service_history'])
+            if service_history_type == service_history_ash[0]['asset_service_history'] :
+                fill_the_data = "yes"
+        
+        print(fill_the_data)
+        # if not alalshi_exist:
+        if fill_the_data == "yes" and svc_hist_type_req_fl == "W1YS":
+            # if svc_hist_type_req_fl == "W1YS":
+
+            print('alalsh = ',alalsh)
+
+                # new_woacalsh = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(node_id=node_id,asset_id=asset_id)
+            woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(node_id=node_id,asset_id=asset_id)
+            print("woacalal_table = ",woacalal_table)
+            woacalal_table.service_histories.add(alalsh)
+
 
 def get_workorderactivity(from_date, to_date):
+
+    WorkOrderActivityCompletion.objects.all().delete()
+    WorkActivityEmployee.objects.all().delete()
+    WorkOrderActivityCompletionAssetLocationAssetList.objects.all().delete()
+    AssetLocationAssetListServiceHistories.objects.all().delete()
+    WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.all().delete()
+    AssetLocationAssetListServiceHistoriesInbound.objects.all().delete()
 
     payload = {
         "from_date": from_date,
         "to_date": to_date
     }
-
-    r = requests.post(
-        "http://139.59.125.201/getWorkOrderActivity.php", data=payload)
+    r = requests.post("http://174.138.28.157/getWorkOrderActivity.php", data=payload)
 
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:
         if (key == "results"):
-            print(key, ":", json_dictionary[key])
+            # print(key, ":", json_dictionary[key])
             if (type(json_dictionary[key]) == dict):
                 # return single json
                 print("dict")
