@@ -43,7 +43,7 @@ def get_inboundworkrequest(type, data):
             'work_request_status': data['work_request_status']
         }
 
-        r = requests.post("http://139.59.125.201/getInboundWorkRequestUpdate.php", data = payload)
+        r = requests.post("http://174.138.28.157/getInboundWorkRequestUpdate.php", data = payload)
 
     return json.loads(r.content);
 

@@ -2,10 +2,7 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="homePage('/technical/tabs/tab1')">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold">
@@ -14,11 +11,7 @@
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge
-        
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px"
-        ></ion-badge>
+        <ion-badge color="danger" style="position: absolute; right: -5px; top: 1px"></ion-badge>
         <!--{{ notificationService.totalnotificationbyuser }}-->
       </ion-button>
     </ion-buttons>
@@ -45,19 +38,19 @@
     <ion-card-content>
       <ion-card-title>Indicator</ion-card-title>
       <ion-row class="ion-padding-top ion-text-center">
-        <ion-col size="3"
-          ><p class="p-indicator"><span class="dot-new"></span> New</p></ion-col
-        >
-        <ion-col size="5"
-          ><p class="p-indicator">
+        <ion-col size="3">
+          <p class="p-indicator"><span class="dot-new"></span> New</p>
+        </ion-col>
+        <ion-col size="5">
+          <p class="p-indicator">
             <span class="dot-in-progress"></span> In Progress
-          </p></ion-col
-        >
-        <ion-col col="4"
-          ><p class="p-indicator">
+          </p>
+        </ion-col>
+        <ion-col col="4">
+          <p class="p-indicator">
             <span class="dot-backlog"></span> Backlog
-          </p></ion-col
-        >
+          </p>
+        </ion-col>
       </ion-row>
     </ion-card-content>
   </ion-card>
@@ -65,36 +58,23 @@
     <ion-card-content>
       <ion-row class="ion-align-items-center">
         <ion-col size="6" class="ion-no-padding ion-text-center">
-          <img
-            src="../../../../assets/technical/corrective.svg"
-            style="width: 50%"
-            class="ion-text-center"
-          />
+          <img src="../../../../assets/technical/corrective.svg" style="width: 50%" class="ion-text-center" />
           <h6>Corrective Maintenance</h6>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'CM', 'New', 'corrective.svg', 'Corrective Maintenance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'CM', 'New', 'corrective.svg', 'Corrective Maintenance')">
           <ion-button color="success">
             <h2>{{ calculateTotalStatus(cmArray, 'New') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'CM', 'In Progress', 'corrective.svg', 'Corrective Maintenance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'CM', 'In Progress', 'corrective.svg', 'Corrective Maintenance')">
           <ion-button color="warning">
             <h2>{{ calculateTotalStatus(cmArray, 'In Progress') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'CM', 'Backlog', 'corrective.svg', 'Corrective Maintenance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'CM', 'Backlog', 'corrective.svg', 'Corrective Maintenance')">
           <ion-button color="danger">
             <h2>{{ calculateTotalStatus(cmArray, 'Backlog') }}</h2>
           </ion-button>
@@ -114,36 +94,23 @@
     <ion-card-content>
       <ion-row class="ion-align-items-center">
         <ion-col size="6" class="ion-no-padding ion-text-center">
-          <img
-            src="../../../../assets/technical/preventive.svg"
-            style="width: 50%"
-            class="ion-text-center"
-          />
+          <img src="../../../../assets/technical/preventive.svg" style="width: 50%" class="ion-text-center" />
           <h6>Preventive Maintenance</h6>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'PM', 'New', 'preventive.svg', 'Preventive Maintenance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'PM', 'New', 'preventive.svg', 'Preventive Maintenance')">
           <ion-button color="success">
             <h2>{{ calculateTotalStatus(pmArray, 'New') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'PM', 'In Progress', 'preventive.svg', 'Preventive Maintenance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'PM', 'In Progress', 'preventive.svg', 'Preventive Maintenance')">
           <ion-button color="warning">
             <h2>{{ calculateTotalStatus(pmArray, 'In Progress') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'PM', 'Backlog', 'preventive.svg', 'Preventive Maintenance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'PM', 'Backlog', 'preventive.svg', 'Preventive Maintenance')">
           <ion-button color="danger">
             <h2>{{ calculateTotalStatus(pmArray, 'Backlog') }}</h2>
           </ion-button>
@@ -163,36 +130,23 @@
     <ion-card-content>
       <ion-row class="ion-align-items-center">
         <ion-col size="6" class="ion-no-padding ion-text-center">
-          <img
-            src="../../../../assets/technical/predictive.svg"
-            style="width: 50%"
-            class="ion-text-center"
-          />
+          <img src="../../../../assets/technical/predictive.svg" style="width: 50%" class="ion-text-center" />
           <h6>Predictive Maintenance</h6>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'PdM', 'New', 'predictive.svg', 'Predictive Maintenance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'PdM', 'New', 'predictive.svg', 'Predictive Maintenance')">
           <ion-button color="success">
             <h2>{{ calculateTotalStatus(pdmArray, 'New') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'PdM', 'In Progress', 'predictive.svg', 'Predictive Maintenance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'PdM', 'In Progress', 'predictive.svg', 'Predictive Maintenance')">
           <ion-button color="warning">
             <h2>{{ calculateTotalStatus(pdmArray, 'In Progress') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'PdM', 'Backlog', 'predictive.svg', 'Predictive Maintenance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'PdM', 'Backlog', 'predictive.svg', 'Predictive Maintenance')">
           <ion-button color="danger">
             <h2>{{ calculateTotalStatus(pdmArray, 'Backlog') }}</h2>
           </ion-button>
@@ -212,36 +166,23 @@
     <ion-card-content>
       <ion-row class="ion-align-items-center">
         <ion-col size="6" class="ion-no-padding ion-text-center">
-          <img
-            src="../../../../assets/technical/testing.svg"
-            style="width: 50%"
-            class="ion-text-center"
-          />
+          <img src="../../../../assets/technical/testing.svg" style="width: 50%" class="ion-text-center" />
           <h6>Installation Testing and Commissioning</h6>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'ITC', 'New', 'testing.svg', 'Installation Testing and Commissioning')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'ITC', 'New', 'testing.svg', 'Installation Testing and Commissioning')">
           <ion-button color="success">
             <h2>{{ calculateTotalStatus(itcArray, 'New') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'ITC', 'In Progress', 'testing.svg', 'Installation Testing and Commissioning')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'ITC', 'In Progress', 'testing.svg', 'Installation Testing and Commissioning')">
           <ion-button color="warning">
             <h2>{{ calculateTotalStatus(itcArray, 'In Progress') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'ITC', 'Backlog', 'testing.svg', 'Installation Testing and Commissioning')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'ITC', 'Backlog', 'testing.svg', 'Installation Testing and Commissioning')">
           <ion-button color="danger">
             <h2>{{ calculateTotalStatus(itcArray, 'Backlog') }}</h2>
           </ion-button>
@@ -261,36 +202,23 @@
     <ion-card-content>
       <ion-row class="ion-align-items-center">
         <ion-col size="6" class="ion-no-padding ion-text-center">
-          <img
-            src="../../../../assets/technical/disposal.svg"
-            style="width: 50%"
-            class="ion-text-center"
-          />
+          <img src="../../../../assets/technical/disposal.svg" style="width: 50%" class="ion-text-center" />
           <h6>Disposal</h6>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'New', 'disposal.svg', 'Disposal')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'New', 'disposal.svg', 'Disposal')">
           <ion-button color="success">
             <h2>{{ calculateTotalStatus(dArray, 'New') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'In Progress', 'disposal.svg', 'Disposal')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'In Progress', 'disposal.svg', 'Disposal')">
           <ion-button color="warning">
             <h2>{{ calculateTotalStatus(dArray, 'In Progress') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'Backlog', 'disposal.svg', 'Disposal')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'Disposal', 'Backlog', 'disposal.svg', 'Disposal')">
           <ion-button color="danger">
             <h2>{{ calculateTotalStatus(dArray, 'Backlog') }}</h2>
           </ion-button>
@@ -310,36 +238,23 @@
     <ion-card-content>
       <ion-row class="ion-align-items-center">
         <ion-col size="6" class="ion-no-padding ion-text-center">
-          <img
-            src="../../../../assets/technical/compliance.svg"
-            style="width: 50%"
-            class="ion-text-center"
-          />
+          <img src="../../../../assets/technical/compliance.svg" style="width: 50%" class="ion-text-center" />
           <h6>Compliance</h6>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'New', 'compliance.svg', 'Compliance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'New', 'compliance.svg', 'Compliance')">
           <ion-button color="success">
             <h2>{{ calculateTotalStatus(cArray, 'New') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'In Progress', 'compliance.svg', 'Compliance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'In Progress', 'compliance.svg', 'Compliance')">
           <ion-button color="warning">
             <h2>{{ calculateTotalStatus(cArray, 'In Progress') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'Backlog', 'compliance.svg', 'Compliance')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'Compliance', 'Backlog', 'compliance.svg', 'Compliance')">
           <ion-button color="danger">
             <h2>{{ calculateTotalStatus(cArray, 'Backlog') }}</h2>
           </ion-button>
@@ -359,36 +274,23 @@
     <ion-card-content>
       <ion-row class="ion-align-items-center">
         <ion-col size="6" class="ion-no-padding ion-text-center">
-          <img
-            src="../../../../assets/technical/redesign.svg"
-            style="width: 50%"
-            class="ion-text-center"
-          />
+          <img src="../../../../assets/technical/redesign.svg" style="width: 50%" class="ion-text-center" />
           <h6>Redesign</h6>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'New', 'redesign.svg', 'Redesign')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'New', 'redesign.svg', 'Redesign')">
           <ion-button color="success">
             <h2>{{ calculateTotalStatus(rArray, 'New') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'In Progress', 'redesign.svg', 'Redesign')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'In Progress', 'redesign.svg', 'Redesign')">
           <ion-button color="warning">
             <h2>{{ calculateTotalStatus(rArray, 'In Progress') }}</h2>
           </ion-button>
         </ion-col>
-        <ion-col
-          size="2"
-          class="ion-text-center"
-          (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'Backlog', 'redesign.svg', 'Redesign')"
-        >
+        <ion-col size="2" class="ion-text-center"
+          (click)="openPage('technical/maintenance-work-detail', 'Redesign', 'Backlog', 'redesign.svg', 'Redesign')">
           <ion-button color="danger">
             <h2>{{ calculateTotalStatus(rArray, 'Backlog') }}</h2>
           </ion-button>

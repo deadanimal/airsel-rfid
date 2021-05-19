@@ -161,7 +161,7 @@ def get_assetsyncoutbound(from_date, to_date):
         "to_date": to_date
     }
 
-    r = requests.post("http://139.59.125.201/getAssetSyncOutbound.php", data=payload)
+    r = requests.post("http://174.138.28.157/getAssetSyncOutbound.php", data=payload)
     
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:

@@ -14,6 +14,7 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
+import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
 
 am4core.useTheme(am4themes_animated);
 
@@ -64,10 +65,11 @@ export class MaintenanceWorkListPage implements OnInit {
     private zone: NgZone,
     public notificationService: NotificationsService,
     private workactivityService: WorkActivitiesService,
-    private wamsService: WamsService
-  ) {}
+    private wamsService: WamsService,
+    private workOrderActivityCompletionService: WorkOrderActivityCompletionService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
@@ -115,13 +117,16 @@ export class MaintenanceWorkListPage implements OnInit {
     // PREVENTIVE MAINTENANCE -> PREVENTIVE MAINTENANCE,
     // UPGRADE -> REDESIGN
 
-    this.workactivityService.get().subscribe(
+    this.workOrderActivityCompletionService.get().subscribe(
       (res) => {
-        // console.log("res", res);
+        console.log("workOrderActivityCompletionService_res", res);
+        // res.forEach(function(data_qq){
+
+        // })
         if (res) {
           this.cmArray = res.filter(function (data) {
             if (
-              data.work_category
+              data.field_1
                 .toString()
                 .indexOf("CORRECTIVE MAINTENANCE") !== -1
             )
@@ -131,7 +136,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.pmArray = res.filter(function (data) {
             if (
-              data.work_category
+              data.field_1
                 .toString()
                 .indexOf("PREVENTIVE MAINTENANCE") !== -1
             )
@@ -141,7 +146,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.itcArray = res.filter(function (data) {
             if (
-              data.work_category
+              data.field_1
                 .toString()
                 .indexOf("INSTALLATION TESTING AND COM") !== -1
             )
@@ -151,7 +156,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.pdmArray = res.filter(function (data) {
             if (
-              data.work_category
+              data.field_1
                 .toString()
                 .indexOf("PREDICTIVE MAINTENANCE") !== -1
             )
@@ -160,14 +165,14 @@ export class MaintenanceWorkListPage implements OnInit {
           });
 
           this.dArray = res.filter(function (data) {
-            if (data.work_category.toString().indexOf("RETIRE") !== -1)
+            if (data.field_1.toString().indexOf("RETIRE") !== -1)
               return true;
             return false;
           });
 
           this.cArray = res.filter(function (data) {
             if (
-              data.work_category.toString().indexOf("FLEET COMPLIANCE") !== -1
+              data.field_1.toString().indexOf("FLEET COMPLIANCE") !== -1
             )
               return true;
             return false;
@@ -175,7 +180,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.rArray = res.filter(function (data) {
             if (
-              data.work_category
+              data.field_1
                 .toString()
                 .toLowerCase()
                 .indexOf("REDESIGN") !== -1
@@ -781,7 +786,7 @@ export class MaintenanceWorkListPage implements OnInit {
         {
           text: "Cancel",
           role: "cancel",
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: "Yes, logout it!",

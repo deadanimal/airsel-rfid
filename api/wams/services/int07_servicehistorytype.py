@@ -151,28 +151,38 @@ def insert_into_service_history(dict):
 
 def get_servicehistorytype():
 
-    ServiceHistory.objects.all().delete()
-    ServiceHistoryQuestion.objects.all().delete()
-    ServiceHistoryQuestionValidValue.objects.all().delete()
-
-    r = requests.post("http://139.59.125.201/getServiceHistoryType.php")
-
+    r = requests.post("http://139.59.125.201/getServiceHistoryType.ph")
     json_dictionary = json.loads(r.content)
-    for key in json_dictionary:
-        if (key == "results"):
-            # print(key, ":", json_dictionary[key])
-            if (type(json_dictionary[key]) == dict):
-                # return single json
-                print("dict")
-                insert_into_service_history(json_dictionary[key])
-            elif (type(json_dictionary[key]) == list):
-                # return array of json
-                print("list")
-                results_json = json_dictionary[key]
-                for x in results_json:
-                    insert_into_service_history(x)
 
-    return json.loads(r.content)
+    print(json_dictionary)
+
+    if json_dictionary :
+        print('berjaya')
+        ServiceHistory.objects.all().delete()
+        ServiceHistoryQuestion.objects.all().delete()
+        ServiceHistoryQuestionValidValue.objects.all().delete()
+
+        for key in json_dictionary:
+            if (key == "results"):
+                # print(key, ":", json_dictionary[key])
+                if (type(json_dictionary[key]) == dict):
+                    # return single json
+                    print("dict")
+                    insert_into_service_history(json_dictionary[key])
+                elif (type(json_dictionary[key]) == list):
+                    # return array of json
+                    print("list")
+                    results_json = json_dictionary[key]
+                    for x in results_json:
+                        insert_into_service_history(x)
+
+        return json.loads(r.content)
+
+    else :
+
+        print('tidak berjaya')
+        return json.loads(r.content)
+
 
     # wsdl = "https://pasb-dev-uwa-iws.oracleindustry.com/ouaf/webservices/CM-SVCHISTTYPE?WSDL"
     # session = Session()

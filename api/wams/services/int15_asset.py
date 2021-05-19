@@ -116,9 +116,7 @@ def get_asset(badge_number):
         "badge_number": badge_number
     }
 
-    print(badge_number)
-
-    r = requests.post("http://139.59.125.201/getAsset.php", data = payload)
+    r = requests.post("http://174.138.28.157/getAsset.php", data = payload)
 
     json_dictionary = json.loads(r.content)
 

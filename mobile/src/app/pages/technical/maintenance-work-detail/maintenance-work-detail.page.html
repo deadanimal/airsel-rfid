@@ -12,10 +12,7 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="clickBack()">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
       </ion-button>
     </ion-buttons>
     <div class="ion-text-center ion-text-wrap" style="font-weight: bold">
@@ -23,17 +20,9 @@
     </div>
     <ion-buttons slot="end">
       <ion-button>
-        <ion-icon
-          color="first"
-          slot="icon-only"
-          name="notifications"
-        ></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-icon color="first" slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -46,20 +35,17 @@
   </div>
   <div *ngIf="workactivities.length == 0">
     <h6 class="ion-text-center">You have no {{ status }} Work Activity</h6>
-  </div>
+  </div>wwwwww
   <ion-card *ngFor="let workactivity of workactivities">
+    qqqqqqq
     <ion-card-header>
       <ion-fab horizontal="end">
-        <ion-fab-button
-          size="small"
-          color="light"
-          (click)="clickWorkActivity(workactivity)"
-        >
+        <ion-fab-button size="small" color="light" (click)="clickWorkActivity(workactivity)">
           <ion-icon name="build"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-      <ion-card-title>Work Activity No</ion-card-title
-      ><ion-card-subtitle>{{ workactivity.activity_id }}</ion-card-subtitle>
+      <ion-card-title>Work Activity No</ion-card-title>
+      <ion-card-subtitle>{{ workactivity.activity_id }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <p>Status: {{ workactivity.bo_status }}</p>
