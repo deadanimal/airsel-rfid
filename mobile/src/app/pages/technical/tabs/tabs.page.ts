@@ -3,6 +3,7 @@
 import { Component, OnInit, NgZone } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
 import { ActionSheetController, AlertController } from "@ionic/angular";
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
 
 @Component({
   selector: "app-tabs",
@@ -19,7 +20,8 @@ export class TabsPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     private ngZone: NgZone,
-    private router: Router
+    private router: Router,
+    private assetsService: AssetsService
   ) { }
 
   private L(...args: any[]) {
@@ -36,13 +38,6 @@ export class TabsPage implements OnInit {
     this.onRegisterRFIDListener();
   }
 
-  updateData(data) {
-    this.ngZone.run(() => {
-      this.scanValue = data;
-      alert(this.scanValue);
-    });
-  }
-
   onRegister2DBarcodeListener() {
     console.log("[register onRegister2DBarcodeListener] ");
     const ev = "com.scanner.broadcast";
@@ -54,7 +49,7 @@ export class TabsPage implements OnInit {
       if (event.SCAN_STATE == "success") {
         this.ngZone.run(() => {
           if (this.bBarcode) {
-            this.updateData(event.data);
+            this.updateQrbarcode(event.data);
           }
         });
       }
@@ -73,7 +68,7 @@ export class TabsPage implements OnInit {
       if (event.SCAN_STATE == "success") {
         this.ngZone.run(() => {
           if (this.bRfid) {
-            this.updateData(event.data);
+            this.updateRfid(event.data);
           }
         });
       }
@@ -174,5 +169,81 @@ export class TabsPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  // updateRfid(data) {
+  //   this.ngZone.run(() => {
+  //     this.scanValue = data;
+  //     alert(this.scanValue);
+  //   });
+  // }
+
+  // rfid scan
+  updateRfid(data) {
+    console.log("sini 4")
+    this.ngZone.run(() => {
+      this.scanValue = data;
+      // alert(this.scanValue);
+      console.log("sini 5 scanned data = ", this.scanValue);
+
+      this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
+        (res) => {
+          console.log("res assetlsService = ", res)
+
+          if (res[0].badge_no != '') {
+            let navigationExtras: NavigationExtras = {
+              state: {
+                badge_no: res[0].badge_no,
+              },
+            };
+            console.log("navigationExtras = ", navigationExtras)
+            this.router.navigate(["/technical/tabs/tab2"], navigationExtras);
+            // this.router.navigate(
+            //   ["/technical/work-request"],
+            //   navigationExtras
+            // );
+          } else {
+            this.presentAlert(
+              "Error",
+              "Data not valid in database"
+            );
+          }
+
+        },
+        (err) => {
+          console.log("err assetlsService = ", err)
+        }
+      )
+
+    });
+  }
+
+  // qr code
+  updateQrbarcode(data) {
+    console.log("updateQrbarcode")
+    this.ngZone.run(() => {
+      this.scanValue = data // "SLUV-0009495";
+      // alert(this.scanValue);
+      console.log("updateQrbarcode = ", this.scanValue);
+
+      if (this.scanValue.badge_no = '') {
+        let navigationExtras: NavigationExtras = {
+          state: {
+            badge_no: this.scanValue.badge_no,
+          },
+        };
+        this.router.navigate(["/technical/tabs/tab2"], navigationExtras);
+        // this.router.navigate(
+        //   ["/technical/work-request"],
+        //   navigationExtras
+        // );
+      } else {
+        this.presentAlert(
+          "Error",
+          "Data not valid in database"
+        );
+      }
+
+    });
   }
 }

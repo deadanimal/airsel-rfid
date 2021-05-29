@@ -15,6 +15,9 @@ import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-g
 import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
+import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
+import { AssetAttributeService } from 'src/app/shared/services/asset-attribute/asset-attribute.service';
+import { AssetAttributeReferenceService } from 'src/app/shared/services/asset-attribute-reference/asset-attribute-reference.service';
 
 @Component({
   selector: "app-asset-detail",
@@ -158,7 +161,10 @@ export class AssetDetailPage implements OnInit {
     modified_at: "",
   };
   asset_type: string;
-
+  assetLocatioSyncdata: any
+  assetAttributedatas: any = []
+  assetAttrData: any[]
+  updateAssetData: any
   // Forms
   // firstFormGroup: FormGroup;
   // secondFormGroup: FormGroup;
@@ -182,17 +188,40 @@ export class AssetDetailPage implements OnInit {
     public authService: AuthService,
     public notificationService: NotificationsService,
     private route: ActivatedRoute,
-    private router: Router // private barcodeScanner: BarcodeScanner
+    private router: Router, // private barcodeScanner: BarcodeScanner
+    private assetLocatioSyncService: AssetLocatioSyncService,
+    private assetAttributeService: AssetAttributeService,
+    private assetAttributeReferenceService: AssetAttributeReferenceService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.asset_detail = this.router.getCurrentNavigation().extras.state.asset_detail;
 
-        if (this.asset_detail.asset_primary_category.match(/Pump/i)) {
-          this.asset_type = "Pump";
-        } else if (this.asset_detail.asset_primary_category.match(/Motor/i)) {
-          this.asset_type = "Motor";
-        }
+        console.log("this.asset_detail ooooo = ", this.asset_detail)
+        // console.log("this.asset_detail asset_id = ", this.asset_detail.asset_type)
+
+        // if (this.asset_detail.asset_primary_category.match(/Pump/i)) {
+        //   this.asset_type = "Pump";
+        // } else if (this.asset_detail.asset_primary_category.match(/Motor/i)) {
+        //   this.asset_type = "Motor";
+        // }
+        let asset_attributes = this.asset_detail["asset_attributes"];
+        // console.log('assetType = ', assetType)
+        // this.getAssetAttributeData()
+        this.getAssetAttributeData(asset_attributes)
+        this.assetLocatioSyncService.filter("node_id=" + this.asset_detail.node_id).subscribe(
+          (res) => {
+            // console.log("res", res);
+            // this.assetregistrations = res;
+            this.assetLocatioSyncdata = res[0].description
+            // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
+          },
+          (err) => {
+            console.error("err", err);
+          }
+        );
+
+
       }
     });
     // this.firstFormGroup = this.formBuilder.group({
@@ -223,7 +252,7 @@ export class AssetDetailPage implements OnInit {
     // });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   scanQrCode() {
     let navigationExtras: NavigationExtras = {
@@ -289,7 +318,7 @@ export class AssetDetailPage implements OnInit {
     const alert = await this.alertController.create({
       header: "Asset Detail",
       message:
-        "Your asset detail have successfully submitted into the system. Thank you.",
+        "Your asset detail have successfully updated into the system. Thank you.",
       buttons: ["OK"],
     });
 
@@ -329,4 +358,117 @@ export class AssetDetailPage implements OnInit {
     this.menu.enable(true, "menuNotification");
     this.menu.open("menuNotification");
   }
+
+  getAssetAttributeData(asset_attr) {
+
+    // console.log('adsadaad');
+    asset_attr.forEach(element => {
+
+      this.assetAttributeService.getOne(element).subscribe(
+        (aasRes) => {
+          // console.log('assetAttributeService = ', aasRes)
+          // this.assetAttributedatas.push(aasRes)
+          // console.log("assetAttributedatas = ", this.assetAttributedatas)
+          let assct = aasRes.characteristic_type
+          // console.log('aasRes.characteristic_type = ', assct)
+          // this.getsadaasasd(assct)
+          this.assetAttributeReferenceService.filter("char_type_cd=" + assct).subscribe(
+            // this.assetAttributeReferenceService.filter("char_type_cd=" + assct).subscribe(
+            (aarsRes) => {
+              // console.log('aarsRes qwe = ', aarsRes)
+              aasRes['field_name'] = aarsRes[0].attribute_field_name
+              this.assetAttributedatas.push(aasRes)
+            },
+            (aarsErr) => {
+              console.error("err", aarsErr);
+            }
+          );
+
+        },
+        (aasErr) => {
+          console.error("err", aasErr);
+        }
+      );
+    });
+    // this.getsadaasasd(this.assetAttributedatas)
+    // this.assetAttributeService.filter("characteristic_type=" + this.asset_detail.node_id).subscribe(
+
+  }
+
+  getsadaasasd(attrData) {
+    console.log('attrData --------- = ', attrData);
+    // attrData.forEach(element => {
+    //   console.log('element = ', element)
+    //   this.assetAttributeReferenceService.filter("char_type_cd=" + element.characteristic_type).subscribe(
+    //     (aarsRes) => {
+    //       console.log('aarsRes = ', aarsRes)
+    //     },
+    //     (aarsErr) => {
+    //       console.error("err", aarsErr);
+    //     }
+    //   );
+    // });
+
+  }
+
+  onKeyAssDesc(value, row) {
+    // console.log(value)
+    this.asset_detail['description'] = value
+    // console.log(this.asset_detail)
+    // this.updateAssetData['characteristic_value'] = value
+  }
+
+  onKey(value, row) {
+
+    this.assetAttributedatas.forEach(element => {
+      if (element.id == row.id) {
+        element.characteristic_value = value;
+        element.action_type = 'update';
+        // console.log("foreach = ", element);
+      }
+    });
+
+  }
+
+  updateDetails() {
+
+    let updateAssAttrformData: any = {}
+    updateAssAttrformData['description'] = this.asset_detail["description"]
+    // update asset data
+    this.assetsService.update(this.asset_detail.id, updateAssAttrformData).subscribe(
+      (res) => {
+        // console.log("updateAssAttrformData = ", res)
+      },
+      (err) => {
+        console.error("err", err);
+      }
+    );
+
+    // update asset attribute data
+    this.assetAttributedatas.forEach(element => {
+
+      if (element.action_type == 'update') {
+        let updateformData: any = {}
+        updateformData['characteristic_value'] = ''
+        updateformData['action_type'] = ''
+        updateformData['characteristic_value'] = element.characteristic_value
+        updateformData['action_type'] = element.action_type
+        // let editAssetsAttr = {
+        //   characteristic_value: this.authService.userID
+        // }
+        this.assetAttributeService.update(element.id, updateformData).subscribe(
+          (res) => {
+            // console.log(res[0])
+            this.assetAttributedatas.push(res)
+          },
+          (err) => {
+            console.error("err", err);
+          }
+        );
+      }
+
+    });
+    this.update()
+  }
+
 }

@@ -800,6 +800,10 @@ class AssetServiceHistoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class AssetMaintenanceSpecViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetMaintenanceSpec.objects.all()
     serializer_class = AssetMaintenanceSpecSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'maintenance_spec_cd','asset_type_cd'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -831,6 +835,10 @@ class AssetMaintenanceSpecViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class AssetAttributeReferenceViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetAttributeReference.objects.all()
     serializer_class = AssetAttributeReferenceSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'char_type_cd','attribute_field_name'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -862,6 +870,10 @@ class AssetAttributeReferenceViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class AssetAttributePredefineViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetAttributePredefine.objects.all()
     serializer_class = AssetAttributePredefineSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'attribute_field_name','characteristic_value'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':

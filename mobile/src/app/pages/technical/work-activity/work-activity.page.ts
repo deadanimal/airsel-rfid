@@ -63,6 +63,9 @@ export class WorkActivityPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.workactivity = this.router.getCurrentNavigation().extras.state.work_activity;
+
+        // console.log(this.workactivity);
+
         this.workactivityFormGroup.patchValue({
           ...this.workactivity,
         });

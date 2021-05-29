@@ -264,7 +264,7 @@ export class OperationalReadingListPage implements OnInit {
         (res) => {
           console.log("res assetlsService = ", res)
 
-          if (res[0].badge_no == '') {
+          if (res[0].badge_no != '') {
             let navigationExtras: NavigationExtras = {
               state: {
                 badge_no: res[0].badge_no,
@@ -294,13 +294,13 @@ export class OperationalReadingListPage implements OnInit {
   updateData2(data) {
     console.log("updateData2")
     this.ngZone.run(() => {
-      this.scanValue = "SLUV-0009495" // data;
+      this.scanValue = data // "SLUV-0009495" // data;
       console.log("updateData2 = ", this.scanValue);
 
-      if (this.scanValue.badge_no == '') {
+      if (this.scanValue.badge_no != '') {
         let navigationExtras: NavigationExtras = {
           state: {
-            badge_no: this.scanValue.badge_no,
+            badge_no: this.scanValue,
           },
         };
         this.router.navigate(

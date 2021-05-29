@@ -25,9 +25,11 @@
           <div class="line-input">
             <ion-item>
               <ion-label position="stacked">Asset Primary Category</ion-label>
-              <ion-select placeholder="Please select" formControlName="asset_primary_category">
-                <ion-select-option *ngFor="let primarycategory of primarycategories" [value]="primarycategory.id">
-                  {{ primarycategory.name }}</ion-select-option>
+              <ion-select placeholder="Please select" (ionChange)='onChangeAssPrimaryCat($event.target.value)'
+                formControlName="asset_primary_category">
+                <ion-select-option *ngFor="let primarycategory of primarycategories"
+                  [value]="primarycategory.asset_type_code">
+                  {{ primarycategory.asset_type_description }}</ion-select-option>
               </ion-select>
               <!-- <small class="validation_messages"
                 >{{ validation_messages.primary_category }}</small
@@ -62,6 +64,18 @@
                 >{{ validation_messages.sub_category_2 }}</small
               > -->
             </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Model number</ion-label>
+              <ion-input type="text" formControlName="model_number"></ion-input>
+              <!-- <small class="validation_messages"
+              >{{ validation_messages.sub_category_2 }}</small
+            > -->
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Bo</ion-label>
+              <ion-input type="text" formControlName="bo" [value]="assetAttrData"></ion-input>
+            </ion-item>
           </div>
 
           <!-- <div>
@@ -90,14 +104,9 @@
                 > -->
               </ion-item>
               <ion-item>
-                <ion-label *ngFor="let assComp of assetOrCompList">{{ assComp.name }}</ion-label>
-              </ion-item>
-              <ion-item>
                 <ion-label position="stacked">Asset Class/Asset Category</ion-label>
-                <ion-select placeholder="Please select" formControlName="asset_class_asset_category">
-                  <ion-select-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}
-                  </ion-select-option>
-                </ion-select>
+                <ion-input type="text" formControlName="asset_class_asset_category" [value]="assetCategoryData">
+                </ion-input>
                 <!-- <small class="validation_messages"
                   >{{ validation_messages.category }}</small
                 > -->
@@ -146,12 +155,16 @@
                 </ion-select-option>
               </ion-select>
               <!-- <small class="validation_messages"
-                >{{ validation_messages.sub_category_2 }}</small
-              > -->
+                >{{ validation_messages.sub_category_2 }}</small> 
+              -->
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Main Operation</ion-label>
-              <ion-select formControlName="main_operation" placeholder="Please select"> </ion-select>
+              <ion-select formControlName="main_operation" placeholder="Please select">
+                <ion-select-option *ngFor="let mainOpList of mainOperationList" [value]="mainOpList.id">
+                  {{ mainOpList.name }}
+                </ion-select-option>
+              </ion-select>
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Region</ion-label>
@@ -162,7 +175,11 @@
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Operation</ion-label>
-              <ion-select formControlName="operation" placeholder="Please select"> </ion-select>
+              <ion-select formControlName="operation" placeholder="Please select">
+                <ion-select-option *ngFor="let operateList of operationList" [value]="operateList.id">
+                  {{ operateList.name }}
+                </ion-select-option>
+              </ion-select>
             </ion-item>
             <ion-radio-group (click)="onChangeParent($event.target.value)">
               <ion-list-header>
@@ -194,7 +211,7 @@
 
             <ion-item *ngIf="parentLocaDiv == 0">
               <ion-label position="stacked">New</ion-label>
-              <ion-input formControlName="parent_location" type="text"></ion-input>
+              <ion-input formControlName="new_parent_location" type="text"></ion-input>
             </ion-item>
             <ion-item *ngIf="parentLocaDiv == 1">
               <ion-label position="stacked">Existing</ion-label>
@@ -219,7 +236,7 @@
                       <ion-label>New</ion-label>
                       <!-- <ion-radio (change)='onChangeParent($event.target.value)' slot="start" value="true" checked></ion-radio> -->
                       <!-- <ion-radio (ionSelect)="onChangeParent('true')"></ion-radio> -->
-                      <ion-radio slot="start" value="0" selected="selected"></ion-radio>
+                      <ion-radio slot="start" value="0" checked></ion-radio>
                     </ion-item>
                   </ion-col>
                   <ion-col>
@@ -233,9 +250,9 @@
             </ion-radio-group>
 
             <ion-item *ngIf="assetLocDiv == 1">
-              <ion-label>Port</ion-label>
-              <ionic-selectable mode="ios" [(ngModel)]="port" [items]="ports" itemValueField="id" itemTextField="name"
-                [canSearch]="true" (onChange)="portChange($event)">
+              <ion-label>Location</ion-label>
+              <ionic-selectable [items]="primarycategories" itemValueField="id" itemTextField="asset_type_description"
+                [canSearch]="true" (ionChange)="portChange($event)">
               </ionic-selectable>
             </ion-item>
 
@@ -559,639 +576,368 @@
 
     <ion-list class="ion-padding line-input">
       <form [formGroup]="sixthFormGroup">
+        <!-- <div *ngIf="assetAttrColumn != ''"> -->
+        <ion-item *ngIf="assetAttrColumn.bottom_water_level == true">
+          <ion-label required position="stacked">Bottom water level</ion-label>
+          <ion-input formControlName="bottom_water_level" type="text"></ion-input>
+        </ion-item>
 
-        <!-- <ion-grid> -->
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Bottom water level</ion-label>
-              <ion-input formControlName="bottom_water_level" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Brand</ion-label>
-              <ion-input formControlName="brand" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
-        <!-- </ion-grid> -->
+        <ion-item *ngIf="assetAttrColumn.brand == true">
+          <ion-label required position="stacked">Brand</ion-label>
+          <ion-input formControlName="brand" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Capacity size</ion-label>
-              <ion-input formControlName="capacity_size" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Closing torque</ion-label>
-              <ion-input formControlName="closing_torque" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.capacity_size == true">
+          <ion-label required position="stacked">Capacity size</ion-label>
+          <ion-input formControlName="capacity_size" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Comunication protocol</ion-label>
-              <ion-input formControlName="communication_protocol" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Coverage range</ion-label>
-              <ion-input formControlName="coverage_range" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.closing_torque == true">
+          <ion-label required position="stacked">Closing torque</ion-label>
+          <ion-input formControlName="closing_torque" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Dimention</ion-label>
-              <ion-input formControlName="dimention" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Environmental Performance</ion-label>
-              <ion-input formControlName="environmental_performance" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.communication_protocol == true">
+          <ion-label required position="stacked">Comunication protocol</ion-label>
+          <ion-input formControlName="communication_protocol" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Flow rate</ion-label>
-              <ion-input formControlName="flow_rate" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Frequency</ion-label>
-              <ion-input formControlName="frequency" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.coverage_range == true">
+          <ion-label required position="stacked">Coverage range</ion-label>
+          <ion-input formControlName="coverage_range" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Horse power</ion-label>
-              <ion-input formControlName="horse_power" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Hysterasis</ion-label>
-              <ion-input formControlName="hysteresis" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.dimention == true">
+          <ion-label required position="stacked">Dimention</ion-label>
+          <ion-input formControlName="dimention" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Infrastracture status</ion-label>
-              <ion-input formControlName="infrastructure_status" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Infrastracture status reason</ion-label>
-              <ion-input formControlName="infrastructure_status_reason" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.environmental_performance == true">
+          <ion-label required position="stacked">Environmental Performance</ion-label>
+          <ion-input formControlName="environmental_performance" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Inlet diameter</ion-label>
-              <ion-input formControlName="inlet_diameter" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Installation</ion-label>
-              <ion-input formControlName="installation" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.flow_rate == true">
+          <ion-label required position="stacked">Flow rate</ion-label>
+          <ion-input formControlName="flow_rate" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Insulation</ion-label>
-              <ion-input formControlName="insulation" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Legal name</ion-label>
-              <ion-input formControlName="legal_name" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.frequency == true">
+          <ion-label required position="stacked">Frequency</ion-label>
+          <ion-input formControlName="frequency" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Manufacturer</ion-label>
-              <ion-input formControlName="manufacturer" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Manufacturer year</ion-label>
-              <ion-input formControlName="manufacturer_year" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.horse_power == true">
+          <ion-label required position="stacked">Horse power</ion-label>
+          <ion-input formControlName="horse_power" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Manufacturer part number</ion-label>
-              <ion-input formControlName="manufacture_part_number" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Material type</ion-label>
-              <ion-input formControlName="material_type" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.hysteresis == true">
+          <ion-label required position="stacked">Hysterasis</ion-label>
+          <ion-input formControlName="hysteresis" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Model</ion-label>
-              <ion-input formControlName="model" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Motor current</ion-label>
-              <ion-input formControlName="motor_current" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.infrastructure_status == true">
+          <ion-label required position="stacked">Infrastracture status</ion-label>
+          <ion-input formControlName="infrastructure_status" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">No of channer</ion-label>
-              <ion-input formControlName="no_of_channel" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">No of phase</ion-label>
-              <ion-input formControlName="no_of_phases" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.infrastructure_status_reason == true">
+          <ion-label required position="stacked">Infrastracture status reason</ion-label>
+          <ion-input formControlName="infrastructure_status_reason" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">No of stage</ion-label>
-              <ion-input formControlName="no_of_stage" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Opening torque</ion-label>
-              <ion-input formControlName="opening_torque" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.inlet_diameter == true">
+          <ion-label required position="stacked">Inlet diameter</ion-label>
+          <ion-input formControlName="inlet_diameter" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Outlet diameter</ion-label>
-              <ion-input formControlName="outlet_diameter" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Power supply type</ion-label>
-              <ion-input formControlName="power_supply_type" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.installation == true">
+          <ion-label required position="stacked">Installation</ion-label>
+          <ion-input formControlName="installation" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Pump head</ion-label>
-              <ion-input formControlName="pump_head" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Revolution per minute</ion-label>
-              <ion-input formControlName="revolutions_per_minute" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.insulation == true">
+          <ion-label required position="stacked">Insulation</ion-label>
+          <ion-input formControlName="insulation" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Source from</ion-label>
-              <ion-input formControlName="source_from" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Staging height</ion-label>
-              <ion-input formControlName="staging_height" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.legal_name == true">
+          <ion-label required position="stacked">Legal name</ion-label>
+          <ion-input formControlName="legal_name" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Supply location</ion-label>
-              <ion-input formControlName="supply_location" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Temperature</ion-label>
-              <ion-input formControlName="temperature" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.manufacturer == true">
+          <ion-label required position="stacked">Manufacturer</ion-label>
+          <!-- <ion-input formControlName="manufacturer" type="text"></ion-input> -->
+          <ion-select placeholder="Please select" formControlName="manufacturer">
+            <ion-select-option *ngFor="let assAttPreMan of assetAttPredefineMans" [value]="assAttPreMan.id">
+              {{ assAttPreMan.characteristic_value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Top water level</ion-label>
-              <ion-input formControlName="top_water_level" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Type</ion-label>
-              <ion-input formControlName="type" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.manufacturer_year == true">
+          <ion-label required position="stacked">Manufacturer year</ion-label>
+          <ion-input formControlName="manufacturer_year" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Value diameter</ion-label>
-              <ion-input formControlName="valve_diameter" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Valve pressuring rate</ion-label>
-              <ion-input formControlName="valve_pressure_rating" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.manufacture_part_number == true">
+          <ion-label required position="stacked">Manufacturer part number</ion-label>
+          <ion-input formControlName="manufacture_part_number" type="text"></ion-input>
+        </ion-item>
 
-        <ion-list-header>
+        <ion-item *ngIf="assetAttrColumn.material_type == true">
+          <ion-label required position="stacked">Material type</ion-label>
+          <ion-input formControlName="material_type" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.model == true">
+          <ion-label required position="stacked">Model</ion-label>
+          <ion-input formControlName="model" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.motor_current == true">
+          <ion-label required position="stacked">Motor current</ion-label>
+          <ion-input formControlName="motor_current" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.no_of_channel == true">
+          <ion-label required position="stacked">No of channer</ion-label>
+          <ion-input formControlName="no_of_channel" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.no_of_phases == true">
+          <ion-label required position="stacked">No of phase</ion-label>
+          <ion-input formControlName="no_of_phases" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.no_of_stage == true">
+          <ion-label required position="stacked">No of stage</ion-label>
+          <ion-input formControlName="no_of_stage" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.opening_torque == true">
+          <ion-label required position="stacked">Opening torque</ion-label>
+          <ion-input formControlName="opening_torque" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.outlet_diameter == true">
+          <ion-label required position="stacked">Outlet diameter</ion-label>
+          <ion-input formControlName="outlet_diameter" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.power_supply_type == true">
+          <ion-label required position="stacked">Power supply type</ion-label>
+          <ion-input formControlName="power_supply_type" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.pump_head == true">
+          <ion-label required position="stacked">Pump head</ion-label>
+          <ion-input formControlName="pump_head" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.revolutions_per_minute == true">
+          <ion-label required position="stacked">Revolution per minute</ion-label>
+          <ion-input formControlName="revolutions_per_minute" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.source_from == true">
+          <ion-label required position="stacked">Source from</ion-label>
+          <ion-input formControlName="source_from" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.staging_height == true">
+          <ion-label required position="stacked">Staging height</ion-label>
+          <ion-input formControlName="staging_height" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.supply_location == true">
+          <ion-label required position="stacked">Supply location</ion-label>
+          <ion-input formControlName="supply_location" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.temperature == true">
+          <ion-label required position="stacked">Temperature</ion-label>
+          <ion-input formControlName="temperature" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.top_water_level == true">
+          <ion-label required position="stacked">Top water level</ion-label>
+          <ion-input formControlName="top_water_level" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.type == true">
+          <ion-label required position="stacked">Type</ion-label>
+          <ion-input formControlName="type" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.valve_diameter == true">
+          <ion-label required position="stacked">Value diameter</ion-label>
+          <ion-input formControlName="valve_diameter" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.valve_pressure_rating == true">
+          <ion-label required position="stacked">Valve pressuring rate</ion-label>
+          <ion-input formControlName="valve_pressure_rating" type="text"></ion-input>
+        </ion-item>
+
+        <ion-list-header *ngIf="assetAttrColumn != ''">
           <ion-label>Vehicle</ion-label>
         </ion-list-header>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">chassis number</ion-label>
-              <ion-input formControlName="vehicle_chasis_number" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">engine capacity</ion-label>
-              <ion-input formControlName="vehicle_engine_capacity" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_chasis_number == true">
+          <ion-label required position="stacked">chassis number</ion-label>
+          <ion-input formControlName="vehicle_chasis_number" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">engine number</ion-label>
-              <ion-input formControlName="vehicle_engine_number" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">ensurance vendor</ion-label>
-              <ion-input formControlName="vehicle_insurance_vendor" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_engine_capacity == true">
+          <ion-label required position="stacked">engine capacity</ion-label>
+          <ion-input formControlName="vehicle_engine_capacity" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">model</ion-label>
-              <ion-input formControlName="vehicle_model" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">insurance windscreen</ion-label>
-              <ion-input formControlName="vehicle_insurance_auto_windscreen_insured" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_engine_number == true">
+          <ion-label required position="stacked">engine number</ion-label>
+          <ion-input formControlName="vehicle_engine_number" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">insurance cover no</ion-label>
-              <ion-input formControlName="vehicle_insurance_cover_note_number" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">insurance date from</ion-label>
-              <ion-input formControlName="vehicle_insurance_date_period_from" type="date"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_vendor == true">
+          <ion-label required position="stacked">insurance vendor</ion-label>
+          <!-- <ion-input formControlName="vehicle_insurance_vendor" type="text"></ion-input> -->
+          <ion-select placeholder="Please select" formControlName="vehicle_insurance_vendor">
+            <ion-select-option *ngFor="let assAttPreInsVen of assetAttPredefinePreInsVens" [value]="assAttPreInsVen.id">
+              {{ assAttPreInsVen.characteristic_value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">insurance date to</ion-label>
-              <ion-input formControlName="vehicle_insurance_date_period_to" type="date"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">insurance claim discount no</ion-label>
-              <ion-input formControlName="vehicle_insurance_no_claim_discount" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_model == true">
+          <ion-label required position="stacked">model</ion-label>
+          <ion-input formControlName="vehicle_model" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">insurance policy type</ion-label>
-              <ion-input formControlName="vehicle_insurance_policy_type" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">insurance sum insured</ion-label>
-              <ion-input formControlName="vehicle_insurance_sum_insured" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_auto_windscreen_insured == true">
+          <ion-label required position="stacked">insurance windscreen</ion-label>
+          <ion-input formControlName="vehicle_insurance_auto_windscreen_insured" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">insurance total premium</ion-label>
-              <ion-input formControlName="vehicle_insurance_total_premium" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">puspakom date inspection</ion-label>
-              <ion-input formControlName="vehicle_puspakom_date_inspection" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_cover_note_number == true">
+          <ion-label required position="stacked">insurance cover no</ion-label>
+          <ion-input formControlName="vehicle_insurance_cover_note_number" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">owner status</ion-label>
-              <ion-input formControlName="vehicle_owner_status" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">register date</ion-label>
-              <ion-input formControlName="vehicle_register_date" type="date"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_date_period_from == true">
+          <ion-label required position="stacked">insurance date from</ion-label>
+          <ion-input formControlName="vehicle_insurance_date_period_from" type="date"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">roadtax rate</ion-label>
-              <ion-input formControlName="vehicle_roadtax_rate" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">puspakom expired date</ion-label>
-              <ion-input formControlName="vehicle_puspakom_expired_date" type="date"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_date_period_to == true">
+          <ion-label required position="stacked">insurance date to</ion-label>
+          <ion-input formControlName="vehicle_insurance_date_period_to" type="date"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">spad permit date to</ion-label>
-              <ion-input formControlName="vehicle_spad_permit_date_period_to" type="date"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">roadtax renew date</ion-label>
-              <ion-input formControlName="vehicle_roadtax_renew_date" type="date"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_no_claim_discount == true">
+          <ion-label required position="stacked">insurance claim discount no</ion-label>
+          <ion-input formControlName="vehicle_insurance_no_claim_discount" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">roadtax expire date</ion-label>
-              <ion-input formControlName="vehicle_roadtax_expired_date" type="date"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">spad no license operator</ion-label>
-              <ion-input formControlName="vehicle_spad_no_license_operator" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_policy_type == true">
+          <ion-label required position="stacked">insurance policy type</ion-label>
+          <!-- <ion-input formControlName="vehicle_insurance_policy_type" type="text"></ion-input> -->
+          <ion-select placeholder="Please select" formControlName="vehicle_insurance_policy_type">
+            <ion-select-option *ngFor="let assAttPreInsPol of assetAttPredefineInsPols" [value]="assAttPreInsPol.id">
+              {{ assAttPreInsPol.characteristic_value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">spad permit date from</ion-label>
-              <ion-input formControlName="vehicle_spad_permit_date_period_from" type="date"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">seating capacity</ion-label>
-              <ion-input formControlName="vehicle_seating_capacity" type="number"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_sum_insured == true">
+          <ion-label required position="stacked">insurance sum insured</ion-label>
+          <ion-input formControlName="vehicle_insurance_sum_insured" type="text"></ion-input>
+        </ion-item>
 
-        <ion-row>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">registration owner</ion-label>
-              <ion-input formControlName="vehicle_registration_owner" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-          <ion-col>
-            <!-- <div> -->
-            <ion-item>
-              <ion-label position="stacked">Voltage</ion-label>
-              <ion-input formControlName="voltage" type="text"></ion-input>
-            </ion-item>
-            <!-- </div> -->
-          </ion-col>
-        </ion-row>
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_total_premium == true">
+          <ion-label required position="stacked">insurance total premium</ion-label>
+          <ion-input formControlName="vehicle_insurance_total_premium" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_puspakom_date_inspection == true">
+          <ion-label required position="stacked">puspakom date inspection</ion-label>
+          <ion-input formControlName="vehicle_puspakom_date_inspection" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_owner_status == true">
+          <ion-label required position="stacked">owner status</ion-label>
+          <!-- <ion-input formControlName="vehicle_owner_status" type="text"></ion-input> -->
+          <ion-select placeholder="Please select" formControlName="vehicle_owner_status">
+            <ion-select-option *ngFor="let assAttPreVehOwnSta of assetAttPredefineOwnStas"
+              [value]="assAttPreVehOwnSta.id">
+              {{ assAttPreVehOwnSta.characteristic_value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_register_date == true">
+          <ion-label required position="stacked">register date</ion-label>
+          <ion-input formControlName="vehicle_register_date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_roadtax_rate == true">
+          <ion-label required position="stacked">roadtax rate</ion-label>
+          <ion-input formControlName="vehicle_roadtax_rate" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_puspakom_expired_date == true">
+          <ion-label required position="stacked">puspakom expired date</ion-label>
+          <ion-input formControlName="vehicle_puspakom_expired_date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_spad_permit_date_period_to == true">
+          <ion-label required position="stacked">spad permit date to</ion-label>
+          <ion-input formControlName="vehicle_spad_permit_date_period_to" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_roadtax_renew_date == true">
+          <ion-label required position="stacked">roadtax renew date</ion-label>
+          <ion-input formControlName="vehicle_roadtax_renew_date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_roadtax_expired_date == true">
+          <ion-label required position="stacked">roadtax expire date</ion-label>
+          <ion-input formControlName="vehicle_roadtax_expired_date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_spad_no_license_operator == true">
+          <ion-label required position="stacked">spad no license operator</ion-label>
+          <ion-input formControlName="vehicle_spad_no_license_operator" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_spad_permit_date_period_from == true">
+          <ion-label required position="stacked">spad permit date from</ion-label>
+          <ion-input formControlName="vehicle_spad_permit_date_period_from" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_seating_capacity == true">
+          <ion-label required position="stacked">seating capacity</ion-label>
+          <ion-input formControlName="vehicle_seating_capacity" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_registration_owner == true">
+          <ion-label required position="stacked">registration owner</ion-label>
+          <!-- <ion-input formControlName="vehicle_registration_owner" type="text"></ion-input> -->
+          <ion-select placeholder="Please select" formControlName="vehicle_registration_owner">
+            <ion-select-option *ngFor="let assAttregOw of assetAttPredefineRegOwns"
+              [value]="assAttregOw.characteristic_value">
+              {{ assAttregOw.characteristic_value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.voltage == true">
+          <ion-label required position="stacked">Voltage</ion-label>
+          <ion-input formControlName="voltage" type="text"></ion-input>
+        </ion-item>
+        <!-- </div> -->
 
       </form>
     </ion-list>
