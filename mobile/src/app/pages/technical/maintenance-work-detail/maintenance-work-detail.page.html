@@ -35,9 +35,8 @@
   </div>
   <div *ngIf="workactivities.length == 0">
     <h6 class="ion-text-center">You have no {{ status }} Work Activity</h6>
-  </div>wwwwww
+  </div>
   <ion-card *ngFor="let workactivity of workactivities">
-    qqqqqqq
     <ion-card-header>
       <ion-fab horizontal="end">
         <ion-fab-button size="small" color="light" (click)="clickWorkActivity(workactivity)">
@@ -48,12 +47,11 @@
       <ion-card-subtitle>{{ workactivity.activity_id }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <p>Status: {{ workactivity.bo_status }}</p>
-      <p>Badge No: {{ workactivity.asset_id }}</p>
+      <p>Status: {{ workactivity.status }}</p>
       <p>Required By Date: {{ workactivity.required_by_date }}</p>
       <p>Parent Location: {{ workactivity.parent_location }}</p>
       <p class="ion-text-justify">
-        Description: {{ workactivity.description }}
+        Description: {{ workactivity.descrlong }}
       </p>
     </ion-card-content>
   </ion-card>

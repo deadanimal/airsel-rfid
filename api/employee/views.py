@@ -13,13 +13,15 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import (
     Employee,
     FailureProfile,
-    ApprovalProfile
+    ApprovalProfile,
+    ContactInformation
 )
 
 from .serializers import (
     EmployeeSerializer,
     FailureProfileSerializer,
     ApprovalProfileSerializer,
+    ContactInformationSerializer
 )
 
 class EmployeeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -78,5 +80,23 @@ class ApprovalProfileViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = ApprovalProfile.objects.all()
+
+        return queryset
+
+class ContactInformationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = ContactInformation.objects.all()
+    serializer_class = ContactInformationSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        queryset = ContactInformation.objects.all()
 
         return queryset

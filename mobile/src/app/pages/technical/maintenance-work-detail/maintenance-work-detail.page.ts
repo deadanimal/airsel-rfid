@@ -55,6 +55,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
   pendings = [];
   completeds = [];
   workactivities = [];
+  workactivitiesData: any[];
 
   // FormGroup
   workactivityFormGroup: FormGroup;
@@ -84,14 +85,19 @@ export class MaintenanceWorkDetailPage implements OnInit {
         this.type = this.router.getCurrentNavigation().extras.state.type;
         this.status = this.router.getCurrentNavigation().extras.state.status;
         this.workactivities = this.router.getCurrentNavigation().extras.state.work_activity;
+        console.log("this.workactivities = ", this.workactivities)
         this.image = '../../../../assets/technical/' + this.router.getCurrentNavigation().extras.state.image;
         this.name = this.router.getCurrentNavigation().extras.state.name;
 
         this.pendings = this.maintenance_work.filter((data) => {
+
           if (data.bo_status.toString().indexOf("New") !== -1) return true;
+          this.workactivitiesData.push(data)
           if (data.bo_status.toString().indexOf("In Progress") !== -1)
             return true;
           if (data.bo_status.toString().indexOf("Backlog") !== -1) return true;
+
+
           return false;
         });
 
@@ -226,6 +232,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
         work_activity: work_activity,
       },
     };
+    console.log("navigationExtras = ", navigationExtras)
     // this.router.navigate(['/technical/work-order'], navigationExtras);
     // this.router.navigate(["/technical/qr-scanner"], navigationExtras);
     this.router.navigate(["/technical/work-activity"], navigationExtras);

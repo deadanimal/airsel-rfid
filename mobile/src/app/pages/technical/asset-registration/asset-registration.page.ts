@@ -18,6 +18,9 @@ import { RegionsService } from "src/app/shared/services/regions/regions.service"
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { AssetRegistrationsService } from 'src/app/shared/services/asset-registrations/asset-registrations.service';
 import { StatesService } from 'src/app/shared/services/state/states.service';
+import { AssetAttributeColumnService } from 'src/app/shared/services/asset-attribute-column/asset-attribute-column.service';
+import { AssetAttributePredefineService } from 'src/app/shared/services/asset-attribute-predefine/asset-attribute-prodefine.service';
+import { AssetAttributeReferenceService } from 'src/app/shared/services/asset-attribute-reference/asset-attribute-reference.service';
 
 class Port {
   public id: number;
@@ -189,6 +192,17 @@ export class AssetRegistrationPage implements OnInit {
     { value: "OT", name: "Other" },
   ];
 
+  // asset attribute // 
+  assetAttrColumn: any
+  assetAttrData: any
+  assetCategoryData: any
+  assetAttPredefine: any
+  assetAttPredefineMans: any = [] // manufacturer
+  assetAttPredefinePreInsVens: any = [] // vehicle_insurance_vendor
+  assetAttPredefineInsPols: any = [] // vehicle_insurance_policy_type
+  assetAttPredefineOwnStas: any = [] //vehicle_owner_status
+  assetAttPredefineRegOwns: any = [] // vehicle_registration_owner
+
   // hide show div
   parentLocaDiv = 0;
   assetLocDiv = 0;
@@ -293,6 +307,23 @@ export class AssetRegistrationPage implements OnInit {
     { id: 3, name: 'Navlakhi' }
   ];
 
+  // operation list
+
+  operationList = [
+    { id: 'NRW-DISTRICT METERING ZONE', name: 'NRW-DISTRICT METERING ZONE' },
+    { id: 'NRW-TRANSMISSION NETWORK', name: 'NRW-TRANSMISSION NETWORK' },
+    { id: 'NRW-WATER BALANCING AREA', name: 'NRW-WATER BALANCING AREA' },
+    { id: 'PUMP HOUSE', name: 'PUMP HOUSE' },
+    { id: 'RESERVOIR', name: 'RESERVOIR' },
+    { id: 'VALVE-DISTRIBUTION MAIN', name: 'VALVE-DISTRIBUTION MAIN' },
+    { id: 'VALVE-TRUNK MAIN', name: 'VALVE-TRUNK MAIN' },
+    { id: 'WATER TREATMENT PLANT', name: 'WATER TREATMENT PLANT' },
+    { id: 'WQ-ONLINE ANALYZER', name: 'WQ-ONLINE ANALYZER' },
+    { id: 'WQ-RIVER MONITORING STATION', name: 'WQ-RIVER MONITORING STATION' },
+    { id: 'WQ-SAMPLING STATION', name: 'WQ-SAMPLING STATION' },
+    { id: 'WQ-LABORATORY SERVICES', name: 'WQ-LABORATORY SERVICES' },
+  ];
+
   // asset // component
   assetOrCompList = [
     { id: 'Asset', name: 'Asset' },
@@ -324,7 +355,10 @@ export class AssetRegistrationPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private assetRegistrationsService: AssetRegistrationsService,
-    private statesService: StatesService
+    private statesService: StatesService,
+    private assetAttributeColumnService: AssetAttributeColumnService,
+    private assetAttributePredefineService: AssetAttributePredefineService,
+    private assetAttributeReferenceService: AssetAttributeReferenceService
   ) {
     // console.log("parentLocaDiv = ", this.parentLocaDiv)
     this.firstFormGroup = this.formBuilder.group({
@@ -332,6 +366,8 @@ export class AssetRegistrationPage implements OnInit {
       asset_identity: [""],
       sub_category_1: [""],
       sub_category_2: [""],
+      model_number: [""],
+      bo: [""]
     });
     this.secondFormGroup = this.formBuilder.group({
       asset_or_component_type: [""],
@@ -344,6 +380,7 @@ export class AssetRegistrationPage implements OnInit {
       region: [""],
       operation: [""],
       parent_location: [""],
+      new_parent_location: [""],
     });
     this.fourthFormGroup = this.formBuilder.group({
       location_description: [""],
@@ -491,6 +528,44 @@ export class AssetRegistrationPage implements OnInit {
     this.getOrganisations()
     this.getAssetType()
     this.getAssetGroup()
+    this.getAttributePredefine()
+  }
+
+  getAttributePredefine() {
+    this.assetAttributePredefineService.get().subscribe(
+      (res) => {
+        // console.log("assetAttPredefine = ", res)
+
+        res.forEach(element => {
+          console.log("assetAttPredefine element = ", element)
+          console.log("assetAttPredefine attribute_field_name = ", element.attribute_field_name)
+
+          if (element.attribute_field_name == "manufacturer") {
+            this.assetAttPredefineMans.push(element); // manufacturer
+            console.log("assetAttPredefineMans = ", this.assetAttPredefineMans)
+          }
+          if (element.attribute_field_name == "vehicle_insurance_vendor") {
+            this.assetAttPredefinePreInsVens.push(element); // vehicle_insurance_vendor
+          }
+          if (element.attribute_field_name == "vehicle_insurance_policy_type") {
+            this.assetAttPredefineInsPols.push(element); // vehicle_insurance_policy_type
+          }
+          if (element.attribute_field_name == "vehicle_owner_status") {
+            this.assetAttPredefineOwnStas.push(element); //vehicle_owner_status
+          }
+          if (element.attribute_field_name == "vehicle_registration_owner") {
+            this.assetAttPredefineRegOwns.push(element); // vehicle_registration_owner
+          }
+        });
+
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
   }
 
   getRegion() {
@@ -541,23 +616,29 @@ export class AssetRegistrationPage implements OnInit {
     this.assetTypesService.get().subscribe(
       (res) => {
         if (res) {
-          this.primarycategories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("at") !== -1)
-              return true;
-            return false;
-          });
+          console.log('this.primarycategories = ', res)
+          this.primarycategories = res;
+          // this.primarycategories = res.filter(function (data) {
+          //   if (data.category.toString().toLowerCase().indexOf("at") !== -1)
+          //     return true;
+          //   return false;
+          // });
 
-          this.typeassets = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
-              return true;
-            return false;
-          });
+          console.log('this.primarycategories = ', this.primarycategories)
 
-          this.categories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
-              return true;
-            return false;
-          });
+          this.typeassets = res
+          // .filter(function (data) {
+          //   if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
+          //     return true;
+          //   return false;
+          // });
+
+          this.categories = res
+          // .filter(function (data) {
+          //   if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
+          //     return true;
+          //   return false;
+          // });
         }
       },
       (err) => {
@@ -681,14 +762,42 @@ export class AssetRegistrationPage implements OnInit {
     }
   }
 
+  changeSegment(segment) {
+    this.segmentModal = segment;
+  }
+
   portChange(event: {
+    // console.log(event);
+    // if(value.length > 3)
     component: IonicSelectableComponent,
     value: any
+    // }
   }) {
     console.log('port:', event.value);
   }
 
-  changeSegment(segment) {
-    this.segmentModal = segment;
+  onChangeAssPrimaryCat(event) {
+    console.log("event = ", event)
+    let field = "asset_type_id=" + event;
+
+    this.primarycategories.forEach(element => {
+      if (element.asset_type_code == event) {
+        console.log("element = ", element);
+        this.assetAttrData = element.asset_bussiness_object
+        this.assetCategoryData = element.asset_category
+      }
+    });
+    this.assetAttributeColumnService.filter(field).subscribe(
+      (res) => {
+        if (res) {
+          this.assetAttrColumn = res[0]
+          console.log(" this.assetAttrColumn = ", this.assetAttrColumn);
+        }
+      },
+      () => {
+
+      }
+    )
   }
+
 }

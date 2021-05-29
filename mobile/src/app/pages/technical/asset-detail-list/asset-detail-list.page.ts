@@ -4,6 +4,7 @@ import { MenuController } from "@ionic/angular";
 
 import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
 
 @Component({
   selector: "app-asset-detail-list",
@@ -19,7 +20,8 @@ export class AssetDetailListPage implements OnInit {
     public notificationService: NotificationsService,
     private assetregistrationService: AssetRegistrationsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private assetsService: AssetsService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -29,7 +31,7 @@ export class AssetDetailListPage implements OnInit {
   }
 
   getAsset(badge_no: string) {
-    this.assetregistrationService.filter("badge_no=" + badge_no).subscribe(
+    this.assetsService.filter("badge_no=" + badge_no).subscribe(
       (res) => {
         console.log("res", res);
         this.assetregistrations = res;
@@ -40,7 +42,7 @@ export class AssetDetailListPage implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   clickEdit(assetregistration) {
     let navigationExtras: NavigationExtras = {

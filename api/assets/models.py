@@ -327,6 +327,11 @@ class AssetRegistration(models.Model):
         choices=APPROVAL_STATUS,
         default='IC'
     )
+
+    bo = models.CharField(max_length=200, default='',null=True, blank=True)
+    bo_status = models.CharField(max_length=200, default='',null=True, blank=True)
+    new_parent_location = models.CharField(max_length=200, default='',null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -431,6 +436,10 @@ class AssetAttributeColumn(models.Model):
     voltage = models.BooleanField(default=False)
     asset_status = models.BooleanField(default=False)
     brand = models.BooleanField(default=False)
+
+    model_number = models.BooleanField(default=False)
+    bo = models.BooleanField(default=False)
+    bo_status = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

@@ -125,69 +125,68 @@ export class MaintenanceWorkListPage implements OnInit {
         // })
         if (res) {
           this.cmArray = res.filter(function (data) {
-            if (
-              data.field_1
-                .toString()
-                .indexOf("CORRECTIVE MAINTENANCE") !== -1
-            )
+            if (data.field_1
+              .indexOf("CORRECTIVE MAINTENANCE") !== -1) {
               return true;
+            }
             return false;
           });
 
           this.pmArray = res.filter(function (data) {
-            if (
-              data.field_1
-                .toString()
-                .indexOf("PREVENTIVE MAINTENANCE") !== -1
-            )
+            if (data.field_1
+              .indexOf("PREVENTIVE MAINTENANCE") !== -1) {
               return true;
+            }
             return false;
           });
 
           this.itcArray = res.filter(function (data) {
-            if (
-              data.field_1
-                .toString()
-                .indexOf("INSTALLATION TESTING AND COM") !== -1
-            )
+            if (data.field_1
+              .indexOf("INSTALLATION TESTING AND COM") !== -1) {
               return true;
+            }
             return false;
           });
 
           this.pdmArray = res.filter(function (data) {
-            if (
-              data.field_1
-                .toString()
-                .indexOf("PREDICTIVE MAINTENANCE") !== -1
-            )
+            if (data.field_1
+              .indexOf("PREDICTIVE MAINTENANCE") !== -1) {
               return true;
+            }
             return false;
           });
 
           this.dArray = res.filter(function (data) {
-            if (data.field_1.toString().indexOf("RETIRE") !== -1)
+            if (data.field_1
+              .indexOf("RETIRE") !== -1) {
               return true;
+            }
             return false;
           });
 
           this.cArray = res.filter(function (data) {
             if (
-              data.field_1.toString().indexOf("FLEET COMPLIANCE") !== -1
-            )
+              data.field_1
+                .indexOf("FLEET COMPLIANCE") !== -1
+            ) {
               return true;
+            }
             return false;
           });
 
           this.rArray = res.filter(function (data) {
             if (
               data.field_1
-                .toString()
                 .toLowerCase()
                 .indexOf("REDESIGN") !== -1
-            )
+            ) {
               return true;
+            }
             return false;
           });
+
+          console.log("cmArray = ", this.cmArray)
+          console.log("pmArray = ", this.pmArray)
         }
       },
       (err) => {
@@ -225,7 +224,6 @@ export class MaintenanceWorkListPage implements OnInit {
       let tempArray = array.filter(function (data) {
         if (
           data.bo_status
-            .toString()
             .toLowerCase()
             .indexOf(status.toLowerCase()) !== -1
         )
@@ -730,41 +728,50 @@ export class MaintenanceWorkListPage implements OnInit {
     let array: any;
     switch (type) {
       case "CM":
-        array = this.cmArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.cmArray;
+        // array = this.cmArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "PM":
-        array = this.pmArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.pmArray;
+        // array = this.pmArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "ITC":
-        array = this.itcArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.itcArray;
+        // array = this.itcArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "PdM":
-        array = this.pdmArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.pdmArray;
+        // array = this.pdmArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "Disposal":
-        array = this.dArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.dArray;
+        // array = this.dArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "Compliance":
-        array = this.cArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.cArray;
+        // array = this.cArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "Redesign":
-        array = this.rArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.rArray;
+        // array = this.rArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
     }
+
+    console.log("array = ", array)
 
     let navigationExtras: NavigationExtras = {
       state: {
@@ -775,6 +782,7 @@ export class MaintenanceWorkListPage implements OnInit {
         name: name,
       },
     };
+    console.log("navigationExtras = ", navigationExtras)
     this.router.navigate([route], navigationExtras);
   }
 

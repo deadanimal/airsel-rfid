@@ -151,20 +151,24 @@ def insert_into_service_history(dict):
 
 def get_servicehistorytype():
 
-    r = requests.post("http://139.59.125.201/getServiceHistoryType.ph")
+    r = requests.post("http://139.59.125.201/getServiceHistoryType.php")
     json_dictionary = json.loads(r.content)
 
     print(json_dictionary)
 
     if json_dictionary :
+        
         print('berjaya')
         ServiceHistory.objects.all().delete()
         ServiceHistoryQuestion.objects.all().delete()
         ServiceHistoryQuestionValidValue.objects.all().delete()
 
+        # r = requests.post("http://139.59.125.201/getServiceHistoryType.php")
+        # json_dictionary = json.loads(r.content)
+
         for key in json_dictionary:
             if (key == "results"):
-                # print(key, ":", json_dictionary[key])
+                print(key, ":", json_dictionary[key])
                 if (type(json_dictionary[key]) == dict):
                     # return single json
                     print("dict")

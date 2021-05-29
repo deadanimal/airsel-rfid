@@ -429,7 +429,7 @@ material_request_router = router.register(
 
 ## employee app
 from employee.views import (
-    EmployeeViewSet,FailureProfileViewSet,ApprovalProfileViewSet
+    EmployeeViewSet,FailureProfileViewSet,ApprovalProfileViewSet,ContactInformationViewSet
 )
 
 employee_router = router.register(
@@ -442,6 +442,10 @@ failure_profile_router = router.register(
 
 approval_profile_router = router.register(
     'approval-profile', ApprovalProfileViewSet
+)
+
+contact_information_router = router.register(
+    'contact-information', ContactInformationViewSet
 )
 
 ############################################# url
