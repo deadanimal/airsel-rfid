@@ -1,5 +1,8 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 
+
+import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
+
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -15,9 +18,36 @@ export class AnalyticsWaComponent implements OnInit {
 
   private chartone: am4charts.XYChart;
 
-  constructor(private zone: NgZone) { }
+  constructor(private zone: NgZone, public workOrderActivityCompletionService: WorkOrderActivityCompletionService) { }
 
   ngOnInit() {
+
+    this.getWorkOrderActivity();
+  }
+
+  //variable
+  WorkOrderActivity: any;
+  totalWorkOrder: any
+  tempTotalWorkOrder: any
+
+
+  getWorkOrderActivity() {
+    this.workOrderActivityCompletionService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      this.WorkOrderActivity = response;
+      console.log("WorkOrderActivity", this.WorkOrderActivity);
+      this.getTotalWorkOrder();
+      // this.updateFilter();
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+  
+  getTotalWorkOrder(){
+    this.totalWorkOrder = this.WorkOrderActivity.length;
+    this.tempTotalWorkOrder = this.WorkOrderActivity.length;
+    console.log("Total work order", this.totalWorkOrder);
+    console.log("Temp Total work order", this.tempTotalWorkOrder);
   }
 
   ngAfterViewInit() {

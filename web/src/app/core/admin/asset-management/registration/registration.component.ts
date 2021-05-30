@@ -11,7 +11,9 @@ import swal from "sweetalert2";
 import * as XLSX from 'xlsx';
 // import { NgxSpinnerService } from "ngx-spinner";
 import { NgxSpinnerService } from "ngx-spinner";
+import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 
+import { AssetLocationSyncService } from "src/app/shared/services/asset-location-sync/asset-location-sync.service";
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
 import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
@@ -24,9 +26,159 @@ import { AssetsLocationService } from 'src/app/shared/services/assets-location/a
 import { AssetsAttributeService } from 'src/app/shared/services/assets-attribute/assets-attribute.service';
 import { AssetAttributeColumnService } from 'src/app/shared/services/asset-attribute-column/asset-attribute-column.service';
 import { AssetsBadgeNoService } from 'src/app/shared/services/assets-badge-no/assets-badge-no.service';
-
+import { AssetAttributePredefineService } from "src/app/shared/services/asset-attribute-predefine/asset-attribute-predefine.service";
+import { MaintenanceManagerService } from "src/app/shared/services/maintenance-manager/maintenance-manager.service";
+import { CostCenterService } from "src/app/shared/services/cost-center/cost-center.service";
+import { AssetMaintenanceSpecService } from "src/app/shared/services/asset-maintenance-spec/asset-maintenance-spec.service";
+import { MeasurementTypesService } from "src/app/shared/services/measurement-types/measurement-types.service";
+import { ContactInformationService } from "src/app/shared/services/contact-information/contact-information.service";
+// import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
 import { system } from '@amcharts/amcharts4/core';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+import { AssetLocationSync } from "src/app/shared/services/asset-location-sync/asset-location-sync";
+import { Observable } from "rxjs";
+import { MeasurementTypesModel } from "src/app/shared/services/measurement-types/measurement-types.model";
+import { ContactInformationModel } from "src/app/shared/services/contact-information/contact-information.model";
+// import { AssetsRegistrationModel } from "src/app/shared/services/assets-registration/assets-registration.model";
+
+export class AssetsRegistrationModel {
+  public id: string;
+  public asset_id: string;
+  public node_id: string;
+  public hex_code: string;
+  public asset_identity: string;
+  public parent_location: string;
+  public location_description: string;
+  public building: string;
+  public address_line_1: string;
+  public address_line_2: string;
+  public address_line_3: string;
+  public city: string;
+  public state: string;
+  public postal_code: string;
+  public country: string;
+  public tag_number: string;
+  public service_area: string;
+  public location_main_contact: string;
+  public location_asset_maintenance_manager: string;
+  public maintenance_planner: string;
+  public gis_esri_id: string;
+  public latitude: string;
+  public longitude: string;
+  public asset_criticality: string;
+  public cost_center: string;
+  public asset_owning_department: string;
+  public main_operation: string;
+  public region: string;
+  public operation: string;
+  public process_function: string;
+  public sub_process_system: string;
+  public asset_or_component_type: string;
+  public asset_class_asset_category: string;
+  public handed_over_asset_or_procured: string;
+  public internal_asset_identity: string;
+  public asset_primary_category: string;
+  public sub_category_1: string;
+  public sub_category_2: string;
+  public brand: string;
+  public model_number: string;
+  public size_capacity_1: string;
+  public size_capacity_1_unit_measurement: string;
+  public size_capacity_2: string;
+  public size_capacity_2_unit_measurement: string;
+  public size_capacity_3: string;
+  public size_capacity_3_unit_measurement: string;
+  public parent_asset_plate_number: string;
+  public asset_plate_number: string;
+  public detailed_description: string;
+  public serial_number: string;
+  public asset_tag_number: string;
+  public purchase_date_installed_handed_over_date: string;
+  public condition_rating: string;
+  public maintenance_specification: string;
+  public measurement_type: string;
+  public warranty: string;
+  public actual_warranty_period: string;
+  public warranty_vendor_name: string;
+  // public manufacturer_year_name: string;
+  public bottom_water_level: string;
+  public closing_torque: string;
+  public dimention: string;
+  public frequency: string;
+  public infrastructure_status: string;
+  public installation: string;
+  public manufacturer: string;
+  public material_type: string;
+  public no_of_channel: string;
+  public opening_torque: string;
+  public pump_head: string;
+  public staging_height: string;
+  public top_water_level: string;
+  public valve_pressure_rating: string;
+  public vehicle_engine_number: string;
+  public vehicle_insurance_auto_windscreen_insured: string;
+  public vehicle_insurance_date_period_to: string;
+  public vehicle_insurance_sum_insured: string;
+  public vehicle_owner_status: string;
+  public vehicle_puspakom_expired_date: string;
+  public vehicle_roadtax_expired_date: string;
+  public vehicle_seating_capacity: string;
+  public communication_protocol: string;
+  public environmental_performance: string;
+  public horse_power: string;
+  public infrastructure_status_reason: string;
+  public insulation: string;
+  public manufacturer_year: string;
+  public model: string;
+
+  public no_of_phases: string;
+  public outlet_diameter: string;
+  public revolutions_per_minute: string;
+  public supply_location: string;
+  public type: string;
+  public vehicle_chasis_number: string;
+  public vehicle_insurance_vendor: string;
+  public vehicle_insurance_cover_note_number: string;
+  public vehicle_insurance_no_claim_discount: string;
+  public vehicle_insurance_total_premium: string;
+  public vehicle_register_date: string;
+  public vehicle_spad_permit_date_period_to: string;
+  public vehicle_spad_no_license_operator: string;
+  public vehicle_registration_owner: string;
+  public capacity_size: string;
+  public coverage_range: string;
+  public flow_rate: string;
+  public hysteresis: string;
+  public inlet_diameter: string;
+  public legal_name: string;
+  public manufacture_part_number: string;
+  public motor_current: number;
+  public no_of_stage: number;
+  public power_supply_type: number;
+  public source_from: number;
+  public temperature: number;
+  public valve_diameter: number;
+  public vehicle_engine_capacity: string;
+  public vehicle_model: string;
+  public vehicle_insurance_date_period_from: string;
+  public vehicle_insurance_policy_type: string;
+  public vehicle_puspakom_date_inspection: string;
+  public vehicle_roadtax_rate: string;
+  public vehicle_roadtax_renew_date: string;
+  public vehicle_spad_permit_date_period_from: string;
+  public voltage: string;
+  public asset_status: string;
+  public status: string;
+  public badge_no: string;
+
+  public created_at: string;
+  public modified_at: string;
+
+  public bo: string;
+  public bo_status: string;
+
+}
+
 
 export enum SelectionType {
   single = "single",
@@ -42,6 +194,9 @@ export enum SelectionType {
   styleUrls: ["./registration.component.scss"],
 })
 export class RegistrationComponent implements OnInit {
+
+  // table
+  ColumnMode = ColumnMode;
   // Stepper
   isLinear = false;
   isDisableRipple = true;
@@ -75,12 +230,12 @@ export class RegistrationComponent implements OnInit {
   modalConfig = {
     keyboard: true,
     class: "modal-dialog-centered modal-xl",
-    ignoreBackdropClick: true,
+    ignoreBackdropClick: false,
   };
   modalConfigUpload = {
     keyboard: true,
     class: "modal-dialog-centered modal-sm",
-    ignoreBackdropClick: true,
+    ignoreBackdropClick: false,
   };
   modalViewAssetConfig = {
     keyboard: true,
@@ -93,302 +248,186 @@ export class RegistrationComponent implements OnInit {
   // Selection
   regions = [];
   organisations = [];
-  assetprimarycategory = [
-    { value: "ACTUATOR", name: "ACTUATOR" },
-    { value: "ADVANCED PILOT VALVE", name: "ADVANCED PILOT VALVE" },
-    { value: "AIR BLOWER", name: "AIR BLOWER" },
-    { value: "AIR CIRCUIT BREAKER", name: "AIR CIRCUIT BREAKER" },
-    { value: "AIR COMPRESSOR", name: "AIR COMPRESSOR" },
-    { value: "AIR RECEIVER TANK", name: "AIR RECEIVER TANK" },
-    { value: "AIR VALVE", name: "AIR VALVE" },
-    { value: "ALTERNATOR", name: "ALTERNATOR" },
-    { value: "ALTITUDE VALVE", name: "ALTITUDE VALVE" },
-    { value: "AMR FLOWMETER", name: "AMR FLOWMETER" },
-    { value: "ANALOG INPUT MODULE", name: "ANALOG INPUT MODULE" },
-    { value: "ANALOG OUTPUT MODULE", name: "ANALOG OUTPUT MODULE" },
-    { value: "AUTOCLAVE", name: "AUTOCLAVE" },
-    { value: "AUTO TITRATOR WITH AUTO SAMPLER", name: "AUTO TITRATOR WITH AUTO SAMPLER" },
-    { value: "BACK PRESSURE VALVE", name: "BACK PRESSURE VALVE" },
-    { value: "BALANCING RESERVOIR", name: "BALANCING RESERVOIR" },
-    { value: "BALL FLOAT VALVE", name: "BALL FLOAT VALVE" },
-    { value: "BALL VALVE", name: "BALL VALVE" },
-    { value: "BANDSCREEN", name: "BANDSCREEN" },
-    { value: "BATTERY CHARGER", name: "BATTERY CHARGER" },
-    { value: "BIN ACTIVATOR", name: "BIN ACTIVATOR" },
-    { value: "BIOLOGICAL OXYGEN DEMAND APPARATUS", name: "BIOLOGICAL OXYGEN DEMAND APPARATUS" },
-    { value: "BOAT ENGINE", name: "BOAT ENGINE" },
-    { value: "BUILDING", name: "BUILDING" },
-    { value: "BULK METER", name: "BULK METER" },
-    { value: "BUTTERFLY VALVE", name: "BUTTERFLY VALVE" },
-    { value: "CABINET", name: "CABINET" },
-    { value: "CAMERA", name: "CAMERA" },
-    { value: "CAPACITOR BANK", name: "CAPACITOR BANK" },
-    { value: "CENTRAL PROCESSING UNIT MODULE", name: "CENTRAL PROCESSING UNIT MODULE" },
-    { value: "CHAIN BLOCK", name: "CHAIN BLOCK" },
-    { value: "CHECK VALVE", name: "CHECK VALVE" },
-    { value: "CHAMBER", name: "CHAMBER" },
-    { value: "CHECK VALVE", name: "CHECK VALVE" },
-    { value: "CHLORGUARD", name: "CHLORGUARD" },
-    { value: "CHLORINATOR", name: "CHLORINATOR" },
-    { value: "CHLORINE VALVE", name: "CHLORINE VALVE" },
-    { value: "CLARIFIER", name: "CLARIFIER" },
-    { value: "COLORIMETER", name: "COLORIMETER" },
-    { value: "CONDUCTIVITY METER", name: "CONDUCTIVITY METER" },
-    { value: "CONSTANT FLOW VALVE", name: "CONSTANT FLOW VALVE" },
-    { value: "CONTROL PANEL", name: "CONTROL PANEL" },
-    { value: "CONTROL VALVE", name: "CONTROL VALVE" },
-    { value: "CONVEYOR", name: "CONVEYOR" },
-    { value: "CRANE", name: "CRANE" },
-    { value: "DAM CREST", name: "DAM CREST" },
-    { value: "DAMPER", name: "DAMPER" },
-    { value: "DATA LOGGER", name: "DATA LOGGER" },
-    { value: "DECANTER", name: "DECANTER" },
-    { value: "DECANTER CENTRIFUDGE", name: "DECANTER CENTRIFUDGE" },
-    { value: "DEHUMIDIFIER", name: "DEHUMIDIFIER" },
-    { value: "DEIONISED WATER SYSTEM", name: "DEIONISED WATER SYSTEM" },
-    { value: "DELIVERY PRESSURE SWITCH", name: "DELIVERY PRESSURE SWITCH" },
-    { value: "DEPTH SAMPLER", name: "DEPTH SAMPLER" },
-    { value: "DESKTOP COMPUTER", name: "DESKTOP COMPUTER" },
-    { value: "DESICCATOR", name: "DESICCATOR" },
-    { value: "DIAPHRAGM VALVE", name: "DIAPHRAGM VALVE" },
-    { value: "DIFFERENTIAL PRESSURE TRANSMITTER", name: "DIFFERENTIAL PRESSURE TRANSMITTER" },
-    { value: "DIFFUSER", name: "DIFFUSER" },
-    { value: "DIGITAL INDICATOR", name: "DIGITAL INDICATOR" },
-    { value: "DIGITAL INPUT MODULE", name: "DIGITAL INPUT MODULE" },
-    { value: "DIGITAL INPUT OR OUTPUT MODULE", name: "DIGITAL INPUT OR OUTPUT MODULE" },
-    { value: "DIGITAL OUTPUT MODULE", name: "DIGITAL OUTPUT MODULE" },
-    { value: "DISPENSETTE", name: "DISPENSETTE" },
-    { value: "DISSOLVED OXYGEN METER", name: "DISSOLVED OXYGEN METER" },
-    { value: "DISTILLATOR", name: "DISTILLATOR" },
-    { value: "DISTRICT METERING ZONE", name: "DISTRICT METERING ZONE" },
-    { value: "DOSER", name: "DOSER" },
-    { value: "DRONE", name: "DRONE" },
-    { value: "DRUM VALVE", name: "DRUM VALVE" },
-    { value: "DUST COLLECTOR", name: "DUST COLLECTOR" },
-    { value: "EARTHING SYSTEM", name: "EARTHING SYSTEM" },
-    { value: "EJECTOR", name: "EJECTOR" },
-    { value: "ELECTRICAL PANEL", name: "ELECTRICAL PANEL" },
-    { value: "ELECTROMAGNETIC (EM) FLOWMETER", name: "ELECTROMAGNETIC (EM) FLOWMETER" },
-    { value: "ELECTRONIC LEVEL SENSOR", name: "ELECTRONIC LEVEL SENSOR" },
-    { value: "ELECTRONIC PRESSURE TRANSMITTER", name: "ELECTRONIC PRESSURE TRANSMITTER" },
-    { value: "EVAPORATOR", name: "EVAPORATOR" },
-    { value: "EXHAUST FAN", name: "EXHAUST FAN" },
-    { value: "FEEDER", name: "FEEDER" },
-    { value: "FIRE FIGHTING SYSTEM", name: "FIRE FIGHTING SYSTEM" },
-    { value: "FLAT SEAT VALVE", name: "FLAT SEAT VALVE" },
-    { value: "FLOCCULATOR", name: "FLOCCULATOR" },
-    { value: "FLOW CONTROL VALVE", name: "FLOW CONTROL VALVE" },
-    { value: "FOOT VALVE", name: "FOOT VALVE" },
-    { value: "FREEZER", name: "FREEZER" },
-    { value: "FUME CUPBOARD", name: "FUME CUPBOARD" },
-    { value: "GAS CHROMATOGRAPHY-MASS SPECTROMETRY", name: "GAS CHROMATOGRAPHY-MASS SPECTROMETRY" },
-    { value: "GATE VALVE", name: "GATE VALVE" },
-    { value: "GEAR BOX", name: "GEAR BOX" },
-    { value: "GENERATOR SET", name: "GENERATOR SET" },
-    { value: "GPS EQUIPMENT", name: "GPS EQUIPMENT" },
-    { value: "HEAT EXCHANGER", name: "HEAT EXCHANGER" },
-    { value: "HEATING REACTOR", name: "HEATING REACTOR" },
-    { value: "HEAVY VEHICLES-BACKHOE LOADER", name: "HEAVY VEHICLES-BACKHOE LOADER" },
-    { value: "HEAVY VEHICLE-BUS", name: "HEAVY VEHICLES-BUS" },
-    { value: "HEAVY VEHICLES-CARGO LORRY", name: "HEAVY VEHICLES-CARGO LORRY" },
-    { value: "HEAVY VEHICLES-LOADER", name: "HEAVY VEHICLES-LOADER" },
-    { value: "HEAVY VEHICLES-PRIME MOVER", name: "HEAVY VEHICLES-PRIME MOVER" },
-    { value: "HEAVY VEHICLES-TANKER LORRY", name: "HEAVY VEHICLES-TANKER LORRY" },
-    { value: "HEAVY VEHICLES-TIPPER LORRY", name: "HEAVY VEHICLES-TIPPER LORRY" },
-    { value: "HEAVY VEHICLES-TRAILER JUMBO", name: "HEAVY VEHICLES-TRAILER JUMBO" },
-    { value: "HEAVY VEHICLES-TRAILER MACHINE", name: "HEAVY VEHICLES-TRAILER MACHINE" },
-    { value: "HOPPER", name: "HOPPER" },
-    { value: "HOTPLATE", name: "HOTPLATE" },
-    { value: "HUMAN MACHINE INTERFACE-PANEL", name: "HUMAN MACHINE INTERFACE-PANEL" },
-    { value: "HYDROMETER", name: "HYDROMETER" },
-    { value: "HYDROPHONE", name: "HYDROPHONE" },
-    { value: "HYDROPNEUMATIC TANK", name: "HYDROPNEUMATIC TANK" },
-    { value: "INCUBATOR", name: "INCUBATOR" },
-    { value: "INDUCTIVELY COUPLE PLASMA-MASS SPECTROMETRY", name: "INDUCTIVELY COUPLE PLASMA-MASS SPECTROMETRY" },
-    { value: "INDUSTRIAL VEHICLES-COMPACTOR", name: "INDUSTRIAL VEHICLES-COMPACTOR" },
-    { value: "INDUSTRIAL VEHICLES-FORKLIFT", name: "INDUSTRIAL VEHICLES-FORKLIFT" },
-    { value: "INDUSTRIAL VEHICLES-TRACTOR", name: "INDUSTRIAL VEHICLES-TRACTOR" },
-    { value: "INJECTOR", name: "INJECTOR" },
-    { value: "INSERTION FLOWMETER", name: "INSERTION FLOWMETER" },
-    { value: "INSTRUMENTATION PANEL", name: "INSTRUMENTATION PANEL" },
-    { value: "INVERTER", name: "INVERTER" },
-    { value: "ION CHROMATOGRAPHY", name: "ION CHROMATOGRAPHY" },
-    { value: "JAR TEST", name: "JAR TEST" },
-    { value: "LAB BALANCE", name: "LAB BALANCE" },
-    { value: "LABORATORY CABINET", name: "LABORATORY CABINET" },
-    { value: "LABORATORY CHILLER", name: "LABORATORY CHILLER" },
-    { value: "LABORATORY HEATER", name: "LABORATORY HEATER" },
-    { value: "LABORATORY OVEN", name: "LABORATORY OVEN" },
-    { value: "LAPTOP", name: "LAPTOP" },
-    { value: "LEAK DETECTOR", name: "LEAK DETECTOR" },
-    { value: "LEVEL ELECTRODE", name: "LEVEL ELECTRODE" },
-    { value: "LIGHT VEHICLE-CAR", name: "LIGHT VEHICLE-CAR" },
-    { value: "LIGHT VEHICLES-MPV", name: "LIGHT VEHICLES-MPV" },
-    { value: "LIGHT VEHICLES-PANEL VAN", name: "LIGHT VEHICLES-PANEL VAN" },
-    { value: "LIGHT VEHICLES-PICKUP", name: "LIGHT VEHICLES-PICKUP" },
-    { value: "LIGHT VEHICLES-SCHOOL VAN", name: "LIGHT VEHICLES-SCHOOL VAN" },
-    { value: "LIGHT VEHICLES-SUV", name: "LIGHT VEHICLES-SUV" },
-    { value: "LIGHT VEHICLES-VAN", name: "LIGHT VEHICLES-VAN" },
-    { value: "LIGHTING", name: "LIGHTING" },
-    { value: "LOAD CELL", name: "LOAD CELL" },
-    { value: "LOGGER", name: "LOGGER" },
-    { value: "LOW PRESSURE PILOT", name: "LOW PRESSURE PILOT" },
-    { value: "MAGNETIC STIRRER", name: "MAGNETIC STIRRER" },
-    { value: "MECHANICAL FLOWMETER", name: "MECHANICAL FLOWMETER" },
-    { value: "MECHANICAL LEVEL INDICATOR", name: "MECHANICAL LEVEL INDICATOR" },
-    { value: "MECHANICAL SCREEN", name: "MECHANICAL SCREEN" },
-    { value: "MEMBRANE FILTER", name: "MEMBRANE FILTER" },
-    { value: "MICROFILL", name: "MICROFILL" },
-    { value: "MICROPIPETTE", name: "MICROPIPETTE" },
-    { value: "MICROSCOPE", name: "MICROSCOPE" },
-    { value: "MIXER", name: "MIXER" },
-    { value: "MODEM", name: "MODEM" },
-    { value: "MODULATION VALVE", name: "MODULATION VALVE" },
-    { value: "MOISTURE ANALYZER", name: "MOISTURE ANALYZER" },
-    { value: "MOTORCYCLES-MOTORCYCLE", name: "MOTORCYCLES-MOTORCYCLE" },
-    { value: "MOTOR-SLIP RING", name: "MOTOR-SLIP RING" },
-    { value: "MOTOR-SQUIRREL CAGE", name: "MOTOR-SQUIRREL CAGE" },
-    { value: "MULTIPARAMETER", name: "MULTIPARAMETER" },
-    { value: "NESSLERISER", name: "NESSLERISER" },
-    { value: "NITROGEN EVAPORATOR", name: "NITROGEN EVAPORATOR" },
-    { value: "OIL TRAP", name: "OIL TRAP" },
-    { value: "ONLINE ANALYZER", name: "ONLINE ANALYZER" },
-    { value: "PASSENGER HOIST", name: "PASSENGER HOIST" },
-    { value: "PENSTOCK", name: "PENSTOCK" },
-    { value: "PH METER", name: "PH METER" },
-    { value: "PHOTOMETER AND SPECTROMETER", name: "PHOTOMETER AND SPECTROMETER" },
-    { value: "PNEUMATIC VALVE", name: "PNEUMATIC VALVE" },
-    { value: "POWER SUPPLY MODULE", name: "POWER SUPPLY MODULE" },
-    { value: "PRESSURE CHECK UNIT", name: "PRESSURE CHECK UNIT" },
-    { value: "PRESSURE CONTROLLER", name: "PRESSURE CONTROLLER" },
-    { value: "PRESSURE GAUGE", name: "PRESSURE GAUGE" },
-    { value: "PRESSURE REDUCING VALVE", name: "PRESSURE REDUCING VALVE" },
-    { value: "PRESSURE RELIEF VALVE", name: "PRESSURE RELIEF VALVE" },
-    { value: "PRESSURE SWITCH", name: "PRESSURE SWITCH" },
-    { value: "PROGRAMMABLE LOGIC CONTROL", name: "PROGRAMMABLE LOGIC CONTROL" },
-    { value: "PUMP HOUSE", name: "PUMP HOUSE" },
-    { value: "PUMP MAGNETIC DRIVE", name: "PUMP MAGNETIC DRIVE" },
-    { value: "PUMP-CENTRIFUGAL-MULTISTAGE", name: "PUMP-CENTRIFUGAL-MULTISTAGE" },
-    { value: "PUMP-CENTRIFUGAL-SELF-PRIMING", name: "PUMP-CENTRIFUGAL-SELF-PRIMING" },
-    { value: "PUMP-CENTRIFUGAL-SPLIT CASING", name: "PUMP-CENTRIFUGAL-SPLIT CASING" },
-    { value: "PUMP-DRY PIT", name: "PUMP-DRY PIT" },
-    { value: "PUMP-END SUCTION", name: "PUMP-END SUCTION" },
-    { value: "PUMP-METERING", name: "PUMP-METERING" },
-    { value: "PUMP-PNEUMATIC", name: "PUMP-PNEUMATIC" },
-    { value: "PUMP-PRESSURE", name: "PUMP-PRESSURE" },
-    { value: "PUMP-PROGRESSIVE CAVITY", name: "PUMP-PROGRESSIVE CAVITY" },
-    { value: "PUMP-SUBMERSIBLE", name: "PUMP-SUBMERSIBLE" },
-    { value: "PUMP-VACCUM", name: "PUMP-VACCUM" },
-    { value: "QUANTI TRAY SEALER", name: "QUANTI TRAY SEALER" },
-    { value: "RECORDER", name: "RECORDER" },
-    { value: "REFRIGERATED AIR DRYER", name: "REFRIGERATED AIR DRYER" },
-    { value: "REMOTE TELEMETRY UNIT", name: "REMOTE TELEMETRY UNIT" },
-    { value: "RESERVOIR", name: "RESERVOIR" },
-    { value: "RIVER GATE", name: "RIVER GATE" },
-    { value: "RIVER MONITORING SYSTEM", name: "RIVER MONITORING SYSTEM" },
-    { value: "ROTAMETER", name: "ROTAMETER" },
-    { value: "SAMPLING STATION", name: "SAMPLING STATION" },
-    { value: "SAND FILTER", name: "SAND FILTER" },
-    { value: "SCADA PANEL", name: "SCADA PANEL" },
-    { value: "SCOUR VALVE", name: "SCOUR VALVE" },
-    { value: "SCRAPPER", name: "SCRAPPER" },
-    { value: "SERVER", name: "SERVER" },
-    { value: "SIEVE", name: "SIEVE" },
-    { value: "SILO", name: "SILO" },
-    { value: "SIPHON FILTER", name: "SIPHON FILTER" },
-    { value: "SLACKER", name: "SLACKER" },
-    { value: "SLUICE KNIFE VALVE", name: "SLUICE KNIFE VALVE" },
-    { value: "SLUICE VALVE", name: "SLUICE VALVE" },
-    { value: "SOLAR CHARGE CONTROLLER", name: "SOLAR CHARGE CONTROLLER" },
-    { value: "SOLAR PANEL", name: "SOLAR PANEL" },
-    { value: "SOLENOID VALVE", name: "SOLENOID VALVE" },
-    { value: "SPRAY NOZZLE", name: "SPRAY NOZZLE" },
-    { value: "STATIC SCREEN", name: "STATIC SCREEN" },
-    { value: "STOPPER", name: "STOPPER" },
-    { value: "STRAINER FILTER", name: "STRAINER FILTER" },
-    { value: "STROKE CONTROLLER", name: "STROKE CONTROLLER" },
-    { value: "SURGE ANTICIPATING RELIEF VALVE", name: "SURGE ANTICIPATING RELIEF VALVE" },
-    { value: "SURGE ANTICIPATING VALVE", name: "SURGE ANTICIPATING VALVE" },
-    { value: "SURGE VESSEL", name: "SURGE VESSEL" },
-    { value: "SURVEILLANCE CAMERA", name: "SURVEILLANCE CAMERA" },
-    { value: "TABLET", name: "TABLET" },
-    { value: "TACHOMETER", name: "TACHOMETER" },
-    { value: "THICKENER", name: "THICKENER" },
-    { value: "TITRATOR", name: "TITRATOR" },
-    { value: "TOTAL ORGANIC CARBON (TOC)", name: "TOTAL ORGANIC CARBON (TOC)" },
-    { value: "TRANSFORMER", name: "TRANSFORMER" },
-    { value: "TURBIDIMETER", name: "TURBIDIMETER" },
-    { value: "ULTRA PURE WATER SYSTEM", name: "ULTRA PURE WATER SYSTEM" },
-    { value: "ULTRASONIC LEVEL SENSOR", name: "ULTRASONIC LEVEL SENSOR" },
-    { value: "ULTRASONIC PRESSURE TRANSMITTER", name: "ULTRASONIC PRESSURE TRANSMITTER" },
-    { value: "ULTRAVIOLATE LAMPS", name: "ULTRAVIOLATE LAMPS" },
-    { value: "UNINTERRUPTIBLE POWER SUPPLY", name: "UNINTERRUPTIBLE POWER SUPPLY" },
-    { value: "VACUUM CIRCUIT BREAKER", name: "VACUUM CIRCUIT BREAKER" },
-    { value: "VACUUM REGULATOR", name: "VACUUM REGULATOR" },
-    { value: "VENTILATION FAN", name: "VENTILATION FAN" },
-    { value: "VIBRATOR", name: "VIBRATOR" },
-    { value: "VISCOMETER", name: "VISCOMETER" },
-    { value: "WATER BALANCED AREA", name: "WATER BALANCED AREA" },
-    { value: "WATERBATH", name: "WATERBATH" },
-    { value: "WATERCRAFT-BOAT", name: "WATERCRAFT-BOAT" },
-    { value: "WEIGHING SCALE", name: "WEIGHING SCALE" },
-    { value: "WEIGHT CALIBRATION KIT", name: "WEIGHT CALIBRATION KIT" },
+
+  assetowningdepartment = [
+    { value: "CBD", name: "CUSTOMER BILLING SERVICES" },
+    { value: "DISTRIBUTION", name: "DISTRIBUTION" },
+    { value: "ES-D", name: "ENGINEERING SERVICES – DISTRIBUTION" },
+    { value: "FLEET", name: "FLEET" },
+    { value: "LAND", name: "LAND" },
+    { value: "NRW", name: "NRW" },
+    { value: "PD-N", name: "PRODUCTION NORTHERN" },
+    { value: "PD-S", name: "PRODUCTION SOUTHERN" },
+    { value: "SCADA", name: "SCADA" },
+    { value: "WQ", name: "WATER QUALITY" },
     { value: "NA", name: "NOT AVAILABLE" },
   ];
-  assetowningdepartment = [
-    { value: "CBS", name: "Customer Billing Sevices" },
-    { value: "DB", name: "Distribution" },
-    { value: "ESD", name: "Engineering Services-Distribution" },
-    { value: "FLT", name: "Fleet" },
-    { value: "LND", name: "Land" },
-    { value: "NRW", name: "NRW" },
-    { value: "PN", name: "Production Northern" },
-    { value: "PS", name: "Production Southern" },
-    { value: "SCD", name: "SCADA" },
-    { value: "WQ", name: "Water Quality" },
-    { value: "NA", name: "Not Available" },
-  ];
   mainoperationregister = [
-    { value: "CBS", name: "Customer Billing Services" },
-    { value: "DB", name: "Distribution" },
-    { value: "GA", name: "General Admin" },
-    { value: "PRD", name: "Production" },
-    { value: "SCD", name: "SCADA" },
-    { value: "WQ", name: "Water Quality" },
-    { value: "FLT", name: "Fleet" },
-    { value: "NA", name: "Not Available" },
+    { value: "CUSTOMER BILLING SERVICES", name: "CUSTOMER BILLING SERVICES" },
+    { value: "DISTRIBUTION", name: "DISTRIBUTION" },
+    { value: "GENERAL ADMIN", name: "GENERAL ADMIN" },
+    { value: "PRODUCTION", name: "PRODUCTION" },
+    { value: "SCADA", name: "SCADA" },
+    { value: "WATER QUALITY", name: "WATER QUALITY" },
+    { value: "FLEET", name: "FLEET" },
+    { value: "NA", name: "NOT AVAILABLE" },
   ];
   region = [
-    { value: "KS", name: "Kuala Selangor" },
-    { value: "KUL", name: "Kuala Lumpur" },
-    { value: "HL", name: "Hulu Langat" },
-    { value: "SB", name: "Sabak Bernam" },
-    { value: "PTG", name: "Petaling" },
-    { value: "KLT", name: "Kuala Langat" },
-    { value: "HS", name: "Hulu Selangor" },
-    { value: "SP", name: "Sepang" },
-    { value: "GBK", name: "Gombak" },
-    { value: "KLG", name: "Klang" },
-    { value: "NRTH", name: "North" },
-    { value: "STH", name: "South" },
-    { value: "HQ", name: "Headquarters" },
-    { value: "NA", name: "Not Available" },
+    { value: "GOMBAK", name: "GOMBAK" },
+    { value: "HEADQUARTERS", name: "HEADQUARTERS" },
+    { value: "HULU-LANGAT", name: "HULU LANGAT" },
+    { value: "HULU-SELANGOR", name: "HULU SELANGOR" },
+    { value: "KLANG", name: "KLANG" },
+    { value: "KUALA-LANGAT", name: "KUALA LANGAT" },
+    { value: "KUALA-LUMPUR", name: "KUALA LUMPUR" },
+    { value: "KUALA-SELANGOR", name: "KUALA SELANGOR" },
+    { value: "NORTH", name: "NORTH" },
+    { value: "PETALING", name: "PETALING" },
+    { value: "SABAK-BERNAM", name: "SABAK BERNAM" },
+    { value: "SEPANG", name: "SEPANG" },
+    { value: "SOUTH", name: "SOUTH" },
   ];
+
+  state = [
+    { value: "JHR", name: "JOHOR" },
+    { value: "KDH", name: "KEDAH" },
+    { value: "KEL", name: "KELANTAN" },
+    { value: "KUL", name: "KUALA LUMPUR" },
+    { value: "LBN", name: "LABUAN" },
+    { value: "MLK", name: "MALACCA" },
+    { value: "NSN", name: "NEGERI SEMBILAN" },
+    { value: "PHG", name: "PAHANG" },
+    { value: "PJY", name: "PUTRAJAYA" },
+    { value: "PLS", name: "PERLIS" },
+    { value: "PNG", name: "PENANG" },
+    { value: "PRK", name: "PERAK" },
+    { value: "SBH", name: "SABAH" },
+    { value: "SGR", name: "SELANGOR" },
+    { value: "SWK", name: "SARAWAK" },
+    { value: "TRG", name: "TERENGGANU" },
+  ]
   operation = [
-    { value: "ND", name: "NRW - District Metering Zone" },
-    { value: "NT", name: "NRW - Transmission Network" },
-    { value: "NW", name: "NRW - Water Balancing Area" },
-    { value: "PH", name: "Pump House" },
-    { value: "RS", name: "Reservoir" },
-    { value: "VD", name: "Valve - Distribution Main" },
-    { value: "VT", name: "Valve - Trunk Main" },
-    { value: "WT", name: "Water Treatment Plant" },
-    { value: "WL", name: "WQ Laboratory Services" },
-    { value: "WO", name: "WQ - Online Analyzer" },
-    { value: "WR", name: "WQ - River Monitoring Station" },
-    { value: "WS", name: "WQ Sampling Station" },
-    { value: "NA", name: "Not Available" },
+    { value: "NRW-DISTRICT METERING ZONE", name: "NRW-DISTRICT METERING ZONE" },
+    { value: "NRW-TRANSMISSION NETWORK", name: "NRW-TRANSMISSION NETWORK" },
+    { value: "NRW-WATER BALANCING AREA", name: "NRW-WATER BALANCING AREA" },
+    { value: "PUMP HOUSE", name: "PUMP HOUSE" },
+    { value: "RESERVOIR", name: "RESERVOIR" },
+    { value: "VALVE-DISTRIBUTION MAIN", name: "VALVE-DISTRIBUTION MAIN" },
+    { value: "VALVE-TRUNK MAIN", name: "VALVE-TRUNK MAIN" },
+    { value: "WATER TREATMENT PLANT", name: "WATER TREATMENT PLANT" },
+    { value: "WQ-ONLINE ANALYZER", name: "WQ-ONLINE ANALYZER" },
+    { value: "WQ-RIVER MONITORING STATION", name: "WQ-RIVER MONITORING STATION" },
+    { value: "WQ-SAMPLING STATION", name: "WQ-SAMPLING STATION" },
+    { value: "WQ-LABORATORY SERVICES", name: "WQ-LABORATORY SERVICES" },
   ];
+
+  specification = [
+    { name: "AMR-MAINTENANCE-180D-G-KS-HS-S", value: "AMR FLOWMETER MAINTENANCE 180 DAYS-G,KS,HS,SB" },
+    { name: "AMR-FLOWMETER-MAINTENANCE-180D", value: "AMR FLOWMETER MAINTENANCE 180 DAYS-HQ" },
+    { name: "AMR-MAINTENANCE-180-KL-K-S-HL", value: "AMR FLOWMETER MAINTENANCE 180 DAYS-KT,K,S,HL" },
+    { name: "AMR-MAINTENANCE-180D-P-KL", value: "AMR FLOWMETER MAINTENANCE 180 DAYS-P,KL" }
+  ]
+
+  processFunction = [
+    { value: "BALANCING RESERVOIR", name: "BALANCING RESERVOIR" },
+    { value: "BUILDINGS", name: "BUILDINGS" },
+    { value: "CHEMICAL DOSING", name: "CHEMICAL DOSING" },
+    { value: "ELECTRICAL SYSTEM", name: "ELECTRICAL SYSTEM" },
+    { value: "FILTRATION PROCESS", name: "FILTRATION PROCESS" },
+    { value: "FLOCCULATION PROCESS", name: "FLOCCULATION PROCESS" },
+    { value: "RAW WATER PROCESS", name: "RAW WATER PROCESS" },
+    { value: "SEDIMENTATION PROCESS", name: "SEDIMENTATION PROCESS" },
+    { value: "SETTLED WATER PROCESS", name: "SETTLED WATER PROCESS" },
+    { value: "TREATED WATER PROCESS", name: "TREATED WATER PROCESS" },
+    { value: "AERATION SYSTEM", name: "AERATION SYSTEM" },
+    { value: "EARTHING SYSTEM", name: "EARTHING SYSTEM" },
+    { value: "SLUDGE TREATMENT PROCESS", name: "SLUDGE TREATMENT PROCESS" },
+    { value: "SOLAR SYSTEM", name: "SOLAR SYSTEM" },
+    { value: "TELEMETRY SYSTEM", name: "TELEMETRY SYSTEM" },
+    { value: "COAGULATION PROCESS", name: "COAGULATION PROCESS" },
+    { value: "TREATMENT PROCESS", name: "TREATMENT PROCESS" },
+    { value: "ELECTRICAL PANEL", name: "ELECTRICAL PANEL" },
+    { value: "WATER ANALYSIS", name: "WATER ANALYSIS" },
+    { value: "BUILDING", name: "BUILDING" },
+    { value: "OFF RIVER STORAGE RESERVOIR", name: "OFF RIVER STORAGE RESERVOIR" },
+    { value: "DRAW OF TOWER", name: "DRAW OF TOWER" },
+    { value: "TANGKI IMBANGAN 3MG", name: "TANGKI IMBANGAN 3MG" },
+    { value: "TANGKI IMBANGAN 4MG(LAMA)", name: "TANGKI IMBANGAN 4MG(LAMA)" },
+    { value: "TANGKI IMBANGAN 4MG(NEW)", name: "TANGKI IMBANGAN 4MG(NEW)" },
+    { value: "NEW PROCESS/FUNCTION", name: "NEW PROCESS/FUNCTION" },
+  ]
+
+  subProcessSystem = [
+    { value: "BALANCING RESERVOIR", name: "BALANCING RESERVOIR" },
+    { value: "BUILDINGS", name: "BUILDINGS" },
+    { value: "FACILITIES SYSTEM", name: "FACILITIES SYSTEM" },
+    { value: "ALUM PROCESS", name: "ALUM PROCESS" },
+    { value: "CHLORINATION PROCESS", name: "CHLORINATION PROCESS" },
+    { value: "FLUORIDE PROCESS", name: "FLUORIDE PROCESS" },
+    { value: "LIME PROCESS", name: "LIME PROCESS" },
+    { value: "SODA ASH PROCESS", name: "SODA ASH PROCESS" },
+    { value: "POWER SUPPLY", name: "POWER SUPPLY" },
+    { value: "FILTRATION PROCESS", name: "FILTRATION PROCESS" },
+    { value: "FLOCCULATION PROCESS", name: "FLOCCULATION PROCESS" },
+    { value: "RAW WATER INTAKE SYSTEM", name: "RAW WATER INTAKE SYSTEM" },
+    { value: "RAW WATER PROCESS", name: "RAW WATER PROCESS" },
+    { value: "RAW WATER SAMPLING", name: "RAW WATER SAMPLING" },
+    { value: "SEDIMENTATION PROCESS", name: "SEDIMENTATION PROCESS" },
+    { value: "SETTLED WATER PROCESS", name: "SETTLED WATER PROCESS" },
+    { value: "SETTLED WATER SAMPLING", name: "SETTLED WATER SAMPLING" },
+    { value: "TREATED WATER PROCESS", name: "TREATED WATER PROCESS" },
+    { value: "TREATED WATER SAMPLING", name: "TREATED WATER SAMPLING" },
+    { value: "AERATION SYSTEM", name: "AERATION SYSTEM" },
+    { value: "POLYMER PROCESS", name: "POLYMER PROCESS" },
+    { value: "EARTHING SYSTEM", name: "EARTHING SYSTEM" },
+    { value: "RAW WATER PUMPING SYSTEM", name: "RAW WATER PUMPING SYSTEM" },
+    { value: "POLYMER (RESIDUAL) DOSING", name: "POLYMER (RESIDUAL) DOSING" },
+    { value: "SLUDGE TREATMENT PROCESS", name: "SLUDGE TREATMENT PROCESS" },
+    { value: "SOLID LIQUID SEPARATION", name: "SOLID LIQUID SEPARATION" },
+    { value: "SOLAR SYSTEM", name: "SOLAR SYSTEM" },
+    { value: "TELEMETRY SYSTEM", name: "TELEMETRY SYSTEM" },
+    { value: "TREATED WATER PUMPING SYSTEM", name: "TREATED WATER PUMPING SYSTEM" },
+    { value: "SCADA SYSTEM", name: "SCADA SYSTEM" },
+    { value: "RAW WATER PIPELINE", name: "RAW WATER PIPELINE" },
+    { value: "CHEMICAL ROOM", name: "CHEMICAL ROOM" },
+    { value: "LABORATORY", name: "LABORATORY" },
+    { value: "COAGULATION PROCESS", name: "COAGULATION PROCESS" },
+    { value: "DATA PROCESS", name: "DATA PROCESS" },
+    { value: "FILTERED WATER SAMPLING", name: "FILTERED WATER SAMPLING" },
+    { value: "SETTLED WATER PUMPING SYSTEM", name: "SETTLED WATER PUMPING SYSTEM" },
+    { value: "WATER ANALYSIS", name: "WATER ANALYSIS" },
+    { value: "BOAT HOUSE", name: "BOAT HOUSE" },
+    { value: "CONTROL ROOM", name: "CONTROL ROOM" },
+    { value: "RESERVOIR", name: "RESERVOIR" },
+    { value: "CHEMICAL PROCESS", name: "CHEMICAL PROCESS" },
+    { value: "WATER TRANSFER", name: "WATER TRANSFER" },
+    { value: "WORKSHOP", name: "WORKSHOP" },
+    { value: "POLY ALUMINIUM CHLORIDE PROCESS", name: "POLY ALUMINIUM CHLORIDE PROCESS" },
+    { value: "CONTROL CENTRE", name: "CONTROL CENTRE" },
+    { value: "CHEMICAL DOSING", name: "CHEMICAL DOSING" },
+    { value: "ACTIFLO PROCESS", name: "ACTIFLO PROCESS" },
+    { value: "TANGKI SEDUT SYABAS", name: "TANGKI SEDUT SYABAS" },
+    { value: "DISSOLVED AIR FLOATATION", name: "DISSOLVED AIR FLOATATION" },
+    { value: "BACKWASH PROCESS", name: "BACKWASH PROCESS" },
+    { value: "BUILDING", name: "BUILDING" },
+    { value: "SODIUM ALUMINO SILICATE PROCESS", name: "SODIUM ALUMINO SILICATE PROCESS" },
+    { value: "ELECTRICAL SYSTEM", name: "ELECTRICAL SYSTEM" },
+    { value: "WASH WATER SYSTEM", name: "WASH WATER SYSTEM" },
+    { value: "TREATED WATER PIPELINE", name: "TREATED WATER PIPELINE" },
+    { value: "RESIDUAL EMERGENCY LAGOON", name: "RESIDUAL EMERGENCY LAGOON" },
+    { value: "RESIDUAL THICKENED PUMPING STATION", name: "RESIDUAL THICKENED PUMPING STATION" },
+    { value: "TREATMENT PROCESS", name: "TREATMENT PROCESS" },
+    { value: "ACTIVATED CARBON PROCESS", name: "ACTIVATED CARBON PROCESS" },
+    { value: "RAPID MIXING", name: "RAPID MIXING" },
+    { value: "SLUDGE BALANCING", name: "SLUDGE BALANCING" },
+    { value: "WASH WATER RECOVERY", name: "WASH WATER RECOVERY" },
+    { value: "DISTRAFICATION", name: "DISTRAFICATION" },
+    { value: "DRAW OFF PROCESS", name: "DRAW OFF PROCESS" },
+    { value: "ONLINE ANALYZER", name: "ONLINE ANALYZER" },
+    { value: "WASH WATER PROCESS", name: "WASH WATER PROCESS" },
+    { value: "NEW PROCESS/FUNCTION", name: "NEW PROCESS/FUNCTION" },
+  ]
+
   parentlocation = [
     { value: "AS", name: "Aeration System" },
     { value: "BR", name: "Balancing Reservoir" },
@@ -416,6 +455,19 @@ export class RegistrationComponent implements OnInit {
     { value: "WA", name: "Water Analysis" },
     { value: "NA", name: "Not Available" },
   ];
+
+  conditionRating = [
+    { value: "1", name: "1  - Very Good" },
+    { value: "2", name: "2 -  Good" },
+    { value: "3", name: "3 -  Average" },
+    { value: "4", name: "4 - Poor" },
+    { value: "5", name: "5 - Replace" },
+  ]
+
+  warranty = [
+    { value: "Available", name: "Y" },
+    { value: "Not Available", name: "N" },
+  ]
   typeassets = [];
   categories = [];
   identities = [];
@@ -424,148 +476,149 @@ export class RegistrationComponent implements OnInit {
   assetprimaryselector = [];
 
   assetprimaryselectorshow =
-  [
-    {
-      // asset_type_id: "",
-      brand: true,
-      capacity_size: true,
-      closing_torque: true,
-      hysteresis: true,
-      installation: true,
-      manufacturer: true,
-      manufacture_part_number: true,
-      manufacturer_year: true,
-      model: true,
-      opening_torque: true,
-      power_supply_type: true,
-      revolutions_per_minute: true,
-      type: true,
-      material_type: true,
-      valve_pressure_rating: true,
-      horse_power: true,
-      temperature: true,
-      coverage_range: true,
-      voltage: true,
-      valve_diameter: true,
-      top_water_level: true,
-      inlet_diameter: true,
-      bottom_water_level: true,
-      outlet_diameter: true,
-      staging_height: true,
-      dimention: true,
-      environmental_performance: true,
-      no_of_channel: true,
-      frequency: true,
-      vehicle_chassis_number: true,
-      vehicle_engine_capacity: true,
-      vehicle_engine_number: true,
-      vehicle_insurance_cover_note_number: true,
-      vehicle_insurance_date_period_from: true,
-      vehicle_insurance_no_claim_discount: true,
-      vehicle_insurance_total_premium: true,
-      vehicle_insurance_policy_type: true,
-      vehicle_insurance_sum_insured: true,
-      vehicle_insurance_date_period_to: true,
-      vehicle_insurance_auto_windscreen_insured: true,
-      vehicle_model: true,
-      vehicle_owner_status: true,
-      vehicle_puspakom_expired_date: true,
-      vehicle_puspakom_date_inspection: true,
-      vehicle_register_date: true,
-      vehicle_registration_owner: true,
-      vehicle_roadtax_rate: true,
-      vehicle_roadtax_renew_date: true,
-      vehicle_insurance_vendor: true,
-      vehicle_seating_capacity: true,
-      vehicle_spad_permit_date_period_from: true,
-      vehicle_spad_no_license_operator: true,
-      vehicle_spad_permit_date_period_to: true,
-      motor_current: true,
-      insulation: true,
-      no_of_phases: true,
-      communication_protocol: true,
-      flow_rate: true,
-      pump_head: true,
-      no_of_stage: true,
-      infrastructure_status_reason: true,
-      infrastructure_status: true,
-      legal_name: true,
-      source_from: true,
-      supply_location: true,
-    }
-  ];
+    [
+      {
+        // asset_type_id: "",
+        brand: true,
+        capacity_size: true,
+        closing_torque: true,
+        hysteresis: true,
+        installation: true,
+        manufacturer: true,
+        manufacture_part_number: true,
+        manufacturer_year: true,
+        model: true,
+        opening_torque: true,
+        power_supply_type: true,
+        revolutions_per_minute: true,
+        type: true,
+        material_type: true,
+        valve_pressure_rating: true,
+        horse_power: true,
+        temperature: true,
+        coverage_range: true,
+        voltage: true,
+        valve_diameter: true,
+        top_water_level: true,
+        inlet_diameter: true,
+        bottom_water_level: true,
+        outlet_diameter: true,
+        staging_height: true,
+        dimention: true,
+        environmental_performance: true,
+        no_of_channel: true,
+        frequency: true,
+        vehicle_chassis_number: true,
+        vehicle_engine_capacity: true,
+        vehicle_engine_number: true,
+        vehicle_insurance_cover_note_number: true,
+        vehicle_insurance_date_period_from: true,
+        vehicle_insurance_no_claim_discount: true,
+        vehicle_insurance_total_premium: true,
+        vehicle_insurance_policy_type: true,
+        vehicle_insurance_sum_insured: true,
+        vehicle_insurance_date_period_to: true,
+        vehicle_insurance_auto_windscreen_insured: true,
+        vehicle_model: true,
+        vehicle_owner_status: true,
+        vehicle_puspakom_expired_date: true,
+        vehicle_puspakom_date_inspection: true,
+        vehicle_register_date: true,
+        vehicle_registration_owner: true,
+        vehicle_roadtax_rate: true,
+        vehicle_roadtax_renew_date: true,
+        vehicle_insurance_vendor: true,
+        vehicle_seating_capacity: true,
+        vehicle_spad_permit_date_period_from: true,
+        vehicle_spad_no_license_operator: true,
+        vehicle_spad_permit_date_period_to: true,
+        motor_current: true,
+        insulation: true,
+        no_of_phases: true,
+        communication_protocol: true,
+        flow_rate: true,
+        pump_head: true,
+        no_of_stage: true,
+        infrastructure_status_reason: true,
+        infrastructure_status: true,
+        legal_name: true,
+        source_from: true,
+        supply_location: true,
+      }
+    ];
+
 
   assetprimaryselectorshowdefault =
-  [
-    {
-      // asset_type_id: "",
-      brand: true,
-      capacity_size: true,
-      closing_torque: true,
-      hysteresis: true,
-      installation: true,
-      manufacturer: true,
-      manufacture_part_number: true,
-      manufacturer_year: true,
-      model: true,
-      opening_torque: true,
-      power_supply_type: true,
-      revolutions_per_minute: true,
-      type: true,
-      material_type: true,
-      valve_pressure_rating: true,
-      horse_power: true,
-      temperature: true,
-      coverage_range: true,
-      voltage: true,
-      valve_diameter: true,
-      top_water_level: true,
-      inlet_diameter: true,
-      bottom_water_level: true,
-      outlet_diameter: true,
-      staging_height: true,
-      dimention: true,
-      environmental_performance: true,
-      no_of_channel: true,
-      frequency: true,
-      vehicle_chassis_number: true,
-      vehicle_engine_capacity: true,
-      vehicle_engine_number: true,
-      vehicle_insurance_cover_note_number: true,
-      vehicle_insurance_date_period_from: true,
-      vehicle_insurance_no_claim_discount: true,
-      vehicle_insurance_total_premium: true,
-      vehicle_insurance_policy_type: true,
-      vehicle_insurance_sum_insured: true,
-      vehicle_insurance_date_period_to: true,
-      vehicle_insurance_auto_windscreen_insured: true,
-      vehicle_model: true,
-      vehicle_owner_status: true,
-      vehicle_puspakom_expired_date: true,
-      vehicle_puspakom_date_inspection: true,
-      vehicle_register_date: true,
-      vehicle_registration_owner: true,
-      vehicle_roadtax_rate: true,
-      vehicle_roadtax_renew_date: true,
-      vehicle_insurance_vendor: true,
-      vehicle_seating_capacity: true,
-      vehicle_spad_permit_date_period_from: true,
-      vehicle_spad_no_license_operator: true,
-      vehicle_spad_permit_date_period_to: true,
-      motor_current: true,
-      insulation: true,
-      no_of_phases: true,
-      communication_protocol: true,
-      flow_rate: true,
-      pump_head: true,
-      no_of_stage: true,
-      infrastructure_status_reason: true,
-      infrastructure_status: true,
-      legal_name: true,
-      source_from: true,
-      supply_location: true,
-    }
-  ];
+    [
+      {
+        // asset_type_id: "",
+        brand: true,
+        capacity_size: true,
+        closing_torque: true,
+        hysteresis: true,
+        installation: true,
+        manufacturer: true,
+        manufacture_part_number: true,
+        manufacturer_year: true,
+        model: true,
+        opening_torque: true,
+        power_supply_type: true,
+        revolutions_per_minute: true,
+        type: true,
+        material_type: true,
+        valve_pressure_rating: true,
+        horse_power: true,
+        temperature: true,
+        coverage_range: true,
+        voltage: true,
+        valve_diameter: true,
+        top_water_level: true,
+        inlet_diameter: true,
+        bottom_water_level: true,
+        outlet_diameter: true,
+        staging_height: true,
+        dimention: true,
+        environmental_performance: true,
+        no_of_channel: true,
+        frequency: true,
+        vehicle_chassis_number: true,
+        vehicle_engine_capacity: true,
+        vehicle_engine_number: true,
+        vehicle_insurance_cover_note_number: true,
+        vehicle_insurance_date_period_from: true,
+        vehicle_insurance_no_claim_discount: true,
+        vehicle_insurance_total_premium: true,
+        vehicle_insurance_policy_type: true,
+        vehicle_insurance_sum_insured: true,
+        vehicle_insurance_date_period_to: true,
+        vehicle_insurance_auto_windscreen_insured: true,
+        vehicle_model: true,
+        vehicle_owner_status: true,
+        vehicle_puspakom_expired_date: true,
+        vehicle_puspakom_date_inspection: true,
+        vehicle_register_date: true,
+        vehicle_registration_owner: true,
+        vehicle_roadtax_rate: true,
+        vehicle_roadtax_renew_date: true,
+        vehicle_insurance_vendor: true,
+        vehicle_seating_capacity: true,
+        vehicle_spad_permit_date_period_from: true,
+        vehicle_spad_no_license_operator: true,
+        vehicle_spad_permit_date_period_to: true,
+        motor_current: true,
+        insulation: true,
+        no_of_phases: true,
+        communication_protocol: true,
+        flow_rate: true,
+        pump_head: true,
+        no_of_stage: true,
+        infrastructure_status_reason: true,
+        infrastructure_status: true,
+        legal_name: true,
+        source_from: true,
+        supply_location: true,
+      }
+    ];
 
   primarycategories = [];
   groupsubcategory1s = [];
@@ -583,6 +636,36 @@ export class RegistrationComponent implements OnInit {
     { value: "TP", name: "Temperature" },
     { value: "OT", name: "Other" },
   ];
+
+  serviceArea = [
+    { value: "GOMBAK", Name: "GOMBAK" },
+    { value: "HEADQUARTERS", Name: "HEADQUARTERS" },
+    { value: "HULU-LANGAT", Name: "HULU LANGAT" },
+    { value: "HULU-SELANGOR", Name: "HULU SELANGOR" },
+    { value: "KLANG", Name: "KLANG" },
+    { value: "KUALA-LANGAT", Name: "KUALA LANGAT" },
+    { value: "KUALA-LUMPUR", Name: "KUALA LUMPUR" },
+    { value: "KUALA-SELANGOR", Name: "KUALA SELANGOR" },
+    { value: "NORTH", Name: "NORTH" },
+    { value: "PETALING", Name: "PETALING" },
+    { value: "SABAK-BERNAM", Name: "SABAK BERNAM" },
+    { value: "SEPANG", Name: "SEPANG" },
+    { value: "SOUTH", Name: "SOUTH" },
+  ]
+
+  assetCriticality = [
+    { value: "01", name: "01 Asset Failure Low Impact" },
+    { value: "02", name: "02" },
+    { value: "03", name: "03" },
+    { value: "04", name: "04" },
+    { value: "05", name: "05" },
+    { value: "06", name: "06" },
+    { value: "07", name: "07" },
+    { value: "08", name: "08" },
+    { value: "09", name: "09 Highest" },
+  ]
+
+  countryDefault = "Malaysia"
 
   is_show1 = {
     parent_location: true, //
@@ -752,138 +835,148 @@ export class RegistrationComponent implements OnInit {
     public assetsLocationService: AssetsLocationService,
     public assetsAttributeService: AssetsAttributeService,
     public assetsAttributeColumnService: AssetAttributeColumnService,
-    public assetBadgeNoService : AssetsBadgeNoService,
+    public assetBadgeNoService: AssetsBadgeNoService,
+    public assetLocationSyncService: AssetLocationSyncService,
+    public assetAttributePredefineService: AssetAttributePredefineService,
+    public maintenanceManagerService: MaintenanceManagerService,
+    public assetMaintenanceSpecService: AssetMaintenanceSpecService,
+    public measurementTypesService: MeasurementTypesService,
+    public costCenterservice: CostCenterService,
+    public contactInformationService: ContactInformationService,
     private spinner: NgxSpinnerService
   ) {
     this.getAssets();
     this.getRegisteredData();
 
     this.firstFormGroup = this.formBuilder.group({
-      asset_primary_category: ["", Validators.required],
-      asset_identity: ["", Validators.required],
-      sub_category_1: ["", Validators.required],
-      sub_category_2: ["", Validators.required],
-      asset_or_component_type: ["", Validators.required],
-      handed_over_asset_or_procured: ["", Validators.required],
-      class_category: ["", Validators.required],
-      asset_owning_department: ["", Validators.required],
-      main_operation: ["", Validators.required],
-      region: ["", Validators.required],
-      operation: ["", Validators.required],
-      parent_location: ["", Validators.required],
-      process_function: ["", Validators.required],
-      sub_process_system: ["", Validators.required],
-      location_description: ["", Validators.required],
-      building: ["", Validators.required],
-      address_line_1: ["", Validators.required],
-      address_line_2: ["", Validators.required],
-      address_line_3: ["", Validators.required],
-      city: ["", Validators.required],
-      state: ["", Validators.required],
-      postal_code: ["", Validators.required],
-      country: ["", Validators.required],
-      tag_number: ["", Validators.required],
-      service_area: ["", Validators.required],
-      location_main_contact: ["", Validators.required],
-      location_asset_maintenance_manager: ["", Validators.required],
-      maintenance_planner: ["", Validators.required],
-      gis_esri_id: ["", Validators.required],
-      latitude: ["", Validators.required],
-      longitude: ["", Validators.required],
-      asset_critically: ["", Validators.required],
-      cost_center: ["", Validators.required],
-      brand: ["", Validators.required],
-      model_number: ["", Validators.required],
-      size_capacity_1: ["", Validators.required],
-      size_capacity_2: ["", Validators.required],
-      size_capacity_3: ["", Validators.required],
-      size_capacity_1_unit_measurement: ["", Validators.required],
-      size_capacity_2_unit_measurement: ["", Validators.required],
-      size_capacity_3_unit_measurement: ["", Validators.required],
-      parent_asset_plate_number: ["", Validators.required],
-      asset_plate_number: ["", Validators.required],
-      detailed_description: ["", Validators.required],
-      serial_number: ["", Validators.required],
-      asset_tag_number: ["", Validators.required],
-      purchase_date_installed_handed_over_date: ["", Validators.required],
-      condition_rating: ["", Validators.required],
-      status: ["", Validators.required],
-      maintenance_specification: ["", Validators.required],
-      measurement_type: ["", Validators.required],
-      warranty: ["", Validators.required],
-      actual_warranty_period: ["", Validators.required],
-      warranty_vendor_name: ["", Validators.required],
+      // asset_primary_category: ["", validators.required],
+      asset_primary_category: ["", Validators.compose([Validators.required])], //
+      asset_identity: ["", Validators.compose([Validators.required])], //
+      sub_category_1: ["",],
+      sub_category_2: ["",],
+      asset_or_component_type: ["",],
+      handed_over_asset_or_procured: ["",],
+      class_category: ["",],
+      specification: ["", Validators.compose([Validators.required])], //
+      asset_owning_department: ["", Validators.compose([Validators.required])], //
+      main_operation: ["", Validators.compose([Validators.required])], //
+      region: ["", Validators.compose([Validators.required])], //
+      operation: ["",],
+      parent_location: ["", Validators.compose([Validators.required])], //
+      process_function: ["",],
+      sub_process_system: ["",],
+      location_description: ["", Validators.compose([Validators.required])], //
+      building: ["",],
+      address_line_1: ["", Validators.compose([Validators.required])], //
+      address_line_2: ["",],
+      address_line_3: ["",],
+      city: ["", Validators.compose([Validators.required])], //
+      state: ["", Validators.compose([Validators.required])], //
+      postal_code: ["", Validators.compose([Validators.required])], //
+      country: ["", Validators.compose([Validators.required])], //
+      tag_number: ["",],
+      service_area: ["", Validators.compose([Validators.required])], //
+      location_main_contact: ["",],
+      location_asset_maintenance_manager: ["",],
+      maintenance_planner: ["", Validators.compose([Validators.required])], //
+      gis_esri_id: ["",],
+      latitude: ["", Validators.compose([Validators.required])], //
+      longitude: ["", Validators.compose([Validators.required])], //
+      asset_critically: ["", Validators.compose([Validators.required])], //
+      cost_center: ["", Validators.compose([Validators.required])], //
+      brand: ["",],
+      model_number: ["",],
+      size_capacity_1: ["",],
+      size_capacity_2: ["",],
+      size_capacity_3: ["",],
+      size_capacity_1_unit_measurement: ["",],
+      size_capacity_2_unit_measurement: ["",],
+      size_capacity_3_unit_measurement: ["",],
+      parent_asset_plate_number: ["",],
+      asset_plate_number: ["",],
+      detailed_description: ["",],
+      serial_number: ["", Validators.compose([Validators.required])], //
+      asset_tag_number: ["",],
+      purchase_date_installed_handed_over_date: ["", Validators.compose([Validators.required])], //
+      condition_rating: ["", Validators.compose([Validators.required])],  //
+      status: ["",],
+      maintenance_specification: ["",],
+      measurement_type: ["",],
+      warranty: ["", Validators.compose([Validators.required])],  //
+      actual_warranty_period: ["",],
+      warranty_vendor_name: ["",],
+      bo: ["",]
     });
     this.secondFormGroup = this.formBuilder.group({
-      bottom_water_level: ["", Validators.required],
-      brand: ["", Validators.required],
-      capacity_size: ["", Validators.required],
-      closing_torque: ["", Validators.required],
-      communication_protocol: ["", Validators.required],
-      coverage_range: ["", Validators.required],
-      dimention: ["", Validators.required],
-      environmental_performance: ["", Validators.required],
-      flow_rate: ["", Validators.required],
-      frequency: ["", Validators.required],
-      horse_power: ["", Validators.required],
-      hysteresis: ["", Validators.required],
-      infrastructure_status: ["", Validators.required],
-      infrastructure_status_reason: ["", Validators.required],
-      inlet_diameter: ["", Validators.required],
-      installation: ["", Validators.required],
-      insulation: ["", Validators.required],
-      legal_name: ["", Validators.required],
-      manufacturer: ["", Validators.required],
-      manufacturer_year: ["", Validators.required],
-      manufacture_part_number: ["", Validators.required],
-      material_type: ["", Validators.required],
-      model: ["", Validators.required],
-      motor_current: ["", Validators.required],
-      no_of_channel: ["", Validators.required],
-      no_of_phases: ["", Validators.required],
-      no_of_stage: ["", Validators.required],
-      opening_torque: ["", Validators.required],
-      outlet_diameter: ["", Validators.required],
-      power_supply_type: ["", Validators.required],
-      pump_head: ["", Validators.required],
-      revolutions_per_minute: ["", Validators.required],
-      source_from: ["", Validators.required],
-      staging_height: ["", Validators.required],
-      supply_location: ["", Validators.required],
-      temperature: ["", Validators.required],
-      top_water_level: ["", Validators.required],
-      type: ["", Validators.required],
-      valve_diameter: ["", Validators.required],
-      valve_pressure_rating: ["", Validators.required],
-      vehicle_chassis_number: ["", Validators.required],
-      vehicle_engine_capacity: ["", Validators.required],
-      vehicle_engine_number: ["", Validators.required],
-      vehicle_insurance_vendor: ["", Validators.required],
-      vehicle_model: ["", Validators.required],
-      vehicle_insurance_auto_windscreen_insured: ["", Validators.required],
-      vehicle_insurance_cover_note_number: ["", Validators.required],
-      vehicle_insurance_date_period_from: ["", Validators.required],
-      vehicle_insurance_date_period_to: ["", Validators.required],
-      vehicle_insurance_no_claim_discount: ["", Validators.required],
-      vehicle_insurance_policy_type: ["", Validators.required],
-      vehicle_insurance_sum_insured: ["", Validators.required],
-      vehicle_insurance_total_premium: ["", Validators.required],
-      vehicle_puspakom_date_inspection: ["", Validators.required],
-      vehicle_owner_status: ["", Validators.required],
-      vehicle_register_date: ["", Validators.required],
-      vehicle_roadtax_rate: ["", Validators.required],
-      vehicle_puspakom_expired_date: ["", Validators.required],
-      vehicle_spad_permit_date_period_to: ["", Validators.required],
-      vehicle_roadtax_renew_date: ["", Validators.required],
-      vehicle_roadtax_expired_date: ["", Validators.required],
-      vehicle_spad_no_license_operator: ["", Validators.required],
-      vehicle_spad_permit_date_period_from: ["", Validators.required],
-      vehicle_seating_capacity: ["", Validators.required],
-      vehicle_registration_owner: ["", Validators.required],
-      voltage: ["", Validators.required],
+      bottom_water_level: ["",],
+      brand: ["",],
+      capacity_size: ["",],
+      closing_torque: ["",],
+      communication_protocol: ["",],
+      coverage_range: ["",],
+      dimention: ["",],
+      environmental_performance: ["",],
+      flow_rate: ["",],
+      frequency: ["",],
+      horse_power: ["",],
+      hysteresis: ["",],
+      infrastructure_status: ["",],
+      infrastructure_status_reason: ["",],
+      inlet_diameter: ["",],
+      installation: ["",],
+      insulation: ["",],
+      legal_name: ["",],
+      manufacturer: ["",],
+      manufacturer_year: ["",],
+      manufacture_part_number: ["",],
+      material_type: ["",],
+      model: ["",],
+      motor_current: ["",],
+      no_of_channel: ["",],
+      no_of_phases: ["",],
+      no_of_stage: ["",],
+      opening_torque: ["",],
+      outlet_diameter: ["",],
+      power_supply_type: ["",],
+      pump_head: ["",],
+      revolutions_per_minute: ["",],
+      source_from: ["",],
+      staging_height: ["",],
+      supply_location: ["",],
+      temperature: ["",],
+      top_water_level: ["",],
+      type: ["",],
+      valve_diameter: ["",],
+      valve_pressure_rating: ["",],
+      vehicle_chassis_number: ["",],
+      vehicle_engine_capacity: ["",],
+      vehicle_engine_number: ["",],
+      vehicle_insurance_vendor: ["",],
+      vehicle_model: ["",],
+      vehicle_insurance_auto_windscreen_insured: ["",],
+      vehicle_insurance_cover_note_number: ["",],
+      vehicle_insurance_date_period_from: ["",],
+      vehicle_insurance_date_period_to: ["",],
+      vehicle_insurance_no_claim_discount: ["",],
+      vehicle_insurance_policy_type: ["",],
+      vehicle_insurance_sum_insured: ["",],
+      vehicle_insurance_total_premium: ["",],
+      vehicle_puspakom_date_inspection: ["",],
+      vehicle_owner_status: ["",],
+      vehicle_register_date: ["",],
+      vehicle_roadtax_rate: ["",],
+      vehicle_puspakom_expired_date: ["",],
+      vehicle_spad_permit_date_period_to: ["",],
+      vehicle_roadtax_renew_date: ["",],
+      vehicle_roadtax_expired_date: ["",],
+      vehicle_spad_no_license_operator: ["",],
+      vehicle_spad_permit_date_period_from: ["",],
+      vehicle_seating_capacity: ["",],
+      vehicle_registration_owner: ["",],
+      voltage: ["",],
     });
     this.fileuploadFormGroup = this.formBuilder.group({
-      excelFile: ["", Validators.required],
+      excelFile: ["",],
     });
     this.assetAttributeGroup = this.formBuilder.group({
       asset_identity: [""],
@@ -915,6 +1008,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.regionsService.get().subscribe(
       (res) => {
         if (res) this.regions = res;
@@ -999,6 +1093,9 @@ export class RegistrationComponent implements OnInit {
       }
     );
 
+
+
+
     // let currentSingleFile = undefined;
     // // single dropzone file - accepts only images
     // new Dropzone(document.getElementsByClassName("dropzone-single")[0], {
@@ -1022,7 +1119,433 @@ export class RegistrationComponent implements OnInit {
     //   },
     // });
     // document.getElementsByClassName("dz-preview-single")[0].innerHTML = "";
+
+    this.getAssetPrimaryCategory()
+    this.getExistingParent()
+    this.getAssetAttributePredefine()
+    this.getMaintenanceManager()
+    this.getCostCenter();
+    this.getMeasurementTypes()
+    this.getContactInformation()
+    // this.classCategory();
+
   }
+
+  assetprimarycategory: any;
+
+  getAssetPrimaryCategory() {
+    this.assetTypesService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      this.assetprimarycategory = response;
+      console.log("AAA", this.assetprimarycategory)
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  test: any;
+  getExistingParent() {
+    this.assetLocationSyncService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      this.test = response;
+      console.log("existing parent", this.test);
+      // this.updateFilter();
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  maintenanceManager: any;
+  getMaintenanceManager() {
+    this.maintenanceManagerService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      this.maintenanceManager = response;
+      console.log("maintenance manager", this.maintenanceManager);
+      // this.updateFilter();
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  manufacturer: any
+  vehicleInsurancePolicyType: any
+  vehicleInsuranceVendor: any
+  vehicle_owner_status: any
+  vehicle_registration_owner: any
+  getAssetAttributePredefine() {
+
+    let temp = [];
+
+    this.assetAttributePredefineService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      temp = response;
+      console.log("Asset attribute predefine", temp);
+
+      this.manufacturer = temp.filter((value) => value.attribute_field_name.includes("manufacturer"));
+      console.log("Manufacturer", this.manufacturer);
+
+      this.vehicleInsurancePolicyType = temp.filter((value) => value.attribute_field_name.includes("vehicle_insurance_policy_type"));
+      console.log("vehicle_insurance_policy_type", this.vehicleInsurancePolicyType);
+
+      this.vehicleInsuranceVendor = temp.filter((value) => value.attribute_field_name.includes("vehicle_insurance_vendor"));
+      console.log("vehicle Insurance Vendor", this.vehicleInsuranceVendor);
+
+      this.vehicle_owner_status = temp.filter((value) => value.attribute_field_name.includes("vehicle_owner_status"));
+      console.log("vehicle_owner_status", this.vehicle_owner_status);
+
+      this.vehicle_registration_owner = temp.filter((value) => value.attribute_field_name.includes("vehicle_registration_owner"));
+      console.log("vehicle_registration_owner", this.vehicle_registration_owner);
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  costCenter: any;
+  getCostCenter() {
+    this.costCenterservice.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      this.costCenter = response;
+      console.log("costCenter", this.costCenter);
+
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  measurementTypes: any;
+  getMeasurementTypes() {
+    this.measurementTypesService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      this.measurementTypes = response;
+      console.log("Measurement types", this.measurementTypes);
+      // this.updateFilter();
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  contact_information: any;
+  getContactInformation() {
+    this.contactInformationService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      this.contact_information = response;
+      console.log("contact_information", this.contact_information);
+      // this.updateFilter();
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  maintenanceSpec: any;
+  getMaintenanceSpec() {
+
+    let temp = [];
+
+    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
+
+    this.assetMaintenanceSpecService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      temp = response;
+      console.log("Asset Maintenance Spec", temp);
+      console.log("Asset Primary", assetPrimaryCategory);
+      this.maintenanceSpec = temp.filter((value) => value.asset_type_cd.includes(assetPrimaryCategory));
+      console.log("Asset Maintenance Spec 2", this.maintenanceSpec);
+      // this.updateFilter();
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  tableMaintenanceSpec: any;
+  getTableMaintenanceSpec() {
+
+    let temp = [];
+
+    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetPrimary")).value
+
+    this.assetMaintenanceSpecService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      temp = response;
+      console.log("Asset Maintenance Spec", temp);
+      console.log("Asset Primary", assetPrimaryCategory);
+      this.tableMaintenanceSpec = temp.filter((value) => value.asset_type_cd.includes(assetPrimaryCategory));
+      console.log("Asset Maintenance Spec 2", this.tableMaintenanceSpec);
+      // this.updateFilter();
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  public warrantyStatus: boolean = false;
+  checkWarrantyStatus() {
+    const value = (<HTMLInputElement>document.getElementById("warranty")).value
+    console.log("warranty", value)
+
+    if (value == "available")
+      this.warrantyStatus = true
+  }
+
+  public ShowProcessFunction: boolean = false
+  toggleShowProcessFunction(event) {
+
+    const value = (<HTMLInputElement>document.getElementById("processFx")).value
+    console.log("prosess", value);
+    if (value == "NEW PROCESS/FUNCTION")
+      this.ShowProcessFunction = true;
+    else
+      this.ShowProcessFunction = false;
+  }
+
+  public ShowSubProcessFunction: boolean = false
+  toggleShowSubProcessFunction(event) {
+
+    const value = (<HTMLInputElement>document.getElementById("subProcessSystem")).value
+    console.log("Subprosess", value);
+    if (value == "NEW PROCESS/FUNCTION")
+      this.ShowSubProcessFunction = true;
+    else
+      this.ShowSubProcessFunction = false;
+  }
+
+  class_category: any;
+  classCategory() {
+    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
+
+    console.log("Asset type Code", assetPrimaryCategory)
+
+    for (let i in this.assetprimarycategory) {
+
+      if (this.assetprimarycategory[i].asset_type_code == assetPrimaryCategory) {
+        console.log("Asset category", this.assetprimarycategory[i].asset_category)
+        this.class_category = this.assetprimarycategory[i].asset_category
+      }
+    }
+  }
+
+  showBO: boolean = true;
+  bo: any;
+  boStatus: any;
+  getBoValue() {
+    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
+
+    for (let i in this.assetprimarycategory) {
+
+      if (this.assetprimarycategory[i].asset_type_code == assetPrimaryCategory) {
+        console.log("BO Value", this.assetprimarycategory[i].asset_bussiness_object)
+        this.bo = this.assetprimarycategory[i].asset_bussiness_object
+        console.log("bo", this.bo)
+      }
+    }
+
+    if (this.bo == "W1-TrackedGeneralAsset" || this.bo == "W1-TrackedGeneralComponent" || this.bo == "CM-SmartMeter")
+      this.boStatus = "INRECEIPT"
+    else if (this.bo == "W1-IOSvcGeneralComponent")
+      this.boStatus = "ATTACHED"
+    else if (this.bo == "W1-IOSvcGeneralAsset" || this.bo == "W1-IOSvcFleetAsset" || this.bo == "W1-IOSvcInfrastructureAsset")
+      this.boStatus = "INSERVICE"
+
+    console.log("bo status", this.boStatus)
+  }
+
+  detailedDescription: any
+  getDetailedDescription() {
+    const assetIdentity = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const SubCategory_1 = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const SubCategory_2 = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const model_number = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const size_capacity_1 = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const size_capacity_1_unit_measurement = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const size_capacity_2 = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const size_capacity_2_unit_measurement = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const size_capacity_3 = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const size_capacity_3_unit_measurement = (<HTMLInputElement>document.getElementById("assetselector")).value
+
+    this.detailedDescription = assetIdentity + "-" + assetPrimaryCategory + "-" + SubCategory_1 + "-" + SubCategory_2 + "-" + model_number + "-" + size_capacity_1 + "-" + size_capacity_1_unit_measurement + "-" + size_capacity_2 + "-" + size_capacity_2_unit_measurement + "-" + size_capacity_3 + "-" + size_capacity_3_unit_measurement;
+  }
+
+  formJoin: FormGroup;
+
+  submitRegistration() {
+
+    const SubmitObject = new AssetsRegistrationModel();
+
+    SubmitObject.node_id = this.firstFormGroup.value.parent_location
+    SubmitObject.asset_identity = this.firstFormGroup.value.asset_identity;
+    SubmitObject.parent_location = this.firstFormGroup.value.parent_location;
+    SubmitObject.location_description = "";
+    SubmitObject.building = this.firstFormGroup.value.building;
+    SubmitObject.address_line_1 = this.firstFormGroup.value.address_line_1;
+    SubmitObject.address_line_2 = this.firstFormGroup.value.address_line_2;
+    SubmitObject.address_line_3 = this.firstFormGroup.value.address_line_3;
+    SubmitObject.city = this.firstFormGroup.value.city;
+    SubmitObject.state = this.firstFormGroup.value.state;
+    SubmitObject.postal_code = this.firstFormGroup.value.postal_code;
+    SubmitObject.country = this.firstFormGroup.value.country;
+    SubmitObject.tag_number = this.firstFormGroup.value.tag_number;
+    SubmitObject.service_area = this.firstFormGroup.value.service_area;
+    SubmitObject.location_main_contact = this.firstFormGroup.value.location_main_contact;
+    SubmitObject.location_asset_maintenance_manager = this.firstFormGroup.value.location_asset_maintenance_manager;
+    SubmitObject.maintenance_planner = this.firstFormGroup.value.maintenance_planner;
+    SubmitObject.gis_esri_id = this.firstFormGroup.value.gis_esri_id;
+    SubmitObject.latitude = this.firstFormGroup.value.latitude;
+    SubmitObject.longitude = this.firstFormGroup.value.longitude;
+    SubmitObject.asset_criticality = this.firstFormGroup.value.asset_critically;
+    SubmitObject.cost_center = this.firstFormGroup.value.cost_center;
+    SubmitObject.asset_owning_department = this.firstFormGroup.value.asset_owning_department;
+    SubmitObject.main_operation = this.firstFormGroup.value.main_operation;
+    SubmitObject.region = this.firstFormGroup.value.region;
+    SubmitObject.operation = this.firstFormGroup.value.operation;
+    SubmitObject.process_function = this.firstFormGroup.value.process_function;
+    SubmitObject.sub_process_system = this.firstFormGroup.value.sub_process_system;
+    SubmitObject.asset_or_component_type = this.firstFormGroup.value.asset_or_component_type;
+    SubmitObject.maintenance_specification = this.firstFormGroup.value.maintenance_specification;
+    SubmitObject.asset_primary_category = this.firstFormGroup.value.asset_primary_category;
+    SubmitObject.sub_category_1 = this.firstFormGroup.value.sub_category_1;
+    SubmitObject.sub_category_2 = this.firstFormGroup.value.sub_category_2;
+    SubmitObject.brand = this.firstFormGroup.value.brand;
+    SubmitObject.model_number = this.firstFormGroup.value.model_number;
+    SubmitObject.size_capacity_1 = this.firstFormGroup.value.size_capacity_1;
+    SubmitObject.size_capacity_1_unit_measurement = this.firstFormGroup.value.size_capacity_1_unit_measurement;
+    SubmitObject.size_capacity_2 = this.firstFormGroup.value.size_capacity_2;
+    SubmitObject.size_capacity_2_unit_measurement = this.firstFormGroup.value.size_capacity_2_unit_measurement;
+    SubmitObject.size_capacity_3 = this.firstFormGroup.value.size_capacity_3;
+    SubmitObject.size_capacity_3_unit_measurement = this.firstFormGroup.value.size_capacity_3_unit_measurement;
+    SubmitObject.detailed_description = this.detailedDescription;
+    SubmitObject.serial_number = this.firstFormGroup.value.serial_number;
+    SubmitObject.asset_tag_number = this.firstFormGroup.value.asset_tag_number;
+    SubmitObject.serial_number = this.firstFormGroup.value.serial_number;
+    SubmitObject.purchase_date_installed_handed_over_date = this.firstFormGroup.value.purchase_date_installed_handed_over_date;
+    SubmitObject.condition_rating = this.firstFormGroup.value.condition_rating;
+    SubmitObject.maintenance_specification = this.firstFormGroup.value.maintenance_specification;
+    SubmitObject.measurement_type = this.firstFormGroup.value.measurement_type;
+    SubmitObject.warranty = this.firstFormGroup.value.warranty;
+    SubmitObject.actual_warranty_period = this.firstFormGroup.value.actual_warranty_period;
+    SubmitObject.warranty_vendor_name = this.firstFormGroup.value.warranty_vendor_name;
+    SubmitObject.asset_class_asset_category = this.class_category;
+    SubmitObject.handed_over_asset_or_procured = this.firstFormGroup.value.status;
+    SubmitObject.bo = this.bo
+    SubmitObject.bo_status = this.boStatus
+
+    SubmitObject.bottom_water_level = this.secondFormGroup.value.bottom_water_level
+    SubmitObject.closing_torque = this.secondFormGroup.value.closing_torque
+    SubmitObject.dimention = this.secondFormGroup.value.dimention
+    SubmitObject.frequency = this.secondFormGroup.value.frequency
+    SubmitObject.infrastructure_status = this.secondFormGroup.value.infrastructure_status
+    SubmitObject.installation = this.secondFormGroup.value.installation
+    SubmitObject.manufacturer = this.secondFormGroup.value.manufacturer
+    SubmitObject.material_type = this.secondFormGroup.value.material_type
+    SubmitObject.no_of_channel = this.secondFormGroup.value.no_of_channel
+    SubmitObject.opening_torque = this.secondFormGroup.value.opening_torque
+    SubmitObject.pump_head = this.secondFormGroup.value.pump_head
+    SubmitObject.staging_height = this.secondFormGroup.value.staging_height
+    SubmitObject.top_water_level = this.secondFormGroup.value.top_water_level
+    SubmitObject.valve_pressure_rating = this.secondFormGroup.value.valve_pressure_rating
+    SubmitObject.vehicle_engine_number = this.secondFormGroup.value.vehicle_engine_number
+    SubmitObject.vehicle_insurance_auto_windscreen_insured = this.secondFormGroup.value.vehicle_insurance_auto_windscreen_insured
+    SubmitObject.vehicle_insurance_date_period_to = this.secondFormGroup.value.vehicle_insurance_date_period_to
+    SubmitObject.vehicle_insurance_sum_insured = this.secondFormGroup.value.vehicle_insurance_sum_insured
+    SubmitObject.vehicle_owner_status = this.secondFormGroup.value.vehicle_owner_status
+    SubmitObject.vehicle_puspakom_expired_date = this.secondFormGroup.value.vehicle_puspakom_expired_date
+    SubmitObject.vehicle_roadtax_expired_date = this.secondFormGroup.value.vehicle_roadtax_expired_date
+    SubmitObject.vehicle_seating_capacity = this.secondFormGroup.value.vehicle_seating_capacity
+    SubmitObject.communication_protocol = this.secondFormGroup.value.communication_protocol
+    SubmitObject.environmental_performance = this.secondFormGroup.value.environmental_performance
+    SubmitObject.horse_power = this.secondFormGroup.value.horse_power
+    SubmitObject.infrastructure_status_reason = this.secondFormGroup.value.infrastructure_status_reason
+    SubmitObject.insulation = this.secondFormGroup.value.insulation
+    SubmitObject.manufacturer_year = this.secondFormGroup.value.manufacturer_year
+    SubmitObject.model = this.secondFormGroup.value.model
+    SubmitObject.no_of_phases = this.secondFormGroup.value.no_of_phases
+    SubmitObject.outlet_diameter = this.secondFormGroup.value.outlet_diameter
+    SubmitObject.revolutions_per_minute = this.secondFormGroup.value.revolutions_per_minute
+    SubmitObject.supply_location = this.secondFormGroup.value.supply_location
+    SubmitObject.type = this.secondFormGroup.value.type
+    SubmitObject.vehicle_chasis_number = this.secondFormGroup.value.vehicle_chasis_number
+    SubmitObject.vehicle_insurance_vendor = this.secondFormGroup.value.vehicle_insurance_vendor
+    SubmitObject.vehicle_insurance_cover_note_number = this.secondFormGroup.value.vehicle_insurance_cover_note_number
+    SubmitObject.vehicle_insurance_no_claim_discount = this.secondFormGroup.value.vehicle_insurance_no_claim_discount
+    SubmitObject.vehicle_insurance_total_premium = this.secondFormGroup.value.vehicle_insurance_total_premium
+    SubmitObject.vehicle_register_date = this.secondFormGroup.value.vehicle_register_date
+    SubmitObject.vehicle_spad_permit_date_period_to = this.secondFormGroup.value.vehicle_spad_permit_date_period_to
+    SubmitObject.vehicle_spad_no_license_operator = this.secondFormGroup.value.vehicle_spad_no_license_operator
+    SubmitObject.vehicle_registration_owner = this.secondFormGroup.value.vehicle_registration_owner
+    SubmitObject.capacity_size = this.secondFormGroup.value.capacity_size
+    SubmitObject.coverage_range = this.secondFormGroup.value.coverage_range
+    SubmitObject.flow_rate = this.secondFormGroup.value.flow_rate
+    SubmitObject.hysteresis = this.secondFormGroup.value.hysteresis
+    SubmitObject.inlet_diameter = this.secondFormGroup.value.inlet_diameter
+    SubmitObject.legal_name = this.secondFormGroup.value.legal_name
+    SubmitObject.manufacture_part_number = this.secondFormGroup.value.manufacture_part_number
+    SubmitObject.motor_current = this.secondFormGroup.value.motor_current
+    SubmitObject.no_of_stage = this.secondFormGroup.value.no_of_stage
+    SubmitObject.power_supply_type = this.secondFormGroup.value.power_supply_type
+    SubmitObject.source_from = this.secondFormGroup.value.source_from
+    SubmitObject.temperature = this.secondFormGroup.value.temperature
+    SubmitObject.valve_diameter = this.secondFormGroup.value.valve_diameter
+    SubmitObject.vehicle_engine_capacity = this.secondFormGroup.value.vehicle_engine_capacity
+    SubmitObject.vehicle_model = this.secondFormGroup.value.vehicle_model
+    SubmitObject.vehicle_insurance_date_period_from = this.secondFormGroup.value.vehicle_insurance_date_period_from
+    SubmitObject.vehicle_insurance_policy_type = this.secondFormGroup.value.vehicle_insurance_policy_type
+    SubmitObject.vehicle_puspakom_date_inspection = this.secondFormGroup.value.vehicle_puspakom_date_inspection
+    SubmitObject.vehicle_roadtax_rate = this.secondFormGroup.value.vehicle_roadtax_rate
+    SubmitObject.vehicle_roadtax_renew_date = this.secondFormGroup.value.vehicle_roadtax_renew_date
+    SubmitObject.vehicle_spad_permit_date_period_from = this.secondFormGroup.value.vehicle_spad_permit_date_period_from
+    SubmitObject.voltage = this.secondFormGroup.value.voltage
+    SubmitObject.asset_status = this.secondFormGroup.value.asset_status
+    SubmitObject.status = this.secondFormGroup.value.status
+
+    this.assetsRegistrationService.post(SubmitObject).subscribe(
+      (res) => {
+        console.log("yeaaayyy = ", res);
+        // this.saveAssetType(createAssetTypeData)
+        // this.successAlert()
+
+        this.spinner.hide();
+        swal
+          .fire({
+            title: "success",
+            text: "The submission has success",
+            type: "success",
+          }).then((result) => {
+          });
+        this.closeModal()
+      },
+      error => {
+        console.error("err", error);
+
+        this.spinner.hide();
+        swal
+          .fire({
+            title: "failed",
+            text: "The submission has failed",
+            type: "warning",
+          }).then((result) => {
+            // const invalidControl = this.firstFormGroup.controls['asset_identity'].invalid;
+            // invalidControl.
+            // this.getRegisteredData()
+          });
+        this.closeModal()
+      }
+    )
+
+  }
+
+
+  //parents location
+  public newParent: boolean = false;
+  public existingParent: boolean = false;
+
+  toggleNewParent() {
+    this.newParent = true
+    this.existingParent = false
+  }
+
+  toggleExistingParent() {
+    this.newParent = false
+    this.existingParent = true
+  }
+
 
   entriesChange($event) {
     console.log($event)
@@ -1074,7 +1597,7 @@ export class RegistrationComponent implements OnInit {
     let tempData = [];
     this.assetsAttributeColumnService.get().subscribe(
       (res) => {
-        res.forEach(function(assetprimer){
+        res.forEach(function (assetprimer) {
           // console.log("asset primary uina =",assetprimer);
           tempData.push(assetprimer);
         })
@@ -1086,6 +1609,7 @@ export class RegistrationComponent implements OnInit {
 
         this.rowData = '';
         this.rowData = row;
+        console.log("rowData", this.rowData)
 
 
         if (assetprimary2.indexOf(assetprimary1) !== -1) {
@@ -1093,18 +1617,18 @@ export class RegistrationComponent implements OnInit {
             return primary.asset_type_id == assetprimary1;
           })
 
-        this.assetprimaryshow = Object.values(this.assetprimary)
+          this.assetprimaryshow = Object.values(this.assetprimary)
 
-        let assetattributekeynum = Object.values(this.assetprimaryshow[0])
-        let assetname = Object.keys(this.assetprimaryshow[0])
+          let assetattributekeynum = Object.values(this.assetprimaryshow[0])
+          let assetname = Object.keys(this.assetprimaryshow[0])
 
-        // this.assetprimaryshow[0].forEach(element => {
-        //   if (assetattributekeynum == false) {
-        //     console.log("test success")
-        //     let assetattributeval2 = (<HTMLInputElement>document.getElementById(assetname[element])).value
-        //     assetattributeval2 = null
-        //   }
-        // });
+          // this.assetprimaryshow[0].forEach(element => {
+          //   if (assetattributekeynum == false) {
+          //     console.log("test success")
+          //     let assetattributeval2 = (<HTMLInputElement>document.getElementById(assetname[element])).value
+          //     assetattributeval2 = null
+          //   }
+          // });
 
 
         }
@@ -1117,11 +1641,11 @@ export class RegistrationComponent implements OnInit {
           this.modalConfig,
 
         );
-        },
-        error => {
-            console.error("err", error);
-          }
-        )
+      },
+      error => {
+        console.error("err", error);
+      }
+    )
 
   }
 
@@ -1311,6 +1835,8 @@ export class RegistrationComponent implements OnInit {
     else {
       // console.log('bluek')
     }
+
+    this.getTableMaintenanceSpec();
   }
 
   onFileChange(event: any) {
@@ -1337,165 +1863,183 @@ export class RegistrationComponent implements OnInit {
   }
 
   submitFileExcel() {
-    let assetregserv = this.assetsRegistrationService
-    this.spinner.show();
-    this.dataFromExcelFile.forEach(function (loopval, index) {
 
-      let checkStatus = 'CO'
-      const formData = new FormData();
+    if (this.firstFormGroup.valid) {
+      let assetregserv = this.assetsRegistrationService
+      this.spinner.show();
+      this.dataFromExcelFile.forEach(function (loopval, index) {
 
-      // formData.asset_owning_department = loopval.asset_owning_department
-      formData.append('asset_owning_department', (loopval.asset_owning_department != undefined ? loopval.asset_owning_department : ''));
-      formData.append('main_operation', (loopval.main_operation != undefined ? loopval.main_operation : ''))
-      formData.append('region', (loopval.region != undefined ? loopval.region : ''))
-      formData.append('operation', (loopval.operation != undefined ? loopval.operation : ''))
-      formData.append('parent_location', (loopval.parent_location != undefined ? loopval.parent_location : ''))
-      formData.append('process_function', (loopval.process_function != undefined ? loopval.process_function : ''))
-      formData.append('sub_process_system', (loopval.sub_process_system != undefined ? loopval.sub_process_system : ''))
-      formData.append('asset_or_component_type', (loopval.asset_or_component_type != undefined ? loopval.asset_or_component_type : ''))
-      formData.append('asset_class_asset_category', (loopval.asset_class_asset_category != undefined ? loopval.asset_class_asset_category : ''))
-      formData.append('handed_over_asset_or_procured', (loopval.handed_over_asset_or_procured != undefined ? loopval.handed_over_asset_or_procured : ''))
-      formData.append('asset_primary_category', (loopval.asset_primary_category != undefined ? loopval.asset_primary_category : ''))
-      formData.append('asset_identity', (loopval.asset_identity != undefined ? loopval.asset_identity : ''))
-      formData.append('location_description', (loopval.location_description != undefined ? loopval.location_description : ''))
-      formData.append('building', (loopval.building != undefined ? loopval.building : ''))
-      formData.append('address_line_1', (loopval.address_line_1 != undefined ? loopval.address_line_1 : ''))
-      formData.append('address_line_2', (loopval.address_line_2 != undefined ? loopval.address_line_2 : ''))
-      formData.append('address_line_3', (loopval.address_line_3 != undefined ? loopval.address_line_3 : ''))
-      formData.append('city', (loopval.city != undefined ? loopval.city : ''))
-      formData.append('state', (loopval.state != undefined ? loopval.state : ''))
-      formData.append('postal_code', (loopval.postal_code != undefined ? loopval.postal_code : ''))
-      formData.append('country', (loopval.country != undefined ? loopval.country : ''))
-      formData.append('tag_number', (loopval.tag_number != undefined ? loopval.tag_number : ''))
-      formData.append('service_area', (loopval.service_area != undefined ? loopval.service_area : ''))
-      formData.append('location_main_contact', (loopval.location_main_contact != undefined ? loopval.location_main_contact : ''))
-      formData.append('location_asset_maintenance_manager', (loopval.location_asset_maintenance_manager != undefined ? loopval.location_asset_maintenance_manager : ''))
-      formData.append('maintenance_planner', (loopval.maintenance_planner != undefined ? loopval.maintenance_planner : ''))
-      formData.append('gis_esri_id', (loopval.gis_esri_id != undefined ? loopval.gis_esri_id : ''))
-      formData.append('latitude', (loopval.latitude != undefined ? loopval.latitude : ''))
-      formData.append('longitude', (loopval.longitude != undefined ? loopval.longitude : ''))
-      formData.append('asset_critically', (loopval.asset_criticality != undefined ? loopval.asset_criticality : ''))
-      formData.append('cost_center', (loopval.cost_center != undefined ? loopval.cost_center : ''))
-      formData.append('sub_category_1', (loopval.sub_category_1 != undefined ? loopval.sub_category_1 : ''))
-      formData.append('sub_category_2', (loopval.sub_category_2 != undefined ? loopval.sub_category_2 : ''))
-      formData.append('brand', (loopval.brand != undefined ? loopval.brand : ''))
-      formData.append('model_number', (loopval.model_number != undefined ? loopval.model_number : ''))
-      formData.append('size_capacity_1', (loopval.size_capacity_1 != undefined ? loopval.size_capacity_1 : ''))
-      formData.append('size_capacity_1_unit_measurement', (loopval.size_capacity_1_unit_measurement != undefined ? loopval.size_capacity_1_unit_measurement : ''))
-      formData.append('size_capacity_2', (loopval.size_capacity_2 != undefined ? loopval.size_capacity_2 : ''))
-      formData.append('size_capacity_2_unit_measurement', (loopval.size_capacity_2_unit_measurement != undefined ? loopval.size_capacity_2_unit_measurement : ''))
-      formData.append('size_capacity_3', (loopval.size_capacity_3 != undefined ? loopval.size_capacity_3 : ''))
-      formData.append('size_capacity_3_unit_measurement', (loopval.size_capacity_3_unit_measurement != undefined ? loopval.size_capacity_3_unit_measurement : ''))
-      formData.append('parent_asset_plate_number', (loopval.parent_asset_plate_number != undefined ? loopval.parent_asset_plate_number : ''))
-      formData.append('asset_plate_number', (loopval.asset_plate_number != undefined ? loopval.asset_plate_number : ''))
-      formData.append('detailed_description ', (loopval.detailed_description != undefined ? loopval.detailed_description : ''))
-      formData.append('serial_number', (loopval.serial_number != undefined ? loopval.serial_number : ''))
-      formData.append('asset_tag_number', (loopval.asset_tag_number != undefined ? loopval.asset_tag_number : ''))
-      formData.append('purchase_date_installed_handed_over_date', (loopval.purchase_date_installed_handed_over_date != undefined ? loopval.purchase_date_installed_handed_over_date : ''))
-      formData.append('condition_rating', (loopval.condition_rating != undefined ? loopval.condition_rating : ''))
-      formData.append('asset_status', (loopval.asset_status != undefined ? loopval.asset_status : ''))
-      formData.append('maintenance_specification', (loopval.maintenance_specification != undefined ? loopval.maintenance_specification : ''))
-      formData.append('measurement_type', (loopval.measurement_type != undefined ? loopval.measurement_type : ''))
-      formData.append('warranty', (loopval.warranty != undefined ? loopval.warranty : ''))
-      formData.append('actual_warranty_period', (loopval.actual_warranty_period != undefined ? loopval.actual_warranty_period : ''))
-      formData.append('warranty_vendor_name', (loopval.warranty_vendor_name != undefined ? loopval.warranty_vendor_name : ''))
-      formData.append('bottom_water_level', (loopval.bottom_water_level != undefined ? loopval.bottom_water_level : ''))
-      formData.append('closing_torque', (loopval.closing_torque != undefined ? loopval.closing_torque : ''))
-      formData.append('dimention', (loopval.dimention != undefined ? loopval.dimention : ''))
-      formData.append('frequency', (loopval.frequency != undefined ? loopval.frequency : ''))
-      formData.append('infrastructure_status', (loopval.infrastructure_status != undefined ? loopval.infrastructure_status : ''))
-      formData.append('installation', (loopval.installation != undefined ? loopval.installation : ''))
-      formData.append('manufacturer', (loopval.manufacturer != undefined ? loopval.manufacturer : ''))
-      formData.append('material_type', (loopval.material_type != undefined ? loopval.material_type : ''))
-      formData.append('no_of_channel', (loopval.no_of_channel != undefined ? loopval.no_of_channel : ''))
-      formData.append('opening_torque', (loopval.opening_torque != undefined ? loopval.opening_torque : ''))
-      formData.append('pump_head', (loopval.pump_head != undefined ? loopval.pump_head : ''))
-      formData.append('staging_height', (loopval.staging_height != undefined ? loopval.staging_height : ''))
-      formData.append('top_water_level', (loopval.top_water_level != undefined ? loopval.top_water_level : ''))
-      formData.append('valve_pressure_rating', (loopval.valve_pressure_rating != undefined ? loopval.valve_pressure_rating : ''))
-      formData.append('vehicle_engine_number', (loopval.vehicle_engine_number != undefined ? loopval.vehicle_engine_number : ''))
-      formData.append('vehicle_insurance_auto_windscreen_insured', (loopval.vehicle_insurance_auto_windscreen_insured != undefined ? loopval.vehicle_insurance_auto_windscreen_insured : ''))
-      formData.append('vehicle_insurance_date_period_to', (loopval.vehicle_insurance_date_period_to != undefined ? loopval.vehicle_insurance_date_period_to : ''))
-      formData.append('vehicle_insurance_sum_insured', (loopval.vehicle_insurance_sum_insured != undefined ? loopval.vehicle_insurance_sum_insured : ''))
-      formData.append('vehicle_owner_status', (loopval.vehicle_owner_status != undefined ? loopval.vehicle_owner_status : ''))
-      formData.append('vehicle_puspakom_expired_date', (loopval.vehicle_puspakom_expired_date != undefined ? loopval.vehicle_puspakom_expired_date : ''))
-      formData.append('vehicle_roadtax_expired_date', (loopval.vehicle_roadtax_expired_date != undefined ? loopval.vehicle_roadtax_expired_date : ''))
-      formData.append('vehicle_seating_capacity', (loopval.vehicle_seating_capacity != undefined ? loopval.vehicle_seating_capacity : ''))
-      formData.append('communication_protocol', (loopval.communication_protocol != undefined ? loopval.communication_protocol : ''))
-      formData.append('environmental_performance', (loopval.environmental_performance != undefined ? loopval.environmental_performance : ''))
-      formData.append('horse_power', (loopval.horse_power != undefined ? loopval.horse_power : ''))
-      formData.append('infrastructure_status_reason', (loopval.infrastructure_status_reason != undefined ? loopval.infrastructure_status_reason : ''))
-      formData.append('insulation', (loopval.insulation != undefined ? loopval.insulation : ''))
-      formData.append('manufacturer_year', (loopval.manufacturer_year != undefined ? loopval.manufacturer_year : ''))
-      formData.append('model', (loopval.model != undefined ? loopval.model : ''))
-      formData.append('no_of_phases', (loopval.no_of_phases != undefined ? loopval.no_of_phases : ''))
-      formData.append('outlet_diameter', (loopval.outlet_diameter != undefined ? loopval.outlet_diameter : ''))
-      formData.append('revolutions_per_minute', (loopval.revolutions_per_minute != undefined ? loopval.revolutions_per_minute : ''))
-      formData.append('supply_location', (loopval.supply_location != undefined ? loopval.supply_location : ''))
-      formData.append('type', (loopval.type != undefined ? loopval.type : ''))
-      formData.append('vehicle_chasis_number', (loopval.vehicle_chassis_number != undefined ? loopval.vehicle_chassis_number : ''))
-      formData.append('vehicle_insurance_vendor', (loopval.vehicle_insurance_vendor != undefined ? loopval.vehicle_insurance_vendor : ''))
-      formData.append('vehicle_insurance_cover_note_number', (loopval.vehicle_insurance_cover_note_number != undefined ? loopval.vehicle_insurance_cover_note_number : ''))
-      formData.append('vehicle_insurance_no_claim_discount', (loopval.vehicle_insurance_no_claim_discount != undefined ? loopval.vehicle_insurance_no_claim_discount : ''))
-      formData.append('vehicle_insurance_total_premium', (loopval.vehicle_insurance_total_premium != undefined ? loopval.vehicle_insurance_total_premium : ''))
-      formData.append('vehicle_register_date', (loopval.vehicle_register_date != undefined ? loopval.vehicle_register_date : ''))
-      formData.append('vehicle_spad_permit_date_period_to', (loopval.vehicle_spad_permit_date_period_to != undefined ? loopval.vehicle_spad_permit_date_period_to : ''))
-      formData.append('vehicle_spad_no_license_operator', (loopval.vehicle_spad_no_license_operator != undefined ? loopval.vehicle_spad_no_license_operator : ''))
-      formData.append('vehicle_registration_owner', (loopval.vehicle_registration_owner != undefined ? loopval.vehicle_registration_owner : ''))
-      formData.append('capacity_size', (loopval.capacity_size != undefined ? loopval.capacity_size : ''))
-      formData.append('coverage_range', (loopval.coverage_range != undefined ? loopval.coverage_range : ''))
-      formData.append('flow_rate', (loopval.flow_rate != undefined ? loopval.flow_rate : ''))
-      formData.append('hysteresis', (loopval.hysteresis != undefined ? loopval.hysteresis : ''))
-      formData.append('inlet_diameter', (loopval.inlet_diameter != undefined ? loopval.inlet_diameter : ''))
-      formData.append('legal_name', (loopval.legal_name != undefined ? loopval.legal_name : ''))
-      formData.append('manufacture_part_number', (loopval.manufacture_part_number != undefined ? loopval.manufacture_part_number : ''))
-      formData.append('motor_current', (loopval.motor_current != undefined ? loopval.motor_current : ''))
-      formData.append('no_of_stage', (loopval.no_of_stage != undefined ? loopval.no_of_stage : ''))
-      formData.append('power_supply_type', (loopval.power_supply_type != undefined ? loopval.power_supply_type : ''))
-      formData.append('source_from', (loopval.source_from != undefined ? loopval.source_from : ''))
-      formData.append('temperature', (loopval.temperature != undefined ? loopval.temperature : ''))
-      formData.append('valve_diameter', (loopval.valve_diameter != undefined ? loopval.valve_diameter : ''))
-      formData.append('vehicle_engine_capacity', (loopval.vehicle_engine_capacity != undefined ? loopval.vehicle_engine_capacity : ''))
-      formData.append('vehicle_model', (loopval.vehicle_model != undefined ? loopval.vehicle_model : ''))
-      formData.append('vehicle_insurance_date_period_from', (loopval.vehicle_insurance_date_period_from != undefined ? loopval.vehicle_insurance_date_period_from : ''))
-      formData.append('vehicle_insurance_policy_type', (loopval.vehicle_insurance_policy_type != undefined ? loopval.vehicle_insurance_policy_type : ''))
-      formData.append('vehicle_puspakom_date_inspection', (loopval.vehicle_puspakom_date_inspection != undefined ? loopval.vehicle_puspakom_date_inspection : ''))
-      formData.append('vehicle_roadtax_rate', (loopval.vehicle_roadtax_rate != undefined ? loopval.vehicle_roadtax_rate : ''))
-      formData.append('vehicle_roadtax_renew_date', (loopval.vehicle_roadtax_renew_date != undefined ? loopval.vehicle_roadtax_renew_date : ''))
-      formData.append('vehicle_spad_permit_date_period_from', (loopval.vehicle_spad_permit_date_period_from != undefined ? loopval.vehicle_spad_permit_date_period_from : ''))
-      formData.append('voltage', (loopval.voltage != undefined ? loopval.voltage : ''))
+        let checkStatus = 'CO'
+        const formData = new FormData();
 
-      formData.forEach(function (loopvaldata) {
-        // console.log('loopvaldata = ', loopvaldata)
-        if (loopvaldata == '') {
-          checkStatus = 'IC'
-        }
+        // formData.asset_owning_department = loopval.asset_owning_department
+        formData.append('asset_owning_department', (loopval.asset_owning_department != undefined ? loopval.asset_owning_department : ''));
+        formData.append('main_operation', (loopval.main_operation != undefined ? loopval.main_operation : ''))
+        formData.append('region', (loopval.region != undefined ? loopval.region : ''))
+        formData.append('operation', (loopval.operation != undefined ? loopval.operation : ''))
+        formData.append('parent_location', (loopval.parent_location != undefined ? loopval.parent_location : ''))
+        formData.append('process_function', (loopval.process_function != undefined ? loopval.process_function : ''))
+        formData.append('sub_process_system', (loopval.sub_process_system != undefined ? loopval.sub_process_system : ''))
+        formData.append('asset_or_component_type', (loopval.asset_or_component_type != undefined ? loopval.asset_or_component_type : ''))
+        formData.append('asset_class_asset_category', (loopval.asset_class_asset_category != undefined ? loopval.asset_class_asset_category : ''))
+        formData.append('handed_over_asset_or_procured', (loopval.handed_over_asset_or_procured != undefined ? loopval.handed_over_asset_or_procured : ''))
+        formData.append('asset_primary_category', (loopval.asset_primary_category != undefined ? loopval.asset_primary_category : ''))
+        formData.append('asset_identity', (loopval.asset_identity != undefined ? loopval.asset_identity : ''))
+        formData.append('location_description', (loopval.location_description != undefined ? loopval.location_description : ''))
+        formData.append('building', (loopval.building != undefined ? loopval.building : ''))
+        formData.append('address_line_1', (loopval.address_line_1 != undefined ? loopval.address_line_1 : ''))
+        formData.append('address_line_2', (loopval.address_line_2 != undefined ? loopval.address_line_2 : ''))
+        formData.append('address_line_3', (loopval.address_line_3 != undefined ? loopval.address_line_3 : ''))
+        formData.append('city', (loopval.city != undefined ? loopval.city : ''))
+        formData.append('state', (loopval.state != undefined ? loopval.state : ''))
+        formData.append('postal_code', (loopval.postal_code != undefined ? loopval.postal_code : ''))
+        formData.append('country', (loopval.country != undefined ? loopval.country : ''))
+        formData.append('tag_number', (loopval.tag_number != undefined ? loopval.tag_number : ''))
+        formData.append('service_area', (loopval.service_area != undefined ? loopval.service_area : ''))
+        formData.append('location_main_contact', (loopval.location_main_contact != undefined ? loopval.location_main_contact : ''))
+        formData.append('location_asset_maintenance_manager', (loopval.location_asset_maintenance_manager != undefined ? loopval.location_asset_maintenance_manager : ''))
+        formData.append('maintenance_planner', (loopval.maintenance_planner != undefined ? loopval.maintenance_planner : ''))
+        formData.append('gis_esri_id', (loopval.gis_esri_id != undefined ? loopval.gis_esri_id : ''))
+        formData.append('latitude', (loopval.latitude != undefined ? loopval.latitude : ''))
+        formData.append('longitude', (loopval.longitude != undefined ? loopval.longitude : ''))
+        formData.append('asset_critically', (loopval.asset_criticality != undefined ? loopval.asset_criticality : ''))
+        formData.append('cost_center', (loopval.cost_center != undefined ? loopval.cost_center : ''))
+        formData.append('sub_category_1', (loopval.sub_category_1 != undefined ? loopval.sub_category_1 : ''))
+        formData.append('sub_category_2', (loopval.sub_category_2 != undefined ? loopval.sub_category_2 : ''))
+        formData.append('brand', (loopval.brand != undefined ? loopval.brand : ''))
+        formData.append('model_number', (loopval.model_number != undefined ? loopval.model_number : ''))
+        formData.append('size_capacity_1', (loopval.size_capacity_1 != undefined ? loopval.size_capacity_1 : ''))
+        formData.append('size_capacity_1_unit_measurement', (loopval.size_capacity_1_unit_measurement != undefined ? loopval.size_capacity_1_unit_measurement : ''))
+        formData.append('size_capacity_2', (loopval.size_capacity_2 != undefined ? loopval.size_capacity_2 : ''))
+        formData.append('size_capacity_2_unit_measurement', (loopval.size_capacity_2_unit_measurement != undefined ? loopval.size_capacity_2_unit_measurement : ''))
+        formData.append('size_capacity_3', (loopval.size_capacity_3 != undefined ? loopval.size_capacity_3 : ''))
+        formData.append('size_capacity_3_unit_measurement', (loopval.size_capacity_3_unit_measurement != undefined ? loopval.size_capacity_3_unit_measurement : ''))
+        formData.append('parent_asset_plate_number', (loopval.parent_asset_plate_number != undefined ? loopval.parent_asset_plate_number : ''))
+        formData.append('asset_plate_number', (loopval.asset_plate_number != undefined ? loopval.asset_plate_number : ''))
+        formData.append('detailed_description ', (loopval.detailed_description != undefined ? loopval.detailed_description : ''))
+        formData.append('serial_number', (loopval.serial_number != undefined ? loopval.serial_number : ''))
+        formData.append('asset_tag_number', (loopval.asset_tag_number != undefined ? loopval.asset_tag_number : ''))
+        formData.append('purchase_date_installed_handed_over_date', (loopval.purchase_date_installed_handed_over_date != undefined ? loopval.purchase_date_installed_handed_over_date : ''))
+        formData.append('condition_rating', (loopval.condition_rating != undefined ? loopval.condition_rating : ''))
+        formData.append('asset_status', (loopval.asset_status != undefined ? loopval.asset_status : ''))
+        formData.append('maintenance_specification', (loopval.maintenance_specification != undefined ? loopval.maintenance_specification : ''))
+        formData.append('measurement_type', (loopval.measurement_type != undefined ? loopval.measurement_type : ''))
+        formData.append('warranty', (loopval.warranty != undefined ? loopval.warranty : ''))
+        formData.append('actual_warranty_period', (loopval.actual_warranty_period != undefined ? loopval.actual_warranty_period : ''))
+        formData.append('warranty_vendor_name', (loopval.warranty_vendor_name != undefined ? loopval.warranty_vendor_name : ''))
+        formData.append('bottom_water_level', (loopval.bottom_water_level != undefined ? loopval.bottom_water_level : ''))
+        formData.append('closing_torque', (loopval.closing_torque != undefined ? loopval.closing_torque : ''))
+        formData.append('dimention', (loopval.dimention != undefined ? loopval.dimention : ''))
+        formData.append('frequency', (loopval.frequency != undefined ? loopval.frequency : ''))
+        formData.append('infrastructure_status', (loopval.infrastructure_status != undefined ? loopval.infrastructure_status : ''))
+        formData.append('installation', (loopval.installation != undefined ? loopval.installation : ''))
+        formData.append('manufacturer', (loopval.manufacturer != undefined ? loopval.manufacturer : ''))
+        formData.append('material_type', (loopval.material_type != undefined ? loopval.material_type : ''))
+        formData.append('no_of_channel', (loopval.no_of_channel != undefined ? loopval.no_of_channel : ''))
+        formData.append('opening_torque', (loopval.opening_torque != undefined ? loopval.opening_torque : ''))
+        formData.append('pump_head', (loopval.pump_head != undefined ? loopval.pump_head : ''))
+        formData.append('staging_height', (loopval.staging_height != undefined ? loopval.staging_height : ''))
+        formData.append('top_water_level', (loopval.top_water_level != undefined ? loopval.top_water_level : ''))
+        formData.append('valve_pressure_rating', (loopval.valve_pressure_rating != undefined ? loopval.valve_pressure_rating : ''))
+        formData.append('vehicle_engine_number', (loopval.vehicle_engine_number != undefined ? loopval.vehicle_engine_number : ''))
+        formData.append('vehicle_insurance_auto_windscreen_insured', (loopval.vehicle_insurance_auto_windscreen_insured != undefined ? loopval.vehicle_insurance_auto_windscreen_insured : ''))
+        formData.append('vehicle_insurance_date_period_to', (loopval.vehicle_insurance_date_period_to != undefined ? loopval.vehicle_insurance_date_period_to : ''))
+        formData.append('vehicle_insurance_sum_insured', (loopval.vehicle_insurance_sum_insured != undefined ? loopval.vehicle_insurance_sum_insured : ''))
+        formData.append('vehicle_owner_status', (loopval.vehicle_owner_status != undefined ? loopval.vehicle_owner_status : ''))
+        formData.append('vehicle_puspakom_expired_date', (loopval.vehicle_puspakom_expired_date != undefined ? loopval.vehicle_puspakom_expired_date : ''))
+        formData.append('vehicle_roadtax_expired_date', (loopval.vehicle_roadtax_expired_date != undefined ? loopval.vehicle_roadtax_expired_date : ''))
+        formData.append('vehicle_seating_capacity', (loopval.vehicle_seating_capacity != undefined ? loopval.vehicle_seating_capacity : ''))
+        formData.append('communication_protocol', (loopval.communication_protocol != undefined ? loopval.communication_protocol : ''))
+        formData.append('environmental_performance', (loopval.environmental_performance != undefined ? loopval.environmental_performance : ''))
+        formData.append('horse_power', (loopval.horse_power != undefined ? loopval.horse_power : ''))
+        formData.append('infrastructure_status_reason', (loopval.infrastructure_status_reason != undefined ? loopval.infrastructure_status_reason : ''))
+        formData.append('insulation', (loopval.insulation != undefined ? loopval.insulation : ''))
+        formData.append('manufacturer_year', (loopval.manufacturer_year != undefined ? loopval.manufacturer_year : ''))
+        formData.append('model', (loopval.model != undefined ? loopval.model : ''))
+        formData.append('no_of_phases', (loopval.no_of_phases != undefined ? loopval.no_of_phases : ''))
+        formData.append('outlet_diameter', (loopval.outlet_diameter != undefined ? loopval.outlet_diameter : ''))
+        formData.append('revolutions_per_minute', (loopval.revolutions_per_minute != undefined ? loopval.revolutions_per_minute : ''))
+        formData.append('supply_location', (loopval.supply_location != undefined ? loopval.supply_location : ''))
+        formData.append('type', (loopval.type != undefined ? loopval.type : ''))
+        formData.append('vehicle_chasis_number', (loopval.vehicle_chassis_number != undefined ? loopval.vehicle_chassis_number : ''))
+        formData.append('vehicle_insurance_vendor', (loopval.vehicle_insurance_vendor != undefined ? loopval.vehicle_insurance_vendor : ''))
+        formData.append('vehicle_insurance_cover_note_number', (loopval.vehicle_insurance_cover_note_number != undefined ? loopval.vehicle_insurance_cover_note_number : ''))
+        formData.append('vehicle_insurance_no_claim_discount', (loopval.vehicle_insurance_no_claim_discount != undefined ? loopval.vehicle_insurance_no_claim_discount : ''))
+        formData.append('vehicle_insurance_total_premium', (loopval.vehicle_insurance_total_premium != undefined ? loopval.vehicle_insurance_total_premium : ''))
+        formData.append('vehicle_register_date', (loopval.vehicle_register_date != undefined ? loopval.vehicle_register_date : ''))
+        formData.append('vehicle_spad_permit_date_period_to', (loopval.vehicle_spad_permit_date_period_to != undefined ? loopval.vehicle_spad_permit_date_period_to : ''))
+        formData.append('vehicle_spad_no_license_operator', (loopval.vehicle_spad_no_license_operator != undefined ? loopval.vehicle_spad_no_license_operator : ''))
+        formData.append('vehicle_registration_owner', (loopval.vehicle_registration_owner != undefined ? loopval.vehicle_registration_owner : ''))
+        formData.append('capacity_size', (loopval.capacity_size != undefined ? loopval.capacity_size : ''))
+        formData.append('coverage_range', (loopval.coverage_range != undefined ? loopval.coverage_range : ''))
+        formData.append('flow_rate', (loopval.flow_rate != undefined ? loopval.flow_rate : ''))
+        formData.append('hysteresis', (loopval.hysteresis != undefined ? loopval.hysteresis : ''))
+        formData.append('inlet_diameter', (loopval.inlet_diameter != undefined ? loopval.inlet_diameter : ''))
+        formData.append('legal_name', (loopval.legal_name != undefined ? loopval.legal_name : ''))
+        formData.append('manufacture_part_number', (loopval.manufacture_part_number != undefined ? loopval.manufacture_part_number : ''))
+        formData.append('motor_current', (loopval.motor_current != undefined ? loopval.motor_current : ''))
+        formData.append('no_of_stage', (loopval.no_of_stage != undefined ? loopval.no_of_stage : ''))
+        formData.append('power_supply_type', (loopval.power_supply_type != undefined ? loopval.power_supply_type : ''))
+        formData.append('source_from', (loopval.source_from != undefined ? loopval.source_from : ''))
+        formData.append('temperature', (loopval.temperature != undefined ? loopval.temperature : ''))
+        formData.append('valve_diameter', (loopval.valve_diameter != undefined ? loopval.valve_diameter : ''))
+        formData.append('vehicle_engine_capacity', (loopval.vehicle_engine_capacity != undefined ? loopval.vehicle_engine_capacity : ''))
+        formData.append('vehicle_model', (loopval.vehicle_model != undefined ? loopval.vehicle_model : ''))
+        formData.append('vehicle_insurance_date_period_from', (loopval.vehicle_insurance_date_period_from != undefined ? loopval.vehicle_insurance_date_period_from : ''))
+        formData.append('vehicle_insurance_policy_type', (loopval.vehicle_insurance_policy_type != undefined ? loopval.vehicle_insurance_policy_type : ''))
+        formData.append('vehicle_puspakom_date_inspection', (loopval.vehicle_puspakom_date_inspection != undefined ? loopval.vehicle_puspakom_date_inspection : ''))
+        formData.append('vehicle_roadtax_rate', (loopval.vehicle_roadtax_rate != undefined ? loopval.vehicle_roadtax_rate : ''))
+        formData.append('vehicle_roadtax_renew_date', (loopval.vehicle_roadtax_renew_date != undefined ? loopval.vehicle_roadtax_renew_date : ''))
+        formData.append('vehicle_spad_permit_date_period_from', (loopval.vehicle_spad_permit_date_period_from != undefined ? loopval.vehicle_spad_permit_date_period_from : ''))
+        formData.append('voltage', (loopval.voltage != undefined ? loopval.voltage : ''))
+
+        formData.forEach(function (loopvaldata) {
+          // console.log('loopvaldata = ', loopvaldata)
+          if (loopvaldata == '') {
+            checkStatus = 'IC'
+          }
+        })
+
+        formData.append('status', checkStatus)
+
+        // console.log('formData = ', formData);
+        // dalam foreach
+        assetregserv.post(formData).subscribe(
+          (res) => {
+            // console.log("res = ", res);
+          },
+          error => {
+            console.error("err", error);
+          }
+        )
+
       })
+      this.spinner.hide();
+      swal
+        .fire({
+          title: "Success",
+          text: "The submission has successfully recorded",
+          type: "success",
+        }).then((result) => {
+          this.getRegisteredData()
+        });
+      this.closeModal()
 
-      formData.append('status', checkStatus)
+    } else {
+      this.spinner.hide();
+      swal
+        .fire({
+          title: "failed",
+          text: "The submission has failed",
+          type: "warning",
+        }).then((result) => {
+          // const invalidControl = this.firstFormGroup.controls['asset_identity'].invalid;
+          // invalidControl.
+          // this.getRegisteredData()
+        });
+      this.closeModal()
+    }
 
-      // console.log('formData = ', formData);
-      // dalam foreach
-      assetregserv.post(formData).subscribe(
-        (res) => {
-          // console.log("res = ", res);
-        },
-        error => {
-          console.error("err", error);
-        }
-      )
-
-    })
-    this.spinner.hide();
-    swal
-      .fire({
-        title: "Success",
-        text: "The submission has successfully recorded",
-        type: "success",
-      }).then((result) => {
-        this.getRegisteredData()
-      });
-    this.closeModal()
   }
 
   getRegisteredData() {
@@ -1514,40 +2058,44 @@ export class RegistrationComponent implements OnInit {
     )
   }
 
- AssetChange() {
-   let tempData = [];
-   this.assetsAttributeColumnService.get().subscribe(
-     (res) => {
-       res.forEach(function(assetprimer){
-         // console.log("asset primary uina =",assetprimer);
-         tempData.push(assetprimer)
-       })
-       this.assetprimarycolumnselector = tempData
-       let assetprimaryregister1 = (<HTMLInputElement>document.getElementById('assetselector')).value;
-       // let assetprimaryregister1 = this.assetprimarycategory.map(b => b.value);
-       let assetprimaryregister2 = this.assetprimarycolumnselector.map(a => a.asset_type_id);
+  AssetChange() {
+    let tempData = [];
+    this.assetsAttributeColumnService.get().subscribe(
+      (res) => {
+        res.forEach(function (assetprimer) {
+          // console.log("asset primary uina =",assetprimer);
+          tempData.push(assetprimer)
+        })
+        this.assetprimarycolumnselector = tempData
+        let assetprimaryregister1 = (<HTMLInputElement>document.getElementById('assetselector')).value;
+        // let assetprimaryregister1 = this.assetprimarycategory.map(b => b.value);
+        let assetprimaryregister2 = this.assetprimarycolumnselector.map(a => a.asset_type_id);
 
-       // console.log("asset = ",assetprimaryregister2);
+        // console.log("asset = ",assetprimaryregister2);
 
-       if (assetprimaryregister2.indexOf(assetprimaryregister1) !== -1) {
-         this.assetprimaryselector = this.assetprimarycolumnselector.filter(function (primary) {
-           return primary.asset_type_id == assetprimaryregister1;
-         })
+        if (assetprimaryregister2.indexOf(assetprimaryregister1) !== -1) {
+          this.assetprimaryselector = this.assetprimarycolumnselector.filter(function (primary) {
+            return primary.asset_type_id == assetprimaryregister1;
+          })
 
-       this.assetprimaryselectorshow = Object.values(this.assetprimaryselector)
+          this.assetprimaryselectorshow = Object.values(this.assetprimaryselector)
 
 
-       }
-       else {
-         this.assetprimaryselectorshow = this.assetprimaryselectorshowdefault
-       }
-     },
-     error => {
-         console.error("err", error);
-       }
-     )
+        }
+        else {
+          this.assetprimaryselectorshow = this.assetprimaryselectorshowdefault
+        }
+      },
+      error => {
+        console.error("err", error);
+      }
+    )
 
- }
+    this.classCategory();
+    this.getBoValue();
+    this.getMaintenanceSpec()
+
+  }
 
   onChange() {
     let counter = 0
@@ -1672,8 +2220,10 @@ export class RegistrationComponent implements OnInit {
     // updateformData = {
     //   cendol: event
     // }
+    console.log("event", event);
     updateformData[formName] = event
 
+    // updateformData.value
     this.assetsRegistrationService.update(row['id'], updateformData).subscribe(
       (res) => {
         this.resOnkeyData = res

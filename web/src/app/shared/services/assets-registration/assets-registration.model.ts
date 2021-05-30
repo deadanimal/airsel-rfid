@@ -131,6 +131,8 @@ export class AssetsRegistrationModel {
   public created_at: string;
   public modified_at: string;
 
+  public bo: string;
+
   constructor(
     id: string,
     asset_id: string,
@@ -263,6 +265,8 @@ export class AssetsRegistrationModel {
     badge_no: string,
     created_at: string,
     modified_at: string,
+
+    bo:string
   ) {
     this.id = id;
     this.asset_id = asset_id;
@@ -395,5 +399,8 @@ export class AssetsRegistrationModel {
     this.badge_no = badge_no;
     this.created_at = created_at;
     this.modified_at = modified_at;
+
+
+    this.bo = bo
   }
 }
