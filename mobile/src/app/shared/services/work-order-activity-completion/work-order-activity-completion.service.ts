@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Form } from "@angular/forms";
 import { tap } from "rxjs/operators";
 import { Observable } from "rxjs";
-import { WorkOrderActivityCompletionModel } from './work-order-activity-completion.model';
+import { WorkOrderActivityCompletionModel } from "./work-order-activity-completion.model";
 
 @Injectable({
   providedIn: "root",
@@ -16,7 +16,7 @@ export class WorkOrderActivityCompletionService {
   public wamodels: WorkOrderActivityCompletionModel[] = [];
   public wamodel: WorkOrderActivityCompletionModel;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   post(body: Form): Observable<WorkOrderActivityCompletionModel> {
     return this.http.post<any>(this.url, body).pipe(
@@ -46,11 +46,13 @@ export class WorkOrderActivityCompletionService {
   }
 
   update(id: string, body: Form): Observable<WorkOrderActivityCompletionModel> {
-    return this.http.patch<WorkOrderActivityCompletionModel>(this.url + id + '/', body).pipe(
-      tap((res) => {
-        console.log("WorkOrderActivityCompletionModel", res);
-      })
-    );
+    return this.http
+      .patch<WorkOrderActivityCompletionModel>(this.url + id + "/", body)
+      .pipe(
+        tap((res) => {
+          console.log("WorkOrderActivityCompletionModel", res);
+        })
+      );
   }
 
   delete(id: string): Observable<any> {
@@ -66,6 +68,15 @@ export class WorkOrderActivityCompletionService {
     return this.http.get<WorkOrderActivityCompletionModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("WorkOrderActivityCompletionModel", res);
+      })
+    );
+  }
+
+  get_dashboard_status_statistic(body): Observable<any[]> {
+    let url = this.url + "get_dashboard_status_statistic/";
+    return this.http.post<any[]>(url, body).pipe(
+      tap((res) => {
+        // console.log("WorkOrderActivityCompletionModel", res);
       })
     );
   }

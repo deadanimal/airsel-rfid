@@ -63,7 +63,6 @@ export class AssetAttributeColumnService {
 
   filter(field: string): Observable<AssetAttributeColumnModel[]> {
     let urlFilter = this.url + "?" + field;
-    console.log(urlFilter);
     return this.http.get<AssetAttributeColumnModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("AssetAttributeColumnModel", res);

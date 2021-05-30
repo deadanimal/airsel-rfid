@@ -1,5 +1,6 @@
 export class WorkRequestsModel {
   public id: string;
+  public badge_no: string;
   public description: string;
   public long_description: string;
   public required_by_date: string;
@@ -29,6 +30,7 @@ export class WorkRequestsModel {
 
   constructor(
     id: string,
+    badge_no: string,
     description: string,
     long_description: string,
     required_by_date: string,
@@ -57,6 +59,7 @@ export class WorkRequestsModel {
     modified_date: any
   ) {
     this.id = id;
+    this.badge_no = badge_no;
     this.description = description;
     this.long_description = long_description;
     this.required_by_date = required_by_date;

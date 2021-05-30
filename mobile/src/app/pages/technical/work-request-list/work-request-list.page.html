@@ -37,14 +37,16 @@
             <ion-icon name="trash"></ion-icon>
           </ion-fab-button> -->
         </ion-fab>
-        <ion-card-title>Badge Number <br />{{ workrequest.badge_no }}</ion-card-title>
+        <ion-card-subtitle>Work Request ID</ion-card-subtitle>
+        <ion-card-title><b>{{ workrequest.work_request_id }}</b></ion-card-title>
       </ion-card-header>
       <ion-card-content>
+        <p>Asset ID: {{ workrequest.asset_id }}</p>
         <p>Required By Date: {{ workrequest.required_by_date }}</p>
         <p>Work Category: {{ workrequest.work_category }}</p>
         <p>Work Class: {{ workrequest.work_class }}</p>
         <p>Work Priority: {{ workrequest.work_priority }}</p>
-        <p>Status: {{ workrequest.status | titlecase }}</p>
+        <p>Status: {{ workrequest.work_request_status | titlecase }}</p>
       </ion-card-content>
     </ion-card>
   </div>
