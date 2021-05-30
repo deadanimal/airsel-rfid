@@ -69,6 +69,7 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         'badge_no',
         'node_id',
         'hex_code',
+        'attached_to_asset_id'
     ]
 
     @action(methods=['POST'], detail=False)
