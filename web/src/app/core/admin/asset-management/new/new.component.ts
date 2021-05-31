@@ -290,6 +290,7 @@ export class NewComponent implements OnInit {
   }
 
   showTable() {
+    this.getRegisteredData();
     let counter = 0
     for (let x in this.is_show1) {
       if (this.is_show1[x]) {
@@ -315,8 +316,13 @@ export class NewComponent implements OnInit {
       (res) => {
         console.log("res all data", res);
         res.forEach(function (val) {
-          val['isTick'] = false
-          tempData.push(val)
+          console.log(val['status'])
+          if (val['status']=="NP") {
+            console.log("masuk sini");
+
+            val['isTick'] = false
+            tempData.push(val)
+          }
         })
         console.log('tempData = ', tempData)
         this.tableTemp1 = tempData
@@ -414,9 +420,13 @@ export class NewComponent implements OnInit {
           let leftSkippedNo: any
           let currentNo = ''
 
-          console.log('badgeFormatdata.skipped_no.length = ', badgeFormatdata.skipped_no.length)
 
-          if (badgeFormatdata.skipped_no.length > 0) {
+          //if (badgeFormatdata.skipped_no.length > 0) {
+          let test = "1";
+          let test2 = "2";
+          if (test==test2) {
+            console.log("loop1");
+
             skippedNo.forEach(function (noTest) {
 
               if (runNo == 1) {
@@ -451,6 +461,8 @@ export class NewComponent implements OnInit {
             currentNo = firstSkippedNo
           } else {
             // firstSkippedNo = badgeFormatdata.latest_no
+            console.log("loop2");
+
             currentNo = badgeFormatdata.latest_no
 
             updateSkippedNo = {

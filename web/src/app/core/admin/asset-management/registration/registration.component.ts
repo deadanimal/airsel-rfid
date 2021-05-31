@@ -1502,6 +1502,7 @@ export class RegistrationComponent implements OnInit {
     let tempData = []
     this.assetsRegistrationService.getNewRegList().subscribe(
       (res) => {
+        console.log("whaa", res);
         res.forEach(function (val) {
           val['isTick'] = false
           tempData.push(val)
@@ -1611,8 +1612,9 @@ export class RegistrationComponent implements OnInit {
       if (itemVal['isTick'] == true) {
 
         console.log('itemVal = ', itemVal.status)
-        if (itemVal.status == 'CO') {
+        if (itemVal.status == 'IC') {
           // const updateformData = new FormData();
+          console.log("itemVal", itemVal);
           let updateformData: any
           // updateformData.append('status', 'PR');
 
@@ -1624,7 +1626,9 @@ export class RegistrationComponent implements OnInit {
           // console.log('---- sini ----')
           assetregser.update(itemVal['id'], updateformData).subscribe(
             (res) => {
-              // console.log("ttttatttatt = ", res);
+              // processing logic
+              // post object into selected table
+              console.log("update status NP", res);
             },
             error => {
               console.error("err", error);
@@ -1636,19 +1640,30 @@ export class RegistrationComponent implements OnInit {
       }
     })
 
-    if (no > 0) {
-      swal.fire({
-        title: 'Warning',
-        text: 'The incomplete data cannot be save.',
-        type: 'warning',
-        buttonsStyling: false,
-        confirmButtonText: 'Ok',
-        confirmButtonClass: 'btn btn-warning'
-      }).then((result) => {
-        this.getRegisteredData()
-      })
-    } else {
-      swal.fire({
+    // if (no > 0) {
+    //   swal.fire({
+    //     title: 'Warning',
+    //     text: 'The incomplete data cannot be save.',
+    //     type: 'warning',
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Ok',
+    //     confirmButtonClass: 'btn btn-warning'
+    //   }).then((result) => {
+    //     this.getRegisteredData()
+    //   })
+    // } else {
+    //   swal.fire({
+    //     title: 'Success',
+    //     text: 'Successfully Change Status',
+    //     type: 'success',
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Ok',
+    //     confirmButtonClass: 'btn btn-success'
+    //   }).then((result) => {
+    //     this.getRegisteredData()
+    //   })
+    // }
+    swal.fire({
         title: 'Success',
         text: 'Successfully Change Status',
         type: 'success',
@@ -1658,7 +1673,7 @@ export class RegistrationComponent implements OnInit {
       }).then((result) => {
         this.getRegisteredData()
       })
-    }
+
   }
 
   onKey(event, formName, row) {

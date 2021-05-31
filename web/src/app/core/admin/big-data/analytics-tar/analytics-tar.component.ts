@@ -4,6 +4,10 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
+import { AssetsModel } from 'src/app/shared/services/assets/assets.model';
+import { map, tap, catchError } from "rxjs/operators";
+
 am4core.useTheme(am4themes_animated);
 
 @Component({
@@ -12,12 +16,20 @@ am4core.useTheme(am4themes_animated);
   styleUrls: ['./analytics-tar.component.scss']
 })
 export class AnalyticsTarComponent implements OnInit {
+  asset_registered_length: number = 0;
+  assetRegistration: AssetsModel[] = [];
+  selected_date: any;
 
   private charttwo: am4charts.XYChart;
 
-  constructor(private zone: NgZone) { }
+  constructor(
+    private zone: NgZone,
+    private assetsService: AssetsService,
+            
+  ) { }
 
   ngOnInit() {
+    this.getAssetRegistered();
   }
 
   ngAfterViewInit() {
@@ -26,10 +38,61 @@ export class AnalyticsTarComponent implements OnInit {
     });
   }
 
+  ngAfterViewChecked() {
+    // if date range not empty 
+    // call api and slice data between range
+
+  }
+
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
       if (this.charttwo) this.charttwo.dispose();
     });
+  }
+
+  searchAsset() {
+    let before = this.selected_date[0].toJSON().slice(0,10);
+    let after = this.selected_date[1].toJSON().slice(0,10);
+
+    let temp: AssetsModel[] = [];
+
+    this.assetsService.get().pipe(map(x => x.filter(i=>i.registered_datetime != null))).subscribe(
+       (res) => {
+         res.forEach(function (val) {
+           if(val["registered_datetime"].slice(0,10) >= before && val["registered_datetime"].slice(0,10) <= after) {
+             console.log(val);
+             temp.push(val);
+           }
+         })
+
+         
+       },
+       (err) => {
+         console.log("err", err);
+       },
+       () => {
+         this.asset_registered_length = temp.length;
+       }
+     );
+
+
+  }
+
+  getAssetRegistered() {
+    // for default value of chart
+    // call api
+    // 
+    this.assetsService.get().subscribe(
+      (res) => {
+        console.log("Resss", res);
+        this.asset_registered_length = res.length;
+
+      },
+      (err) => {
+
+      }
+    );
+
   }
 
   initChartTwo() {
