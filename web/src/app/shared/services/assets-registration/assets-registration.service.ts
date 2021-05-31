@@ -21,6 +21,7 @@ export class AssetsRegistrationService {
   post(body): Observable<AssetsRegistrationModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
+        console.log("AssetsRegistrationModel", res);
       })
     );
   }

@@ -72,7 +72,6 @@ export class AssetsService {
 
   filter(field: string): Observable<AssetsModel[]> {
     let urlFilter = this.url + "?" + field;
-    console.log(urlFilter);
     return this.http.get<AssetsModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("AssetsModel", res);

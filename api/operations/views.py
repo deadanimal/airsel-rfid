@@ -1,7 +1,7 @@
 import json
 
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import F, Q, Count
 
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -9,6 +9,9 @@ from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import viewsets, status
 from rest_framework_extensions.mixins import NestedViewSetMixin
+
+from datetime import datetime
+import json
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -913,6 +916,24 @@ class WorkActivityEmployeeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         queryset = WorkActivityEmployee.objects.all()
 
         return queryset
+
+    @action(methods=['POST'], detail=False)
+    def get_dashboard_status_statistic(self, request):
+
+        data = json.loads(request.body)
+
+        employee_id = data['employee_id']
+        now = datetime.now()
+        
+        queryset_overall = WorkActivityEmployee.objects.filter(employee_id=employee_id).values(status=F('work_order_activity_completion_id__status')).annotate(total_status=Count('work_order_activity_completion_id__status'))
+        queryset_today = WorkActivityEmployee.objects.filter(created_date__date=now.strftime("%Y-%m-%d"), employee_id=employee_id).values(status=F('work_order_activity_completion_id__status')).annotate(total_status=Count('work_order_activity_completion_id__status'))
+        
+        data = {
+            'queryset_overall': queryset_overall,
+            'queryset_today': queryset_today
+        }
+
+        return Response(data)
 
 class WorkOrderActivityCompletionAssetLocationAssetListInboundViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.all()

@@ -36,6 +36,7 @@ import { NewComponent } from './new/new.component';
 import { ProcessedComponent } from './processed/processed.component';
 import { BadgeNoComponent } from './badge-no/badge-no.component';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import { BrowserModule } from "@angular/platform-browser";
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -64,7 +65,8 @@ import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
     RatingModule.forRoot(),
     TypeaheadModule.forRoot(),
     NgxDatatableModule,
-    Select2Module
+    Select2Module,
+    // BrowserModule
   ],
 })
 export class AssetManagementModule { }

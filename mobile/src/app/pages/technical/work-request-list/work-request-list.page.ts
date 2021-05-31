@@ -11,7 +11,7 @@ import { WorkRequestPage } from "../work-request/work-request.page";
 
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkRequestsService } from "src/app/shared/services/work-requests/work-requests.service";
-import { AssetsService } from 'src/app/shared/services/assets/assets.service';
+import { AssetsService } from "src/app/shared/services/assets/assets.service";
 
 @Component({
   selector: "app-work-request-list",
@@ -27,7 +27,7 @@ export class WorkRequestListPage implements OnInit {
   public scanValue: any;
   bBarcode: boolean = false;
   bRfid: boolean = false;
-  badge_number = ''
+  badge_number = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -39,8 +39,8 @@ export class WorkRequestListPage implements OnInit {
     public modalController: ModalController,
     public notificationService: NotificationsService,
     private workrequestService: WorkRequestsService,
-    private assetsService: AssetsService
-  ) { }
+    private assetService: AssetsService
+  ) {}
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -59,9 +59,8 @@ export class WorkRequestListPage implements OnInit {
   getWorkRequest() {
     this.workrequestService.get().subscribe(
       (res) => {
-        console.log("workrequest = ", res);
-        let workreq = res;
-        this.addGetBadgeNumber(workreq)
+        // console.log("workrequest = ", res);
+        this.addGetBadgeNumber(res);
       },
       (err) => {
         console.error("err", err);
@@ -70,25 +69,19 @@ export class WorkRequestListPage implements OnInit {
   }
 
   addGetBadgeNumber(workReqData) {
-    // console.log("---- sini -----")
-    this.workrequests = []
-    let getAssetsService = this.assetsService
-    workReqData.forEach(element => {
-
-      let asset_id = element.asset_id
-      console.log("element = ", element)
-      element.badge_no = ''
-      getAssetsService.filter("asset_id=" + asset_id).subscribe(
-        (res) => {
-          console.log("res asset service = ", res)
-          element.badge_no = res[0].badge_no
-        },
-        (err) => {
-          console.log("err asset service = ", err)
-        }
-      )
-      this.workrequests.push(element)
-
+    this.workrequests = [];
+    workReqData.forEach((element) => {
+      if (element.asset_id != "")
+        this.assetService.filter("asset_id=" + element.asset_id).subscribe(
+          (res) => {
+            // console.log("res assetsService = ", res);
+            if (res.length > 0) element.badge_no = res[0].badge_no;
+          },
+          (err) => {
+            // console.log("err assetsService = ", err);
+          }
+        );
+      this.workrequests.push(element);
     });
   }
 
@@ -161,7 +154,7 @@ export class WorkRequestListPage implements OnInit {
   async searchBadgeNo() {
     const alert = await this.alertController.create({
       header: "Badge No.",
-      message: "Enter a badge number to search the asset",
+      message: "Enter a badge number to search asset",
       inputs: [
         {
           name: "badge_no",
@@ -180,7 +173,7 @@ export class WorkRequestListPage implements OnInit {
         {
           text: "Search",
           handler: (data) => {
-            console.log("data.badge_no = ", data.badge_no)
+            console.log("data.badge_no = ", data.badge_no);
             if (data.badge_no) {
               let navigationExtras: NavigationExtras = {
                 state: {

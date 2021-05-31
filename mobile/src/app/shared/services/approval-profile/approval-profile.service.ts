@@ -10,7 +10,7 @@ import { ApprovalProfileModel } from "./approval-profile.model";
   providedIn: "root",
 })
 export class ApprovalProfileService {
-  url: string = environment.baseUrl + "v1/asset-location-sync/";
+  url: string = environment.baseUrl + "v1/approval-profile/";
 
   // Data
   public atmodels: ApprovalProfileModel[] = [];

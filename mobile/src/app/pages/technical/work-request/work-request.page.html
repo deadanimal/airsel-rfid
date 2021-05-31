@@ -2,15 +2,23 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="clickBack()">
-        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold"></ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
-          {{ notificationService.totalnotificationbyuser }}</ion-badge>
+        <ion-badge
+          size="small"
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px"
+        >
+          {{ notificationService.totalnotificationbyuser }}</ion-badge
+        >
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -48,16 +56,38 @@
       <img [src]="capturedSnapURL" />
     </ion-card> -->
 
-    <ion-list class="ion-padding line-input" style="padding-top: 100px">
+    <ion-list class="ion-padding line-input" style="padding-top: 50px">
       <form [formGroup]="workrequestFormGroup">
         <ion-item>
-          <ion-label position="stacked">Asset Description</ion-label>
-          <ion-input type="text" formControlName="asset_description" readonly></ion-input>
+          <ion-label position="stacked">Badge No</ion-label>
+          <ion-input
+            type="text"
+            formControlName="badge_no"
+            readonly
+          ></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">Location</ion-label>
-          <ion-input type="text" formControlName="location" readonly></ion-input>
+          <ion-label position="stacked">Asset ID</ion-label>
+          <ion-input
+            type="text"
+            formControlName="asset_id"
+            readonly
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Asset Description</ion-label>
+          <ion-textarea
+            rows="3"
+            formControlName="asset_description"
+            readonly
+          ></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Asset Location</ion-label>
+          <ion-input type="text" formControlName="node_id" readonly></ion-input>
         </ion-item>
 
         <ion-item>
@@ -66,41 +96,69 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">Detailed Description</ion-label>
-          <ion-textarea rows="3" formControlName="long_description"></ion-textarea>
+          <ion-label position="stacked"
+            >Work Request Detail Description</ion-label
+          >
+          <ion-textarea
+            rows="3"
+            formControlName="long_description"
+          ></ion-textarea>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Required By Date</ion-label>
-          <ion-datetime displayFormat="YYYY-MM-DD" formControlName="required_by_date"></ion-datetime>
+          <ion-datetime
+            displayFormat="YYYY-MM-DD"
+            formControlName="required_by_date"
+          ></ion-datetime>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Downtime Start Date Time</ion-label>
-          <ion-datetime displayFormat="YYYY-MM-DD HH:mm" formControlName="downtime_start">
+          <ion-datetime
+            displayFormat="YYYY-MM-DD HH:mm"
+            formControlName="downtime_start"
+          >
           </ion-datetime>
         </ion-item>
-
-        <!-- <ion-item>
-          <ion-label position="stacked">Downtime Start</ion-label>
-          <ion-datetime displayFormat="HH:mm" placeholder="Time"></ion-datetime>
-        </ion-item> -->
 
         <ion-item>
           <ion-label position="stacked">Planner</ion-label>
           <ion-select formControlName="planner">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option *ngFor="let plan of plannerData" [value]="plan.planner">
+            <ion-select-option
+              *ngFor="let plan of plannerData"
+              [value]="plan.planner"
+            >
               {{plan.description}}
             </ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">Work Class</ion-label>
-          <ion-select formControlName="work_class" (ionChange)='onChangeWorkClass($event.target.value)'>
+          <ion-label position="stacked">Approval Profile</ion-label>
+          <ion-select formControlName="approval_profile">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option *ngFor="let wcd of workClassData" [value]="wcd.name">
+            <ion-select-option
+              *ngFor="let approvalProfile of approvalProfileData"
+              [value]="approvalProfile.approval_profile"
+            >
+              {{approvalProfile.description}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Work Class</ion-label>
+          <ion-select
+            formControlName="work_class"
+            (ionChange)="onChangeWorkClass($event.target.value)"
+          >
+            <ion-select-option value="">Please select</ion-select-option>
+            <ion-select-option
+              *ngFor="let wcd of workClassData"
+              [value]="wcd.name"
+            >
               {{wcd.name}}
             </ion-select-option>
           </ion-select>
@@ -111,8 +169,11 @@
           <ion-label position="stacked">Work Category</ion-label>
           <ion-select formControlName="work_category">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option *ngFor="let wcatd of workCategoryDataqwe" [value]="wcatd.value">
-              {{wcatd.value}}
+            <ion-select-option
+              *ngFor="let wcatd of workCategoryDataqwe"
+              [value]="wcatd.value"
+            >
+              {{wcatd.description}}
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -121,15 +182,15 @@
           <ion-label position="stacked">Work Priority</ion-label>
           <ion-select formControlName="work_priority">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option value="01">01 - Low (01)</ion-select-option>
-            <ion-select-option value="02">02 - Low (02)</ion-select-option>
-            <ion-select-option value="03">03 - Medium (03)</ion-select-option>
-            <ion-select-option value="04">04 - High (04)</ion-select-option>
-            <ion-select-option value="05">05 - High (05)</ion-select-option>
-            <ion-select-option value="06">06 - Very High (06)</ion-select-option>
-            <ion-select-option value="07">07 - Very High (07)</ion-select-option>
-            <ion-select-option value="08">08 - Very High (08)</ion-select-option>
-            <ion-select-option value="09">09 - Very High (09)</ion-select-option>
+            <ion-select-option value="01">01 - Low</ion-select-option>
+            <ion-select-option value="02">02 - Low</ion-select-option>
+            <ion-select-option value="03">03 - Medium</ion-select-option>
+            <ion-select-option value="04">04 - High</ion-select-option>
+            <ion-select-option value="05">05 - High</ion-select-option>
+            <ion-select-option value="06">06 - Very High</ion-select-option>
+            <ion-select-option value="07">07 - Very High</ion-select-option>
+            <ion-select-option value="08">08 - Very High</ion-select-option>
+            <ion-select-option value="09">09 - Very High</ion-select-option>
           </ion-select>
         </ion-item>
 
@@ -142,7 +203,10 @@
           <ion-label position="stacked">Owning Organization</ion-label>
           <ion-select formControlName="owning_access_group">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option *ngFor="let ownOrga of owningOrganisationData" [value]="ownOrga.description">
+            <ion-select-option
+              *ngFor="let ownOrga of owningOrganisationData"
+              [value]="ownOrga.description"
+            >
               {{ownOrga.name}}
             </ion-select-option>
           </ion-select>
@@ -189,8 +253,12 @@
     </ion-list>
 
     <div class="ion-text-center ion-padding">
-      <ion-button color="light" (click)="changeSegment('first')">Back</ion-button>
-      <ion-button *ngIf="process != 'view'" (click)="submit()">Submit</ion-button>
+      <ion-button color="light" (click)="changeSegment('first')"
+        >Back</ion-button
+      >
+      <ion-button *ngIf="process != 'view'" (click)="submit()"
+        >Submit</ion-button
+      >
     </div>
   </div>
 </ion-content>
