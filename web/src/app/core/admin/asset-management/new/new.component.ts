@@ -394,7 +394,6 @@ export class NewComponent implements OnInit {
     this.tableTemp1.forEach(function (itemVal) {
 
       if (itemVal['isTick'] == true) {
-        console.log("masuk la");
         let asspricat = itemVal.asset_primary_category
         let field = 'asset_primary_category=' + asspricat + '&status=AC'
         // console.log('field = ', field)
@@ -423,7 +422,10 @@ export class NewComponent implements OnInit {
 
 
           //if (badgeFormatdata.skipped_no.length > 0) {
-          if (1==1) {
+          let test = "1";
+          let test2 = "2";
+          if (test==test2) {
+            console.log("loop1");
 
             skippedNo.forEach(function (noTest) {
 
@@ -459,6 +461,8 @@ export class NewComponent implements OnInit {
             currentNo = firstSkippedNo
           } else {
             // firstSkippedNo = badgeFormatdata.latest_no
+            console.log("loop2");
+
             currentNo = badgeFormatdata.latest_no
 
             updateSkippedNo = {
