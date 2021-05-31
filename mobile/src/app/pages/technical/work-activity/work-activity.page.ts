@@ -18,6 +18,7 @@ import { ServiceHistoryPage } from "../service-history/service-history.page";
 
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
+import { WorkOrderActivityCompletionAssLocAssListService } from 'src/app/shared/services/work-order-activity-completion-AssLocAssList/work-order-activity-completion-AssLocAssList.service';
 
 @Component({
   selector: "app-work-activity",
@@ -30,6 +31,7 @@ export class WorkActivityPage implements OnInit {
 
   // Data
   workactivity: any;
+  workactivityData: any = [];
 
   // Form
   workactivityFormGroup: FormGroup;
@@ -43,7 +45,8 @@ export class WorkActivityPage implements OnInit {
     public menu: MenuController,
     public modalController: ModalController,
     public notificationService: NotificationsService,
-    private workactivityService: WorkActivitiesService
+    private workactivityService: WorkActivitiesService,
+    private workOrderActivityCompletionAssLocAssListService: WorkOrderActivityCompletionAssLocAssListService
   ) {
     this.workactivityFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -64,11 +67,15 @@ export class WorkActivityPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.workactivity = this.router.getCurrentNavigation().extras.state.work_activity;
 
-        // console.log(this.workactivity);
-
         this.workactivityFormGroup.patchValue({
           ...this.workactivity,
         });
+        // console.log("this.workactivity = ", this.workactivity['asset_location_asset_list']);
+        // let getWOrkActivityData = this.workactivity['asset_location_asset_list']
+        this.getWOrkActivityData(this.workactivity['asset_location_asset_list'])
+        // this.workactivity['asset_location_asset_list'].forEach(element => {
+        //   console.log('element', element);
+        // });
       }
     });
   }
@@ -234,6 +241,7 @@ export class WorkActivityPage implements OnInit {
                   asset,
                 },
               };
+              console.log("navigationExtras 0000 = ", navigationExtras)
               this.router.navigate(
                 ["/technical/work-activity-asset"],
                 navigationExtras
@@ -253,5 +261,21 @@ export class WorkActivityPage implements OnInit {
 
   clickRemove(index: number) {
     this.servicehistories.splice(index, 1);
+  }
+
+  getWOrkActivityData(getdata) {
+
+    getdata.forEach((element) => {
+      let woacalsl = element.toString();
+      console.log(woacalsl)
+      this.workOrderActivityCompletionAssLocAssListService.getOne(woacalsl).subscribe(
+        (Res) => {
+          this.workactivityData.push(Res)
+        },
+        (Err) => {
+          console.error("err", Err);
+        }
+      );
+    });
   }
 }

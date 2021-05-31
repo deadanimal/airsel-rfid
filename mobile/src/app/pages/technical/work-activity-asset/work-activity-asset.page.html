@@ -2,22 +2,15 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="clickBack()">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold"> </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -30,87 +23,50 @@
       <form [formGroup]="workactivityassetFormGroup">
         <ion-item>
           <ion-label position="stacked">Asset ID:</ion-label>
-          <ion-input
-            type="text"
-            readonly
-            formControlName="asset_id"
-          ></ion-input>
+          <ion-input type="text" readonly formControlName="asset_id"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Asset Type:</ion-label>
-          <ion-input
-            type="text"
-            readonly
-            formControlName="asset_type"
-          ></ion-input>
+          <ion-input type="text" readonly formControlName="asset_type"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Badge Number:</ion-label>
-          <ion-input
-            type="text"
-            readonly
-            formControlName="badge_number"
-          ></ion-input>
+          <ion-input type="text" readonly formControlName="badge_number"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Serial Number:</ion-label>
-          <ion-input
-            type="text"
-            readonly
-            formControlName="serial_number"
-          ></ion-input>
+          <ion-input type="text" readonly formControlName="serial_number"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Detailed Description:</ion-label>
-          <ion-textarea
-            rows="5"
-            readonly
-            formControlName="detailed_description"
-          ></ion-textarea>
+          <ion-textarea rows="5" readonly formControlName="detailed_description"></ion-textarea>
         </ion-item>
       </form>
     </ion-list>
 
-    <div *ngIf="workactivityassetFormGroup.value.badge_number">
+    <!-- <div *ngIf="workactivityassetFormGroup.value.badge_number"> -->
+    <div>
       <ion-item lines="none">
-        <ion-label class="ion-text-start ion-no-padding"
-          >Service History</ion-label
-        >
-        <ion-button
-          class="ion-text-end"
-          (click)="clickAddServiceHistory(workactivityasset)"
-          >Add</ion-button
-        >
+        <ion-label class="ion-text-start ion-no-padding">Service History</ion-label>
+        <ion-button class="ion-text-end" (click)="clickAddServiceHistory(workactivityasset)">Add</ion-button>
       </ion-item>
 
-      <ion-card
-        *ngIf="workactivityasset.service_history_type_dt, let i = index"
-      >
+      <ion-card>
         <ion-card-header>
           <ion-fab horizontal="end">
-            <ion-fab-button
-              size="small"
-              color="primary"
-              (click)="clickEdit(workactivityasset)"
-            >
+            <ion-fab-button size="small" color="primary" (click)="clickEdit(workactivityasset)">
               <ion-icon name="create"></ion-icon>
             </ion-fab-button>
-            <ion-fab-button
-              size="small"
-              color="danger"
-              (click)="clickRemove(i)"
-            >
+            <ion-fab-button size="small" color="danger" (click)="clickRemove(i)">
               <ion-icon name="trash"></ion-icon>
             </ion-fab-button>
           </ion-fab>
           <ion-card-title>Service History Type</ion-card-title>
-          <ion-card-subtitle
-            >{{ workactivityasset.service_history_type_dt }}</ion-card-subtitle
-          >
+          <ion-card-subtitle>{{ workactivityasset.service_history_type_dt }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           <p>Start Date/Time: {{ workactivityasset.start_date_time | date }}</p>
@@ -121,27 +77,18 @@
       </ion-card>
 
       <ion-card *ngIf="workactivityasset.service_history_type_f, let i = index">
+        <!-- <ion-card> -->
         <ion-card-header>
           <ion-fab horizontal="end">
-            <ion-fab-button
-              size="small"
-              color="primary"
-              (click)="clickEdit(workactivityasset)"
-            >
+            <ion-fab-button size="small" color="primary" (click)="clickEdit(workactivityasset)">
               <ion-icon name="create"></ion-icon>
             </ion-fab-button>
-            <ion-fab-button
-              size="small"
-              color="danger"
-              (click)="clickRemove(i)"
-            >
+            <ion-fab-button size="small" color="danger" (click)="clickRemove(i)">
               <ion-icon name="trash"></ion-icon>
             </ion-fab-button>
           </ion-fab>
           <ion-card-title>Service History Type</ion-card-title>
-          <ion-card-subtitle
-            >{{ workactivityasset.service_history_type_f }}</ion-card-subtitle
-          >
+          <ion-card-subtitle>{{ workactivityasset.service_history_type_f }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           <p>Failure Type: {{ workactivityasset.failure_type}}</p>
@@ -154,27 +101,18 @@
       </ion-card>
 
       <ion-card *ngIf="workactivityasset.service_history_type_pm, let i = index">
+        <!-- <ion-card> -->
         <ion-card-header>
           <ion-fab horizontal="end">
-            <ion-fab-button
-              size="small"
-              color="primary"
-              (click)="clickEdit(workactivityasset)"
-            >
+            <ion-fab-button size="small" color="primary" (click)="clickEdit(workactivityasset)">
               <ion-icon name="create"></ion-icon>
             </ion-fab-button>
-            <ion-fab-button
-              size="small"
-              color="danger"
-              (click)="clickRemove(i)"
-            >
+            <ion-fab-button size="small" color="danger" (click)="clickRemove(i)">
               <ion-icon name="trash"></ion-icon>
             </ion-fab-button>
           </ion-fab>
           <ion-card-title>Service History Type</ion-card-title>
-          <ion-card-subtitle
-            >{{ workactivityasset.service_history_type_pm }}</ion-card-subtitle
-          >
+          <ion-card-subtitle>{{ workactivityasset.service_history_type_pm }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content *ngIf="workactivityasset.asset_type == 'Pump'">
           <p>Non Drive Bearing Temperature: {{ workactivityasset.answer_1}}</p>
@@ -222,17 +160,12 @@
     </ion-card> -->
 
     <div class="ion-text-center ion-padding">
-      <small
-        >*Note: Fulfill all service history before submitting the work
-        activity.</small
-      ><br />
+      <small>*Note: Fulfill all service history before submitting the work
+        activity.</small><br />
       <ion-button color="light" (click)="clickBack()">Back</ion-button>
       <ion-button
         *ngIf="workactivityasset.service_history_type_dt && workactivityasset.service_history_type_f && workactivityassetFormGroup.value.badge_number"
-        color="primary"
-        (click)="submit()"
-        >Submit</ion-button
-      >
+        color="primary" (click)="submit()">Submit</ion-button>
     </div>
   </div>
 </ion-content>

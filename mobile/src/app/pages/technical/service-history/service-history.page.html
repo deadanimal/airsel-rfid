@@ -2,22 +2,15 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="clickBack()">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold"> </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -30,15 +23,25 @@
       <form [formGroup]="servicehistoryFormGroup">
         <ion-item>
           <ion-label position="stacked">Service History Type</ion-label>
-          <ion-select formControlName="type">
-            <ion-select-option value="DOWNTIME">DOWNTIME</ion-select-option>
-            <ion-select-option value="FAILURE">FAILURE</ion-select-option>
-            <ion-select-option value="PREVENTIVE MAINTENANCE"
-              >PREVENTIVE MAINTENANCE</ion-select-option
-            >
+          <ion-select (ionChange)="onChangeServiceHistory($event.target.value)">
+            <ion-select-option *ngFor="let serHis of ServiceHistoryList" [value]="serHis.id">
+              {{serHis.service_hist_desc}}</ion-select-option>
           </ion-select>
         </ion-item>
 
+        <div *ngIf="questionAndAnswerDiv == '1'">
+          <!-- <div> -->
+          <ion-item *ngFor="let qna of questionAndAnswerData">
+            <ion-label position="stacked">{{qna.question.question_desc}}</ion-label>
+            <ion-select (ionChange)="safeDataToArray($event.target.value,qna)" required>
+              <ion-select-option>Please Select</ion-select-option>
+              <ion-select-option *ngFor="let ans of qna.answer" [value]="ans.answer_cd">{{ans.answer_desc}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <!-- 
         <div *ngIf="servicehistoryFormGroup.value.type == 'DOWNTIME'">
           <ion-item>
             <ion-label position="stacked">Start Date/Time</ion-label>
@@ -53,8 +56,8 @@
           <ion-item>
             <ion-label position="stacked">Downtime Reason</ion-label>
             <ion-select formControlName="downtime_reason">
-              <ion-select-option value="NPL">Not Planned</ion-select-option
-              ><ion-select-option value="PL">Planned</ion-select-option>
+              <ion-select-option value="NPL">Not Planned</ion-select-option>
+              <ion-select-option value="PL">Planned</ion-select-option>
             </ion-select>
           </ion-item>
         </div>
@@ -70,67 +73,37 @@
               </ion-select-option>
               <ion-select-option value="CUT">CUT CABLES</ion-select-option>
               <ion-select-option value="DENTED">FOR PANELS</ion-select-option>
-              <ion-select-option value="NATURAL-DISASTER"
-                >LANDSLIDE</ion-select-option
-              >
+              <ion-select-option value="NATURAL-DISASTER">LANDSLIDE</ion-select-option>
               <ion-select-option value="NO-DISPLAY">
                 DISPLAY ON SENSOR, SCADA, LOGGER OR RECORDER.
               </ion-select-option>
-              <ion-select-option value="NO-OUTPUT"
-                >SENSOR OR SCADA OUTPUT SIGNAL</ion-select-option
-              >
-              <ion-select-option value="SWITCHED-OFF"
-                >SWITHES, ISOLATORS</ion-select-option
-              >
-              <ion-select-option value="TRIPPED"
-                >CIRCUIT, MCB, ELB BREAKERS.</ion-select-option
-              >
-              <ion-select-option value="VANDALISED"
-                >VANDALISM</ion-select-option
-              >
-              <ion-select-option value="WIRING"
-                >WRONG WIRING CONNECTION</ion-select-option
-              >
-              <ion-select-option value="ZONE-BREACHED"
-                >BREACHED, BYPASS</ion-select-option
-              >
+              <ion-select-option value="NO-OUTPUT">SENSOR OR SCADA OUTPUT SIGNAL</ion-select-option>
+              <ion-select-option value="SWITCHED-OFF">SWITHES, ISOLATORS</ion-select-option>
+              <ion-select-option value="TRIPPED">CIRCUIT, MCB, ELB BREAKERS.</ion-select-option>
+              <ion-select-option value="VANDALISED">VANDALISM</ion-select-option>
+              <ion-select-option value="WIRING">WRONG WIRING CONNECTION</ion-select-option>
+              <ion-select-option value="ZONE-BREACHED">BREACHED, BYPASS</ion-select-option>
             </ion-select>
           </ion-item>
 
           <ion-item>
             <ion-label position="stacked">Failure Mode</ion-label>
             <ion-select formControlName="failure_mode">
-              <ion-select-option value="ASSET-REPLACEMENT"
-                >NEW ASSET</ion-select-option
-              >
-              <ion-select-option value="CALIBRATION"
-                >CALIBRATION</ion-select-option
-              >
+              <ion-select-option value="ASSET-REPLACEMENT">NEW ASSET</ion-select-option>
+              <ion-select-option value="CALIBRATION">CALIBRATION</ion-select-option>
               <ion-select-option value="COMPONENT-REPLACEMENT">
                 COMPONENT REPLACEMENT
               </ion-select-option>
               <ion-select-option value="CORROSION">CORROSION</ion-select-option>
-              <ion-select-option value="FLOW-FLATLINE"
-                >FLOW FLATLINE</ion-select-option
-              >
-              <ion-select-option value="INSTALLATION"
-                >WRONG INSTALLATION</ion-select-option
-              >
-              <ion-select-option value="INSTALL-NEW-ITEM"
-                >INSTALL NEW ITEM</ion-select-option
-              >
+              <ion-select-option value="FLOW-FLATLINE">FLOW FLATLINE</ion-select-option>
+              <ion-select-option value="INSTALLATION">WRONG INSTALLATION</ion-select-option>
+              <ion-select-option value="INSTALL-NEW-ITEM">INSTALL NEW ITEM</ion-select-option>
               <ion-select-option value="JAMMED">JAMMED</ion-select-option>
-              <ion-select-option value="MISSING-DATA"
-                >MISSING DATA</ion-select-option
-              >
-              <ion-select-option value="PRESSURE-FLATLINE"
-                >PRESSURE FLATLINE</ion-select-option
-              >
+              <ion-select-option value="MISSING-DATA">MISSING DATA</ion-select-option>
+              <ion-select-option value="PRESSURE-FLATLINE">PRESSURE FLATLINE</ion-select-option>
               <ion-select-option value="RUST">RUST</ion-select-option>
               <ion-select-option value="SERVICE">SERVICE</ion-select-option>
-              <ion-select-option value="SPARE-PART-REPLACEMENT"
-                >NEW SPARE PART</ion-select-option
-              >
+              <ion-select-option value="SPARE-PART-REPLACEMENT">NEW SPARE PART</ion-select-option>
               <ion-select-option value="WIRING">RE-WIRING</ion-select-option>
             </ion-select>
           </ion-item>
@@ -138,9 +111,7 @@
           <ion-item>
             <ion-label position="stacked">Failure Repair</ion-label>
             <ion-select formControlName="failure_repair">
-              <ion-select-option value="ASSET-REPLACEMENT"
-                >NEW ASSET</ion-select-option
-              >
+              <ion-select-option value="ASSET-REPLACEMENT">NEW ASSET</ion-select-option>
               <ion-select-option value="COMPONENT-REPLACEMENT">
                 COMPONENT REPLACEMENT
               </ion-select-option>
@@ -152,9 +123,7 @@
                 REPLACE CABLE, RESETTING LOGGER, REPLACE METER, REPLACE
                 TRANSMITTER
               </ion-select-option>
-              <ion-select-option value="PRESSURE-FLATLINE"
-                >PRESSURE TRANDUCER</ion-select-option
-              >
+              <ion-select-option value="PRESSURE-FLATLINE">PRESSURE TRANDUCER</ion-select-option>
               <ion-select-option value="PRESSURE-READING-ERROR">
                 REPLACE LOGGER, RECALIBRATED LOGGER
               </ion-select-option>
@@ -175,21 +144,11 @@
               <ion-select-option value="ACTUATOR-DRIVE">
                 TRIP/FAILED TO OPERATE/CONTROL CARD FAULT
               </ion-select-option>
-              <ion-select-option value="BATTERY"
-                >FAULTY, WEAK</ion-select-option
-              >
-              <ion-select-option value="BATTERY-CHARGER"
-                >BATTERY CHARGER</ion-select-option
-              >
-              <ion-select-option value="CABINET"
-                >DAMAGE, STOLEN</ion-select-option
-              >
-              <ion-select-option value="CABLE"
-                >CABLE: FAILURE, DAMAGE</ion-select-option
-              >
-              <ion-select-option value="CHAINS"
-                >CHAINS: DAMAGED</ion-select-option
-              >
+              <ion-select-option value="BATTERY">FAULTY, WEAK</ion-select-option>
+              <ion-select-option value="BATTERY-CHARGER">BATTERY CHARGER</ion-select-option>
+              <ion-select-option value="CABINET">DAMAGE, STOLEN</ion-select-option>
+              <ion-select-option value="CABLE">CABLE: FAILURE, DAMAGE</ion-select-option>
+              <ion-select-option value="CHAINS">CHAINS: DAMAGED</ion-select-option>
               <ion-select-option value="CHAMBER">
                 CHAMBER COVER CRACKED, STOLEN, DAMAGE
               </ion-select-option>
@@ -225,12 +184,8 @@
                 POWER FAILURE: TRIPPING/OVERLOAD/EARTH FAULT
               </ion-select-option>
               <ion-select-option value="EM-METERS">EM METERS</ion-select-option>
-              <ion-select-option value="FLOWMETER"
-                >FLOWMETER: FAILURE, DAMAGE</ion-select-option
-              >
-              <ion-select-option value="GE-PANAMETRIC-TRANSPORT-PT878"
-                >FAILURE</ion-select-option
-              >
+              <ion-select-option value="FLOWMETER">FLOWMETER: FAILURE, DAMAGE</ion-select-option>
+              <ion-select-option value="GE-PANAMETRIC-TRANSPORT-PT878">FAILURE</ion-select-option>
               <ion-select-option value="HYDROPHONE">BLOCKED</ion-select-option>
               <ion-select-option value="INSTRUMENT">
                 INSTRUMENT/CONTROL/PLC/METER/SOLENOID/VSD
@@ -241,9 +196,7 @@
               <ion-select-option value="LEVEL-INDICATOR">
                 LEVEL INDICATOR: BROKEN, CAN'T READ
               </ion-select-option>
-              <ion-select-option value="LEVEL-SENSOR"
-                >LEVEL SENSOR</ion-select-option
-              >
+              <ion-select-option value="LEVEL-SENSOR">LEVEL SENSOR</ion-select-option>
               <ion-select-option value="LOW-PRESSURE-PILOT">
                 LOW PRESSURE PILOT: FAULT, STOLEN
               </ion-select-option>
@@ -271,37 +224,19 @@
               <ion-select-option value="PRESSURE-HOSE">
                 PRESSURE HOSE: DAMAGE, DISMANTLE
               </ion-select-option>
-              <ion-select-option value="PRESSURE-SENSOR"
-                >PRESSURE SENSOR</ion-select-option
-              >
-              <ion-select-option value="PRESSURE-TRANDUCER"
-                >DEFECTIVE</ion-select-option
-              >
-              <ion-select-option value="PRV-DIAPHRAGM"
-                >TORN, DAMAGED</ion-select-option
-              >
-              <ion-select-option value="PRV-PILOT"
-                >UNCONTROLLED, STOLEN</ion-select-option
-              >
-              <ion-select-option value="PRV-STRAINER"
-                >CLOGGED, DAMAGED</ion-select-option
-              >
+              <ion-select-option value="PRESSURE-SENSOR">PRESSURE SENSOR</ion-select-option>
+              <ion-select-option value="PRESSURE-TRANDUCER">DEFECTIVE</ion-select-option>
+              <ion-select-option value="PRV-DIAPHRAGM">TORN, DAMAGED</ion-select-option>
+              <ion-select-option value="PRV-PILOT">UNCONTROLLED, STOLEN</ion-select-option>
+              <ion-select-option value="PRV-STRAINER">CLOGGED, DAMAGED</ion-select-option>
               <ion-select-option value="REMOTE-TELEMETRY-UNIT">
                 DEFECTIVE, DAMAGE, MISSING
               </ion-select-option>
-              <ion-select-option value="RTU-MODULE"
-                >RTU SYSTEM</ion-select-option
-              >
+              <ion-select-option value="RTU-MODULE">RTU SYSTEM</ion-select-option>
               <ion-select-option value="SENSOR">FLOW FAULTY</ion-select-option>
-              <ion-select-option value="SIMCARD"
-                >MISSING, FAILURE</ion-select-option
-              >
-              <ion-select-option value="SOLAR-PANEL"
-                >SOLAR PANEL: DAMAGE</ion-select-option
-              >
-              <ion-select-option value="TRANSDUCER"
-                >TRANSDUCER: FAULT</ion-select-option
-              >
+              <ion-select-option value="SIMCARD">MISSING, FAILURE</ion-select-option>
+              <ion-select-option value="SOLAR-PANEL">SOLAR PANEL: DAMAGE</ion-select-option>
+              <ion-select-option value="TRANSDUCER">TRANSDUCER: FAULT</ion-select-option>
               <ion-select-option value="TRANSMITTER">
                 TRANSMITTER: FAILURE, MISSING, DAMAGE
               </ion-select-option>
@@ -317,35 +252,23 @@
 
           <ion-item>
             <ion-label position="stacked">Failure Root Cause</ion-label>
-            <ion-textarea
-              rows="5"
-              formControlName="failure_root_cause"
-            ></ion-textarea>
+            <ion-textarea rows="5" formControlName="failure_root_cause"></ion-textarea>
           </ion-item>
         </div>
 
-        <div
-          *ngIf="servicehistoryFormGroup.value.type == 'PREVENTIVE MAINTENANCE'"
-        >
+        <div *ngIf="servicehistoryFormGroup.value.type == 'PREVENTIVE MAINTENANCE'">
           <ion-item>
             <ion-label position="stacked">Asset Primary Category</ion-label>
-            <ion-input
-              type="text"
-              readonly
-              formControlName="asset_type"
-            ></ion-input>
+            <ion-input type="text" readonly formControlName="asset_type"></ion-input>
           </ion-item>
 
           <div *ngIf="servicehistoryFormGroup.value.asset_type == 'Pump'">
             <ion-item>
               <ion-label position="stacked">Non Drive Bearing Temperature</ion-label>
               <ion-select formControlName="answer_1">
-                <ion-select-option value="OPERATING NORMALLY / NO ACTION"
-                  >OPERATING NORMALLY / NO ACTION</ion-select-option
-                >
-                <ion-select-option value="REQUIRED CORRECTIVE ACTION"
-                  >REQUIRED CORRECTIVE ACTION</ion-select-option
-                >
+                <ion-select-option value="OPERATING NORMALLY / NO ACTION">OPERATING NORMALLY / NO ACTION
+                </ion-select-option>
+                <ion-select-option value="REQUIRED CORRECTIVE ACTION">REQUIRED CORRECTIVE ACTION</ion-select-option>
                 <ion-select-option value="REQUIRED REPLACEMENT">
                   REQUIRED REPLACEMENT
                 </ion-select-option>
@@ -355,12 +278,9 @@
             <ion-item>
               <ion-label position="stacked">Drive End Bearing Temperature</ion-label>
               <ion-select formControlName="answer_2">
-                <ion-select-option value="OPERATING NORMALLY / NO ACTION"
-                  >OPERATING NORMALLY / NO ACTION</ion-select-option
-                >
-                <ion-select-option value="REQUIRED CORRECTIVE ACTION"
-                  >REQUIRED CORRECTIVE ACTION</ion-select-option
-                >
+                <ion-select-option value="OPERATING NORMALLY / NO ACTION">OPERATING NORMALLY / NO ACTION
+                </ion-select-option>
+                <ion-select-option value="REQUIRED CORRECTIVE ACTION">REQUIRED CORRECTIVE ACTION</ion-select-option>
                 <ion-select-option value="REQUIRED REPLACEMENT">
                   REQUIRED REPLACEMENT
                 </ion-select-option>
@@ -370,12 +290,9 @@
             <ion-item>
               <ion-label position="stacked">Mechanical Seal / Packing</ion-label>
               <ion-select formControlName="answer_3">
-                <ion-select-option value="OPERATING NORMALLY / NO ACTION"
-                  >OPERATING NORMALLY / NO ACTION</ion-select-option
-                >
-                <ion-select-option value="REQUIRED CORRECTIVE ACTION"
-                  >REQUIRED CORRECTIVE ACTION</ion-select-option
-                >
+                <ion-select-option value="OPERATING NORMALLY / NO ACTION">OPERATING NORMALLY / NO ACTION
+                </ion-select-option>
+                <ion-select-option value="REQUIRED CORRECTIVE ACTION">REQUIRED CORRECTIVE ACTION</ion-select-option>
                 <ion-select-option value="REQUIRED REPLACEMENT">
                   REQUIRED REPLACEMENT
                 </ion-select-option>
@@ -386,12 +303,9 @@
             <ion-item>
               <ion-label position="stacked">Terminal Box</ion-label>
               <ion-select formControlName="answer_1">
-                <ion-select-option value="OPERATING NORMALLY / NO ACTION"
-                  >OPERATING NORMALLY / NO ACTION</ion-select-option
-                >
-                <ion-select-option value="REQUIRED CORRECTIVE ACTION"
-                  >REQUIRED CORRECTIVE ACTION</ion-select-option
-                >
+                <ion-select-option value="OPERATING NORMALLY / NO ACTION">OPERATING NORMALLY / NO ACTION
+                </ion-select-option>
+                <ion-select-option value="REQUIRED CORRECTIVE ACTION">REQUIRED CORRECTIVE ACTION</ion-select-option>
                 <ion-select-option value="REQUIRED REPLACEMENT">
                   REQUIRED REPLACEMENT
                 </ion-select-option>
@@ -401,12 +315,9 @@
             <ion-item>
               <ion-label position="stacked">Slip Ring & Carbon Brush</ion-label>
               <ion-select formControlName="answer_2">
-                <ion-select-option value="OPERATING NORMALLY / NO ACTION"
-                  >OPERATING NORMALLY / NO ACTION</ion-select-option
-                >
-                <ion-select-option value="REQUIRED CORRECTIVE ACTION"
-                  >REQUIRED CORRECTIVE ACTION</ion-select-option
-                >
+                <ion-select-option value="OPERATING NORMALLY / NO ACTION">OPERATING NORMALLY / NO ACTION
+                </ion-select-option>
+                <ion-select-option value="REQUIRED CORRECTIVE ACTION">REQUIRED CORRECTIVE ACTION</ion-select-option>
                 <ion-select-option value="REQUIRED REPLACEMENT">
                   REQUIRED REPLACEMENT
                 </ion-select-option>
@@ -416,27 +327,22 @@
             <ion-item>
               <ion-label position="stacked">Armature</ion-label>
               <ion-select formControlName="answer_3">
-                <ion-select-option value="OPERATING NORMALLY / NO ACTION"
-                  >OPERATING NORMALLY / NO ACTION</ion-select-option
-                >
-                <ion-select-option value="REQUIRED CORRECTIVE ACTION"
-                  >REQUIRED CORRECTIVE ACTION</ion-select-option
-                >
+                <ion-select-option value="OPERATING NORMALLY / NO ACTION">OPERATING NORMALLY / NO ACTION
+                </ion-select-option>
+                <ion-select-option value="REQUIRED CORRECTIVE ACTION">REQUIRED CORRECTIVE ACTION</ion-select-option>
                 <ion-select-option value="REQUIRED REPLACEMENT">
                   REQUIRED REPLACEMENT
                 </ion-select-option>
               </ion-select>
             </ion-item>
           </div>
-        </div>
+        </div> -->
       </form>
     </ion-list>
 
     <div class="ion-text-center">
       <ion-button color="light" (click)="clickBack()">Cancel</ion-button>
-      <ion-button color="primary" (click)="clickSaveServiceHistory()"
-        >Save</ion-button
-      >
+      <ion-button color="primary" (click)="clickSaveServiceHistory()">Save</ion-button>
     </div>
   </div>
 </ion-content>

@@ -18,6 +18,8 @@ import { ServiceHistoryPage } from "../service-history/service-history.page";
 import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
+import { AssetLocationAssLisSerHisService } from 'src/app/shared/services/asset-location-assLisSerHis/asset-location-assLisSerHis.service';
 
 @Component({
   selector: "app-work-activity-asset",
@@ -43,7 +45,9 @@ export class WorkActivityAssetPage implements OnInit {
     public modalController: ModalController,
     public notificationService: NotificationsService,
     private assetregistrationService: AssetRegistrationsService,
-    private workactivityService: WorkActivitiesService // private barcodeScanner: BarcodeScanner
+    private workactivityService: WorkActivitiesService,
+    // private barcodeScanner: BarcodeScanner
+    private assetsService: AssetsService
   ) {
     this.workactivityassetFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -58,38 +62,50 @@ export class WorkActivityAssetPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.workactivityasset = this.router.getCurrentNavigation().extras.state.asset;
+
         this.workactivityassetFormGroup.patchValue({
           id: this.workactivityasset.id,
           bo_status: this.workactivityasset.bo_status,
           asset_id: this.workactivityasset.asset_id,
         });
 
-        if (this.router.getCurrentNavigation().extras.state.badge_no) {
-          let badge_no = this.router.getCurrentNavigation().extras.state
-            .badge_no;
+        console.log("test test test test test test");
+        console.log(this.workactivityasset);
+        let servHist = this.workactivityasset.service_histories
 
-          if (badge_no == this.workactivityasset.badge_number) {
-            this.assetregistrationService
-              .filter("badge_no=" + badge_no)
-              .subscribe(
-                (res) => {
-                  this.workactivityassetFormGroup.patchValue({
-                    asset_type: res[0].asset_primary_category,
-                    badge_number: badge_no,
-                    serial_number: res[0].serial_number,
-                    detailed_description: res[0].detailed_description,
-                  });
-                },
-                (err) => {
-                  console.error("err", err);
-                }
-              );
-          } else
-            this.alertErrorWorkActivityAsset(
-              "Work Activity",
-              "The QR code is not same with the asset. Please try again."
-            );
-        }
+        servHist.forEach(element => {
+
+        });
+
+        // if (this.router.getCurrentNavigation().extras.state.badge_no) {
+        let badge_no = this.router.getCurrentNavigation().extras.state
+          .badge_no;
+        console.log("badge_no = ", badge_no)
+        // if (badge_no == this.workactivityasset.badge_number) {
+
+        this.assetsService
+          .filter("badge_no=" + badge_no)
+          .subscribe(
+            (res) => {
+              console.log("res qweqwe", res)
+              this.workactivityassetFormGroup.patchValue({
+                // asset_type: res[0].asset_primary_category,
+                badge_number: badge_no,
+                serial_number: res[0].serial_number,
+                // detailed_description: res[0].detailed_description,
+              });
+            },
+            (err) => {
+              console.error("err", err);
+            }
+          );
+        // } else {
+        //   this.alertErrorWorkActivityAsset(
+        //     "Work Activity",
+        //     "The QR code is not same with the asset. Please try again."
+        //   );
+        // }
+        // }
       }
     });
   }
@@ -164,7 +180,7 @@ export class WorkActivityAssetPage implements OnInit {
       buttons: [
         {
           text: "OK",
-          handler: () => {},
+          handler: () => { },
         },
       ],
     });
@@ -182,7 +198,8 @@ export class WorkActivityAssetPage implements OnInit {
       componentProps: { servicehistory: servicehistory },
     });
     modal.onDidDismiss().then((data) => {
-      // if (data.data) this.servicehistories.push(data.data);
+      if (data) this.servicehistories.push(data.data);
+      console.log("this.servicehistories = ", this.servicehistories)
       this.workactivityService.getOne(this.workactivityasset.id).subscribe(
         (res) => {
           console.log("res", res);
@@ -204,7 +221,7 @@ export class WorkActivityAssetPage implements OnInit {
       component: ServiceHistoryPage,
       componentProps: { servicehistory: servicehistory },
     });
-    modal.onDidDismiss().then((data) => {});
+    modal.onDidDismiss().then((data) => { });
     return await modal.present();
   }
 
