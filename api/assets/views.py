@@ -241,10 +241,10 @@ class AssetGroupViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class AssetTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetType.objects.all()
     serializer_class = AssetTypeSerializer
-    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    # filterset_fields = [
-    #     'created_at'
-    # ]
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'asset_bussiness_object','asset_type_code','asset_type_description','status','assessment_class'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -764,11 +764,10 @@ class AssetAttributeInboundViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 class AssetServiceHistoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetServiceHistory.objects.all()
     serializer_class = AssetServiceHistorySerializer
-    # filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    # filterset_fields = [
-    #     'category',
-    #     'created_at'
-    # ]
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'asset_service_history'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':

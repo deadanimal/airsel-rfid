@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.db.models import F, Q, Count
 
@@ -664,6 +666,9 @@ class ServiceHistoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = ServiceHistory.objects.all()
     serializer_class = ServiceHistorySerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'service_hist_type', 'service_hist_desc','service_hist_bo','category','service_hist_subclass'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -682,6 +687,9 @@ class ServiceHistoryQuestionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = ServiceHistoryQuestion.objects.all()
     serializer_class = ServiceHistoryQuestionSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'question_seq', 'question_cd','question_desc','service_history_id'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -695,6 +703,27 @@ class ServiceHistoryQuestionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         queryset = ServiceHistoryQuestion.objects.all()
 
         return queryset
+
+    @action(methods=['POST'], detail=False)
+    def get_service_history_qna(self, request):
+
+        data = json.loads(request.body)
+
+        service_history_id = data['service_history_id']
+        queryset_question = ServiceHistoryQuestion.objects.filter(service_history_id=service_history_id).values('id', 'question_seq', 'question_cd', 'question_desc', 'service_history_id')
+
+        data = []
+        for qs_qs in queryset_question:            
+            queryset_answer = ServiceHistoryQuestionValidValue.objects.filter(service_history_question_id=qs_qs['id']).values('id', 'answer_seq', 'answer_cd', 'answer_desc', 'point_value', 'style', 'service_history_question_id')
+
+            # for qs_aw in queryset_answer:
+            dictionary = {
+                'question': qs_qs,
+                'answer': queryset_answer
+            }
+            data.append(dictionary)
+
+        return Response(data)
 
 class ServiceHistoryQuestionValidValueViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = ServiceHistoryQuestionValidValue.objects.all()

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://airsel-rfid-api.pipe.my/'
-  // baseUrl: 'http://127.0.0.1:8000/'
+  // baseUrl: 'https://airsel-rfid-api.pipe.my/'
+  baseUrl: 'http://127.0.0.1:8000/'
 };

@@ -26,6 +26,7 @@
     <h4 class="ion-text-center ion-padding">Work Activity Details</h4>
     <ion-list class="line-input">
       <form [formGroup]="workactivityFormGroup">
+
         <ion-item>
           <ion-label position="stacked">Work Activity No:</ion-label>
           <ion-input type="text" [value]="workactivity.activityid" readonly></ion-input>
@@ -50,23 +51,24 @@
           <ion-label position="stacked">Asset ID:</ion-label>
           <ion-input type="text" [value]="workactivity.asset_id_1" readonly></ion-input>
         </ion-item>
+
       </form>
     </ion-list>
 
-    <ion-card>
+    <ion-card *ngFor="let workActData of workactivityData">
       <ion-card-header>
         <ion-fab horizontal="end">
-          <ion-fab-button size="small" color="primary" (click)="clickViewAsset(workactivity)">
+          <ion-fab-button size="small" color="primary" (click)="clickViewAsset(workActData)">
             <ion-icon name="search"></ion-icon>
           </ion-fab-button>
         </ion-fab>
-        <!-- <ion-card-title>Asset ID: {{ workactivity.ASSET_ID }}</ion-card-title> -->
-        <ion-card-title>Asset ID<br />{{ workactivity.asset_id }}</ion-card-title>
+        <!-- <ion-card-title>Asset ID: {{ workActData.ASSET_ID }}</ion-card-title> -->
+        <ion-card-title>Asset ID<br />{{ workActData.asset_id }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Asset Type: {{ workactivity.asset_type }}</p>
-        <p>Badge Number: {{ workactivity.badge_number }}</p>
-        <p>Serial Number: {{ workactivity.serial_number }}</p>
+        <!-- <p>Asset Type: {{ workActData.asset_type }}</p> -->
+        <p>Asset ID: {{ workActData.asset_id }}</p>
+        <p>Node ID: {{ workActData.node_id }}</p>
       </ion-card-content>
     </ion-card>
 
