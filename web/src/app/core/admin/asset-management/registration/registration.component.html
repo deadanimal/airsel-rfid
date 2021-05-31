@@ -1558,7 +1558,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="form-control-label">Asset Identity</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="asset_identity"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="asset_identity" id="asset_identity"
               class="form-control" value="{{rowData.asset_identity}}" />
           </div>
         </div>
@@ -1582,7 +1582,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].bottom_water_level">
           <div class="form-group" id="bottom_water_level">
             <label class="form-control-label">Bottom Water Level</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="bottom_water_level"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="bottom_water_level"
               class="form-control" value="{{rowData.bottom_water_level}}" />
           </div>
         </div>
@@ -1590,7 +1590,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].brand">
           <div class="form-group" id="brand">
             <label class="form-control-label">Brand</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="brand"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="brand"
               class="form-control" value="{{rowData.brand}}" />
           </div>
         </div>
@@ -1598,7 +1598,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].capacity_size">
           <div class="form-group" id="capacity_size">
             <label class="form-control-label">Capacity Size</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="capacity_size"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="capacity_size"
               class="form-control" value="{{rowData.capacity_size}}" />
           </div>
         </div>
@@ -1606,7 +1606,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].closing_torque">
           <div class="form-group" id="closing_torque">
             <label class="form-control-label">Closing Torque</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="closing_torque"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="closing_torque"
               class="form-control" value="{{rowData.closing_torque}}" />
           </div>
         </div>
@@ -1614,7 +1614,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].communication_protocol">
           <div class="form-group" id="communication_protocol">
             <label class="form-control-label">Communication Protocol</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="communication_protocol" class="form-control" value="{{rowData.communication_protocol}}" />
           </div>
         </div>
@@ -1622,7 +1622,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].coverage_range">
           <div class="form-group" id="coverage_range">
             <label class="form-control-label">Coverage Range</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="coverage_range"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="coverage_range"
               class="form-control" value="{{rowData.coverage_range}}" />
           </div>
         </div>
@@ -1630,7 +1630,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].dimention">
           <div class="form-group" id="dimention">
             <label class="form-control-label">Dimension</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="dimention"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="dimention"
               class="form-control" value="{{rowData.dimention}}" />
           </div>
         </div>
@@ -1638,7 +1638,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].environmental_performance">
           <div class="form-group" id="environmental_performance">
             <label class="form-control-label">Environment Performance</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="environmental_performance" class="form-control" value="{{rowData.environmental_performance}}" />
           </div>
         </div>
@@ -1646,7 +1646,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].flow_rate">
           <div class="form-group" id="flow_rate">
             <label class="form-control-label">Flow Rate</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="flow_rate"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="flow_rate"
               class="form-control" value="{{rowData.flow_rate}}" />
           </div>
         </div>
@@ -1654,14 +1654,14 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].frequency">
           <div class="form-group" id="frequency">
             <label class="form-control-label">Frequency</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="frequency"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="frequency"
               class="form-control" value="{{rowData.Frequency}}" />
           </div>
         </div>
         <div class="col-md-4" *ngIf="assetprimaryshow[0].horse_power">
           <div class="form-group" id="horse_power">
             <label class="form-control-label">Horse Power</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="horse_power"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="horse_power"
               class="form-control" value="{{rowData.horse_power}}" />
           </div>
         </div>
@@ -1669,7 +1669,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].hysteresis">
           <div class="form-group" id="hysteresis">
             <label class="form-control-label">Hysteresis</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="hysteresis"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="hysteresis"
               class="form-control" value="{{rowData.hysteresis}}" />
           </div>
         </div>
@@ -1677,7 +1677,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].infrastructure_status">
           <div class="form-group" id="infrastructure_status">
             <label class="form-control-label">Infrastructure Status</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="infrastructure_status"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="infrastructure_status"
               class="form-control" value="{{rowData.infrastructure_status}}" />
           </div>
         </div>
@@ -1685,7 +1685,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].infrastructure_status_reason">
           <div class="form-group" id="infrastructure_status_reason">
             <label class="form-control-label">Infrastructure Status-Reason</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="infrastructure_status_reason" class="form-control"
               value="{{rowData.infrastructure_status_reason}}" />
           </div>
@@ -1694,7 +1694,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].inlet_diameter">
           <div class="form-group" id="inlet_diameter">
             <label class="form-control-label">Inlet Diameter</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="inlet_diameter"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="inlet_diameter"
               class="form-control" value="{{rowData.inlet_diameter}}" />
           </div>
         </div>
@@ -1702,7 +1702,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].installation">
           <div class="form-group" id="installation">
             <label class="form-control-label">Installation</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="installation"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="installation"
               class="form-control" value="{{rowData.installation}}" />
           </div>
         </div>
@@ -1710,7 +1710,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].insulation">
           <div class="form-group" id="insulation">
             <label class="form-control-label">Insulation</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="insulation"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="insulation"
               class="form-control" value="{{rowData.insulation}}" />
           </div>
         </div>
@@ -1718,7 +1718,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].legal_name">
           <div class="form-group" id="legal_name">
             <label class="form-control-label">Legal Name</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="legal_name"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="legal_name"
               class="form-control" value="{{rowData.legal_name}}" />
           </div>
         </div>
@@ -1729,8 +1729,8 @@
             <!-- <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="manufacturer"
               class="form-control" value="{{rowData.manufacturer}}" /> -->
 
-            <select class="form-control custom-select custom-select-sm"
-              (change)="onKey($event.target.value,$event.target.name,row)" name="manufacturer"
+            <select class="form-control custom-select custom-select-sm" id="manufacturer"
+              (change)="onKey($event.target.value,$event.target.name,rowData)" name="manufacturer"
               value="{{rowData.manufacturer}}">
               <option *ngFor="let manufacturer of manufacturer" [value]="manufacturer.characteristic_value">
                 {{ manufacturer.characteristic_value }}</option>
@@ -1741,7 +1741,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].manufacturer_year">
           <div class="form-group" id="manufacturer_year">
             <label class="form-control-label">Manufacturer Year</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="manufacturer_year"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="manufacturer_year"
               class="form-control" value="{{rowData.manufacturer_year}}" />
           </div>
         </div>
@@ -1749,7 +1749,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].manufacture_part_number">
           <div class="form-group" id="manufacture_part_number">
             <label class="form-control-label">Manufacture Part Number</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="manufacture_part_number" class="form-control" value="{{rowData.manufacture_part_number}}" />
           </div>
         </div>
@@ -1757,7 +1757,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].material_type">
           <div class="form-group" id="material_type">
             <label class="form-control-label">Material Type</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="material_type"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="material_type"
               class="form-control" value="{{rowData.material_type}}" />
           </div>
         </div>
@@ -1765,7 +1765,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].model">
           <div class="form-group" id="model">
             <label class="form-control-label">Model</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="model"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="model"
               class="form-control" value="{{rowData.model}}" />
           </div>
         </div>
@@ -1773,7 +1773,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].motor_current">
           <div class="form-group" id="motor_current">
             <label class="form-control-label">Motor Current</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="motor_current"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="motor_current"
               class="form-control" value="{{rowData.motor_current}}" />
           </div>
         </div>
@@ -1781,7 +1781,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].no_of_channel">
           <div class="form-group" id="no_of_channel">
             <label class="form-control-label">No Of Channel</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="no_of_channel"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="no_of_channel"
               class="form-control" value="{{rowData.no_of_channel}}" />
           </div>
         </div>
@@ -1789,7 +1789,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].no_of_phases">
           <div class="form-group" id="no_of_phases">
             <label class="form-control-label">No Of Phases</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="no_of_phases"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="no_of_phases"
               class="form-control" value="{{rowData.no_of_phases}}" />
           </div>
         </div>
@@ -1797,7 +1797,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].no_of_stage">
           <div class="form-group" id="no_of_stage">
             <label class="form-control-label">No Of Stage</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="no_of_stage"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="no_of_stage"
               class="form-control" value="{{rowData.no_of_stage}}" />
           </div>
         </div>
@@ -1805,7 +1805,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].opening_torque">
           <div class="form-group" id="opening_torque">
             <label class="form-control-label">Opening Torque</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="opening_torque"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="opening_torque"
               class="form-control" value="{{rowData.opening_torque}}" />
           </div>
         </div>
@@ -1813,7 +1813,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].outlet_diameter">
           <div class="form-group" id="outlet_diameter">
             <label class="form-control-label">Outlet Diameter</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="outlet_diameter"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="outlet_diameter"
               class="form-control" value="{{rowData.outlet_diameter}}" />
           </div>
         </div>
@@ -1821,7 +1821,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].power_supply_type">
           <div class="form-group" id="power_supply_type">
             <label class="form-control-label">Power Supply Type</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="power_supply_type"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="power_supply_type"
               class="form-control" value="{{rowData.power_supply_type}}" />
           </div>
         </div>
@@ -1829,7 +1829,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].pump_head">
           <div class="form-group" id="pump_head">
             <label class="form-control-label">Pump Head</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="pump_head"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="pump_head"
               class="form-control" value="{{rowData.pump_head}}" />
           </div>
         </div>
@@ -1837,7 +1837,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].revolutions_per_minute">
           <div class="form-group" id="revolutions_per_minute">
             <label class="form-control-label">Revolution Per Minute</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="revolutions_per_minute" class="form-control" value="{{rowData.revolutions_per_minute}}" />
           </div>
         </div>
@@ -1845,7 +1845,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].source_from">
           <div class="form-group" id="source_from">
             <label class="form-control-label">Source From</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="source_from"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="source_from"
               class="form-control" value="{{rowData.source_from}}" />
           </div>
         </div>
@@ -1853,7 +1853,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].staging_height">
           <div class="form-group" id="staging_height">
             <label class="form-control-label">Staging Height</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="staging_height"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="staging_height"
               class="form-control" value="{{rowData.staging_height}}" />
           </div>
         </div>
@@ -1861,7 +1861,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].supply_location">
           <div class="form-group" id="supply_location">
             <label class="form-control-label">Supply Location</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="supply_location"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="supply_location"
               class="form-control" value="{{rowData.supply_location}}" />
           </div>
         </div>
@@ -1869,7 +1869,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].temperature">
           <div class="form-group" id="temperature">
             <label class="form-control-label">Temperature</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="temperature"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="temperature"
               class="form-control" value="{{rowData.temperature}}" />
           </div>
         </div>
@@ -1877,7 +1877,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].top_water_level">
           <div class="form-group" id="top_water_level">
             <label class="form-control-label">Top Water Level</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="top_water_level"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="top_water_level"
               class="form-control" value="{{rowData.top_water_level}}" />
           </div>
         </div>
@@ -1885,7 +1885,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].type">
           <div class="form-group" id="type">
             <label class="form-control-label">Type</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="type"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="type"
               class="form-control" value="{{rowData.type}}" />
           </div>
         </div>
@@ -1893,7 +1893,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].valve_diameter">
           <div class="form-group" id="valve_diameter">
             <label class="form-control-label">Valve Diameter</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="valve_diameter"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="valve_diameter"
               class="form-control" value="{{rowData.valve_diameter}}" />
           </div>
         </div>
@@ -1901,7 +1901,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].valve_pressure_rating">
           <div class="form-group" id="valve_pressure_rating">
             <label class="form-control-label">Valve Pressure Rating</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="valve_pressure_rating"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="valve_pressure_rating"
               class="form-control" value="{{rowData.valve_pressure_rating}}" />
           </div>
         </div>
@@ -1909,7 +1909,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_chassis_number">
           <div class="form-group" id="vehicle_chasis_number">
             <label class="form-control-label">Vehicle Chassis Number</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_chasis_number"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_chasis_number"
               class="form-control" value="{{rowData.vehicle_chasis_number}}" />
           </div>
         </div>
@@ -1917,7 +1917,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_engine_capacity">
           <div class="form-group" id="vehicle_engine_capacity">
             <label class="form-control-label">Vehicle Engine Capacity</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_engine_capacity" class="form-control" value="{{rowData.vehicle_engine_capacity}}" />
           </div>
         </div>
@@ -1925,7 +1925,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_engine_number">
           <div class="form-group" id="vehicle_engine_number">
             <label class="form-control-label">Vehicle Engine Number</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_engine_number"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_engine_number"
               class="form-control" value="{{rowData.vehicle_engine_number}}" />
           </div>
         </div>
@@ -1937,7 +1937,7 @@
               name="vehicle_insurance_vendor" class="form-control" value="{{rowData.asset_identity}}" /> -->
 
             <select class="form-control custom-select custom-select-sm" name="vehicle_insurance_vendor"
-              (change)="onKey($event.target.value,$event.target.name,row)" value="{{rowData.vehicle_insurance_vendor}}">
+              (change)="onKey($event.target.value,$event.target.name,rowData)" value="{{rowData.vehicle_insurance_vendor}}">
               <option *ngFor="let vehicleInsuranceVendor of vehicleInsuranceVendor"
                 [value]="vehicleInsuranceVendor.characteristic_value">
                 {{ vehicleInsuranceVendor.characteristic_value }}</option>
@@ -1948,7 +1948,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_model">
           <div class="form-group" id="vehicle_model">
             <label class="form-control-label">Vehicle Model</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_model"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_model"
               class="form-control" value="{{rowData.vehicle_model}}" />
           </div>
         </div>
@@ -1956,7 +1956,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_insurance_auto_windscreen_insured">
           <div class="form-group" id="vehicle_insurance_auto_windscreen_insured">
             <label class="form-control-label">Vehicle Insurance Auto Windscreen Insured</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_insurance_auto_windscreen_insured" class="form-control"
               value="{{rowData.vehicle_insurance_auto_windscreen_insured}}" />
           </div>
@@ -1965,7 +1965,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_insurance_cover_note_number">
           <div class="form-group" id="vehicle_insurance_cover_note_number">
             <label class="form-control-label">Vehicle Insurance Cover Note Number</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_insurance_cover_note_number" class="form-control"
               value="{{rowData.vehicle_insurance_cover_note_number}}" />
           </div>
@@ -1974,7 +1974,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_insurance_date_period_from">
           <div class="form-group" id="vehicle_insurance_date_period_from">
             <label class="form-control-label">Vehicle Insurance Date Period From</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_insurance_date_period_from" class="form-control"
               value="{{rowData.vehicle_insurance_date_period_from}}" />
           </div>
@@ -1983,7 +1983,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_insurance_date_period_to">
           <div class="form-group" id="vehicle_insurance_date_period_to">
             <label class="form-control-label">Vehicle Insurance Date Period To</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_insurance_date_period_to" class="form-control"
               value="{{rowData.vehicle_insurance_date_period_to}}" />
           </div>
@@ -1992,7 +1992,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_insurance_no_claim_discount">
           <div class="form-group" id="vehicle_insurance_no_claim_discount">
             <label class="form-control-label">Vehicle Insurance No Claim Discount</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_insurance_no_claim_discount" class="form-control"
               value="{{rowData.vehicle_insurance_no_claim_discount}}" />
           </div>
@@ -2006,7 +2006,7 @@
               value="{{rowData.vehicle_insurance_policy_type}}" /> -->
 
             <select class="form-control custom-select custom-select-sm"
-              (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_insurance_policy_type"
+              (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_insurance_policy_type"
               value="{{rowData.vehicle_insurance_policy_type}}">
               <option *ngFor="let vehicleInsurancePolicyType of vehicleInsurancePolicyType"
                 [value]="vehicleInsurancePolicyType.characteristic_value">
@@ -2019,7 +2019,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_insurance_sum_insured">
           <div class="form-group" id="vehicle_insurance_sum_insured">
             <label class="form-control-label">Vehicle Insurance Sum Insured</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_insurance_sum_insured" class="form-control"
               value="{{rowData.vehicle_insurance_sum_insured}}" />
           </div>
@@ -2028,7 +2028,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_insurance_total_premium">
           <div class="form-group" id="vehicle_insurance_total_premium">
             <label class="form-control-label">Vehicle Insurance Total Premium</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_insurance_total_premium" class="form-control"
               value="{{rowData.vehicle_insurance_total_premium}}" />
           </div>
@@ -2037,7 +2037,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_puspakom_date_inspection">
           <div class="form-group" id="vehicle_puspakom_date_inspection">
             <label class="form-control-label">Vehicle Puspakom Date Inspection</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_puspakom_date_inspection" class="form-control"
               value="{{rowData.vehicle_puspakom_date_inspection}}" />
           </div>
@@ -2050,7 +2050,7 @@
               class="form-control" value="{{rowData.vehicle_owner_status}}" /> -->
 
             <select class="form-control custom-select custom-select-sm" value="{{rowData.vehicle_owner_status}}"
-              (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_owner_status">
+              (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_owner_status">
               <option *ngFor="let vehicle_owner_status of vehicle_owner_status"
                 [value]="vehicle_owner_status.characteristic_value">
                 {{ vehicle_owner_status.characteristic_value }}</option>
@@ -2061,7 +2061,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_register_date">
           <div class="form-group" id="vehicle_register_date">
             <label class="form-control-label">Vehicle Register Date</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_register_date"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_register_date"
               class="form-control" value="{{rowData.vehicle_register_date}}" />
 
 
@@ -2071,7 +2071,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_roadtax_rate">
           <div class="form-group" id="vehicle_roadtax_rate">
             <label class="form-control-label">Vehicle Roadtax Rate</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="vehicle_roadtax_rate"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_roadtax_rate"
               class="form-control" value="{{rowData.vehicle.roadtax_rate}}" />
           </div>
         </div>
@@ -2079,7 +2079,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_puspakom_expired_date">
           <div class="form-group" id="vehicle-vehicle_puspakom_expired_date">
             <label class="form-control-label">Vehicle Puspakom Expired Date</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_puspakom_expired_date" class="form-control"
               value="{{rowData.vehicle_puspakom_expired_date}}" />
           </div>
@@ -2087,7 +2087,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_spad_permit_date_period_to">
           <div class="form-group" id="vehicle_spad_permit_date_period_to">
             <label class="form-control-label">Vehicle Spad Permit Date Period To</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_spad_permit_date_period_to" class="form-control"
               value="{{rowData.vehicle_spad_permit_date_period_to}}" />
           </div>
@@ -2096,7 +2096,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_roadtax_renew_date">
           <div class="form-group" id="vehicle_roadtax_renew_date">
             <label class="form-control-label">Vehicle Roadtax Renew Date</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_roadtax_renew_date" class="form-control" value="{{rowData.vehicle_roadtax_renew_date}}" />
           </div>
         </div>
@@ -2104,7 +2104,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_roadtax_expired_date">
           <div class="form-group" id="vehicle_roadtax_expired_date">
             <label class="form-control-label">Vehicle Roadtax Expired Date</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_roadtax_expired_date" class="form-control"
               value="{{rowData.vehicle_roadtax_expired_date}}" />
           </div>
@@ -2113,7 +2113,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_spad_no_license_operator">
           <div class="form-group" id="vehicle_spad_no_license_operator">
             <label class="form-control-label">Vehicel Spad No License Operator</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_spad_no_license_operator" class="form-control"
               value="{{rowData.vehicle_spad_no_license_operator}}" />
           </div>
@@ -2122,7 +2122,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_spad_permit_date_period_from">
           <div class="form-group" id="vehicle_spad_permit_date_period_from">
             <label class="form-control-label">Vehicle Spad Permit Date Period From</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_spad_permit_date_period_from" class="form-control"
               value="{{rowData.vehicle_spad_permit_date_period_from}}" />
           </div>
@@ -2131,7 +2131,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_seating_capacity">
           <div class="form-group" id="vehicle_seating_capacity">
             <label class="form-control-label">Vehicle Seating Capacity</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
               name="vehicle_seating_capacity" class="form-control"
               value="{{rowData.vehicle-vehicle_seating_capacity}}" />
           </div>
@@ -2144,7 +2144,7 @@
               name="vehicle_registration_owner" class="form-control" value="{{rowData.vehicle_registration_owner}}" /> -->
 
             <select class="form-control custom-select custom-select-sm" name="vehicle_registration_owner"
-              (change)="onKey($event.target.value,$event.target.name,row)"
+              (change)="onKey($event.target.value,$event.target.name,rowData)"
               value="{{rowData.vehicle_registration_owner}}">
               <option *ngFor=" let vehicle_registration_owner of vehicle_registration_owner"
                 [value]="vehicle_registration_owner.characteristic_value">
@@ -2156,7 +2156,7 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].voltage">
           <div class="form-group" id="voltage">
             <label class="form-control-label">Voltage</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="voltage"
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="voltage"
               class="form-control" value="{{rowData.voltage}}" />
           </div>
         </div>
@@ -2166,12 +2166,12 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-default btn-sm" (click)="submitFileExcel()">
-      Submit
+    <button class="btn btn-default btn-sm" (click)="ModalAssetAttribute.hide()">
+      OK
     </button>
-    <button class="btn btn-secondary btn-sm" type="button" (click)="ModalAssetAttribute.hide()">
+    <!-- <button class="btn btn-secondary btn-sm" type="button" (click)="ModalAssetAttribute.hide()">
       Close
-    </button>
+    </button> -->
   </div>
 </ng-template>
 

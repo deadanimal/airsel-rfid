@@ -1864,7 +1864,7 @@ export class RegistrationComponent implements OnInit {
 
   submitFileExcel() {
 
-    if (this.firstFormGroup.valid) {
+    
       let assetregserv = this.assetsRegistrationService
       this.spinner.show();
       this.dataFromExcelFile.forEach(function (loopval, index) {
@@ -2024,21 +2024,6 @@ export class RegistrationComponent implements OnInit {
           this.getRegisteredData()
         });
       this.closeModal()
-
-    } else {
-      this.spinner.hide();
-      swal
-        .fire({
-          title: "failed",
-          text: "The submission has failed",
-          type: "warning",
-        }).then((result) => {
-          // const invalidControl = this.firstFormGroup.controls['asset_identity'].invalid;
-          // invalidControl.
-          // this.getRegisteredData()
-        });
-      this.closeModal()
-    }
 
   }
 
@@ -2220,7 +2205,10 @@ export class RegistrationComponent implements OnInit {
     // updateformData = {
     //   cendol: event
     // }
+
     console.log("event", event);
+    console.log("form name", formName);
+    console.log("row", row);
     updateformData[formName] = event
 
     // updateformData.value
