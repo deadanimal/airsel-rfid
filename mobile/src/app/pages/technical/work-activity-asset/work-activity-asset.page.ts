@@ -91,7 +91,7 @@ export class WorkActivityAssetPage implements OnInit {
               this.workactivityassetFormGroup.patchValue({
                 // asset_type: res[0].asset_primary_category,
                 badge_number: badge_no,
-                serial_number: res[0].serial_number,
+                // serial_number: res[0].serial_number,
                 // detailed_description: res[0].detailed_description,
               });
             },

@@ -65,13 +65,13 @@ export class ServiceHistoryPage implements OnInit {
     // console.log("servicehistory == ", this.navParams.get("servicehistory"));
 
     let servHist = this.navParams.get("servicehistory")
-    // console.log("servHist qqqqqq = ", servHist)
+    console.log("servHist qqqqqq = ", servHist)
 
     this.assetsService
       .filter("asset_id=" + servHist.asset_id)
       .subscribe(
         (assServres) => {
-          // console.log("assetsService res", res)
+          console.log("assetsService res", assServres)
           // console.log("assetsService res", res[0]['asset_type'])
           // console.log("assetsService res", res[0].asset_type)
           this.assetTypesService
@@ -125,26 +125,26 @@ export class ServiceHistoryPage implements OnInit {
         }
       );
 
-    if (this.navParams.get("servicehistory")) {
-      if (this.navParams.get("servicehistory").service_history_type_dt) {
-        this.servicehistoryFormGroup.patchValue({
-          ...this.navParams.get("servicehistory"),
-          type: this.navParams.get("servicehistory").service_history_type_dt
-        });
-      }
-      else if (this.navParams.get("servicehistory").service_history_type_f) {
-        this.servicehistoryFormGroup.patchValue({
-          ...this.navParams.get("servicehistory"),
-          type: this.navParams.get("servicehistory").service_history_type_f
-        });
-      }
-      else if (this.navParams.get("servicehistory").service_history_type_pm) {
-        this.servicehistoryFormGroup.patchValue({
-          ...this.navParams.get("servicehistory"),
-          type: this.navParams.get("servicehistory").service_history_type_pm
-        });
-      }
-    }
+    // if (this.navParams.get("servicehistory")) {
+    //   if (this.navParams.get("servicehistory").service_history_type_dt) {
+    //     this.servicehistoryFormGroup.patchValue({
+    //       ...this.navParams.get("servicehistory"),
+    //       type: this.navParams.get("servicehistory").service_history_type_dt
+    //     });
+    //   }
+    //   else if (this.navParams.get("servicehistory").service_history_type_f) {
+    //     this.servicehistoryFormGroup.patchValue({
+    //       ...this.navParams.get("servicehistory"),
+    //       type: this.navParams.get("servicehistory").service_history_type_f
+    //     });
+    //   }
+    //   else if (this.navParams.get("servicehistory").service_history_type_pm) {
+    //     this.servicehistoryFormGroup.patchValue({
+    //       ...this.navParams.get("servicehistory"),
+    //       type: this.navParams.get("servicehistory").service_history_type_pm
+    //     });
+    //   }
+    // }
   }
 
   ngOnInit() { }
@@ -329,29 +329,13 @@ export class ServiceHistoryPage implements OnInit {
         validValueFormData['short_text_valid'] = element1.question_id
         validValueFormData['text_valid'] = element1.question_id
 
+        console.log("validValueFormData = ", validValueFormData)
+
         this.questionValidValueService.post(validValueFormData).subscribe(
           (serHisQueRes) => {
-            // console.log("res = ", serHisQueRes)
+            console.log("res serHisQueRes = ", serHisQueRes)
 
-            validvalue.push(element2.id);
-
-            let serHisQueFormData = new FormData();
-            serHisQueFormData['seq'] = element1.question_seq
-            serHisQueFormData['code'] = element1.question_cd
-            serHisQueFormData['short_text'] = element1.question_cd
-            serHisQueFormData['text'] = element1.question_desc
-            serHisQueFormData['style'] = styleDiv
-            serHisQueFormData['respone'] = element1.question_desc
-            serHisQueFormData['response_check_box'] = element1.question_desc
-            serHisQueFormData['response_radio'] = element1.question_desc
-            // serHisQueFormData['responseDate'] = element1.responseDate
-            // serHisQueFormData['response_datetime'] = element1.response_datetime
-            serHisQueFormData['valid_value'] = validvalue
-
-            console.log("serHisQueFormData = ", serHisQueFormData)
-
-
-
+            validvalue.push(serHisQueRes.id);
 
           },
           (err) => {
@@ -364,6 +348,22 @@ export class ServiceHistoryPage implements OnInit {
       //////////
       console.log("validvalue = ", validvalue)
       console.log("element1 ,", element1)
+      console.log("element2 ,", element2)
+
+      let serHisQueFormData = new FormData();
+      serHisQueFormData['seq'] = element1.question_seq
+      serHisQueFormData['code'] = element1.question_cd
+      serHisQueFormData['short_text'] = element1.question_cd
+      serHisQueFormData['text'] = element1.question_desc
+      serHisQueFormData['style'] = styleDiv
+      serHisQueFormData['respone'] = element1.question_desc
+      serHisQueFormData['response_check_box'] = element1.question_desc
+      serHisQueFormData['response_radio'] = element1.question_desc
+      // serHisQueFormData['responseDate'] = element1.responseDate
+      // serHisQueFormData['response_datetime'] = element1.response_datetime
+      serHisQueFormData['valid_value'] = validvalue
+
+      console.log("serHisQueFormData = ", serHisQueFormData)
 
       // this.questionValidValueService
       //   .update(

@@ -1,4 +1,4 @@
-// declare var broadcaster: any;
+declare var broadcaster: any;
 
 import { Component, NgZone, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
@@ -13,6 +13,7 @@ import { NotificationsService } from "src/app/shared/services/notifications/noti
 import { OperationalReadingsService } from "src/app/shared/services/operational-readings/operational-readings.service";
 import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
 import { AssetsService } from 'src/app/shared/services/assets/assets.service';
+import { WamsService } from "src/app/shared/services/wams/wams.service";
 
 @Component({
   selector: "app-operational-reading-list",
@@ -42,7 +43,8 @@ export class OperationalReadingListPage implements OnInit {
     public notificationService: NotificationsService,
     private assetregistrationService: AssetRegistrationsService,
     private operationalreadingService: OperationalReadingsService,
-    private assetsService: AssetsService
+    private assetsService: AssetsService,
+    private wamsService: WamsService
   ) { }
 
   private L(...args: any[]) {
@@ -54,7 +56,7 @@ export class OperationalReadingListPage implements OnInit {
   }
 
   ngOnInit() {
-    // broadcaster._debug = true;
+    broadcaster._debug = true;
     this.onRegister2DBarcodeListener();
     this.onRegisterRFIDListener();
   }
@@ -86,7 +88,7 @@ export class OperationalReadingListPage implements OnInit {
         });
       }
     };
-    // broadcaster.addEventListener(ev, isGlobal, listener);
+    broadcaster.addEventListener(ev, isGlobal, listener);
   }
 
   onRegisterRFIDListener() {
@@ -110,7 +112,7 @@ export class OperationalReadingListPage implements OnInit {
         });
       }
     };
-    // broadcaster.addEventListener(ev, isGlobal, listener);
+    broadcaster.addEventListener(ev, isGlobal, listener);
   }
 
   getOperationalReading() {
@@ -222,6 +224,16 @@ export class OperationalReadingListPage implements OnInit {
                   badge_no: data.badge_no,
                 },
               };
+
+              /// get data from wams
+              this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
+                (resBsdgeNo) => {
+
+                }, (errBadgeNo) => {
+
+                }
+              );
+
               this.router.navigate(
                 ["/technical/operational-reading"],
                 navigationExtras
@@ -270,7 +282,17 @@ export class OperationalReadingListPage implements OnInit {
                 badge_no: res[0].badge_no,
               },
             };
-            console.log("navigationExtras = ", navigationExtras)
+
+            /// get data from wams
+            this.wamsService.getAssetBadgeNo(res[0].badge_no).subscribe(
+              (resBsdgeNo) => {
+
+              }, (errBadgeNo) => {
+
+              }
+            );
+
+            // console.log("navigationExtras = ", navigationExtras)
             this.router.navigate(
               ["/technical/work-request"],
               navigationExtras
@@ -297,12 +319,22 @@ export class OperationalReadingListPage implements OnInit {
       this.scanValue = data // "SLUV-0009495" // data;
       console.log("updateData2 = ", this.scanValue);
 
-      if (this.scanValue.badge_no != '') {
+      if (this.scanValue != '') {
         let navigationExtras: NavigationExtras = {
           state: {
             badge_no: this.scanValue,
           },
         };
+
+        /// get data from wams
+        this.wamsService.getAssetBadgeNo(this.scanValue).subscribe(
+          (resBsdgeNo) => {
+
+          }, (errBadgeNo) => {
+
+          }
+        );
+
         this.router.navigate(
           ["/technical/work-request"],
           navigationExtras

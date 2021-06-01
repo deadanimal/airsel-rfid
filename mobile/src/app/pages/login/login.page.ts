@@ -147,6 +147,7 @@ export class LoginPage implements OnInit {
                               resAD["status"] = true;
                               resAD["department"] = "";
                               resAD["employee_id"] = resEmp[0].uuid;
+                              resAD["service_area"] = resAD.region;
                               this.userService
                                 .update(resAD, resPIPE.user.pk)
                                 .subscribe((resPIPE) => {
