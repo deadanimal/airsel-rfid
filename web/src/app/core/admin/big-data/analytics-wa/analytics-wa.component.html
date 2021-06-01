@@ -32,8 +32,8 @@
               <h4 class="mb-0">Search filter</h4>
             </div>
             <div class="col-auto text-right">
-              <button class="btn btn-default btn-sm">Search</button>
-              <button class="btn btn-secondary btn-sm">Reset</button>
+              <button class="btn btn-default btn-sm" (click)="getByDate($event)()">Search</button>
+              <button class="btn btn-secondary btn-sm" (click)="reset()">Reset</button>
             </div>
           </div>
         </div>
@@ -44,44 +44,60 @@
                 <label class="form-control-label">Owning Organization</label>
                 <select class="form-control form-control-sm">
                   <option value="">Please select</option>
+                  <option *ngFor="let assetowningdepartment of assetowningdepartment"
+                    [value]="assetowningdepartment.value">
+                    {{ assetowningdepartment.name }}</option>
                 </select>
               </div>
             </div>
             <div class="col-lg-6 col-xs-12">
+              <div class="form-group">
+                <label class="form-control-label">Date Range</label>
+
+                <input id="dateRange" type="text" class="form-control form-control-sm"
+                  placeholder="Please select date range" bsDaterangepicker [bsConfig]="{
+                    isAnimated: true,
+                    containerClass: 'theme-default',
+                    rangeInputFormat: 'MM/DD/YYYY',
+                    dateInputFormat: 'MM/DD/YYYY'
+                  }" 
+                  (ngModelChange)="getByDate($event)"
+                  [(ngModel)]="this.filters.date"/>
+              </div>
+            </div>
+            <!-- <div class="col-lg-6 col-xs-12">
               <div class="form-group">
                 <label class="form-control-label">Work Category</label>
                 <select class="form-control form-control-sm">
                   <option value="">Please select</option>
                 </select>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="row">
-            <div class="col-lg-6 col-xs-12">
+            <!-- <div class="col-lg-6 col-xs-12">
               <div class="form-group">
                 <label class="form-control-label">Date Range</label>
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  placeholder="Please select date range"
-                  bsDaterangepicker
-                  [bsConfig]="{
+
+                <input id="dateRange" type="text" class="form-control form-control-sm"
+                  placeholder="Please select date range" bsDaterangepicker [bsConfig]="{
                     isAnimated: true,
                     containerClass: 'theme-default',
                     rangeInputFormat: 'MM/DD/YYYY',
                     dateInputFormat: 'MM/DD/YYYY'
-                  }"
-                />
+                  }" 
+                  (ngModelChange)="getByDate($event)"
+                  [(ngModel)]="this.filters.date"/>
               </div>
-            </div>
-            <div class="col-lg-6 col-xs-12">
+            </div> -->
+            <!-- <div class="col-lg-6 col-xs-12">
               <div class="form-group">
                 <label class="form-control-label">Region</label>
                 <select class="form-control form-control-sm">
                   <option value="">Please select</option>
                 </select>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -102,33 +118,31 @@
           <h4 class="mb-0 text-white">Total Numbers of Backlog</h4>
           <div class="row">
             <div class="col-4 text-right">
-              <h1 class="font-weight-bold">2,371</h1>
+              <h1 class="font-weight-bold">{{ totalBackLogToday }}</h1>
             </div>
             <div class="col-4 pt-1">
               <i class="fas fa-arrow-right fa-2x"></i>
             </div>
             <div class="col-4 text-left">
-              <h1 class="text-white font-weight-bolder">3,215</h1>
+              <h1 class="text-white font-weight-bolder"> {{totalBackLogYesterday}}</h1>
             </div>
           </div>
 
           <h4 class="mb-0 text-white">Backlog Percentage:</h4>
           <div class="row">
             <div class="col-4 text-right">
-              <h2 class="font-weight-bold">23.16%</h2>
+              <h2 class="font-weight-bold">{{backLogPercentageToday}}</h2>
             </div>
             <div class="col-4 pt-1">
               <i class="fas fa-arrow-right fa-lg"></i>
             </div>
             <div class="col-4 text-left">
-              <h2 class="text-white font-weight-bolder">24.84%</h2>
+              <h2 class="text-white font-weight-bolder">{{backLogPercentageYesterday}}</h2>
             </div>
           </div>
 
-          <small style="color: white;"
-            >*Users are reminded to complete work activity within required by
-            date.</small
-          >
+          <small style="color: white;">*Users are reminded to complete work activity within required by
+            date.</small>
         </div>
       </div>
 
