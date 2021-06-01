@@ -6,6 +6,7 @@ import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import { formatDate } from '@angular/common';
 
 am4core.useTheme(am4themes_animated);
 
@@ -25,30 +26,121 @@ export class AnalyticsWaComponent implements OnInit {
     this.getWorkOrderActivity();
   }
 
+  assetowningdepartment = [
+    { value: "CBD", name: "CUSTOMER BILLING SERVICES" },
+    { value: "DISTRIBUTION", name: "DISTRIBUTION" },
+    { value: "ES-D", name: "ENGINEERING SERVICES – DISTRIBUTION" },
+    { value: "FLEET", name: "FLEET" },
+    { value: "LAND", name: "LAND" },
+    { value: "NRW", name: "NRW" },
+    { value: "PD-N", name: "PRODUCTION NORTHERN" },
+    { value: "PD-S", name: "PRODUCTION SOUTHERN" },
+    { value: "SCADA", name: "SCADA" },
+    { value: "WQ", name: "WATER QUALITY" },
+    { value: "NA", name: "NOT AVAILABLE" },
+  ];
+
   //variable
   WorkOrderActivity: any;
   totalWorkOrder: any
   tempTotalWorkOrder: any
-
+  backLog: any
+  totalBackLogToday: any
+  totalBackLogYesterday: any
+  backLogPercentageToday : any
+  backLogPercentageYesterday : any
 
   getWorkOrderActivity() {
+
+    // let temp = []
     this.workOrderActivityCompletionService.get().subscribe((response) => {
       console.log('response from API is ', response);
       this.WorkOrderActivity = response;
       console.log("WorkOrderActivity", this.WorkOrderActivity);
+
       this.getTotalWorkOrder();
+
+      this.backLog = this.WorkOrderActivity.filter((value) => value.bo_status_cd.includes("Backlog"));
+      console.log("BackLog", this.backLog);
       // this.updateFilter();
+
+      this.getTotalBackLog()
     }, (error) => {
       console.log('Error is ', error)
     })
   }
-  
-  getTotalWorkOrder(){
+
+  getTotalBackLog() {
+
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1)
+
+    console.log("today", today)
+    console.log("yesterday", yesterday)
+
+    let yesterdayBacklog =[]
+
+    for (let i in this.backLog) {
+
+      const filteredData = formatDate(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') < formatDate(today, 'yyyy-MM-dd', 'en_US');
+      console.log("filtered backlog", filteredData)
+
+      if(formatDate(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') < formatDate(today, 'yyyy-MM-dd', 'en_US'))
+        yesterdayBacklog[i] = this.backLog[i]
+
+      // if (formatDate(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(this.yesterday, 'yyyy-MM-dd', 'en_US'))
+      //   yesterdayBacklog[i] = this.backLog[i]
+    }
+    console.log("yesterday BackLog",yesterdayBacklog)
+
+    this.totalBackLogToday = this.backLog.length
+    this.totalBackLogYesterday = yesterdayBacklog.length
+    const totalActivity = this.WorkOrderActivity.length
+
+    console.log("Today",this.totalBackLogToday)
+    console.log("yesterday",this.totalBackLogYesterday)
+
+    this.backLogPercentageToday = ((this.totalBackLogToday/totalActivity) * 100).toFixed(2);
+    this.backLogPercentageYesterday = ((this.totalBackLogYesterday/totalActivity) * 100).toFixed(2);
+
+  }
+
+  getTotalWorkOrder() {
     this.totalWorkOrder = this.WorkOrderActivity.length;
     this.tempTotalWorkOrder = this.WorkOrderActivity.length;
     console.log("Total work order", this.totalWorkOrder);
     console.log("Temp Total work order", this.tempTotalWorkOrder);
+
   }
+
+  public filters = <any>{
+    "to": '',
+    "from": '',
+  };
+
+  filteredWOA = []
+  public getByDate(event) {
+    this.filters['from'] = event[0];
+    this.filters['to'] = event[1];
+    console.log(this.filters['from'], '===', this.filters['to'])
+
+    for (let i in this.WorkOrderActivity) {
+
+      const filteredData = formatDate(this.WorkOrderActivity[i].modified_date, 'yyyy-MM-dd', 'en_US') >= formatDate(this.filters['from'], 'yyyy-MM-dd', 'en_US') && formatDate(this.WorkOrderActivity[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(this.filters['to'], 'yyyy-MM-dd', 'en_US');
+      console.log("filtered date", filteredData)
+
+      if (formatDate(this.WorkOrderActivity[i].modified_date, 'yyyy-MM-dd', 'en_US') >= formatDate(this.filters['from'], 'yyyy-MM-dd', 'en_US') && formatDate(this.WorkOrderActivity[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(this.filters['to'], 'yyyy-MM-dd', 'en_US'))
+        this.filteredWOA[i] = this.WorkOrderActivity[i]
+    }
+    console.log("filteredWOA", this.filteredWOA)
+    this.totalWorkOrder = this.filteredWOA.length
+  }
+
+  reset() {
+    this.totalWorkOrder = this.WorkOrderActivity.length
+  }
+
 
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
