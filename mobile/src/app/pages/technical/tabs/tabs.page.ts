@@ -226,10 +226,10 @@ export class TabsPage implements OnInit {
       // alert(this.scanValue);
       console.log("updateQrbarcode = ", this.scanValue);
 
-      if (this.scanValue.badge_no = '') {
+      if (this.scanValue != '') {
         let navigationExtras: NavigationExtras = {
           state: {
-            badge_no: this.scanValue.badge_no,
+            badge_no: this.scanValue,
           },
         };
         this.router.navigate(["/technical/tabs/tab2"], navigationExtras);

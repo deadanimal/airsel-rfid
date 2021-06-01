@@ -26,7 +26,7 @@ from operations.models import (
 
 
 def insert_into_work_order_activity(dict):
-    # print("insert_into_work_order_activity", dict)
+    print("insert_into_work_order_activity", dict)
     # find in the database first
     # if do not exist, insert data into database
     workorderactivitycompletion = WorkOrderActivityCompletion.objects.filter(
@@ -224,7 +224,7 @@ def insert_into_work_order_activity(dict):
             # "service_history_type":service_history_type
         }
         alalshi_exist = AssetLocationAssetListServiceHistoriesInbound.objects.filter(**check_alalsh).exists()
-        print("alalshi_exist = ",alalshi_exist)
+        print("alalshi_exist ---= ",alalshi_exist)
         ## insert in a 
         dictionary_asset_location_asset_list_service_histories_inbound = {
             "service_history_type": service_history_type,
@@ -232,6 +232,8 @@ def insert_into_work_order_activity(dict):
             "asset_id": asset_id,
             "activityid":activityid,
         }
+        print("alalshi_exist === ",alalshi_exist)
+
 
         alalshi_insert = AssetLocationAssetListServiceHistoriesInbound(
             **dictionary_asset_location_asset_list_service_histories_inbound)
@@ -300,6 +302,8 @@ def get_workorderactivity(from_date, to_date):
     r = requests.post("http://174.138.28.157/getWorkOrderActivity.php", data=payload)
 
     json_dictionary = json.loads(r.content)
+    # print(json_dictionary)
+    
     for key in json_dictionary:
         if (key == "results"):
             # print(key, ":", json_dictionary[key])

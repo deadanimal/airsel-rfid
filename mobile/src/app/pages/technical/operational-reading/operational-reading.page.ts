@@ -100,6 +100,13 @@ export class OperationalReadingPage implements OnInit {
             .subscribe((res) => {
 
               console.log("res qweqweewwq", res);
+              if (res[0].measurement_types.length == 0) {
+                console.log("measurement_types.length = ", res[0].measurement_types.length)
+                // res[0].measurement_types
+                let header = "Operational Reading"
+                let body = "No Measurement Required From This Asset"
+                this.emptyMeasuremntType(header, body)
+              }
               this.MeasurementTypeData = res[0].measurement_types
               this.getAssetLocationSync(res[0].node_id)
               this.getAssetExtended(res[0].id)
@@ -107,6 +114,7 @@ export class OperationalReadingPage implements OnInit {
                 asset_description: res[0].description,
                 badge_number: res[0].badge_no,
                 asset_id: res[0].asset_id,
+                owning_organization: res[0].owning_access_group,
               });
             });
         } else {
@@ -114,7 +122,19 @@ export class OperationalReadingPage implements OnInit {
             .filter("asset_id=" + this.OpreationalReading.asset_id)
             .subscribe((res) => {
               console.log("asset qweqwe = ", res)
+
+              if (res[0].measurement_types.length == 0) {
+                console.log("measurement_types.length = ", res[0].measurement_types.length)
+                let header = "Operational Reading"
+                let body = "No Measurement Required From This Asset"
+                this.emptyMeasuremntType(header, body)
+                // res[0].measurement_types
+              }
+
               this.MeasurementTypeData = res[0].measurement_types
+              this.operationalreadingFormGroup.patchValue({
+                asset_description: res[0].description,
+              });
               this.getAssetLocationSync(res[0].node_id)
               this.getAssetExtended(res[0].id)
             });
@@ -134,12 +154,14 @@ export class OperationalReadingPage implements OnInit {
       (res) => {
         console.log("res assetlsService = ", res)
 
-        this.operationalreadingFormGroup.patchValue({
-          location: res[0].description,
-          // node_id: res[0].node_id,
-          // description: "NA",
-          // long_description: res[0].detailed_description
-        })
+        if (res.length != 0) {
+          this.operationalreadingFormGroup.patchValue({
+            location: res[0].description,
+            // node_id: res[0].node_id,
+            // description: "NA",
+            // long_description: res[0].detailed_description
+          })
+        }
       },
       (err) => {
         console.log("err assetlsService = ", err)
@@ -173,6 +195,22 @@ export class OperationalReadingPage implements OnInit {
       header,
       message,
       buttons: ["OK"],
+    });
+
+    await alert.present();
+  }
+  async emptyMeasuremntType(header, message) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: [
+        {
+          text: "OK",
+          handler: () => {
+            this.router.navigate(["/technical/operational-reading-list"]);
+          },
+        },
+      ],
     });
 
     await alert.present();

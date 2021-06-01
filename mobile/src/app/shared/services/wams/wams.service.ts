@@ -11,7 +11,7 @@ export class WamsService {
   url: string = environment.baseUrl + "v1/wams/services/";
   // url: string = "http://127.0.0.1:8000/v1/wams/services/";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getService(body): Observable<any> {
     return this.http.post<any>(this.url, body).pipe(
@@ -46,6 +46,18 @@ export class WamsService {
   getAssetSyncOutbound(): Observable<any> {
     let body = {
       service_name: "getAssetSyncOutbound",
+    };
+    return this.http.post<any>(this.url, body).pipe(
+      tap((res) => {
+        console.log("getAssetSyncOutbound", res);
+      })
+    );
+  }
+
+  getAssetBadgeNo(badge_no): Observable<any> {
+    let body = {
+      service_name: "getAsset",
+      badge_number: badge_no,
     };
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {

@@ -38,10 +38,10 @@ export class ProfilePage implements OnInit {
       // full_name: new FormControl(this.userService.umodel.first_name + ' ' + this.userService.umodel.last_name),
       full_name: new FormControl(this.userService.umodel.first_name),
       phone_no: new FormControl(this.userService.umodel.phone_no),
-      department: new FormControl(this.userService.umodel.department),
-      job_title: new FormControl(this.userService.umodel.job_title),
+      // department: new FormControl(this.userService.umodel.department),
+      // job_title: new FormControl(this.userService.umodel.job_title),
       service_area: new FormControl(this.userService.umodel.service_area),
-      crewshift_id: new FormControl(this.userService.umodel.crewshift_id)
+      // crewshift_id: new FormControl(this.userService.umodel.crewshift_id)
     });
     this.getEmployeeData(this.userService.umodel.employee_id)
   }
@@ -57,6 +57,7 @@ export class ProfilePage implements OnInit {
 
         this.userFormGroup.patchValue({
           employee_id: res.employee_id,
+          phone_no: res.phone_no,
           // node_id: res[0].node_id,
           // description: "NA",
           // long_description: res[0].detailed_description

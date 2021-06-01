@@ -34,7 +34,8 @@ def get_inboundworkrequest(type, data):
             'asset_id': data['asset_id']
         }
 
-        r = requests.post("http://139.59.125.201/getInboundWorkRequestCreate.php", data = payload)
+        r = requests.post("http://174.138.28.157/getInboundWorkRequestUpdate.php", data = payload)
+        # r = requests.post("http://139.59.125.201/getInboundWorkRequestCreate.php", data = payload)
     elif type == 'update':
 
         payload = {
@@ -45,7 +46,7 @@ def get_inboundworkrequest(type, data):
 
         r = requests.post("http://174.138.28.157/getInboundWorkRequestUpdate.php", data = payload)
 
-    return json.loads(r.content);
+    return json.loads(r.content)
 
     # wsdl = "https://pasb-dev-uwa-iws.oracleindustry.com/ouaf/webservices/CM-FAILUREPROFILE?WSDL"
     # session = Session()

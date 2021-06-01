@@ -151,7 +151,7 @@ def insert_into_service_history(dict):
 
 def get_servicehistorytype():
 
-    r = requests.post("http://139.59.125.201/getServiceHistoryType.php")
+    r = requests.post("http://174.138.28.157/getServiceHistoryType.php")
     json_dictionary = json.loads(r.content)
 
     print(json_dictionary)
