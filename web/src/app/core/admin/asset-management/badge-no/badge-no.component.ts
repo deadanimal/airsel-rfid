@@ -96,6 +96,7 @@ export class BadgeNoComponent implements OnInit {
         // console.log("assetTypesService = ", res);
         // console.log('tempData = ', tempData)
         this.assetTypeList = res
+        console.log("nasty", res);
       },
       error => {
         console.error("err", error);
@@ -185,6 +186,7 @@ export class BadgeNoComponent implements OnInit {
       (res) => {
         // console.log("assTypeListjhjhj = ", res);
         this.assTypeList = res
+        console.log("asset types", res);
         noTotal = res.length
         // console.log('assTypeList = ', this.assTypeList)
         if (noTotal > 1) {

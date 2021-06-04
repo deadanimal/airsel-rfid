@@ -1,6 +1,4 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
-import {
-  Validators,
+import { Component, OnInit, TemplateRef } from "@angular/core"; import { Validators,
   FormBuilder,
   FormGroup,
   FormControl,
@@ -20,6 +18,11 @@ import { RegionsService } from "src/app/shared/services/regions/regions.service"
 import { NotifyService } from "src/app/shared/handler/notify/notify.service";
 import { AssetsRegistrationService } from 'src/app/shared/services/assets-registration/assets-registration.service';
 import { system } from '@amcharts/amcharts4/core';
+
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+
+
 
 export enum SelectionType {
   single = "single",
@@ -49,6 +52,9 @@ export class RegisteredComponent implements OnInit {
   fileUploaded: File;
   jsonData: any;
   data: [][]
+
+  // array-download
+  downloadArray: [] = [];
 
   // Modal
   modal: BsModalRef;
@@ -461,6 +467,100 @@ export class RegisteredComponent implements OnInit {
     )
     // console.log('tempDataqweqe = ', tempData)
     this.tableTemp1 = tempData
+  }
+
+  downloadExcel() {
+    let temp2 = [];
+
+    let output = [];
+    let keys = Object.keys(this.tableTemp1[0]);
+    //let headerss = ["Field"]
+    let headerss = [keys]
+
+    this.tableTemp1.forEach(function (itemVal) {
+      if (itemVal['isTick']) {
+        temp2.push(itemVal);
+
+        //concat
+        let tempss = []
+        for (const property in itemVal) {
+          if (itemVal[property]=="" || itemVal[property]==null) {
+            itemVal[property]="None";
+          }
+
+          tempss.push(itemVal[property]);
+        }
+        headerss.push(tempss);
+
+      }
+    });
+
+    // susun data before rendering to pdf
+
+    var dd = {
+      content: [
+
+        // Header 
+        {text: 'Registered Data', style: 'header'},
+        {
+          table: {
+				    body: [
+				    	headerss
+				    ]
+			    }
+        }
+
+      ],
+      styles: {
+      		header: {
+      			fontSize: 12,
+      			bold: true,
+      			margin: [0, 0, 0, 5]
+      		},
+      		subheader: {
+      			fontSize: 10,
+      			bold: true,
+      			margin: [0, 0, 0, 5]
+      		},
+      		tableExample: {
+            fontSize: 10,
+      			margin: [0, 5, 0, 15],
+      		},
+      		tableHeader: {
+      			bold: true,
+      			fontSize: 13,
+      			color: 'black'
+      		},
+          breaker: {
+            margin: [0, 40, 0, 0],
+          },
+      	},
+      };
+
+      // initiate printing job
+       (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+      pdfMake
+        .createPdf(dd)
+        .download(
+          "registered-data" + new Date().toJSON().slice(0,10) + ".pdf"
+        );
+
+
+
+  }
+
+  downloadExcel2() {
+       /* table id is passed over here */   
+       let element = document.getElementById('excel-table'); 
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+       /* save to file */
+       XLSX.writeFile(wb, "registered-data" + new Date().toJSON().slice(0,10) + ".xlsx"
+      );
   }
 
   confirm(task) {

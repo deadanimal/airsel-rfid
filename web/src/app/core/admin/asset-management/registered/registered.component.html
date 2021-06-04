@@ -85,7 +85,7 @@
                                         </div>
                                     </div>
 
-                                    <ngx-datatable class="bootstrap selection-cell material" columnMode="force"
+                                    <ngx-datatable id="excel-table" class="bootstrap selection-cell material" columnMode="force"
                                         [scrollbarV]="true" [scrollbarH]="true" [footerHeight]="50"
                                         [rowHeight]="75" [limit]="tableEntries != -1 ? tableEntries : undefined"
                                         [rows]="tableTemp1" (activate)="onActivate($event)">
@@ -746,6 +746,7 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
+                                        <!--
                                         <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false">
                                             <ng-template ngx-datatable-header-template>
                                                 <span></span>
@@ -754,6 +755,7 @@
                                                 <span><i class="fa fa-file text-default"></i></span>
                                             </ng-template>
                                         </ngx-datatable-column>
+                                        -->
                                     </ngx-datatable>
                                 </div>
 
@@ -761,6 +763,7 @@
                                     <div class="row">
                                         <div class="col text-right">
                                             <!-- <button class="btn btn-danger" (click)="confirm('RJ')">Reject</button> -->
+                                            <button class="btn btn-success" (click)="downloadExcel()">Download</button>
                                             <button class="btn btn-default" (click)="confirm('PR')">Process</button>
                                         </div>
                                     </div>

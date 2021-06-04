@@ -76,8 +76,11 @@
                                     </div> -->
                                 </div>
 
-                                <ngx-datatable class="bootstrap selection-cell" [scrollbarH]="true" [footerHeight]="50"
-                                    [rowHeight]="75" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemp"
+                                <ngx-datatable class="bootstrap selection-cell"
+                                    [columnMode]="'force'"
+                                    [footerHeight]="50"
+                                    [headerHeight]="50"
+                                    [rowHeight]="'auto'" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemp"
                                     (activate)="onActivate($event)">
 
                                     <ngx-datatable-column name="No" [width]="30">
@@ -229,8 +232,8 @@
                     <select class="form-control" formControlName='asset_primary_category' name="asset_primary_category"
                         type="text">
                         <option value="">Please Select Asset Type</option>
-                        <option *ngFor="let asstype of assetTypeList" [value]="asstype.name">
-                            {{asstype.name}}</option>
+                        <option *ngFor="let asstype of tableTemp" [value]="asstype.id">
+                            {{asstype.asset_primary_category}}</option>
                     </select>
                 </div>
                 <div class="col-md-6 form-group">
