@@ -2228,7 +2228,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Asset Identity<span class="mandatory">*</span></label>
-                <input type="text" formControlName="asset_identity" class="form-control form-control-sm" />
+                <input type="text" formControlName="asset_identity" class="form-control form-control-sm" id="asset_identity" (change)="getDetailedDescription()"/>
                 <mat-hint
                   *ngIf="firstFormGroup.controls['asset_identity'].hasError('required') && firstFormGroup.controls['asset_identity'].touched && firstFormGroup.controls['asset_identity'].invalid "
                   class="validation_messages"><small>This field is required</small></mat-hint>
@@ -2239,13 +2239,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Sub-Category 1</label>
-                <input type="text" formControlName="sub_category_1" class="form-control form-control-sm" />
+                <input type="text" formControlName="sub_category_1" class="form-control form-control-sm" id="SubCategory_1" (change)="getDetailedDescription()"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Sub-Category 2</label>
-                <input type="text" formControlName="sub_category_2" class="form-control form-control-sm" />
+                <input type="text" formControlName="sub_category_2" class="form-control form-control-sm" id="SubCategory_2" (change)="getDetailedDescription()"/>
               </div>
             </div>
           </div>
@@ -2709,7 +2709,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Model Number</label>
-                <input type="text" formControlName="model_number" class="form-control form-control-sm" />
+                <input type="text" formControlName="model_number" class="form-control form-control-sm" id="model_number" (change)="getDetailedDescription()"/>
               </div>
             </div>
           </div>
@@ -2717,14 +2717,14 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 1</label>
-                <input type="text" formControlName="size_capacity_1" class="form-control form-control-sm" />
+                <input type="text" formControlName="size_capacity_1" class="form-control form-control-sm" (change)="getDetailedDescription()" id="size_capacity_1"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 1-Unit Measurement</label>
                 <input type="text" formControlName="size_capacity_1_unit_measurement"
-                  class="form-control form-control-sm" />
+                  class="form-control form-control-sm" id="size_capacity_1_unit_measurement" (change)="getDetailedDescription()"/>
               </div>
             </div>
           </div>
@@ -2732,14 +2732,14 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 2</label>
-                <input type="text" formControlName="size_capacity_2" class="form-control form-control-sm" />
+                <input type="text" formControlName="size_capacity_2" class="form-control form-control-sm" id="size_capacity_2" (change)="getDetailedDescription()"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 2-Unit Measurement</label>
                 <input type="text" formControlName="size_capacity_2_unit_measurement"
-                  class="form-control form-control-sm" />
+                  class="form-control form-control-sm" id="size_capacity_2_unit_measurement" (change)="getDetailedDescription()"/>
               </div>
             </div>
           </div>
@@ -2747,14 +2747,14 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 3</label>
-                <input type="text" formControlName="size_capacity_3" class="form-control form-control-sm" />
+                <input type="text" formControlName="size_capacity_3" class="form-control form-control-sm" id="size_capacity_3" (change)="getDetailedDescription()"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 3-Uni Measurement</label>
                 <input type="text" formControlName="size_capacity_3_unit_measurement"
-                  class="form-control form-control-sm" />
+                  class="form-control form-control-sm" id="size_capacity_3_unit_measurement" (change)="getDetailedDescription()"/>
               </div>
             </div>
           </div>

@@ -2,11 +2,14 @@ import { Component, OnInit, NgZone } from "@angular/core";
 
 
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
+import { AssetsModel } from "src/app/shared/services/assets/assets.model";
 
 
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import { formatDate } from "@angular/common";
+import { map, tap, catchError } from "rxjs/operators";
 
 am4core.useTheme(am4themes_animated);
 
@@ -24,33 +27,65 @@ export class AnalyticsAcsComponent implements OnInit {
   ngOnInit() {
     // console.log("today",this.today)
     this.getAssets();
-    this.getAssetConditionStores()
+    // this.getAssetConditionStores()
   }
 
   //variables
+
   today = new Date();
 
   assets: any;
   totalAssets: any;
+
+  public assetsToday = []
+  totalAssetToday: any;
+
+  firstDayLastMonth = new Date();
+  assetsLastMonth = [];
+  totalassetsLastMonth: any
+
   PercentageAssetConditionRating: any;
   totalConditionRating: number = 0;
 
-  tableAssetConditionStores = [
-    { title: "CBD", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-    { title: "DISTRIBUTION", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-    { title: "ES-D", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-    { title: "FLEET", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-    { title: "LAND", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-    { title: "NRW", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-    { title: "PD-N", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-    { title: "PD-S", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-    { title: "SCADA", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-    { title: "WQ", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-  ]
+  nullassetOwning = []
 
+  tableAssetConditionStores: any;
+
+  assetowningdepartment = [
+    { value: "CBD", name: "CUSTOMER BILLING SERVICES" },
+    { value: "DISTRIBUTION", name: "DISTRIBUTION" },
+    { value: "ES-D", name: "ENGINEERING SERVICES – DISTRIBUTION" },
+    { value: "FLEET", name: "FLEET" },
+    { value: "LAND", name: "LAND" },
+    { value: "NRW", name: "NRW" },
+    { value: "PD-N", name: "PRODUCTION NORTHERN" },
+    { value: "PD-S", name: "PRODUCTION SOUTHERN" },
+    { value: "SCADA", name: "SCADA" },
+    { value: "WQ", name: "WATER QUALITY" },
+  ];
+
+  lastmonth = new Date
 
   getAssets() {
-    this.assetsService.get().subscribe((response) => {
+    this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
+      console.log('response from API is ', response);
+      this.assets = response;
+      console.log('assets', this.assets);
+      this.totalAssets = this.assets.length
+      console.log('totalAssets', this.totalAssets);
+
+      this.getTotalAssetToday();
+      this.calcPercentageAssetConditionRating();
+      this.getAssetConditionStores();
+
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  reset() {
+
+    this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
       console.log('response from API is ', response);
       this.assets = response;
       console.log('assets', this.assets);
@@ -63,9 +98,48 @@ export class AnalyticsAcsComponent implements OnInit {
     }, (error) => {
       console.log('Error is ', error)
     })
+
+  }
+
+  getTotalAssetToday() {
+    const today = new Date();
+    console.log("today", today)
+
+    let assetsToday = [];
+
+    for (let i in this.assets) {
+
+      if (formatDate(this.assets[i].registered_datetime, 'yyyy-MM-dd', 'en_US') == formatDate(today, 'yyyy-MM-dd', 'en_US'))
+        this.assetsToday[i] = this.assets[i]
+
+    }
+    this.totalAssetToday = assetsToday.length
+    console.log("totalToday", this.totalAssetToday)
+    console.log("assets today", this.assetsToday)
+
+
+    let date = new Date()
+    var firstDayThisMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.firstDayLastMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.firstDayLastMonth.setMonth(this.firstDayLastMonth.getMonth() - 1)
+
+    console.log("firstDayThisMonth", firstDayThisMonth)
+    console.log("firstDayLastMonth", this.firstDayLastMonth)
+
+    for (let i in this.assets) {
+
+      if (formatDate(this.assets[i].registered_datetime, 'yyyy-MM-dd', 'en_US') >= formatDate(this.firstDayLastMonth, 'yyyy-MM-dd', 'en_US') && formatDate(this.assets[i].registered_datetime, 'yyyy-MM-dd', 'en_US') < formatDate(firstDayThisMonth, 'yyyy-MM-dd', 'en_US'))
+        this.assetsLastMonth[i] = this.assets[i]
+    }
+    this.totalassetsLastMonth = this.assetsLastMonth.length
+    console.log("total lastmonth", this.totalAssetToday)
+    console.log("assets last month", this.assetsLastMonth)
+
   }
 
   calcPercentageAssetConditionRating() {
+
+    this.totalConditionRating = 0;
 
     for (let i in this.assets) {
       this.totalConditionRating += parseFloat(this.assets[i].condition_rating);
@@ -78,6 +152,19 @@ export class AnalyticsAcsComponent implements OnInit {
   }
 
   getAssetConditionStores() {
+
+    this.tableAssetConditionStores = [
+      { title: "CBD", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "DISTRIBUTION", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "ES-D", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "FLEET", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "LAND", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "NRW", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "PD-N", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "PD-S", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "SCADA", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "WQ", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+    ];
 
     for (let i in this.assets) {
 
@@ -221,195 +308,81 @@ export class AnalyticsAcsComponent implements OnInit {
         else if (this.assets[i].condition_rating >= 5)
           this.tableAssetConditionStores[9].five += 1;
       }
+      else {
+        this.nullassetOwning.push(this.assets[i])
+      }
     }
-
-    console.log(this.tableAssetConditionStores)
-
+    console.log("nullassetOwning", this.nullassetOwning)
+    console.log("tableAssetConditionStores", this.tableAssetConditionStores)
 
   }
 
-  // tableAssetConditionStores = [
-  //   {
-  //     title: "ES-D-PUMP HOUSE",
-  //     noasset: "16094",
-  //     zero: "23",
-  //     one: "9567",
-  //     two: "9413",
-  //     three: "3090",
-  //     four: "649",
-  //     five: "47",
-  //   },
-  //   {
-  //     title: "ES-D-VALVE",
-  //     noasset: "1242",
-  //     zero: "1",
-  //     one: "8765",
-  //     two: "1244",
-  //     three: "0",
-  //     four: "0",
-  //     five: "0",
-  //   },
-  //   {
-  //     title: "FLEET",
-  //     noasset: "1424",
-  //     zero: "3",
-  //     one: "345",
-  //     two: "234",
-  //     three: "112",
-  //     four: "1",
-  //     five: "0",
-  //   },
-  //   {
-  //     title: "NRW-DMZ",
-  //     noasset: "12435",
-  //     zero: "5",
-  //     one: "18456",
-  //     two: "12645",
-  //     three: "45",
-  //     four: "2",
-  //     five: "13",
-  //   },
-  //   {
-  //     title: "NRW-TRANSIENT",
-  //     noasset: "2143",
-  //     zero: "0",
-  //     one: "0",
-  //     two: "0",
-  //     three: "0",
-  //     four: "0",
-  //     five: "0",
-  //   },
-  //   {
-  //     title: "NRW-WBA",
-  //     noasset: "131",
-  //     zero: "0",
-  //     one: "345",
-  //     two: "235",
-  //     three: "1",
-  //     four: "0",
-  //     five: "0",
-  //   },
-  //   {
-  //     title: "PD-N",
-  //     noasset: "19525",
-  //     zero: "112",
-  //     one: "2345",
-  //     two: "2391",
-  //     three: "3457",
-  //     four: "134",
-  //     five: "31",
-  //   },
-  //   {
-  //     title: "PD-S",
-  //     noasset: "7442",
-  //     zero: "13",
-  //     one: "1985",
-  //     two: "1246",
-  //     three: "324",
-  //     four: "46",
-  //     five: "12",
-  //   },
-  //   {
-  //     title: "OTS-INSTRUMENT",
-  //     noasset: "7584",
-  //     zero: "0",
-  //     one: "1924",
-  //     two: "3",
-  //     three: "1244",
-  //     four: "6",
-  //     five: "12",
-  //   },
-  //   {
-  //     title: "OTS-EM FLOWMETER",
-  //     noasset: "478",
-  //     zero: "0",
-  //     one: "2",
-  //     two: "321",
-  //     three: "456",
-  //     four: "0",
-  //     five: "1",
-  //   },
-  //   {
-  //     title: "WQ-LAB SERVICES",
-  //     noasset: "346",
-  //     zero: "3",
-  //     one: "312",
-  //     two: "22",
-  //     three: "4",
-  //     four: "0",
-  //     five: "9",
-  //   },
-  //   {
-  //     title: "WQ-ONLA",
-  //     noasset: "34",
-  //     zero: "0",
-  //     one: "33",
-  //     two: "1",
-  //     three: "0",
-  //     four: "0",
-  //     five: "0",
-  //   },
-  //   {
-  //     title: "WQ-RMS",
-  //     noasset: "5",
-  //     zero: "0",
-  //     one: "1",
-  //     two: "1237",
-  //     three: "2",
-  //     four: "0",
-  //     five: "0",
-  //   },
-  //   {
-  //     title: "WQ-SPA",
-  //     noasset: "2355",
-  //     zero: "0",
-  //     one: "1235",
-  //     two: "290",
-  //     three: "0",
-  //     four: "0",
-  //     five: "0",
-  //   },
-  //   {
-  //     title: "WQ-SURVEILLANCE",
-  //     noasset: "234",
-  //     zero: "0",
-  //     one: "290",
-  //     two: "3245",
-  //     three: "0",
-  //     four: "235",
-  //     five: "1",
-  //   },
-  //   {
-  //     title: "DIST-RESERVOIR",
-  //     noasset: "10252",
-  //     zero: "2",
-  //     one: "3956",
-  //     two: "123",
-  //     three: "5867",
-  //     four: "0",
-  //     five: "92",
-  //   },
-  //   {
-  //     title: "CBS-AMR FLOWMETER",
-  //     noasset: "234",
-  //     zero: "1",
-  //     one: "344",
-  //     two: "14",
-  //     three: "46",
-  //     four: "1",
-  //     five: "5",
-  //   },
-  //   {
-  //     title: "TOTAL ASSET/OVERALL AVERAGE %",
-  //     noasset: "81958",
-  //     zero: "163",
-  //     one: "49905",
-  //     two: "32664",
-  //     three: "14648",
-  //     four: "1074",
-  //     five: "223",
-  //   },
-  // ];
+  selected_date: any;
+  asset_owning: any;
+
+  filter() {
+
+    let temp: AssetsModel[] = [];
+    let temp2: AssetsModel[] = [];
+
+
+    this.assetsService.get().pipe(map(x => x.filter(i => i.registered_datetime != null))).subscribe((response) => {
+      // temp = response
+      // console.log("temp", temp)
+
+      console.log("asset_owning", this.asset_owning)
+
+      if (this.asset_owning != null && this.selected_date == null) {
+        temp = response.filter((value) => value.owning_access_group.includes(this.asset_owning));
+        console.log("temp", temp);
+        temp2 = temp;
+
+      }
+      else if (this.asset_owning == null && this.selected_date != null) {
+        let from = this.selected_date[0]
+        let to = this.selected_date[1]
+
+        console.log("from", from);
+        console.log("to", to);
+        temp = response;
+        for (let i in temp) {
+          if (formatDate(temp[i].registered_datetime, 'yyyy-MM-dd', 'en_US') >= formatDate(from, 'yyyy-MM-dd', 'en_US') && formatDate(this.assets[i].registered_datetime, 'yyyy-MM-dd', 'en_US') <= formatDate(to, 'yyyy-MM-dd', 'en_US'))
+            temp2.push(temp[i])
+        }
+      }
+      else if (this.asset_owning != null && this.selected_date != null) {
+
+        let from = this.selected_date[0]
+        let to = this.selected_date[1]
+        console.log("from", from);
+        console.log("to", to);
+
+        temp = response.filter((value) => value.owning_access_group.includes(this.asset_owning));
+        console.log("temp", temp);
+
+        for (let i in temp) {
+          if (formatDate(temp[i].registered_datetime, 'yyyy-MM-dd', 'en_US') >= formatDate(from, 'yyyy-MM-dd', 'en_US') && formatDate(this.assets[i].registered_datetime, 'yyyy-MM-dd', 'en_US') <= formatDate(to, 'yyyy-MM-dd', 'en_US'))
+            temp2.push(temp[i])
+        }
+      }
+
+      console.log("temp2", temp2)
+      console.log("temp2 length", temp2.length)
+
+      this.assets = temp2
+      console.log('assets', this.assets);
+
+      this.calcPercentageAssetConditionRating();
+      this.getAssetConditionStores();
+
+
+
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+
 
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => { });
