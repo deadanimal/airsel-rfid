@@ -166,24 +166,25 @@ export class LoginPage implements OnInit {
                     }
                   );
               }
-              // else {
-              //   // to create user account in PIPE who AD is invalid
-              //   // STEP 5
-              //   let bodyPIPE = {
-              //     username: this.validations_form.value.username,
-              //     // email: "",
-              //     password1: this.validations_form.value.password,
-              //     password2: this.validations_form.value.password,
-              //   };
-              //   this.authService.registerAccount(bodyPIPE).subscribe(
-              //     (resPIPE) => {
-              //       this.retryLogin();
-              //     },
-              //     (err) => {
-              //       console.error("err", err);
-              //     }
-              //   );
-              // }
+              else {
+                this.userNotExist()
+                //   // to create user account in PIPE who AD is invalid
+                //   // STEP 5
+                //   let bodyPIPE = {
+                //     username: this.validations_form.value.username,
+                //     // email: "",
+                //     password1: this.validations_form.value.password,
+                //     password2: this.validations_form.value.password,
+                //   };
+                //   this.authService.registerAccount(bodyPIPE).subscribe(
+                //     (resPIPE) => {
+                //       this.retryLogin();
+                //     },
+                //     (err) => {
+                //       console.error("err", err);
+                //     }
+                //   );
+              }
             },
             (err) => {
               console.error("err", err);
@@ -318,6 +319,16 @@ export class LoginPage implements OnInit {
     const alert = await this.alertController.create({
       header: "Wrong Credential",
       message: "You have entered wrong credentials. Please try again.",
+      buttons: ["OK"],
+    });
+
+    await alert.present();
+  }
+
+  async userNotExist() {
+    const alert = await this.alertController.create({
+      header: "Data Not Found",
+      message: "User not exist, Please try again.",
       buttons: ["OK"],
     });
 

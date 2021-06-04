@@ -9,8 +9,8 @@ export class ServiceHistoriesQuestionModel {
   public response_check_box: string;
   public response_radio: string;
   public responseDate: string;
-  public response_datetime: string;
-  public valid_value: string;
+  public response_datetime: any;
+  public valid_value: [];
   public created_date: any;
   public modified_date: any;
 
@@ -25,8 +25,8 @@ export class ServiceHistoriesQuestionModel {
     response_check_box: string,
     response_radio: string,
     responseDate: string,
-    response_datetime: string,
-    valid_value: string,
+    response_datetime: any,
+    valid_value: [],
     created_date: any,
     modified_date: any,
   ) {

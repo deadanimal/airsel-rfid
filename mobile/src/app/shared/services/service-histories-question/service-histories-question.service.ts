@@ -13,8 +13,8 @@ export class ServiceHistoriesQuestionService {
   url: string = environment.baseUrl + "v1/service-histories-questions/";
 
   // Data
-  public atmodels: ServiceHistoriesQuestionModel[] = [];
-  public atmodel: ServiceHistoriesQuestionModel;
+  public amodels: ServiceHistoriesQuestionModel[] = [];
+  public amodel: ServiceHistoriesQuestionModel;
 
   constructor(private http: HttpClient) { }
 
@@ -30,7 +30,7 @@ export class ServiceHistoriesQuestionService {
     return this.http.get<any>(this.url).pipe(
       tap((res) => {
         console.log("ServiceHistoriesQuestionModel", res);
-        this.atmodels = res;
+        this.amodels = res;
       })
     );
   }
@@ -40,13 +40,14 @@ export class ServiceHistoriesQuestionService {
     return this.http.get<ServiceHistoriesQuestionModel>(urlID).pipe(
       tap((res: ServiceHistoriesQuestionModel) => {
         console.log("ServiceHistoriesQuestionModel", res);
-        this.atmodel = res;
+        this.amodel = res;
       })
     );
   }
 
-  update(body: Form): Observable<ServiceHistoriesQuestionModel> {
-    return this.http.patch<ServiceHistoriesQuestionModel>(this.url, body).pipe(
+  update(id: string, body: Form): Observable<ServiceHistoriesQuestionModel> {
+    let urlTemp = this.url + id + '/'
+    return this.http.patch<ServiceHistoriesQuestionModel>(urlTemp, body).pipe(
       tap((res) => {
         console.log("ServiceHistoriesQuestionModel", res);
       })

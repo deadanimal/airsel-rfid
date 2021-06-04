@@ -14,7 +14,7 @@ from operations.models import (
 
 def insert_into_service_history(dict):
 
-    # print("insert_into_service_history", dict)
+    print("insert_into_service_history", dict)
     # find in the database first
     # if do not exist, insert data into database
 
@@ -35,6 +35,7 @@ def insert_into_service_history(dict):
     answer_seq = dict['ANSWER_SEQ'] if 'ANSWER_SEQ' in dict else ""
     answer_cd = dict['ANSWER_CD'] if 'ANSWER_CD' in dict else ""
     answer_desc = dict['ANSWER_DESC'] if 'ANSWER_DESC' in dict else ""
+    answer_text = dict['ANSWER_TEXT'] if 'ANSWER_TEXT' in dict else ""
     point_value = dict['POINT_VALUE'] if 'POINT_VALUE' in dict else ""
     style = dict['STYLE'] if 'STYLE' in dict else ""
 
@@ -123,6 +124,7 @@ def insert_into_service_history(dict):
         "answer_seq": answer_seq,
         "answer_cd": answer_cd,
         "answer_desc": answer_desc,
+        "answer_text": answer_text,
         "point_value": point_value,
         "style": style,
         "service_history_question_id":service_history_question_id
@@ -159,9 +161,9 @@ def get_servicehistorytype():
     if json_dictionary :
         
         print('berjaya')
-        ServiceHistory.objects.all().delete()
-        ServiceHistoryQuestion.objects.all().delete()
-        ServiceHistoryQuestionValidValue.objects.all().delete()
+        # ServiceHistory.objects.all().delete()
+        # ServiceHistoryQuestion.objects.all().delete()
+        # ServiceHistoryQuestionValidValue.objects.all().delete()
 
         # r = requests.post("http://139.59.125.201/getServiceHistoryType.php")
         # json_dictionary = json.loads(r.content)

@@ -14,7 +14,7 @@ export class AssetLocationAssetListServiceHistoriesModel {
   public downtime_reason: string;
   public created_date: any;
   public modified_date: any;
-  public question: any;
+  public question: [];
 
   constructor(
     id: string,
@@ -32,7 +32,7 @@ export class AssetLocationAssetListServiceHistoriesModel {
     downtime_reason: string,
     created_date: any,
     modified_date: any,
-    question: any,
+    question: [],
   ) {
     this.id = id;
     this.service_history_type = service_history_type;

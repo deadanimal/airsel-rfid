@@ -23,6 +23,8 @@ import { ServiceHistoryService } from 'src/app/shared/services/service-history/s
 import { ServiceHistoriesQuestionService } from 'src/app/shared/services/service-histories-question/service-histories-question.service';
 import { ServiceHistoryQuestionService } from 'src/app/shared/services/service-history-question/service-history-question.service';
 import { QuestionValidValueService } from 'src/app/shared/services/questions-value-valid/questions-value-valid.service';
+import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+import { AssetLocationAssetListServiceHistoriesService } from 'src/app/shared/services/asset-location-asset-list-service-histories/asset-location-asset-list-service-histories.service';
 
 
 @Component({
@@ -44,6 +46,8 @@ export class ServiceHistoryPage implements OnInit {
 
   updateformData = [];
 
+  // serHisQueFormData: FormGroup;
+
   constructor(
     public formBuilder: FormBuilder,
     public alertController: AlertController,
@@ -57,11 +61,11 @@ export class ServiceHistoryPage implements OnInit {
     private assetsService: AssetsService,
     private assetServiceHistoryService: AssetServiceHistoryService,
     private serviceHistoryService: ServiceHistoryService,
-    private serviceHistoriesQuestionService: ServiceHistoriesQuestionService,
     private serviceHistoryQuestionService: ServiceHistoryQuestionService,
-    private questionValidValueService: QuestionValidValueService
+    private questionValidValueService: QuestionValidValueService,
+    private serviceHistoriesQuestionService: ServiceHistoriesQuestionService,
+    private assetLocationAssetListServiceHistoriesService: AssetLocationAssetListServiceHistoriesService
   ) {
-
     // console.log("servicehistory == ", this.navParams.get("servicehistory"));
 
     let servHist = this.navParams.get("servicehistory")
@@ -78,7 +82,7 @@ export class ServiceHistoryPage implements OnInit {
             .filter("asset_type_code=" + assServres[0]['asset_type'])
             .subscribe(
               (assTypeServres) => {
-                // console.log("assetTypesService res", assTypeServres)
+                console.log("assetTypesService res", assTypeServres)
                 let asset_service_history_id = assTypeServres[0]['asset_service_history']
 
                 // looping Asset Service history id
@@ -89,17 +93,17 @@ export class ServiceHistoryPage implements OnInit {
                   this.assetServiceHistoryService.getOne(assSerHisId)
                     .subscribe(
                       (assServHistres) => {
-                        // console.log("assServHistres =", assServHistres)
+                        console.log("assetServiceHistoryService res =", assServHistres)
                         // console.log("assServHistres asset_service_history =", assServHistres['asset_service_history'])
 
                         // get service history data
                         this.serviceHistoryService.filter('service_hist_type=' + assServHistres['asset_service_history'])
                           .subscribe(
-                            (assServHistres) => {
+                            (ServHistres) => {
 
-                              // console.log("assServHistres =", assServHistres);
-                              // console.log("assServHistres =", assServHistres[0]['service_hist_desc']);
-                              this.ServiceHistoryList.push(assServHistres[0])
+                              console.log("serviceHistoryService res =", ServHistres);
+                              // console.log("ServHistres =", assServHistres[0]['service_hist_desc']);
+                              this.ServiceHistoryList.push(ServHistres[0])
 
                             },
                             (err) => {
@@ -124,27 +128,6 @@ export class ServiceHistoryPage implements OnInit {
           console.error("err", err);
         }
       );
-
-    // if (this.navParams.get("servicehistory")) {
-    //   if (this.navParams.get("servicehistory").service_history_type_dt) {
-    //     this.servicehistoryFormGroup.patchValue({
-    //       ...this.navParams.get("servicehistory"),
-    //       type: this.navParams.get("servicehistory").service_history_type_dt
-    //     });
-    //   }
-    //   else if (this.navParams.get("servicehistory").service_history_type_f) {
-    //     this.servicehistoryFormGroup.patchValue({
-    //       ...this.navParams.get("servicehistory"),
-    //       type: this.navParams.get("servicehistory").service_history_type_f
-    //     });
-    //   }
-    //   else if (this.navParams.get("servicehistory").service_history_type_pm) {
-    //     this.servicehistoryFormGroup.patchValue({
-    //       ...this.navParams.get("servicehistory"),
-    //       type: this.navParams.get("servicehistory").service_history_type_pm
-    //     });
-    //   }
-    // }
   }
 
   ngOnInit() { }
@@ -308,81 +291,146 @@ export class ServiceHistoryPage implements OnInit {
 
   clickSaveServiceHistory() {
 
-    let questionvalue = [];
+    let servHistQues = [];
 
-    this.updateformData.forEach(element1 => {
+    const serHisQueDataFormData = new FormGroup({
+      seq: new FormControl(),
+      code: new FormControl(),
+      short_text: new FormControl(),
+      text: new FormControl(),
+      style: new FormControl(),
+      response_radio: new FormControl(),
+      valid_value: new FormControl(),
+    });
 
-      console.log("element", element1)
-      let validvalue = [];
+    console.log(serHisQueDataFormData.value);
+
+    // this.updateformData.forEach(element1 => {
+    for (let x = 0; x <= this.updateformData.length; x++) {
+
+      console.log("this.updateformData[x] = ", this.updateformData[0])
+
+      // let validvalue: any = []
       let styleDiv = ''
+      let questionvalueData: string[]
+      let questionvalue = [];
+      let validvalue = [];
+      let responseRadio = ''
 
-      element1['valid_value'].forEach(element2 => {
+      console.log("element1['valid_value'] = ", this.updateformData[x]['valid_value'].length)
+      // this.updateformData[x]['valid_value'].forEach(element2 => {
+      let valid_value_data = this.updateformData[x]['valid_value']
 
-        // console.log("res = ", element2)
-        if (element2.answer_cd == element1.answer_id) {
-          styleDiv = element2.style
+      for (let i = 0; i <= valid_value_data.length; i++) {
+        console.log("valid_value res = ", valid_value_data[i])
+        if (valid_value_data[i].answer_cd == this.updateformData[x].answer_id) {
+          styleDiv = valid_value_data[i].style
+          responseRadio = valid_value_data[i].answer_cd
         }
 
         let validValueFormData = new FormData();
-        validValueFormData['seq_valid'] = element1.question_id
-        validValueFormData['code_valid'] = element1.question_id
-        validValueFormData['short_text_valid'] = element1.question_id
-        validValueFormData['text_valid'] = element1.question_id
+        validValueFormData.append('seq_valid', valid_value_data[i].answer_seq)
+        validValueFormData.append('code_valid', valid_value_data[i].answer_cd)
+        validValueFormData.append('short_text_valid', valid_value_data[i].answer_desc)
+        validValueFormData.append('text_valid', valid_value_data[i].answer_text)
 
         console.log("validValueFormData = ", validValueFormData)
 
         this.questionValidValueService.post(validValueFormData).subscribe(
-          (serHisQueRes) => {
-            console.log("res serHisQueRes = ", serHisQueRes)
+          (queValValRes) => {
 
-            validvalue.push(serHisQueRes.id);
+            console.log("res queValValRes = ", queValValRes)
+
+            let obj2 = [queValValRes.id]
+            // validvalue.push(this.updateformData[x].id);
+
+            // questionvalue.push(obj2);
+            // validvalue[i] = queValValRes.id
+            console.log("validvalue array = ", obj2)
+
+            validvalue.push(queValValRes.id)
+            console.log("questionvalue qweqwe res = ", validvalue)
+
+            console.log("before i == valid_value_data.length = ", i, " -- ", valid_value_data.length)
+            if (i == (valid_value_data.length - 1)) {
+              console.log("afetr i == valid_value_data.length = ", i, " -- ", valid_value_data.length)
+
+              let serHisQueDataFormData = {
+                seq: this.updateformData[x].question_seq,
+                code: this.updateformData[x].question_cd,
+                short_text: this.updateformData[x].question_desc,
+                text: this.updateformData[x].question_desc,
+                style: styleDiv,
+                response_radio: responseRadio,
+                valid_value: validvalue
+              }
+
+              // this.serviceHistoriesQuestionService.post(serHisQueDataFormData.value).subscribe(
+              this.serviceHistoriesQuestionService.post(serHisQueDataFormData).subscribe(
+                (serHisQueRes) => {
+
+                  console.log("res serHisQueRes = ", serHisQueRes)
+                  servHistQues.push(serHisQueRes.id);
+
+                },
+                (err) => {
+                  console.error("err", err);
+                },
+                () => {
+
+                  console.log("before x == this.updateformData.length = ", x, " -- ", this.updateformData.length)
+                  if (x == (this.updateformData.length - 1)) {
+                    console.log("before x == this.updateformData.length = ", x, " -- ", this.updateformData.length)
+
+                    let assLocAssLisSerHisData = {
+                      service_history_type: this.updateformData[x].question_seq,
+                      effective_datetime: this.updateformData[x].question_seq,
+                      start_date_time: this.updateformData[x].question_seq,
+                      end_date_time: this.updateformData[x].question_seq,
+                      comments: this.updateformData[x].question_seq,
+                      failure_type: this.updateformData[x].question_seq,
+                      failure_mode: this.updateformData[x].question_seq,
+                      failure_repair: this.updateformData[x].question_seq,
+                      failure_component: this.updateformData[x].question_seq,
+                      failure_root_cause: this.updateformData[x].question_seq,
+                      svc_hist_type_req_fl: this.updateformData[x].question_seq,
+                      downtime_reason: this.updateformData[x].question_seq,
+                      question: this.updateformData[x].question_seq
+                    }
+
+                    console.log(assLocAssLisSerHisData)
+
+                    this.assetLocationAssetListServiceHistoriesService.post(assLocAssLisSerHisData).subscribe(
+                      (alslshRes) => {
+                        console.log("alslshRes", alslshRes)
+                      }, (alslshErr) => {
+                        console.log("alslshErr", alslshErr)
+                      }, () => {
+                      }
+                    )
+                    console.log("here 111111111111")
+
+                  }
+
+                }
+              );
+            }
 
           },
           (err) => {
             console.error("err", err);
+          },
+          () => {
           }
         );
 
-      });
+      }
 
-      //////////
-      console.log("validvalue = ", validvalue)
-      console.log("element1 ,", element1)
-      console.log("element2 ,", element2)
+    }
 
-      let serHisQueFormData = new FormData();
-      serHisQueFormData['seq'] = element1.question_seq
-      serHisQueFormData['code'] = element1.question_cd
-      serHisQueFormData['short_text'] = element1.question_cd
-      serHisQueFormData['text'] = element1.question_desc
-      serHisQueFormData['style'] = styleDiv
-      serHisQueFormData['respone'] = element1.question_desc
-      serHisQueFormData['response_check_box'] = element1.question_desc
-      serHisQueFormData['response_radio'] = element1.question_desc
-      // serHisQueFormData['responseDate'] = element1.responseDate
-      // serHisQueFormData['response_datetime'] = element1.response_datetime
-      serHisQueFormData['valid_value'] = validvalue
-
-      console.log("serHisQueFormData = ", serHisQueFormData)
-
-      // this.questionValidValueService
-      //   .update(
-      //     this.servicehistoryFormGroup.value
-      //   )
-      //   .subscribe(
-      //     (res) => {
-      //       console.log("res", res);
-      //       this.alertServiceHistory(
-      //         "Success",
-      //         "Your service history have successfully added."
-      //       );
-      //     },
-      //     (err) => {
-      //       console.error("err", err);
-      //     }
-      //   );
-
-    });
+    // setTimeout(function () {
+    //   console.log("servHistQues arrid = ", servHistQues)
+    // }, 4000);
 
   }
 }

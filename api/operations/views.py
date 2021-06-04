@@ -714,7 +714,7 @@ class ServiceHistoryQuestionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         data = []
         for qs_qs in queryset_question:            
-            queryset_answer = ServiceHistoryQuestionValidValue.objects.filter(service_history_question_id=qs_qs['id']).values('id', 'answer_seq', 'answer_cd', 'answer_desc', 'point_value', 'style', 'service_history_question_id')
+            queryset_answer = ServiceHistoryQuestionValidValue.objects.filter(service_history_question_id=qs_qs['id']).values('id', 'answer_seq', 'answer_cd', 'answer_text', 'answer_desc', 'point_value', 'style', 'service_history_question_id')
 
             # for qs_aw in queryset_answer:
             dictionary = {
