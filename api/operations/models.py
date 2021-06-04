@@ -382,7 +382,7 @@ class ServiceHistoriesQuestions(models.Model):
     response_check_box = models.CharField(max_length=100, blank=True)
     response_radio = models.CharField(max_length=100,blank=True)
     responseDate = models.DateField(null=True)
-    response_datetime = models.DateTimeField()
+    response_datetime = models.DateTimeField(auto_now=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -512,7 +512,7 @@ class ServiceHistory(models.Model):
 
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     service_hist_type = models.CharField(max_length=100, blank=True)
-    service_hist_desc = models.CharField(max_length=100, blank=True)
+    service_hist_desc = models.CharField(max_length=225, blank=True)
     service_hist_bo = models.CharField(max_length=100, blank=True)
     category = models.CharField(max_length=100, blank=True)
     service_hist_subclass = models.CharField(max_length=100, blank=True)
@@ -527,8 +527,8 @@ class ServiceHistoryQuestion(models.Model):
 
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     question_seq = models.CharField(max_length=100, blank=True)
-    question_cd = models.CharField(max_length=100, blank=True)
-    question_desc = models.CharField(max_length=100, blank=True)
+    question_cd = models.CharField(max_length=225, blank=True)
+    question_desc = models.CharField(max_length=225, blank=True)
     service_history_id = models.ForeignKey(ServiceHistory, on_delete=models.CASCADE, related_name='service_history_question_service_history_id', null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
@@ -541,8 +541,9 @@ class ServiceHistoryQuestionValidValue(models.Model):
 
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     answer_seq = models.CharField(max_length=100, blank=True)
-    answer_cd = models.CharField(max_length=100, blank=True)
-    answer_desc = models.CharField(max_length=100, blank=True)
+    answer_cd = models.CharField(max_length=225, blank=True)
+    answer_desc = models.CharField(max_length=225, blank=True)
+    answer_text = models.CharField(max_length=225, blank=True)
     point_value = models.CharField(max_length=100, blank=True)
     service_history_question_id = models.CharField(max_length=100, blank=True)
     style = models.CharField(max_length=100, blank=True)

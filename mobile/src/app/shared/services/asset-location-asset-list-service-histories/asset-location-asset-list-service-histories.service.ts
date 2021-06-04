@@ -10,7 +10,7 @@ import { AssetLocationAssetListServiceHistoriesModel } from './asset-location-as
   providedIn: "root",
 })
 export class AssetLocationAssetListServiceHistoriesService {
-  url: string = environment.baseUrl + "v1/work-order-activity-completion-asset-location-asset-list/";
+  url: string = environment.baseUrl + "v1/asset-location-asset-list-service-histories/";
 
   // Data
   public wamodels: AssetLocationAssetListServiceHistoriesModel[] = [];
