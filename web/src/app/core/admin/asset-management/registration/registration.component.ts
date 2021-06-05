@@ -1349,18 +1349,19 @@ export class RegistrationComponent implements OnInit {
 
   detailedDescription: any
   getDetailedDescription() {
-    const assetIdentity = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const assetIdentity = (<HTMLInputElement>document.getElementById("asset_identity")).value
     const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
-    const SubCategory_1 = (<HTMLInputElement>document.getElementById("assetselector")).value
-    const SubCategory_2 = (<HTMLInputElement>document.getElementById("assetselector")).value
-    const model_number = (<HTMLInputElement>document.getElementById("assetselector")).value
-    const size_capacity_1 = (<HTMLInputElement>document.getElementById("assetselector")).value
-    const size_capacity_1_unit_measurement = (<HTMLInputElement>document.getElementById("assetselector")).value
-    const size_capacity_2 = (<HTMLInputElement>document.getElementById("assetselector")).value
-    const size_capacity_2_unit_measurement = (<HTMLInputElement>document.getElementById("assetselector")).value
-    const size_capacity_3 = (<HTMLInputElement>document.getElementById("assetselector")).value
-    const size_capacity_3_unit_measurement = (<HTMLInputElement>document.getElementById("assetselector")).value
+    const SubCategory_1 = (<HTMLInputElement>document.getElementById("SubCategory_1")).value
+    const SubCategory_2 = (<HTMLInputElement>document.getElementById("SubCategory_2")).value
+    const model_number = (<HTMLInputElement>document.getElementById("model_number")).value
+    const size_capacity_1 = (<HTMLInputElement>document.getElementById("size_capacity_1")).value
+    const size_capacity_1_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_1_unit_measurement")).value
+    const size_capacity_2 = (<HTMLInputElement>document.getElementById("size_capacity_2")).value
+    const size_capacity_2_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_2_unit_measurement")).value
+    const size_capacity_3 = (<HTMLInputElement>document.getElementById("size_capacity_3")).value
+    const size_capacity_3_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_3_unit_measurement")).value
 
+    console.log("SubCategory_1",SubCategory_1)
     this.detailedDescription = assetIdentity + "-" + assetPrimaryCategory + "-" + SubCategory_1 + "-" + SubCategory_2 + "-" + model_number + "-" + size_capacity_1 + "-" + size_capacity_1_unit_measurement + "-" + size_capacity_2 + "-" + size_capacity_2_unit_measurement + "-" + size_capacity_3 + "-" + size_capacity_3_unit_measurement;
   }
 
@@ -2079,7 +2080,8 @@ export class RegistrationComponent implements OnInit {
 
     this.classCategory();
     this.getBoValue();
-    this.getMaintenanceSpec()
+    this.getMaintenanceSpec();
+    this.getDetailedDescription();
 
   }
 
