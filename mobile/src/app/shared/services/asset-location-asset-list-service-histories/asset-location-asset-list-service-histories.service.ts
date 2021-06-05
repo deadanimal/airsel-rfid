@@ -18,7 +18,7 @@ export class AssetLocationAssetListServiceHistoriesService {
 
   constructor(private http: HttpClient) { }
 
-  post(body: Form): Observable<AssetLocationAssetListServiceHistoriesModel> {
+  post(body): Observable<AssetLocationAssetListServiceHistoriesModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
         console.log("AssetLocationAssetListServiceHistoriesModel", res);

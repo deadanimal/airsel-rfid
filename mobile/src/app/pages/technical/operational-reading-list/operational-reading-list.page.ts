@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import {
   ActionSheetController,
   AlertController,
+  LoadingController,
   MenuController,
   ModalController,
 } from "@ionic/angular";
@@ -12,8 +13,10 @@ import {
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { OperationalReadingsService } from "src/app/shared/services/operational-readings/operational-readings.service";
 import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
-import { AssetsService } from 'src/app/shared/services/assets/assets.service';
+import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
+
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-operational-reading-list",
@@ -24,7 +27,7 @@ export class OperationalReadingListPage implements OnInit {
   // List
   operationalreadings = [];
 
-  // data 
+  // data
   private logs = new Array<string>();
   public scanValue: any;
   badge_no: any;
@@ -32,12 +35,15 @@ export class OperationalReadingListPage implements OnInit {
   bBarcode: boolean = false;
   bRfid: boolean = false;
 
+  private subscription: Subscription;
+
   constructor(
     private ngZone: NgZone,
     private route: ActivatedRoute,
     private router: Router,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
+    public loadingController: LoadingController,
     public menu: MenuController,
     public modalController: ModalController,
     public notificationService: NotificationsService,
@@ -45,7 +51,7 @@ export class OperationalReadingListPage implements OnInit {
     private operationalreadingService: OperationalReadingsService,
     private assetsService: AssetsService,
     private wamsService: WamsService
-  ) { }
+  ) {}
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -56,63 +62,95 @@ export class OperationalReadingListPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ngOnInit OperationalReadingListPage");
+
     broadcaster._debug = true;
-    this.onRegister2DBarcodeListener();
-    this.onRegisterRFIDListener();
+    // this.onRegister2DBarcodeListener();
+    // this.onRegisterRFIDListener();
   }
 
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ["OK"],
-    });
+  ngOnDestroy() {
+    console.log("ngOnDestroy OperationalReadingListPage");
+  }
 
-    await alert.present();
+  presentAlert(header: string, message: string) {
+    this.alertController
+      .create({
+        header,
+        message,
+        buttons: ["OK"],
+      })
+      .then((loading) => {
+        loading.present();
+      });
   }
 
   onRegister2DBarcodeListener() {
-    console.log("[register onRegister2DBarcodeListener] ");
-    const ev = "com.scanner.broadcast";
-    var isGlobal = true;
+    this.loadingController
+      .create({
+        message: "Please scan the QR code...",
+      })
+      .then((loading) => {
+        loading.present();
 
-    var listener = (event) => {
-      console.log(JSON.stringify(event));
+        console.log("[register onRegister2DBarcodeListener] ");
+        const ev = "com.scanner.broadcast";
+        var isGlobal = true;
 
-      if (event.SCAN_STATE == "success") {
-        this.ngZone.run(() => {
-          console.log("this.bBarcode = ", this.bBarcode)
-          if (this.bBarcode) {
-            this.updateData2(event.data);
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
+
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bBarcode = ", this.bBarcode);
+              if (this.bBarcode) {
+                loading.dismiss();
+                this.updateQrbarcode(event.data);
+              }
+            });
           }
-        });
-      }
-    };
-    broadcaster.addEventListener(ev, isGlobal, listener);
+        };
+
+        this.subscription = broadcaster.addEventListener(
+          ev,
+          isGlobal,
+          listener
+        );
+      });
   }
 
   onRegisterRFIDListener() {
-    console.log("[register onRegisterRFIDListener] ");
-    const ev = "android.intent.action.scanner.RFID";
-    var isGlobal = true;
-    console.log("this.bRfid 1 = ", this.bRfid)
+    this.loadingController
+      .create({
+        message: "Please scan the RFID tag...",
+      })
+      .then((loading) => {
+        loading.present();
 
-    var listener = (event) => {
-      console.log("sini 1")
-      console.log(JSON.stringify(event));
+        console.log("[register onRegisterRFIDListener] ");
+        const ev = "android.intent.action.scanner.RFID";
+        var isGlobal = true;
 
-      if (event.SCAN_STATE == "success") {
-        console.log("sini 2")
-        this.ngZone.run(() => {
-          console.log("this.bRfid = ", this.bRfid)
-          if (this.bRfid) {
-            console.log("sini 3")
-            this.updateData(event.data);
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
+
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bRfid = ", this.bRfid);
+              if (this.bRfid) {
+                loading.dismiss();
+                this.updateRfid(event.data);
+              }
+            });
           }
-        });
-      }
-    };
-    broadcaster.addEventListener(ev, isGlobal, listener);
+        };
+
+        this.subscription = broadcaster.addEventListener(
+          ev,
+          isGlobal,
+          listener
+        );
+      });
   }
 
   getOperationalReading() {
@@ -137,7 +175,17 @@ export class OperationalReadingListPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    console.log("ionViewDidEnter OperationalReadingListPage");
+
     this.getOperationalReading();
+  }
+
+  ionViewDidLeave() {
+    console.log("ionViewDidLeave OperationalReadingListPage");
+
+    console.log("broadcaster", broadcaster);
+    if (!this.subscription || this.subscription.closed) return;
+    this.subscription.unsubscribe();
   }
 
   homePage(path: string) {
@@ -150,7 +198,8 @@ export class OperationalReadingListPage implements OnInit {
   }
 
   async clickNew() {
-    // this.router.navigate(["/technical/operational-reading"]);
+    this.bRfid = false;
+    this.bBarcode = false;
 
     const actionSheet = await this.actionSheetController.create({
       header: "Choose method",
@@ -159,20 +208,20 @@ export class OperationalReadingListPage implements OnInit {
           text: "RFID",
           icon: "scan",
           handler: () => {
-            this.bRfid = true
-            this.bBarcode = false
+            this.bRfid = true;
+            this.bBarcode = false;
             console.log("OPL RFID clicked");
-            this.onRegisterRFIDListener()
+            this.onRegisterRFIDListener();
           },
         },
         {
           text: "QR Code",
           icon: "qr-code",
           handler: () => {
-            this.bRfid = true
-            this.bBarcode = false
+            this.bRfid = false;
+            this.bBarcode = true;
             console.log("OPL QR Code clicked");
-            this.onRegister2DBarcodeListener()
+            this.onRegister2DBarcodeListener();
           },
         },
         {
@@ -227,11 +276,8 @@ export class OperationalReadingListPage implements OnInit {
 
               /// get data from wams
               this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
-                (resBsdgeNo) => {
-
-                }, (errBadgeNo) => {
-
-                }
+                (resBsdgeNo) => {},
+                (errBadgeNo) => {}
               );
 
               this.router.navigate(
@@ -266,86 +312,69 @@ export class OperationalReadingListPage implements OnInit {
     this.operationalreadings.splice(index, 1);
   }
 
-  updateData(data) {
-    console.log("sini 4")
-    this.ngZone.run(() => {
-      this.scanValue = data;
-      console.log("sini 5 scanned data = ", this.scanValue);
+  updateRfid(data) {
+    if (this.bRfid)
+      this.ngZone.run(() => {
+        this.scanValue = data;
 
-      this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
-        (res) => {
-          console.log("res assetlsService = ", res)
+        this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
+          (res) => {
+            if (res.length > 0) {
+              let navigationExtras: NavigationExtras = {
+                state: {
+                  badge_no: res[0].badge_no,
+                },
+              };
 
-          if (res[0].badge_no != '') {
-            let navigationExtras: NavigationExtras = {
-              state: {
-                badge_no: res[0].badge_no,
-              },
-            };
-
-            /// get data from wams
-            this.wamsService.getAssetBadgeNo(res[0].badge_no).subscribe(
-              (resBsdgeNo) => {
-
-              }, (errBadgeNo) => {
-
-              }
-            );
-
-            // console.log("navigationExtras = ", navigationExtras)
-            this.router.navigate(
-              ["/technical/work-request"],
-              navigationExtras
-            );
-          } else {
-            this.presentAlert(
-              "Error",
-              "Data not valid in database"
-            );
+              /// get data from wams
+              this.wamsService.getAssetBadgeNo(res[0].badge_no).subscribe(
+                (resBsdgeNo) => {},
+                (errBadgeNo) => {},
+                () => {
+                  this.router.navigate(
+                    ["/technical/operational-reading"],
+                    navigationExtras
+                  );
+                }
+              );
+            } else {
+              console.log("masuk sini");
+              this.presentAlert("Error", "Data not valid in database");
+            }
+          },
+          (err) => {
+            console.log("err assetlsService = ", err);
           }
-
-        },
-        (err) => {
-          console.log("err assetlsService = ", err)
-        }
-      )
-
-    });
+        );
+      });
   }
 
-  updateData2(data) {
-    console.log("updateData2")
-    this.ngZone.run(() => {
-      this.scanValue = data // "SLUV-0009495" // data;
-      console.log("updateData2 = ", this.scanValue);
+  updateQrbarcode(data) {
+    if (this.bBarcode)
+      this.ngZone.run(() => {
+        this.scanValue = data;
 
-      if (this.scanValue != '') {
-        let navigationExtras: NavigationExtras = {
-          state: {
-            badge_no: this.scanValue,
-          },
-        };
+        if (this.scanValue != "") {
+          let navigationExtras: NavigationExtras = {
+            state: {
+              badge_no: this.scanValue,
+            },
+          };
 
-        /// get data from wams
-        this.wamsService.getAssetBadgeNo(this.scanValue).subscribe(
-          (resBsdgeNo) => {
-
-          }, (errBadgeNo) => {
-
-          }
-        );
-
-        this.router.navigate(
-          ["/technical/work-request"],
-          navigationExtras
-        );
-      } else {
-        this.presentAlert(
-          "Error",
-          "Data not valid in database"
-        );
-      }
-
-    });
+          /// get data from wams
+          this.wamsService.getAssetBadgeNo(this.scanValue).subscribe(
+            (resBsdgeNo) => {},
+            (errBadgeNo) => {},
+            () => {
+              this.router.navigate(
+                ["/technical/operational-reading"],
+                navigationExtras
+              );
+            }
+          );
+        } else {
+          this.presentAlert("Error", "Data not valid in database");
+        }
+      });
   }
 }

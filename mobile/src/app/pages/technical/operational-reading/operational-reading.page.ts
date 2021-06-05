@@ -143,8 +143,22 @@ export class OperationalReadingPage implements OnInit {
     });
   }
 
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter OperationalReadingPage");
+  }
+
+  ionViewDidLeave() {
+    console.log("ionViewDidLeave OperationalReadingPage")
+  }
+
   ngOnInit() {
+    console.log("ngOnInit OperationalReadingPage");
+
     this.menu.enable(false, "menuNotification");
+  }
+
+  ngOnDestroy() {
+    console.log("ngOnDestroy OperationalReadingPage");
   }
 
   getAssetLocationSync(node_id) {
