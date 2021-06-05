@@ -283,15 +283,6 @@ export class OperationalReadingListPage implements OnInit {
               },
             };
 
-            /// get data from wams
-            this.wamsService.getAssetBadgeNo(res[0].badge_no).subscribe(
-              (resBsdgeNo) => {
-
-              }, (errBadgeNo) => {
-
-              }
-            );
-
             // console.log("navigationExtras = ", navigationExtras)
             this.router.navigate(
               ["/technical/work-request"],

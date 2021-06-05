@@ -13,12 +13,12 @@ export class AssetLocationAssetListServiceHistoriesService {
   url: string = environment.baseUrl + "v1/asset-location-asset-list-service-histories/";
 
   // Data
-  public wamodels: AssetLocationAssetListServiceHistoriesModel[] = [];
-  public wamodel: AssetLocationAssetListServiceHistoriesModel;
+  public atmodels: AssetLocationAssetListServiceHistoriesModel[] = [];
+  public atmodel: AssetLocationAssetListServiceHistoriesModel;
 
   constructor(private http: HttpClient) { }
 
-  post(body: Form): Observable<AssetLocationAssetListServiceHistoriesModel> {
+  post(body): Observable<AssetLocationAssetListServiceHistoriesModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
         console.log("AssetLocationAssetListServiceHistoriesModel", res);
@@ -30,7 +30,7 @@ export class AssetLocationAssetListServiceHistoriesService {
     return this.http.get<any>(this.url).pipe(
       tap((res) => {
         console.log("AssetLocationAssetListServiceHistoriesModel", res);
-        this.wamodels = res;
+        this.atmodels = res;
       })
     );
   }
@@ -40,13 +40,13 @@ export class AssetLocationAssetListServiceHistoriesService {
     return this.http.get<AssetLocationAssetListServiceHistoriesModel>(urlID).pipe(
       tap((res: AssetLocationAssetListServiceHistoriesModel) => {
         console.log("AssetLocationAssetListServiceHistoriesModel", res);
-        this.wamodel = res;
+        this.atmodel = res;
       })
     );
   }
 
-  update(id: string, body: Form): Observable<AssetLocationAssetListServiceHistoriesModel> {
-    return this.http.patch<AssetLocationAssetListServiceHistoriesModel>(this.url + id + '/', body).pipe(
+  update(body: Form): Observable<AssetLocationAssetListServiceHistoriesModel> {
+    return this.http.patch<AssetLocationAssetListServiceHistoriesModel>(this.url, body).pipe(
       tap((res) => {
         console.log("AssetLocationAssetListServiceHistoriesModel", res);
       })

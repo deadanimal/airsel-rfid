@@ -13,12 +13,12 @@ export class WorkOrderActivityCompletionAssLocAssListService {
   url: string = environment.baseUrl + "v1/work-order-activity-completion-asset-location-asset-list/";
 
   // Data
-  public wamodels: WorkOrderActivityCompletionAssLocAssListModel[] = [];
-  public wamodel: WorkOrderActivityCompletionAssLocAssListModel;
+  public amodels: WorkOrderActivityCompletionAssLocAssListModel[] = [];
+  public amodel: WorkOrderActivityCompletionAssLocAssListModel;
 
   constructor(private http: HttpClient) { }
 
-  post(body: Form): Observable<WorkOrderActivityCompletionAssLocAssListModel> {
+  post(body): Observable<WorkOrderActivityCompletionAssLocAssListModel> {
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
         console.log("WorkOrderActivityCompletionAssLocAssListModel", res);
@@ -30,7 +30,7 @@ export class WorkOrderActivityCompletionAssLocAssListService {
     return this.http.get<any>(this.url).pipe(
       tap((res) => {
         console.log("WorkOrderActivityCompletionAssLocAssListModel", res);
-        this.wamodels = res;
+        this.amodels = res;
       })
     );
   }
@@ -40,13 +40,14 @@ export class WorkOrderActivityCompletionAssLocAssListService {
     return this.http.get<WorkOrderActivityCompletionAssLocAssListModel>(urlID).pipe(
       tap((res: WorkOrderActivityCompletionAssLocAssListModel) => {
         console.log("WorkOrderActivityCompletionAssLocAssListModel", res);
-        this.wamodel = res;
+        this.amodel = res;
       })
     );
   }
 
-  update(id: string, body: Form): Observable<WorkOrderActivityCompletionAssLocAssListModel> {
-    return this.http.patch<WorkOrderActivityCompletionAssLocAssListModel>(this.url + id + '/', body).pipe(
+  update(id: string, body): Observable<WorkOrderActivityCompletionAssLocAssListModel> {
+    let urlTemp = this.url + id + '/'
+    return this.http.patch<WorkOrderActivityCompletionAssLocAssListModel>(urlTemp, body).pipe(
       tap((res) => {
         console.log("WorkOrderActivityCompletionAssLocAssListModel", res);
       })
