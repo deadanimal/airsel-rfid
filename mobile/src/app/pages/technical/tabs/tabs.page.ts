@@ -1,9 +1,13 @@
-// declare var broadcaster: any;
+declare var broadcaster: any;
 
-import { Component, OnInit, NgZone } from "@angular/core";
+import { Component, OnInit, NgZone, ElementRef } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
-import { ActionSheetController, AlertController } from "@ionic/angular";
-import { AssetsService } from 'src/app/shared/services/assets/assets.service';
+import {
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+} from "@ionic/angular";
+import { AssetsService } from "src/app/shared/services/assets/assets.service";
 
 @Component({
   selector: "app-tabs",
@@ -19,10 +23,12 @@ export class TabsPage implements OnInit {
   constructor(
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
+    public loadingController: LoadingController,
+    private elementRef: ElementRef,
     private ngZone: NgZone,
     private router: Router,
     private assetsService: AssetsService
-  ) { }
+  ) {}
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -33,50 +39,81 @@ export class TabsPage implements OnInit {
   }
 
   ngOnInit() {
-    // broadcaster._debug = true;
-    this.onRegister2DBarcodeListener();
-    this.onRegisterRFIDListener();
+    console.log("ngOnInit TabsPage");
+
+    broadcaster._debug = true;
+    // this.onRegister2DBarcodeListener();
+    // this.onRegisterRFIDListener();
+  }
+
+  ngOnDestroy() {
+    console.log("ngOnDestroy TabsPage");
+
+    // this.elementRef.nativeElement.remove();
   }
 
   onRegister2DBarcodeListener() {
-    console.log("[register onRegister2DBarcodeListener] ");
-    const ev = "com.scanner.broadcast";
-    var isGlobal = true;
+    this.loadingController
+      .create({
+        message: "Please scan the QR code...",
+      })
+      .then((loading) => {
+        loading.present();
 
-    var listener = (event) => {
-      console.log(JSON.stringify(event));
+        console.log("[register onRegister2DBarcodeListener] ");
+        const ev = "com.scanner.broadcast";
+        var isGlobal = true;
 
-      if (event.SCAN_STATE == "success") {
-        this.ngZone.run(() => {
-          if (this.bBarcode) {
-            this.updateQrbarcode(event.data);
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
+
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bBarcode = ", this.bBarcode);
+              if (this.bBarcode) {
+                loading.dismiss();
+                this.updateQrbarcode(event.data);
+              }
+            });
           }
-        });
-      }
-    };
-    // broadcaster.addEventListener(ev, isGlobal, listener);
+        };
+        broadcaster.addEventListener(ev, isGlobal, listener);
+      });
   }
 
   onRegisterRFIDListener() {
-    console.log("[register onRegisterRFIDListener] ");
-    const ev = "android.intent.action.scanner.RFID";
-    var isGlobal = true;
+    this.loadingController
+      .create({
+        message: "Please scan the RFID tag...",
+      })
+      .then((loading) => {
+        loading.present();
 
-    var listener = (event) => {
-      console.log(JSON.stringify(event));
+        console.log("[register onRegisterRFIDListener] ");
+        const ev = "android.intent.action.scanner.RFID";
+        var isGlobal = true;
 
-      if (event.SCAN_STATE == "success") {
-        this.ngZone.run(() => {
-          if (this.bRfid) {
-            this.updateRfid(event.data);
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
+
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bRfid = ", this.bRfid);
+              if (this.bRfid) {
+                loading.dismiss();
+                this.updateRfid(event.data);
+              }
+            });
           }
-        });
-      }
-    };
-    // broadcaster.addEventListener(ev, isGlobal, listener);
+        };
+        broadcaster.addEventListener(ev, isGlobal, listener);
+      });
   }
 
   async scan() {
+    this.bRfid = false;
+    this.bBarcode = false;
+
     const actionSheet = await this.actionSheetController.create({
       header: "Choose method",
       buttons: [
@@ -87,6 +124,7 @@ export class TabsPage implements OnInit {
             console.log("RFID clicked");
             this.bBarcode = false;
             this.bRfid = true;
+            this.onRegisterRFIDListener();
           },
         },
         {
@@ -96,6 +134,7 @@ export class TabsPage implements OnInit {
             console.log("QR Code clicked");
             this.bBarcode = true;
             this.bRfid = false;
+            this.onRegister2DBarcodeListener();
           },
         },
         {
@@ -147,7 +186,10 @@ export class TabsPage implements OnInit {
                   badge_no: data.badge_no,
                 },
               };
-              this.router.navigate(["/technical/tabs/tab2"], navigationExtras);
+              this.router.navigate(
+                ["/technical/asset-detail-list"],
+                navigationExtras
+              );
             } else {
               this.presentAlert(
                 "Error",
@@ -161,89 +203,65 @@ export class TabsPage implements OnInit {
     await alert.present();
   }
 
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
+  presentAlert(header: string, message: string) {
+    this.alertController.create({
       header,
       message,
       buttons: ["OK"],
+    }).then((loading) => {
+      loading.present();
     });
-
-    await alert.present();
   }
-
-  // updateRfid(data) {
-  //   this.ngZone.run(() => {
-  //     this.scanValue = data;
-  //     alert(this.scanValue);
-  //   });
-  // }
 
   // rfid scan
   updateRfid(data) {
-    console.log("sini 4")
-    this.ngZone.run(() => {
-      this.scanValue = data;
-      // alert(this.scanValue);
-      console.log("sini 5 scanned data = ", this.scanValue);
+    if (this.bRfid)
+      this.ngZone.run(() => {
+        this.scanValue = data;
 
-      this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
-        (res) => {
-          console.log("res assetlsService = ", res)
+        this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
+          (res) => {
+            if (res.length > 0) {
+              let navigationExtras: NavigationExtras = {
+                state: {
+                  badge_no: res[0].badge_no,
+                },
+              };
 
-          if (res[0].badge_no != '') {
-            let navigationExtras: NavigationExtras = {
-              state: {
-                badge_no: res[0].badge_no,
-              },
-            };
-            console.log("navigationExtras = ", navigationExtras)
-            this.router.navigate(["/technical/tabs/tab2"], navigationExtras);
-            // this.router.navigate(
-            //   ["/technical/work-request"],
-            //   navigationExtras
-            // );
-          } else {
-            this.presentAlert(
-              "Error",
-              "Data not valid in database"
-            );
+              this.router.navigate(
+                ["/technical/asset-detail-list"],
+                navigationExtras
+              );
+            } else {
+              this.presentAlert("Error", "Data not valid in database");
+            }
+          },
+          (err) => {
+            console.log("err assetlsService = ", err);
           }
-
-        },
-        (err) => {
-          console.log("err assetlsService = ", err)
-        }
-      )
-
-    });
+        );
+      });
   }
 
   // qr code
   updateQrbarcode(data) {
-    console.log("updateQrbarcode")
-    this.ngZone.run(() => {
-      this.scanValue = data // "SLUV-0009495";
-      // alert(this.scanValue);
-      console.log("updateQrbarcode = ", this.scanValue);
+    if (this.bBarcode)
+      this.ngZone.run(() => {
+        this.scanValue = data;
 
-      if (this.scanValue != '') {
-        let navigationExtras: NavigationExtras = {
-          state: {
-            badge_no: this.scanValue,
-          },
-        };
-        this.router.navigate(["/technical/tabs/tab2"], navigationExtras);
-        // this.router.navigate(
-        //   ["/technical/work-request"],
-        //   navigationExtras
-        // );
-      } else {
-        this.presentAlert(
-          "Error",
-          "Data not valid in database"
-        );
-      }
-
-    });
+        if (this.scanValue != "") {
+          let navigationExtras: NavigationExtras = {
+            state: {
+              badge_no: this.scanValue,
+            },
+          };
+          this.router.navigate(
+            ["/technical/asset-detail-list"],
+            navigationExtras
+          );
+        } else {
+          this.presentAlert("Error", "Data not valid in database");
+        }
+      });
   }
 }

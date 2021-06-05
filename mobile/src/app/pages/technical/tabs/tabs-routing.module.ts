@@ -18,18 +18,18 @@ const routes: Routes = [
           },
         ],
       },
-      {
-        path: "tab2",
-        children: [
-          {
-            path: "",
-            loadChildren: () =>
-              import("../asset-detail-list/asset-detail-list.module").then(
-                (m) => m.AssetDetailListPageModule
-              ),
-          },
-        ],
-      },
+      // {
+      //   path: "tab2",
+      //   children: [
+      //     {
+      //       path: "",
+      //       loadChildren: () =>
+      //         import("../asset-detail-list/asset-detail-list.module").then(
+      //           (m) => m.AssetDetailListPageModule
+      //         ),
+      //     },
+      //   ],
+      // },
       {
         path: "tab3",
         children: [
