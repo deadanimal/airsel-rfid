@@ -11,7 +11,7 @@ export class WorkOrderActivityCompletionAssLocAssListModel {
   public reading_datetime: string;
   public created_date: string;
   public modified_date: string;
-  public service_histories: string;
+  public service_histories: [];
 
   constructor(
     id: string,
@@ -26,7 +26,7 @@ export class WorkOrderActivityCompletionAssLocAssListModel {
     reading_datetime: string,
     created_date: string,
     modified_date: string,
-    service_histories: string
+    service_histories: []
   ) {
     this.id = id;
     this.node_id = node_id;

@@ -25,7 +25,7 @@ import { ServiceHistoryQuestionService } from 'src/app/shared/services/service-h
 import { QuestionValidValueService } from 'src/app/shared/services/questions-value-valid/questions-value-valid.service';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 import { AssetLocationAssetListServiceHistoriesService } from 'src/app/shared/services/asset-location-asset-list-service-histories/asset-location-asset-list-service-histories.service';
-
+import { WorkOrderActivityCompletionAssLocAssListService } from 'src/app/shared/services/work-order-activity-completion-AssLocAssList/work-order-activity-completion-AssLocAssList.service';
 
 @Component({
   selector: "app-service-history",
@@ -43,6 +43,9 @@ export class ServiceHistoryPage implements OnInit {
   questionAndAnswerData: any = []
   questionAndAnswerDiv = '0'
   qnaPostData = [];
+  servHist: any
+  workOrderActComAssLocAssLis: any = []
+  AssLocAssLisArrId = []
 
   updateformData = [];
 
@@ -64,15 +67,16 @@ export class ServiceHistoryPage implements OnInit {
     private serviceHistoryQuestionService: ServiceHistoryQuestionService,
     private questionValidValueService: QuestionValidValueService,
     private serviceHistoriesQuestionService: ServiceHistoriesQuestionService,
-    private assetLocationAssetListServiceHistoriesService: AssetLocationAssetListServiceHistoriesService
+    private assetLocationAssetListServiceHistoriesService: AssetLocationAssetListServiceHistoriesService,
+    private workOrderActivityCompletionAssLocAssListService: WorkOrderActivityCompletionAssLocAssListService
   ) {
     // console.log("servicehistory == ", this.navParams.get("servicehistory"));
 
-    let servHist = this.navParams.get("servicehistory")
-    console.log("servHist qqqqqq = ", servHist)
-
+    this.servHist = this.navParams.get("servicehistory")
+    console.log("this.servHist qqqqqq = ", this.servHist)
+    this.getWorkOrderActComAssLocAssLis(this.servHist)
     this.assetsService
-      .filter("asset_id=" + servHist.asset_id)
+      .filter("asset_id=" + this.servHist.asset_id)
       .subscribe(
         (assServres) => {
           console.log("assetsService res", assServres)
@@ -128,6 +132,23 @@ export class ServiceHistoryPage implements OnInit {
           console.error("err", err);
         }
       );
+
+  }
+
+  getWorkOrderActComAssLocAssLis(workoacalal) {
+
+    this.workOrderActivityCompletionAssLocAssListService
+      .getOne(workoacalal.id)
+      .subscribe(
+        (woacalalres) => {
+          console.log("woacalalres === ", woacalalres)
+          this.workOrderActComAssLocAssLis = woacalalres
+          // console.log("woacalalres.service_histories =", woacalalres.service_histories)
+        }, (woacalalerr) => {
+          console.log("woacalalerr === ", woacalalerr)
+        }
+      )
+
   }
 
   ngOnInit() { }
@@ -293,22 +314,14 @@ export class ServiceHistoryPage implements OnInit {
 
     let servHistQues = [];
 
-    const serHisQueDataFormData = new FormGroup({
-      seq: new FormControl(),
-      code: new FormControl(),
-      short_text: new FormControl(),
-      text: new FormControl(),
-      style: new FormControl(),
-      response_radio: new FormControl(),
-      valid_value: new FormControl(),
-    });
-
-    console.log(serHisQueDataFormData.value);
-
     // this.updateformData.forEach(element1 => {
-    for (let x = 0; x <= this.updateformData.length; x++) {
+    for (let x = 0; x < this.updateformData.length; x++) {
 
-      console.log("this.updateformData[x] = ", this.updateformData[0])
+
+
+      console.log("xxxxxx = ", x)
+      console.log("this.updateformData[x] = ", this.updateformData[x])
+      console.log("element1['valid_value'] = ", this.updateformData[x]['valid_value'].length)
 
       // let validvalue: any = []
       let styleDiv = ''
@@ -317,11 +330,10 @@ export class ServiceHistoryPage implements OnInit {
       let validvalue = [];
       let responseRadio = ''
 
-      console.log("element1['valid_value'] = ", this.updateformData[x]['valid_value'].length)
       // this.updateformData[x]['valid_value'].forEach(element2 => {
       let valid_value_data = this.updateformData[x]['valid_value']
 
-      for (let i = 0; i <= valid_value_data.length; i++) {
+      for (let i = 0; i < valid_value_data.length; i++) {
         console.log("valid_value res = ", valid_value_data[i])
         if (valid_value_data[i].answer_cd == this.updateformData[x].answer_id) {
           styleDiv = valid_value_data[i].style
@@ -365,52 +377,83 @@ export class ServiceHistoryPage implements OnInit {
                 valid_value: validvalue
               }
 
-              // this.serviceHistoriesQuestionService.post(serHisQueDataFormData.value).subscribe(
+              console.log("serHisQueDataFormData =", serHisQueDataFormData)
+
               this.serviceHistoriesQuestionService.post(serHisQueDataFormData).subscribe(
                 (serHisQueRes) => {
 
                   console.log("res serHisQueRes = ", serHisQueRes)
                   servHistQues.push(serHisQueRes.id);
+                  console.log("servHistQues arr = ", servHistQues)
+
+                  console.log("before x == this.updateformData.length = ", x, " -- ", (this.updateformData.length - 1))
+                  if (x == (this.updateformData.length - 1)) {
+                    console.log("servHistQues arr final = ", servHistQues)
+                    console.log("after x == this.updateformData.length = ", x, " -- ", (this.updateformData.length - 1))
+
+                    let assLocAssLisSerHisData = {
+                      service_history_type: this.updateformData[x].question_seq,
+                      comments: this.updateformData[x].question_seq,
+                      // failure_type: this.updateformData[x].question_seq,
+                      // failure_mode: this.updateformData[x].question_seq,
+                      // failure_repair: this.updateformData[x].question_seq,
+                      // failure_component: this.updateformData[x].question_seq,
+                      // failure_root_cause: this.updateformData[x].question_seq,
+                      // svc_hist_type_req_fl: this.updateformData[x].question_seq,
+                      // downtime_reason: this.updateformData[x].question_seq,
+                      question: servHistQues
+                    }
+
+                    console.log(assLocAssLisSerHisData)
+                    let woacalalData = []
+                    this.assetLocationAssetListServiceHistoriesService.post(assLocAssLisSerHisData).subscribe(
+                      (alslshRes) => {
+                        console.log("alslshRes", alslshRes)
+
+                        console.log("siniiiiii length = ", this.workOrderActComAssLocAssLis)
+                        if (this.workOrderActComAssLocAssLis.service_histories.length > 0) {
+                          console.log("sana length = ", this.workOrderActComAssLocAssLis.service_histories.length)
+                          this.workOrderActComAssLocAssLis.service_histories
+                            .forEach(element => {
+                              // this.AssLocAssLisArrId
+                              woacalalData.push(element)
+                            });
+                        } else {
+                          console.log("sini length = ", this.workOrderActComAssLocAssLis.service_histories.length)
+                          woacalalData = []
+                        }
+
+                        woacalalData.push(alslshRes.id)
+
+                        // let woacassLocAssLisDataFormData = new FormData();
+                        // woacassLocAssLisDataFormData.append('service_histories',woacalalData)
+                        let woacassLocAssLisFormData = {
+                          service_histories: woacalalData
+                        }
+
+                        this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
+                          (woacalalRes) => {
+                            console.log("woacalalRes =", woacalalRes)
+                            this.alertWorkActivityAsset('Work Activity', 'SuccessFully Save Data.')
+                          }, (woacalalErr) => {
+                            console.log(woacalalErr)
+                          }
+                        )
+
+                      }, (alslshErr) => {
+                        console.log("alslshErr", alslshErr)
+                      }, () => {
+                      }
+                    )
+                    // console.log("here 111111111111")
+
+                  }
 
                 },
                 (err) => {
                   console.error("err", err);
                 },
                 () => {
-
-                  console.log("before x == this.updateformData.length = ", x, " -- ", this.updateformData.length)
-                  if (x == (this.updateformData.length - 1)) {
-                    console.log("before x == this.updateformData.length = ", x, " -- ", this.updateformData.length)
-
-                    let assLocAssLisSerHisData = {
-                      service_history_type: this.updateformData[x].question_seq,
-                      effective_datetime: this.updateformData[x].question_seq,
-                      start_date_time: this.updateformData[x].question_seq,
-                      end_date_time: this.updateformData[x].question_seq,
-                      comments: this.updateformData[x].question_seq,
-                      failure_type: this.updateformData[x].question_seq,
-                      failure_mode: this.updateformData[x].question_seq,
-                      failure_repair: this.updateformData[x].question_seq,
-                      failure_component: this.updateformData[x].question_seq,
-                      failure_root_cause: this.updateformData[x].question_seq,
-                      svc_hist_type_req_fl: this.updateformData[x].question_seq,
-                      downtime_reason: this.updateformData[x].question_seq,
-                      question: this.updateformData[x].question_seq
-                    }
-
-                    console.log(assLocAssLisSerHisData)
-
-                    this.assetLocationAssetListServiceHistoriesService.post(assLocAssLisSerHisData).subscribe(
-                      (alslshRes) => {
-                        console.log("alslshRes", alslshRes)
-                      }, (alslshErr) => {
-                        console.log("alslshErr", alslshErr)
-                      }, () => {
-                      }
-                    )
-                    console.log("here 111111111111")
-
-                  }
 
                 }
               );
@@ -432,5 +475,24 @@ export class ServiceHistoryPage implements OnInit {
     //   console.log("servHistQues arrid = ", servHistQues)
     // }, 4000);
 
+  }
+
+  async alertWorkActivityAsset(header, message) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: [
+        {
+          text: "OK",
+          handler: () => {
+            // this.router.navigate(["/technical/maintenance-work-list"]);
+            // this.router.navigate(["/technical/work-activity-asset"]);
+            this.modalController.dismiss();
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }

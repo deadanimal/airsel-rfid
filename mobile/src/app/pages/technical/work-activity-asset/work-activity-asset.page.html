@@ -55,7 +55,8 @@
         <ion-button class="ion-text-end" (click)="clickAddServiceHistory(workactivityasset)">Add</ion-button>
       </ion-item>
 
-      <ion-card>
+      <!-- <ion-card> -->
+      <ion-card *ngFor="let woacalal of workOrderActivityCompletionAssLocAssLis">
         <ion-card-header>
           <ion-fab horizontal="end">
             <ion-fab-button size="small" color="primary" (click)="clickEdit(workactivityasset)">

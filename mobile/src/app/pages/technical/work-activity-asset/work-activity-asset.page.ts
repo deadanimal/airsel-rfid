@@ -19,7 +19,10 @@ import { AssetRegistrationsService } from "src/app/shared/services/asset-registr
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { AssetsService } from 'src/app/shared/services/assets/assets.service';
-import { AssetLocationAssLisSerHisService } from 'src/app/shared/services/asset-location-assLisSerHis/asset-location-assLisSerHis.service';
+// import { AssetLocationAssLisSerHisService } from 'src/app/shared/services/asset-location-assLisSerHis/asset-location-assLisSerHis.service';
+import { ServiceHistoryQuestionService } from 'src/app/shared/services/service-history-question/service-history-question.service';
+import { WorkOrderActivityCompletionAssLocAssListService } from 'src/app/shared/services/work-order-activity-completion-AssLocAssList/work-order-activity-completion-AssLocAssList.service';
+import { AssetLocationAssetListServiceHistoriesService } from 'src/app/shared/services/asset-location-asset-list-service-histories/asset-location-asset-list-service-histories.service';
 
 @Component({
   selector: "app-work-activity-asset",
@@ -32,6 +35,7 @@ export class WorkActivityAssetPage implements OnInit {
 
   // Data
   workactivityasset: any;
+  workOrderActivityCompletionAssLocAssLis: any = []
 
   // Form
   workactivityassetFormGroup: FormGroup;
@@ -47,7 +51,10 @@ export class WorkActivityAssetPage implements OnInit {
     private assetregistrationService: AssetRegistrationsService,
     private workactivityService: WorkActivitiesService,
     // private barcodeScanner: BarcodeScanner
-    private assetsService: AssetsService
+    private assetsService: AssetsService,
+    private serviceHistoryQuestionService: ServiceHistoryQuestionService,
+    private workOrderActivityCompletionAssLocAssListService: WorkOrderActivityCompletionAssLocAssListService,
+    private assetLocationAssetListServiceHistoriesService: AssetLocationAssetListServiceHistoriesService
   ) {
     this.workactivityassetFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -69,25 +76,31 @@ export class WorkActivityAssetPage implements OnInit {
           asset_id: this.workactivityasset.asset_id,
         });
 
-        console.log("test test test test test test");
-        console.log(this.workactivityasset);
-        let servHist = this.workactivityasset.service_histories
+        // console.log("workactivityasset == ", this.workactivityasset);
+        // let servHist = this.workactivityasset.service_histories
 
-        servHist.forEach(element => {
-
+        this.workactivityasset.service_histories.forEach(element => {
+          this.assetLocationAssetListServiceHistoriesService.getOne(element).subscribe(
+            (res) => {
+              console.log("serviceHistoryQuestionService", res)
+              this.workOrderActivityCompletionAssLocAssLis.push(res)
+            }, (err) => {
+              console.log(err)
+            }
+          )
         });
 
         // if (this.router.getCurrentNavigation().extras.state.badge_no) {
         let badge_no = this.router.getCurrentNavigation().extras.state
           .badge_no;
-        console.log("badge_no = ", badge_no)
+        // console.log("badge_no = ", badge_no)
         // if (badge_no == this.workactivityasset.badge_number) {
 
         this.assetsService
           .filter("badge_no=" + badge_no)
           .subscribe(
             (res) => {
-              console.log("res qweqwe", res)
+              // console.log("res qweqwe", res)
               this.workactivityassetFormGroup.patchValue({
                 // asset_type: res[0].asset_primary_category,
                 badge_number: badge_no,
@@ -109,6 +122,10 @@ export class WorkActivityAssetPage implements OnInit {
       }
     });
   }
+
+  // getWorkOrderActivityComp(){
+  //   workactivityasset
+  // }
 
   ngOnInit() {
     this.menu.enable(false, "menuNotification");
