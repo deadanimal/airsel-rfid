@@ -1,5 +1,7 @@
 
 import json
+import xlsxwriter
+import io
 
 from django.shortcuts import render
 from django.db.models import Q
@@ -12,8 +14,10 @@ from rest_framework import viewsets, status
 from rest_framework_extensions.mixins import NestedViewSetMixin
 
 from django_filters.rest_framework import DjangoFilterBackend
+from django.http import HttpResponse
 
 from datetime import datetime
+
 
 from .models import (
     Asset,
@@ -200,6 +204,47 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         serializer = AssetSerializer(asset)
         return Response(serializer.data)
+
+    @action(methods=['POST', 'GET'], detail=False)
+    def exportExcel(self, request, *args, **kwargs):
+        temp = []
+        for i in request.data["selected_id"]:
+            temp.append(AssetRegistration.objects.all().filter(id=i).values()[0])
+
+        temp_list = [i for i in temp]
+
+
+        output = io.BytesIO()
+        file_name = 'RegisteredAsset.xlsx'
+        workbook = xlsxwriter.Workbook(output)
+        worksheet = workbook.add_worksheet('registered_asset')
+        
+        # get header 
+        header = [*temp_list[0]]
+        print(header)
+
+        first_row = 0
+        for h in header:
+            col = header.index(h)
+            worksheet.write(first_row, col, h)
+
+        row = 1
+        for i in temp_list:
+            for _key, _value in i.items():
+                col = header.index(_key)
+                worksheet.write(row, col, str(_value))
+            row+=1
+
+        workbook.close()
+        output.seek(0)
+         
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename="' + file_name +'"'
+        return response
+
 
 class AssetGroupViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetGroup.objects.all()
