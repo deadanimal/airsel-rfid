@@ -77,7 +77,7 @@ export const AMROUTES: RouteInfo[] = [
     icontype: 'far fa-chart-bar text-blue',
     isCollapsed: true,
     children: [
-      { path: 'tableau', title: 'Tableau', type: 'link' },
+      // { path: 'tableau', title: 'Tableau', type: 'link' },
       // { path: 'analytics', title: 'Analytics', type: 'link' },
       { path: 'work-activity', title: 'Work Activity', type: 'link' },
       { path: 'total-asset-registered', title: 'Total Asset Registered', type: 'link' },
@@ -202,7 +202,7 @@ export const PLANNEROUTES: RouteInfo[] = [
     icontype: 'far fa-chart-bar text-blue',
     isCollapsed: true,
     children: [
-      { path: 'tableau', title: 'Tableau', type: 'link' },
+      // { path: 'tableau', title: 'Tableau', type: 'link' },
       // { path: 'analytics', title: 'Analytics', type: 'link' },
       { path: 'work-activity', title: 'Work Activity', type: 'link' },
       { path: 'total-asset-registered', title: 'Total Asset Registered', type: 'link' },
