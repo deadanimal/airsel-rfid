@@ -41,6 +41,90 @@
           </ion-item>
         </div>
 
+        <div *ngIf="questionAndAnswerDowntimeDiv == '1'">
+          <ion-item>
+            <ion-label position="stacked">Start Date Time</ion-label>
+            <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss"
+              (ionChange)="saveFailureDontimeArray($event.target.value,'start')"></ion-datetime>
+            <!-- <ion-input type="datetime-local" (click)="saveFailureDontimeArray($event.target.value,'start')" required> -->
+            <!-- </ion-input> -->
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">End Date Time</ion-label>
+            <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss"
+              (ionChange)="saveFailureDontimeArray($event.target.value,'end')"></ion-datetime>
+            <!-- <ion-input type="datetime-local" (click)="saveFailureDontimeArray($event.target.value,'end')" required> -->
+            <!-- </ion-input> -->
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Downtime Reason</ion-label>
+            <ion-select (ionChange)="saveFailureDontimeArray($event.target.value,'reason')" required>
+              <ion-select-option value="PL">Planned</ion-select-option>
+              <ion-select-option value="NPL">Not Planned
+              </ion-select-option>
+            </ion-select>
+            <!-- <ion-input type="text" (ionChange)="saveFailureDontimeArray($event.target.value,'reason')" required>
+            </ion-input> -->
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Comment</ion-label>
+            <ion-input type="text" (keyup)="saveFailureDontimeArray($event.target.value,'comment')" required>
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div *ngIf="questionAndAnswerFailureDiv == '1'">
+          <ion-item>
+            <ion-label position="stacked">Failure Type</ion-label>
+            <ion-select (ionChange)="saveFailureDontimeArray($event.target.value,'type')" required>
+              <ion-select-option>Please Select</ion-select-option>
+              <ion-select-option *ngFor="let ansType of failureTypeData" [value]="ansType.failure_type">
+                {{ansType.failure_type}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Failure Mode</ion-label>
+            <ion-select (ionChange)="saveFailureDontimeArray($event.target.value,'mode')" required>
+              <ion-select-option>Please Select</ion-select-option>
+              <ion-select-option *ngFor="let ansMode of failureModeData" [value]="ansMode.failure_mode">
+                {{ansMode.failure_mode}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Failure Repair</ion-label>
+            <ion-select (ionChange)="saveFailureDontimeArray($event.target.value,'repair')" required>
+              <ion-select-option>Please Select</ion-select-option>
+              <ion-select-option *ngFor="let ansRepair of failureRepairData" [value]="ansRepair.failure_repair">
+                {{ansRepair.failure_repair}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Failure Component</ion-label>
+            <ion-select (ionChange)="saveFailureDontimeArray($event.target.value,'component')" required>
+              <ion-select-option>Please Select</ion-select-option>
+              <ion-select-option *ngFor="let ansComp of failureComponentData" [value]="ansComp.failure_comp">
+                {{ansComp.failure_comp}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Remark</ion-label>
+            <ion-input type="text" (keyup)="saveFailureDontimeArray($event.target.value,'remark')" required>
+            </ion-input>
+          </ion-item>
+
+        </div>
+
         <!-- 
         <div *ngIf="servicehistoryFormGroup.value.type == 'DOWNTIME'">
           <ion-item>

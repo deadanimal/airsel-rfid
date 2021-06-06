@@ -36,12 +36,12 @@ export class MaintenanceWorkDetailPage implements OnInit {
       name: "New",
     },
     {
-      value: "In Progress",
-      name: "In Progress",
+      value: "InProgress",
+      name: "InProgress",
     },
     {
-      value: "Backlog",
-      name: "Backlog",
+      value: "BackLog",
+      name: "BackLog",
     },
   ];
   items: any[];
@@ -93,9 +93,9 @@ export class MaintenanceWorkDetailPage implements OnInit {
 
           if (data.bo_status.toString().indexOf("New") !== -1) return true;
           this.workactivitiesData.push(data)
-          if (data.bo_status.toString().indexOf("In Progress") !== -1)
+          if (data.bo_status.toString().indexOf("InProgress") !== -1)
             return true;
-          if (data.bo_status.toString().indexOf("Backlog") !== -1) return true;
+          if (data.bo_status.toString().indexOf("BackLog") !== -1) return true;
 
 
           return false;
@@ -212,7 +212,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
     if (work_activity.bo_status == "New") {
       this.workactivityFormGroup.patchValue({
         ...work_activity,
-        bo_status: "In Progress",
+        bo_status: "InProgress",
       });
       this.workactivityService
         .update(work_activity.id, this.workactivityFormGroup.value)
@@ -225,7 +225,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
           }
         );
 
-      work_activity.status = "In Progress";
+      work_activity.status = "InProgress";
     }
     let navigationExtras: NavigationExtras = {
       state: {
@@ -240,8 +240,8 @@ export class MaintenanceWorkDetailPage implements OnInit {
 
   pendingColor(status: string) {
     if (status == "New") return "success";
-    if (status == "In Progress") return "warning";
-    if (status == "Backlog") return "danger";
+    if (status == "InProgress") return "warning";
+    if (status == "BackLog") return "danger";
   }
 
   clickBack() {

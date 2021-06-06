@@ -65,6 +65,13 @@ export const TechnicalRoutes: Routes = [
           ),
       },
       {
+        path: "asset-detail-list",
+        loadChildren: () =>
+          import("./asset-detail-list/asset-detail-list.module").then(
+            (m) => m.AssetDetailListPageModule
+          ),
+      },
+      {
         path: "asset-registration",
         loadChildren: () =>
           import("./asset-registration/asset-registration.module").then(

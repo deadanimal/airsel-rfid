@@ -19,6 +19,7 @@ import { ServiceHistoryPage } from "../service-history/service-history.page";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { WorkOrderActivityCompletionAssLocAssListService } from 'src/app/shared/services/work-order-activity-completion-AssLocAssList/work-order-activity-completion-AssLocAssList.service';
+import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
 
 @Component({
   selector: "app-work-activity",
@@ -46,7 +47,8 @@ export class WorkActivityPage implements OnInit {
     public modalController: ModalController,
     public notificationService: NotificationsService,
     private workactivityService: WorkActivitiesService,
-    private workOrderActivityCompletionAssLocAssListService: WorkOrderActivityCompletionAssLocAssListService
+    private workOrderActivityCompletionAssLocAssListService: WorkOrderActivityCompletionAssLocAssListService,
+    private workOrderActivityCompletionService: WorkOrderActivityCompletionService
   ) {
     this.workactivityFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -66,6 +68,8 @@ export class WorkActivityPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.workactivity = this.router.getCurrentNavigation().extras.state.work_activity;
+
+        console.log("this.workactivity = ", this.workactivity)
 
         this.workactivityFormGroup.patchValue({
           ...this.workactivity,
@@ -277,5 +281,64 @@ export class WorkActivityPage implements OnInit {
         }
       );
     });
+  }
+
+  getCurrentDateTime() {
+    let selectedDate = new Date();
+    let year = selectedDate.getFullYear();
+    let month =
+      selectedDate.getMonth() + 1 < 10
+        ? "0" + (selectedDate.getMonth() + 1)
+        : selectedDate.getMonth() + 1;
+    let day =
+      selectedDate.getDate() < 10
+        ? "0" + selectedDate.getDate()
+        : selectedDate.getDate();
+    let formatDate = year + "-" + month + "-" + day;
+
+    let hour =
+      selectedDate.getHours() < 10
+        ? "0" + selectedDate.getHours()
+        : selectedDate.getHours();
+    let minute =
+      selectedDate.getMinutes() < 10
+        ? "0" + selectedDate.getMinutes()
+        : selectedDate.getMinutes();
+    let second =
+      selectedDate.getSeconds() < 10
+        ? "0" + selectedDate.getSeconds()
+        : selectedDate.getSeconds();
+    let formatTime = hour + ":" + minute + ":" + second;
+
+    return formatDate + "T" + formatTime + "Z";
+  }
+
+  submit() {
+    let woacassLocAssLisFormData = {
+      status: 'InProgress',
+      completiondatetime: this.getCurrentDateTime(),
+      submitted_datetime: this.getCurrentDateTime(),
+    }
+
+    console.log("modified_date", woacassLocAssLisFormData)
+
+    this.workOrderActivityCompletionService
+      .update(
+        this.workactivity.id,
+        woacassLocAssLisFormData
+      )
+      .subscribe(
+        (res) => {
+          console.log("res = ", res)
+
+          this.presentAlert(
+            "Success",
+            "Successfully update data."
+          );
+        }, (err) => {
+
+        }
+      )
+
   }
 }

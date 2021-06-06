@@ -51,6 +51,9 @@ class FailureProfileViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = FailureProfile.objects.all()
     serializer_class = FailureProfileSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'failure_profile', 'description','failure_repair','failure_mode','failure_comp','failure_type'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':

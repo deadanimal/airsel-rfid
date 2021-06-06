@@ -42,7 +42,21 @@ export class AssetDetailListPage implements OnInit {
     );
   }
 
-  ngOnInit() { }
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter AssetDetailListPage");
+  }
+
+  ionViewDidLeave() {
+    console.log("ionViewDidLeave AssetDetailListPage")
+  }
+
+  ngOnInit() {
+    console.log("ngOnInit AssetDetailListPage");
+  }
+
+  ngOnDestroy() {
+    console.log("ngOnDestroy AssetDetailListPage");
+  }
 
   clickEdit(assetregistration) {
     let navigationExtras: NavigationExtras = {

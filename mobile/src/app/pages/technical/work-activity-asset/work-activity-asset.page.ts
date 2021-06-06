@@ -35,7 +35,7 @@ export class WorkActivityAssetPage implements OnInit {
 
   // Data
   workactivityasset: any;
-  workOrderActivityCompletionAssLocAssLis: any = []
+  workOrderActivityCompletionAssLocAssLisData: any = []
 
   // Form
   workactivityassetFormGroup: FormGroup;
@@ -70,6 +70,8 @@ export class WorkActivityAssetPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.workactivityasset = this.router.getCurrentNavigation().extras.state.asset;
 
+        console.log("this.workactivityasset = ", this.workactivityasset)
+
         this.workactivityassetFormGroup.patchValue({
           id: this.workactivityasset.id,
           bo_status: this.workactivityasset.bo_status,
@@ -83,7 +85,7 @@ export class WorkActivityAssetPage implements OnInit {
           this.assetLocationAssetListServiceHistoriesService.getOne(element).subscribe(
             (res) => {
               console.log("serviceHistoryQuestionService", res)
-              this.workOrderActivityCompletionAssLocAssLis.push(res)
+              this.workOrderActivityCompletionAssLocAssLisData.push(res)
             }, (err) => {
               console.log(err)
             }
@@ -102,10 +104,10 @@ export class WorkActivityAssetPage implements OnInit {
             (res) => {
               // console.log("res qweqwe", res)
               this.workactivityassetFormGroup.patchValue({
-                // asset_type: res[0].asset_primary_category,
+                asset_type: res[0].asset_type,
                 badge_number: badge_no,
                 // serial_number: res[0].serial_number,
-                // detailed_description: res[0].detailed_description,
+                detailed_description: res[0].description,
               });
             },
             (err) => {
@@ -151,26 +153,32 @@ export class WorkActivityAssetPage implements OnInit {
   }
 
   submit() {
-    // this.workactivityassetFormGroup.patchValue({
-    //   bo_status: "Completed",
-    // });
-    // this.workactivityService
-    //   .update(
-    //     this.workactivityassetFormGroup.value.id,
-    //     this.workactivityassetFormGroup.value
-    //   )
-    //   .subscribe(
-    //     (res) => {
-    //       console.log("res", res);
-    this.alertWorkActivityAsset(
-      "Work Activity",
-      "Your work activity have successfully submitted into the system. Thank you."
-    );
-    //   },
-    //   (err) => {
-    //     console.error("err", err);
-    //   }
-    // );
+    console.log("this.workactivityasset = ", this.workactivityasset)
+    console.log("this.workOrderActivityCompletionAssLocAssLisData = ", this.workOrderActivityCompletionAssLocAssLisData)
+
+    let woacassLocAssLisFormData = {
+      modified_date: this.getCurrentDateTime(),
+    }
+
+    console.log("modified_date", woacassLocAssLisFormData)
+
+    this.workOrderActivityCompletionAssLocAssListService
+      .update(
+        this.workactivityasset.id,
+        woacassLocAssLisFormData
+      )
+      .subscribe(
+        (res) => {
+          console.log("workOrderActivityCompletionAssLocAssListService res", res);
+          this.alertWorkActivityAsset(
+            "Work Activity",
+            "Your work activity have successfully submitted into the system. Thank you."
+          );
+        },
+        (err) => {
+          console.error("err", err);
+        }
+      );
   }
 
   async alertWorkActivityAsset(header, message) {
@@ -244,5 +252,35 @@ export class WorkActivityAssetPage implements OnInit {
 
   clickRemove(index: number) {
     this.servicehistories.splice(index, 1);
+  }
+
+  getCurrentDateTime() {
+    let selectedDate = new Date();
+    let year = selectedDate.getFullYear();
+    let month =
+      selectedDate.getMonth() + 1 < 10
+        ? "0" + (selectedDate.getMonth() + 1)
+        : selectedDate.getMonth() + 1;
+    let day =
+      selectedDate.getDate() < 10
+        ? "0" + selectedDate.getDate()
+        : selectedDate.getDate();
+    let formatDate = year + "-" + month + "-" + day;
+
+    let hour =
+      selectedDate.getHours() < 10
+        ? "0" + selectedDate.getHours()
+        : selectedDate.getHours();
+    let minute =
+      selectedDate.getMinutes() < 10
+        ? "0" + selectedDate.getMinutes()
+        : selectedDate.getMinutes();
+    let second =
+      selectedDate.getSeconds() < 10
+        ? "0" + selectedDate.getSeconds()
+        : selectedDate.getSeconds();
+    let formatTime = hour + ":" + minute + ":" + second;
+
+    return formatDate + "T" + formatTime + "Z";
   }
 }
