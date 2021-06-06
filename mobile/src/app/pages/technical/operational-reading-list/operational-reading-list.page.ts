@@ -51,7 +51,7 @@ export class OperationalReadingListPage implements OnInit {
     private operationalreadingService: OperationalReadingsService,
     private assetsService: AssetsService,
     private wamsService: WamsService
-  ) {}
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -270,8 +270,8 @@ export class OperationalReadingListPage implements OnInit {
 
               /// get data from wams
               this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
-                (resBsdgeNo) => {},
-                (errBadgeNo) => {}
+                (resBsdgeNo) => { },
+                (errBadgeNo) => { }
               );
 
               this.router.navigate(
@@ -322,8 +322,8 @@ export class OperationalReadingListPage implements OnInit {
 
               /// get data from wams
               this.wamsService.getAssetBadgeNo(res[0].badge_no).subscribe(
-                (resBsdgeNo) => {},
-                (errBadgeNo) => {},
+                (resBsdgeNo) => { },
+                (errBadgeNo) => { },
                 () => {
                   this.router.navigate(
                     ["/technical/operational-reading"],
@@ -356,8 +356,8 @@ export class OperationalReadingListPage implements OnInit {
 
           /// get data from wams
           this.wamsService.getAssetBadgeNo(this.scanValue).subscribe(
-            (resBsdgeNo) => {},
-            (errBadgeNo) => {},
+            (resBsdgeNo) => { },
+            (errBadgeNo) => { },
             () => {
               this.router.navigate(
                 ["/technical/operational-reading"],

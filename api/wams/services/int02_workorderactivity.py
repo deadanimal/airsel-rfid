@@ -137,7 +137,9 @@ def insert_into_work_order_activity(dict):
         "w1_duration": w1_duration,
         "crew_shift_id": crew_shift_id,
         "sched_duration": sched_duration,
-        "break_in_dttm": break_in_dttm
+        "break_in_dttm": break_in_dttm,
+        "status": 'New',
+        "field_1": 'PREVENTIVE MAINTENANCE'
     }
 
     dictionary_work_activity_employee = {

@@ -16,7 +16,7 @@ export class WorkOrderActivityCompletionService {
   public wamodels: WorkOrderActivityCompletionModel[] = [];
   public wamodel: WorkOrderActivityCompletionModel;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   post(body: Form): Observable<WorkOrderActivityCompletionModel> {
     return this.http.post<any>(this.url, body).pipe(
@@ -45,7 +45,7 @@ export class WorkOrderActivityCompletionService {
     );
   }
 
-  update(id: string, body: Form): Observable<WorkOrderActivityCompletionModel> {
+  update(id: string, body): Observable<WorkOrderActivityCompletionModel> {
     return this.http
       .patch<WorkOrderActivityCompletionModel>(this.url + id + "/", body)
       .pipe(

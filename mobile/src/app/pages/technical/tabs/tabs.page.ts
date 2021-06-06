@@ -1,4 +1,4 @@
-declare var broadcaster: any;
+// declare var broadcaster: any;
 
 import { Component, OnInit, NgZone, ElementRef } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
@@ -28,7 +28,7 @@ export class TabsPage implements OnInit {
     private ngZone: NgZone,
     private router: Router,
     private assetsService: AssetsService
-  ) {}
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -41,7 +41,7 @@ export class TabsPage implements OnInit {
   ngOnInit() {
     console.log("ngOnInit TabsPage");
 
-    broadcaster._debug = true;
+    // broadcaster._debug = true;
     // this.onRegister2DBarcodeListener();
     // this.onRegisterRFIDListener();
   }
@@ -78,7 +78,7 @@ export class TabsPage implements OnInit {
             });
           }
         };
-        broadcaster.addEventListener(ev, isGlobal, listener);
+        // broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -108,7 +108,7 @@ export class TabsPage implements OnInit {
             });
           }
         };
-        broadcaster.addEventListener(ev, isGlobal, listener);
+        // broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
