@@ -82,7 +82,8 @@
             </div>
             <div class="col-auto text-right">
               <button class="btn btn-default btn-sm">
-                <a href="../../../../../assets/file/Asset Registration Blank Template.xlsx" style="color: white;"
+                <!-- <a href="../../../../../assets/file/Asset Registration Blank Template.xlsx" style="color: white;" -->
+                <a href="../../../../../assets/file/AssetRegTemp4.xlsx" style="color: white;"
                   download>
                   Download
                 </a>
@@ -716,7 +717,7 @@
 
                   <ngx-datatable class="bootstrap selection-cell" [scrollbarH]="true" [footerHeight]="50"
                     [rowHeight]="75" [limit]="entries != -1 ? entries : undefined" [rows]="tableTemp1"
-                    (activate)="onActivate($event)" [columnMode]="ColumnMode.force">
+                    (activate)="onActivate($event)" [columnMode]="ColumnMode.force" [sorts]="[{prop: 'modified_at', dir: 'desc'}]">
 
                     <ngx-datatable-column maxWidth="30">
                       <ng-template let-row="row" ngx-datatable-cell-template>
@@ -1558,8 +1559,8 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="form-control-label">Asset Identity</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="asset_identity" id="asset_identity"
-              class="form-control" value="{{rowData.asset_identity}}" />
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="asset_identity"
+              id="asset_identity" class="form-control" value="{{rowData.asset_identity}}" />
           </div>
         </div>
 
@@ -1582,8 +1583,8 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].bottom_water_level">
           <div class="form-group" id="bottom_water_level">
             <label class="form-control-label">Bottom Water Level</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="bottom_water_level"
-              class="form-control" value="{{rowData.bottom_water_level}}" />
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
+              name="bottom_water_level" class="form-control" value="{{rowData.bottom_water_level}}" />
           </div>
         </div>
 
@@ -1677,8 +1678,8 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].infrastructure_status">
           <div class="form-group" id="infrastructure_status">
             <label class="form-control-label">Infrastructure Status</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="infrastructure_status"
-              class="form-control" value="{{rowData.infrastructure_status}}" />
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
+              name="infrastructure_status" class="form-control" value="{{rowData.infrastructure_status}}" />
           </div>
         </div>
 
@@ -1901,16 +1902,16 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].valve_pressure_rating">
           <div class="form-group" id="valve_pressure_rating">
             <label class="form-control-label">Valve Pressure Rating</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="valve_pressure_rating"
-              class="form-control" value="{{rowData.valve_pressure_rating}}" />
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
+              name="valve_pressure_rating" class="form-control" value="{{rowData.valve_pressure_rating}}" />
           </div>
         </div>
 
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_chassis_number">
           <div class="form-group" id="vehicle_chasis_number">
             <label class="form-control-label">Vehicle Chassis Number</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_chasis_number"
-              class="form-control" value="{{rowData.vehicle_chasis_number}}" />
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
+              name="vehicle_chasis_number" class="form-control" value="{{rowData.vehicle_chasis_number}}" />
           </div>
         </div>
 
@@ -1925,8 +1926,8 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_engine_number">
           <div class="form-group" id="vehicle_engine_number">
             <label class="form-control-label">Vehicle Engine Number</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_engine_number"
-              class="form-control" value="{{rowData.vehicle_engine_number}}" />
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
+              name="vehicle_engine_number" class="form-control" value="{{rowData.vehicle_engine_number}}" />
           </div>
         </div>
 
@@ -1937,7 +1938,8 @@
               name="vehicle_insurance_vendor" class="form-control" value="{{rowData.asset_identity}}" /> -->
 
             <select class="form-control custom-select custom-select-sm" name="vehicle_insurance_vendor"
-              (change)="onKey($event.target.value,$event.target.name,rowData)" value="{{rowData.vehicle_insurance_vendor}}">
+              (change)="onKey($event.target.value,$event.target.name,rowData)"
+              value="{{rowData.vehicle_insurance_vendor}}">
               <option *ngFor="let vehicleInsuranceVendor of vehicleInsuranceVendor"
                 [value]="vehicleInsuranceVendor.characteristic_value">
                 {{ vehicleInsuranceVendor.characteristic_value }}</option>
@@ -2061,8 +2063,8 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_register_date">
           <div class="form-group" id="vehicle_register_date">
             <label class="form-control-label">Vehicle Register Date</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_register_date"
-              class="form-control" value="{{rowData.vehicle_register_date}}" />
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
+              name="vehicle_register_date" class="form-control" value="{{rowData.vehicle_register_date}}" />
 
 
           </div>
@@ -2071,8 +2073,8 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_roadtax_rate">
           <div class="form-group" id="vehicle_roadtax_rate">
             <label class="form-control-label">Vehicle Roadtax Rate</label>
-            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)" name="vehicle_roadtax_rate"
-              class="form-control" value="{{rowData.vehicle.roadtax_rate}}" />
+            <input type="text" (change)="onKey($event.target.value,$event.target.name,rowData)"
+              name="vehicle_roadtax_rate" class="form-control" value="{{rowData.vehicle.roadtax_rate}}" />
           </div>
         </div>
 
@@ -2228,7 +2230,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Asset Identity<span class="mandatory">*</span></label>
-                <input type="text" formControlName="asset_identity" class="form-control form-control-sm" id="asset_identity" (change)="getDetailedDescription()"/>
+                <input type="text" formControlName="asset_identity" class="form-control form-control-sm"
+                  id="asset_identity" (change)="getDetailedDescription()" />
                 <mat-hint
                   *ngIf="firstFormGroup.controls['asset_identity'].hasError('required') && firstFormGroup.controls['asset_identity'].touched && firstFormGroup.controls['asset_identity'].invalid "
                   class="validation_messages"><small>This field is required</small></mat-hint>
@@ -2239,13 +2242,15 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Sub-Category 1</label>
-                <input type="text" formControlName="sub_category_1" class="form-control form-control-sm" id="SubCategory_1" (change)="getDetailedDescription()"/>
+                <input type="text" formControlName="sub_category_1" class="form-control form-control-sm"
+                  id="SubCategory_1" (change)="getDetailedDescription()" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Sub-Category 2</label>
-                <input type="text" formControlName="sub_category_2" class="form-control form-control-sm" id="SubCategory_2" (change)="getDetailedDescription()"/>
+                <input type="text" formControlName="sub_category_2" class="form-control form-control-sm"
+                  id="SubCategory_2" (change)="getDetailedDescription()" />
               </div>
             </div>
           </div>
@@ -2709,7 +2714,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Model Number</label>
-                <input type="text" formControlName="model_number" class="form-control form-control-sm" id="model_number" (change)="getDetailedDescription()"/>
+                <input type="text" formControlName="model_number" class="form-control form-control-sm" id="model_number"
+                  (change)="getDetailedDescription()" />
               </div>
             </div>
           </div>
@@ -2717,14 +2723,16 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 1</label>
-                <input type="text" formControlName="size_capacity_1" class="form-control form-control-sm" (change)="getDetailedDescription()" id="size_capacity_1"/>
+                <input type="text" formControlName="size_capacity_1" class="form-control form-control-sm"
+                  (change)="getDetailedDescription()" id="size_capacity_1" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 1-Unit Measurement</label>
                 <input type="text" formControlName="size_capacity_1_unit_measurement"
-                  class="form-control form-control-sm" id="size_capacity_1_unit_measurement" (change)="getDetailedDescription()"/>
+                  class="form-control form-control-sm" id="size_capacity_1_unit_measurement"
+                  (change)="getDetailedDescription()" />
               </div>
             </div>
           </div>
@@ -2732,14 +2740,16 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 2</label>
-                <input type="text" formControlName="size_capacity_2" class="form-control form-control-sm" id="size_capacity_2" (change)="getDetailedDescription()"/>
+                <input type="text" formControlName="size_capacity_2" class="form-control form-control-sm"
+                  id="size_capacity_2" (change)="getDetailedDescription()" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 2-Unit Measurement</label>
                 <input type="text" formControlName="size_capacity_2_unit_measurement"
-                  class="form-control form-control-sm" id="size_capacity_2_unit_measurement" (change)="getDetailedDescription()"/>
+                  class="form-control form-control-sm" id="size_capacity_2_unit_measurement"
+                  (change)="getDetailedDescription()" />
               </div>
             </div>
           </div>
@@ -2747,14 +2757,16 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 3</label>
-                <input type="text" formControlName="size_capacity_3" class="form-control form-control-sm" id="size_capacity_3" (change)="getDetailedDescription()"/>
+                <input type="text" formControlName="size_capacity_3" class="form-control form-control-sm"
+                  id="size_capacity_3" (change)="getDetailedDescription()" />
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Size/Capacity 3-Uni Measurement</label>
                 <input type="text" formControlName="size_capacity_3_unit_measurement"
-                  class="form-control form-control-sm" id="size_capacity_3_unit_measurement" (change)="getDetailedDescription()"/>
+                  class="form-control form-control-sm" id="size_capacity_3_unit_measurement"
+                  (change)="getDetailedDescription()" />
               </div>
             </div>
           </div>
