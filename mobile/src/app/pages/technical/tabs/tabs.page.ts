@@ -72,6 +72,7 @@ export class TabsPage implements OnInit {
               console.log("this.bBarcode = ", this.bBarcode);
               if (this.bBarcode) {
                 loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
                 this.updateQrbarcode(event.data);
               }
             });
@@ -101,6 +102,7 @@ export class TabsPage implements OnInit {
               console.log("this.bRfid = ", this.bRfid);
               if (this.bRfid) {
                 loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
                 this.updateRfid(event.data);
               }
             });

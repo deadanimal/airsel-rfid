@@ -105,17 +105,14 @@ export class OperationalReadingListPage implements OnInit {
               console.log("this.bBarcode = ", this.bBarcode);
               if (this.bBarcode) {
                 loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
                 this.updateQrbarcode(event.data);
               }
             });
           }
         };
 
-        this.subscription = broadcaster.addEventListener(
-          ev,
-          isGlobal,
-          listener
-        );
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -139,17 +136,14 @@ export class OperationalReadingListPage implements OnInit {
               console.log("this.bRfid = ", this.bRfid);
               if (this.bRfid) {
                 loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
                 this.updateRfid(event.data);
               }
             });
           }
         };
 
-        this.subscription = broadcaster.addEventListener(
-          ev,
-          isGlobal,
-          listener
-        );
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -183,9 +177,9 @@ export class OperationalReadingListPage implements OnInit {
   ionViewDidLeave() {
     console.log("ionViewDidLeave OperationalReadingListPage");
 
-    console.log("broadcaster", broadcaster);
-    if (!this.subscription || this.subscription.closed) return;
-    this.subscription.unsubscribe();
+    // console.log("broadcaster", broadcaster);
+    // if (!this.subscription || this.subscription.closed) return;
+    // this.subscription.unsubscribe();
   }
 
   homePage(path: string) {
@@ -338,7 +332,6 @@ export class OperationalReadingListPage implements OnInit {
                 }
               );
             } else {
-              console.log("masuk sini");
               this.presentAlert("Error", "Data not valid in database");
             }
           },
