@@ -1,5 +1,4 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
-import {
+import { Component, OnInit, TemplateRef } from "@angular/core"; import {
   Validators,
   FormBuilder,
   FormGroup,
@@ -44,28 +43,20 @@ export class UtilityUserComponent implements OnInit {
       value: "OP",
     },
     {
-      name: "Store Keeper",
-      value: "SK",
-    },
-    {
-      name: "Store Supervisor",
-      value: "SS",
-    },
-    {
-      name: "Technical",
-      value: "TC",
-    },
-    {
-      name: "AMS",
+      name: "Admin",
       value: "AM",
     },
     {
-      name: "INV",
-      value: "IN",
+      name: "Planner",
+      value: "PL",
     },
     {
-      name: "Vendor",
-      value: "VD",
+      name: "Contractor",
+      value: "CR",
+    },
+    {
+      name: "Technical Crew",
+      value: "TC",
     },
   ];
 
@@ -89,7 +80,8 @@ export class UtilityUserComponent implements OnInit {
       office_number: new FormControl("", [Validators.required]),
       mobile_number: new FormControl("", [Validators.required]),
       user_type: new FormControl("", [Validators.required]),
-      is_active: new FormControl("", [Validators.required]),
+      // default for is_active is false
+      is_active: new FormControl(false, [Validators.required]),
       password1: "password@123",
       password2: "password@123",
     });
@@ -138,13 +130,14 @@ export class UtilityUserComponent implements OnInit {
 
   register() {
     // To reset the formGroup if exist value
-    this.userFormGroup.reset();
+    // this.userFormGroup.reset();
 
     this.authService.register(this.userFormGroup.value).subscribe(
       (res) => {
         if (res) {
-          // console.log("auth", res);
+          console.log("auth", res);
           this.userFormGroup.value.id = res.user.pk;
+          let user_pk = res.user.email;
 
           this.userService
             .update(this.userFormGroup.value.id, this.userFormGroup.value)
@@ -171,6 +164,7 @@ export class UtilityUserComponent implements OnInit {
               },
               () => {
                 () => console.log("HTTP request completed.");
+                this.sendActivationEmail(user_pk);
               }
             );
         }
@@ -180,6 +174,24 @@ export class UtilityUserComponent implements OnInit {
       },
       () => {
         () => console.log("HTTP request completed.");
+      }
+    );
+  }
+
+  sendActivationEmail(user_pk) {
+    let body = {
+      "user_pk": user_pk
+    }
+
+    this.userService.activation(body).subscribe(
+      (res) => {
+        console.log("activation email", res);
+      },
+      (err) => {
+
+      },
+      () => {
+
       }
     );
   }
