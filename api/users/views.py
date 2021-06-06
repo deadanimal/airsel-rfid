@@ -1,6 +1,28 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+import six
+import os
+
+from django.views.generic import View
+from django.template import Context, Template
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BASE_DIR)
+
+
+class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self, user, timestamp):
+        return (
+            six.text_type(user.pk) + six.text_type(timestamp) +
+            six.text_type(user.is_active)
+        )
+
+account_activation_token = AccountActivationTokenGenerator()
+
+from django.core.mail import send_mail
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -34,6 +56,28 @@ from .models import (
 from .serializers import (
     CustomUserSerializer
 )
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_text, force_bytes
+
+class ActivateAccount(View):
+    def get(self, request, uidb64, token, *args, **kwargs):
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = CustomUser.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+            user = None
+
+        if user is not None and account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+
+        else:
+            #messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
+            user.is_active = True
+            user.save()
 
 class CustomUserViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -71,5 +115,34 @@ class CustomUserViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = User.objects.filter(company=company.id)
         """
         return queryset    
+
+    @action(methods=['POST'], detail=False)
+    def activation(self, request):
+        #check request
+
+        pk = request.data['user_pk']
+        user = CustomUser.objects.all().filter(email=pk)[0]
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = account_activation_token.make_token(user)
+
+
+        # Email
+        current_site = get_current_site(request)
+        print(type(current_site))
+        subject = 'Activate Your Account'
+        message = render_to_string(f'{BASE_DIR}/templates/account/email/email_confirmation_message.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': uid, 
+            'token': token
+        })
+
+        to = [user.email]
+        send_mail(subject, message, None, to, fail_silently=False)
+        user.email_user(subject, message)
+
+        return Response({})
+
+
  
 

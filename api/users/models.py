@@ -29,15 +29,24 @@ class CustomUser(AbstractUser):
     crewshift_id = models.CharField(max_length=50, blank=True)
     department = models.CharField(max_length=50, blank=True)
 
+    #USER_TYPE = [
+    #    ('AM', 'Asset Management System'),
+    #    ('IV', 'Inventory'),
+    #    ('OP', 'Operator'),
+    #    ('SK', 'Store Keeper'),
+    #    ('SS', 'Store Supervisor'),
+    #    ('TC', 'Technical Crew'),
+    #    ('VD', 'Vendor')
+    #]
+
     USER_TYPE = [
-        ('AM', 'Asset Management System'),
-        ('IV', 'Inventory'),
+        ('AM', 'Admin'),
         ('OP', 'Operator'),
-        ('SK', 'Store Keeper'),
-        ('SS', 'Store Supervisor'),
         ('TC', 'Technical Crew'),
-        ('VD', 'Vendor')
+        ('CR', 'Contractor'),
+        ('PL', 'Planner'),
     ]
+
     user_type = models.CharField(
         max_length=2,
         choices=USER_TYPE,
