@@ -54,6 +54,7 @@ export class MatchPage implements OnInit {
       if (event.SCAN_STATE == "success") {
         this.ngZone.run(() => {
           if (this.bBarcode) {
+            broadcaster.removeEventListener(ev, listener);
             this.badge_no = event.data;
           }
         });
@@ -74,6 +75,7 @@ export class MatchPage implements OnInit {
       if (event.SCAN_STATE == "success") {
         this.ngZone.run(() => {
           if (this.bRfid) {
+            broadcaster.removeEventListener(ev, listener);
             this.hex_code = event.data;
           }
         });

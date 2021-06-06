@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib.gis import admin
 
+from django.urls import path
+
 from rest_framework import routers
 from rest_framework_extensions.routers import NestedRouterMixin
 
@@ -16,7 +18,8 @@ from rest_framework_simplejwt.views import (
 )
 
 from users.views import (
-    MyTokenObtainPairView
+    MyTokenObtainPairView,
+    ActivateAccount
 )
 
 class NestedDefaultRouter(NestedRouterMixin, routers.DefaultRouter):
@@ -53,11 +56,7 @@ assets_router = router.register(
 assets_badge_format_router = router.register(
     'asset-badge-format', AssetBadgeFormatViewSet
 )
-
-assets_attribute_router = router.register(
-    'asset-attribute', AssetAttributeViewSet
-)
-
+assets_attribute_router = router.register( 'asset-attribute', AssetAttributeViewSet)
 asset_groups_router = router.register(
     'asset-groups', AssetGroupViewSet
 )
@@ -464,5 +463,9 @@ urlpatterns = [
 
     url('auth/obtain/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     url('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    url('auth/verify/', TokenVerifyView.as_view(), name='token_verify')
+    url('auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
+
+    # url for account activation via token
+    path('activate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
+
 ]
