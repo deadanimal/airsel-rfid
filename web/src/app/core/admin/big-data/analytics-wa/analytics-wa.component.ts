@@ -19,7 +19,9 @@ export class AnalyticsWaComponent implements OnInit {
 
   private chartone: am4charts.XYChart;
 
-  constructor(private zone: NgZone, public workOrderActivityCompletionService: WorkOrderActivityCompletionService) { }
+  constructor(
+    private zone: NgZone, 
+    public workOrderActivityCompletionService: WorkOrderActivityCompletionService) { }
 
   ngOnInit() {
 
@@ -37,7 +39,6 @@ export class AnalyticsWaComponent implements OnInit {
     { value: "PD-S", name: "PRODUCTION SOUTHERN" },
     { value: "SCADA", name: "SCADA" },
     { value: "WQ", name: "WATER QUALITY" },
-    { value: "NA", name: "NOT AVAILABLE" },
   ];
 
   //variable

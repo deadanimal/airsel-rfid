@@ -118,26 +118,26 @@
           <h4 class="mb-0 text-white">Total Numbers of Backlog</h4>
           <div class="row">
             <div class="col-4 text-right">
-              <h1 class="font-weight-bold">{{ totalBackLogToday }}</h1>
+              <h1 class="font-weight-bold">{{ totalBackLogYesterday }}</h1>
             </div>
             <div class="col-4 pt-1">
               <i class="fas fa-arrow-right fa-2x"></i>
             </div>
             <div class="col-4 text-left">
-              <h1 class="text-white font-weight-bolder"> {{totalBackLogYesterday}}</h1>
+              <h1 class="text-white font-weight-bolder">{{ totalBackLogToday }}</h1>
             </div>
           </div>
 
           <h4 class="mb-0 text-white">Backlog Percentage:</h4>
           <div class="row">
             <div class="col-4 text-right">
-              <h2 class="font-weight-bold">{{backLogPercentageToday}}</h2>
+              <h2 class="font-weight-bold"></h2>
             </div>
             <div class="col-4 pt-1">
-              <i class="fas fa-arrow-right fa-lg"></i>
+              <i class="fas fa-arrow-right fa-lg">{{ backLogPercentageYesterday }}%</i>
             </div>
             <div class="col-4 text-left">
-              <h2 class="text-white font-weight-bolder">{{backLogPercentageYesterday}}</h2>
+              <h2 class="text-white font-weight-bolder">{{ backLogPercentageToday }}%</h2>
             </div>
           </div>
 

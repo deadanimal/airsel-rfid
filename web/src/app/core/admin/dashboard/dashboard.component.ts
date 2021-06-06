@@ -24,6 +24,12 @@ import { CompareChartData } from "../../../../assets/mock/dashboard";
 import { Map, NavigationControl, Popup } from "mapbox-gl";
 import { GeojsonService } from "src/app/shared/services/geojson/geojson.service";
 import { columnsByPin } from "@swimlane/ngx-datatable/release/utils";
+import { WorkOrderActivityCompletionService } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service";
+import { AssetsService } from "src/app/shared/services/assets/assets.service";
+
+import { formatDate } from "@angular/common";
+import { map } from "rxjs/operators";
+import { AssetsModel } from "src/app/shared/services/assets/assets.model";
 
 @Component({
   selector: "app-dashboard",
@@ -31,6 +37,387 @@ import { columnsByPin } from "@swimlane/ngx-datatable/release/utils";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+
+
+  constructor(
+    private geoJSONSrv: GeojsonService,
+    private zone: NgZone,
+    public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
+    public assetsService: AssetsService) { }
+
+  // variables
+  assetowningdepartment = [
+    { value: "CBD", name: "CUSTOMER BILLING SERVICES" },
+    { value: "DISTRIBUTION", name: "DISTRIBUTION" },
+    { value: "ES-D", name: "ENGINEERING SERVICES – DISTRIBUTION" },
+    { value: "FLEET", name: "FLEET" },
+    { value: "LAND", name: "LAND" },
+    { value: "NRW", name: "NRW" },
+    { value: "PD-N", name: "PRODUCTION NORTHERN" },
+    { value: "PD-S", name: "PRODUCTION SOUTHERN" },
+    { value: "SCADA", name: "SCADA" },
+    { value: "WQ", name: "WATER QUALITY" },
+  ];
+
+  // work activity
+  //variable
+  WorkOrderActivity: any;
+  totalWorkOrder: any
+  tempTotalWorkOrder: any
+  backLog: any
+  totalBackLogToday: any
+  totalBackLogYesterday: any
+  backLogPercentageToday: any
+  backLogPercentageYesterday: any
+
+
+  getWorkOrderActivity() {
+
+    // let temp = []
+    this.workOrderActivityCompletionService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      this.WorkOrderActivity = response;
+      console.log("WorkOrderActivity", this.WorkOrderActivity);
+
+      this.getTotalWorkOrder();
+
+      this.backLog = this.WorkOrderActivity.filter((value) => value.bo_status_cd.includes("Backlog"));
+      console.log("BackLog", this.backLog);
+      // this.updateFilter();
+
+      this.getTotalBackLog()
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  getTotalBackLog() {
+
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1)
+
+    console.log("today", today)
+    console.log("yesterday", yesterday)
+
+    let yesterdayBacklog = []
+
+    for (let i in this.backLog) {
+
+      const filteredData = formatDate(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') < formatDate(today, 'yyyy-MM-dd', 'en_US');
+      console.log("filtered backlog", filteredData)
+
+      if (formatDate(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') < formatDate(today, 'yyyy-MM-dd', 'en_US'))
+        yesterdayBacklog[i] = this.backLog[i]
+
+      // if (formatDate(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(this.yesterday, 'yyyy-MM-dd', 'en_US'))
+      //   yesterdayBacklog[i] = this.backLog[i]
+    }
+    console.log("yesterday BackLog", yesterdayBacklog)
+
+    this.totalBackLogToday = this.backLog.length
+    this.totalBackLogYesterday = yesterdayBacklog.length
+    const totalActivity = this.WorkOrderActivity.length
+
+    console.log("Today", this.totalBackLogToday)
+    console.log("yesterday", this.totalBackLogYesterday)
+
+    this.backLogPercentageToday = ((this.totalBackLogToday / totalActivity) * 100).toFixed(2);
+    this.backLogPercentageYesterday = ((this.totalBackLogYesterday / totalActivity) * 100).toFixed(2);
+
+  }
+
+  getTotalWorkOrder() {
+    this.totalWorkOrder = this.WorkOrderActivity.length;
+    this.tempTotalWorkOrder = this.WorkOrderActivity.length;
+    console.log("Total work order", this.totalWorkOrder);
+    console.log("Temp Total work order", this.tempTotalWorkOrder);
+
+  }
+
+  //end work activity
+
+  //asset condition score
+
+  assets: any;
+  totalAssets: any;
+
+  public assetsToday = []
+  totalAssetToday: any;
+
+  firstDayLastMonth = new Date();
+  assetsLastMonth = [];
+  totalassetsLastMonth: any
+
+  PercentageAssetConditionRating: any;
+  totalConditionRating: number = 0;
+
+  nullassetOwning = []
+
+  tableAssetConditionStores: any;
+
+  getAssets() {
+    this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
+      console.log('response from API is ', response);
+      this.assets = response;
+      console.log('assets', this.assets);
+      this.totalAssets = this.assets.length
+      console.log('totalAssets', this.totalAssets);
+      
+
+      this.getTotalAssetToday();
+      this.calcPercentageAssetConditionRating();
+      this.getAssetConditionStores();
+
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  getTotalAssetToday() {
+    const today = new Date();
+    console.log("today", today)
+
+    let assetsToday = [];
+
+    for (let i in this.assets) {
+
+      if (formatDate(this.assets[i].registered_datetime, 'yyyy-MM-dd', 'en_US') == formatDate(today, 'yyyy-MM-dd', 'en_US'))
+        this.assetsToday[i] = this.assets[i]
+
+    }
+    this.totalAssetToday = assetsToday.length
+    console.log("totalToday", this.totalAssetToday)
+    console.log("assets today", this.assetsToday)
+
+
+    let date = new Date()
+    var firstDayThisMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.firstDayLastMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.firstDayLastMonth.setMonth(this.firstDayLastMonth.getMonth() - 1)
+
+    console.log("firstDayThisMonth", firstDayThisMonth)
+    console.log("firstDayLastMonth", this.firstDayLastMonth)
+
+    for (let i in this.assets) {
+
+      if (formatDate(this.assets[i].registered_datetime, 'yyyy-MM-dd', 'en_US') >= formatDate(this.firstDayLastMonth, 'yyyy-MM-dd', 'en_US') && formatDate(this.assets[i].registered_datetime, 'yyyy-MM-dd', 'en_US') < formatDate(firstDayThisMonth, 'yyyy-MM-dd', 'en_US'))
+        this.assetsLastMonth[i] = this.assets[i]
+    }
+    this.totalassetsLastMonth = this.assetsLastMonth.length
+    console.log("total lastmonth", this.totalAssetToday)
+    console.log("assets last month", this.assetsLastMonth)
+
+  }
+
+  calcPercentageAssetConditionRating() {
+
+    this.totalConditionRating = 0;
+
+    for (let i in this.assets) {
+      this.totalConditionRating += parseFloat(this.assets[i].condition_rating);
+    }
+
+    this.PercentageAssetConditionRating = (this.totalConditionRating / this.totalAssets * 100).toFixed(2)
+
+    console.log("totalConditionRating", this.totalConditionRating)
+    console.log("PercentageAssetConditionRating", this.PercentageAssetConditionRating)
+  }
+
+  getAssetConditionStores() {
+
+    this.tableAssetConditionStores = [
+      { title: "CBD", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "DISTRIBUTION", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "ES-D", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "FLEET", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "LAND", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "NRW", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "PD-N", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "PD-S", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "SCADA", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "WQ", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+    ];
+
+    for (let i in this.assets) {
+
+      if (this.assets[i].owning_access_group == "CBD") {
+        this.tableAssetConditionStores[0].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[0].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[0].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[0].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[0].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[0].five += 1;
+      }
+      else if (this.assets[i].owning_access_group == "DISTRIBUTION") {
+        this.tableAssetConditionStores[1].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[1].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[1].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[1].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[1].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[1].five += 1;
+      }
+      else if (this.assets[i].owning_access_group == "ES-D") {
+        this.tableAssetConditionStores[2].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[2].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[2].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[2].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[2].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[2].five += 1;
+      }
+      else if (this.assets[i].owning_access_group == "FLEET") {
+        this.tableAssetConditionStores[3].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[3].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[3].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[3].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[3].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[3].five += 1;
+      }
+      else if (this.assets[i].owning_access_group == "LAND") {
+        this.tableAssetConditionStores[4].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[4].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[4].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[4].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[4].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[4].five += 1;
+      }
+      else if (this.assets[i].owning_access_group == "NRW") {
+        this.tableAssetConditionStores[5].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[5].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[5].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[5].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[5].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[5].five += 1;
+      }
+      else if (this.assets[i].owning_access_group == "PD-N") {
+        this.tableAssetConditionStores[6].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[6].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[6].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[6].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[6].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[6].five += 1;
+      }
+      else if (this.assets[i].owning_access_group == "PD-S") {
+        this.tableAssetConditionStores[7].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[7].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[7].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[7].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[7].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[7].five += 1;
+      }
+      else if (this.assets[i].owning_access_group == "SCADA") {
+        this.tableAssetConditionStores[8].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[8].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[8].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[8].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[8].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[8].five += 1;
+      }
+      else if (this.assets[i].owning_access_group == "WQ") {
+        this.tableAssetConditionStores[9].noasset += 1;
+
+        if (this.assets[i].condition_rating < 2)
+          this.tableAssetConditionStores[9].one += 1;
+        else if (this.assets[i].condition_rating >= 2 && this.assets[i].condition_rating < 3)
+          this.tableAssetConditionStores[9].two += 1;
+        else if (this.assets[i].condition_rating >= 3 && this.assets[i].condition_rating < 4)
+          this.tableAssetConditionStores[9].three += 1;
+        else if (this.assets[i].condition_rating >= 4 && this.assets[i].condition_rating < 5)
+          this.tableAssetConditionStores[9].four += 1;
+        else if (this.assets[i].condition_rating >= 5)
+          this.tableAssetConditionStores[9].five += 1;
+      }
+      else {
+        // this.nullassetOwning.push(this.assets[i])
+      }
+    }
+    // console.log("nullassetOwning", this.nullassetOwning)
+    console.log("tableAssetConditionStores", this.tableAssetConditionStores)
+
+  }
+
+  //end Asset condition score
+
+  //start Total Asset Registered
+
+  asset_registered_length: number = 0;
+  assetRegistration: AssetsModel[] = [];
+
+  getAssetRegistered() {
+    // for default value of chart
+    // call api
+    // 
+    this.assetsService.get().subscribe(
+      (res) => {
+        console.log("Resss", res);
+        this.asset_registered_length = res.length;
+
+      },
+      (err) => {
+
+      }
+    );
+
+  }
+
+  //end Total Asset Registered
+
+
+
   // Map
   leafletOptions = {
     layers: [
@@ -155,188 +542,188 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private chartone: am4charts.XYChart;
   private charttwo: am4charts.XYChart;
 
-  tableAssetConditionStores = [
-    {
-      title: "ES-D-PUMP HOUSE",
-      noasset: "16094",
-      zero: "23",
-      one: "9567",
-      two: "9413",
-      three: "3090",
-      four: "649",
-      five: "47",
-    },
-    {
-      title: "ES-D-VALVE",
-      noasset: "1242",
-      zero: "1",
-      one: "8765",
-      two: "1244",
-      three: "0",
-      four: "0",
-      five: "0",
-    },
-    {
-      title: "FLEET",
-      noasset: "1424",
-      zero: "3",
-      one: "345",
-      two: "234",
-      three: "112",
-      four: "1",
-      five: "0",
-    },
-    {
-      title: "NRW-DMZ",
-      noasset: "12435",
-      zero: "5",
-      one: "18456",
-      two: "12645",
-      three: "45",
-      four: "2",
-      five: "13",
-    },
-    {
-      title: "NRW-TRANSIENT",
-      noasset: "2143",
-      zero: "0",
-      one: "0",
-      two: "0",
-      three: "0",
-      four: "0",
-      five: "0",
-    },
-    {
-      title: "NRW-WBA",
-      noasset: "131",
-      zero: "0",
-      one: "345",
-      two: "235",
-      three: "1",
-      four: "0",
-      five: "0",
-    },
-    {
-      title: "PD-N",
-      noasset: "19525",
-      zero: "112",
-      one: "2345",
-      two: "2391",
-      three: "3457",
-      four: "134",
-      five: "31",
-    },
-    {
-      title: "PD-S",
-      noasset: "7442",
-      zero: "13",
-      one: "1985",
-      two: "1246",
-      three: "324",
-      four: "46",
-      five: "12",
-    },
-    {
-      title: "OTS-INSTRUMENT",
-      noasset: "7584",
-      zero: "0",
-      one: "1924",
-      two: "3",
-      three: "1244",
-      four: "6",
-      five: "12",
-    },
-    {
-      title: "OTS-EM FLOWMETER",
-      noasset: "478",
-      zero: "0",
-      one: "2",
-      two: "321",
-      three: "456",
-      four: "0",
-      five: "1",
-    },
-    {
-      title: "WQ-LAB SERVICES",
-      noasset: "346",
-      zero: "3",
-      one: "312",
-      two: "22",
-      three: "4",
-      four: "0",
-      five: "9",
-    },
-    {
-      title: "WQ-ONLA",
-      noasset: "34",
-      zero: "0",
-      one: "33",
-      two: "1",
-      three: "0",
-      four: "0",
-      five: "0",
-    },
-    {
-      title: "WQ-RMS",
-      noasset: "5",
-      zero: "0",
-      one: "1",
-      two: "1237",
-      three: "2",
-      four: "0",
-      five: "0",
-    },
-    {
-      title: "WQ-SPA",
-      noasset: "2355",
-      zero: "0",
-      one: "1235",
-      two: "290",
-      three: "0",
-      four: "0",
-      five: "0",
-    },
-    {
-      title: "WQ-SURVEILLANCE",
-      noasset: "234",
-      zero: "0",
-      one: "290",
-      two: "3245",
-      three: "0",
-      four: "235",
-      five: "1",
-    },
-    {
-      title: "DIST-RESERVOIR",
-      noasset: "10252",
-      zero: "2",
-      one: "3956",
-      two: "123",
-      three: "5867",
-      four: "0",
-      five: "92",
-    },
-    {
-      title: "CBS-AMR FLOWMETER",
-      noasset: "234",
-      zero: "1",
-      one: "344",
-      two: "14",
-      three: "46",
-      four: "1",
-      five: "5",
-    },
-    {
-      title: "TOTAL ASSET/OVERALL AVERAGE %",
-      noasset: "81958",
-      zero: "163",
-      one: "49905",
-      two: "32664",
-      three: "14648",
-      four: "1074",
-      five: "223",
-    },
-  ];
+  // tableAssetConditionStores = [
+  //   {
+  //     title: "ES-D-PUMP HOUSE",
+  //     noasset: "16094",
+  //     zero: "23",
+  //     one: "9567",
+  //     two: "9413",
+  //     three: "3090",
+  //     four: "649",
+  //     five: "47",
+  //   },
+  //   {
+  //     title: "ES-D-VALVE",
+  //     noasset: "1242",
+  //     zero: "1",
+  //     one: "8765",
+  //     two: "1244",
+  //     three: "0",
+  //     four: "0",
+  //     five: "0",
+  //   },
+  //   {
+  //     title: "FLEET",
+  //     noasset: "1424",
+  //     zero: "3",
+  //     one: "345",
+  //     two: "234",
+  //     three: "112",
+  //     four: "1",
+  //     five: "0",
+  //   },
+  //   {
+  //     title: "NRW-DMZ",
+  //     noasset: "12435",
+  //     zero: "5",
+  //     one: "18456",
+  //     two: "12645",
+  //     three: "45",
+  //     four: "2",
+  //     five: "13",
+  //   },
+  //   {
+  //     title: "NRW-TRANSIENT",
+  //     noasset: "2143",
+  //     zero: "0",
+  //     one: "0",
+  //     two: "0",
+  //     three: "0",
+  //     four: "0",
+  //     five: "0",
+  //   },
+  //   {
+  //     title: "NRW-WBA",
+  //     noasset: "131",
+  //     zero: "0",
+  //     one: "345",
+  //     two: "235",
+  //     three: "1",
+  //     four: "0",
+  //     five: "0",
+  //   },
+  //   {
+  //     title: "PD-N",
+  //     noasset: "19525",
+  //     zero: "112",
+  //     one: "2345",
+  //     two: "2391",
+  //     three: "3457",
+  //     four: "134",
+  //     five: "31",
+  //   },
+  //   {
+  //     title: "PD-S",
+  //     noasset: "7442",
+  //     zero: "13",
+  //     one: "1985",
+  //     two: "1246",
+  //     three: "324",
+  //     four: "46",
+  //     five: "12",
+  //   },
+  //   {
+  //     title: "OTS-INSTRUMENT",
+  //     noasset: "7584",
+  //     zero: "0",
+  //     one: "1924",
+  //     two: "3",
+  //     three: "1244",
+  //     four: "6",
+  //     five: "12",
+  //   },
+  //   {
+  //     title: "OTS-EM FLOWMETER",
+  //     noasset: "478",
+  //     zero: "0",
+  //     one: "2",
+  //     two: "321",
+  //     three: "456",
+  //     four: "0",
+  //     five: "1",
+  //   },
+  //   {
+  //     title: "WQ-LAB SERVICES",
+  //     noasset: "346",
+  //     zero: "3",
+  //     one: "312",
+  //     two: "22",
+  //     three: "4",
+  //     four: "0",
+  //     five: "9",
+  //   },
+  //   {
+  //     title: "WQ-ONLA",
+  //     noasset: "34",
+  //     zero: "0",
+  //     one: "33",
+  //     two: "1",
+  //     three: "0",
+  //     four: "0",
+  //     five: "0",
+  //   },
+  //   {
+  //     title: "WQ-RMS",
+  //     noasset: "5",
+  //     zero: "0",
+  //     one: "1",
+  //     two: "1237",
+  //     three: "2",
+  //     four: "0",
+  //     five: "0",
+  //   },
+  //   {
+  //     title: "WQ-SPA",
+  //     noasset: "2355",
+  //     zero: "0",
+  //     one: "1235",
+  //     two: "290",
+  //     three: "0",
+  //     four: "0",
+  //     five: "0",
+  //   },
+  //   {
+  //     title: "WQ-SURVEILLANCE",
+  //     noasset: "234",
+  //     zero: "0",
+  //     one: "290",
+  //     two: "3245",
+  //     three: "0",
+  //     four: "235",
+  //     five: "1",
+  //   },
+  //   {
+  //     title: "DIST-RESERVOIR",
+  //     noasset: "10252",
+  //     zero: "2",
+  //     one: "3956",
+  //     two: "123",
+  //     three: "5867",
+  //     four: "0",
+  //     five: "92",
+  //   },
+  //   {
+  //     title: "CBS-AMR FLOWMETER",
+  //     noasset: "234",
+  //     zero: "1",
+  //     one: "344",
+  //     two: "14",
+  //     three: "46",
+  //     four: "1",
+  //     five: "5",
+  //   },
+  //   {
+  //     title: "TOTAL ASSET/OVERALL AVERAGE %",
+  //     noasset: "81958",
+  //     zero: "163",
+  //     one: "49905",
+  //     two: "32664",
+  //     three: "14648",
+  //     four: "1074",
+  //     five: "223",
+  //   },
+  // ];
 
   private pieone: am4charts.PieChart;
   private pietwo: am4charts.PieChart;
@@ -348,9 +735,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private pieeight: am4charts.PieChart;
   private pienine: am4charts.PieChart;
 
-  constructor(private geoJSONSrv: GeojsonService, private zone: NgZone) {}
-
   ngOnInit() {
+
+    //new update
+    this.getWorkOrderActivity();
+    this.getAssets();
+    this.getAssetRegistered();
+
+
+
     var calendarEl = document.getElementById("widget-calendar");
 
     var calendar = new Calendar(calendarEl, {
@@ -514,6 +907,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initCompareChart() {
+
+    //end
+
     this.compareChart = am4core.create("compareChart", am4charts.XYChart);
     this.compareChart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
