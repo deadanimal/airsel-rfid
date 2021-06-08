@@ -466,6 +466,9 @@ urlpatterns = [
     url('auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
     # url for account activation via token
-    path('activate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
+    #path('activate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
+    #url('activate_account/<slug:uidb64>/<slug:token>/', ActivateAccount.as_view(), name='activate_account')
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+                ActivateAccount.as_view(), name='activate'),
 
 ]

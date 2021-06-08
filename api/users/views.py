@@ -1,5 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 import six
@@ -40,6 +42,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 from django.shortcuts import render
 from django.db.models import Q
 
+from django.contrib.sites.models import Site
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -72,12 +75,17 @@ class ActivateAccount(View):
 
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
+            user.status = True
             user.save()
 
         else:
             #messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
             user.is_active = True
+            user.status = True
             user.save()
+        
+        html = "<html><body>Your Account Has Been Activated</body></html>"
+        return HttpResponseRedirect("https://airsel-rfid.pipe.my/")
 
 class CustomUserViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -125,16 +133,27 @@ class CustomUserViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = account_activation_token.make_token(user)
 
+        print("USER", user, uid, token, user.username)
+
 
         # Email
         current_site = get_current_site(request)
-        print(type(current_site))
+        current_site = Site.objects.get_current()
+
+        #domain = "127.0.0.1:8000"
+        domain = "http://airsel-rfid-api.pipe.my"
+
         subject = 'Activate Your Account'
         message = render_to_string(f'{BASE_DIR}/templates/account/email/email_confirmation_message.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': uid, 
-            'token': token
+            # comment this line before push to repo
+            # uncomment this line when going live
+            #domain : "http://airsel-rfid-api.pipe.my/"
+
+            'uid': uid,
+            'token': token,
+            'username': user.username,
+            'password': 'bg6yaaz3pv',
+            'url': f"http://{domain}/activate/{uid}/{token}/"
         })
 
         to = [user.email]
@@ -142,7 +161,4 @@ class CustomUserViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         user.email_user(subject, message)
 
         return Response({})
-
-
- 
 

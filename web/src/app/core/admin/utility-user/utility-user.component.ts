@@ -82,8 +82,9 @@ export class UtilityUserComponent implements OnInit {
       user_type: new FormControl("", [Validators.required]),
       // default for is_active is false
       is_active: new FormControl(false, [Validators.required]),
-      password1: "password@123",
-      password2: "password@123",
+      status: new FormControl(false, [Validators.required]),
+      password1: "bg6yaaz3pv",
+      password2: "bg6yaaz3pv",
     });
   }
 
