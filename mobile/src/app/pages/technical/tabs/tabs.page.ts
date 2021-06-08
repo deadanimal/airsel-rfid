@@ -1,4 +1,4 @@
-// declare var broadcaster: any;
+declare var broadcaster: any;
 
 import { Component, OnInit, NgZone, ElementRef } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
@@ -43,7 +43,7 @@ export class TabsPage implements OnInit {
   ngOnInit() {
     console.log("ngOnInit TabsPage");
 
-    // broadcaster._debug = true;
+    broadcaster._debug = true;
     // this.onRegister2DBarcodeListener();
     // this.onRegisterRFIDListener();
   }
@@ -74,13 +74,13 @@ export class TabsPage implements OnInit {
               console.log("this.bBarcode = ", this.bBarcode);
               if (this.bBarcode) {
                 loading.dismiss();
-                // broadcaster.removeEventListener(ev, listener);
+                broadcaster.removeEventListener(ev, listener);
                 this.updateQrbarcode(event.data);
               }
             });
           }
         };
-        // broadcaster.addEventListener(ev, isGlobal, listener);
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -104,13 +104,13 @@ export class TabsPage implements OnInit {
               console.log("this.bRfid = ", this.bRfid);
               if (this.bRfid) {
                 loading.dismiss();
-                // broadcaster.removeEventListener(ev, listener);
+                broadcaster.removeEventListener(ev, listener);
                 this.updateRfid(event.data);
               }
             });
           }
         };
-        // broadcaster.addEventListener(ev, isGlobal, listener);
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -200,18 +200,18 @@ export class TabsPage implements OnInit {
 
               //     loading.present();
               //     /// get data from wams
-              //     this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
-              //       (resBsdgeNo) => { },
-              //       (errBadgeNo) => { },
-              //       () => {
-              //         loading.dismiss()
-              //         // setTimeout(function () {
-              //         this.router.navigate(
-              //           ["/technical/asset-detail-list"],
-              //           navigationExtras
-              //         );
-              //       }
-              //     );
+              this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
+                (resBsdgeNo) => { },
+                (errBadgeNo) => { },
+                () => {
+                  //         loading.dismiss()
+                  //         // setTimeout(function () {
+                  //         this.router.navigate(
+                  //           ["/technical/asset-detail-list"],
+                  //           navigationExtras
+                  //         );
+                }
+              );
               //   });
 
               this.router.navigate(

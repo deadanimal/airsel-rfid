@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+declare var broadcaster: any;
+
+import { Component, NgZone, OnInit } from "@angular/core";
 import {
   Validators,
   FormBuilder,
@@ -10,7 +12,7 @@ import {
   ActionSheetController,
   AlertController,
   MenuController,
-  ModalController,
+  ModalController, LoadingController
 } from "@ionic/angular";
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 
@@ -20,6 +22,8 @@ import { NotificationsService } from "src/app/shared/services/notifications/noti
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { WorkOrderActivityCompletionAssLocAssListService } from 'src/app/shared/services/work-order-activity-completion-AssLocAssList/work-order-activity-completion-AssLocAssList.service';
 import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
+import { WamsService } from "src/app/shared/services/wams/wams.service";
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
 
 @Component({
   selector: "app-work-activity",
@@ -29,6 +33,11 @@ import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work
 export class WorkActivityPage implements OnInit {
   // List
   servicehistories = [];
+
+  // scanner
+  public scanValue: any;
+  bBarcode: boolean = false;
+  bRfid: boolean = false;
 
   // Data
   workactivity: any;
@@ -48,7 +57,11 @@ export class WorkActivityPage implements OnInit {
     public notificationService: NotificationsService,
     private workactivityService: WorkActivitiesService,
     private workOrderActivityCompletionAssLocAssListService: WorkOrderActivityCompletionAssLocAssListService,
-    private workOrderActivityCompletionService: WorkOrderActivityCompletionService
+    private workOrderActivityCompletionService: WorkOrderActivityCompletionService,
+    public loadingController: LoadingController,
+    private ngZone: NgZone,
+    private assetsService: AssetsService,
+    private wamsService: WamsService
   ) {
     this.workactivityFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -85,6 +98,7 @@ export class WorkActivityPage implements OnInit {
   }
 
   ngOnInit() {
+    broadcaster._debug = true;
     this.menu.enable(false, "menuNotification");
   }
 
@@ -176,51 +190,51 @@ export class WorkActivityPage implements OnInit {
     return await modal.present();
   }
 
-  async clickViewAsset(asset) {
-    // let navigationExtras: NavigationExtras = {
-    //   state: {
-    //     asset,
-    //   },
-    // };
-    // this.router.navigate(["/technical/work-activity-asset"], navigationExtras);
+  // async clickViewAsset(asset) {
+  //   // let navigationExtras: NavigationExtras = {
+  //   //   state: {
+  //   //     asset,
+  //   //   },
+  //   // };
+  //   // this.router.navigate(["/technical/work-activity-asset"], navigationExtras);
 
-    const actionSheet = await this.actionSheetController.create({
-      header: "Choose method",
-      buttons: [
-        {
-          text: "RFID",
-          icon: "scan",
-          handler: () => {
-            console.log("RFID clicked");
-          },
-        },
-        {
-          text: "QR Code",
-          icon: "qr-code",
-          handler: () => {
-            console.log("QR Code clicked");
-          },
-        },
-        {
-          text: "Badge No.",
-          icon: "search",
-          handler: () => {
-            console.log("Badge No. clicked");
-            this.searchBadgeNo(asset);
-          },
-        },
-        {
-          text: "Cancel",
-          role: "cancel",
-          icon: "close",
-          handler: () => {
-            console.log("Cancel clicked");
-          },
-        },
-      ],
-    });
-    await actionSheet.present();
-  }
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: "Choose method",
+  //     buttons: [
+  //       {
+  //         text: "RFID",
+  //         icon: "scan",
+  //         handler: () => {
+  //           console.log("RFID clicked");
+  //         },
+  //       },
+  //       {
+  //         text: "QR Code",
+  //         icon: "qr-code",
+  //         handler: () => {
+  //           console.log("QR Code clicked");
+  //         },
+  //       },
+  //       {
+  //         text: "Badge No.",
+  //         icon: "search",
+  //         handler: () => {
+  //           console.log("Badge No. clicked");
+  //           this.searchBadgeNo(asset);
+  //         },
+  //       },
+  //       {
+  //         text: "Cancel",
+  //         role: "cancel",
+  //         icon: "close",
+  //         handler: () => {
+  //           console.log("Cancel clicked");
+  //         },
+  //       },
+  //     ],
+  //   });
+  //   await actionSheet.present();
+  // }
 
   async searchBadgeNo(asset) {
     const alert = await this.alertController.create({
@@ -348,4 +362,171 @@ export class WorkActivityPage implements OnInit {
       )
 
   }
+
+  onRegister2DBarcodeListener() {
+    this.loadingController
+      .create({
+        message: "Please scan the QR code...",
+      })
+      .then((loading) => {
+        loading.present();
+
+        console.log("[register onRegister2DBarcodeListener] ");
+        const ev = "com.scanner.broadcast";
+        var isGlobal = true;
+
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
+
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bBarcode = ", this.bBarcode);
+              if (this.bBarcode) {
+                loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
+                this.updateQrbarcode(event.data);
+              }
+            });
+          }
+        };
+        broadcaster.addEventListener(ev, isGlobal, listener);
+      });
+  }
+
+  onRegisterRFIDListener() {
+    this.loadingController
+      .create({
+        message: "Please scan the RFID tag...",
+      })
+      .then((loading) => {
+        loading.present();
+
+        console.log("[register onRegisterRFIDListener] ");
+        const ev = "android.intent.action.scanner.RFID";
+        var isGlobal = true;
+
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
+
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bRfid = ", this.bRfid);
+              if (this.bRfid) {
+                loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
+                this.updateRfid(event.data);
+              }
+            });
+          }
+        };
+        broadcaster.addEventListener(ev, isGlobal, listener);
+      });
+  }
+
+  async clickViewAsset(asset) {
+    this.bRfid = false;
+    this.bBarcode = false;
+
+    const actionSheet = await this.actionSheetController.create({
+      header: "Choose method",
+      buttons: [
+        {
+          text: "RFID",
+          icon: "scan",
+          handler: () => {
+            console.log("RFID clicked");
+            this.bBarcode = false;
+            this.bRfid = true;
+            this.onRegisterRFIDListener();
+          },
+        },
+        {
+          text: "QR Code",
+          icon: "qr-code",
+          handler: () => {
+            console.log("QR Code clicked");
+            this.bBarcode = true;
+            this.bRfid = false;
+            this.onRegister2DBarcodeListener();
+          },
+        },
+        {
+          text: "Badge No.",
+          icon: "search",
+          handler: () => {
+            console.log("Badge No. clicked");
+            this.searchBadgeNo(asset);
+          },
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          icon: "close",
+          handler: () => {
+            console.log("Cancel clicked");
+          },
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
+  // rfid scan
+  updateRfid(data) {
+    if (this.bRfid)
+      this.ngZone.run(() => {
+        this.scanValue = data;
+
+        this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
+          (res) => {
+            if (res.length > 0) {
+              let navigationExtras: NavigationExtras = {
+                state: {
+                  badge_no: res[0].badge_no,
+                },
+              };
+
+              /// get data from wams
+              this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
+                (resBsdgeNo) => { },
+                (errBadgeNo) => { }
+              );
+
+              this.router.navigate(
+                ["/technical/asset-detail-list"],
+                navigationExtras
+              );
+            } else {
+              this.presentAlert("Error", "Data not valid in database");
+            }
+          },
+          (err) => {
+            console.log("err assetlsService = ", err);
+          }
+        );
+      });
+  }
+
+  // qr code
+  updateQrbarcode(data) {
+    if (this.bBarcode)
+      this.ngZone.run(() => {
+        this.scanValue = data;
+
+        if (this.scanValue != "") {
+          let navigationExtras: NavigationExtras = {
+            state: {
+              badge_no: this.scanValue,
+            },
+          };
+          this.router.navigate(
+            ["/technical/asset-detail-list"],
+            navigationExtras
+          );
+        } else {
+          this.presentAlert("Error", "Data not valid in database");
+        }
+      });
+  }
+
 }

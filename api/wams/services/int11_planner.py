@@ -44,7 +44,6 @@ def insert_into_planner(dict):
 
 def get_planner(from_date, to_date):
 
-    Planner.objects.all().delete()
     
     payload = {
         "from_date": from_date,
@@ -59,21 +58,25 @@ def get_planner(from_date, to_date):
     json_dictionary = json.loads(r.content)
     print(json_dictionary)
 
-    for key in json_dictionary:
-        if (key == "results"):
-            print(key, ":", json_dictionary[key])
-            if (type(json_dictionary[key]) == dict):
-                # return single json
-                print("dict")
-                insert_into_planner(json_dictionary[key])
-            elif (type(json_dictionary[key]) == list):
-                # return array of json
-                print("list")
-                results_json = json_dictionary[key]
-                for x in results_json:
-                    insert_into_planner(x)
+    if json_dictionary : 
 
-    return json.loads(r.content)
+        Planner.objects.all().delete()
+        
+        for key in json_dictionary:
+            if (key == "results"):
+                print(key, ":", json_dictionary[key])
+                if (type(json_dictionary[key]) == dict):
+                    # return single json
+                    print("dict")
+                    insert_into_planner(json_dictionary[key])
+                elif (type(json_dictionary[key]) == list):
+                    # return array of json
+                    print("list")
+                    results_json = json_dictionary[key]
+                    for x in results_json:
+                        insert_into_planner(x)
+
+        return json.loads(r.content)
 
     # wsdl = "https://pasb-dev-uwa-iws.oracleindustry.com/ouaf/webservices/CM-PLANNER?WSDL"
     # session = Session()

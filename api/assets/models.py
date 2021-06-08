@@ -117,9 +117,9 @@ class AssetAttribute(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     characteristic_type = models.CharField(max_length=100, blank=True )
     adhoc_value = models.CharField(max_length=100, blank=True )
-    characteristic_value = models.CharField(max_length=100, null=True)
+    characteristic_value = models.CharField(max_length=100, null=True, blank=True )
     action_type = models.CharField(max_length=100, blank=True )
-    characteristic_type_name = models.CharField(max_length=100, null=True)
+    characteristic_type_name = models.CharField(max_length=100, null=True, blank=True )
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)

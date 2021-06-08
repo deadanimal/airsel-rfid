@@ -42,9 +42,11 @@
 
       <ion-item>
         <ion-label position="stacked">Asset Description</ion-label>
-        <ion-input type="text" (change)="onKeyAssDesc($event.target.value,asset_detail)"
+        <!-- <ion-input type="text" (change)="onKeyAssDesc($event.target.value,asset_detail)"
           [value]="asset_detail.description">
-        </ion-input>
+        </ion-input> -->
+        <ion-textarea rows="3" (change)="onKeyAssDesc($event.target.value,asset_detail)"
+          [value]="asset_detail.description"></ion-textarea>
       </ion-item>
 
       <ion-item>
