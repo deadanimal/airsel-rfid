@@ -173,6 +173,7 @@ export class AssetsRegistrationModel {
 
   public created_at: string;
   public modified_at: string;
+  public new_parent_location: string;
 
   public bo: string;
   public bo_status: string;
@@ -862,7 +863,8 @@ export class RegistrationComponent implements OnInit {
       main_operation: ["", Validators.compose([Validators.required])], //
       region: ["", Validators.compose([Validators.required])], //
       operation: ["",],
-      parent_location: ["", Validators.compose([Validators.required])], //
+      parent_location: ["", ], //
+      new_parent_location: ["", ], //
       process_function: ["",],
       sub_process_system: ["",],
       location_description: ["", Validators.compose([Validators.required])], //
@@ -1426,6 +1428,8 @@ export class RegistrationComponent implements OnInit {
     SubmitObject.warranty_vendor_name = this.firstFormGroup.value.warranty_vendor_name;
     SubmitObject.asset_class_asset_category = this.class_category;
     SubmitObject.handed_over_asset_or_procured = this.firstFormGroup.value.status;
+
+    SubmitObject.new_parent_location = this.firstFormGroup.value.new_parent_location
     SubmitObject.bo = this.bo
     SubmitObject.bo_status = this.boStatus
 
@@ -1496,6 +1500,8 @@ export class RegistrationComponent implements OnInit {
     SubmitObject.voltage = this.secondFormGroup.value.voltage
     SubmitObject.asset_status = this.secondFormGroup.value.asset_status
     SubmitObject.status = this.secondFormGroup.value.status
+    
+
 
     this.assetsRegistrationService.post(SubmitObject).subscribe(
       (res) => {
