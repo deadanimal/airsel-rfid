@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
-import { MenuController } from "@ionic/angular";
+import { MenuController, LoadingController, } from "@ionic/angular";
 
 import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
@@ -21,16 +21,33 @@ export class AssetDetailListPage implements OnInit {
     private assetregistrationService: AssetRegistrationsService,
     private route: ActivatedRoute,
     private router: Router,
+    public loadingController: LoadingController,
     private assetsService: AssetsService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
+
+        // this.loadingController
+        //   .create({
+        //     message: "Please wait ...",
+        //     duration: 1000
+        //   })
+        //   .then((loading) => {
+
+        //     setTimeout(function () {
+        // loading.present();
+
         this.getAsset(this.router.getCurrentNavigation().extras.state.badge_no);
+
+        //   }, 1000);
+
+        // });
       }
     });
   }
 
   getAsset(badge_no: string) {
+    console.log("badge_no =", badge_no)
     this.assetsService.filter("badge_no=" + badge_no).subscribe(
       (res) => {
         console.log("res", res);

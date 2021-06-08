@@ -92,7 +92,14 @@ export class WorkActivityPage implements OnInit {
     const alert = await this.alertController.create({
       header,
       message,
-      buttons: ["OK"],
+      buttons: [
+        {
+          text: "OK",
+          handler: () => {
+            this.router.navigate(["/technical/maintenance-work-list"]);
+          },
+        },
+      ],
     });
 
     await alert.present();

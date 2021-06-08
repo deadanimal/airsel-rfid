@@ -25,12 +25,16 @@
           <div class="line-input">
             <ion-item>
               <ion-label position="stacked">Asset Primary Category</ion-label>
-              <ion-select placeholder="Please select" (ionChange)='onChangeAssPrimaryCat($event.target.value)'
+              <!-- <ion-select placeholder="Please select" (ionChange)='onChangeAssPrimaryCat($event.target.value)'
                 formControlName="asset_primary_category">
                 <ion-select-option *ngFor="let primarycategory of primarycategories"
                   [value]="primarycategory.asset_type_code">
                   {{ primarycategory.asset_type_description }}</ion-select-option>
-              </ion-select>
+              </ion-select> -->
+
+              <ionic-selectable [items]="primarycategories" itemValueField="id" itemTextField="asset_type_description"
+                [canSearch]="true" formControlName="asset_primary_category" (onChange)="onChangeAssPrimaryCat($event)">
+              </ionic-selectable>
               <!-- <small class="validation_messages"
                 >{{ validation_messages.primary_category }}</small
               > -->
@@ -71,11 +75,7 @@
               >{{ validation_messages.sub_category_2 }}</small
             > -->
             </ion-item>
-
-            <ion-item>
-              <ion-label position="stacked">Bo</ion-label>
-              <ion-input type="text" formControlName="bo" [value]="assetAttrData"></ion-input>
-            </ion-item>
+            <ion-input type="hidden" formControlName="bo" [value]="assetAttrData"></ion-input>
           </div>
 
           <!-- <div>
@@ -251,8 +251,12 @@
 
             <ion-item *ngIf="assetLocDiv == 1">
               <ion-label>Location</ion-label>
-              <ionic-selectable [items]="primarycategories" itemValueField="id" itemTextField="asset_type_description"
-                [canSearch]="true" (ionChange)="portChange($event)">
+
+              <!-- <ionic-selectable [items]="primarycategories" itemValueField="id" itemTextField="asset_type_description"
+                [canSearch]="true" formControlName="asset_primary_category" (onChange)="onChangeAssPrimaryCat($event)">
+              </ionic-selectable> -->
+              <ionic-selectable [items]="assetLocationData" itemValueField="uuid" itemTextField="description"
+                [canSearch]="true" formControlName="parent_location" (ionChange)="portChange($event)">
               </ionic-selectable>
             </ion-item>
 
@@ -314,12 +318,20 @@
               </ion-item>
               <ion-item>
                 <ion-label position="stacked">Location/Asset Maintenance Manager</ion-label>
-                <ion-input formControlName="location_asset_maintenance_manager"
-                  placeholder="Location/Asset Maintenance Manager"></ion-input>
+                <!-- <ion-input formControlName="location_asset_maintenance_manager"
+                  placeholder="Location/Asset Maintenance Manager"></ion-input> -->
+                <ion-select placeholder="Please select" formControlName="location_asset_maintenance_manager">
+                  <ion-select-option *ngFor="let maintMan of maintenanceManagerData" [value]="maintMan.id">
+                    {{ maintMan.description }}</ion-select-option>
+                </ion-select>
               </ion-item>
               <ion-item>
                 <ion-label position="stacked">Planner</ion-label>
-                <ion-input formControlName="maintenance_planner" placeholder="Planner"></ion-input>
+                <!-- <ion-input formControlName="maintenance_planner" placeholder="Planner"></ion-input> -->
+                <ion-select placeholder="Please select" formControlName="maintenance_planner">
+                  <ion-select-option *ngFor="let planner of plannerData" [value]="planner.id">
+                    {{ planner.description }}</ion-select-option>
+                </ion-select>
               </ion-item>
               <ion-item>
                 <ion-label position="stacked">GIS/ESRI ID</ion-label>

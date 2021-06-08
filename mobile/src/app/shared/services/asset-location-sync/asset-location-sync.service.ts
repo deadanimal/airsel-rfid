@@ -69,4 +69,16 @@ export class AssetLocatioSyncService {
       })
     );
   }
+
+  get_asset_location(): Observable<AssetLocatioSyncModel[]> {
+    let urlget = this.url + "get_asset_location/";
+    console.log("urlget = ", urlget)
+    return this.http.get<any>(urlget).pipe(
+      tap((res) => {
+        console.log("AssetLocatioSyncModel", res);
+        this.atmodels = res;
+      })
+    );
+  }
+
 }

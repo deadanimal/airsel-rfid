@@ -661,7 +661,7 @@ class AssetLocationSyncViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = AssetLocationSyncSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'node_id'
+        'node_id','description'
     ]
     search_fields = ['$node_id', '$description']
 
@@ -692,6 +692,35 @@ class AssetLocationSyncViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Asset.objects.filter(company=company.id)
         """
         return queryset
+
+    @action(methods=['GET'], detail=False)
+    def get_asset_location(self, request, *args, **kwargs):
+
+        query = AssetLocationSync.objects.all()[:100]  
+        print(query)
+        serializer = AssetLocationSyncSerializer(query, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False)
+    def no_duplicate_list(self, request, *args, **kwargs):
+
+        # asset_list = AssetRegistration.objects.filter(status='AP')
+
+        # serializer = AssetRegistrationSerializer(asset_list, many=True)
+        # return Response(serializer.data)
+
+        # asset_list = AssetRegistration.objects.filter(status='PR')
+        queryset = AssetLocationSync.objects.values_list().distinct()
+
+        print(queryset)
+
+        # for i in queryset:
+        #     print(i)
+
+
+        serializer = AssetLocationSyncSerializer(queryset, many=True)
+        print(serializer)
+        return Response(serializer.data)
 
 class AssetAttributeFieldViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetAttributeField.objects.all()

@@ -8,6 +8,7 @@ import {
   LoadingController,
 } from "@ionic/angular";
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
+import { WamsService } from "src/app/shared/services/wams/wams.service";
 
 @Component({
   selector: "app-tabs",
@@ -27,7 +28,8 @@ export class TabsPage implements OnInit {
     private elementRef: ElementRef,
     private ngZone: NgZone,
     private router: Router,
-    private assetsService: AssetsService
+    private assetsService: AssetsService,
+    private wamsService: WamsService
   ) { }
 
   private L(...args: any[]) {
@@ -72,7 +74,7 @@ export class TabsPage implements OnInit {
               console.log("this.bBarcode = ", this.bBarcode);
               if (this.bBarcode) {
                 loading.dismiss();
-                broadcaster.removeEventListener(ev, listener);
+                // broadcaster.removeEventListener(ev, listener);
                 this.updateQrbarcode(event.data);
               }
             });
@@ -102,7 +104,7 @@ export class TabsPage implements OnInit {
               console.log("this.bRfid = ", this.bRfid);
               if (this.bRfid) {
                 loading.dismiss();
-                broadcaster.removeEventListener(ev, listener);
+                // broadcaster.removeEventListener(ev, listener);
                 this.updateRfid(event.data);
               }
             });
@@ -188,10 +190,38 @@ export class TabsPage implements OnInit {
                   badge_no: data.badge_no,
                 },
               };
+
+              // this.loadingController
+              //   .create({
+              //     message: "Please wait ...",
+              //     duration: 1000
+              //   })
+              //   .then((loading) => {
+
+              //     loading.present();
+              //     /// get data from wams
+              //     this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
+              //       (resBsdgeNo) => { },
+              //       (errBadgeNo) => { },
+              //       () => {
+              //         loading.dismiss()
+              //         // setTimeout(function () {
+              //         this.router.navigate(
+              //           ["/technical/asset-detail-list"],
+              //           navigationExtras
+              //         );
+              //       }
+              //     );
+              //   });
+
               this.router.navigate(
                 ["/technical/asset-detail-list"],
                 navigationExtras
               );
+
+
+              // }, 1000);
+
             } else {
               this.presentAlert(
                 "Error",
@@ -229,6 +259,12 @@ export class TabsPage implements OnInit {
                   badge_no: res[0].badge_no,
                 },
               };
+
+              /// get data from wams
+              this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
+                (resBsdgeNo) => { },
+                (errBadgeNo) => { }
+              );
 
               this.router.navigate(
                 ["/technical/asset-detail-list"],

@@ -207,7 +207,7 @@ class WorkCategory(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     work_category = models.CharField(max_length=100, default='NA')
-    # description = models.CharField(max_length=255, default='NA')
+    description = models.CharField(max_length=255, blank=True)
     # detail_description = models.TextField(default='NA')
     # status = models.BooleanField(default=True)
 

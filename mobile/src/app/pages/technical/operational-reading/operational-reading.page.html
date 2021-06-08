@@ -42,7 +42,7 @@
 
           <ion-select formControlName="measurent_type">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option *ngFor="let choice of MeasurementTypeData" [value]="choice.id">
+            <ion-select-option *ngFor="let choice of MeasurementTypeData" [value]="choice.measurement_type">
               {{choice.measurement_type}}
             </ion-select-option>
           </ion-select>

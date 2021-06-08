@@ -53,7 +53,7 @@ export class AssetsService {
   //   );
   // }
 
-  update(id: string, body: Form): Observable<AssetsModel> {
+  update(id: string, body): Observable<AssetsModel> {
     let urlTemp = this.url + id + '/'
     return this.http.patch<AssetsModel>(urlTemp, body).pipe(
       tap((res) => {

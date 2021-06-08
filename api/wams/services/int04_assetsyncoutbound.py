@@ -80,7 +80,8 @@ def insert_into_asset(dict):
         "condifence_rating": condifence_rating,
         "maintenance_specification": maintenance_specification,
         "attached_to_asset_id": attached_to_asset_id,
-        "registered_datetime": registered_datetime
+        "registered_datetime": registered_datetime,
+        "transaction_type":"UPDATE"
     }
 
     if not asset:
@@ -149,7 +150,7 @@ def insert_into_asset(dict):
                 else:
                     asset = Asset.objects.get(asset_id=asset_id)
                     asset_attribute = AssetAttribute.objects.create(
-                        characteristic_type=characteristic_type, adhoc_value=characteristic_value)
+                        characteristic_type=characteristic_type, adhoc_value=characteristic_value,action_type='unchanged')
                     asset.asset_attributes.add(asset_attribute)
                     print("not found",asset_attribute)
 
