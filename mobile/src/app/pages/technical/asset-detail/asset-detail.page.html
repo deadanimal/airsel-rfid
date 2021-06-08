@@ -42,9 +42,11 @@
 
       <ion-item>
         <ion-label position="stacked">Asset Description</ion-label>
-        <ion-input type="text" (change)="onKeyAssDesc($event.target.value,asset_detail)"
+        <!-- <ion-input type="text" (change)="onKeyAssDesc($event.target.value,asset_detail)"
           [value]="asset_detail.description">
-        </ion-input>
+        </ion-input> -->
+        <ion-textarea rows="3" (change)="onKeyAssDesc($event.target.value,asset_detail)"
+          [value]="asset_detail.description"></ion-textarea>
       </ion-item>
 
       <ion-item>
@@ -54,15 +56,14 @@
     </ion-list>
 
 
-    <ion-list-header *ngIf="assetAttrColumn != ''">
+    <ion-list-header *ngIf="assetAttrColumn != []">
       <ion-label>Asset Attribute </ion-label>
     </ion-list-header>
 
     <ion-list class="ion-padding line-input">
       <ion-item *ngFor="let assetAttr of assetAttributedatas">
         <ion-label position="stacked">{{assetAttr.field_name | titlecase}}</ion-label>
-        <ion-input type="text" (change)="onKey($event.target.value,assetAttr)"
-          value="{{assetAttr.characteristic_value}}">
+        <ion-input type="text" (change)="onKey($event.target.value,assetAttr)" value="{{assetAttr.field_value}}">
         </ion-input>
       </ion-item>
     </ion-list>

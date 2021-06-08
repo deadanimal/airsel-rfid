@@ -217,7 +217,7 @@ export class MaintenanceWorkListPage implements OnInit {
   calculateTotalStatus(array: Array<any>, status: string) {
     // From database
     // ('Backlog', 'Backlog'),
-    // ('In Progress', 'In Progress'),
+    // ('InProgress', 'InProgress'),
     // ('New', 'New')
     // ('Completed', 'Completed')
     if (array.length > 0) {

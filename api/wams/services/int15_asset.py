@@ -82,7 +82,8 @@ def insert_into_asset(dict):
         "condifence_rating": condifence_rating,
         "maintenance_specification": maintenance_specification,
         "attached_to_asset_id": attached_to_asset_id,
-        "registered_datetime": registered_datetime
+        "registered_datetime": registered_datetime,
+        "transaction_type":"UPDATE"
     }
 
     if not asset:

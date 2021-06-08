@@ -1,4 +1,4 @@
-// declare var broadcaster: any;
+declare var broadcaster: any;
 
 import { Component, OnInit, NgZone, ElementRef } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
@@ -8,6 +8,7 @@ import {
   LoadingController,
 } from "@ionic/angular";
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
+import { WamsService } from "src/app/shared/services/wams/wams.service";
 
 @Component({
   selector: "app-tabs",
@@ -27,7 +28,8 @@ export class TabsPage implements OnInit {
     private elementRef: ElementRef,
     private ngZone: NgZone,
     private router: Router,
-    private assetsService: AssetsService
+    private assetsService: AssetsService,
+    private wamsService: WamsService
   ) { }
 
   private L(...args: any[]) {
@@ -41,7 +43,7 @@ export class TabsPage implements OnInit {
   ngOnInit() {
     console.log("ngOnInit TabsPage");
 
-    // broadcaster._debug = true;
+    broadcaster._debug = true;
     // this.onRegister2DBarcodeListener();
     // this.onRegisterRFIDListener();
   }
@@ -78,7 +80,7 @@ export class TabsPage implements OnInit {
             });
           }
         };
-        // broadcaster.addEventListener(ev, isGlobal, listener);
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -108,7 +110,7 @@ export class TabsPage implements OnInit {
             });
           }
         };
-        // broadcaster.addEventListener(ev, isGlobal, listener);
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -188,10 +190,38 @@ export class TabsPage implements OnInit {
                   badge_no: data.badge_no,
                 },
               };
+
+              // this.loadingController
+              //   .create({
+              //     message: "Please wait ...",
+              //     duration: 1000
+              //   })
+              //   .then((loading) => {
+
+              //     loading.present();
+              //     /// get data from wams
+              this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
+                (resBsdgeNo) => { },
+                (errBadgeNo) => { },
+                () => {
+                  //         loading.dismiss()
+                  //         // setTimeout(function () {
+                  //         this.router.navigate(
+                  //           ["/technical/asset-detail-list"],
+                  //           navigationExtras
+                  //         );
+                }
+              );
+              //   });
+
               this.router.navigate(
                 ["/technical/asset-detail-list"],
                 navigationExtras
               );
+
+
+              // }, 1000);
+
             } else {
               this.presentAlert(
                 "Error",
@@ -229,6 +259,12 @@ export class TabsPage implements OnInit {
                   badge_no: res[0].badge_no,
                 },
               };
+
+              /// get data from wams
+              this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
+                (resBsdgeNo) => { },
+                (errBadgeNo) => { }
+              );
 
               this.router.navigate(
                 ["/technical/asset-detail-list"],

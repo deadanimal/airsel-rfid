@@ -21,6 +21,9 @@ import { StatesService } from 'src/app/shared/services/state/states.service';
 import { AssetAttributeColumnService } from 'src/app/shared/services/asset-attribute-column/asset-attribute-column.service';
 import { AssetAttributePredefineService } from 'src/app/shared/services/asset-attribute-predefine/asset-attribute-prodefine.service';
 import { AssetAttributeReferenceService } from 'src/app/shared/services/asset-attribute-reference/asset-attribute-reference.service';
+import { MaintenanceManagerService } from 'src/app/shared/services/maintenance-manager/maintenance-manager.service';
+import { PlannerService } from 'src/app/shared/services/planner/planner.service';
+import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
 
 class Port {
   public id: number;
@@ -251,12 +254,12 @@ export class AssetRegistrationPage implements OnInit {
   assCriticalList = [
     { id: '01', name: '01 Asset Failure Low Impact' },
     { id: '02', name: '02' },
-    { id: '03', name: '02' },
-    { id: '04', name: '02' },
-    { id: '05', name: '02' },
-    { id: '06', name: '02' },
-    { id: '07', name: '02' },
-    { id: '08', name: '02' },
+    { id: '03', name: '03' },
+    { id: '04', name: '04' },
+    { id: '05', name: '05' },
+    { id: '06', name: '06' },
+    { id: '07', name: '07' },
+    { id: '08', name: '08' },
     { id: '09', name: '09 Highest' }
   ];
 
@@ -358,7 +361,10 @@ export class AssetRegistrationPage implements OnInit {
     private statesService: StatesService,
     private assetAttributeColumnService: AssetAttributeColumnService,
     private assetAttributePredefineService: AssetAttributePredefineService,
-    private assetAttributeReferenceService: AssetAttributeReferenceService
+    private assetAttributeReferenceService: AssetAttributeReferenceService,
+    private maintenanceManagerService: MaintenanceManagerService,
+    private plannerService: PlannerService,
+    private assetLocatioSyncService: AssetLocatioSyncService
   ) {
     // console.log("parentLocaDiv = ", this.parentLocaDiv)
     this.firstFormGroup = this.formBuilder.group({
@@ -529,6 +535,93 @@ export class AssetRegistrationPage implements OnInit {
     this.getAssetType()
     this.getAssetGroup()
     this.getAttributePredefine()
+    this.getMaintenanceManager()
+    this.getPlanner()
+    this.getAssetLocationSync()
+  }
+
+  removeDuplicates(originalArray, prop) {
+    console
+    var newArray = [];
+    var lookupObject = [];
+
+    for (var i in originalArray) {
+
+      lookupObject[originalArray[i][prop]] = originalArray[i];
+      console.log(i, " qqqqq= ", originalArray[i])
+    }
+
+    for (i in lookupObject) {
+      this.assetLocationData.push(lookupObject[i]);
+    }
+    console.log("uniqueArray is: " + this.assetLocationData);
+    // return this.assetLocationData;
+  }
+
+  assetLocationData: any = []
+  getAssetLocationSync() {
+
+    console.log("iiiiiiiiii")
+    this.assetLocatioSyncService.get_asset_location().subscribe(
+      (res) => {
+        console.log("assetLocatioSyncService = ", res)
+        // let assetLocationarr = res
+        // this.assetLocationData.push(res)
+        this.assetLocationData = res
+
+        // var newArray = [];
+        // var lookupObject = {};
+
+        // for (var i in assetLocationarr) {
+        //   console.log("i = ", i)
+        //   // lookupObject[assetLocationarr[i][prop]] = assetLocationarr[i];
+        //   // if(){
+
+        //   // }
+        // }
+        // this.assetLocationData = this.removeDuplicates(assetLocationarr, "node_id");
+        console.log("uniqueArray is: " + this.assetLocationData);
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
+  }
+
+  plannerData = []
+  getPlanner() {
+    this.plannerService.get().subscribe(
+      (res) => {
+        // console.log("planner = ", res)
+        if (res) this.plannerData = res;
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
+
+  }
+
+  maintenanceManagerData = []
+  getMaintenanceManager() {
+    this.maintenanceManagerService.get().subscribe(
+      (res) => {
+        // console.log("regions = ", res)
+        if (res) this.maintenanceManagerData = res;
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request completed");
+      }
+    );
   }
 
   getAttributePredefine() {
@@ -537,12 +630,12 @@ export class AssetRegistrationPage implements OnInit {
         // console.log("assetAttPredefine = ", res)
 
         res.forEach(element => {
-          console.log("assetAttPredefine element = ", element)
-          console.log("assetAttPredefine attribute_field_name = ", element.attribute_field_name)
+          // console.log("assetAttPredefine element = ", element)
+          // console.log("assetAttPredefine attribute_field_name = ", element.attribute_field_name)
 
           if (element.attribute_field_name == "manufacturer") {
             this.assetAttPredefineMans.push(element); // manufacturer
-            console.log("assetAttPredefineMans = ", this.assetAttPredefineMans)
+            // console.log("assetAttPredefineMans = ", this.assetAttPredefineMans)
           }
           if (element.attribute_field_name == "vehicle_insurance_vendor") {
             this.assetAttPredefinePreInsVens.push(element); // vehicle_insurance_vendor
@@ -571,7 +664,7 @@ export class AssetRegistrationPage implements OnInit {
   getRegion() {
     this.regionsService.get().subscribe(
       (res) => {
-        console.log("regions = ", res)
+        // console.log("regions = ", res)
         if (res) this.regions = res;
       },
       (err) => {
@@ -586,7 +679,7 @@ export class AssetRegistrationPage implements OnInit {
   getState() {
     this.statesService.get().subscribe(
       (res) => {
-        console.log("states = ", res)
+        // console.log("states = ", res)
         if (res) this.states = res;
       },
       (err) => {
@@ -616,7 +709,7 @@ export class AssetRegistrationPage implements OnInit {
     this.assetTypesService.get().subscribe(
       (res) => {
         if (res) {
-          console.log('this.primarycategories = ', res)
+          // console.log('this.primarycategories = ', res)
           this.primarycategories = res;
           // this.primarycategories = res.filter(function (data) {
           //   if (data.category.toString().toLowerCase().indexOf("at") !== -1)
@@ -624,7 +717,7 @@ export class AssetRegistrationPage implements OnInit {
           //   return false;
           // });
 
-          console.log('this.primarycategories = ', this.primarycategories)
+          // console.log('this.primarycategories = ', this.primarycategories)
 
           this.typeassets = res
           // .filter(function (data) {
@@ -694,12 +787,12 @@ export class AssetRegistrationPage implements OnInit {
       // created_by: this.authService.userID
     };
 
-    console.log('postAssets = ', postAssets);
+    // console.log('postAssets = ', postAssets);
     // this.assetsService.post(postAssets).subscribe( 
     this.assetRegistrationsService.post(postAssets).subscribe(
       (res) => {
         if (res) {
-          console.log("register_res = ", res);
+          // console.log("register_res = ", res);
           this.presentAlert("Success", "Your asset successfully registered into the system.");
         } else {
           console.log('eweqqweeq');
@@ -766,6 +859,10 @@ export class AssetRegistrationPage implements OnInit {
     this.segmentModal = segment;
   }
 
+  portChange2(event) {
+
+  }
+
   portChange(event: {
     // console.log(event);
     // if(value.length > 3)
@@ -776,12 +873,19 @@ export class AssetRegistrationPage implements OnInit {
     console.log('port:', event.value);
   }
 
-  onChangeAssPrimaryCat(event) {
+  onChangeAssPrimaryCat(event: {
+    // console.log(event);
+    // if(value.length > 3)
+    component: IonicSelectableComponent,
+    value: any
+    // }
+  }) {
+    console.log('port:', event.value.asset_type_code);
     console.log("event = ", event)
-    let field = "asset_type_id=" + event;
+    let field = "asset_type_id=" + event.value.asset_type_description;
 
     this.primarycategories.forEach(element => {
-      if (element.asset_type_code == event) {
+      if (element.asset_type_code == event.value.asset_type_code) {
         console.log("element = ", element);
         this.assetAttrData = element.asset_bussiness_object
         this.assetCategoryData = element.asset_category
@@ -791,7 +895,7 @@ export class AssetRegistrationPage implements OnInit {
       (res) => {
         if (res) {
           this.assetAttrColumn = res[0]
-          console.log(" this.assetAttrColumn = ", this.assetAttrColumn);
+          // console.log(" this.assetAttrColumn = ", this.assetAttrColumn);
         }
       },
       () => {
