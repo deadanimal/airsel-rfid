@@ -493,7 +493,7 @@ export class WorkActivityPage implements OnInit {
               );
 
               this.router.navigate(
-                ["/technical/asset-detail-list"],
+                ["/technical/work-activity-asset"],
                 navigationExtras
               );
             } else {
@@ -520,7 +520,7 @@ export class WorkActivityPage implements OnInit {
             },
           };
           this.router.navigate(
-            ["/technical/asset-detail-list"],
+            ["/technical/work-activity-asset"],
             navigationExtras
           );
         } else {
