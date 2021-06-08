@@ -210,19 +210,19 @@ export const PLANNEROUTES: RouteInfo[] = [
       { path: 'total-asset-maintenance', title: 'Total Asset Maintenance', type: 'link' },
     ]
   },
-  {
-    path: '/planner/utility',
-    title: 'Utility',
-    type: 'sub',
-    icontype: 'fas fa-tools text-blue',
-    collapse: 'utility',
-    isCollapsed: true,
-    children: [
-      { path: 'user', title: 'User', type: 'link' },
-      { path: 'user-privileges', title: 'User Privileges', type: 'link' },
-      { path: 'audit-trail', title: 'Audit Trail', type: 'link' }
-    ]
-  }
+  // {
+  //   path: '/planner/utility',
+  //   title: 'Utility',
+  //   type: 'sub',
+  //   icontype: 'fas fa-tools text-blue',
+  //   collapse: 'utility',
+  //   isCollapsed: true,
+  //   children: [
+  //     { path: 'user', title: 'User', type: 'link' },
+  //     { path: 'user-privileges', title: 'User Privileges', type: 'link' },
+  //     { path: 'audit-trail', title: 'Audit Trail', type: 'link' }
+  //   ]
+  // }
 ]
 
 /*

@@ -1,9 +1,14 @@
 {% autoescape off %}
 Hi new user,
 
-Thank you for registering with us. Please click on the following link to complete your registration:
+Hereby is your login credentials
 
-http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+username: {{ username }}
+password: {{ password }}
+
+Thank you for registering with us. Before logging in, please click on the following link to complete your registration.
+
+{{ url }}
 
 Thank you.
 

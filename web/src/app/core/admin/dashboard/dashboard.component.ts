@@ -969,6 +969,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     bullet2.label.fill = am4core.color("#ffffff");
 
     this.compareChart.scrollbarX = new am4core.Scrollbar();
+    
   }
 
   addMarker() {

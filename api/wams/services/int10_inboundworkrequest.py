@@ -34,7 +34,7 @@ def get_inboundworkrequest(type, data):
             'asset_id': data['asset_id']
         }
 
-        r = requests.post("http://174.138.28.157/getInboundWorkRequestUpdate.php", data = payload)
+        r = requests.post("http://174.138.28.157/getInboundWorkRequestCreate.php", data = payload)
         # r = requests.post("http://139.59.125.201/getInboundWorkRequestCreate.php", data = payload)
     elif type == 'update':
 

@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("KIBLAT DRILL ARAH SINI");
     let value = this.loginForm.value;
 
    
@@ -68,10 +67,34 @@ export class LoginComponent implements OnInit {
 
     this.authService.obtainToken(loginBody).subscribe(
       (res) => {
-        console.log("berjaya login", res);
-        this.router.navigate(['/planner/dashboard']);
+        // validate user status
+        // if is_active == true then redirect
+        // if is_active == false then swalAlert
+        let user = this.authService.decodedToken();
+        this.userService.getOne(user.user_id).subscribe(
+          (res) => {
+            console.log("user status", res.is_active);
+            if (res.status == true) {
+              this.router.navigate(['/planner/dashboard']);
+            } else {
+              swal.fire({
+                title: 'Sorry',
+                text: 'The login is correct, buy you did not activate your account yet. Please check your email (inbox and spam)',
+                type: 'warning',
+                buttonsStyling: false,
+                confirmButtonClass: 'btn btn-warning'
+              })
 
-        // redirect ke planner dashboard
+            }
+
+          },
+          (err) => {
+            console.log("err", err);
+            
+
+          }
+        );
+
         
 
       },
@@ -126,6 +149,15 @@ export class LoginComponent implements OnInit {
                   }
                 );
             }
+            else {
+              swal.fire({
+                title: 'Sorry',
+                text: 'Incorrect login credentials.',
+                type: 'warning',
+                buttonsStyling: false,
+                confirmButtonClass: 'btn btn-warning'
+              })
+            }
             // else {
             //   // to create user account in PIPE who AD is invalid
             //   // STEP 5
@@ -146,7 +178,7 @@ export class LoginComponent implements OnInit {
             // }
           },
           (err) => {
-            console.error("err", err);
+            console.error("masukkksss", err);
           });
        },
       () => {
