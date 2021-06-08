@@ -8,6 +8,7 @@ import { BsDropdownModule } from "ngx-bootstrap";
 import { ToastrModule } from "ngx-toastr";
 import { TagInputModule } from "ngx-chips";
 import { CollapseModule } from "ngx-bootstrap/collapse";
+import { HttpTokenInterceptor } from "./shared/interceptor/http.token.interceptor";
 
 import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
@@ -47,12 +48,12 @@ import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
   providers: [
-    NgxSpinnerService
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: HttpTokenInterceptor,
-    //   multi: true,
-    // },
+    NgxSpinnerService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpTokenInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
