@@ -135,7 +135,7 @@
           </ion-select>
         </ion-item>
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Approval Profile</ion-label>
           <ion-select formControlName="approval_profile">
             <ion-select-option value="">Please select</ion-select-option>
@@ -146,7 +146,7 @@
               {{approvalProfile.description}}
             </ion-select-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item>
           <ion-label position="stacked">Work Class</ion-label>
@@ -201,15 +201,11 @@
 
         <ion-item>
           <ion-label position="stacked">Owning Organization</ion-label>
-          <ion-select formControlName="owning_access_group">
-            <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option
-              *ngFor="let ownOrga of owningOrganisationData"
-              [value]="ownOrga.description"
-            >
-              {{ownOrga.name}}
-            </ion-select-option>
-          </ion-select>
+          <ion-input
+            type="text"
+            formControlName="owning_access_group"
+            readonly
+          ></ion-input>
         </ion-item>
       </form>
     </ion-list>

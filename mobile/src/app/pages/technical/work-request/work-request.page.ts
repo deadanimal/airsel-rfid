@@ -6,7 +6,11 @@ import {
   FormControl,
 } from "@angular/forms";
 import { ActivatedRoute, Router, NavigationExtras } from "@angular/router";
-import { AlertController, MenuController } from "@ionic/angular";
+import {
+  AlertController,
+  LoadingController,
+  MenuController,
+} from "@ionic/angular";
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 import { format } from "date-fns";
@@ -82,6 +86,7 @@ export class WorkRequestPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public alertController: AlertController,
+    public loadingController: LoadingController,
     public menu: MenuController,
     private plannerService: PlannerService,
     private authService: AuthService,
@@ -106,7 +111,7 @@ export class WorkRequestPage implements OnInit {
       required_by_date: new FormControl(""),
       approval_profile: new FormControl(""),
       badge_no: new FormControl(""),
-      bo: new FormControl(""),
+      bo: new FormControl("W1-WorkRequest"),
       creation_datetime: new FormControl(""),
       creation_user: new FormControl(""),
       downtime_start: new FormControl(""),
@@ -156,7 +161,7 @@ export class WorkRequestPage implements OnInit {
                   asset_description: res[0].description,
                   asset_id: res[0].asset_id,
                   badge_no: res[0].badge_no,
-                  bo: res[0].bo,
+                  owning_access_group: res[0].owning_access_group,
                 });
               } else {
                 this.presentAlert(
@@ -193,7 +198,7 @@ export class WorkRequestPage implements OnInit {
                     asset_description: res[0].description,
                     asset_id: res[0].asset_id,
                     badge_no: res[0].badge_no,
-                    bo: res[0].bo,
+                    owning_access_group: res[0].owning_access_group,
                   });
                 }
               });
@@ -293,7 +298,7 @@ export class WorkRequestPage implements OnInit {
   }
 
   getPlannerList() {
-    this.plannerService.get().subscribe(
+    this.plannerService.filter("status=ACTIVE").subscribe(
       (res) => {
         // console.log("plannerService = ", res);
         this.plannerData = res;
@@ -363,31 +368,42 @@ export class WorkRequestPage implements OnInit {
     );
   }
 
-  async submit() {
-    console.log("workrequestFormGroup = ", this.workrequestFormGroup.value);
+  submit() {
     this.workrequestFormGroup.patchValue({
       // creation_user: this.authService.userID,
       required_by_date: format(
         new Date(this.workrequestFormGroup.value.required_by_date),
         "yyyy-MM-dd"
       ),
+      // maybe kena buat convert downtime_start dari UTC 8 kepada UTC 0
     });
+    console.log("workrequestFormGroup = ", this.workrequestFormGroup.value);
 
-    this.workrequestService.post(this.workrequestFormGroup.value).subscribe(
-      (res) => {
-        // console.log("res", res);
-        this.alertWorkRequest(
-          "Work Request",
-          "Your work request have successfully submitted into the system. Thank you."
+    this.loadingController
+      .create({
+        message: "Please wait for a while...",
+      })
+      .then((loading) => {
+        this.workrequestService.post(this.workrequestFormGroup.value).subscribe(
+          (res) => {
+            // console.log("res", res);
+            loading.dismiss();
+            this.alertWorkRequest(
+              "Work Request",
+              "Your work request have successfully submitted into the system. Thank you.",
+              true
+            );
+          },
+          (err) => {
+            console.error("err", err);
+            loading.dismiss();
+            this.alertWorkRequest("Error", "Please try again.", false);
+          }
         );
-      },
-      (err) => {
-        console.error("err", err);
-      }
-    );
+      });
   }
 
-  async alertWorkRequest(header, message) {
+  async alertWorkRequest(header, message, success) {
     const alert = await this.alertController.create({
       header,
       message,
@@ -395,7 +411,7 @@ export class WorkRequestPage implements OnInit {
         {
           text: "OK",
           handler: () => {
-            this.clickBack();
+            if (success) this.clickBack();
           },
         },
       ],
