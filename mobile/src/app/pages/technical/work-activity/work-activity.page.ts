@@ -35,6 +35,7 @@ export class WorkActivityPage implements OnInit {
   servicehistories = [];
 
   // scanner
+  private logs = new Array<string>();
   public scanValue: any;
   bBarcode: boolean = false;
   bRfid: boolean = false;
@@ -94,6 +95,14 @@ export class WorkActivityPage implements OnInit {
         //   console.log('element', element);
         // });
       }
+    });
+  }
+
+  private L(...args: any[]) {
+    let v = args.join(" ");
+    console.log(v);
+    this.ngZone.run(() => {
+      this.logs.push(v);
     });
   }
 
@@ -236,54 +245,6 @@ export class WorkActivityPage implements OnInit {
   //   await actionSheet.present();
   // }
 
-  async searchBadgeNo(asset) {
-    const alert = await this.alertController.create({
-      header: "Badge No.",
-      message: "Enter a badge number to search the asset",
-      inputs: [
-        {
-          name: "badge_no",
-          type: "text",
-          value: asset.badge_number,
-          placeholder: "",
-        },
-      ],
-      buttons: [
-        {
-          text: "Cancel",
-          role: "cancel",
-          handler: () => {
-            console.log("Cancel clicked");
-          },
-        },
-        {
-          text: "Search",
-          handler: (data) => {
-            if (data.badge_no) {
-              let navigationExtras: NavigationExtras = {
-                state: {
-                  badge_no: data.badge_no,
-                  asset,
-                },
-              };
-              console.log("navigationExtras 0000 = ", navigationExtras)
-              this.router.navigate(
-                ["/technical/work-activity-asset"],
-                navigationExtras
-              );
-            } else {
-              this.presentAlert(
-                "Error",
-                "Please enter badge number to find asset detail"
-              );
-            }
-          },
-        },
-      ],
-    });
-    await alert.present();
-  }
-
   clickRemove(index: number) {
     this.servicehistories.splice(index, 1);
   }
@@ -361,6 +322,54 @@ export class WorkActivityPage implements OnInit {
         }
       )
 
+  }
+
+  async searchBadgeNo(asset) {
+    const alert = await this.alertController.create({
+      header: "Badge No.",
+      message: "Enter a badge number to search the asset",
+      inputs: [
+        {
+          name: "badge_no",
+          type: "text",
+          value: asset.badge_number,
+          placeholder: "",
+        },
+      ],
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          },
+        },
+        {
+          text: "Search",
+          handler: (data) => {
+            if (data.badge_no) {
+              let navigationExtras: NavigationExtras = {
+                state: {
+                  badge_no: data.badge_no,
+                  asset,
+                },
+              };
+              console.log("navigationExtras 0000 = ", navigationExtras)
+              this.router.navigate(
+                ["/technical/work-activity-asset"],
+                navigationExtras
+              );
+            } else {
+              this.presentAlert(
+                "Error",
+                "Please enter badge number to find asset detail"
+              );
+            }
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
   onRegister2DBarcodeListener() {
