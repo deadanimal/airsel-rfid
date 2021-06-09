@@ -15,6 +15,7 @@ import { WorkRequestPage } from "../work-request/work-request.page";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkRequestsService } from "src/app/shared/services/work-requests/work-requests.service";
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
+import { PlannerService } from "src/app/shared/services/planner/planner.service";
 
 @Component({
   selector: "app-work-request-list",
@@ -31,6 +32,7 @@ export class WorkRequestListPage implements OnInit {
   bBarcode: boolean = false;
   bRfid: boolean = false;
   badge_number = "";
+  alertRadioPlanner = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +45,8 @@ export class WorkRequestListPage implements OnInit {
     public modalController: ModalController,
     public notificationService: NotificationsService,
     private workrequestService: WorkRequestsService,
-    private assetService: AssetsService
+    private assetService: AssetsService,
+    private plannerService: PlannerService
   ) {}
 
   private L(...args: any[]) {
@@ -72,6 +75,26 @@ export class WorkRequestListPage implements OnInit {
     );
   }
 
+  getPlanner() {
+    this.plannerService.filter("status=ACTIVE").subscribe(
+      (res) => {
+        // console.log("planner = ", res);
+        res.forEach((obj, index) => {
+          let object = {
+            name: "radio" + index,
+            type: "radio",
+            label: obj.description,
+            value: obj.planner,
+          };
+          this.alertRadioPlanner.push(object);
+        });
+      },
+      (err) => {
+        console.error("err", err);
+      }
+    );
+  }
+
   addGetBadgeNumber(workReqData) {
     this.workrequests = [];
     workReqData.forEach((element) => {
@@ -91,6 +114,7 @@ export class WorkRequestListPage implements OnInit {
 
   ionViewDidEnter() {
     this.getWorkRequest();
+    this.getPlanner();
   }
 
   homePage(path: string) {
@@ -217,6 +241,75 @@ export class WorkRequestListPage implements OnInit {
     };
 
     this.router.navigate(["/technical/work-request"], navigationExtras);
+  }
+
+  async clickApprove(workrequest) {
+    if (this.alertRadioPlanner.length > 0) {
+      const alert = await this.alertController.create({
+        header: "Update Approval Profile",
+        inputs: this.alertRadioPlanner,
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {
+              console.log("Confirm Cancel");
+            },
+          },
+          {
+            text: "Ok",
+            handler: (data: string) => {
+              if (data) {
+                this.loadingController
+                  .create({
+                    message: "Please wait for a while...",
+                  })
+                  .then((loading) => {
+                    loading.present();
+                    this.submitApprovalProfile(workrequest, data, loading);
+                  });
+              } else {
+                this.presentAlert(
+                  "Error",
+                  "Please pick ONE approval profile to proceed."
+                );
+              }
+            },
+          },
+        ],
+      });
+
+      await alert.present();
+    }
+  }
+
+  submitApprovalProfile(workrequest, data, loading) {
+    let obj = {
+      id: workrequest.id,
+      work_request_id: workrequest.work_request_id,
+      approval_profile: data,
+    };
+
+    this.workrequestService.submit_approval_profile(obj).subscribe(
+      (res) => {
+        if (res) {
+          this.presentAlert(
+            "Success",
+            "Your work request have successfully approved."
+          );
+        }
+        loading.dismiss();
+      },
+      (err) => {
+        console.error("err", err);
+        this.presentAlert("Error", "Please try again.");
+        loading.dismiss();
+      },
+      () => {
+        this.getWorkRequest();
+      }
+    );
   }
 
   updateRfid(data) {
