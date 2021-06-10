@@ -141,7 +141,7 @@ class CustomUserViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         current_site = Site.objects.get_current()
 
         #domain = "127.0.0.1:8000"
-        domain = "http://airsel-rfid-api.pipe.my"
+        domain = "airsel-rfid-api.pipe.my"
 
         subject = 'Activate Your Account'
         message = render_to_string(f'{BASE_DIR}/templates/account/email/email_confirmation_message.html', {
