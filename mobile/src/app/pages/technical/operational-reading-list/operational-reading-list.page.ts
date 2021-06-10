@@ -296,7 +296,7 @@ export class OperationalReadingListPage implements OnInit {
                               (res) => {
                                 loading.dismiss();
 
-                                if (res.length > 0) {
+                                if (res.results.length > 0) {
                                   let navigationExtras: NavigationExtras = {
                                     state: {
                                       badge_no: data.badge_no,
@@ -455,7 +455,7 @@ export class OperationalReadingListPage implements OnInit {
                       (res) => {
                         loading.dismiss();
 
-                        if (res.length > 0) {
+                        if (res.results.length > 0) {
                           let navigationExtras: NavigationExtras = {
                             state: {
                               badge_no: this.scanValue,

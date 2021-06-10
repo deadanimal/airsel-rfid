@@ -1,4 +1,4 @@
-declare var broadcaster: any;
+// declare var broadcaster: any;
 
 import { Component, OnInit, NgZone, ElementRef } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
@@ -43,7 +43,7 @@ export class TabsPage implements OnInit {
   ngOnInit() {
     console.log("ngOnInit TabsPage");
 
-    broadcaster._debug = true;
+    // broadcaster._debug = true;
     // this.onRegister2DBarcodeListener();
     // this.onRegisterRFIDListener();
   }
@@ -55,63 +55,63 @@ export class TabsPage implements OnInit {
   }
 
   onRegister2DBarcodeListener() {
-    this.loadingController
-      .create({
-        message: "Please scan the QR code...",
-      })
-      .then((loading) => {
-        loading.present();
+    // this.loadingController
+    //   .create({
+    //     message: "Please scan the QR code...",
+    //   })
+    //   .then((loading) => {
+    //     loading.present();
 
-        console.log("[register onRegister2DBarcodeListener] ");
-        const ev = "com.scanner.broadcast";
-        var isGlobal = true;
+    //     console.log("[register onRegister2DBarcodeListener] ");
+    //     const ev = "com.scanner.broadcast";
+    //     var isGlobal = true;
 
-        var listener = (event) => {
-          console.log(JSON.stringify(event));
+    //     var listener = (event) => {
+    //       console.log(JSON.stringify(event));
 
-          if (event.SCAN_STATE == "success") {
-            this.ngZone.run(() => {
-              console.log("this.bBarcode = ", this.bBarcode);
-              if (this.bBarcode) {
-                loading.dismiss();
-                broadcaster.removeEventListener(ev, listener);
-                this.updateQrbarcode(event.data);
-              }
-            });
-          }
-        };
-        broadcaster.addEventListener(ev, isGlobal, listener);
-      });
+    //       if (event.SCAN_STATE == "success") {
+    //         this.ngZone.run(() => {
+    //           console.log("this.bBarcode = ", this.bBarcode);
+    //           if (this.bBarcode) {
+    //             loading.dismiss();
+    //             broadcaster.removeEventListener(ev, listener);
+    //             this.updateQrbarcode(event.data);
+    //           }
+    //         });
+    //       }
+    //     };
+    //     broadcaster.addEventListener(ev, isGlobal, listener);
+    //   });
   }
 
   onRegisterRFIDListener() {
-    this.loadingController
-      .create({
-        message: "Please scan the RFID tag...",
-      })
-      .then((loading) => {
-        loading.present();
+    // this.loadingController
+    //   .create({
+    //     message: "Please scan the RFID tag...",
+    //   })
+    //   .then((loading) => {
+    //     loading.present();
 
-        console.log("[register onRegisterRFIDListener] ");
-        const ev = "android.intent.action.scanner.RFID";
-        var isGlobal = true;
+    //     console.log("[register onRegisterRFIDListener] ");
+    //     const ev = "android.intent.action.scanner.RFID";
+    //     var isGlobal = true;
 
-        var listener = (event) => {
-          console.log(JSON.stringify(event));
+    //     var listener = (event) => {
+    //       console.log(JSON.stringify(event));
 
-          if (event.SCAN_STATE == "success") {
-            this.ngZone.run(() => {
-              console.log("this.bRfid = ", this.bRfid);
-              if (this.bRfid) {
-                loading.dismiss();
-                broadcaster.removeEventListener(ev, listener);
-                this.updateRfid(event.data);
-              }
-            });
-          }
-        };
-        broadcaster.addEventListener(ev, isGlobal, listener);
-      });
+    //       if (event.SCAN_STATE == "success") {
+    //         this.ngZone.run(() => {
+    //           console.log("this.bRfid = ", this.bRfid);
+    //           if (this.bRfid) {
+    //             loading.dismiss();
+    //             broadcaster.removeEventListener(ev, listener);
+    //             this.updateRfid(event.data);
+    //           }
+    //         });
+    //       }
+    //     };
+    //     broadcaster.addEventListener(ev, isGlobal, listener);
+    //   });
   }
 
   async scan() {
@@ -219,7 +219,7 @@ export class TabsPage implements OnInit {
                               (res) => {
                                 loading.dismiss();
 
-                                if (res.length > 0) {
+                                if (res.results.length > 0) {
                                   let navigationExtras: NavigationExtras = {
                                     state: {
                                       badge_no: data.badge_no,
@@ -377,7 +377,7 @@ export class TabsPage implements OnInit {
                       (res) => {
                         loading.dismiss();
 
-                        if (res.length > 0) {
+                        if (res.results.length > 0) {
                           let navigationExtras: NavigationExtras = {
                             state: {
                               badge_no: this.scanValue,

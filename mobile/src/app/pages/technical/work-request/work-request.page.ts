@@ -397,7 +397,7 @@ export class WorkRequestPage implements OnInit {
           (err) => {
             console.error("err", err);
             loading.dismiss();
-            this.alertWorkRequest("Error", "Please try again.", false);
+            this.alertWorkRequest("Error", err.error.error_details, false);
           }
         );
       });
