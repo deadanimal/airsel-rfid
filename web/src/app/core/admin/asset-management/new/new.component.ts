@@ -413,7 +413,8 @@ export class NewComponent implements OnInit {
           // updateformData.append('status', 'PR');
           // console.log('badgeFormatdata qweqwe = ', badgeFormatdata)
 
-          var skippedNo = badgeFormatdata.skipped_no
+          //var skippedNo = badgeFormatdata.skipped_no
+          var skippedNo = null;
           // console.log('skippedNo = ', skippedNo)
           let runNo = 1
           let firstSkippedNo: any
@@ -461,26 +462,26 @@ export class NewComponent implements OnInit {
             currentNo = firstSkippedNo
           } else {
             // firstSkippedNo = badgeFormatdata.latest_no
-            console.log("loop2");
+            // console.log("loop2");
 
-            currentNo = badgeFormatdata.latest_no
+            // currentNo = badgeFormatdata.latest_no
 
-            updateSkippedNo = {
-              latest_no: leftSkippedNo
-            }
+            // updateSkippedNo = {
+            //   latest_no: leftSkippedNo
+            // }
 
-            badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
-              (res) => {
-              },
-              (err) => {
-              }
-            )
+            // badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
+            //   (res) => {
+            //   },
+            //   (err) => {
+            //   }
+            // )
           }
 
-          let badgeNo = badgeFormatdata.short + '_' + currentNo.padStart(7, '0')
+          //let badgeNo = badgeFormatdata.short + '_' + currentNo.padStart(7, '0')
           updateformData = {
             status: task,
-            badge_no: badgeNo
+            badge_no: "ACT1001", 
           }
 
           // console.log('itemVal = ', itemVal)
