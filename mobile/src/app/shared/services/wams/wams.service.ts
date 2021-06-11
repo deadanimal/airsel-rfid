@@ -61,7 +61,7 @@ export class WamsService {
     };
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {
-        console.log("getAssetSyncOutbound", res);
+        console.log("getAsset", res);
       })
     );
   }

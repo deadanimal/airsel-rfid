@@ -51,7 +51,7 @@ export class OperationalReadingListPage implements OnInit {
     private operationalreadingService: OperationalReadingsService,
     private assetsService: AssetsService,
     private wamsService: WamsService
-  ) { }
+  ) {}
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -262,22 +262,81 @@ export class OperationalReadingListPage implements OnInit {
           text: "Search",
           handler: (data) => {
             if (data.badge_no) {
-              let navigationExtras: NavigationExtras = {
-                state: {
-                  badge_no: data.badge_no,
-                },
-              };
+              this.loadingController
+                .create({
+                  message: "Please wait...",
+                })
+                .then((loading) => {
+                  loading.present();
 
-              /// get data from wams
-              this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
-                (resBsdgeNo) => { },
-                (errBadgeNo) => { }
-              );
+                  this.assetsService
+                    .filter("badge_no=" + data.badge_no)
+                    .subscribe(
+                      (res) => {
+                        // if find, go to asset detail list
+                        if (res.length > 0) {
+                          loading.dismiss();
+                          let navigationExtras: NavigationExtras = {
+                            state: {
+                              badge_no: res[0].badge_no,
+                            },
+                          };
 
-              this.router.navigate(
-                ["/technical/operational-reading"],
-                navigationExtras
-              );
+                          this.router.navigate(
+                            ["/technical/operational-reading"],
+                            navigationExtras
+                          );
+                        }
+                        // else, find the asset in the wams to pump into PIPE's asset table
+                        else {
+                          // get data from wams
+                          this.wamsService
+                            .getAssetBadgeNo(data.badge_no)
+                            .subscribe(
+                              (res) => {
+                                loading.dismiss();
+
+                                if (res.results.length > 0) {
+                                  let navigationExtras: NavigationExtras = {
+                                    state: {
+                                      badge_no: data.badge_no,
+                                    },
+                                  };
+
+                                  this.router.navigate(
+                                    ["/technical/operational-reading"],
+                                    navigationExtras
+                                  );
+                                } else {
+                                  this.presentAlert(
+                                    "Error",
+                                    "Sorry, asset is not found in the database."
+                                  );
+                                }
+                              },
+                              (err) => {
+                                console.error("err", err);
+                                loading.dismiss();
+
+                                this.presentAlert(
+                                  "Error",
+                                  "Sorry, there is a technical problem going on."
+                                );
+                              }
+                            );
+                        }
+                      },
+                      (err) => {
+                        console.log("err assetlsService = ", err);
+                        loading.dismiss();
+
+                        this.presentAlert(
+                          "Error",
+                          "Sorry, there is a technical problem going on."
+                        );
+                      }
+                    );
+                });
             } else {
               this.presentAlert(
                 "Error",
@@ -311,34 +370,52 @@ export class OperationalReadingListPage implements OnInit {
       this.ngZone.run(() => {
         this.scanValue = data;
 
-        this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
-          (res) => {
-            if (res.length > 0) {
-              let navigationExtras: NavigationExtras = {
-                state: {
-                  badge_no: res[0].badge_no,
-                },
-              };
+        if (this.scanValue != "") {
+          this.loadingController
+            .create({
+              message: "Please wait...",
+            })
+            .then((loading) => {
+              loading.present();
 
-              /// get data from wams
-              this.wamsService.getAssetBadgeNo(res[0].badge_no).subscribe(
-                (resBsdgeNo) => { },
-                (errBadgeNo) => { },
-                () => {
-                  this.router.navigate(
-                    ["/technical/operational-reading"],
-                    navigationExtras
+              this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
+                (res) => {
+                  loading.dismiss();
+                  // if find, go to asset detail list
+                  if (res.length > 0) {
+                    let navigationExtras: NavigationExtras = {
+                      state: {
+                        badge_no: res[0].badge_no,
+                      },
+                    };
+
+                    this.router.navigate(
+                      ["/technical/operational-reading"],
+                      navigationExtras
+                    );
+                  }
+                  // else, suggest the user to use QR scanner OR search by badge number
+                  else {
+                    this.presentAlert(
+                      "Error",
+                      "The asset is not found in the database. Please try again by using QR scanner OR search by badge number."
+                    );
+                  }
+                },
+                (err) => {
+                  console.log("err assetlsService = ", err);
+                  loading.dismiss();
+
+                  this.presentAlert(
+                    "Error",
+                    "Sorry, there is a technical problem going on."
                   );
                 }
               );
-            } else {
-              this.presentAlert("Error", "Data not valid in database");
-            }
-          },
-          (err) => {
-            console.log("err assetlsService = ", err);
-          }
-        );
+            });
+        } else {
+          this.presentAlert("Error", "RFID is invalid. Please try again.");
+        }
       });
   }
 
@@ -348,25 +425,79 @@ export class OperationalReadingListPage implements OnInit {
         this.scanValue = data;
 
         if (this.scanValue != "") {
-          let navigationExtras: NavigationExtras = {
-            state: {
-              badge_no: this.scanValue,
-            },
-          };
+          this.loadingController
+            .create({
+              message: "Please wait...",
+            })
+            .then((loading) => {
+              loading.present();
 
-          /// get data from wams
-          this.wamsService.getAssetBadgeNo(this.scanValue).subscribe(
-            (resBsdgeNo) => { },
-            (errBadgeNo) => { },
-            () => {
-              this.router.navigate(
-                ["/technical/operational-reading"],
-                navigationExtras
+              this.assetsService.filter("badge_no=" + this.scanValue).subscribe(
+                (res) => {
+                  // if find, go to asset detail list
+                  if (res.length > 0) {
+                    loading.dismiss();
+                    let navigationExtras: NavigationExtras = {
+                      state: {
+                        badge_no: res[0].badge_no,
+                      },
+                    };
+
+                    this.router.navigate(
+                      ["/technical/operational-reading"],
+                      navigationExtras
+                    );
+                  }
+                  // else, find the asset in the wams to pump into PIPE's asset table
+                  else {
+                    // get data from wams
+                    this.wamsService.getAssetBadgeNo(this.scanValue).subscribe(
+                      (res) => {
+                        loading.dismiss();
+
+                        if (res.results.length > 0) {
+                          let navigationExtras: NavigationExtras = {
+                            state: {
+                              badge_no: this.scanValue,
+                            },
+                          };
+
+                          this.router.navigate(
+                            ["/technical/operational-reading"],
+                            navigationExtras
+                          );
+                        } else {
+                          this.presentAlert(
+                            "Error",
+                            "Sorry, asset is not found in the database."
+                          );
+                        }
+                      },
+                      (err) => {
+                        console.error("err", err);
+                        loading.dismiss();
+
+                        this.presentAlert(
+                          "Error",
+                          "Sorry, there is a technical problem going on."
+                        );
+                      }
+                    );
+                  }
+                },
+                (err) => {
+                  console.log("err assetlsService = ", err);
+                  loading.dismiss();
+
+                  this.presentAlert(
+                    "Error",
+                    "Sorry, there is a technical problem going on."
+                  );
+                }
               );
-            }
-          );
+            });
         } else {
-          this.presentAlert("Error", "Data not valid in database");
+          this.presentAlert("Error", "QR code is invalid. Please try again.");
         }
       });
   }

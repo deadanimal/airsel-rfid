@@ -430,39 +430,39 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         request.data['creation_datetime'] = datetime.now(pytz.utc).replace(microsecond=0).isoformat()
 
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-
         data = {
-            'description': serializer.data['description'], 
-            'long_description': serializer.data['long_description'],
-            'required_by_date': serializer.data['required_by_date'], 
-            'approval_profile': serializer.data['approval_profile'], 
-            'bo': serializer.data['bo'], 
-            'creation_datetime': serializer.data['creation_datetime'], 
-            'creation_user': serializer.data['creation_user'], 
-            'downtime_start': serializer.data['downtime_start'], 
-            'planner': serializer.data['planner'], 
-            'work_class': serializer.data['work_class'], 
-            'work_category': serializer.data['work_category'], 
-            'work_priority': serializer.data['work_priority'], 
-            'requestor': serializer.data['requestor'], 
-            'owning_access_group': serializer.data['owning_access_group'], 
-            'first_name': serializer.data['first_name'], 
-            'last_name': serializer.data['last_name'], 
-            'primary_phone': serializer.data['primary_phone'], 
-            'mobile_phone': serializer.data['mobile_phone'], 
-            'home_phone': serializer.data['home_phone'], 
-            'node_id': serializer.data['node_id'], 
-            'asset_id': serializer.data['asset_id']
+            'description': request.data['description'], 
+            'long_description': request.data['long_description'],
+            'required_by_date': request.data['required_by_date'], 
+            'approval_profile': request.data['approval_profile'], 
+            'bo': request.data['bo'], 
+            'creation_datetime': request.data['creation_datetime'], 
+            'creation_user': request.data['creation_user'], 
+            'downtime_start': request.data['downtime_start'], 
+            'planner': request.data['planner'], 
+            'work_class': request.data['work_class'], 
+            'work_category': request.data['work_category'], 
+            'work_priority': request.data['work_priority'], 
+            'requestor': request.data['requestor'], 
+            'owning_access_group': request.data['owning_access_group'], 
+            'first_name': request.data['first_name'], 
+            'last_name': request.data['last_name'], 
+            'primary_phone': request.data['primary_phone'], 
+            'mobile_phone': request.data['mobile_phone'], 
+            'home_phone': request.data['home_phone'], 
+            'node_id': request.data['node_id'], 
+            'asset_id': request.data['asset_id']
         }
 
         middleware_call = get_inboundworkrequest('create', data)
         print('middleware_call', middleware_call)
         
         if middleware_call['status'] == 'SUCCESS':
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+
             wr_update = WorkRequest.objects.get(id=serializer.data['id'])
             wr_update.work_request_id = middleware_call['work_request_id']
             wr_update.work_request_status = middleware_call['status']
@@ -472,8 +472,8 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
             return Response(wr_response[0], status=status.HTTP_201_CREATED, headers=headers)
 
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        elif middleware_call['status'] == 'ERROR':
+            return Response({'error_details': middleware_call['error_details']}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['POST'], detail=False)
     def submit_approval_profile(self, request, *args, **kwargs):
@@ -504,8 +504,8 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
             return Response(wr_response[0], status=status.HTTP_201_CREATED)
 
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        elif middleware_call['status'] == 'ERROR':
+            return Response({'error_details': middleware_call['error_details']}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['GET'], detail=False)
     def extended(self, request, *args, **kwargs):
