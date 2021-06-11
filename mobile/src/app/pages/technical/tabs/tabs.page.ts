@@ -30,7 +30,7 @@ export class TabsPage implements OnInit {
     private router: Router,
     private assetsService: AssetsService,
     private wamsService: WamsService
-  ) {}
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");

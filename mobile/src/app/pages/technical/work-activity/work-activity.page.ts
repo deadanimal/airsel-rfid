@@ -25,11 +25,7 @@ import { WorkActivitiesService } from "src/app/shared/services/work-activities/w
 import { WorkOrderActivityCompletionAssLocAssListService } from "src/app/shared/services/work-order-activity-completion-AssLocAssList/work-order-activity-completion-AssLocAssList.service";
 import { WorkOrderActivityCompletionService } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
-<<<<<<< HEAD
-import { AssetsService } from 'src/app/shared/services/assets/assets.service';
 import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
-=======
->>>>>>> 0a97272aee0a056800ac281ab05d1ff4ae22043c
 
 @Component({
   selector: "app-work-activity",
@@ -271,7 +267,6 @@ export class WorkActivityPage implements OnInit {
     this.servicehistories.splice(index, 1);
   }
 
-<<<<<<< HEAD
 
   getWOrkActivityData(getdata) {
     let woacalalsh = []
@@ -310,22 +305,6 @@ export class WorkActivityPage implements OnInit {
           )
         });
       }, 2000);
-=======
-  getWOrkActivityData(getdata) {
-    getdata.forEach((element) => {
-      let woacalsl = element.toString();
-      console.log(woacalsl);
-      this.workOrderActivityCompletionAssLocAssListService
-        .getOne(woacalsl)
-        .subscribe(
-          (Res) => {
-            this.workactivityData.push(Res);
-          },
-          (Err) => {
-            console.error("err", Err);
-          }
-        );
->>>>>>> 0a97272aee0a056800ac281ab05d1ff4ae22043c
     });
   }
 
@@ -376,7 +355,7 @@ export class WorkActivityPage implements OnInit {
 
           this.presentAlert("Success", "Successfully update data.");
         },
-        (err) => {}
+        (err) => { }
       );
   }
 
