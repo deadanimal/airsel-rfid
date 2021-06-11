@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
       username: new FormControl(
         // "haziq_y",
         // "fadhillah",
-        "",
+        // "",
         Validators.compose([
           Validators.required,
           // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
@@ -252,8 +252,8 @@ export class LoginPage implements OnInit {
     // ('SK', 'Store Keeper'),
     // ('SS', 'Store Supervisor'),
     // ('TC', 'Technical Crew')
-
-    if (userType === "TC") {
+    console.log("userType = ", userType)
+    if (userType === "TC" || userType === "PL") {
       // technical
       this.router.navigate(["/technical/tabs/tab1"]);
     } else if (userType === "OP") {

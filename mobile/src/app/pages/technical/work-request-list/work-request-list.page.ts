@@ -47,7 +47,7 @@ export class WorkRequestListPage implements OnInit {
     private workrequestService: WorkRequestsService,
     private assetService: AssetsService,
     private plannerService: PlannerService
-  ) {}
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");

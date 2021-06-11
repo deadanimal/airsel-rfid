@@ -333,6 +333,9 @@ export class AssetRegistrationPage implements OnInit {
     { id: 'Component', name: 'Component' },
   ];
 
+  //asset Or Component
+  assetOrComponent = ''
+
   // Forms
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -886,9 +889,14 @@ export class AssetRegistrationPage implements OnInit {
 
     this.primarycategories.forEach(element => {
       if (element.asset_type_code == event.value.asset_type_code) {
-        console.log("element = ", element);
+        console.log("element = ---", element);
         this.assetAttrData = element.asset_bussiness_object
         this.assetCategoryData = element.asset_category
+        if (element.asset_category == 'W1-TrackedGeneralAsset' || element.asset_category == 'W1-IOSvcGeneralAsset') {
+          this.assetOrComponent = 'Asset'
+        } else { // W1-IOSvcGeneralComponent , W1-TrackedGeneralComponent
+          this.assetOrComponent = 'Component'
+        }
       }
     });
     this.assetAttributeColumnService.filter(field).subscribe(

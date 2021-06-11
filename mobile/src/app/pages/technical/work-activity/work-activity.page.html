@@ -44,13 +44,14 @@
 
         <ion-item>
           <ion-label position="stacked">Parent Location:</ion-label>
-          <ion-input type="text" [value]="workactivity.act_type_cd" readonly></ion-input>
+          <!-- <ion-input type="text" [value]="workactivity.asset_loc_sync" readonly></ion-input> -->
+          <ion-textarea rows="2" type="text" [value]="workactivity.asset_loc_sync" readonly></ion-textarea>
         </ion-item>
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Asset ID:</ion-label>
           <ion-input type="text" [value]="workactivity.asset_id_1" readonly></ion-input>
-        </ion-item>
+        </ion-item> -->
 
       </form>
     </ion-list>
@@ -63,12 +64,13 @@
           </ion-fab-button>
         </ion-fab>
         <!-- <ion-card-title>Asset ID: {{ workActData.ASSET_ID }}</ion-card-title> -->
-        <ion-card-title>Asset ID<br />{{ workActData.asset_id }}</ion-card-title>
+        <ion-card-title>Badge No<br />{{ workActData.badge_number }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <!-- <p>Asset Type: {{ workActData.asset_type }}</p> -->
         <p>Asset ID: {{ workActData.asset_id }}</p>
-        <p>Node ID: {{ workActData.node_id }}</p>
+        <p>Location: {{ workActData.location_descr }}</p>
+        <p>Asset Description : {{ workActData.description }}</p>
       </ion-card-content>
     </ion-card>
 

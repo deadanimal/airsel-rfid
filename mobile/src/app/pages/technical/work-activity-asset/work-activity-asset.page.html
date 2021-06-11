@@ -43,6 +43,18 @@
       </form>
     </ion-list>
 
+    <ion-list>
+
+      <ion-card-header>Required Service History
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngFor="let woacalal of workOrderActivityCompletionAssLocAssLisDataReq">
+          <small>*
+            {{ woacalal }}</small>
+        </div>
+      </ion-card-content>
+    </ion-list>
+
     <!-- <div *ngIf="workactivityassetFormGroup.value.badge_number"> -->
     <div>
       <ion-item lines="none">
@@ -51,114 +63,36 @@
       </ion-item>
 
       <!-- <ion-card> -->
-      <ion-card *ngFor="let woacalal of workOrderActivityCompletionAssLocAssLisData">
-        <ion-card-header>
-          <ion-fab horizontal="end">
-            <ion-fab-button size="small" color="primary" (click)="clickEdit(workactivityasset)">
+      <div *ngFor="let woacalal of workOrderActivityCompletionAssLocAssLisData">
+        <ion-card>
+          <ion-card-header>
+            <ion-fab horizontal="end">
+              <!-- <ion-fab-button size="small" color="primary" (click)="clickEdit(workactivityasset)">
               <ion-icon name="create"></ion-icon>
-            </ion-fab-button>
-            <!-- <ion-fab-button size="small" color="danger" (click)="clickRemove(i)">
+            </ion-fab-button> -->
+              <!-- <ion-fab-button size="small" color="danger" (click)="clickRemove(i)">
               <ion-icon name="trash"></ion-icon>
             </ion-fab-button> -->
-          </ion-fab>
-          <ion-card-title>Service History Type</ion-card-title>
-          <ion-card-subtitle>{{ woacalal.service_history_type }}</ion-card-subtitle>
-        </ion-card-header>
-        <!-- <ion-card-content>
-          <p>Start Date/Time: {{ workactivityasset.start_date_time | date }}</p>
-          <p>End Date/Time: {{ workactivityasset.end_date_time | date }}</p>
-          <p>Downtime Reason</p>
-          <p>{{ workactivityasset.downtime_reason }}</p>
-        </ion-card-content> -->
-      </ion-card>
-
-      <!-- <ion-card *ngIf="workactivityasset.service_history_type_f, let i = index">
-        <ion-card-header>
-          <ion-fab horizontal="end">
-            <ion-fab-button size="small" color="primary" (click)="clickEdit(workactivityasset)">
-              <ion-icon name="create"></ion-icon>
-            </ion-fab-button>
-            <ion-fab-button size="small" color="danger" (click)="clickRemove(i)">
-              <ion-icon name="trash"></ion-icon>
-            </ion-fab-button>
-          </ion-fab>
-          <ion-card-title>Service History Type</ion-card-title>
-          <ion-card-subtitle>{{ workactivityasset.service_history_type_f }}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Failure Type: {{ workactivityasset.failure_type}}</p>
-          <p>Failure Mode: {{ workactivityasset.failure_mode }}</p>
-          <p>Failure Repair: {{ workactivityasset.failure_repair }}</p>
-          <p>Failure Component: {{ workactivityasset.failure_component }}</p>
-          <p>Failure Root Cause:</p>
-          <p>{{ workactivityasset.failure_root_cause }}</p>
-        </ion-card-content>
-      </ion-card> -->
-
-      <!-- <ion-card *ngIf="workactivityasset.service_history_type_pm, let i = index">
-        <ion-card-header>
-          <ion-fab horizontal="end">
-            <ion-fab-button size="small" color="primary" (click)="clickEdit(workactivityasset)">
-              <ion-icon name="create"></ion-icon>
-            </ion-fab-button>
-            <ion-fab-button size="small" color="danger" (click)="clickRemove(i)">
-              <ion-icon name="trash"></ion-icon>
-            </ion-fab-button>
-          </ion-fab>
-          <ion-card-title>Service History Type</ion-card-title>
-          <ion-card-subtitle>{{ workactivityasset.service_history_type_pm }}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content *ngIf="workactivityasset.asset_type == 'Pump'">
-          <p>Non Drive Bearing Temperature: {{ workactivityasset.answer_1}}</p>
-          <p>Drive End Bearing Temperature: {{ workactivityasset.answer_2 }}</p>
-          <p>Mechanical Seal / Packing: {{ workactivityasset.answer_3 }}</p>
-        </ion-card-content>
-        <ion-card-content *ngIf="workactivityasset.asset_type == 'Motor'">
-          <p>Terminal Box: {{ workactivityasset.answer_1}}</p>
-          <p>Slip Ring & Carbon Brush: {{ workactivityasset.answer_2 }}</p>
-          <p>Armature: {{ workactivityasset.answer_3 }}</p>
-        </ion-card-content>
-      </ion-card> -->
+              <ion-icon color="secondary" name="close-circle"></ion-icon>
+            </ion-fab>
+            <ion-card-title>Service History Type
+              <!-- <ion-icon color="danger" name="checkmark-circle"></ion-icon> -->
+              <!-- <ion-icon color="secondary" name="close-circle"></ion-icon> -->
+            </ion-card-title>
+            <ion-card-subtitle>{{ woacalal.service_history_type }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </div>
     </div>
 
-    <!-- <ion-card *ngFor="let servicehistory of servicehistories; let i = index">
-      <ion-card-header>
-        <ion-fab horizontal="end">
-          <ion-fab-button
-            size="small"
-            color="primary"
-            (click)="clickEdit(servicehistory)"
-          >
-            <ion-icon name="create"></ion-icon>
-          </ion-fab-button>
-          <ion-fab-button size="small" color="danger" (click)="clickRemove(i)">
-            <ion-icon name="trash"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
-        <ion-card-title>{{ servicehistory.type }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content *ngIf="servicehistory.type == 'Downtime'">
-        <p>Start Date/Time: {{ servicehistory.start | date }}</p>
-        <p>End Date/Time: {{ servicehistory.end | date }}</p>
-        <p>Downtime Reason</p>
-        <p>{{ servicehistory.reason }}</p>
-      </ion-card-content>
-      <ion-card-content *ngIf="servicehistory.type == 'Preventive Maintenance'">
-        <p>Terminal Box</p>
-        <p>{{ servicehistory.terminal_box }}</p>
-        <p>Slip Ring & Carbon Brush</p>
-        <p>{{ servicehistory.slip_ring }}</p>
-        <p>Armature</p>
-        <p>{{ servicehistory.armature }}</p>
-      </ion-card-content>
-    </ion-card> -->
-
     <div class="ion-text-center ion-padding">
-      <small>*Note: Fulfill all service history before submitting the work
+      <small>*Note: Fulfill all <b>REQUIRED</b> service history before submitting the work
         activity.</small><br />
       <ion-button color="light" (click)="clickBack()">Back</ion-button>
-      <ion-button *ngIf="workOrderActivityCompletionAssLocAssLis != []" color="primary" (click)="submit()">Submit
+      <ion-button *ngIf="workOrderActivityCompletionAssLocAssLisData != []" color="primary" (click)="submit()">Submit
       </ion-button>
+      <!-- <ion-button *ngIf="workOrderActivityCompletionAssLocAssLis != []" color="primary" (click)="submit()">Submit
+      </ion-button> -->
     </div>
   </div>
 </ion-content>

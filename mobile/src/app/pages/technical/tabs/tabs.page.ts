@@ -191,28 +191,28 @@ export class TabsPage implements OnInit {
                 },
               };
 
-              // this.loadingController
-              //   .create({
-              //     message: "Please wait ...",
-              //     duration: 1000
-              //   })
-              //   .then((loading) => {
+              this.loadingController
+                .create({
+                  message: "Please wait ...",
+                  duration: 1000
+                })
+                .then((loading) => {
 
-              //     loading.present();
-              //     /// get data from wams
-              this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
-                (resBsdgeNo) => { },
-                (errBadgeNo) => { },
-                () => {
-                  //         loading.dismiss()
-                  //         // setTimeout(function () {
-                  //         this.router.navigate(
-                  //           ["/technical/asset-detail-list"],
-                  //           navigationExtras
-                  //         );
-                }
-              );
-              //   });
+                  loading.present();
+                  /// get data from wams
+                  this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
+                    (resBsdgeNo) => { },
+                    (errBadgeNo) => { },
+                    () => {
+                      loading.dismiss()
+                      // setTimeout(function () {
+                      this.router.navigate(
+                        ["/technical/asset-detail-list"],
+                        navigationExtras
+                      );
+                    }
+                  );
+                });
 
               this.router.navigate(
                 ["/technical/asset-detail-list"],
