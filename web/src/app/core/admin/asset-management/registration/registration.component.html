@@ -83,7 +83,7 @@
             <div class="col-auto text-right">
               <button class="btn btn-default btn-sm">
                 <!-- <a href="../../../../../assets/file/Asset Registration Blank Template.xlsx" style="color: white;" -->
-                <a href="../../../../../assets/file/AssetRegTemp4.xlsx" style="color: white;"
+                <a href="../../../../../assets/file/blank-template.xlsx" style="color: white;"
                   download>
                   Download
                 </a>
@@ -2594,12 +2594,14 @@
               <div class="form-group">
                 <label class="form-control-label">Service Area<span class="mandatory">*</span></label>
                 <!-- <input type="text" formControlName="service_area" class="form-control form-control-sm" /> -->
-                <ng-select [items]="serviceArea" bindLabel="Name" autofocus bindValue="value"
+                <ng-select [items]="serviceArea" bindLabel="Name" bindValue="value"
                   formControlName="service_area">
                 </ng-select>
                 <mat-hint
                   *ngIf="firstFormGroup.controls['service_area'].hasError('required') && firstFormGroup.controls['service_area'].touched && firstFormGroup.controls['service_area'].invalid "
-                  class="validation_messages"><small>This field is required</small></mat-hint>
+                  class="validation_messages"><small>This field is required</small>
+                </mat-hint>
+        
               </div>
             </div>
             <div class="col-md-6">
@@ -2620,7 +2622,7 @@
                 <!-- <input type="text" formControlName="location_asset_maintenance_manager"
                   class="form-control form-control-sm" /> -->
 
-                <ng-select [items]="maintenanceManager" bindLabel="description" autofocus
+                <ng-select [items]="maintenanceManager" bindLabel="description"
                   bindValue="maintenance_manager" formControlName="location_asset_maintenance_manager">
                 </ng-select>
               </div>
@@ -2630,7 +2632,7 @@
                 <label class="form-control-label">Maintenance Planner<span class="mandatory">*</span></label>
                 <!-- <input type="text" formControlName="maintenance_planner" class="form-control form-control-sm" /> -->
 
-                <ng-select [items]="maintenanceManager" bindLabel="description" autofocus
+                <ng-select [items]="maintenanceManager" bindLabel="description"
                   bindValue="maintenance_manager" formControlName="maintenance_planner">
                 </ng-select>
 
@@ -3229,7 +3231,7 @@
                 <label class="form-control-label">Vehicle Insurance Vendor</label>
                 <!-- <input type="text" formControlName="vehicle_insurance_vendor" class="form-control form-control-sm" /> -->
 
-                <select class="form-control custom-select form-control-sm custom-select-sm" id="manufacturer"
+                <select class="form-control custom-select form-control-sm custom-select-sm"
                   formControlName="vehicle_insurance_vendor">
                   <option value="">Please select</option>
                   <option *ngFor="let vehicleInsuranceVendor of vehicleInsuranceVendor"
@@ -3292,7 +3294,7 @@
                 <!-- <input type="text" formControlName="vehicle_insurance_policy_type"
                   class="form-control form-control-sm" /> -->
 
-                <select class="form-control custom-select form-control-sm custom-select-sm" id="manufacturer"
+                <select class="form-control custom-select form-control-sm custom-select-sm"
                   formControlName="vehicle_insurance_policy_type">
                   <option value="">Please select</option>
                   <option *ngFor="let vehicleInsurancePolicyType of vehicleInsurancePolicyType"
@@ -3331,7 +3333,7 @@
                 <label class="form-control-label">Vehicle Owner Status</label>
                 <!-- <input type="text" formControlName="vehicle_owner_status" class="form-control form-control-sm" /> -->
 
-                <select class="form-control custom-select form-control-sm custom-select-sm" id="manufacturer"
+                <select class="form-control custom-select form-control-sm custom-select-sm" 
                   formControlName="vehicle_owner_status">
                   <option value="">Please select</option>
                   <option *ngFor="let vehicle_owner_status of vehicle_owner_status"
@@ -3414,7 +3416,7 @@
                 <label class="form-control-label">Vehicle Registration Owner</label>
                 <!-- <input type="text" formControlName="vehicle_registration_owner" class="form-control form-control-sm" /> -->
 
-                <select class="form-control custom-select form-control-sm custom-select-sm" id="manufacturer"
+                <select class="form-control custom-select form-control-sm custom-select-sm" 
                   formControlName="vehicle_registration_owner">
                   <option value="">Please select</option>
                   <option *ngFor="let vehicle_registration_owner of vehicle_registration_owner"

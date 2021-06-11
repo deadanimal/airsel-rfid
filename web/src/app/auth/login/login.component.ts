@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
           (res) => {
             console.log("user status", res.is_active);
             if (res.status == true) {
-              this.router.navigate(['/planner/dashboard']);
+              this.router.navigate(['/ams/dashboard']);
             } else {
               swal.fire({
                 title: 'Sorry',
