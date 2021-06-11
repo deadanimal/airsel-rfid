@@ -375,7 +375,6 @@ export class WorkRequestPage implements OnInit {
         new Date(this.workrequestFormGroup.value.required_by_date),
         "yyyy-MM-dd"
       ),
-      // maybe kena buat convert downtime_start dari UTC 8 kepada UTC 0
     });
     console.log("workrequestFormGroup = ", this.workrequestFormGroup.value);
 
