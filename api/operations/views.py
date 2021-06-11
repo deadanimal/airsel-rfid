@@ -10,6 +10,8 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import viewsets, status
 from rest_framework_extensions.mixins import NestedViewSetMixin
 
+from core.utils import convert_gmt8_to_utc0
+
 from datetime import datetime
 import json
 import pytz
@@ -429,6 +431,7 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     def create(self, request):
 
         request.data['creation_datetime'] = datetime.now(pytz.utc).replace(microsecond=0).isoformat()
+        request.data['downtime_start'] = convert_gmt8_to_utc0(request.data['downtime_start'])
 
         data = {
             'description': request.data['description'], 
@@ -457,7 +460,7 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         middleware_call = get_inboundworkrequest('create', data)
         print('middleware_call', middleware_call)
         
-        if middleware_call['status'] == 'SUCCESS':
+        if middleware_call['status'] == 'CREATED':
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
