@@ -1,4 +1,4 @@
-// declare var broadcaster: any;
+declare var broadcaster: any;
 
 import { Component, OnInit, NgZone } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
@@ -47,14 +47,9 @@ export class WorkRequestListPage implements OnInit {
     public notificationService: NotificationsService,
     private workrequestService: WorkRequestsService,
     private assetService: AssetsService,
-<<<<<<< HEAD
-    private plannerService: PlannerService
-  ) { }
-=======
     private plannerService: PlannerService,
     private wamsService: WamsService
-  ) {}
->>>>>>> 0a97272aee0a056800ac281ab05d1ff4ae22043c
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -65,7 +60,7 @@ export class WorkRequestListPage implements OnInit {
   }
 
   ngOnInit() {
-    // broadcaster._debug = true;
+    broadcaster._debug = true;
     // this.onRegister2DBarcodeListener();
     // this.onRegisterRFIDListener();
   }
@@ -526,64 +521,64 @@ export class WorkRequestListPage implements OnInit {
   }
 
   onRegister2DBarcodeListener() {
-    // this.loadingController
-    //   .create({
-    //     message: "Please scan the QR code...",
-    //   })
-    //   .then((loading) => {
-    //     loading.present();
+    this.loadingController
+      .create({
+        message: "Please scan the QR code...",
+      })
+      .then((loading) => {
+        loading.present();
 
-    //     console.log("[register onRegister2DBarcodeListener] ");
-    //     const ev = "com.scanner.broadcast";
-    //     var isGlobal = true;
+        console.log("[register onRegister2DBarcodeListener] ");
+        const ev = "com.scanner.broadcast";
+        var isGlobal = true;
 
-    //     var listener = (event) => {
-    //       console.log(JSON.stringify(event));
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
 
-    //       if (event.SCAN_STATE == "success") {
-    //         this.ngZone.run(() => {
-    //           console.log("this.bBarcode = ", this.bBarcode);
-    //           if (this.bBarcode) {
-    //             loading.dismiss();
-    //             broadcaster.removeEventListener(ev, listener);
-    //             this.updateQrbarcode(event.data);
-    //           }
-    //         });
-    //       }
-    //     };
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bBarcode = ", this.bBarcode);
+              if (this.bBarcode) {
+                loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
+                this.updateQrbarcode(event.data);
+              }
+            });
+          }
+        };
 
-    //     broadcaster.addEventListener(ev, isGlobal, listener);
-    //   });
+        broadcaster.addEventListener(ev, isGlobal, listener);
+      });
   }
 
   onRegisterRFIDListener() {
-    // this.loadingController
-    //   .create({
-    //     message: "Please scan the RFID tag...",
-    //   })
-    //   .then((loading) => {
-    //     loading.present();
+    this.loadingController
+      .create({
+        message: "Please scan the RFID tag...",
+      })
+      .then((loading) => {
+        loading.present();
 
-    //     console.log("[register onRegisterRFIDListener] ");
-    //     const ev = "android.intent.action.scanner.RFID";
-    //     var isGlobal = true;
+        console.log("[register onRegisterRFIDListener] ");
+        const ev = "android.intent.action.scanner.RFID";
+        var isGlobal = true;
 
-    //     var listener = (event) => {
-    //       console.log(JSON.stringify(event));
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
 
-    //       if (event.SCAN_STATE == "success") {
-    //         this.ngZone.run(() => {
-    //           console.log("this.bRfid = ", this.bRfid);
-    //           if (this.bRfid) {
-    //             loading.dismiss();
-    //             broadcaster.removeEventListener(ev, listener);
-    //             this.updateRfid(event.data);
-    //           }
-    //         });
-    //       }
-    //     };
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bRfid = ", this.bRfid);
+              if (this.bRfid) {
+                loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
+                this.updateRfid(event.data);
+              }
+            });
+          }
+        };
 
-    //     broadcaster.addEventListener(ev, isGlobal, listener);
-    //   });
+        broadcaster.addEventListener(ev, isGlobal, listener);
+      });
   }
 }
