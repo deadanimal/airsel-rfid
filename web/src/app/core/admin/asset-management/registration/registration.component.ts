@@ -1121,7 +1121,7 @@ export class RegistrationComponent implements OnInit {
     // document.getElementsByClassName("dz-preview-single")[0].innerHTML = "";
 
     this.getAssetPrimaryCategory()
-    this.getExistingParent()
+    //this.getExistingParent()
     this.getAssetAttributePredefine()
     this.getMaintenanceManager()
     this.getCostCenter();
@@ -2136,6 +2136,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   changeStatus(task) {
+    console.log("goes here");
     let resData: any
     // console.log('this.task = ', task)
     let no = 0
