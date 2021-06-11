@@ -49,11 +49,11 @@ import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
   declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
   providers: [
     NgxSpinnerService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpTokenInterceptor,
-      multi: true,
-    },
+    //{
+    //  provide: HTTP_INTERCEPTORS,
+    //  useClass: HttpTokenInterceptor,
+    //  multi: true,
+    //},
   ],
   bootstrap: [AppComponent],
 })

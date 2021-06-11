@@ -129,7 +129,13 @@ export class NavbarComponent implements OnInit {
       cancelButtonClass: 'btn btn-secondary'
     }).then((result) => {
       if (result.value) {
+
         this.router.navigate(['/auth/login']);
+
+        // to do
+        // destroy token (jwtService) on logout
+        // this.accessToken = this.jwtService.getToken("accessToken");
+        // then navigate to login 
       }
     });
   }
