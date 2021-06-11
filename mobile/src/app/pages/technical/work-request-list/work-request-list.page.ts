@@ -47,9 +47,14 @@ export class WorkRequestListPage implements OnInit {
     public notificationService: NotificationsService,
     private workrequestService: WorkRequestsService,
     private assetService: AssetsService,
+<<<<<<< HEAD
+    private plannerService: PlannerService
+  ) { }
+=======
     private plannerService: PlannerService,
     private wamsService: WamsService
   ) {}
+>>>>>>> 0a97272aee0a056800ac281ab05d1ff4ae22043c
 
   private L(...args: any[]) {
     let v = args.join(" ");

@@ -202,13 +202,13 @@ export class AssetDetailPage implements OnInit {
 
         console.log("this.asset_detail ooooo = ", this.asset_detail)
         // console.log("this.asset_detail asset_id = ", this.asset_detail.asset_type)
-        let asset_type = "asset_type=" + this.asset_detail['asset_type']
+        let asset_type = "asset_type_code=" + this.asset_detail['asset_type']
         this.assetAttributeId = this.asset_detail['asset_attributes']
         console.log("this.assetAttributeId----", this.assetAttributeId)
         this.assetTypesService.filter(asset_type).subscribe(
           (assTypeRes) => {
-            // console.log("assTypeRes", assTypeRes[0])
-            // console.log("assTypeRes", assTypeRes[0]['asset_type_description'])
+            console.log("assTypeRes", assTypeRes)
+            console.log("assTypeRes", assTypeRes[0]['asset_type_description'])
             let asset_typedesc = "asset_type_id=" + assTypeRes[0]['asset_type_description']
             // console.log(asset_typedesc)
             this.assetAttributeColumnService.filter(asset_typedesc).subscribe(
@@ -255,9 +255,9 @@ export class AssetDetailPage implements OnInit {
   assetAttrCollumn: any = []
   getAssAttrColumnData(assAttCol) {
     let arraytype = []
-    console.log("assetAttributedatas == ", this.assetAttributedatas)
+    console.log("assetAttributedatas =>>= ", this.assetAttributedatas)
     this.assetAttributedatas.forEach(elementqq => {
-      arraytype.push(elementqq.field_name)
+      arraytype.push(elementqq.characteristic_type_name)
     });
 
     console.log("arraytype = ", arraytype)
@@ -322,6 +322,8 @@ export class AssetDetailPage implements OnInit {
       this.assetAttributedatas.push(assAttColTemp)
     }
     if (assAttCol['installation'] == true && arraytype.indexOf('installation') == -1) {
+      console.log("assAttCol['installation']  = ", assAttCol['installation'])
+      console.log("arraytype.indexOf('installation')  = ", arraytype.indexOf('installation'))
       let assAttColTemp = []
       assAttColTemp['id'] = ''
       assAttColTemp['action_type'] = ''
@@ -1351,7 +1353,7 @@ export class AssetDetailPage implements OnInit {
         if (characteristic_type_list.indexOf(row.characteristic_type) !== -1) {
           console.log("ssss")
           element.characteristic_value = value;
-          updateformData['characteristic_value'] = value
+          // updateformData['characteristic_value'] = value
         } else {
           console.log("ddddd")
           element.adhoc_value = value;

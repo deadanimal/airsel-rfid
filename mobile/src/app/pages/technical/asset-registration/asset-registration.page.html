@@ -95,10 +95,12 @@
             <div class="row">
               <ion-item>
                 <ion-label position="stacked">Asset or Component Type</ion-label>
-                <ion-select placeholder="Please select" formControlName="asset_or_component_type">
+                <ion-input type="text" formControlName="asset_or_component_type" [value]="assetOrComponent">
+                </ion-input>
+                <!-- <ion-select placeholder="Please select" formControlName="asset_or_component_type">
                   <ion-select-option *ngFor="let assComp of assetOrCompList" [value]="assComp.id">{{ assComp.name }}
                   </ion-select-option>
-                </ion-select>
+                </ion-select> -->
                 <!-- <small class="validation_messages"
                   >{{ validation_messages.type_asset }}</small
                 > -->

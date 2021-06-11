@@ -25,6 +25,11 @@ import { WorkActivitiesService } from "src/app/shared/services/work-activities/w
 import { WorkOrderActivityCompletionAssLocAssListService } from "src/app/shared/services/work-order-activity-completion-AssLocAssList/work-order-activity-completion-AssLocAssList.service";
 import { WorkOrderActivityCompletionService } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
+<<<<<<< HEAD
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
+import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
+=======
+>>>>>>> 0a97272aee0a056800ac281ab05d1ff4ae22043c
 
 @Component({
   selector: "app-work-activity",
@@ -63,7 +68,8 @@ export class WorkActivityPage implements OnInit {
     public loadingController: LoadingController,
     private ngZone: NgZone,
     private assetsService: AssetsService,
-    private wamsService: WamsService
+    private wamsService: WamsService,
+    private assetLocatioSyncService: AssetLocatioSyncService
   ) {
     this.workactivityFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -78,6 +84,7 @@ export class WorkActivityPage implements OnInit {
       required_by_date: new FormControl(""),
       parent_location: new FormControl(""),
       node_id: new FormControl(""),
+      asset_loc_sync: new FormControl(""),
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -87,9 +94,20 @@ export class WorkActivityPage implements OnInit {
 
         console.log("this.workactivity = ", this.workactivity);
 
-        this.workactivityFormGroup.patchValue({
-          ...this.workactivity,
-        });
+        let node_id_1 = "node_id=" + this.workactivity.node_id_1
+        this.assetLocatioSyncService.filter(node_id_1).subscribe(
+          (resAls) => {
+            this.workactivity.asset_loc_sync = resAls[0]['description']
+            this.workactivityFormGroup.patchValue({
+              ...this.workactivity,
+            });
+
+          }, (errAls) => {
+
+          }
+        )
+
+
         // console.log("this.workactivity = ", this.workactivity['asset_location_asset_list']);
         // let getWOrkActivityData = this.workactivity['asset_location_asset_list']
         this.getWOrkActivityData(
@@ -253,6 +271,46 @@ export class WorkActivityPage implements OnInit {
     this.servicehistories.splice(index, 1);
   }
 
+<<<<<<< HEAD
+
+  getWOrkActivityData(getdata) {
+    let woacalalsh = []
+    getdata.forEach((element) => {
+      let woacalsl = element.toString();
+      console.log(woacalsl)
+      this.workOrderActivityCompletionAssLocAssListService.getOne(woacalsl).subscribe(
+        (Res) => {
+          this.workactivityData.push(Res)
+          console.log()
+        },
+        (Err) => {
+          console.error("err", Err);
+        }
+      );
+
+      setTimeout(() => {
+        this.workactivityData.forEach(element => {
+          let asset_id = "asset_id=" + element.asset_id
+          this.assetsService.filter(asset_id).subscribe(
+            (res) => {
+              element.badge_number = res[0].badge_no
+              element.description = res[0].description
+            }, (errAs) => {
+
+            }
+          )
+          let nodeid = "node_id=" + element.node_id
+          this.assetLocatioSyncService.filter(nodeid).subscribe(
+            (resALALSH) => {
+              console.log("resALALSH --=-= ", resALALSH)
+              element.location_descr = resALALSH[0].description
+            }, () => {
+
+            }
+          )
+        });
+      }, 2000);
+=======
   getWOrkActivityData(getdata) {
     getdata.forEach((element) => {
       let woacalsl = element.toString();
@@ -267,6 +325,7 @@ export class WorkActivityPage implements OnInit {
             console.error("err", Err);
           }
         );
+>>>>>>> 0a97272aee0a056800ac281ab05d1ff4ae22043c
     });
   }
 

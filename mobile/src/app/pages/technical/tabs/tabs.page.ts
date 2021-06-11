@@ -185,6 +185,45 @@ export class TabsPage implements OnInit {
           text: "Search",
           handler: (data) => {
             if (data.badge_no) {
+<<<<<<< HEAD
+              let navigationExtras: NavigationExtras = {
+                state: {
+                  badge_no: data.badge_no,
+                },
+              };
+
+              this.loadingController
+                .create({
+                  message: "Please wait ...",
+                  duration: 1000
+                })
+                .then((loading) => {
+
+                  loading.present();
+                  /// get data from wams
+                  this.wamsService.getAssetBadgeNo(data.badge_no).subscribe(
+                    (resBsdgeNo) => { },
+                    (errBadgeNo) => { },
+                    () => {
+                      loading.dismiss()
+                      // setTimeout(function () {
+                      this.router.navigate(
+                        ["/technical/asset-detail-list"],
+                        navigationExtras
+                      );
+                    }
+                  );
+                });
+
+              this.router.navigate(
+                ["/technical/asset-detail-list"],
+                navigationExtras
+              );
+
+
+              // }, 1000);
+
+=======
               this.loadingController
                 .create({
                   message: "Please wait...",
@@ -260,6 +299,7 @@ export class TabsPage implements OnInit {
                       }
                     );
                 });
+>>>>>>> 0a97272aee0a056800ac281ab05d1ff4ae22043c
             } else {
               this.presentAlert(
                 "Error",

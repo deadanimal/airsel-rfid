@@ -49,6 +49,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
   items: any[];
   type = "";
   status = "";
+  statuses = "";
   image = "";
   name = "";
   maintenance_work: any;
@@ -95,6 +96,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
             this.workactivitiesDatas.push(eleWorAct)
 
             eleWorAct.status = (eleWorAct.status == 'InProgress' ? 'In Progress' : eleWorAct.status)
+            this.statuses = eleWorAct.status
 
             this.assetLocatioSyncService.filter("node_id=" + eleWorAct.node_id_1).subscribe(
               (res) => {

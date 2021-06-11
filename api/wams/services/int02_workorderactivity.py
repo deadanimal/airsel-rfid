@@ -293,7 +293,7 @@ def get_workorderactivity(from_date, to_date):
         "to_date": to_date
     }
     r = requests.post("http://174.138.28.157/getWorkOrderActivity.php", data=payload)
-
+    print(r)
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:
         if (key == "results"):
