@@ -360,6 +360,7 @@ export class WorkActivityPage implements OnInit {
   }
 
   async searchBadgeNo(asset) {
+    console.log("asset>>", asset)
     const alert = await this.alertController.create({
       header: "Badge No.",
       message: "Enter a badge number to search the asset",
@@ -473,7 +474,7 @@ export class WorkActivityPage implements OnInit {
     await alert.present();
   }
 
-  onRegister2DBarcodeListener() {
+  onRegister2DBarcodeListener(asset) {
     this.loadingController
       .create({
         message: "Please scan the QR code...",
@@ -494,7 +495,7 @@ export class WorkActivityPage implements OnInit {
               if (this.bBarcode) {
                 loading.dismiss();
                 broadcaster.removeEventListener(ev, listener);
-                this.updateQrbarcode(event.data);
+                this.updateQrbarcode(event.data, asset);
               }
             });
           }
@@ -503,7 +504,7 @@ export class WorkActivityPage implements OnInit {
       });
   }
 
-  onRegisterRFIDListener() {
+  onRegisterRFIDListener(asset) {
     this.loadingController
       .create({
         message: "Please scan the RFID tag...",
@@ -524,7 +525,7 @@ export class WorkActivityPage implements OnInit {
               if (this.bRfid) {
                 loading.dismiss();
                 broadcaster.removeEventListener(ev, listener);
-                this.updateRfid(event.data);
+                this.updateRfid(event.data, asset);
               }
             });
           }
@@ -534,6 +535,7 @@ export class WorkActivityPage implements OnInit {
   }
 
   async clickViewAsset(asset) {
+    console.log('asset>>><<', asset)
     this.bRfid = false;
     this.bBarcode = false;
 
@@ -547,7 +549,7 @@ export class WorkActivityPage implements OnInit {
             console.log("RFID clicked");
             this.bBarcode = false;
             this.bRfid = true;
-            this.onRegisterRFIDListener();
+            this.onRegisterRFIDListener(asset);
           },
         },
         {
@@ -557,7 +559,7 @@ export class WorkActivityPage implements OnInit {
             console.log("QR Code clicked");
             this.bBarcode = true;
             this.bRfid = false;
-            this.onRegister2DBarcodeListener();
+            this.onRegister2DBarcodeListener(asset);
           },
         },
         {
@@ -582,7 +584,7 @@ export class WorkActivityPage implements OnInit {
   }
 
   // rfid scan
-  updateRfid(data) {
+  updateRfid(data, asset) {
     if (this.bRfid)
       this.ngZone.run(() => {
         this.scanValue = data;
@@ -637,7 +639,7 @@ export class WorkActivityPage implements OnInit {
   }
 
   // qr code
-  updateQrbarcode(data) {
+  updateQrbarcode(data, asset) {
     if (this.bBarcode)
       this.ngZone.run(() => {
         this.scanValue = data;

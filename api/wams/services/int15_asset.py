@@ -101,7 +101,9 @@ def insert_into_asset(dict):
         Asset.objects.filter(asset_id=asset_id).update(**dictionary)
         inserted_asset_id = Asset.objects.filter(asset_id=asset_id).first()
 
+    characteristic_type_list = ["CM-MFG","CM-WASTC","CM-VRTVD","CM-VOWNS","CM-VROWN","CM-VINPT"]
     # to save measurement_types if exist
+    print(measurement_types)
     if measurement_types != "":
 
         ### check for measurement type exist
@@ -114,47 +116,51 @@ def insert_into_asset(dict):
         ### insert data to asset measurement inbound
         asset_measurement_type_inbound = AssetMeasurementTypeInbound.objects.create(
                 measurement_type=measurement_types,asset_id=Asset.objects.filter(asset_id=asset_id).first())
-        characteristic_type_list = ["CM-MFG","CM-WASTC","CM-VRTVD","CM-VOWNS","CM-VROWN","CM-VINPT"]
-        # print(characteristic_type_list)
+        # characteristic_type_list = ["CM-MFG","CM-WASTC","CM-VRTVD","CM-VOWNS","CM-VROWN","CM-VINPT"]
+        print("here 9")
 
         # die()
 
         if not check_in_asset_measurement_type_inbound:
+
+            print("here 10")
             
             asset = Asset.objects.get(asset_id=asset_id)
             asset_measurement_type = AssetMeasurementType.objects.create(measurement_type=measurement_types)
             asset.measurement_types.add(asset_measurement_type)
 
-        # to save characteristic_type && characteristic_value if exist
-        if characteristic_type != "" and characteristic_value != "":
+    # to save characteristic_type && characteristic_value if exist
+    if characteristic_type != "" and characteristic_value != "":
 
-            ## check for asset attribute
-            check_asset_attribute_inbound = {
-                "characteristic_type": characteristic_type,
-                "asset_id":inserted_asset_id
-            }            
-            check_in_asset_attribute_inbound = AssetAttributeInbound.objects.filter(**check_asset_attribute_inbound).exists()
+        print("here 11")
 
-            ### insert data into asset attribute inbound
-            asset_attribute_inbound = AssetAttributeInbound.objects.create(characteristic_type=characteristic_type, characteristic_value=characteristic_value, asset_id=Asset.objects.filter(asset_id=asset_id).first())
+        ## check for asset attribute
+        check_asset_attribute_inbound = {
+            "characteristic_type": characteristic_type,
+            "asset_id":inserted_asset_id
+        }            
+        check_in_asset_attribute_inbound = AssetAttributeInbound.objects.filter(**check_asset_attribute_inbound).exists()
 
-            # asset_attribute_inbound_exist = AssetAttributeInbound.objects.filter(asset_id=inserted_asset_id).exists()
-            # print(asset_attribute_inbound_exist)
-            
-            if not check_in_asset_attribute_inbound:
-                print("characteristic_type = ",characteristic_type)
-                if characteristic_type in characteristic_type_list:
-                    asset = Asset.objects.get(asset_id=asset_id)
-                    asset_attribute = AssetAttribute.objects.create(
-                        characteristic_type=characteristic_type, characteristic_value=characteristic_value)
-                    asset.asset_attributes.add(asset_attribute)
-                    print('found',asset_attribute)
-                else:
-                    asset = Asset.objects.get(asset_id=asset_id)
-                    asset_attribute = AssetAttribute.objects.create(
-                        characteristic_type=characteristic_type, adhoc_value=characteristic_value)
-                    asset.asset_attributes.add(asset_attribute)
-                    print("not found",asset_attribute)
+        ### insert data into asset attribute inbound
+        asset_attribute_inbound = AssetAttributeInbound.objects.create(characteristic_type=characteristic_type, characteristic_value=characteristic_value, asset_id=Asset.objects.filter(asset_id=asset_id).first())
+
+        # asset_attribute_inbound_exist = AssetAttributeInbound.objects.filter(asset_id=inserted_asset_id).exists()
+        # print(asset_attribute_inbound_exist)
+        
+        if not check_in_asset_attribute_inbound:
+            print("characteristic_type = ",characteristic_type)
+            if characteristic_type in characteristic_type_list:
+                asset = Asset.objects.get(asset_id=asset_id)
+                asset_attribute = AssetAttribute.objects.create(
+                    characteristic_type=characteristic_type, characteristic_value=characteristic_value)
+                asset.asset_attributes.add(asset_attribute)
+                print('found',asset_attribute)
+            else:
+                asset = Asset.objects.get(asset_id=asset_id)
+                asset_attribute = AssetAttribute.objects.create(
+                    characteristic_type=characteristic_type, adhoc_value=characteristic_value)
+                asset.asset_attributes.add(asset_attribute)
+                print("not found",asset_attribute)
 
     #     asset = Asset.objects.get(asset_id=asset_id)
     #     asset_measurement_type = AssetMeasurementType.objects.create(
