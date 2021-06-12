@@ -49,7 +49,7 @@ export class WorkRequestListPage implements OnInit {
     private assetService: AssetsService,
     private plannerService: PlannerService,
     private wamsService: WamsService
-  ) { }
+  ) {}
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -235,7 +235,7 @@ export class WorkRequestListPage implements OnInit {
                               (res) => {
                                 loading.dismiss();
 
-                                if (res.results.length > 0) {
+                                if (res.results) {
                                   let navigationExtras: NavigationExtras = {
                                     state: {
                                       badge_no: data.badge_no,
@@ -469,7 +469,7 @@ export class WorkRequestListPage implements OnInit {
                       (res) => {
                         loading.dismiss();
 
-                        if (res.results.length > 0) {
+                        if (res.results) {
                           let navigationExtras: NavigationExtras = {
                             state: {
                               badge_no: this.scanValue,
