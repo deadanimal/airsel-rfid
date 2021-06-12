@@ -78,6 +78,10 @@ export class WorkActivityAssetPage implements OnInit {
     });
   }
 
+
+  workOrdActComAssLocAssLisReq: any = []
+  worOrdActComAssLocAssLisNot: any = []
+  serviceHistArr = []
   getAllData() {
     this.workactivityasset = this.router.getCurrentNavigation().extras.state.asset;
 
@@ -93,6 +97,8 @@ export class WorkActivityAssetPage implements OnInit {
     // let servHist = this.workactivityasset.service_histories
     this.buttonStatusArr == []
     // this.buttonStatus = ''
+    this.worOrdActComAssLocAssLisNot = []
+    this.workOrdActComAssLocAssLisReq = []
     this.workactivityasset.service_histories.forEach(element => {
       // this.buttonStatus : Boolean
       let bstat = ''
@@ -100,26 +106,68 @@ export class WorkActivityAssetPage implements OnInit {
         (res) => {
           console.log("serviceHistoryQuestionService", res)
           this.workOrderActivityCompletionAssLocAssLisDataAll.push(res)
-          if (res.svc_hist_type_req_fl == "W1YS") {
+
+          console.log("res.service_history_type>>", res.service_history_type)
+          console.log("res.svc_hist_type_req_fl>>", res.svc_hist_type_req_fl)
+
+          // if (res.svc_hist_type_req_fl == "W1YS") {
+          //   this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+          //   this.workOrdActComAssLocAssLisReq.push(res)
+          //   console.log("----------<<<<<")
+          // } else {
+          //   console.log("---------->>>>>")
+          //   this.worOrdActComAssLocAssLisNot.push(res)
+          // }
+
+          if (res.svc_hist_type_req_fl == 'W1YS') {
             this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+            if (res.service_history_type == "FAILURE") {
+              if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+                this.workOrdActComAssLocAssLisReq.push(res)
+              }
+            } else if (res.service_history_type == "DOWNTIME") {
+              if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
+                this.workOrdActComAssLocAssLisReq.push(res)
+              }
+            } else {
+              if (res.comments != '' && res.question != []) {
+                this.workOrdActComAssLocAssLisReq.push(res)
+              }
+            }
+          } else {
+            if (res.service_history_type == "FAILURE") {
+              if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+                this.worOrdActComAssLocAssLisNot.push(res)
+              }
+            } else if (res.service_history_type == "DOWNTIME") {
+              if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
+                this.worOrdActComAssLocAssLisNot.push(res)
+              }
+            } else {
+              if (res.comments != '' && res.question != []) {
+                this.worOrdActComAssLocAssLisNot.push(res)
+              }
+            }
           }
+
           bstat = 'no'
           if (res.service_history_type == "FAILURE") {
             if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
               this.workOrderActivityCompletionAssLocAssLisData.push(res)
               bstat = 'yes'
+              this.serviceHistArr.push(res.service_history_type)
             }
           } else if (res.service_history_type == "DOWNTIME") {
             if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
               this.workOrderActivityCompletionAssLocAssLisData.push(res)
               bstat = 'yes'
-            } else {
-
+              this.serviceHistArr.push(res.service_history_type)
             }
           } else {
             if (res.comments != '' && res.question != []) {
               this.workOrderActivityCompletionAssLocAssLisData.push(res)
               bstat = 'yes'
+              this.serviceHistArr.push(res.service_history_type)
             }
           }
           this.buttonStatusArr.push(bstat)
@@ -165,6 +213,149 @@ export class WorkActivityAssetPage implements OnInit {
     //   );
     // }
     // }
+  }
+
+  getAllData2() {
+    this.workOrderActivityCompletionAssLocAssLisData = []
+    this.workOrderActivityCompletionAssLocAssLisDataAll = []
+    this.workOrderActivityCompletionAssLocAssLisDataReq = []
+    let bstat = ''
+    this.buttonStatusArr == []
+    // this.buttonStatus = ''
+    let buttonArray = []
+    let buttonArrayReq = []
+    this.worOrdActComAssLocAssLisNot = []
+    this.workOrdActComAssLocAssLisReq = []
+    this.serviceHistArr = []
+
+    console.log("workactivityasset+++", this.workactivityasset)
+    this.workOrderActivityCompletionAssLocAssListService.getOne(this.workactivityasset.id).subscribe(
+      (resWoacalal) => {
+        console.log("resWoacalal ===", resWoacalal)
+        resWoacalal.service_histories.forEach(element => {
+          console.log("element++++++++", element)
+          this.assetLocationAssetListServiceHistoriesService.getOne(element).subscribe(
+            (res) => {
+
+              console.log("serviceHistoryQuestionService", res)
+              this.workOrderActivityCompletionAssLocAssLisDataAll.push(res)
+
+              // if (res.svc_hist_type_req_fl == "W1YS") {
+              //   buttonArrayReq.push(res.service_history_type)
+              // }
+              // if (res.svc_hist_type_req_fl == "W1YS") {
+              //   buttonArrayReq.push(res.service_history_type)
+              //   this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+              //   this.workOrdActComAssLocAssLisReq.push(res)
+              // } else {
+              //   this.worOrdActComAssLocAssLisNot.push(res)
+              // }
+
+              // if (res.service_history_type == "FAILURE") {
+              //   if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+              //     this.serviceHistArr.push(res.service_history_type)
+              //   }
+              // } else if (res.service_history_type == "DOWNTIME") {
+              //   if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
+              //     this.serviceHistArr.push(res.service_history_type)
+              //   }
+              // } else {
+              //   if (res.question != []) {
+              //     this.serviceHistArr.push(res.service_history_type)
+              //   }
+              // }
+
+              if (res.svc_hist_type_req_fl == 'W1YS') {
+                this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+                if (res.service_history_type == "FAILURE") {
+                  if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+                    this.workOrdActComAssLocAssLisReq.push(res)
+                  }
+                } else if (res.service_history_type == "DOWNTIME") {
+                  if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
+                    this.workOrdActComAssLocAssLisReq.push(res)
+                  }
+                } else {
+                  if (res.question != []) {
+                    this.workOrdActComAssLocAssLisReq.push(res)
+                  }
+                }
+              } else {
+                if (res.service_history_type == "FAILURE") {
+                  if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+                    this.worOrdActComAssLocAssLisNot.push(res)
+                  }
+                } else if (res.service_history_type == "DOWNTIME") {
+                  if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
+                    this.worOrdActComAssLocAssLisNot.push(res)
+                  }
+                } else {
+                  if (res.comments != '' && res.question != []) {
+                    this.worOrdActComAssLocAssLisNot.push(res)
+                  }
+                }
+              }
+
+              if (res.service_history_type == "FAILURE") {
+                if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+                  this.workOrderActivityCompletionAssLocAssLisData.push(res)
+                  buttonArray.push(res.service_history_type)
+                  this.serviceHistArr.push(res.service_history_type)
+                }
+              } else if (res.service_history_type == "DOWNTIME") {
+                if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
+                  this.workOrderActivityCompletionAssLocAssLisData.push(res)
+                  buttonArray.push(res.service_history_type)
+                  this.serviceHistArr.push(res.service_history_type)
+                } else {
+
+                }
+              } else {
+                if (res.comments != '' && res.question != []) {
+                  this.workOrderActivityCompletionAssLocAssLisData.push(res)
+                  buttonArray.push(res.service_history_type)
+                  this.serviceHistArr.push(res.service_history_type)
+                }
+              }
+
+
+            }, (err) => {
+              console.log(err)
+            }
+          )
+
+        })
+        setTimeout(() => {
+
+          let check = []
+          let stat = ''
+          console.log("buttonArray", buttonArray)
+          console.log("this.workOrderActivityCompletionAssLocAssLisDataReq", buttonArrayReq)
+          buttonArrayReq.forEach(elemButt => {
+            console.log("elemButt", elemButt)
+            if (buttonArray.indexOf(elemButt) == -1) {
+              check.push('yes')
+            } else {
+              check.push('no')
+            }
+
+          })
+
+          console.log("check", check)
+          if (check.indexOf('no') == -1) {
+            console.log('no')
+            this.buttonStatus = false
+          } else {
+            console.log('yes')
+            this.buttonStatus = true
+          }
+
+        }, 1000);
+      }, () => {
+
+      }
+    )
+
   }
 
   // getWorkOrderActivityComp(){
@@ -290,95 +481,14 @@ export class WorkActivityAssetPage implements OnInit {
     this.router.navigate(["/technical/maintenance-work-list"]);
   }
 
-  getAllData2() {
-    this.workOrderActivityCompletionAssLocAssLisData = []
-    this.workOrderActivityCompletionAssLocAssLisDataAll = []
-    this.workOrderActivityCompletionAssLocAssLisDataReq = []
-    let bstat = ''
-    this.buttonStatusArr == []
-    // this.buttonStatus = ''
-    let buttonArray = []
-    let buttonArrayReq = []
-
-    console.log("workactivityasset+++", this.workactivityasset)
-    this.workOrderActivityCompletionAssLocAssListService.getOne(this.workactivityasset.id).subscribe(
-      (resWoacalal) => {
-        console.log("resWoacalal ===", resWoacalal)
-        resWoacalal.service_histories.forEach(element => {
-          console.log("element++++++++", element)
-          this.assetLocationAssetListServiceHistoriesService.getOne(element).subscribe(
-            (res) => {
-
-              console.log("serviceHistoryQuestionService", res)
-              this.workOrderActivityCompletionAssLocAssLisDataAll.push(res)
-
-              if (res.svc_hist_type_req_fl == "W1YS") {
-                buttonArrayReq.push(res.service_history_type)
-              }
-
-              if (res.service_history_type == "FAILURE") {
-                if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
-                  this.workOrderActivityCompletionAssLocAssLisData.push(res)
-                  buttonArray.push(res.service_history_type)
-                }
-              } else if (res.service_history_type == "DOWNTIME") {
-                if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
-                  this.workOrderActivityCompletionAssLocAssLisData.push(res)
-                  buttonArray.push(res.service_history_type)
-                } else {
-
-                }
-              } else {
-                if (res.comments != '' && res.question != []) {
-                  this.workOrderActivityCompletionAssLocAssLisData.push(res)
-                  buttonArray.push(res.service_history_type)
-                }
-              }
-
-
-            }, (err) => {
-              console.log(err)
-            }
-          )
-
-        })
-        setTimeout(() => {
-
-          let check = []
-          let stat = ''
-          console.log("buttonArray", buttonArray)
-          console.log("this.workOrderActivityCompletionAssLocAssLisDataReq", buttonArrayReq)
-          buttonArrayReq.forEach(elemButt => {
-            console.log("elemButt", elemButt)
-            if (buttonArray.indexOf(elemButt) == -1) {
-              check.push('yes')
-            } else {
-              check.push('no')
-            }
-
-          })
-
-          console.log("check", check)
-          if (check.indexOf('no') == -1) {
-            console.log('no')
-            this.buttonStatus = false
-          } else {
-            console.log('yes')
-            this.buttonStatus = true
-          }
-
-        }, 1000);
-      }, () => {
-
-      }
-    )
-
-  }
-
   async clickAddServiceHistory(servicehistory) {
+    let obj = {
+      servicehistory: servicehistory,
+      servHistArr: this.serviceHistArr
+    }
     const modal = await this.modalController.create({
       component: ServiceHistoryPage,
-      componentProps: { servicehistory: servicehistory },
+      componentProps: { servicehistory: servicehistory, servHistArr: this.serviceHistArr },
     });
     modal.onDidDismiss().then((data) => {
 

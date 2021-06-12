@@ -51,9 +51,8 @@ export class ServiceHistoryPage implements OnInit {
   workOrderActComAssLocAssLis: any = []
   AssLocAssLisArrId = []
   assetTypeData = []
-
-  updateformData = [];
-
+  updateformData = []
+  servHistArr = []
 
   // serHisQueFormData: FormGroup;
 
@@ -80,7 +79,9 @@ export class ServiceHistoryPage implements OnInit {
     // console.log("servicehistory == ", this.navParams.get("servicehistory"));
 
     this.servHist = this.navParams.get("servicehistory")
-    console.log("this.servHist qqqqqq = ", this.servHist)
+    this.servHistArr = this.navParams.get("servHistArr")
+    console.log("this.servHist servHistArr = ", this.servHistArr)
+    console.log("this.servHist servHist = ", this.servHist)
     this.getWorkOrderActComAssLocAssLis(this.servHist)
     this.assetsService
       .filter("asset_id=" + this.servHist.asset_id)
@@ -105,24 +106,43 @@ export class ServiceHistoryPage implements OnInit {
                   this.assetServiceHistoryService.getOne(assSerHisId)
                     .subscribe(
                       (assServHistres) => {
-                        console.log("assetServiceHistoryService res =", assServHistres)
-                        // console.log("assServHistres asset_service_history =", assServHistres['asset_service_history'])
+                        // console.log("assetServiceHistoryService res =", assServHistres)
+                        console.log("assServHistres asset_service_history =", assServHistres.asset_service_history)
 
-                        // get service history data
-                        this.serviceHistoryService.filter('service_hist_type=' + assServHistres['asset_service_history'])
-                          .subscribe(
-                            (ServHistres) => {
+                        if (this.servHistArr.indexOf(assServHistres.asset_service_history) == -1) {
+                          // get service history data
+                          this.serviceHistoryService.filter('service_hist_type=' + assServHistres['asset_service_history'])
+                            .subscribe(
+                              (ServHistres) => {
 
-                              console.log("serviceHistoryService res =", ServHistres);
-                              // console.log("ServHistres =", assServHistres[0]['service_hist_desc']);
-                              this.ServiceHistoryListAll.push(ServHistres[0])
-                              // this.ServiceHistoryList.push(ServHistres[0])
+                                console.log("serviceHistoryService res =", ServHistres);
 
-                            },
-                            (err) => {
-                              console.error("err", err);
-                            }
-                          );
+                                // if (res['service_history_type'] == 'Failure') {
+
+                                //   if (res.failure_type == '' && res.failure_mode == '' && res.failure_repair == '' && res.failure_component == '' && res.comments == '') {
+                                //     this.serviceHistoryArray.push(res.service_history_type)
+                                //   }
+                                // } else if (res['service_history_type'] == 'Downtime') {
+
+                                //   if (res.start_date_time == '' && res.end_date_time == '' && res.downtime_reason == '' && res.comments == '') {
+                                //     this.serviceHistoryArray.push(res.service_history_type)
+                                //   }
+                                // } else {
+                                //   if (res.question.length) {
+                                //     this.serviceHistoryArray.push(res.service_history_type)
+                                //   }
+                                // }
+
+                                // console.log("ServHistres =", assServHistres[0]['service_hist_desc']);
+                                this.ServiceHistoryListAll.push(ServHistres[0])
+                                // this.ServiceHistoryList.push(ServHistres[0])
+
+                              },
+                              (err) => {
+                                console.error("err", err);
+                              }
+                            );
+                        }
 
                       },
                       (err) => {

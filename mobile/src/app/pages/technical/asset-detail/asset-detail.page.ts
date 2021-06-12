@@ -200,6 +200,11 @@ export class AssetDetailPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.asset_detail = this.router.getCurrentNavigation().extras.state.asset_detail;
 
+        let asset_attributes = this.asset_detail["asset_attributes"];
+        // console.log('assetType = ', assetType)
+        // this.getAssetAttributeData()
+        this.getAssetAttributeData(asset_attributes)
+
         console.log("this.asset_detail ooooo = ", this.asset_detail)
         // console.log("this.asset_detail asset_id = ", this.asset_detail.asset_type)
         let asset_type = "asset_type_code=" + this.asset_detail['asset_type']
@@ -213,7 +218,7 @@ export class AssetDetailPage implements OnInit {
             // console.log(asset_typedesc)
             this.assetAttributeColumnService.filter(asset_typedesc).subscribe(
               (assAttColRes) => {
-                // console.log("assAttColRes = ", assAttColRes[0])
+                console.log("assAttColRes = ", assAttColRes)
                 this.getAssAttrColumnData(assAttColRes[0])
               }, (err) => {
                 console.log(err)
@@ -223,15 +228,12 @@ export class AssetDetailPage implements OnInit {
             console.log(err)
           }
         )
+
         // if (this.asset_detail.asset_primary_category.match(/Pump/i)) {
         //   this.asset_type = "Pump";
         // } else if (this.asset_detail.asset_primary_category.match(/Motor/i)) {
         //   this.asset_type = "Motor";
         // }
-        let asset_attributes = this.asset_detail["asset_attributes"];
-        // console.log('assetType = ', assetType)
-        // this.getAssetAttributeData()
-        this.getAssetAttributeData(asset_attributes)
         this.assetLocatioSyncService.filter("node_id=" + this.asset_detail.node_id).subscribe(
           (res) => {
             console.log("assetLocatioSyncServiceres", res);
@@ -253,872 +255,1027 @@ export class AssetDetailPage implements OnInit {
 
   assetAttributeColumnFormData: any = []
   assetAttrCollumn: any = []
+  arraytype = []
   getAssAttrColumnData(assAttCol) {
-    let arraytype = []
-    console.log("assetAttributedatas =>>= ", this.assetAttributedatas)
-    this.assetAttributedatas.forEach(elementqq => {
-      arraytype.push(elementqq.characteristic_type_name)
-    });
+    // arraytype = []
+    setTimeout(() => {
 
-    console.log("arraytype = ", arraytype)
-    if (assAttCol['bottom_water_level'] == true && arraytype.indexOf('bottom_water_level') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'bottom_water_level'
-      assAttColTemp['field_name'] = 'bottom_water_level'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['closing_torque'] == true && arraytype.indexOf('closing_torque') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'closing_torque'
-      assAttColTemp['field_name'] = 'closing_torque'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['dimention'] == true && arraytype.indexOf('dimention') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'dimention'
-      assAttColTemp['field_name'] = 'dimention'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['frequency'] == true && arraytype.indexOf('frequency') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'frequency'
-      assAttColTemp['field_name'] = 'frequency'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['infrastructure_status'] == true && arraytype.indexOf('infrastructure_status') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'infrastructure_status'
-      assAttColTemp['field_name'] = 'infrastructure_status'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['installation'] == true && arraytype.indexOf('installation') == -1) {
-      console.log("assAttCol['installation']  = ", assAttCol['installation'])
-      console.log("arraytype.indexOf('installation')  = ", arraytype.indexOf('installation'))
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'installation'
-      assAttColTemp['field_name'] = 'installation'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['manufacturer'] == true && arraytype.indexOf('manufacturer') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'manufacturer'
-      assAttColTemp['field_name'] = 'manufacturer'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['material_type'] == true && arraytype.indexOf('material_type') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'material_type'
-      assAttColTemp['field_name'] = 'material_type'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['no_of_channel'] == true && arraytype.indexOf('no_of_channel') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'no_of_channel'
-      assAttColTemp['field_name'] = 'no_of_channel'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['opening_torque'] == true && arraytype.indexOf('opening_torque') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'opening_torque'
-      assAttColTemp['field_name'] = 'opening_torque'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['pump_head'] == true && arraytype.indexOf('pump_head') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'pump_head'
-      assAttColTemp['field_name'] = 'pump_head'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['staging_height'] == true && arraytype.indexOf('staging_height') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'staging_height'
-      assAttColTemp['field_name'] = 'staging_height'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['top_water_level'] == true && arraytype.indexOf('top_water_level') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'top_water_level'
-      assAttColTemp['field_name'] = 'top_water_level'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['valve_pressure_rating'] == true && arraytype.indexOf('valve_pressure_rating') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'valve_pressure_rating'
-      assAttColTemp['field_name'] = 'valve_pressure_rating'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_engine_number'] == true && arraytype.indexOf('vehicle_engine_number') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_engine_number'
-      assAttColTemp['field_name'] = 'vehicle_engine_number'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_insurance_auto_windscreen_insured'] == true && arraytype.indexOf('vehicle_insurance_auto_windscreen_insured') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_auto_windscreen_insured'
-      assAttColTemp['field_name'] = 'vehicle_insurance_auto_windscreen_insured'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_insurance_date_period_to'] == true && arraytype.indexOf('vehicle_insurance_date_period_to') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_date_period_to'
-      assAttColTemp['field_name'] = 'vehicle_insurance_date_period_to'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_insurance_sum_insured'] == true && arraytype.indexOf('vehicle_insurance_sum_insured') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_sum_insured'
-      assAttColTemp['field_name'] = 'vehicle_insurance_sum_insured'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_owner_status'] == true && arraytype.indexOf('vehicle_owner_status') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_owner_status'
-      assAttColTemp['field_name'] = 'vehicle_owner_status'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_puspakom_expired_date'] == true && arraytype.indexOf('vehicle_puspakom_expired_date') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_puspakom_expired_date'
-      assAttColTemp['field_name'] = 'vehicle_puspakom_expired_date'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_roadtax_expired_date'] == true && arraytype.indexOf('vehicle_roadtax_expired_date') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_roadtax_expired_date'
-      assAttColTemp['field_name'] = 'vehicle_roadtax_expired_date'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_seating_capacity'] == true && arraytype.indexOf('vehicle_seating_capacity') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_seating_capacity'
-      assAttColTemp['field_name'] = 'vehicle_seating_capacity'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['communication_protocol'] == true && arraytype.indexOf('communication_protocol') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'communication_protocol'
-      assAttColTemp['field_name'] = 'communication_protocol'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['environmental_performance'] == true && arraytype.indexOf('environmental_performance') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'environmental_performance'
-      assAttColTemp['field_name'] = 'environmental_performance'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['horse_power'] == true && arraytype.indexOf('horse_power') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'horse_power'
-      assAttColTemp['field_name'] = 'horse_power'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['infrastructure_status_reason'] == true && arraytype.indexOf('infrastructure_status_reason') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'infrastructure_status_reason'
-      assAttColTemp['field_name'] = 'infrastructure_status_reason'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['insulation'] == true && arraytype.indexOf('insulation') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'insulation'
-      assAttColTemp['field_name'] = 'insulation'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['manufacturer_year'] == true && arraytype.indexOf('manufacturer_year') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'manufacturer_year'
-      assAttColTemp['field_name'] = 'manufacturer_year'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['model'] == true && arraytype.indexOf('model') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'model'
-      assAttColTemp['field_name'] = 'model'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['no_of_phases'] == true && arraytype.indexOf('no_of_phases') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'no_of_phases'
-      assAttColTemp['field_name'] = 'no_of_phases'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['outlet_diameter'] == true && arraytype.indexOf('outlet_diameter') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'outlet_diameter'
-      assAttColTemp['field_name'] = 'outlet_diameter'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['revolutions_per_minute'] == true && arraytype.indexOf('revolutions_per_minute') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'revolutions_per_minute'
-      assAttColTemp['field_name'] = 'revolutions_per_minute'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['supply_location'] == true && arraytype.indexOf('supply_location') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'supply_location'
-      assAttColTemp['field_name'] = 'supply_location'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['type'] == true && arraytype.indexOf('type') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'type'
-      assAttColTemp['field_name'] = 'type'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_chasis_number'] == true && arraytype.indexOf('vehicle_chasis_number') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_chasis_number'
-      assAttColTemp['field_name'] = 'vehicle_chasis_number'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_insurance_vendor'] == true && arraytype.indexOf('vehicle_insurance_vendor') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_vendor'
-      assAttColTemp['field_name'] = 'vehicle_insurance_vendor'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_insurance_cover_note_number'] == true && arraytype.indexOf('vehicle_insurance_cover_note_number') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_cover_note_number'
-      assAttColTemp['field_name'] = 'vehicle_insurance_cover_note_number'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_insurance_no_claim_discount'] == true && arraytype.indexOf('vehicle_insurance_no_claim_discount') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_no_claim_discount'
-      assAttColTemp['field_name'] = 'vehicle_insurance_no_claim_discount'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_insurance_total_premium'] == true && arraytype.indexOf('vehicle_insurance_total_premium') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_total_premium'
-      assAttColTemp['field_name'] = 'vehicle_insurance_total_premium'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_register_date'] == true && arraytype.indexOf('vehicle_register_date') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_register_date'
-      assAttColTemp['field_name'] = 'vehicle_register_date'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_spad_permit_date_period_to'] == true && arraytype.indexOf('vehicle_spad_permit_date_period_to') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_spad_permit_date_period_to'
-      assAttColTemp['field_name'] = 'vehicle_spad_permit_date_period_to'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_spad_no_license_operator'] == true && arraytype.indexOf('vehicle_spad_no_license_operator') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_spad_no_license_operator'
-      assAttColTemp['field_name'] = 'vehicle_spad_no_license_operator'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_registration_owner'] == true && arraytype.indexOf('vehicle_registration_owner') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_registration_owner'
-      assAttColTemp['field_name'] = 'vehicle_registration_owner'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['capacity_size'] == true && arraytype.indexOf('capacity_size') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'capacity_size'
-      assAttColTemp['field_name'] = 'capacity_size'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['coverage_range'] == true && arraytype.indexOf('coverage_range') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'coverage_range'
-      assAttColTemp['field_name'] = 'coverage_range'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['flow_rate'] == true && arraytype.indexOf('flow_rate') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'flow_rate'
-      assAttColTemp['field_name'] = 'flow_rate'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['hysteresis'] == true && arraytype.indexOf('hysteresis') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'hysteresis'
-      assAttColTemp['field_name'] = 'hysteresis'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['inlet_diameter'] == true && arraytype.indexOf('inlet_diameter') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'inlet_diameter'
-      assAttColTemp['field_name'] = 'inlet_diameter'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['legal_name'] == true && arraytype.indexOf('legal_name') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'legal_name'
-      assAttColTemp['field_name'] = 'legal_name'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['manufacture_part_number'] == true && arraytype.indexOf('manufacture_part_number') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'manufacture_part_number'
-      assAttColTemp['field_name'] = 'manufacture_part_number'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['motor_current'] == true && arraytype.indexOf('motor_current') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'motor_current'
-      assAttColTemp['field_name'] = 'motor_current'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['no_of_stage'] == true && arraytype.indexOf('no_of_stage') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'no_of_stage'
-      assAttColTemp['field_name'] = 'no_of_stage'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['power_supply_type'] == true && arraytype.indexOf('power_supply_type') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'power_supply_type'
-      assAttColTemp['field_name'] = 'power_supply_type'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['source_from'] == true && arraytype.indexOf('source_from') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'source_from'
-      assAttColTemp['field_name'] = 'source_from'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['temperature'] == true && arraytype.indexOf('temperature') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'temperature'
-      assAttColTemp['field_name'] = 'temperature'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['valve_diameter'] == true && arraytype.indexOf('valve_diameter') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'valve_diameter'
-      assAttColTemp['field_name'] = 'valve_diameter'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_engine_capacity'] == true && arraytype.indexOf('vehicle_engine_capacity') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_engine_capacity'
-      assAttColTemp['field_name'] = 'vehicle_engine_capacity'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_model'] == true && arraytype.indexOf('vehicle_model') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_model'
-      assAttColTemp['field_name'] = 'vehicle_model'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_insurance_date_period_from'] == true && arraytype.indexOf('vehicle_insurance_date_period_from') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_date_period_from'
-      assAttColTemp['field_name'] = 'vehicle_insurance_date_period_from'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_insurance_policy_type'] == true && arraytype.indexOf('vehicle_insurance_policy_type') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_policy_type'
-      assAttColTemp['field_name'] = 'vehicle_insurance_policy_type'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_puspakom_date_inspection'] == true && arraytype.indexOf('vehicle_puspakom_date_inspection') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_puspakom_date_inspection'
-      assAttColTemp['field_name'] = 'vehicle_puspakom_date_inspection'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_roadtax_rate'] == true && arraytype.indexOf('vehicle_roadtax_rate') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_roadtax_rate'
-      assAttColTemp['field_name'] = 'vehicle_roadtax_rate'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_roadtax_renew_date'] == true && arraytype.indexOf('vehicle_roadtax_renew_date') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_roadtax_renew_date'
-      assAttColTemp['field_name'] = 'vehicle_roadtax_renew_date'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['vehicle_spad_permit_date_period_from'] == true && arraytype.indexOf('vehicle_spad_permit_date_period_from') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'vehicle_spad_permit_date_period_from'
-      assAttColTemp['field_name'] = 'vehicle_spad_permit_date_period_from'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['voltage'] == true && arraytype.indexOf('voltage') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'voltage'
-      assAttColTemp['field_name'] = 'voltage'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['asset_status'] == true && arraytype.indexOf('asset_status') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'asset_status'
-      assAttColTemp['field_name'] = 'asset_status'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['brand'] == true && arraytype.indexOf('brand') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'brand'
-      assAttColTemp['field_name'] = 'brand'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['model_number'] == true && arraytype.indexOf('brand') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'model_number'
-      assAttColTemp['field_name'] = 'model_number'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['bo'] == true && arraytype.indexOf('bo') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'bo'
-      assAttColTemp['field_name'] = 'bo'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    if (assAttCol['bo_status'] == true && arraytype.indexOf('bo_status') == -1) {
-      let assAttColTemp = []
-      assAttColTemp['id'] = ''
-      assAttColTemp['action_type'] = ''
-      // assAttColTemp['adhoc_value'] = null
-      assAttColTemp['characteristic_type'] = ''
-      assAttColTemp['characteristic_type_name'] = 'bo_status'
-      assAttColTemp['field_name'] = 'bo_status'
-      assAttColTemp['field_value'] = ''
-      // assAttColTemp['characteristic_value'] = null
-      this.assetAttributedatas.push(assAttColTemp)
-    }
-    console.log("this.assetAttributedatas ==== ", this.assetAttributedatas)
 
-    for (let i = 0; i < this.assetAttributedatas.length; i++) {
-      console.log("this.assetAttributedatas[1] ===== ", this.assetAttributedatas[i])
-      if (this.assetAttributedatas[i].characteristic_type == '') {
-        this.assetAttributeReferenceService.filter("attribute_field_name=" + this.assetAttributedatas[i].field_name).subscribe(
-          (res) => {
-            this.assetAttributedatas[i].characteristic_type = res[0].char_type_cd
-            // this.assetAttributedatas.push(this.assetAttributedatas[i])
-            console.log("res ===== ", res)
-          }, () => {
+      // this.assetAttributedatas.forEach((elementqq) => {
+      //   console.log("elementqq = ", elementqq)
+      //   arraytype.push(elementqq.field_name)
+      // })
 
-          }
-        )
+      // for (let key in this.assetAttributedatas) {
+      //   let child = this.assetAttributedatas[key];
+      //   console.log("qweqweqweqqwe", this.assetAttributedatas[key])
+      // }
+
+      // for (let i = 0; i <= this.assetAttributedatas.length; i++) {
+      //   console.log("this.assetAttributedatas = ", this.assetAttributedatas[i])
+      //   arraytype.push(this.assetAttributedatas[i].field_name)
+      // }
+
+      console.log("arraytype = ", this.arraytype)
+      if (assAttCol['bottom_water_level'] == true) {
+        if (this.arraytype.indexOf('bottom_water_level') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'bottom_water_level'
+          assAttColTemp['field_name'] = 'bottom_water_level'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
       }
-    }
+      if (assAttCol['closing_torque'] == true) {
+        if (this.arraytype.indexOf('closing_torque') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'closing_torque'
+          assAttColTemp['field_name'] = 'closing_torque'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['dimention'] == true) {
+        if (this.arraytype.indexOf('dimention') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'dimention'
+          assAttColTemp['field_name'] = 'dimention'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['frequency'] == true) {
+        if (this.arraytype.indexOf('frequency') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'frequency'
+          assAttColTemp['field_name'] = 'frequency'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['infrastructure_status'] == true) {
+        if (this.arraytype.indexOf('infrastructure_status') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'infrastructure_status'
+          assAttColTemp['field_name'] = 'infrastructure_status'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['installation'] == true) {
+        if (this.arraytype.indexOf('installation') == -1) {
+          console.log("assAttCol['installation']  = ", assAttCol['installation'])
+          console.log("this.arraytype.indexOf('installation')  = ", this.arraytype.indexOf('installation'))
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'installation'
+          assAttColTemp['field_name'] = 'installation'
+          assAttColTemp['field_value'] = ''
+          assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['manufacturer'] == true) {
+        if (this.arraytype.indexOf('manufacturer') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'manufacturer'
+          assAttColTemp['field_name'] = 'manufacturer'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['material_type'] == true) {
+        if (this.arraytype.indexOf('material_type') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'material_type'
+          assAttColTemp['field_name'] = 'material_type'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['no_of_channel'] == true) {
+        if (this.arraytype.indexOf('no_of_channel') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'no_of_channel'
+          assAttColTemp['field_name'] = 'no_of_channel'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['opening_torque'] == true) {
+        if (this.arraytype.indexOf('opening_torque') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'opening_torque'
+          assAttColTemp['field_name'] = 'opening_torque'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['pump_head'] == true) {
+        if (this.arraytype.indexOf('pump_head') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'pump_head'
+          assAttColTemp['field_name'] = 'pump_head'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['staging_height'] == true) {
+        if (this.arraytype.indexOf('staging_height') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'staging_height'
+          assAttColTemp['field_name'] = 'staging_height'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['top_water_level'] == true) {
+        if (this.arraytype.indexOf('top_water_level') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'top_water_level'
+          assAttColTemp['field_name'] = 'top_water_level'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['valve_pressure_rating'] == true) {
+        if (this.arraytype.indexOf('valve_pressure_rating') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'valve_pressure_rating'
+          assAttColTemp['field_name'] = 'valve_pressure_rating'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_engine_number'] == true) {
+        if (this.arraytype.indexOf('vehicle_engine_number') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_engine_number'
+          assAttColTemp['field_name'] = 'vehicle_engine_number'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_insurance_auto_windscreen_insured'] == true) {
+        if (this.arraytype.indexOf('vehicle_insurance_auto_windscreen_insured') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_auto_windscreen_insured'
+          assAttColTemp['field_name'] = 'vehicle_insurance_auto_windscreen_insured'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_insurance_date_period_to'] == true) {
+        if (this.arraytype.indexOf('vehicle_insurance_date_period_to') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_date_period_to'
+          assAttColTemp['field_name'] = 'vehicle_insurance_date_period_to'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_insurance_sum_insured'] == true) {
+        if (this.arraytype.indexOf('vehicle_insurance_sum_insured') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_sum_insured'
+          assAttColTemp['field_name'] = 'vehicle_insurance_sum_insured'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_owner_status'] == true) {
+        if (this.arraytype.indexOf('vehicle_owner_status') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_owner_status'
+          assAttColTemp['field_name'] = 'vehicle_owner_status'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_puspakom_expired_date'] == true) {
+        if (this.arraytype.indexOf('vehicle_puspakom_expired_date') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_puspakom_expired_date'
+          assAttColTemp['field_name'] = 'vehicle_puspakom_expired_date'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_roadtax_expired_date'] == true) {
+        if (this.arraytype.indexOf('vehicle_roadtax_expired_date') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_roadtax_expired_date'
+          assAttColTemp['field_name'] = 'vehicle_roadtax_expired_date'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_seating_capacity'] == true) {
+        if (this.arraytype.indexOf('vehicle_seating_capacity') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_seating_capacity'
+          assAttColTemp['field_name'] = 'vehicle_seating_capacity'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['communication_protocol'] == true) {
+        if (this.arraytype.indexOf('communication_protocol') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'communication_protocol'
+          assAttColTemp['field_name'] = 'communication_protocol'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['environmental_performance'] == true) {
+        if (this.arraytype.indexOf('environmental_performance') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'environmental_performance'
+          assAttColTemp['field_name'] = 'environmental_performance'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['horse_power'] == true) {
+        if (this.arraytype.indexOf('horse_power') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'horse_power'
+          assAttColTemp['field_name'] = 'horse_power'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['infrastructure_status_reason'] == true) {
+        if (this.arraytype.indexOf('infrastructure_status_reason') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'infrastructure_status_reason'
+          assAttColTemp['field_name'] = 'infrastructure_status_reason'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['insulation'] == true) {
+        if (this.arraytype.indexOf('insulation') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'insulation'
+          assAttColTemp['field_name'] = 'insulation'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['manufacturer_year'] == true) {
+        if (this.arraytype.indexOf('manufacturer_year') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'manufacturer_year'
+          assAttColTemp['field_name'] = 'manufacturer_year'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['model'] == true) {
+        if (this.arraytype.indexOf('model') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'model'
+          assAttColTemp['field_name'] = 'model'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['no_of_phases'] == true) {
+        if (this.arraytype.indexOf('no_of_phases') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'no_of_phases'
+          assAttColTemp['field_name'] = 'no_of_phases'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['outlet_diameter'] == true) {
+        if (this.arraytype.indexOf('outlet_diameter') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'outlet_diameter'
+          assAttColTemp['field_name'] = 'outlet_diameter'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['revolutions_per_minute'] == true) {
+        if (this.arraytype.indexOf('revolutions_per_minute') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'revolutions_per_minute'
+          assAttColTemp['field_name'] = 'revolutions_per_minute'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['supply_location'] == true) {
+        if (this.arraytype.indexOf('supply_location') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'supply_location'
+          assAttColTemp['field_name'] = 'supply_location'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['type'] == true) {
+        if (this.arraytype.indexOf('type') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'type'
+          assAttColTemp['field_name'] = 'type'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_chasis_number'] == true) {
+        if (this.arraytype.indexOf('vehicle_chasis_number') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_chasis_number'
+          assAttColTemp['field_name'] = 'vehicle_chasis_number'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_insurance_vendor'] == true) {
+        if (this.arraytype.indexOf('vehicle_insurance_vendor') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_vendor'
+          assAttColTemp['field_name'] = 'vehicle_insurance_vendor'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_insurance_cover_note_number'] == true) {
+        if (this.arraytype.indexOf('vehicle_insurance_cover_note_number') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_cover_note_number'
+          assAttColTemp['field_name'] = 'vehicle_insurance_cover_note_number'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_insurance_no_claim_discount'] == true) {
+        if (this.arraytype.indexOf('vehicle_insurance_no_claim_discount') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_no_claim_discount'
+          assAttColTemp['field_name'] = 'vehicle_insurance_no_claim_discount'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_insurance_total_premium'] == true) {
+        if (this.arraytype.indexOf('vehicle_insurance_total_premium') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_total_premium'
+          assAttColTemp['field_name'] = 'vehicle_insurance_total_premium'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_register_date'] == true) {
+        if (this.arraytype.indexOf('vehicle_register_date') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_register_date'
+          assAttColTemp['field_name'] = 'vehicle_register_date'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_spad_permit_date_period_to'] == true) {
+        if (this.arraytype.indexOf('vehicle_spad_permit_date_period_to') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_spad_permit_date_period_to'
+          assAttColTemp['field_name'] = 'vehicle_spad_permit_date_period_to'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_spad_no_license_operator'] == true) {
+        if (this.arraytype.indexOf('vehicle_spad_no_license_operator') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_spad_no_license_operator'
+          assAttColTemp['field_name'] = 'vehicle_spad_no_license_operator'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_registration_owner'] == true) {
+        if (this.arraytype.indexOf('vehicle_registration_owner') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_registration_owner'
+          assAttColTemp['field_name'] = 'vehicle_registration_owner'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['capacity_size'] == true) {
+        if (this.arraytype.indexOf('capacity_size') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'capacity_size'
+          assAttColTemp['field_name'] = 'capacity_size'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['coverage_range'] == true) {
+        if (this.arraytype.indexOf('coverage_range') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'coverage_range'
+          assAttColTemp['field_name'] = 'coverage_range'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['flow_rate'] == true) {
+        if (this.arraytype.indexOf('flow_rate') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'flow_rate'
+          assAttColTemp['field_name'] = 'flow_rate'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['hysteresis'] == true) {
+        if (this.arraytype.indexOf('hysteresis') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'hysteresis'
+          assAttColTemp['field_name'] = 'hysteresis'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['inlet_diameter'] == true) {
+        if (this.arraytype.indexOf('inlet_diameter') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'inlet_diameter'
+          assAttColTemp['field_name'] = 'inlet_diameter'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['legal_name'] == true) {
+        if (this.arraytype.indexOf('legal_name') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'legal_name'
+          assAttColTemp['field_name'] = 'legal_name'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['manufacture_part_number'] == true) {
+        if (this.arraytype.indexOf('manufacture_part_number') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'manufacture_part_number'
+          assAttColTemp['field_name'] = 'manufacture_part_number'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['motor_current'] == true) {
+        if (this.arraytype.indexOf('motor_current') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'motor_current'
+          assAttColTemp['field_name'] = 'motor_current'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['no_of_stage'] == true) {
+        if (this.arraytype.indexOf('no_of_stage') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'no_of_stage'
+          assAttColTemp['field_name'] = 'no_of_stage'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['power_supply_type'] == true) {
+        if (this.arraytype.indexOf('power_supply_type') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'power_supply_type'
+          assAttColTemp['field_name'] = 'power_supply_type'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['source_from'] == true) {
+        if (this.arraytype.indexOf('source_from') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'source_from'
+          assAttColTemp['field_name'] = 'source_from'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['temperature'] == true) {
+        if (this.arraytype.indexOf('temperature') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'temperature'
+          assAttColTemp['field_name'] = 'temperature'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['valve_diameter'] == true) {
+        if (this.arraytype.indexOf('valve_diameter') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'valve_diameter'
+          assAttColTemp['field_name'] = 'valve_diameter'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_engine_capacity'] == true) {
+        if (this.arraytype.indexOf('vehicle_engine_capacity') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_engine_capacity'
+          assAttColTemp['field_name'] = 'vehicle_engine_capacity'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_model'] == true) {
+        if (this.arraytype.indexOf('vehicle_model') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_model'
+          assAttColTemp['field_name'] = 'vehicle_model'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_insurance_date_period_from'] == true) {
+        if (this.arraytype.indexOf('vehicle_insurance_date_period_from') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_date_period_from'
+          assAttColTemp['field_name'] = 'vehicle_insurance_date_period_from'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_insurance_policy_type'] == true) {
+        if (this.arraytype.indexOf('vehicle_insurance_policy_type') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_insurance_policy_type'
+          assAttColTemp['field_name'] = 'vehicle_insurance_policy_type'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_puspakom_date_inspection'] == true) {
+        if (this.arraytype.indexOf('vehicle_puspakom_date_inspection') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_puspakom_date_inspection'
+          assAttColTemp['field_name'] = 'vehicle_puspakom_date_inspection'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_roadtax_rate'] == true) {
+        if (this.arraytype.indexOf('vehicle_roadtax_rate') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_roadtax_rate'
+          assAttColTemp['field_name'] = 'vehicle_roadtax_rate'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_roadtax_renew_date'] == true) {
+        if (this.arraytype.indexOf('vehicle_roadtax_renew_date') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_roadtax_renew_date'
+          assAttColTemp['field_name'] = 'vehicle_roadtax_renew_date'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['vehicle_spad_permit_date_period_from'] == true) {
+        if (this.arraytype.indexOf('vehicle_spad_permit_date_period_from') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'vehicle_spad_permit_date_period_from'
+          assAttColTemp['field_name'] = 'vehicle_spad_permit_date_period_from'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['voltage'] == true) {
+        if (this.arraytype.indexOf('voltage') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'voltage'
+          assAttColTemp['field_name'] = 'voltage'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['asset_status'] == true) {
+        if (this.arraytype.indexOf('asset_status') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'asset_status'
+          assAttColTemp['field_name'] = 'asset_status'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['brand'] == true) {
+        if (this.arraytype.indexOf('brand') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'brand'
+          assAttColTemp['field_name'] = 'brand'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['model_number'] == true) {
+        if (this.arraytype.indexOf('model_number') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'model_number'
+          assAttColTemp['field_name'] = 'model_number'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['bo'] == true) {
+        if (this.arraytype.indexOf('bo') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'bo'
+          assAttColTemp['field_name'] = 'bo'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      if (assAttCol['bo_status'] == true) {
+        if (this.arraytype.indexOf('bo_status') == -1) {
+          let assAttColTemp = []
+          assAttColTemp['id'] = ''
+          assAttColTemp['action_type'] = ''
+          // assAttColTemp['adhoc_value'] = null
+          assAttColTemp['characteristic_type'] = ''
+          assAttColTemp['characteristic_type_name'] = 'bo_status'
+          assAttColTemp['field_name'] = 'bo_status'
+          assAttColTemp['field_value'] = ''
+          // assAttColTemp['characteristic_value'] = null
+          this.assetAttributedatas.push(assAttColTemp)
+        }
+      }
+      // console.log("this.assetAttributedatas ==== ", this.assetAttributedatas)
+
+      for (let i = 0; i < this.assetAttributedatas.length; i++) {
+        console.log("this.assetAttributedatas[1] ===== ", this.assetAttributedatas[i])
+        if (this.assetAttributedatas[i].characteristic_type == '') {
+          this.assetAttributeReferenceService.filter("attribute_field_name=" + this.assetAttributedatas[i].field_name).subscribe(
+            (res) => {
+              this.assetAttributedatas[i].characteristic_type = res[0].char_type_cd
+              // this.assetAttributedatas.push(this.assetAttributedatas[i])
+              console.log("res ===== ", res)
+            }, () => {
+
+            }
+          )
+        }
+      }
+    }, 1000);
 
   }
 
@@ -1235,6 +1392,7 @@ export class AssetDetailPage implements OnInit {
   }
 
   field_value = ''
+
   getAssetAttributeData(asset_attr) {
 
     this.assetAttributedatas = []
@@ -1244,7 +1402,7 @@ export class AssetDetailPage implements OnInit {
       this.field_value = null
       this.assetAttributeService.getOne(element).subscribe(
         (aasRes) => {
-          // console.log('assetAttributeService = ', aasRes)
+          console.log('assetAttributeService>>=// ', aasRes)
           // this.assetAttributedatas.push(aasRes)
           // console.log("assetAttributedatas = ", this.assetAttributedatas)
           let assct = aasRes.characteristic_type
@@ -1275,9 +1433,11 @@ export class AssetDetailPage implements OnInit {
             (aarsRes) => {
 
               aasRes['field_name'] = aarsRes[0].attribute_field_name
+              this.arraytype.push(aarsRes[0].attribute_field_name)
               // console.log('aarsRes qwe = ', aasRes)
 
               this.assetAttributedatas.push(aasRes)
+
             },
             (aarsErr) => {
               console.error("err", aarsErr);
@@ -1341,6 +1501,7 @@ export class AssetDetailPage implements OnInit {
   onKey(value, row) {
     console.log("row === ", row)
     console.log("value === ", value)
+
     this.assetAttributedatas.forEach(element => {
 
       // check in the form data 
