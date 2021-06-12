@@ -87,7 +87,11 @@
 
         <ion-item>
           <ion-label position="stacked">Asset Location</ion-label>
-          <ion-input type="text" formControlName="location" readonly></ion-input>
+          <ion-input
+            type="text"
+            formControlName="location"
+            readonly
+          ></ion-input>
         </ion-item>
 
         <ion-item>
@@ -124,15 +128,15 @@
 
         <ion-item>
           <ion-label position="stacked">Planner</ion-label>
-          <ion-select formControlName="planner">
-            <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option
-              *ngFor="let plan of plannerData"
-              [value]="plan.planner"
-            >
-              {{plan.description}}
-            </ion-select-option>
-          </ion-select>
+          <ionic-selectable
+            [items]="plannerData"
+            itemValueField="planner"
+            itemTextField="description"
+            [canSearch]="true"
+            formControlName="planner"
+            (onChange)="onChangePlanner($event)"
+          >
+          </ionic-selectable>
         </ion-item>
 
         <!-- <ion-item>

@@ -14,6 +14,7 @@ import {
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 import { format } from "date-fns";
+import { IonicSelectableComponent } from "ionic-selectable";
 
 import { ApprovalProfileService } from "src/app/shared/services/approval-profile/approval-profile.service";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
@@ -39,6 +40,7 @@ export class WorkRequestPage implements OnInit {
   // Data
   capturedSnapURL: string;
   segmentModal = "first";
+  plannerSelected: string = "";
   process: string;
   approvalProfileData: any;
   assetLocatioSyncData: any;
@@ -331,44 +333,6 @@ export class WorkRequestPage implements OnInit {
         }
       );
     }
-
-    // if (
-    //   (bo == "W1-TrackedGeneralComponent" ||
-    //     bo == "W1-IOSvcGeneralComponent") &&
-    //   attached_to_asset_id != ""
-    // ) {
-    //   this.assetsService
-    //     .filter("attached_to_asset_id=" + attached_to_asset_id)
-    //     .subscribe(
-    //       (res) => {
-    //         // console.log("res assetsService = ", res);
-
-    //         this.workrequestFormGroup.patchValue({
-    //           // location: res[0].description,
-    //           node_id: res[0].node_id,
-    //         });
-    //       },
-    //       (err) => {
-    //         // console.log("err assetsService = ", err);
-    //       }
-    //     );
-    // } else {
-    //   if (node_id) {
-    //     this.assetLocatioSyncService.filter("node_id=" + node_id).subscribe(
-    //       (res) => {
-    //         console.log("res assetlsService = ", res);
-
-    //         this.workrequestFormGroup.patchValue({
-    //           location: res[0].description,
-    //           node_id: res[0].node_id,
-    //         });
-    //       },
-    //       (err) => {
-    //         // console.log("err assetlsService = ", err);
-    //       }
-    //     );
-    //   }
-    // }
   }
 
   getApprovalProfileList() {
@@ -454,6 +418,10 @@ export class WorkRequestPage implements OnInit {
     );
   }
 
+  onChangePlanner(event: { component: IonicSelectableComponent; value: any }) {
+    this.plannerSelected = event.value.planner;
+  }
+
   submit() {
     this.workrequestFormGroup.patchValue({
       // creation_user: this.authService.userID,
@@ -461,6 +429,7 @@ export class WorkRequestPage implements OnInit {
         new Date(this.workrequestFormGroup.value.required_by_date),
         "yyyy-MM-dd"
       ),
+      planner: this.plannerSelected,
     });
     console.log("workrequestFormGroup = ", this.workrequestFormGroup.value);
 

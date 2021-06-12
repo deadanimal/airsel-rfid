@@ -8,13 +8,16 @@ import { WorkRequestPageRoutingModule } from './work-request-routing.module';
 
 import { WorkRequestPage } from './work-request.page';
 
+import { IonicSelectableModule } from 'ionic-selectable';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    WorkRequestPageRoutingModule
+    WorkRequestPageRoutingModule,
+    IonicSelectableModule
   ],
   declarations: [WorkRequestPage]
 })
