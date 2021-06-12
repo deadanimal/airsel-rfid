@@ -271,6 +271,7 @@ export class WorkRequestPage implements OnInit {
                       });
                     } else {
                       this.presentAlert("Info", "Asset location is not found");
+                      this.clickBack();
                     }
                   },
                   (err) => {
@@ -317,6 +318,7 @@ export class WorkRequestPage implements OnInit {
             });
           } else {
             this.presentAlert("Info", "Asset location is not found");
+            this.clickBack();
           }
         },
         (err) => {
@@ -467,6 +469,7 @@ export class WorkRequestPage implements OnInit {
         message: "Please wait for a while...",
       })
       .then((loading) => {
+        loading.present();
         this.workrequestService.post(this.workrequestFormGroup.value).subscribe(
           (res) => {
             // console.log("res", res);
