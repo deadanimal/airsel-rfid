@@ -168,12 +168,12 @@ export class WorkRequestPage implements OnInit {
                   "Error",
                   "Badge number not found, Please enter correct badge number."
                 );
-                this.router.navigate(["/technical/work-request-list"]);
+                this.clickBack();
               }
             },
             (err) => {
               console.error("err", err);
-              this.router.navigate(["/technical/work-request-list"]);
+              this.clickBack();
             }
           );
         } else {
@@ -247,42 +247,126 @@ export class WorkRequestPage implements OnInit {
     // else, take the "node_id" based on "asset_id"
 
     if (
-      (bo == "W1-TrackedGeneralComponent" ||
-        bo == "W1-IOSvcGeneralComponent") &&
-      attached_to_asset_id != ""
+      bo == "W1-TrackedGeneralComponent" ||
+      bo == "W1-IOSvcGeneralComponent"
     ) {
-      this.assetsService
-        .filter("attached_to_asset_id=" + attached_to_asset_id)
-        .subscribe(
-          (res) => {
+      // take the attached_to_asset_id if not empty
+      if (attached_to_asset_id != "") {
+        this.assetsService.filter("asset_id=" + attached_to_asset_id).subscribe(
+          (resAsset) => {
             // console.log("res assetsService = ", res);
 
-            this.workrequestFormGroup.patchValue({
-              // location: res[0].description,
-              node_id: res[0].node_id,
-            });
-          },
-          (err) => {
-            // console.log("err assetsService = ", err);
-          }
-        );
-    } else {
-      if (node_id) {
-        this.assetLocatioSyncService.filter("node_id=" + node_id).subscribe(
-          (res) => {
-            console.log("res assetlsService = ", res);
+            if (resAsset.length > 0) {
+              this.workrequestFormGroup.patchValue({
+                node_id: resAsset[0].node_id,
+              });
 
-            this.workrequestFormGroup.patchValue({
-              location: res[0].description,
-              node_id: res[0].node_id,
-            });
+              this.assetLocatioSyncService
+                .filter("node_id=" + resAsset[0].node_id)
+                .subscribe(
+                  (resAssetLocationSync) => {
+                    if (resAssetLocationSync.length > 0) {
+                      this.workrequestFormGroup.patchValue({
+                        location: resAssetLocationSync[0].description,
+                      });
+                    } else {
+                      this.presentAlert("Info", "Asset location is not found");
+                    }
+                  },
+                  (err) => {
+                    console.error("err assetLocatioSyncService", err);
+                    this.presentAlert(
+                      "Error",
+                      "Sorry, there is a technical problem going on."
+                    );
+                    this.clickBack();
+                  }
+                );
+            } else {
+              this.presentAlert("Info", "No asset found for this component");
+              this.clickBack();
+            }
           },
           (err) => {
-            // console.log("err assetlsService = ", err);
+            console.log("err assetsService = ", err);
+            this.presentAlert(
+              "Error",
+              "Sorry, there is a technical problem going on."
+            );
+            this.clickBack();
           }
         );
+      } else {
+        this.presentAlert(
+          "Info",
+          "Work request can't be done for this component"
+        );
+        this.clickBack();
       }
+    } else {
+      // do this if bo not [W1-TrackedGeneralComponent, W1-IOSvcGeneralComponent]
+      this.workrequestFormGroup.patchValue({
+        node_id: node_id,
+      });
+
+      this.assetLocatioSyncService.filter("node_id=" + node_id).subscribe(
+        (resAssetLocationSync) => {
+          if (resAssetLocationSync.length > 0) {
+            this.workrequestFormGroup.patchValue({
+              location: resAssetLocationSync[0].description,
+            });
+          } else {
+            this.presentAlert("Info", "Asset location is not found");
+          }
+        },
+        (err) => {
+          console.error("err assetLocatioSyncService", err);
+          this.presentAlert(
+            "Error",
+            "Sorry, there is a technical problem going on."
+          );
+          this.clickBack();
+        }
+      );
     }
+
+    // if (
+    //   (bo == "W1-TrackedGeneralComponent" ||
+    //     bo == "W1-IOSvcGeneralComponent") &&
+    //   attached_to_asset_id != ""
+    // ) {
+    //   this.assetsService
+    //     .filter("attached_to_asset_id=" + attached_to_asset_id)
+    //     .subscribe(
+    //       (res) => {
+    //         // console.log("res assetsService = ", res);
+
+    //         this.workrequestFormGroup.patchValue({
+    //           // location: res[0].description,
+    //           node_id: res[0].node_id,
+    //         });
+    //       },
+    //       (err) => {
+    //         // console.log("err assetsService = ", err);
+    //       }
+    //     );
+    // } else {
+    //   if (node_id) {
+    //     this.assetLocatioSyncService.filter("node_id=" + node_id).subscribe(
+    //       (res) => {
+    //         console.log("res assetlsService = ", res);
+
+    //         this.workrequestFormGroup.patchValue({
+    //           location: res[0].description,
+    //           node_id: res[0].node_id,
+    //         });
+    //       },
+    //       (err) => {
+    //         // console.log("err assetlsService = ", err);
+    //       }
+    //     );
+    //   }
+    // }
   }
 
   getApprovalProfileList() {
