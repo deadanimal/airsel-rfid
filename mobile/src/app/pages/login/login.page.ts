@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
       username: new FormControl(
         // "haziq_y",
         // "fadhillah",
-        // "",
+        "",
         Validators.compose([
           Validators.required,
           // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
@@ -328,7 +328,7 @@ export class LoginPage implements OnInit {
   async userNotExist() {
     const alert = await this.alertController.create({
       header: "Data Not Found",
-      message: "User not exist, Please try again.",
+      message: "Username or password did not match. Please try again.",
       buttons: ["OK"],
     });
 

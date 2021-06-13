@@ -299,8 +299,8 @@ export class AssetRegistrationPage implements OnInit {
 
   // warranty
   warrantyList = [
-    { id: 'Available', name: 'Y' },
-    { id: 'Not-Available', name: 'N' },
+    { id: 'Available', name: 'Yes' },
+    { id: 'Not-Available', name: 'No' },
   ];
 
   // search region
@@ -875,6 +875,23 @@ export class AssetRegistrationPage implements OnInit {
   }) {
     console.log('port:', event.value);
   }
+
+  onChangeLocAssMaiMan(event: {
+    // console.log(event);
+    // if(value.length > 3)
+    component: IonicSelectableComponent,
+    value: any
+    // }
+  }) {
+    console.log('port:', event.value);
+  }
+  // onChangeLocAssMaiMan(event: {
+  //   // console.log(event);
+  //   // if(value.length > 3)
+  //   component: IonicSelectableComponent,
+  //   value: any
+  //   // }
+  // }) { }
 
   onChangeAssPrimaryCat(event: {
     // console.log(event);
