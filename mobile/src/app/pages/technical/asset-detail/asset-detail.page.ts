@@ -200,25 +200,27 @@ export class AssetDetailPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.asset_detail = this.router.getCurrentNavigation().extras.state.asset_detail;
 
+        // console.log("this.asset_detail==>><<", this.asset_detail)
+
         let asset_attributes = this.asset_detail["asset_attributes"];
         // console.log('assetType = ', assetType)
         // this.getAssetAttributeData()
         this.getAssetAttributeData(asset_attributes)
 
-        console.log("this.asset_detail ooooo = ", this.asset_detail)
+        // console.log("this.asset_detail ooooo = ", this.asset_detail)
         // console.log("this.asset_detail asset_id = ", this.asset_detail.asset_type)
         let asset_type = "asset_type_code=" + this.asset_detail['asset_type']
         this.assetAttributeId = this.asset_detail['asset_attributes']
-        console.log("this.assetAttributeId----", this.assetAttributeId)
+        // console.log("this.assetAttributeId----", this.assetAttributeId)
         this.assetTypesService.filter(asset_type).subscribe(
           (assTypeRes) => {
-            console.log("assTypeRes", assTypeRes)
-            console.log("assTypeRes", assTypeRes[0]['asset_type_description'])
+            // console.log("assTypeRes", assTypeRes)
+            // console.log("assTypeRes", assTypeRes[0]['asset_type_description'])
             let asset_typedesc = "asset_type_id=" + assTypeRes[0]['asset_type_description']
             // console.log(asset_typedesc)
             this.assetAttributeColumnService.filter(asset_typedesc).subscribe(
               (assAttColRes) => {
-                console.log("assAttColRes = ", assAttColRes)
+                // console.log("assAttColRes = ", assAttColRes)
                 this.getAssAttrColumnData(assAttColRes[0])
               }, (err) => {
                 console.log(err)
@@ -236,9 +238,13 @@ export class AssetDetailPage implements OnInit {
         // }
         this.assetLocatioSyncService.filter("node_id=" + this.asset_detail.node_id).subscribe(
           (res) => {
-            console.log("assetLocatioSyncServiceres", res);
+            // console.log("assetLocatioSyncServiceres", res);
             // this.assetregistrations = res;
-            this.assetLocatioSyncdata = res[0].description
+            if (res.length > 0) {
+              this.assetLocatioSyncdata = res[0].description
+            } else {
+              this.assetLocatioSyncdata = '-'
+            }
             // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
           },
           (err) => {
@@ -259,7 +265,7 @@ export class AssetDetailPage implements OnInit {
   getAssAttrColumnData(assAttCol) {
     // arraytype = []
     setTimeout(() => {
-
+      // console.log("this.assetAttributedatas<>><><>", this.assetAttributedatas)
 
       // this.assetAttributedatas.forEach((elementqq) => {
       //   console.log("elementqq = ", elementqq)
@@ -276,7 +282,7 @@ export class AssetDetailPage implements OnInit {
       //   arraytype.push(this.assetAttributedatas[i].field_name)
       // }
 
-      console.log("arraytype = ", this.arraytype)
+      // console.log("this.arraytype>>>>>>>", this.arraytype)
       if (assAttCol['bottom_water_level'] == true) {
         if (this.arraytype.indexOf('bottom_water_level') == -1) {
           let assAttColTemp = []
@@ -349,8 +355,8 @@ export class AssetDetailPage implements OnInit {
       }
       if (assAttCol['installation'] == true) {
         if (this.arraytype.indexOf('installation') == -1) {
-          console.log("assAttCol['installation']  = ", assAttCol['installation'])
-          console.log("this.arraytype.indexOf('installation')  = ", this.arraytype.indexOf('installation'))
+          // console.log("assAttCol['installation']  = ", assAttCol['installation'])
+          // console.log("this.arraytype.indexOf('installation')  = ", this.arraytype.indexOf('installation'))
           let assAttColTemp = []
           assAttColTemp['id'] = ''
           assAttColTemp['action_type'] = ''
@@ -364,7 +370,11 @@ export class AssetDetailPage implements OnInit {
         }
       }
       if (assAttCol['manufacturer'] == true) {
+
+        // console.log("gggggggg")
+
         if (this.arraytype.indexOf('manufacturer') == -1) {
+          // console.log("hhhhhhh")
           let assAttColTemp = []
           assAttColTemp['id'] = ''
           assAttColTemp['action_type'] = ''
@@ -1262,13 +1272,13 @@ export class AssetDetailPage implements OnInit {
       // console.log("this.assetAttributedatas ==== ", this.assetAttributedatas)
 
       for (let i = 0; i < this.assetAttributedatas.length; i++) {
-        console.log("this.assetAttributedatas[1] ===== ", this.assetAttributedatas[i])
+        // console.log("this.assetAttributedatas[1] ===== ", this.assetAttributedatas[i])
         if (this.assetAttributedatas[i].characteristic_type == '') {
           this.assetAttributeReferenceService.filter("attribute_field_name=" + this.assetAttributedatas[i].field_name).subscribe(
             (res) => {
               this.assetAttributedatas[i].characteristic_type = res[0].char_type_cd
               // this.assetAttributedatas.push(this.assetAttributedatas[i])
-              console.log("res ===== ", res)
+              // console.log("res ===== ", res)
             }, () => {
 
             }
@@ -1402,7 +1412,7 @@ export class AssetDetailPage implements OnInit {
       this.field_value = null
       this.assetAttributeService.getOne(element).subscribe(
         (aasRes) => {
-          console.log('assetAttributeService>>=// ', aasRes)
+          // console.log('assetAttributeService>>=// ', aasRes)
           // this.assetAttributedatas.push(aasRes)
           // console.log("assetAttributedatas = ", this.assetAttributedatas)
           let assct = aasRes.characteristic_type
@@ -1455,24 +1465,9 @@ export class AssetDetailPage implements OnInit {
 
   }
 
-  getsadaasasd(attrData) {
-    console.log('attrData --------- = ', attrData);
-    // attrData.forEach(element => {
-    //   console.log('element = ', element)
-    //   this.assetAttributeReferenceService.filter("char_type_cd=" + element.characteristic_type).subscribe(
-    //     (aarsRes) => {
-    //       console.log('aarsRes = ', aarsRes)
-    //     },
-    //     (aarsErr) => {
-    //       console.error("err", aarsErr);
-    //     }
-    //   );
-    // });
-
-  }
 
   onKeyAssDesc(value, row) {
-    console.log(value)
+    // console.log(value)
     this.asset_detail['description'] = value
     // console.log(this.asset_detail)
     // this.updateAssetData['characteristic_value'] = value
@@ -1498,9 +1493,11 @@ export class AssetDetailPage implements OnInit {
   //   console.log(this.assetAttributedatas)
 
   // }
+
   onKey(value, row) {
-    console.log("row === ", row)
-    console.log("value === ", value)
+
+    // console.log("row === ", row)
+    // console.log("value === ", value)
 
     this.assetAttributedatas.forEach(element => {
 
@@ -1510,27 +1507,27 @@ export class AssetDetailPage implements OnInit {
         let characteristic_type_list = ["CM-MFG", "CM-WASTC", "CM-VRTVD", "CM-VOWNS", "CM-VROWN", "CM-VINPT"]
 
         let updateformData: any = {}
-        console.log(characteristic_type_list.indexOf(row.characteristic_type))
+        // console.log(characteristic_type_list.indexOf(row.characteristic_type))
         if (characteristic_type_list.indexOf(row.characteristic_type) !== -1) {
-          console.log("ssss")
+          // console.log("ssss")
           element.characteristic_value = value;
-          // updateformData['characteristic_value'] = value
+          updateformData['characteristic_value'] = value
         } else {
-          console.log("ddddd")
+          // console.log("ddddd")
           element.adhoc_value = value;
           updateformData['adhoc_value'] = value
         }
-        element.action_type = 'update';
 
-        updateformData['action_type'] = 'update'
+        // updateformData['action_type'] = 'update'
         updateformData['characteristic_type'] = element.characteristic_type
         updateformData['characteristic_type_name'] = element.field_name
 
-        console.log("updateformData = ", updateformData);
-        console.log("element = ", element)
+        // console.log("updateformData = ", updateformData);
+        // console.log("element = ", element)
 
         if (element.id == '') {
-          console.log('exist cok')
+          element.action_type = 'add';
+          // console.log('not exist cok')
           this.assetAttributeService.post(updateformData).subscribe(
             (resAAS) => {
               let atID: any = []
@@ -1538,10 +1535,10 @@ export class AssetDetailPage implements OnInit {
               // this.assetAttributeId.forEach(ele => {
               //   atID.push(ele)
               // });
-              console.log("resAAS = ", resAAS)
+              // console.log("resAAS = ", resAAS)
               // this.assetAttributeId.push(resAAS.id)
               element.id = resAAS.id;
-              console.log("assetAttributeId = ", this.assetAttributeId)
+              // console.log("assetAttributeId = ", this.assetAttributeId)
 
             },
             (err) => {
@@ -1549,11 +1546,15 @@ export class AssetDetailPage implements OnInit {
             }
           );
         } else {
-          console.log('not exist cok')
+          element.action_type = 'update';
+          // console.log('exist cok')
           this.assetAttributeService.update(element.id, updateformData).subscribe(
             (res) => {
-              console.log(res)
+              // console.log(res)
               // this.assetAttributedatas.push(res)
+              // console.log("resAAS = ", res)
+              // this.assetAttributeId.push(res.id)
+              // element.id = res.id;
               // let obj = {
               //   submitted_datetime: this.getCurrentDateTime(),
               // }
@@ -1573,7 +1574,6 @@ export class AssetDetailPage implements OnInit {
         }
       }
     });
-    console.log(this.assetAttributedatas)
 
   }
 
@@ -1660,33 +1660,47 @@ export class AssetDetailPage implements OnInit {
 
     // });
     // setTimeout(() => {
-    console.log("assetAttributedatas --==][ ", this.assetAttributedatas)
-    let assetAttrId = []
+    // console.log("assetAttributedatas --==][ ", this.assetAttributedatas)
+    let assetAttrIdExist = []
     this.assetAttributedatas.forEach(element => {
-      console.log("element --- ", element.id)
+
+      // console.log("element --- ", element.id)
       if (element.id != '') {
-        console.log('masuk')
-        assetAttrId.push(element.id)
+        // console.log('masuk')
+        assetAttrIdExist.push(element.id)
       }
     })
-    console.log("assetAttrId---", assetAttrId)
+    // console.log("assetAttrIdExist---", assetAttrIdExist)
 
     let obj = {
-      asset_attributes: assetAttrId,
+      asset_attributes: assetAttrIdExist,
       description: this.asset_detail["description"],
       submitted_datetime: this.getCurrentDateTime()
     }
-    console.log("obj = ", obj)
-    this.assetsService.update(this.asset_detail['id'], obj).subscribe(
-      (resp) => {
-        console.log('berjaya cok', resp)
-      }, (error) => {
-        console.log('tidak berjaya cok', error)
-      }, () => {
-        this.update()
-      }
-    )
-    // }, 2000);
+    // console.log("obj = ", obj)
+    if (this.assetAttributedatas.length == assetAttrIdExist.length) {
+      this.assetsService.update(this.asset_detail['id'], obj).subscribe(
+        (resp) => {
+          // console.log('berjaya cok', resp)
+        }, (error) => {
+          // console.log('tidak berjaya cok', error)
+        }, () => {
+          this.update()
+        }
+      )
+    } else {
+      this.warningAlert('Warning', 'Please fill in all question.')
+    }
+  }
+
+  async warningAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['ok'],
+    });
+
+    await alert.present();
   }
 
   getCurrentDateTime() {

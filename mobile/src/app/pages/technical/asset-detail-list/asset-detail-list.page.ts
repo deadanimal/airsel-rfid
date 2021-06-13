@@ -50,17 +50,22 @@ export class AssetDetailListPage implements OnInit {
   }
 
   getAsset(badge_no: string) {
-    console.log("badge_no =", badge_no)
+    // console.log("badge_no =", badge_no)
     this.assetsService.filter("badge_no=" + badge_no).subscribe(
       (res) => {
-        console.log("res", res);
+        // console.log("res", res);
         this.assetregistrations = res;
 
         this.assetLocatioSyncService.filter("node_id=" + this.assetregistrations[0].node_id).subscribe(
           (res) => {
-            console.log("assetLocatioSyncServiceres", res);
+            // console.log("assetLocatioSyncServiceres", res);
             // this.assetregistrations = res;
-            this.assetLocatioSyncdata = res[0].description
+            // this.assetLocatioSyncdata = res[0].description
+            if (res.length > 0) {
+              this.assetLocatioSyncdata = res[0].description
+            } else {
+              this.assetLocatioSyncdata = '-'
+            }
             // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
           },
           (err) => {

@@ -328,7 +328,7 @@ export class LoginPage implements OnInit {
   async userNotExist() {
     const alert = await this.alertController.create({
       header: "Data Not Found",
-      message: "User not exist, Please try again.",
+      message: "Username or password did not match. Please try again.",
       buttons: ["OK"],
     });
 

@@ -1,4 +1,4 @@
-declare var broadcaster: any;
+// declare var broadcaster: any;
 
 import { Component, OnInit, NgZone } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
@@ -46,7 +46,7 @@ export class WorkRequestListPage implements OnInit {
     private workrequestService: WorkRequestsService,
     private assetService: AssetsService,
     private wamsService: WamsService
-  ) {}
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -57,7 +57,7 @@ export class WorkRequestListPage implements OnInit {
   }
 
   ngOnInit() {
-    broadcaster._debug = true;
+    // broadcaster._debug = true;
     // this.onRegister2DBarcodeListener();
     // this.onRegisterRFIDListener();
   }
@@ -496,14 +496,14 @@ export class WorkRequestListPage implements OnInit {
               console.log("this.bBarcode = ", this.bBarcode);
               if (this.bBarcode) {
                 loading.dismiss();
-                broadcaster.removeEventListener(ev, listener);
+                // broadcaster.removeEventListener(ev, listener);
                 this.updateQrbarcode(event.data);
               }
             });
           }
         };
 
-        broadcaster.addEventListener(ev, isGlobal, listener);
+        // broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -527,14 +527,14 @@ export class WorkRequestListPage implements OnInit {
               console.log("this.bRfid = ", this.bRfid);
               if (this.bRfid) {
                 loading.dismiss();
-                broadcaster.removeEventListener(ev, listener);
+                // broadcaster.removeEventListener(ev, listener);
                 this.updateRfid(event.data);
               }
             });
           }
         };
 
-        broadcaster.addEventListener(ev, isGlobal, listener);
+        // broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 }
