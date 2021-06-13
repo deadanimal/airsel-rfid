@@ -2,17 +2,23 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="homePage('/technical/tabs/tab1')">
-        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem;"></ion-icon>
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title style="font-weight: bold;">
-      Work Request
-    </ion-title>
+    <ion-title style="font-weight: bold"> Work Request </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px;">
-          {{ notificationService.totalnotificationbyuser }}</ion-badge>
+        <ion-badge
+          size="small"
+          color="danger"
+          style="position: absolute; right: -5px; top: 1px"
+        >
+          {{ notificationService.totalnotificationbyuser }}</ion-badge
+        >
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -26,10 +32,19 @@
     <ion-card *ngFor="let workrequest of workrequests">
       <ion-card-header>
         <ion-fab horizontal="end">
-          <ion-fab-button size="small" color="primary" (click)="clickEdit(workrequest)">
+          <ion-fab-button
+            size="small"
+            color="primary"
+            (click)="clickEdit(workrequest)"
+          >
             <ion-icon name="document-text"></ion-icon>
           </ion-fab-button>
-          <ion-fab-button size="small" color="tertiary" (click)="clickApprove(workrequest)">
+          <ion-fab-button
+            *ngIf="workrequest.work_request_status == 'CREATED'"
+            size="small"
+            color="tertiary"
+            (click)="clickApprove(workrequest)"
+          >
             <ion-icon name="checkmark-circle-outline"></ion-icon>
           </ion-fab-button>
           <!-- <ion-fab-button
@@ -41,7 +56,9 @@
           </ion-fab-button> -->
         </ion-fab>
         <ion-card-subtitle>Work Request ID</ion-card-subtitle>
-        <ion-card-title><b>{{ workrequest.work_request_id }}</b></ion-card-title>
+        <ion-card-title
+          ><b>{{ workrequest.work_request_id }}</b></ion-card-title
+        >
       </ion-card-header>
       <ion-card-content>
         <p>Asset ID: {{ workrequest.asset_id }}</p>

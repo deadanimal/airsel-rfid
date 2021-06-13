@@ -23,7 +23,7 @@
       <form [formGroup]="operationalreadingFormGroup">
         <ion-item>
           <ion-label position="stacked">Asset Description</ion-label>
-          <ion-input type="text" readonly formControlName="asset_description"></ion-input>
+          <ion-textarea rows="3" readonly formControlName="asset_description"></ion-textarea>
         </ion-item>
 
         <ion-item>
@@ -33,7 +33,7 @@
 
         <ion-item>
           <ion-label position="stacked">Location</ion-label>
-          <ion-input type="text" formControlName="location" readonly></ion-input>
+          <ion-textarea rows="3" readonly formControlName="location"></ion-textarea>
         </ion-item>
 
         <ion-item>

@@ -13,6 +13,7 @@ import { ServiceHistoryPageModule } from './service-history/service-history.modu
 import { WorkRequestPageModule } from './work-request/work-request.module';
 import { OperationalReadingPageModule } from './operational-reading/operational-reading.module';
 import { MeasurementTypePageModule } from './measurement-type/measurement-type.module';
+import { ApprovalProfilePageModule } from "./approval-profile/approval-profile.module";
 
 @NgModule({
   declarations: [QrScannerComponent],
@@ -25,6 +26,7 @@ import { MeasurementTypePageModule } from './measurement-type/measurement-type.m
     WorkRequestPageModule,
     OperationalReadingPageModule,
     MeasurementTypePageModule,
+    ApprovalProfilePageModule,
     IonCustomScrollbarModule,
     IonicModule.forRoot(),
     LeafletModule.forRoot(),

@@ -10,12 +10,11 @@ import {
   ModalController,
 } from "@ionic/angular";
 
-import { WorkRequestPage } from "../work-request/work-request.page";
+import { ApprovalProfilePage } from "../approval-profile/approval-profile.page";
 
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkRequestsService } from "src/app/shared/services/work-requests/work-requests.service";
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
-import { PlannerService } from "src/app/shared/services/planner/planner.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
 
 @Component({
@@ -33,7 +32,6 @@ export class WorkRequestListPage implements OnInit {
   bBarcode: boolean = false;
   bRfid: boolean = false;
   badge_number = "";
-  alertRadioPlanner = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +45,6 @@ export class WorkRequestListPage implements OnInit {
     public notificationService: NotificationsService,
     private workrequestService: WorkRequestsService,
     private assetService: AssetsService,
-    private plannerService: PlannerService,
     private wamsService: WamsService
   ) { }
 
@@ -77,26 +74,6 @@ export class WorkRequestListPage implements OnInit {
     );
   }
 
-  getPlanner() {
-    this.plannerService.filter("status=ACTIVE").subscribe(
-      (res) => {
-        // console.log("planner = ", res);
-        res.forEach((obj, index) => {
-          let object = {
-            name: "radio" + index,
-            type: "radio",
-            label: obj.description,
-            value: obj.planner,
-          };
-          this.alertRadioPlanner.push(object);
-        });
-      },
-      (err) => {
-        console.error("err", err);
-      }
-    );
-  }
-
   addGetBadgeNumber(workReqData) {
     this.workrequests = [];
     workReqData.forEach((element) => {
@@ -116,7 +93,6 @@ export class WorkRequestListPage implements OnInit {
 
   ionViewDidEnter() {
     this.getWorkRequest();
-    this.getPlanner();
   }
 
   homePage(path: string) {
@@ -311,44 +287,24 @@ export class WorkRequestListPage implements OnInit {
   }
 
   async clickApprove(workrequest) {
-    if (this.alertRadioPlanner.length > 0) {
-      const alert = await this.alertController.create({
-        header: "Update Approval Profile",
-        inputs: this.alertRadioPlanner,
-        buttons: [
-          {
-            text: "Cancel",
-            role: "cancel",
-            cssClass: "secondary",
-            handler: () => {
-              console.log("Confirm Cancel");
-            },
-          },
-          {
-            text: "Ok",
-            handler: (data: string) => {
-              if (data) {
-                this.loadingController
-                  .create({
-                    message: "Please wait for a while...",
-                  })
-                  .then((loading) => {
-                    loading.present();
-                    this.submitApprovalProfile(workrequest, data, loading);
-                  });
-              } else {
-                this.presentAlert(
-                  "Error",
-                  "Please pick ONE approval profile to proceed."
-                );
-              }
-            },
-          },
-        ],
-      });
+    const modal = await this.modalController.create({
+      component: ApprovalProfilePage,
+    });
 
-      await alert.present();
-    }
+    modal.onDidDismiss().then((modelData) => {
+      if (modelData.data != "") {
+        this.loadingController
+          .create({
+            message: "Please wait for a while...",
+          })
+          .then((loading) => {
+            loading.present();
+            this.submitApprovalProfile(workrequest, modelData.data, loading);
+          });
+      }
+    });
+
+    return await modal.present();
   }
 
   submitApprovalProfile(workrequest, data, loading) {
