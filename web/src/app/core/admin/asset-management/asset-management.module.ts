@@ -37,6 +37,8 @@ import { ProcessedComponent } from './processed/processed.component';
 import { BadgeNoComponent } from './badge-no/badge-no.component';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -66,7 +68,8 @@ import { BrowserModule } from "@angular/platform-browser";
     TypeaheadModule.forRoot(),
     NgxDatatableModule,
     Select2Module,
-    // BrowserModule
+    // BrowserAnimationsModule,
+    AccordionModule.forRoot(),
   ],
 })
 export class AssetManagementModule { }
