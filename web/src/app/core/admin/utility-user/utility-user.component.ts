@@ -81,8 +81,8 @@ export class UtilityUserComponent implements OnInit {
       mobile_number: new FormControl("", [Validators.required]),
       user_type: new FormControl("", [Validators.required]),
       // default for is_active is false
-      is_active: new FormControl(false, [Validators.required]),
-      status: new FormControl(false, [Validators.required]),
+      is_active: new FormControl("", [Validators.required]),
+      status: new FormControl("", [Validators.required]),
       password1: "bg6yaaz3pv",
       password2: "bg6yaaz3pv",
     });
@@ -132,6 +132,10 @@ export class UtilityUserComponent implements OnInit {
   register() {
     // To reset the formGroup if exist value
     // this.userFormGroup.reset();
+    this.userFormGroup.patchValue({
+        status: false,
+        is_active: false,
+      });
 
     this.authService.register(this.userFormGroup.value).subscribe(
       (res) => {
@@ -198,12 +202,34 @@ export class UtilityUserComponent implements OnInit {
   }
 
   update() {
+    console.log("bastard", this.userFormGroup.value);
+    let temp1;
+    let temp2;
+
+    console.log("status", this.userFormGroup.value.status);
+
+    if (this.userFormGroup.value.status == "false") {
+      this.userFormGroup.patchValue({
+          status: false,
+          is_active: false,
+      });
+
+    } else {
+      this.userFormGroup.patchValue({
+          status: true,
+          is_active: true,
+      });
+    }
+
+    
+    console.log("bastard2", this.userFormGroup.value);
+    
     this.userService
       .update(this.userFormGroup.value.id, this.userFormGroup.value)
       .subscribe(
         (res) => {
           if (res) {
-            // console.log("user", res);
+            console.log("user", res);
 
             this.modal.hide();
             swal.fire({
@@ -222,6 +248,7 @@ export class UtilityUserComponent implements OnInit {
         },
         (err) => {
           this.validation_forms = err.error;
+          console.log(err);
         },
         () => {
           () => console.log("HTTP request completed.");

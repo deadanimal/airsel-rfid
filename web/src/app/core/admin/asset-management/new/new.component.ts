@@ -393,6 +393,7 @@ export class NewComponent implements OnInit {
     let badgeFormatService = this.assetsBadgeNoService
     this.tableTemp1.forEach(function (itemVal) {
 
+      // badge logic is here
       if (itemVal['isTick'] == true) {
         let asspricat = itemVal.asset_primary_category
         let field = 'asset_primary_category=' + asspricat + '&status=AC'
@@ -401,6 +402,7 @@ export class NewComponent implements OnInit {
           (res) => {
             // console.log('res qweqwe', res)
             badgeFormatdata = res[0]
+            console.log("badgeFormatdata", badgeFormatdata);
             // console.log('badgeFormatdata asdasd = ', badgeFormatdata)
           }
         )
@@ -422,16 +424,11 @@ export class NewComponent implements OnInit {
           let currentNo = ''
 
 
-          //if (badgeFormatdata.skipped_no.length > 0) {
-          let test = "1";
-          let test2 = "2";
-          if (test==test2) {
-            console.log("loop1");
-
+          if (badgeFormatdata.skipped_no.length > 0) {
             skippedNo.forEach(function (noTest) {
 
               if (runNo == 1) {
-                // console.log('noTest if = ', noTest)
+              // console.log('noTest if = ', noTest)
                 firstSkippedNo = noTest
                 // leftSkippedNo += '"0"'
               }
@@ -461,27 +458,26 @@ export class NewComponent implements OnInit {
             )
             currentNo = firstSkippedNo
           } else {
-            // firstSkippedNo = badgeFormatdata.latest_no
-            // console.log("loop2");
+            firstSkippedNo = badgeFormatdata.latest_no
 
-            // currentNo = badgeFormatdata.latest_no
+            currentNo = badgeFormatdata.latest_no
 
-            // updateSkippedNo = {
-            //   latest_no: leftSkippedNo
-            // }
+            updateSkippedNo = {
+              latest_no: leftSkippedNo
+            }
 
-            // badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
-            //   (res) => {
-            //   },
-            //   (err) => {
-            //   }
-            // )
+            badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
+              (res) => {
+              },
+              (err) => {
+              }
+            )
           }
 
-          //let badgeNo = badgeFormatdata.short + '_' + currentNo.padStart(7, '0')
+          let badgeNo = badgeFormatdata.short + '_' + currentNo.padStart(7, '0')
           updateformData = {
             status: task,
-            badge_no: "ACT1001", 
+            badge_no: badgeNo, 
           }
 
           // console.log('itemVal = ', itemVal)
@@ -490,6 +486,8 @@ export class NewComponent implements OnInit {
             (res) => {
               console.log("res = ", res);
               resData = res
+              this.getRegisteredData()
+
             },
             error => {
               console.error("err", error);
