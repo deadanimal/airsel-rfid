@@ -198,6 +198,7 @@ export class RegistrationComponent implements OnInit {
 
   // table
   ColumnMode = ColumnMode;
+
   // Stepper
   isLinear = false;
   isDisableRipple = true;
@@ -876,7 +877,7 @@ export class RegistrationComponent implements OnInit {
       state: ["", Validators.compose([Validators.required])], //
       postal_code: ["", Validators.compose([Validators.required])], //
       country: ["", Validators.compose([Validators.required])], //
-      // tag_number: ["",],
+      tag_number: ["",],
       rfid_hex_code: ["",],
       service_area: ["", Validators.compose([Validators.required])], //
       location_main_contact: ["",],
@@ -886,7 +887,7 @@ export class RegistrationComponent implements OnInit {
       latitude: ["", Validators.compose([Validators.required])], //
       longitude: ["", Validators.compose([Validators.required])], //
       asset_critically: ["", Validators.compose([Validators.required])], //
-      cost_center: ["", Validators.compose([Validators.required])], //
+      cost_center: ["",], //
       brand: ["",],
       model_number: ["",],
       size_capacity_1: ["",],
@@ -899,7 +900,7 @@ export class RegistrationComponent implements OnInit {
       asset_plate_number: ["",],
       detailed_description: ["",],
       serial_number: ["", Validators.compose([Validators.required])], //
-      asset_tag_number: ["",],
+      // asset_tag_number: ["",],
       purchase_date_installed_handed_over_date: ["", Validators.compose([Validators.required])], //
       condition_rating: ["", Validators.compose([Validators.required])],  //
       status: ["",],
@@ -1412,11 +1413,38 @@ export class RegistrationComponent implements OnInit {
 
   }
 
-  formJoin: FormGroup;
+  // stepper: any;
+  reset(stepper) {
+
+    console.log("stepper", stepper)
+    this.spinner.hide();
+    swal
+      .fire({
+        title: "Warning",
+        text: "The form will be reset",
+        type: "warning",
+        showCancelButton: true,
+
+      }).then((result) => {
+        // this.firstFormGroup.reset();
+        // this.secondFormGroup.reset();
+
+        console.log("resilt", result)
+
+        if (result.value) {
+          stepper.reset();
+        }
+
+
+      });
+    // this.closeModal()
+  }
 
   submitRegistration() {
 
     const SubmitObject = new AssetsRegistrationModel();
+
+    // if (this.firstFormGroup.valid) {
 
     SubmitObject.node_id = this.firstFormGroup.value.parent_location
     SubmitObject.asset_identity = this.firstFormGroup.value.asset_identity;
@@ -1430,7 +1458,7 @@ export class RegistrationComponent implements OnInit {
     SubmitObject.state = this.firstFormGroup.value.state;
     SubmitObject.postal_code = this.firstFormGroup.value.postal_code;
     SubmitObject.country = this.firstFormGroup.value.country;
-    // SubmitObject.tag_number = this.firstFormGroup.value.tag_number;
+    SubmitObject.tag_number = this.firstFormGroup.value.tag_number;
     SubmitObject.hex_code = this.firstFormGroup.value.rfid_hex_code
     SubmitObject.service_area = this.firstFormGroup.value.service_area;
     SubmitObject.location_main_contact = this.firstFormGroup.value.location_main_contact;
@@ -1462,7 +1490,7 @@ export class RegistrationComponent implements OnInit {
     SubmitObject.size_capacity_3_unit_measurement = this.firstFormGroup.value.size_capacity_3_unit_measurement;
     SubmitObject.detailed_description = this.detailedDescription;
     SubmitObject.serial_number = this.firstFormGroup.value.serial_number;
-    SubmitObject.asset_tag_number = this.firstFormGroup.value.asset_tag_number;
+    // SubmitObject.asset_tag_number = this.firstFormGroup.value.asset_tag_number;
     SubmitObject.serial_number = this.firstFormGroup.value.serial_number;
     SubmitObject.purchase_date_installed_handed_over_date = this.firstFormGroup.value.purchase_date_installed_handed_over_date;
     SubmitObject.condition_rating = this.firstFormGroup.value.condition_rating;
@@ -1581,6 +1609,17 @@ export class RegistrationComponent implements OnInit {
         this.closeModal()
       }
     )
+    // }
+    // else {
+    //   swal
+    //     .fire({
+    //       title: "Failed",
+    //       text: "The submission has failed",
+    //       type: "warning",
+    //     }).then((result) => {
+    //     });
+
+    // }
 
   }
 
@@ -2110,14 +2149,17 @@ export class RegistrationComponent implements OnInit {
 
     console.log("assetPrimary", event)
     let tempData = [];
-    let assetprimaryregister1 = (<HTMLInputElement>document.getElementById('assetselector')).value;
-    console.log("assetprimaryregister1", assetprimaryregister1)
+
+    let asset_primary = this.assetprimarycategory.filter((value) => value.asset_type_code.includes(event));
+    console.log("Asset_primary_category", asset_primary[0].asset_type_description)
+
     this.assetsAttributeColumnService.get().subscribe(
       (res) => {
         // tempData = res;
         console.log("res", res)
 
-        tempData = res.filter((value) => value.asset_type_id.includes(event));
+
+        tempData = res.filter((value) => value.asset_type_id.includes(asset_primary[0].asset_type_description));
         console.log("tempData", tempData);
 
         this.assetprimaryselectorshow = tempData;

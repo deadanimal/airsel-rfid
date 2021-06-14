@@ -2,11 +2,13 @@ import { Component, OnInit, NgZone } from '@angular/core';
 
 
 import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
 
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { formatDate } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 am4core.useTheme(am4themes_animated);
 
@@ -21,11 +23,13 @@ export class AnalyticsWaComponent implements OnInit {
 
   constructor(
     private zone: NgZone, 
-    public workOrderActivityCompletionService: WorkOrderActivityCompletionService) { }
+    public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
+    public assetsService: AssetsService) { }
 
   ngOnInit() {
 
     this.getWorkOrderActivity();
+    this.getAssets();
   }
 
   assetowningdepartment = [
@@ -113,6 +117,18 @@ export class AnalyticsWaComponent implements OnInit {
     console.log("Total work order", this.totalWorkOrder);
     console.log("Temp Total work order", this.tempTotalWorkOrder);
 
+  }
+
+  assets: any;
+  getAssets(){
+    this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
+      console.log('response from API is ', response);
+      this.assets = response;
+      console.log('assets', this.assets);
+
+    }, (error) => {
+      console.log('Error is ', error)
+    })
   }
 
   public filters = <any>{
