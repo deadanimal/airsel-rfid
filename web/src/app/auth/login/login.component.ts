@@ -73,13 +73,20 @@ export class LoginComponent implements OnInit {
         let user = this.authService.decodedToken();
         this.userService.getOne(user.user_id).subscribe(
           (res) => {
-            console.log("user status", res.is_active);
             if (res.status == true) {
-              this.router.navigate(['/ams/dashboard']);
+              // check user role
+              // if role == admin => go to admin
+              // if role != admin => planner
+              if (res.user_type == "AM") {
+                this.router.navigate(['/ams/dashboard']);
+              } else {
+                this.router.navigate(['/planner/dashboard']);
+              }
+
             } else {
               swal.fire({
                 title: 'Sorry',
-                text: 'The login is correct, buy you did not activate your account yet. Please check your email (inbox and spam)',
+                text: 'The login credential is correct, but you did not activate your account yet. Please check your email (inbox and spam)',
                 type: 'warning',
                 buttonsStyling: false,
                 confirmButtonClass: 'btn btn-warning'

@@ -1039,21 +1039,31 @@ export class RegistrationComponent implements OnInit {
       (res) => {
         if (res) {
           this.primarycategories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("at") !== -1)
+            if(data.category !== undefined) {
+              if (data.category.toString().toLowerCase().indexOf("at") !== -1)
               return true;
-            return false;
+            } else {
+              return false;
+            }
           });
 
           this.typeassets = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
+            if(data.category !== undefined) {
+              if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
               return true;
-            return false;
+            } else {
+              return false;
+            }
+
           });
 
           this.categories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
+            if(data.category !== undefined) {
+              if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
               return true;
-            return false;
+            } else {
+              return false;
+            }
           });
         }
       },
@@ -1123,13 +1133,13 @@ export class RegistrationComponent implements OnInit {
     // document.getElementsByClassName("dz-preview-single")[0].innerHTML = "";
 
     this.getAssetPrimaryCategory()
-    //this.getExistingParent()
+    this.getExistingParent()
     this.getAssetAttributePredefine()
     this.getMaintenanceManager()
     this.getCostCenter();
     this.getMeasurementTypes()
     this.getContactInformation()
-    // this.classCategory();
+    this.classCategory();
 
   }
 
@@ -1505,7 +1515,6 @@ export class RegistrationComponent implements OnInit {
 
     this.assetsRegistrationService.post(SubmitObject).subscribe(
       (res) => {
-        console.log("yeaaayyy = ", res);
         // this.saveAssetType(createAssetTypeData)
         // this.successAlert()
 
@@ -1517,7 +1526,9 @@ export class RegistrationComponent implements OnInit {
             type: "success",
           }).then((result) => {
           });
-        this.closeModal()
+          this.modalRegisterAsset.hide();
+        //this.closeModal()
+          this.getRegisteredData();
       },
       error => {
         console.error("err", error);
@@ -1533,7 +1544,8 @@ export class RegistrationComponent implements OnInit {
             // invalidControl.
             // this.getRegisteredData()
           });
-        this.closeModal()
+        this.modalRegisterAsset.hide();
+        //this.closeModal()
       }
     )
 
@@ -1867,7 +1879,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   closeModal() {
-    this.modal.hide();
+    //this.modal.hide();
+    this.modalService.hide();
   }
 
   submitFileExcel() {
