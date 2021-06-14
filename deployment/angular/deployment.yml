@@ -18,7 +18,7 @@ spec:
         app: airsel-rfid-webapp
     spec:
       containers:
-      - image: syafiqpipe/airsel-rfid-webapp:1.0.8
+      - image: yusliadi/airsel-rfid-webapp:1.1.17
         imagePullPolicy: Always   
         name: airsel-rfid-webapp
         resources: {}

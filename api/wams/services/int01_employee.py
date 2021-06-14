@@ -10,34 +10,56 @@ from employee.models import Employee
 
 def insert_into_employee(dict):
 
-    # print("insert_into_employee", dict)
+    print("insert_into_employee", dict)
     # find in the database first
     # if do not exist, insert data into database
     employee = Employee.objects.filter(
         employee_id=dict['EMPLOYEE_ID']).exists()
 
     if not employee:
+        print("new")
         # insert data into database
         w1_first_name = dict['W1_FIRST_NAME'] if 'W1_FIRST_NAME' in dict else ""
         employee = Employee(employee_id=dict['EMPLOYEE_ID'], first_name=w1_first_name, last_name=dict['W1_LAST_NAME'], phone_no=dict['W1_PHONE_VALUE'], user_type=dict['EMPLOYEE_TYPE_CD'],
                             bo_status_cd=dict['BO_STATUS_CD'], country=dict['COUNTRY'], business_unit_cd=dict['BUSINESS_UNIT_CD'], hr_employee_number=dict['HR_EMPLOYEE_NUMBER'])
 
         employee.save()
+    
+    else: 
+        # update data in database
+        print("update")
+        w1_first_name = dict['W1_FIRST_NAME'] if 'W1_FIRST_NAME' in dict else ""
+
+        dictionary = {
+            "employee_id":dict['EMPLOYEE_ID'],
+            "first_name": w1_first_name,
+            "last_name": dict['W1_LAST_NAME'],
+            "phone_no": dict['W1_PHONE_VALUE'],
+            "user_type": dict['EMPLOYEE_TYPE_CD'],
+            "bo_status_cd": dict['BO_STATUS_CD'],
+            "country": dict['COUNTRY'],
+            "business_unit_cd": dict['BUSINESS_UNIT_CD'],
+            "hr_employee_number": dict['HR_EMPLOYEE_NUMBER']
+        }
+        Employee.objects.filter(employee_id=dict['EMPLOYEE_ID']).update(**dictionary)
 
 
 def get_employee(from_date, to_date):
+
+    # Employee.objects.all().delete()
 
     payload = {
         "from_date": from_date,
         "to_date": to_date
     }
 
-    r = requests.post("http://139.59.125.201/getEmployee.php", data=payload)
+    r = requests.post("http://174.138.28.157/getEmployee.php", data=payload)
+
 
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:
         if (key == "results"):
-            print(key, ":", json_dictionary[key])
+            # print(key, ":", json_dictionary[key])
             if (type(json_dictionary[key]) == dict):
                 # return single json
                 print("dict")

@@ -1,8 +1,14 @@
-// declare var broadcaster: any;
+declare var broadcaster: any;
 
-import { Component, OnInit, NgZone } from "@angular/core";
+import { Component, OnInit, NgZone, ElementRef } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
-import { ActionSheetController, AlertController } from "@ionic/angular";
+import {
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+} from "@ionic/angular";
+import { AssetsService } from "src/app/shared/services/assets/assets.service";
+import { WamsService } from "src/app/shared/services/wams/wams.service";
 
 @Component({
   selector: "app-tabs",
@@ -18,9 +24,13 @@ export class TabsPage implements OnInit {
   constructor(
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
+    public loadingController: LoadingController,
+    private elementRef: ElementRef,
     private ngZone: NgZone,
-    private router: Router
-  ) {}
+    private router: Router,
+    private assetsService: AssetsService,
+    private wamsService: WamsService
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -31,57 +41,83 @@ export class TabsPage implements OnInit {
   }
 
   ngOnInit() {
-    // broadcaster._debug = true;
-    this.onRegister2DBarcodeListener();
-    this.onRegisterRFIDListener();
+    console.log("ngOnInit TabsPage");
+
+    broadcaster._debug = true;
+    // this.onRegister2DBarcodeListener();
+    // this.onRegisterRFIDListener();
   }
 
-  updateData(data) {
-    this.ngZone.run(() => {
-      this.scanValue = data;
-      alert(this.scanValue);
-    });
+  ngOnDestroy() {
+    console.log("ngOnDestroy TabsPage");
+
+    // this.elementRef.nativeElement.remove();
   }
 
   onRegister2DBarcodeListener() {
-    console.log("[register onRegister2DBarcodeListener] ");
-    const ev = "com.scanner.broadcast";
-    var isGlobal = true;
+    this.loadingController
+      .create({
+        message: "Please scan the QR code...",
+      })
+      .then((loading) => {
+        loading.present();
 
-    var listener = (event) => {
-      console.log(JSON.stringify(event));
+        console.log("[register onRegister2DBarcodeListener] ");
+        const ev = "com.scanner.broadcast";
+        var isGlobal = true;
 
-      if (event.SCAN_STATE == "success") {
-        this.ngZone.run(() => {
-          if (this.bBarcode) {
-            this.updateData(event.data);
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
+
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bBarcode = ", this.bBarcode);
+              if (this.bBarcode) {
+                loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
+                this.updateQrbarcode(event.data);
+              }
+            });
           }
-        });
-      }
-    };
-    // broadcaster.addEventListener(ev, isGlobal, listener);
+        };
+        broadcaster.addEventListener(ev, isGlobal, listener);
+      });
   }
 
   onRegisterRFIDListener() {
-    console.log("[register onRegisterRFIDListener] ");
-    const ev = "android.intent.action.scanner.RFID";
-    var isGlobal = true;
+    this.loadingController
+      .create({
+        message: "Please scan the RFID tag...",
+      })
+      .then((loading) => {
+        loading.present();
 
-    var listener = (event) => {
-      console.log(JSON.stringify(event));
+        console.log("[register onRegisterRFIDListener] ");
+        const ev = "android.intent.action.scanner.RFID";
+        var isGlobal = true;
 
-      if (event.SCAN_STATE == "success") {
-        this.ngZone.run(() => {
-          if (this.bRfid) {
-            this.updateData(event.data);
+        var listener = (event) => {
+          console.log(JSON.stringify(event));
+
+          if (event.SCAN_STATE == "success") {
+            this.ngZone.run(() => {
+              console.log("this.bRfid = ", this.bRfid);
+              if (this.bRfid) {
+                loading.dismiss();
+                broadcaster.removeEventListener(ev, listener);
+                this.updateRfid(event.data);
+              }
+            });
           }
-        });
-      }
-    };
-    // broadcaster.addEventListener(ev, isGlobal, listener);
+        };
+        broadcaster.addEventListener(ev, isGlobal, listener);
+      });
   }
 
   async scan() {
+    this.bRfid = false;
+    this.bBarcode = false;
+
     const actionSheet = await this.actionSheetController.create({
       header: "Choose method",
       buttons: [
@@ -92,6 +128,7 @@ export class TabsPage implements OnInit {
             console.log("RFID clicked");
             this.bBarcode = false;
             this.bRfid = true;
+            this.onRegisterRFIDListener();
           },
         },
         {
@@ -101,6 +138,7 @@ export class TabsPage implements OnInit {
             console.log("QR Code clicked");
             this.bBarcode = true;
             this.bRfid = false;
+            this.onRegister2DBarcodeListener();
           },
         },
         {
@@ -147,12 +185,81 @@ export class TabsPage implements OnInit {
           text: "Search",
           handler: (data) => {
             if (data.badge_no) {
-              let navigationExtras: NavigationExtras = {
-                state: {
-                  badge_no: data.badge_no,
-                },
-              };
-              this.router.navigate(["/technical/tabs/tab2"], navigationExtras);
+              this.loadingController
+                .create({
+                  message: "Please wait...",
+                })
+                .then((loading) => {
+                  loading.present();
+
+                  this.assetsService
+                    .filter("badge_no=" + data.badge_no)
+                    .subscribe(
+                      (res) => {
+                        // if find, go to asset detail list
+                        if (res.length > 0) {
+                          loading.dismiss();
+                          let navigationExtras: NavigationExtras = {
+                            state: {
+                              badge_no: res[0].badge_no,
+                            },
+                          };
+
+                          this.router.navigate(
+                            ["/technical/asset-detail-list"],
+                            navigationExtras
+                          );
+                        }
+                        // else, find the asset in the wams to pump into PIPE's asset table
+                        else {
+                          // get data from wams
+                          this.wamsService
+                            .getAssetBadgeNo(data.badge_no)
+                            .subscribe(
+                              (res) => {
+                                loading.dismiss();
+
+                                if (res.results.length > 0) {
+                                  let navigationExtras: NavigationExtras = {
+                                    state: {
+                                      badge_no: data.badge_no,
+                                    },
+                                  };
+
+                                  this.router.navigate(
+                                    ["/technical/asset-detail-list"],
+                                    navigationExtras
+                                  );
+                                } else {
+                                  this.presentAlert(
+                                    "Error",
+                                    "Sorry, asset is not found in the database."
+                                  );
+                                }
+                              },
+                              (err) => {
+                                console.error("err", err);
+                                loading.dismiss();
+
+                                this.presentAlert(
+                                  "Error",
+                                  "Sorry, there is a technical problem going on."
+                                );
+                              }
+                            );
+                        }
+                      },
+                      (err) => {
+                        console.log("err assetlsService = ", err);
+                        loading.dismiss();
+
+                        this.presentAlert(
+                          "Error",
+                          "Sorry, there is a technical problem going on."
+                        );
+                      }
+                    );
+                });
             } else {
               this.presentAlert(
                 "Error",
@@ -166,13 +273,154 @@ export class TabsPage implements OnInit {
     await alert.present();
   }
 
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ["OK"],
-    });
+  presentAlert(header: string, message: string) {
+    this.alertController
+      .create({
+        header,
+        message,
+        buttons: ["OK"],
+      })
+      .then((alert) => {
+        alert.present();
+      });
+  }
 
-    await alert.present();
+  // rfid scan
+  updateRfid(data) {
+    if (this.bRfid)
+      this.ngZone.run(() => {
+        this.scanValue = data;
+
+        if (this.scanValue != "") {
+          this.loadingController
+            .create({
+              message: "Please wait...",
+            })
+            .then((loading) => {
+              loading.present();
+
+              this.assetsService.filter("hex_code=" + this.scanValue).subscribe(
+                (res) => {
+                  loading.dismiss();
+                  // if find, go to asset detail list
+                  if (res.length > 0) {
+                    let navigationExtras: NavigationExtras = {
+                      state: {
+                        badge_no: res[0].badge_no,
+                      },
+                    };
+
+                    this.router.navigate(
+                      ["/technical/asset-detail-list"],
+                      navigationExtras
+                    );
+                  }
+                  // else, suggest the user to use QR scanner OR search by badge number
+                  else {
+                    this.presentAlert(
+                      "Error",
+                      "The asset is not found in the database. Please try again by using QR scanner OR search by badge number."
+                    );
+                  }
+                },
+                (err) => {
+                  console.log("err assetlsService = ", err);
+                  loading.dismiss();
+
+                  this.presentAlert(
+                    "Error",
+                    "Sorry, there is a technical problem going on."
+                  );
+                }
+              );
+            });
+        } else {
+          this.presentAlert("Error", "RFID is invalid. Please try again.");
+        }
+      });
+  }
+
+  // qr code
+  updateQrbarcode(data) {
+    if (this.bBarcode)
+      this.ngZone.run(() => {
+        this.scanValue = data;
+
+        if (this.scanValue != "") {
+          this.loadingController
+            .create({
+              message: "Please wait...",
+            })
+            .then((loading) => {
+              loading.present();
+
+              this.assetsService.filter("badge_no=" + this.scanValue).subscribe(
+                (res) => {
+                  // if find, go to asset detail list
+                  if (res.length > 0) {
+                    loading.dismiss();
+                    let navigationExtras: NavigationExtras = {
+                      state: {
+                        badge_no: res[0].badge_no,
+                      },
+                    };
+
+                    this.router.navigate(
+                      ["/technical/asset-detail-list"],
+                      navigationExtras
+                    );
+                  }
+                  // else, find the asset in the wams to pump into PIPE's asset table
+                  else {
+                    // get data from wams
+                    this.wamsService.getAssetBadgeNo(this.scanValue).subscribe(
+                      (res) => {
+                        loading.dismiss();
+
+                        if (res.results.length > 0) {
+                          let navigationExtras: NavigationExtras = {
+                            state: {
+                              badge_no: this.scanValue,
+                            },
+                          };
+
+                          this.router.navigate(
+                            ["/technical/asset-detail-list"],
+                            navigationExtras
+                          );
+                        } else {
+                          this.presentAlert(
+                            "Error",
+                            "Sorry, asset is not found in the database."
+                          );
+                        }
+                      },
+                      (err) => {
+                        console.error("err", err);
+                        loading.dismiss();
+
+                        this.presentAlert(
+                          "Error",
+                          "Sorry, there is a technical problem going on."
+                        );
+                      }
+                    );
+                  }
+                },
+                (err) => {
+                  console.log("err assetlsService = ", err);
+                  loading.dismiss();
+
+                  this.presentAlert(
+                    "Error",
+                    "Sorry, there is a technical problem going on."
+                  );
+                }
+              );
+            });
+        } else {
+          this.presentAlert("Error", "QR code is invalid. Please try again.");
+        }
+      });
   }
 }

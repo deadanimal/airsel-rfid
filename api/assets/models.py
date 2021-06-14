@@ -63,6 +63,19 @@ class AssetGroup(models.Model):
     def __str__(self):
         return self.name
 
+class AssetServiceHistory(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    asset_service_history = models.CharField(max_length=100, default='NA')
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['created_at']
+    
+    def __str__(self):
+        return self.asset_service_history
+
 class AssetType(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -74,6 +87,10 @@ class AssetType(models.Model):
     profile_failure = models.CharField(max_length=100, default='NA')
     owned_organisation = models.CharField(max_length=100, default='NA')
     instance_organisation = models.CharField(max_length=100, default='NA')
+
+    asset_category = models.CharField(max_length=100, default='')
+    # asset_service_history = models.ForeignKey(AssetServiceHistory, on_delete=models.CASCADE, related_name='asset_service_history_asset_service_history_id', null=True)
+    asset_service_history = models.ManyToManyField(AssetServiceHistory,blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -100,9 +117,9 @@ class AssetAttribute(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     characteristic_type = models.CharField(max_length=100, blank=True )
     adhoc_value = models.CharField(max_length=100, blank=True )
-    characteristic_value = models.CharField(max_length=100, null=True)
+    characteristic_value = models.CharField(max_length=100, null=True, blank=True )
     action_type = models.CharField(max_length=100, blank=True )
-    characteristic_type_name = models.CharField(max_length=100, null=True)
+    characteristic_type_name = models.CharField(max_length=100, null=True, blank=True )
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -204,7 +221,7 @@ class AssetRegistration(models.Model):
     asset_or_component_type = models.CharField(max_length=200, default='',null=True, blank=True)
     asset_class_asset_category = models.CharField(max_length=200, default='',null=True, blank=True)
     handed_over_asset_or_procured = models.CharField(max_length=200, default='',null=True, blank=True)
-    internal_asset_identity = models.CharField(max_length=200, default='',null=True, blank=True)
+    specification = models.CharField(max_length=200, default='',null=True, blank=True)
     asset_primary_category = models.CharField(max_length=200, default='',null=True, blank=True)
     sub_category_1 = models.CharField(max_length=200, default='',null=True, blank=True)
     sub_category_2 = models.CharField(max_length=200, default='',null=True, blank=True)
@@ -216,8 +233,8 @@ class AssetRegistration(models.Model):
     size_capacity_2_unit_measurement = models.CharField(max_length=200, default='',null=True, blank=True)
     size_capacity_3 = models.CharField(max_length=200, default='',null=True, blank=True)
     size_capacity_3_unit_measurement = models.CharField(max_length=200, default='',null=True, blank=True)
-    parent_asset_plate_number = models.CharField(max_length=200, default='',null=True, blank=True)
-    asset_plate_number = models.CharField(max_length=200, default='',null=True, blank=True)
+    attached_to_asset_badge_no = models.CharField(max_length=200, default='',null=True, blank=True)
+    attached_to_asset_id = models.CharField(max_length=200, default='',null=True, blank=True)
     detailed_description = models.CharField(max_length=200, default='',null=True, blank=True)
     serial_number = models.CharField(max_length=200, default='',null=True, blank=True)
     asset_tag_number = models.CharField(max_length=200, default='',null=True, blank=True)
@@ -310,6 +327,11 @@ class AssetRegistration(models.Model):
         choices=APPROVAL_STATUS,
         default='IC'
     )
+
+    bo = models.CharField(max_length=200, default='',null=True, blank=True)
+    bo_status = models.CharField(max_length=200, default='',null=True, blank=True)
+    new_parent_location = models.CharField(max_length=200, default='',null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -414,6 +436,10 @@ class AssetAttributeColumn(models.Model):
     voltage = models.BooleanField(default=False)
     asset_status = models.BooleanField(default=False)
     brand = models.BooleanField(default=False)
+
+    model_number = models.BooleanField(default=False)
+    bo = models.BooleanField(default=False)
+    bo_status = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -534,3 +560,80 @@ class AssetAttributeField(models.Model):
 
     # def __str__(self):
     #     return ('%s %s %s'%(self.characteristic_type, self.adhoc_value, self.characteristic_value))
+
+class AssetMeasurementTypeInbound(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    measurement_type = models.CharField(max_length=100, blank=True )
+    action_type = models.CharField(max_length=100, blank=True )
+    description = models.CharField(max_length=250, blank=True )
+    measurement_identifie = models.CharField(max_length=100, blank=True )
+    asset_id = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name='asset_measurement_type_inbound_asset_id', null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return self.measurement_type
+
+class AssetAttributeInbound(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    characteristic_type = models.CharField(max_length=100, blank=True )
+    adhoc_value = models.CharField(max_length=100, blank=True )
+    characteristic_value = models.CharField(max_length=100, null=True)
+    action_type = models.CharField(max_length=100, blank=True )
+    characteristic_type_name = models.CharField(max_length=100, null=True)
+    asset_id = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name='asset_attribute_inbound_asset_id', null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return ('%s %s %s'%(self.characteristic_type, self.adhoc_value, self.characteristic_value))
+
+class AssetMaintenanceSpec(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    maintenance_spec_cd = models.CharField(max_length=100, blank=True)
+    asset_type_cd = models.CharField(max_length=100, blank=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return (self.maintenance_spec_cd)
+
+class AssetAttributeReference(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    char_type_cd = models.CharField(max_length=100, blank=True)
+    attribute_field_name = models.CharField(max_length=100, blank=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return (self.char_type_cd)
+
+class AssetAttributePredefine(models.Model):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    attribute_field_name = models.CharField(max_length=100, blank=True)
+    characteristic_value = models.CharField(max_length=100, blank=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return (self.attribute_field_name)

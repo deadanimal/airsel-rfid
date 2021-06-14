@@ -42,6 +42,7 @@
     "devextreme": "^19.2.7",
     "devextreme-angular": "19.1.5",
     "dropzone": "5.5.1",
+    "file-saver": "^2.0.5",
     "fullcalendar": "3.10.1",
     "jquery": "^3.4.1",
     "kind-of": "^6.0.3",

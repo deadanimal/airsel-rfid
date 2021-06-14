@@ -124,6 +124,9 @@ export class AssetRegistrationsModel {
   public vehicle_spad_permit_date_period_from: string;
   public voltage: string;
   public asset_status: string;
+  public bo: string;
+  public bo_status: string;
+  public new_parent_location: string;
   public status: string;
   public created_at: string;
   public modified_at: string;
@@ -255,6 +258,9 @@ export class AssetRegistrationsModel {
     voltage: string,
     asset_status: string,
     status: string,
+    bo: string,
+    bo_status: string,
+    new_parent_location: string,
     created_at: string,
     modified_at: string
   ) {
@@ -384,6 +390,9 @@ export class AssetRegistrationsModel {
     this.voltage = voltage;
     this.asset_status = asset_status;
     this.status = status;
+    this.bo = bo;
+    this.bo_status = bo_status;
+    this.new_parent_location = new_parent_location;
     this.created_at = created_at;
     this.modified_at = modified_at;
   }

@@ -13,7 +13,11 @@
       <p class="subtitle" style="max-width: 240px; text-align: center; padding-bottom: 20px;">Enter your email and we
         will send you a
         reset link</p>
-      <small style="text-align: center">For those who is WAMS user, please reset your password at WAMS. Thank you</small>
+      <small style="text-align: center">For those who is
+        Air Selangor Staff
+        , please reset your password at Air Selangor Active
+        Directory. Thank
+        you</small>
       <form class="form" [formGroup]="validations_form">
         <ion-item lines="none">
           <ion-input type="text" formControlName="email" placeholder="Enter your email"></ion-input>
@@ -27,20 +31,10 @@
           </ng-container>
         </div>
         <div class="ion-text-center">
-          <ion-button 
-            *ngIf="!isLoading"
-            type="submit" 
-            [disabled]="!validations_form.valid" 
-            shape="round"
-            (click)="resetPassword()"
-            color="primary">Reset Password
+          <ion-button *ngIf="!isLoading" type="submit" [disabled]="!validations_form.valid" shape="round"
+            (click)="resetPassword()" color="primary">Reset Password
           </ion-button>
-          <ion-button
-            disabled
-            *ngIf="isLoading"
-            type="submit" 
-            shape="round" 
-            color="primary">
+          <ion-button disabled *ngIf="isLoading" type="submit" shape="round" color="primary">
             <ion-spinner name="bubbles"></ion-spinner>
           </ion-button>
         </div>

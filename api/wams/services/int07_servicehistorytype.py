@@ -14,7 +14,7 @@ from operations.models import (
 
 def insert_into_service_history(dict):
 
-    # print("insert_into_service_history", dict)
+    print("insert_into_service_history", dict)
     # find in the database first
     # if do not exist, insert data into database
 
@@ -26,6 +26,7 @@ def insert_into_service_history(dict):
     service_hist_subclass = dict['SERVICE_HIST_SUBCLASS'] if 'SERVICE_HIST_SUBCLASS' in dict else ""
 
     # for ServiceHistoryQuestion
+    # print(dict)
     question_seq = dict['QUESTION_SEQ'] if 'QUESTION_SEQ' in dict else ""
     question_cd = dict['QUESTION_CD'] if 'QUESTION_CD' in dict else ""
     question_desc = dict['QUESTION_DESC'] if 'QUESTION_DESC' in dict else ""
@@ -34,6 +35,7 @@ def insert_into_service_history(dict):
     answer_seq = dict['ANSWER_SEQ'] if 'ANSWER_SEQ' in dict else ""
     answer_cd = dict['ANSWER_CD'] if 'ANSWER_CD' in dict else ""
     answer_desc = dict['ANSWER_DESC'] if 'ANSWER_DESC' in dict else ""
+    answer_text = dict['ANSWER_TEXT'] if 'ANSWER_TEXT' in dict else ""
     point_value = dict['POINT_VALUE'] if 'POINT_VALUE' in dict else ""
     style = dict['STYLE'] if 'STYLE' in dict else ""
 
@@ -45,23 +47,25 @@ def insert_into_service_history(dict):
         "service_hist_subclass": service_hist_subclass
     }
 
-    dictionary_service_history_question = {
-        "question_seq": question_seq,
-        "question_cd": question_cd,
-        "question_desc": question_desc,
-    }
+    # dictionary_service_history_question = {
+    #     "question_seq": question_seq,
+    #     "question_cd": question_cd,
+    #     "question_desc": question_desc,
+    #     "service_history_id": service_history_id,
+    # }
 
-    dictionary_service_history_question_valid_value = {
-        "answer_seq": answer_seq,
-        "answer_cd": answer_cd,
-        "answer_desc": answer_desc,
-        "point_value": point_value,
-        "style": style
-    }
+    # print(dictionary_service_history_question)
+
+    # dictionary_service_history_question_valid_value = {
+    #     "answer_seq": answer_seq,
+    #     "answer_cd": answer_cd,
+    #     "answer_desc": answer_desc,
+    #     "point_value": point_value,
+    #     "style": style
+    # }
 
     # ServiceHistory operation
-    service_history = ServiceHistory.objects.filter(
-        **dictionary_service_history).exists()
+    service_history = ServiceHistory.objects.filter(**dictionary_service_history).exists()
 
     if not service_history:
         # service history does not exist in the database
@@ -73,33 +77,69 @@ def insert_into_service_history(dict):
         service_history = ServiceHistory.objects.filter(
             **dictionary_service_history).values()
         service_history_id = service_history[0]['id']
-
+    
+    ### get service history question into array to check in database
+    dictionary_service_history_question = {
+        "question_seq": question_seq,
+        "question_cd": question_cd,
+        "question_desc": question_desc,
+        "service_history_id":service_history_id
+        # "service_history_id":ServiceHistory.objects.filter(id=str(service_history_id)).first()
+    }
+    # print(dictionary_service_history_question)
     # ServiceHistoryQuestion operation
     service_history_question = ServiceHistoryQuestion.objects.filter(
         **dictionary_service_history_question).exists()
+    # print(service_history_question)
 
     if not service_history_question:
+
+        dictionary_service_history_question["service_history_id"] = ServiceHistory.objects.filter(id=str(service_history_id)).first()
+
         # service history question does not exist in the database
+        print("not exist")
+        print(dictionary_service_history_question)
+        aaaa = ServiceHistory.objects.filter(id=str(service_history_id))
         service_history = ServiceHistory.objects.get(
             **dictionary_service_history)
 
-        # to save into service history question
+        ## to save into service history question
         service_history_question = ServiceHistoryQuestion.objects.create(
             **dictionary_service_history_question)
+            
         service_history_question.service_history_id = service_history
+        # service_history_question.service_history_id = ServiceHistory.objects.filter(id=str(service_history_id)).first()
+        print(dictionary_service_history_question)
         service_history_question.save()
         service_history_question_id = service_history_question.id
 
     else:
+        print("exist")
         service_history_question = ServiceHistoryQuestion.objects.filter(
             **dictionary_service_history_question).values()
         service_history_question_id = service_history_question[0]['id']
+    
+    ## get service history question valid value into array to check in database
+    dictionary_service_history_question_valid_value = {
+        "answer_seq": answer_seq,
+        "answer_cd": answer_cd,
+        "answer_desc": answer_desc,
+        "answer_text": answer_text,
+        "point_value": point_value,
+        "style": style,
+        "service_history_question_id":service_history_question_id
+        # "service_history_question_id":ServiceHistoryQuestion.objects.filter(id=str(service_history_question_id)).first()
+    }
+    # print(dictionary_service_history_question_valid_value)
 
     # ServiceHistoryQuestionValidValue operation
     service_history_question_valid_value = ServiceHistoryQuestionValidValue.objects.filter(
         **dictionary_service_history_question_valid_value).exists()
 
     if not service_history_question_valid_value:
+
+        dictionary_service_history_question_valid_value['service_history_question_id'] = ServiceHistoryQuestion.objects.filter(id=str(service_history_question_id)).first()
+
         # service history question valid value does not exist in the database
         service_history_question = ServiceHistoryQuestion.objects.get(
             **dictionary_service_history_question)
@@ -113,24 +153,42 @@ def insert_into_service_history(dict):
 
 def get_servicehistorytype():
 
-    r = requests.post("http://139.59.125.201/getServiceHistoryType.php")
-
+    r = requests.post("http://174.138.28.157/getServiceHistoryType.php")
     json_dictionary = json.loads(r.content)
-    for key in json_dictionary:
-        if (key == "results"):
-            print(key, ":", json_dictionary[key])
-            if (type(json_dictionary[key]) == dict):
-                # return single json
-                print("dict")
-                insert_into_service_history(json_dictionary[key])
-            elif (type(json_dictionary[key]) == list):
-                # return array of json
-                print("list")
-                results_json = json_dictionary[key]
-                for x in results_json:
-                    insert_into_service_history(x)
 
-    return json.loads(r.content)
+    print(json_dictionary)
+
+    if json_dictionary :
+        
+        print('berjaya')
+        # ServiceHistory.objects.all().delete()
+        # ServiceHistoryQuestion.objects.all().delete()
+        # ServiceHistoryQuestionValidValue.objects.all().delete()
+
+        # r = requests.post("http://139.59.125.201/getServiceHistoryType.php")
+        # json_dictionary = json.loads(r.content)
+
+        for key in json_dictionary:
+            if (key == "results"):
+                print(key, ":", json_dictionary[key])
+                if (type(json_dictionary[key]) == dict):
+                    # return single json
+                    print("dict")
+                    insert_into_service_history(json_dictionary[key])
+                elif (type(json_dictionary[key]) == list):
+                    # return array of json
+                    print("list")
+                    results_json = json_dictionary[key]
+                    for x in results_json:
+                        insert_into_service_history(x)
+
+        return json.loads(r.content)
+
+    else :
+
+        print('tidak berjaya')
+        return json.loads(r.content)
+
 
     # wsdl = "https://pasb-dev-uwa-iws.oracleindustry.com/ouaf/webservices/CM-SVCHISTTYPE?WSDL"
     # session = Session()

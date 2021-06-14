@@ -1,0 +1,37 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal('')">
+        <ion-icon
+          src="../../../../assets/icon/air-selangor-icon.svg"
+          style="font-size: 2rem"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="font-weight: bold"> Submit for Approval </ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button (click)="openNotification()">
+        <ion-icon slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px;">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    placeholder="Search approval profile"
+    animated="true"
+    (ionChange)="getItems($event)"
+  ></ion-searchbar>
+
+  <ion-list>
+    <ion-item
+      *ngFor="let item of items"
+      (click)="closeModal(item)"
+    >
+      <p>{{ item.description }}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -121,6 +121,10 @@ const routes: Routes = [
   {
     path: 'subinventory-transfer',
     loadChildren: () => import('./pages/inventory-management/subinventory-transfer/subinventory-transfer.module').then( m => m.SubinventoryTransferPageModule)
+  },
+  {
+    path: 'approval-profile',
+    loadChildren: () => import('./pages/technical/approval-profile/approval-profile.module').then( m => m.ApprovalProfilePageModule)
   }
 ];
 @NgModule({

@@ -1041,21 +1041,31 @@ export class RegistrationComponent implements OnInit {
       (res) => {
         if (res) {
           this.primarycategories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("at") !== -1)
+            if(data.category !== undefined) {
+              if (data.category.toString().toLowerCase().indexOf("at") !== -1)
               return true;
-            return false;
+            } else {
+              return false;
+            }
           });
 
           this.typeassets = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
+            if(data.category !== undefined) {
+              if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
               return true;
-            return false;
+            } else {
+              return false;
+            }
+
           });
 
           this.categories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
+            if(data.category !== undefined) {
+              if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
               return true;
-            return false;
+            } else {
+              return false;
+            }
           });
         }
       },
@@ -1131,7 +1141,8 @@ export class RegistrationComponent implements OnInit {
     this.getCostCenter();
     this.getMeasurementTypes()
     this.getContactInformation()
-    this.classCategory()
+    this.classCategory();
+
 
   }
 
@@ -1579,7 +1590,6 @@ export class RegistrationComponent implements OnInit {
 
     this.assetsRegistrationService.post(SubmitObject).subscribe(
       (res) => {
-        console.log("yeaaayyy = ", res);
         // this.saveAssetType(createAssetTypeData)
         // this.successAlert()
 
@@ -1591,7 +1601,9 @@ export class RegistrationComponent implements OnInit {
             type: "success",
           }).then((result) => {
           });
-        this.closeModal()
+          this.modalRegisterAsset.hide();
+        //this.closeModal()
+          this.getRegisteredData();
       },
       error => {
         console.error("err", error);
@@ -1607,7 +1619,8 @@ export class RegistrationComponent implements OnInit {
             // invalidControl.
             // this.getRegisteredData()
           });
-        this.closeModal()
+        this.modalRegisterAsset.hide();
+        //this.closeModal()
       }
     )
     // }
@@ -1955,7 +1968,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   closeModal() {
-    this.modal.hide();
+    //this.modal.hide();
+    this.modalService.hide();
   }
 
   submitFileExcel() {
@@ -2132,6 +2146,7 @@ export class RegistrationComponent implements OnInit {
     let tempData = []
     this.assetsRegistrationService.getNewRegList().subscribe(
       (res) => {
+        console.log("whaa", res);
         res.forEach(function (val) {
           val['isTick'] = false
           tempData.push(val)
@@ -2231,6 +2246,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   changeStatus(task) {
+    console.log("goes here");
     let resData: any
     // console.log('this.task = ', task)
     let no = 0
@@ -2240,8 +2256,9 @@ export class RegistrationComponent implements OnInit {
       if (itemVal['isTick'] == true) {
 
         console.log('itemVal = ', itemVal.status)
-        if (itemVal.status == 'CO') {
+        if (itemVal.status == 'IC') {
           // const updateformData = new FormData();
+          console.log("itemVal", itemVal);
           let updateformData: any
           // updateformData.append('status', 'PR');
 
@@ -2253,7 +2270,9 @@ export class RegistrationComponent implements OnInit {
           // console.log('---- sini ----')
           assetregser.update(itemVal['id'], updateformData).subscribe(
             (res) => {
-              // console.log("ttttatttatt = ", res);
+              // processing logic
+              // post object into selected table
+              console.log("update status NP", res);
             },
             error => {
               console.error("err", error);
@@ -2265,19 +2284,30 @@ export class RegistrationComponent implements OnInit {
       }
     })
 
-    if (no > 0) {
-      swal.fire({
-        title: 'Warning',
-        text: 'The incomplete data cannot be save.',
-        type: 'warning',
-        buttonsStyling: false,
-        confirmButtonText: 'Ok',
-        confirmButtonClass: 'btn btn-warning'
-      }).then((result) => {
-        this.getRegisteredData()
-      })
-    } else {
-      swal.fire({
+    // if (no > 0) {
+    //   swal.fire({
+    //     title: 'Warning',
+    //     text: 'The incomplete data cannot be save.',
+    //     type: 'warning',
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Ok',
+    //     confirmButtonClass: 'btn btn-warning'
+    //   }).then((result) => {
+    //     this.getRegisteredData()
+    //   })
+    // } else {
+    //   swal.fire({
+    //     title: 'Success',
+    //     text: 'Successfully Change Status',
+    //     type: 'success',
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Ok',
+    //     confirmButtonClass: 'btn btn-success'
+    //   }).then((result) => {
+    //     this.getRegisteredData()
+    //   })
+    // }
+    swal.fire({
         title: 'Success',
         text: 'Successfully Change Status',
         type: 'success',
@@ -2287,7 +2317,7 @@ export class RegistrationComponent implements OnInit {
       }).then((result) => {
         this.getRegisteredData()
       })
-    }
+
   }
 
   onKey(event, formName, row) {

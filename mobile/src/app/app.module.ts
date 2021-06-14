@@ -19,6 +19,7 @@ import { QRScanner } from "@ionic-native/qr-scanner/ngx";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HttpTokenInterceptor } from "./shared/interceptor/http.token.interceptor";
+import { IonicSelectableModule } from 'ionic-selectable';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { HttpTokenInterceptor } from "./shared/interceptor/http.token.intercepto
     AppRoutingModule,
     BrowserAnimationsModule,
     LeafletModule.forRoot(),
+    IonicSelectableModule
   ],
   providers: [
     Camera,
@@ -50,4 +52,4 @@ import { HttpTokenInterceptor } from "./shared/interceptor/http.token.intercepto
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

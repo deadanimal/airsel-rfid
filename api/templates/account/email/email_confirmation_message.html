@@ -1,7 +1,16 @@
-Hi!
+{% autoescape off %}
+Hi new user,
 
-An account has been created on Air Selangor: RFID using this email address. You can now login using this email address.
+Hereby is your login credentials
 
-Thank you and have a nice day!
+username: {{ username }}
+password: {{ password }}
 
-Note: This is an automated email, please do not reply to this address.
+Thank you for registering with us. Before logging in, please click on the following link to complete your registration.
+
+{{ url }}
+
+Thank you.
+
+[This is an automated message please do not reply]
+{% endautoescape %}

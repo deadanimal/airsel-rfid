@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib.gis import admin
 
+from django.urls import path
+
 from rest_framework import routers
 from rest_framework_extensions.routers import NestedRouterMixin
 
@@ -16,7 +18,8 @@ from rest_framework_simplejwt.views import (
 )
 
 from users.views import (
-    MyTokenObtainPairView
+    MyTokenObtainPairView,
+    ActivateAccount
 )
 
 class NestedDefaultRouter(NestedRouterMixin, routers.DefaultRouter):
@@ -37,7 +40,13 @@ from assets.views import (
     AssetLocationViewSet,
     AssetMeasurementTypeViewSet,
     AssetLocationSyncViewSet,
-    AssetAttributeFieldViewSet
+    AssetAttributeFieldViewSet,
+    AssetMeasurementTypeInboundViewSet,
+    AssetAttributeInboundViewSet,
+    AssetServiceHistoryViewSet,
+    AssetMaintenanceSpecViewSet,
+    AssetAttributeReferenceViewSet,
+    AssetAttributePredefineViewSet
 )
 
 assets_router = router.register(
@@ -47,11 +56,7 @@ assets_router = router.register(
 assets_badge_format_router = router.register(
     'asset-badge-format', AssetBadgeFormatViewSet
 )
-
-assets_attribute_router = router.register(
-    'asset-attribute', AssetAttributeViewSet
-)
-
+assets_attribute_router = router.register( 'asset-attribute', AssetAttributeViewSet)
 asset_groups_router = router.register(
     'asset-groups', AssetGroupViewSet
 )
@@ -87,6 +92,33 @@ asset_location_sync_router = router.register(
 asset_attribute_field_router = router.register(
     'asset-attribute-field', AssetAttributeFieldViewSet
 )
+
+asset_measurement_type_inbound_router = router.register(
+    'asset-measurement-type-inbound',AssetMeasurementTypeInboundViewSet
+)
+
+asset_attribute_inbound_router = router.register(
+    'asset-attribute-inbound', AssetAttributeInboundViewSet
+)
+
+asset_service_history = router.register(
+    'asset-service-history', AssetServiceHistoryViewSet
+)
+
+asset_maintenance_spec = router.register(
+    'asset-maintenance-spec', AssetMaintenanceSpecViewSet
+)
+
+asset_attribute_reference = router.register(
+    'asset-attribute-reference', AssetAttributeReferenceViewSet
+)
+
+asset_attribute_predefine = router.register(
+    'asset-attribute-predefine', AssetAttributePredefineViewSet
+)
+
+
+
 # Locations app
 from locations.views import (
     RegionViewSet,
@@ -149,12 +181,12 @@ from operations.views import (
     ServiceHistoriesQuestionsViewSet,
     QuestionsValidValueViewSet,
     WorkOrderActivityCompletionViewSet,
-
     ServiceHistoryViewSet,ServiceHistoryQuestionViewSet,ServiceHistoryQuestionValidValueViewSet,
     PlannerViewSet,MaintenanceManagerViewSet,WorkRequestViewSet,MainOperationViewSet,FunctionViewSet,LocationTypeViewSet,
-    SubFunctionViewSet,CostCenterViewSet,OperationViewSet,WorkActivityEmployeeViewSet
+    SubFunctionViewSet,CostCenterViewSet,OperationViewSet,WorkActivityEmployeeViewSet,
+    WorkOrderActivityCompletionAssetLocationAssetListInboundViewSet,
+    AssetLocationAssetListServiceHistoriesInboundViewSet
 )
-
 
 service_history_router = router.register(
     'service-history', ServiceHistoryViewSet
@@ -263,6 +295,14 @@ asset_location_asset_list_service_histories_router = router.register(
     'asset-location-asset-list-service-histories', AssetLocationAssetListServiceHistoriesViewSet
 )
 
+work_order_activity_completion_asset_location_asset_list_inbound_router = router.register(
+    'work-order-activity-completion-asset-location-asset-list-inbound', WorkOrderActivityCompletionAssetLocationAssetListInboundViewSet
+)
+
+asset_location_asset_list_service_histories_inbound_router = router.register(
+    'asset-location-asset-list-service-histories-inbound', AssetLocationAssetListServiceHistoriesInboundViewSet
+)
+
 service_histories_questions_router = router.register(
     'service-histories-questions', ServiceHistoriesQuestionsViewSet
 )
@@ -350,8 +390,8 @@ wams_router = router.register(
 # inventory app
 from inventory.views import (
     InventoryItemViewSet,
-    InventoryItemUomIntraViewSet,
-    InventoryItemUomInterViewSet,
+    # InventoryItemUomIntraViewSet,
+    # InventoryItemUomInterViewSet,
     InventoryPurchaseOrderViewSet,
     InventoryGrnViewSet,
     InventoryTransactionViewSet,
@@ -362,13 +402,13 @@ item_router = router.register(
     'inventory-item', InventoryItemViewSet
 )
 
-item_intra_router = router.register(
-    'inventory-item-intra', InventoryItemUomIntraViewSet
-)
+# item_intra_router = router.register(
+#     'inventory-item-intra', InventoryItemUomIntraViewSet
+# )
 
-item_inter_router = router.register(
-    'inventory-item-inter', InventoryItemUomInterViewSet
-)
+# item_inter_router = router.register(
+#     'inventory-item-inter', InventoryItemUomInterViewSet
+# )
 
 purchase_order_router = router.register(
     'inventory-purchase-order', InventoryPurchaseOrderViewSet
@@ -388,7 +428,7 @@ material_request_router = router.register(
 
 ## employee app
 from employee.views import (
-    EmployeeViewSet,FailureProfileViewSet,ApprovalProfileViewSet
+    EmployeeViewSet,FailureProfileViewSet,ApprovalProfileViewSet,ContactInformationViewSet
 )
 
 employee_router = router.register(
@@ -401,6 +441,10 @@ failure_profile_router = router.register(
 
 approval_profile_router = router.register(
     'approval-profile', ApprovalProfileViewSet
+)
+
+contact_information_router = router.register(
+    'contact-information', ContactInformationViewSet
 )
 
 ############################################# url
@@ -419,5 +463,12 @@ urlpatterns = [
 
     url('auth/obtain/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     url('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    url('auth/verify/', TokenVerifyView.as_view(), name='token_verify')
+    url('auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
+
+    # url for account activation via token
+    #path('activate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
+    #url('activate_account/<slug:uidb64>/<slug:token>/', ActivateAccount.as_view(), name='activate_account')
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+                ActivateAccount.as_view(), name='activate'),
+
 ]

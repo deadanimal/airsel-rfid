@@ -12,6 +12,7 @@ import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { UsersService } from "src/app/shared/services/users/users.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
+import { WorkActivityEmployeeService } from "src/app/shared/services/work-activity-employee/work-activity-employee.service";
 
 @Component({
   selector: "app-home",
@@ -20,133 +21,10 @@ import { WorkActivitiesService } from "src/app/shared/services/work-activities/w
   providers: [DatePipe],
 })
 export class HomePage implements OnInit {
-  type: string = "pending";
-  role;
-  category: string = "All";
-  categorys = ["All", "New", "In Progress", "Pending"];
-  items: any[];
   workactivities = [];
-
-  accordionIcon: string = "arrow-up-circle";
-  showAccordion: boolean = true;
-
-  // lists
-  pendings = [
-    {
-      type: "CM",
-      date: "14 February 2020",
-      desc: "Maintenance need to do at Petaling zone near......",
-      color: "success",
-    },
-    {
-      type: "CM",
-      date: "12 February 2020",
-      desc: "There have a water leakage at Sepang zone that......",
-      color: "warning",
-    },
-    {
-      type: "PM",
-      date: "13 February 2020",
-      desc: "Need to replace components at Kuala Lumpur zone......",
-      color: "danger",
-    },
-    {
-      type: "PM",
-      date: "11 February 2020",
-      desc: "Gombak have a water disrupted at 10.00 am......",
-      color: "danger",
-    },
-  ];
-  completeds = [
-    {
-      id: "WORKORDER-2020-00011",
-      desc: "Services have been done at Petaling zone at......",
-    },
-    {
-      id: "WORKORDER-2020-00009",
-      desc: "Kuala Lumpur service have been completed at......",
-    },
-    {
-      id: "WORKORDER-2020-00007",
-      desc: "Sepang zone water disruption have been lifted off at......",
-    },
-    {
-      id: "WORKORDER-2020-00006",
-      desc: "Gombak zone have been completely run so far so good......",
-    },
-    {
-      id: "WORKORDER-2020-00005",
-      desc: "Hulu Langat area have back to normal......",
-    },
-  ];
-  approvals = [
-    {
-      dateOfSubmission: "2020-03-03",
-      assetName: "SLUICE VALVE-SLUICE VALVE-GROUND-200-MM",
-      quantity: "11",
-      status: "approve",
-    },
-    {
-      dateOfSubmission: "2020-03-02",
-      assetName: "SLUICE VALVE-SCOUR VALVE-GROUND-150-MM",
-      quantity: "7",
-      status: "reject",
-    },
-    {
-      dateOfSubmission: "2020-03-01",
-      assetName: "MECHANICAL LEVEL INDICATOR-LEVEL INDICATOR-ABOVE GROUND",
-      quantity: "5",
-      status: "reject",
-    },
-    {
-      dateOfSubmission: "2020-03-01",
-      assetName: "MECHANICAL LEVEL INDICATOR-LEVEL INDICATOR-ABOVE GROUND",
-      quantity: "5",
-      status: "pending",
-    },
-    {
-      dateOfSubmission: "2020-03-01",
-      assetName: "MECHANICAL LEVEL INDICATOR-LEVEL INDICATOR-ABOVE GROUND",
-      quantity: "5",
-      status: "pending",
-    },
-  ];
-
-  serviceHistorys = [
-    {
-      serviceid: "SERVICE-2020-00019",
-      servicedate: "10 March 2020",
-      servicedesc: "This service conducted at Petaling zone by 5 members......",
-    },
-    {
-      serviceid: "SERVICE-2020-00018",
-      servicedate: "7 March 2020",
-      servicedesc: "They have an accident occured at Sepang region that......",
-    },
-    {
-      serviceid: "SERVICE-2020-00017",
-      servicedate: "5 March 2020",
-      servicedesc: "Service at Kuala Lumpur have been done at......",
-    },
-    {
-      serviceid: "SERVICE-2020-00016",
-      servicedate: "3 March 2020",
-      servicedesc: "Done service at Hulu Langat zone at......",
-    },
-    {
-      serviceid: "SERVICE-2020-00015",
-      servicedate: "1 March 2020",
-      servicedesc: "Gombak service have done at complete at......",
-    },
-  ];
-
-  sliderConfig = {
-    slidesPerView: 1.6,
-    spaceBetween: 10,
-  };
+  workorderactivitycompletionstatus: any;
 
   constructor(
-    private datePipe: DatePipe,
     public alertController: AlertController,
     public menu: MenuController,
     public modalController: ModalController,
@@ -154,7 +32,8 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     public notificationService: NotificationsService,
     private userService: UsersService,
-    private workactivityService: WorkActivitiesService
+    private workactivityService: WorkActivitiesService,
+    private workactivityemployeeService: WorkActivityEmployeeService
   ) {
     this.userService.getOne(this.authService.userID).subscribe(
       (res) => {
@@ -162,9 +41,6 @@ export class HomePage implements OnInit {
       },
       (err) => {
         console.error("err", err);
-      },
-      () => {
-        console.log("Http request is completed");
       }
     );
   }
@@ -179,32 +55,21 @@ export class HomePage implements OnInit {
       },
       (err) => {
         console.error("err", err);
-      },
-      () => {
-        console.log("Http request is completed");
       }
     );
+
+    this.workactivityemployeeService
+      .get_dashboard_status_statistic({
+        employee_id: this.authService.userID,
+      })
+      .subscribe((res) => {
+        this.workorderactivitycompletionstatus = res;
+      });
   }
 
-  ngOnInit() {
-    this.items = this.pendings;
-  }
+  ngOnInit() {}
 
-  initializeItems(): void {
-    this.pendings = this.items;
-  }
-
-  categorySelect() {
-    this.initializeItems();
-
-    this.pendings = this.pendings.filter((pending) => {
-      if (this.category == "All") return true;
-      else
-        return (
-          pending.type.toLowerCase().indexOf(this.category.toLowerCase()) > -1
-        );
-    });
-  }
+  initializeItems() {}
 
   async notesAlert() {
     const alert = await this.alertController.create({
@@ -227,12 +92,6 @@ export class HomePage implements OnInit {
 
   openPage(route: string) {
     this.router.navigate([route]);
-  }
-
-  clickAccordion() {
-    this.showAccordion = !this.showAccordion;
-    if (this.showAccordion) this.accordionIcon = "arrow-up-circle";
-    if (!this.showAccordion) this.accordionIcon = "arrow-down-circle";
   }
 
   async clickLogout() {
@@ -258,26 +117,55 @@ export class HomePage implements OnInit {
   }
 
   calculateStatus(status: string) {
-    let count = 0;
-    for (let i = 0; i < this.workactivities.length; i++) {
-      if (this.workactivities[i].bo_status === status) count++;
-    }
-    return count;
+    // let count = 0;
+    // for (let i = 0; i < this.workactivities.length; i++) {
+    //   if (this.workactivities[i].bo_status === status) count++;
+    // }
+    // return count;
+
+    // Overall status
+    if (this.workorderactivitycompletionstatus) {
+      if (this.workorderactivitycompletionstatus.queryset_overall.length > 0) {
+        let result =
+          this.workorderactivitycompletionstatus.queryset_overall.find(
+            (obj) => {
+              return obj.status == status;
+            }
+          );
+        if (result) {
+          return result.total_status ? result.total_status : 0;
+        } else return 0;
+      } else return 0;
+    } else return 0;
   }
 
   calculateToday(status: string) {
-    let count = 0;
-    for (let i = 0; i < this.workactivities.length; i++) {
-      if (this.workactivities[i].bo_status === status) {
-        let received_date = this.datePipe.transform(
-          this.workactivities[i].record_date,
-          "yyyy-MM-dd"
+    // let count = 0;
+    // for (let i = 0; i < this.workactivities.length; i++) {
+    //   if (this.workactivities[i].bo_status === status) {
+    //     let received_date = this.datePipe.transform(
+    //       this.workactivities[i].record_date,
+    //       "yyyy-MM-dd"
+    //     );
+    //     let to_date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
+    //     if (received_date === to_date) count++;
+    //   }
+    // }
+    // return count;
+
+    // Today status
+    if (this.workorderactivitycompletionstatus) {
+      if (this.workorderactivitycompletionstatus.queryset_today.length > 0) {
+        let result = this.workorderactivitycompletionstatus.queryset_today.find(
+          (obj) => {
+            return obj.status == status;
+          }
         );
-        let to_date = this.datePipe.transform(new Date(), "yyyy-MM-dd");
-        if (received_date === to_date) count++;
-      }
-    }
-    return count;
+        if (result) {
+          return result.total_status ? result.total_status : 0;
+        } else return 0;
+      } else return 0;
+    } else return 0;
   }
 
   homePage(path: string) {

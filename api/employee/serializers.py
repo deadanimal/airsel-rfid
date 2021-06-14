@@ -11,7 +11,8 @@ from django.utils.timezone import now
 from .models import (
     Employee,
     FailureProfile,
-    ApprovalProfile
+    ApprovalProfile,
+    ContactInformation
 )
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -30,4 +31,10 @@ class ApprovalProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ApprovalProfile
+        fields = '__all__'
+
+class ContactInformationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ContactInformation
         fields = '__all__'

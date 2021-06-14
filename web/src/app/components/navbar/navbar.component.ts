@@ -2,6 +2,10 @@ import { Component, OnInit, ElementRef } from "@angular/core";
 import { AMROUTES, IROUTES, PLANNEROUTES } from "../../shared/menu/menu-items";
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import swal from 'sweetalert2';
+import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { UsersService } from "src/app/shared/services/users/users.service";
+
+
 
 import {
   Location,
@@ -15,6 +19,16 @@ import {
   styleUrls: ["./navbar.component.scss"]
 })
 export class NavbarComponent implements OnInit {
+  // user type enum
+  enum = {
+    "AM": "Admin",
+    "OP": "Operator",
+    "TC": "Technical Crew",
+    "CR": "Contractor",
+    "PL": "Planner", 
+  } 
+  
+  username: String = '';
 
   public focus;
   public listTitles: any[];
@@ -28,7 +42,9 @@ export class NavbarComponent implements OnInit {
   constructor(
     location: Location,
     private element: ElementRef,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private userService: UsersService,
   ) {
     this.location = location;
     this.router.events.subscribe((event: Event) => {
@@ -57,18 +73,34 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.router.url.includes("/ams/")) {
-      this.listTitles = AMROUTES.filter(listTitle => listTitle);
-      this.role = "AMS";
-    }
-    else if (this.router.url.includes("/inv/")) {
-      this.listTitles = IROUTES.filter(listTitle => listTitle);
-      this.role = "INV";
-    }
-    else if (this.router.url.includes("/planner/")) {
-      this.listTitles = PLANNEROUTES.filter(listTitle => listTitle);
-      this.role = "PLANNER";
-    }
+    // get current user
+    let sampar = this.authService.decodedToken();
+    this.username = sampar.username;
+
+    // get user data
+    this.userService.getOne(sampar.user_id).subscribe(
+      (res) => {
+        console.log("RES", res);
+        this.role = res.user_type;
+      },
+      (err) => {
+        console.log("err", err);
+      }
+    );
+
+    
+    // if (this.router.url.includes("/ams/")) {
+    //   this.listTitles = AMROUTES.filter(listTitle => listTitle);
+    //   this.role = "AMS";
+    // }
+    // else if (this.router.url.includes("/inv/")) {
+    //   this.listTitles = IROUTES.filter(listTitle => listTitle);
+    //   this.role = "INV";
+    // }
+    // else if (this.router.url.includes("/planner/")) {
+    //   this.listTitles = PLANNEROUTES.filter(listTitle => listTitle);
+    //   this.role = "PLANNER";
+    // }
   }
   getTitle() {
     var titlee = this.location.prepareExternalUrl(this.location.path());
@@ -97,7 +129,13 @@ export class NavbarComponent implements OnInit {
       cancelButtonClass: 'btn btn-secondary'
     }).then((result) => {
       if (result.value) {
+
         this.router.navigate(['/auth/login']);
+
+        // to do
+        // destroy token (jwtService) on logout
+        // this.accessToken = this.jwtService.getToken("accessToken");
+        // then navigate to login 
       }
     });
   }

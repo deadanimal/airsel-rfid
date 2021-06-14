@@ -14,6 +14,7 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
+import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
 
 am4core.useTheme(am4themes_animated);
 
@@ -64,10 +65,11 @@ export class MaintenanceWorkListPage implements OnInit {
     private zone: NgZone,
     public notificationService: NotificationsService,
     private workactivityService: WorkActivitiesService,
-    private wamsService: WamsService
-  ) {}
+    private wamsService: WamsService,
+    private workOrderActivityCompletionService: WorkOrderActivityCompletionService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
@@ -115,74 +117,76 @@ export class MaintenanceWorkListPage implements OnInit {
     // PREVENTIVE MAINTENANCE -> PREVENTIVE MAINTENANCE,
     // UPGRADE -> REDESIGN
 
-    this.workactivityService.get().subscribe(
+    this.workOrderActivityCompletionService.get().subscribe(
       (res) => {
-        // console.log("res", res);
+        console.log("workOrderActivityCompletionService_res", res);
+        // res.forEach(function(data_qq){
+
+        // })
         if (res) {
           this.cmArray = res.filter(function (data) {
-            if (
-              data.work_category
-                .toString()
-                .indexOf("CORRECTIVE MAINTENANCE") !== -1
-            )
+            if (data.field_1
+              .indexOf("CORRECTIVE MAINTENANCE") !== -1) {
               return true;
+            }
             return false;
           });
 
           this.pmArray = res.filter(function (data) {
-            if (
-              data.work_category
-                .toString()
-                .indexOf("PREVENTIVE MAINTENANCE") !== -1
-            )
+            if (data.field_1
+              .indexOf("PREVENTIVE MAINTENANCE") !== -1) {
               return true;
+            }
             return false;
           });
 
           this.itcArray = res.filter(function (data) {
-            if (
-              data.work_category
-                .toString()
-                .indexOf("INSTALLATION TESTING AND COM") !== -1
-            )
+            if (data.field_1
+              .indexOf("INSTALLATION TESTING AND COM") !== -1) {
               return true;
+            }
             return false;
           });
 
           this.pdmArray = res.filter(function (data) {
-            if (
-              data.work_category
-                .toString()
-                .indexOf("PREDICTIVE MAINTENANCE") !== -1
-            )
+            console.log(data)
+            console.log(data.field_1)
+            if (data.field_1 == "PREDICTIVE MAINTENANCE") {
               return true;
+            }
             return false;
           });
 
+          console.log("this.pdmArray = ", this.pdmArray)
+
           this.dArray = res.filter(function (data) {
-            if (data.work_category.toString().indexOf("RETIRE") !== -1)
+            if (data.field_1 == "RETIRE") {
               return true;
+            }
             return false;
           });
 
           this.cArray = res.filter(function (data) {
             if (
-              data.work_category.toString().indexOf("FLEET COMPLIANCE") !== -1
-            )
+              data.field_1 == "FLEET COMPLIANCE") {
               return true;
+            }
             return false;
           });
 
           this.rArray = res.filter(function (data) {
             if (
-              data.work_category
-                .toString()
+              data.field_1
                 .toLowerCase()
                 .indexOf("REDESIGN") !== -1
-            )
+            ) {
               return true;
+            }
             return false;
           });
+
+          console.log("www cmArray = ", this.cmArray)
+          console.log("qqq pmArray = ", this.pmArray)
         }
       },
       (err) => {
@@ -213,14 +217,13 @@ export class MaintenanceWorkListPage implements OnInit {
   calculateTotalStatus(array: Array<any>, status: string) {
     // From database
     // ('Backlog', 'Backlog'),
-    // ('In Progress', 'In Progress'),
+    // ('InProgress', 'InProgress'),
     // ('New', 'New')
     // ('Completed', 'Completed')
     if (array.length > 0) {
       let tempArray = array.filter(function (data) {
         if (
-          data.bo_status
-            .toString()
+          data.status
             .toLowerCase()
             .indexOf(status.toLowerCase()) !== -1
         )
@@ -725,41 +728,50 @@ export class MaintenanceWorkListPage implements OnInit {
     let array: any;
     switch (type) {
       case "CM":
-        array = this.cmArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.cmArray;
+        // array = this.cmArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "PM":
-        array = this.pmArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.pmArray;
+        // array = this.pmArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "ITC":
-        array = this.itcArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.itcArray;
+        // array = this.itcArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "PdM":
-        array = this.pdmArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.pdmArray;
+        // array = this.pdmArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "Disposal":
-        array = this.dArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.dArray;
+        // array = this.dArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "Compliance":
-        array = this.cArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.cArray;
+        // array = this.cArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
       case "Redesign":
-        array = this.rArray.filter((obj) => {
-          return obj.bo_status == status;
-        });
+        array = this.rArray;
+        // array = this.rArray.filter((obj) => {
+        //   return obj.bo_status == status;
+        // });
         break;
     }
+
+    console.log("array = ", array)
 
     let navigationExtras: NavigationExtras = {
       state: {
@@ -770,6 +782,7 @@ export class MaintenanceWorkListPage implements OnInit {
         name: name,
       },
     };
+    console.log("navigationExtras = ", navigationExtras)
     this.router.navigate([route], navigationExtras);
   }
 
@@ -781,7 +794,7 @@ export class MaintenanceWorkListPage implements OnInit {
         {
           text: "Cancel",
           role: "cancel",
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: "Yes, logout it!",

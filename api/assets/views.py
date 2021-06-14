@@ -1,5 +1,7 @@
 
 import json
+import xlsxwriter
+import io
 
 from django.shortcuts import render
 from django.db.models import Q
@@ -12,8 +14,10 @@ from rest_framework import viewsets, status
 from rest_framework_extensions.mixins import NestedViewSetMixin
 
 from django_filters.rest_framework import DjangoFilterBackend
+from django.http import HttpResponse
 
 from datetime import datetime
+
 
 from .models import (
     Asset,
@@ -27,7 +31,13 @@ from .models import (
     AssetLocation,
     AssetMeasurementType,
     AssetLocationSync,
-    AssetAttributeField
+    AssetAttributeField,
+    AssetMeasurementTypeInbound,
+    AssetAttributeInbound,
+    AssetServiceHistory,
+    AssetMaintenanceSpec,
+    AssetAttributeReference,
+    AssetAttributePredefine
 )
 
 from .serializers import (
@@ -43,7 +53,13 @@ from .serializers import (
     AssetMeasurementTypeSerializer,
     AssetExtendedSerializer,
     AssetLocationSyncSerializer,
-    AssetAttributeFieldSerializer
+    AssetAttributeFieldSerializer,
+    AssetMeasurementTypeInboundSerializer,
+    AssetAttributeInboundSerializer,
+    AssetServiceHistorySerializer,
+    AssetMaintenanceSpecSerializer,
+    AssetAttributeReferenceSerializer,
+    AssetAttributePredefineSerializer
 )
 
 class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -57,6 +73,7 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         'badge_no',
         'node_id',
         'hex_code',
+        'attached_to_asset_id'
     ]
 
     @action(methods=['POST'], detail=False)
@@ -188,6 +205,47 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         serializer = AssetSerializer(asset)
         return Response(serializer.data)
 
+    @action(methods=['POST', 'GET'], detail=False)
+    def exportExcel(self, request, *args, **kwargs):
+        temp = []
+        for i in request.data["selected_id"]:
+            temp.append(AssetRegistration.objects.all().filter(id=i).values()[0])
+
+        temp_list = [i for i in temp]
+
+
+        output = io.BytesIO()
+        file_name = 'RegisteredAsset.xlsx'
+        workbook = xlsxwriter.Workbook(output)
+        worksheet = workbook.add_worksheet('registered_asset')
+        
+        # get header 
+        header = [*temp_list[0]]
+        print(header)
+
+        first_row = 0
+        for h in header:
+            col = header.index(h)
+            worksheet.write(first_row, col, h)
+
+        row = 1
+        for i in temp_list:
+            for _key, _value in i.items():
+                col = header.index(_key)
+                worksheet.write(row, col, str(_value))
+            row+=1
+
+        workbook.close()
+        output.seek(0)
+         
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename="' + file_name +'"'
+        return response
+
+
 class AssetGroupViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetGroup.objects.all()
     serializer_class = AssetGroupSerializer
@@ -230,8 +288,7 @@ class AssetTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = AssetTypeSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'category',
-        'created_at'
+        'asset_bussiness_object','asset_type_code','asset_type_description','status','assessment_class'
     ]
 
     def get_permissions(self):
@@ -604,7 +661,7 @@ class AssetLocationSyncViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = AssetLocationSyncSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'node_id'
+        'node_id','description'
     ]
     search_fields = ['$node_id', '$description']
 
@@ -635,6 +692,35 @@ class AssetLocationSyncViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Asset.objects.filter(company=company.id)
         """
         return queryset
+
+    @action(methods=['GET'], detail=False)
+    def get_asset_location(self, request, *args, **kwargs):
+
+        query = AssetLocationSync.objects.all()[:100]  
+        print(query)
+        serializer = AssetLocationSyncSerializer(query, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=False)
+    def no_duplicate_list(self, request, *args, **kwargs):
+
+        # asset_list = AssetRegistration.objects.filter(status='AP')
+
+        # serializer = AssetRegistrationSerializer(asset_list, many=True)
+        # return Response(serializer.data)
+
+        # asset_list = AssetRegistration.objects.filter(status='PR')
+        queryset = AssetLocationSync.objects.values_list().distinct()
+
+        print(queryset)
+
+        # for i in queryset:
+        #     print(i)
+
+
+        serializer = AssetLocationSyncSerializer(queryset, many=True)
+        print(serializer)
+        return Response(serializer.data)
 
 class AssetAttributeFieldViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetAttributeField.objects.all()
@@ -672,3 +758,220 @@ class AssetAttributeFieldViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                 queryset = Asset.objects.filter(company=company.id)
         """
         return queryset
+
+class AssetMeasurementTypeInboundViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+
+    queryset = AssetMeasurementTypeInbound.objects.all()
+    serializer_class = AssetMeasurementTypeInboundSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'measurement_type','action_type','description','measurement_identifie','asset_id'
+    ]
+    search_fields = ['$node_id', '$description']
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetMeasurementTypeInbound.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset
+ 
+class AssetAttributeInboundViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+
+    queryset = AssetAttributeInbound.objects.all()
+    serializer_class = AssetAttributeInboundSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'characteristic_type','adhoc_value','characteristic_value','action_type','asset_id'
+    ]
+    # search_fields = ['$node_id', '$description']
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetAttributeInbound.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset
+
+class AssetServiceHistoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetServiceHistory.objects.all()
+    serializer_class = AssetServiceHistorySerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'asset_service_history'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetServiceHistory.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset        
+
+class AssetMaintenanceSpecViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetMaintenanceSpec.objects.all()
+    serializer_class = AssetMaintenanceSpecSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'maintenance_spec_cd','asset_type_cd'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    def get_queryset(self):
+        queryset = AssetMaintenanceSpec.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset        
+
+class AssetAttributeReferenceViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetAttributeReference.objects.all()
+    serializer_class = AssetAttributeReferenceSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'char_type_cd','attribute_field_name'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    def get_queryset(self):
+        queryset = AssetAttributeReference.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset        
+
+class AssetAttributePredefineViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetAttributePredefine.objects.all()
+    serializer_class = AssetAttributePredefineSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'attribute_field_name','characteristic_value'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    def get_queryset(self):
+        queryset = AssetAttributePredefine.objects.all()
+
+        """
+        if self.request.user.is_anonymous:
+            queryset = Asset.objects.none()
+
+        else:
+            user = self.request.user
+            company_employee = CompanyEmployee.objects.filter(employee=user)
+            company = company_employee[0].company
+            
+            if company.company_type == 'AD':
+                queryset = Asset.objects.all()
+            else:
+                queryset = Asset.objects.filter(company=company.id)
+        """
+        return queryset        

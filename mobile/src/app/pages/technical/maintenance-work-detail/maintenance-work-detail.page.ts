@@ -15,6 +15,7 @@ import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
+import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
 
 @Component({
   selector: "app-maintenance-work-detail",
@@ -23,6 +24,7 @@ import { WorkActivitiesService } from "src/app/shared/services/work-activities/w
 })
 export class MaintenanceWorkDetailPage implements OnInit {
   // type: string = "pending";
+  assetLocatioSyncdata: any
   category: number = 99;
   startdatePending: any;
   enddatePending: any;
@@ -36,25 +38,28 @@ export class MaintenanceWorkDetailPage implements OnInit {
       name: "New",
     },
     {
-      value: "In Progress",
-      name: "In Progress",
+      value: "InProgress",
+      name: "InProgress",
     },
     {
-      value: "Backlog",
-      name: "Backlog",
+      value: "BackLog",
+      name: "BackLog",
     },
   ];
   items: any[];
   type = "";
   status = "";
+  statuses = "";
   image = "";
   name = "";
-  // maintenance_work: any;
+  maintenance_work: any;
 
   // List
   pendings = [];
   completeds = [];
   workactivities = [];
+  workactivitiesData: any[];
+  workactivitiesDatas: any = [];
 
   // FormGroup
   workactivityFormGroup: FormGroup;
@@ -67,6 +72,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public notificationService: NotificationsService,
+    private assetLocatioSyncService: AssetLocatioSyncService,
     private workactivityService: WorkActivitiesService
   ) {
     this.workactivityFormGroup = this.formBuilder.group({
@@ -84,38 +90,67 @@ export class MaintenanceWorkDetailPage implements OnInit {
         this.type = this.router.getCurrentNavigation().extras.state.type;
         this.status = this.router.getCurrentNavigation().extras.state.status;
         this.workactivities = this.router.getCurrentNavigation().extras.state.work_activity;
+        this.workactivities.forEach(eleWorAct => {
+
+          if (eleWorAct.status == this.status) {
+            this.workactivitiesDatas.push(eleWorAct)
+
+            eleWorAct.status = (eleWorAct.status == 'InProgress' ? 'In Progress' : eleWorAct.status)
+            this.statuses = eleWorAct.status
+
+            this.assetLocatioSyncService.filter("node_id=" + eleWorAct.node_id_1).subscribe(
+              (res) => {
+                console.log("assetLocatioSyncServiceres", res);
+                // this.assetregistrations = res;
+                this.assetLocatioSyncdata = res[0].description
+                eleWorAct.assetLocatioSyncdata = res[0].description
+                // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
+              },
+              (err) => {
+                console.error("err", err);
+              }
+            );
+          }
+        });
+        console.log("this.workactivities = ", this.workactivities)
+        console.log("this.status = ", this.status)
+        console.log("this.type = ", this.type)
         this.image = '../../../../assets/technical/' + this.router.getCurrentNavigation().extras.state.image;
         this.name = this.router.getCurrentNavigation().extras.state.name;
-        // this.pendings = this.maintenance_work.filter((data) => {
-        //   if (data.bo_status.toString().indexOf("New") !== -1) return true;
-        //   if (data.bo_status.toString().indexOf("In Progress") !== -1)
+
+        // this.pendings = this.workactivities.filter((data) => {
+
+        //   if (data.status.toString().indexOf("New") !== -1) return true;
+        //   this.workactivitiesData.push(data)
+        //   if (data.status.toString().indexOf("InProgress") !== -1)
         //     return true;
-        //   if (data.bo_status.toString().indexOf("Backlog") !== -1) return true;
+        //   if (data.status.toString().indexOf("BackLog") !== -1) return true;
+
         //   return false;
         // });
 
-        // this.completeds = this.maintenance_work.filter((data) => {
-        //   if (data.bo_status.toString().indexOf("Completed") !== -1)
-        //     return true;
-        //   return false;
-        // });
+        this.completeds = this.workactivities.filter((data) => {
+          if (data.bo_status.toString().indexOf("Completed") !== -1)
+            return true;
+          return false;
+        });
 
         // filter status based on BO_STATUS_CD from WAMS
-        // this.pendings = this.maintenance_work.filter((data) => {
-        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("nw") !== -1)
-        //     return true;
-        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("ip") !== -1)
-        //     return true;
-        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("bl") !== -1)
-        //     return true;
-        //   return false;
-        // });
+        this.pendings = this.workactivities.filter((data) => {
+          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("nw") !== -1)
+            return true;
+          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("ip") !== -1)
+            return true;
+          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("bl") !== -1)
+            return true;
+          return false;
+        });
 
-        // this.completeds = this.maintenance_work.filter((data) => {
-        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("active") !== -1)
-        //     return true;
-        //   return false;
-        // });
+        this.completeds = this.workactivities.filter((data) => {
+          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("active") !== -1)
+            return true;
+          return false;
+        });
       }
     });
   }
@@ -183,7 +218,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
         {
           text: "Cancel",
           role: "cancel",
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: "Yes, logout it!",
@@ -205,7 +240,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
     if (work_activity.bo_status == "New") {
       this.workactivityFormGroup.patchValue({
         ...work_activity,
-        bo_status: "In Progress",
+        bo_status: "InProgress",
       });
       this.workactivityService
         .update(work_activity.id, this.workactivityFormGroup.value)
@@ -218,13 +253,14 @@ export class MaintenanceWorkDetailPage implements OnInit {
           }
         );
 
-      work_activity.status = "In Progress";
+      work_activity.status = "InProgress";
     }
     let navigationExtras: NavigationExtras = {
       state: {
         work_activity: work_activity,
       },
     };
+    console.log("navigationExtras = ", navigationExtras)
     // this.router.navigate(['/technical/work-order'], navigationExtras);
     // this.router.navigate(["/technical/qr-scanner"], navigationExtras);
     this.router.navigate(["/technical/work-activity"], navigationExtras);
@@ -232,8 +268,8 @@ export class MaintenanceWorkDetailPage implements OnInit {
 
   pendingColor(status: string) {
     if (status == "New") return "success";
-    if (status == "In Progress") return "warning";
-    if (status == "Backlog") return "danger";
+    if (status == "InProgress") return "warning";
+    if (status == "BackLog") return "danger";
   }
 
   clickBack() {

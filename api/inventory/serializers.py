@@ -10,8 +10,8 @@ from django.utils.timezone import now
 
 from .models import (
     InventoryItem,
-    InventoryItemUomIntra,
-    InventoryItemUomInter,
+    # InventoryItemUomIntra,
+    # InventoryItemUomInter,
     InventoryPurchaseOrder,
     InventoryGrn,
     InventoryTransaction,
@@ -28,17 +28,17 @@ class InventoryItemSerializer(serializers.ModelSerializer):
         model = InventoryItem
         fields = '__all__'
 
-class InventoryItemUomIntraSerializer(serializers.ModelSerializer):
+# class InventoryItemUomIntraSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = InventoryItemUomIntra
-        fields = '__all__'
+#     class Meta:
+#         model = InventoryItemUomIntra
+#         fields = '__all__'
 
-class InventoryItemUomInterSerializer(serializers.ModelSerializer):
+# class InventoryItemUomInterSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = InventoryItemUomInter
-        fields = '__all__'
+#     class Meta:
+#         model = InventoryItemUomInter
+#         fields = '__all__'
 
 class InventoryPurchaseOrderSerializer(serializers.ModelSerializer):
 

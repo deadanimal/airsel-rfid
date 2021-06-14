@@ -91,3 +91,16 @@ class ApprovalProfile(models.Model):
 
     class meta:
         ordering = ['-created_date']
+
+class ContactInformation(models.Model):
+
+    uuid = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+    contact_name = models.CharField(max_length=100, blank=True)
+    contact_id = models.CharField(max_length=250, blank=True)
+    # employee_id = models.CharField(max_length=250, blank=True)
+    employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='contact_information_employee_id', null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    class meta:
+        ordering = ['-created_date']

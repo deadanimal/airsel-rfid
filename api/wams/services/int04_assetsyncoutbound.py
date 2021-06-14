@@ -8,7 +8,9 @@ import xmltodict
 from assets.models import (
     Asset,
     AssetAttribute,
-    AssetMeasurementType
+    AssetMeasurementType,
+    AssetMeasurementTypeInbound,
+    AssetAttributeInbound
 )
 
 
@@ -78,7 +80,8 @@ def insert_into_asset(dict):
         "condifence_rating": condifence_rating,
         "maintenance_specification": maintenance_specification,
         "attached_to_asset_id": attached_to_asset_id,
-        "registered_datetime": registered_datetime
+        "registered_datetime": registered_datetime,
+        "transaction_type":"UPDATE"
     }
 
     if not asset:
@@ -86,25 +89,72 @@ def insert_into_asset(dict):
         # print("insert")
         asset = Asset(**dictionary)
         asset.save()
+        inserted_asset_id = asset.id
 
     else:
         # update data into database
         # print("update")
         Asset.objects.filter(asset_id=asset_id).update(**dictionary)
+        inserted_asset_id = Asset.objects.filter(asset_id=asset_id).first()
 
+    # print(inserted_asset_id)
+    # print(measurement_types)
     # to save measurement_types if exist
+
+    characteristic_type_list = ["CM-MFG","CM-WASTC","CM-VRTVD","CM-VOWNS","CM-VROWN","CM-VINPT"]
     if measurement_types != "":
-        asset = Asset.objects.get(asset_id=asset_id)
-        asset_measurement_type = AssetMeasurementType.objects.create(
-            measurement_type=measurement_types)
-        asset.measurement_types.add(asset_measurement_type)
+
+        ### check for measurement type exist
+        check_asset_measurement_type_inbound = {
+            "measurement_type": measurement_types,
+            "asset_id":inserted_asset_id
+        }
+        check_in_asset_measurement_type_inbound = AssetMeasurementTypeInbound.objects.filter(**check_asset_measurement_type_inbound).exists()
+
+        ### insert data to asset measurement inbound
+        asset_measurement_type_inbound = AssetMeasurementTypeInbound.objects.create(
+                measurement_type=measurement_types,asset_id=Asset.objects.filter(asset_id=asset_id).first())
+        # characteristic_type_list = ["CM-MFG","CM-WASTC","CM-VRTVD","CM-VOWNS","CM-VROWN","CM-VINPT"]
+        # print(characteristic_type_list)
+
+        # die()
+
+        if not check_in_asset_measurement_type_inbound:
+            
+            asset = Asset.objects.get(asset_id=asset_id)
+            asset_measurement_type = AssetMeasurementType.objects.create(measurement_type=measurement_types)
+            asset.measurement_types.add(asset_measurement_type)
 
     # to save characteristic_type && characteristic_value if exist
     if characteristic_type != "" and characteristic_value != "":
-        asset = Asset.objects.get(asset_id=asset_id)
-        asset_attribute = AssetAttribute.objects.create(
-            characteristic_type=characteristic_type, characteristic_value=characteristic_value)
-        asset.asset_attributes.add(asset_attribute)
+
+        ## check for asset attribute
+        check_asset_attribute_inbound = {
+            "characteristic_type": characteristic_type,
+            "asset_id":inserted_asset_id
+        }            
+        check_in_asset_attribute_inbound = AssetAttributeInbound.objects.filter(**check_asset_attribute_inbound).exists()
+
+        ### insert data into asset attribute inbound
+        asset_attribute_inbound = AssetAttributeInbound.objects.create(characteristic_type=characteristic_type, characteristic_value=characteristic_value, asset_id=Asset.objects.filter(asset_id=asset_id).first())
+
+        # asset_attribute_inbound_exist = AssetAttributeInbound.objects.filter(asset_id=inserted_asset_id).exists()
+        # print(asset_attribute_inbound_exist)
+        
+        if not check_in_asset_attribute_inbound:
+            print("characteristic_type = ",characteristic_type)
+            if characteristic_type in characteristic_type_list:
+                asset = Asset.objects.get(asset_id=asset_id)
+                asset_attribute = AssetAttribute.objects.create(
+                    characteristic_type=characteristic_type, characteristic_value=characteristic_value)
+                asset.asset_attributes.add(asset_attribute)
+                print('found',asset_attribute)
+            else:
+                asset = Asset.objects.get(asset_id=asset_id)
+                asset_attribute = AssetAttribute.objects.create(
+                    characteristic_type=characteristic_type, adhoc_value=characteristic_value,action_type='unchanged')
+                asset.asset_attributes.add(asset_attribute)
+                print("not found",asset_attribute)
 
 
 def get_assetsyncoutbound(from_date, to_date):
@@ -114,13 +164,12 @@ def get_assetsyncoutbound(from_date, to_date):
         "to_date": to_date
     }
 
-    r = requests.post(
-        "http://139.59.125.201/getAssetSyncOutbound.php", data=payload)
-
+    r = requests.post("http://174.138.28.157/getAssetSyncOutbound.php", data=payload)
+    
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:
         if (key == "results"):
-            print(key, ":", json_dictionary[key])
+            # print(key, ":", json_dictionary[key])
             if (type(json_dictionary[key]) == dict):
                 # return single json
                 print("dict")

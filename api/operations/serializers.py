@@ -29,7 +29,9 @@ from .models import (
     WorkOrderActivityCompletion,
     ServiceHistory,ServiceHistoryQuestion,ServiceHistoryQuestionValidValue,
     Planner,MaintenanceManager,WorkRequest,MainOperation,Function,LocationType,
-    SubFunction,CostCenter,Operation,WorkActivityEmployee
+    SubFunction,CostCenter,Operation,WorkActivityEmployee,
+    WorkOrderActivityCompletionAssetLocationAssetListInbound,
+    AssetLocationAssetListServiceHistoriesInbound
 )
 
 from users.serializers import (
@@ -331,4 +333,16 @@ class WorkActivityEmployeeSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = WorkActivityEmployee
+        fields = '__all__'
+
+class WorkOrderActivityCompletionAssetLocationAssetListInboundSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = WorkOrderActivityCompletionAssetLocationAssetListInbound
+        fields = '__all__'
+
+class AssetLocationAssetListServiceHistoriesInboundSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = AssetLocationAssetListServiceHistoriesInbound
         fields = '__all__'

@@ -70,4 +70,12 @@ export class UsersService {
       })
     );
   }
+
+  activation(body): Observable<any> {
+    return this.http.post<any>(this.url + "activation/", body).pipe(
+      tap((res) => {
+        console.log("Registration: ", res);
+      })
+    );
+  }
 }
