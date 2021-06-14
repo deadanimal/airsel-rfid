@@ -1131,6 +1131,7 @@ export class RegistrationComponent implements OnInit {
     this.getCostCenter();
     this.getMeasurementTypes()
     this.getContactInformation()
+    this.classCategory()
 
   }
 
