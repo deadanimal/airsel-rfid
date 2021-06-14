@@ -35,55 +35,6 @@ export class AssetsAttributeService {
     );
   }
 
-  getApprovedList(): Observable<AssetsAttributeModel[]> {
-    let NewUrl: string = environment.baseUrl + "v1/asset-registration/approved_list/";
-    return this.http.get<any>(NewUrl).pipe(
-      tap((res) => {
-        console.log("AssetsAttributeModel", res);
-        this.amodels = res;
-      })
-    );
-  }
-
-  getNewRegList(): Observable<AssetsAttributeModel[]> {
-    let NewUrl: string = environment.baseUrl + "v1/asset-registration/new_register_list/";
-    return this.http.get<any>(NewUrl).pipe(
-      tap((res) => {
-        console.log("AssetsAttributeModel", res);
-        this.amodels = res;
-      })
-    );
-  }
-
-  getNewProcessedList(): Observable<AssetsAttributeModel[]> {
-    let NewUrl: string = environment.baseUrl + "v1/asset-registration/new_processed_list/";
-    return this.http.get<any>(NewUrl).pipe(
-      tap((res) => {
-        console.log("AssetsAttributeModel", res);
-        this.amodels = res;
-      })
-    );
-  }
-  getProcessedList(): Observable<AssetsAttributeModel[]> {
-    let NewUrl: string = environment.baseUrl + "v1/asset-registration/processed_list/";
-    return this.http.get<any>(NewUrl).pipe(
-      tap((res) => {
-        console.log("AssetsAttributeModel", res);
-        this.amodels = res;
-      })
-    );
-  }
-
-  getRejectedList(): Observable<AssetsAttributeModel[]> {
-    let NewUrl: string = environment.baseUrl + "v1/asset-registration/rejected_list/";
-    return this.http.get<any>(NewUrl).pipe(
-      tap((res) => {
-        console.log("AssetsAttributeModel", res);
-        this.amodels = res;
-      })
-    );
-  }
-
   getOne(id: string): Observable<AssetsAttributeModel> {
     let urlID = this.url + id + "/";
     return this.http.get<AssetsAttributeModel>(urlID).pipe(

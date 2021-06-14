@@ -64,4 +64,13 @@ export class AssetsService {
       })
     );
   }
+
+  exportExcel(body): Observable<any> {
+    var HTTPOptions = {
+      'responseType': 'blob' as 'json'
+    }
+    return this.http.post<any>(this.url + "exportExcel/", body, HTTPOptions);
+  }
+
+
 }

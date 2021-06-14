@@ -1,5 +1,4 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
-import {
+import { Component, OnInit, TemplateRef } from "@angular/core"; import {
   Validators,
   FormBuilder,
   FormGroup,
@@ -9,6 +8,8 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import Dropzone from "dropzone";
 import swal from "sweetalert2";
 import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
 import { NgxSpinnerService } from "ngx-spinner";
 
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
@@ -146,6 +147,7 @@ export class RegisteredComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public modalService: BsModalService,
+    //public assetsService: AssetsService,
     public assetsService: AssetsService,
     public assetGroupsService: AssetGroupsService,
     public assetTypesService: AssetTypesService,
@@ -518,5 +520,26 @@ export class RegisteredComponent implements OnInit {
       this.getRegisteredData()
     })
     // }
+  }
+
+  downloadExcel() {
+    let array = [];
+    this.tableTemp1.forEach(function (itemVal) {
+      if (itemVal['isTick']==true) {
+        array.push(itemVal['id']);
+      }
+    });
+
+    this.assetsService.exportExcel({"selected_id": array}).subscribe(
+      (res) => {
+        FileSaver.saveAs(res, "registered_data.xlsx");
+      },
+      (err) => {
+        console.log("Error exporting", err);
+      },
+      () => {
+      }
+    );
+
   }
 }

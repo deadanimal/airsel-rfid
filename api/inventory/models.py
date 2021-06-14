@@ -37,42 +37,42 @@ class InventoryItem(models.Model):
     # def __str__(self):
     #     return self.name
     
-class InventoryItemUomIntra(models.Model):
+# class InventoryItemUomIntra(models.Model):
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    record_type = models.IntegerField(blank=True, default='0')
-    item_number = models.CharField(max_length=300, default='',blank=True)
-    from_uom_code = models.CharField(max_length=100, default='',blank=True)
-    uom_class = models.CharField(max_length=40, default='',blank=True)
-    conversion_rate = models.CharField(max_length=22, default='',blank=True)
-    base_uom_rate = models.CharField(max_length=100, default='',blank=True)
-    end_date = models.DateTimeField(auto_now=True)
-    attribute1 = models.CharField(max_length=18, default='',blank=True)
-
-    # class meta:
-    #     ordering = ['name']
-    
-    # def __str__(self):
-    #     return self.name
-
-class InventoryItemUomInter(models.Model):
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    record_type = models.IntegerField(blank=True, default='0')
-    item_number = models.CharField(max_length=300, default='',blank=True)
-    from_base_uom_code = models.CharField(max_length=100, default='',blank=True)
-    from_uom_class = models.CharField(max_length=100, default='',blank=True)
-    conversion_rate = models.CharField(max_length=22, default='',blank=True)
-    to_base_uom_code = models.CharField(max_length=100, default='',blank=True)
-    to_uom_class = models.CharField(max_length=40, default='',blank=True)
-    end_date = models.DateTimeField(auto_now=True)
-    attribure1 = models.CharField(max_length=18, default='',blank=True)
+#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     record_type = models.IntegerField(blank=True, default='0')
+#     item_number = models.CharField(max_length=300, default='',blank=True)
+#     from_uom_code = models.CharField(max_length=100, default='',blank=True)
+#     uom_class = models.CharField(max_length=40, default='',blank=True)
+#     conversion_rate = models.CharField(max_length=22, default='',blank=True)
+#     base_uom_rate = models.CharField(max_length=100, default='',blank=True)
+#     end_date = models.DateTimeField(auto_now=True)
+#     attribute1 = models.CharField(max_length=18, default='',blank=True)
 
 #     # class meta:
 #     #     ordering = ['name']
     
 #     # def __str__(self):
 #     #     return self.name
+
+# class InventoryItemUomInter(models.Model):
+
+#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     record_type = models.IntegerField(blank=True, default='0')
+#     item_number = models.CharField(max_length=300, default='',blank=True)
+#     from_base_uom_code = models.CharField(max_length=100, default='',blank=True)
+#     from_uom_class = models.CharField(max_length=100, default='',blank=True)
+#     conversion_rate = models.CharField(max_length=22, default='',blank=True)
+#     to_base_uom_code = models.CharField(max_length=100, default='',blank=True)
+#     to_uom_class = models.CharField(max_length=40, default='',blank=True)
+#     end_date = models.DateTimeField(auto_now=True)
+#     attribure1 = models.CharField(max_length=18, default='',blank=True)
+
+# #     # class meta:
+# #     #     ordering = ['name']
+    
+# #     # def __str__(self):
+# #     #     return self.name
 
 class InventoryPurchaseOrder(models.Model):
 

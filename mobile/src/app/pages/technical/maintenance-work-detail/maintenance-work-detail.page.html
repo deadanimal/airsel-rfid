@@ -12,28 +12,17 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="clickBack()">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
       </ion-button>
     </ion-buttons>
     <div class="ion-text-center ion-text-wrap" style="font-weight: bold">
-      {{ status }}
+      {{ statuses }}
     </div>
     <ion-buttons slot="end">
       <ion-button>
-        <ion-icon
-          color="first"
-          slot="icon-only"
-          name="notifications"
-        ></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-icon color="first" slot="icon-only" name="notifications"></ion-icon>
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -47,27 +36,22 @@
   <div *ngIf="workactivities.length == 0">
     <h6 class="ion-text-center">You have no {{ status }} Work Activity</h6>
   </div>
-  <ion-card *ngFor="let workactivity of workactivities">
+  <ion-card *ngFor="let workactivity of workactivitiesDatas">
     <ion-card-header>
       <ion-fab horizontal="end">
-        <ion-fab-button
-          size="small"
-          color="light"
-          (click)="clickWorkActivity(workactivity)"
-        >
+        <ion-fab-button size="small" color="light" (click)="clickWorkActivity(workactivity)">
           <ion-icon name="build"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-      <ion-card-title>Work Activity No</ion-card-title
-      ><ion-card-subtitle>{{ workactivity.activity_id }}</ion-card-subtitle>
+      <ion-card-title>Work Activity No</ion-card-title>
+      <ion-card-subtitle>{{ workactivity.activityid }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <p>Status: {{ workactivity.bo_status }}</p>
-      <p>Badge No: {{ workactivity.asset_id }}</p>
-      <p>Required By Date: {{ workactivity.required_by_date }}</p>
-      <p>Parent Location: {{ workactivity.parent_location }}</p>
+      <p style="font-size:15px;font-weight: bold;">Required By Date: {{ workactivity.required_by_dt }}</p>
+      <p>Status: {{ workactivity.status }}</p>
+      <p>Parent Location: {{ workactivity.assetLocatioSyncdata }}</p>
       <p class="ion-text-justify">
-        Description: {{ workactivity.description }}
+        Description: {{ workactivity.descrlong }}
       </p>
     </ion-card-content>
   </ion-card>

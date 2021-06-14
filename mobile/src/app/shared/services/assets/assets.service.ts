@@ -16,7 +16,7 @@ export class AssetsService {
   public amodels: AssetsModel[] = [];
   public amodel: AssetsModel;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   post(body): Observable<AssetsModel> {
     return this.http.post<any>(this.url, body).pipe(
@@ -45,8 +45,17 @@ export class AssetsService {
     );
   }
 
-  update(body: Form): Observable<AssetsModel> {
-    return this.http.patch<AssetsModel>(this.url, body).pipe(
+  // update(body: Form): Observable<AssetsModel> {
+  //   return this.http.patch<AssetsModel>(this.url, body).pipe(
+  //     tap((res) => {
+  //       console.log("AssetsModel", res);
+  //     })
+  //   );
+  // }
+
+  update(id: string, body): Observable<AssetsModel> {
+    let urlTemp = this.url + id + '/'
+    return this.http.patch<AssetsModel>(urlTemp, body).pipe(
       tap((res) => {
         console.log("AssetsModel", res);
       })
@@ -63,10 +72,19 @@ export class AssetsService {
 
   filter(field: string): Observable<AssetsModel[]> {
     let urlFilter = this.url + "?" + field;
-    console.log(urlFilter);
     return this.http.get<AssetsModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("AssetsModel", res);
+      })
+    );
+  }
+
+  getOneExtended(id: string): Observable<AssetsModel> {
+    let urlID = this.url + id + "/extended/";
+    return this.http.get<AssetsModel>(urlID).pipe(
+      tap((res: AssetsModel) => {
+        console.log("AssetsModel", res);
+        this.amodel = res;
       })
     );
   }

@@ -1,5 +1,7 @@
+import json
+
 from django.shortcuts import render
-from django.db.models import Q
+from django.db.models import F, Q, Count
 
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -7,6 +9,14 @@ from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import viewsets, status
 from rest_framework_extensions.mixins import NestedViewSetMixin
+
+from core.utils import convert_gmt8_to_utc0
+
+from datetime import datetime
+import json
+import pytz
+
+from wams.services.int10_inboundworkrequest import get_inboundworkrequest
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -29,9 +39,11 @@ from .models import (
     ServiceHistoriesQuestions,
     QuestionsValidValue,
     WorkOrderActivityCompletion,
-    ServiceHistory,ServiceHistoryQuestion,ServiceHistoryQuestionValidValue,
-    Planner,MaintenanceManager,WorkRequest,MainOperation,Function,LocationType,
-    SubFunction,CostCenter,Operation,WorkActivityEmployee
+    ServiceHistory, ServiceHistoryQuestion, ServiceHistoryQuestionValidValue,
+    Planner, MaintenanceManager, WorkRequest, MainOperation, Function, LocationType,
+    SubFunction, CostCenter, Operation, WorkActivityEmployee,
+    WorkOrderActivityCompletionAssetLocationAssetListInbound,
+    AssetLocationAssetListServiceHistoriesInbound
 )
 
 from .serializers import (
@@ -63,10 +75,13 @@ from .serializers import (
     QuestionsValidValueSerializer,
     WorkOrderActivityCompletionSerializer,
     WorkOrderActivityCompletionExtendedSerializer,
-    ServiceHistorySerializer,ServiceHistoryQuestionSerializer,ServiceHistoryQuestionValidValueSerializer,
-    PlannerSerializer,MaintenanceManagerSerializer,WorkRequestSerializer,MainOperationSerializer,FunctionSerializer,LocationTypeSerializer,
-    SubFunctionSerializer,CostCenterSerializer,OperationSerializer,WorkActivityEmployeeSerializer
+    ServiceHistorySerializer, ServiceHistoryQuestionSerializer, ServiceHistoryQuestionValidValueSerializer,
+    PlannerSerializer, MaintenanceManagerSerializer, WorkRequestSerializer, MainOperationSerializer, FunctionSerializer, LocationTypeSerializer,
+    SubFunctionSerializer, CostCenterSerializer, OperationSerializer, WorkActivityEmployeeSerializer,
+    WorkOrderActivityCompletionAssetLocationAssetListInboundSerializer,
+    AssetLocationAssetListServiceHistoriesInboundSerializer
 )
+
 
 class OwningOrganizationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = OwningOrganization.objects.all()
@@ -82,20 +97,21 @@ class OwningOrganizationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = OwningOrganization.objects.all()
         return queryset
 
     @action(methods=['GET'], detail=False)
     def extended(self, request, *args, **kwargs):
-        
+
         queryset = OwningOrganization.objects.all()
-        serializer_class = OwningOrganizationExtendedSerializer(queryset, many=True)
-        
+        serializer_class = OwningOrganizationExtendedSerializer(
+            queryset, many=True)
+
         return Response(serializer_class.data)
+
 
 class BoViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Bo.objects.all()
@@ -111,20 +127,20 @@ class BoViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = Bo.objects.all()
         return queryset
 
     @action(methods=['GET'], detail=False)
     def extended(self, request, *args, **kwargs):
-        
+
         queryset = Bo.objects.all()
         serializer_class = BoExtendedSerializer(queryset, many=True)
-        
+
         return Response(serializer_class.data)
+
 
 class MaintenanceViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Maintenance.objects.all()
@@ -140,9 +156,8 @@ class MaintenanceViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = Maintenance.objects.all()
 
@@ -160,8 +175,9 @@ class MaintenanceViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             else:
                 queryset = Activity.objects.filter(company=company.id)
         """
-        return queryset    
- 
+        return queryset
+
+
 class IssueTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = IssueType.objects.all()
     serializer_class = IssueTypeSerializer
@@ -176,9 +192,8 @@ class IssueTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = IssueType.objects.all()
 
@@ -196,7 +211,8 @@ class IssueTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             else:
                 queryset = Activity.objects.filter(company=company.id)
         """
-        return queryset    
+        return queryset
+
 
 class WorkOrderViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkOrder.objects.all()
@@ -214,9 +230,8 @@ class WorkOrderViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = WorkOrder.objects.all()
 
@@ -234,7 +249,8 @@ class WorkOrderViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             else:
                 queryset = Activity.objects.filter(company=company.id)
         """
-        return queryset 
+        return queryset
+
 
 class WorkActivityViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkActivity.objects.all()
@@ -251,9 +267,8 @@ class WorkActivityViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = WorkActivity.objects.all()
 
@@ -275,11 +290,12 @@ class WorkActivityViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=False)
     def extended(self, request, *args, **kwargs):
-        
+
         queryset = WorkActivity.objects.all()
         serializer_class = WorkActivityExtendedSerializer(queryset, many=True)
-        
+
         return Response(serializer_class.data)
+
 
 class WorkActivityTeamViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkActivityTeam.objects.all()
@@ -297,9 +313,8 @@ class WorkActivityTeamViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = WorkActivityTeam.objects.all()
 
@@ -319,6 +334,7 @@ class WorkActivityTeamViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         """
         return queryset
 
+
 class WorkClassViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkClass.objects.all()
     serializer_class = WorkClassSerializer
@@ -333,27 +349,27 @@ class WorkClassViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = WorkClass.objects.all()
         return queryset
 
     @action(methods=['GET'], detail=False)
     def extended(self, request, *args, **kwargs):
-        
+
         queryset = WorkClass.objects.all()
         serializer_class = WorkClassExtendedSerializer(queryset, many=True)
-        
+
         return Response(serializer_class.data)
+
 
 class WorkCategoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkCategory.objects.all()
     serializer_class = WorkCategorySerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'name', 'description', 'detail_description', 'status', 'record_by', 'modified_by'
+        'work_category'
     ]
 
     def get_permissions(self):
@@ -362,27 +378,27 @@ class WorkCategoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = WorkCategory.objects.all()
         return queryset
 
     @action(methods=['GET'], detail=False)
     def extended(self, request, *args, **kwargs):
-        
+
         queryset = WorkCategory.objects.all()
         serializer_class = WorkCategoryExtendedSerializer(queryset, many=True)
-        
+
         return Response(serializer_class.data)
+
 
 class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkRequest.objects.all()
     serializer_class = WorkRequestSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'description', 'long_description','node_id','asset_id','required_by_date'
+        'description', 'long_description', 'node_id', 'asset_id', 'required_by_date'
     ]
 
     def get_permissions(self):
@@ -391,8 +407,8 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
-    
+        return [permission() for permission in permission_classes]
+
     def get_queryset(self):
         queryset = WorkRequest.objects.all()
 
@@ -410,15 +426,98 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             else:
                 queryset = Activity.objects.filter(company=company.id)
         """
-        return queryset  
+        return queryset
+
+    def create(self, request):
+
+        request.data['creation_datetime'] = datetime.now(pytz.utc).replace(microsecond=0).isoformat()
+        request.data['downtime_start'] = convert_gmt8_to_utc0(request.data['downtime_start'])
+
+        data = {
+            'description': request.data['description'], 
+            'long_description': request.data['long_description'],
+            'required_by_date': request.data['required_by_date'], 
+            'approval_profile': request.data['approval_profile'], 
+            'bo': request.data['bo'], 
+            'creation_datetime': request.data['creation_datetime'], 
+            'creation_user': request.data['creation_user'], 
+            'downtime_start': request.data['downtime_start'], 
+            'planner': request.data['planner'], 
+            'work_class': request.data['work_class'], 
+            'work_category': request.data['work_category'], 
+            'work_priority': request.data['work_priority'], 
+            'requestor': request.data['requestor'], 
+            'owning_access_group': request.data['owning_access_group'], 
+            'first_name': request.data['first_name'], 
+            'last_name': request.data['last_name'], 
+            'primary_phone': request.data['primary_phone'], 
+            'mobile_phone': request.data['mobile_phone'], 
+            'home_phone': request.data['home_phone'], 
+            'node_id': request.data['node_id'], 
+            'asset_id': request.data['asset_id']
+        }
+
+        middleware_call = get_inboundworkrequest('create', data)
+        print('middleware_call', middleware_call)
+        
+        if middleware_call['status'] == 'CREATED':
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+
+            wr_update = WorkRequest.objects.get(id=serializer.data['id'])
+            wr_update.work_request_id = middleware_call['work_request_id']
+            wr_update.work_request_status = middleware_call['status']
+            wr_update.save()
+
+            wr_response = WorkRequest.objects.filter(id=serializer.data['id']).values()
+
+            return Response(wr_response[0], status=status.HTTP_201_CREATED, headers=headers)
+
+        elif middleware_call['status'] == 'ERROR':
+            return Response({'error_details': middleware_call['error_details']}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=['POST'], detail=False)
+    def submit_approval_profile(self, request, *args, **kwargs):
+
+        data = json.loads(request.body)
+        print('data', data)
+
+        wr_update = WorkRequest.objects.get(id=data['id'], work_request_id=data['work_request_id'])
+        wr_update.approval_profile = data['approval_profile']
+        wr_update.work_request_status = 'PENDAPPROVAL'
+        wr_update.save()
+
+        request = {
+            'work_request_id': data['work_request_id'],
+            'approval_profile': data['approval_profile'],
+            'work_request_status': 'PENDAPPROVAL'
+        }
+
+        middleware_call = get_inboundworkrequest('update', request)
+        print('middleware_call', middleware_call)
+
+        if middleware_call['status'] == 'SUCCESS':
+            wr_update = WorkRequest.objects.get(id=data['id'], work_request_id=data['work_request_id'])
+            wr_update.work_request_status = middleware_call['status']
+            wr_update.save()
+
+            wr_response = WorkRequest.objects.filter(id=data['id']).values()
+
+            return Response(wr_response[0], status=status.HTTP_201_CREATED)
+
+        elif middleware_call['status'] == 'ERROR':
+            return Response({'error_details': middleware_call['error_details']}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['GET'], detail=False)
     def extended(self, request, *args, **kwargs):
-        
+
         queryset = WorkRequest.objects.all()
         serializer_class = WorkRequestExtendedSerializer(queryset, many=True)
-        
+
         return Response(serializer_class.data)
+
 
 class WorkRequestStatusViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkRequestStatus.objects.all()
@@ -434,20 +533,21 @@ class WorkRequestStatusViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = WorkRequestStatus.objects.all()
         return queryset
 
     @action(methods=['GET'], detail=False)
     def extended(self, request, *args, **kwargs):
-        
+
         queryset = WorkRequestStatus.objects.all()
-        serializer_class = WorkRequestStatusExtendedSerializer(queryset, many=True)
-        
+        serializer_class = WorkRequestStatusExtendedSerializer(
+            queryset, many=True)
+
         return Response(serializer_class.data)
+
 
 class MeasurementTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = MeasurementType.objects.all()
@@ -461,20 +561,21 @@ class MeasurementTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
-    
     def get_queryset(self):
         queryset = MeasurementType.objects.all()
         return queryset
 
     @action(methods=['GET'], detail=False)
     def extended(self, request, *args, **kwargs):
-        
+
         queryset = MeasurementType.objects.all()
-        serializer_class = MeasurementTypeExtendedSerializer(queryset, many=True)
-        
+        serializer_class = MeasurementTypeExtendedSerializer(
+            queryset, many=True)
+
         return Response(serializer_class.data)
+
 
 class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = OperationalReading.objects.all()
@@ -490,7 +591,7 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
 
-        return [permission() for permission in permission_classes]    
+        return [permission() for permission in permission_classes]
 
     def get_queryset(self):
         queryset = OperationalReading.objects.all()
@@ -525,6 +626,7 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
 # start copied from dev api
 
+
 class WorkOrderActivityCompletionAssetLocationAssetListViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkOrderActivityCompletionAssetLocationAssetList.objects.all()
     serializer_class = WorkOrderActivityCompletionAssetLocationAssetListSerializer
@@ -542,6 +644,7 @@ class WorkOrderActivityCompletionAssetLocationAssetListViewSet(NestedViewSetMixi
         queryset = WorkOrderActivityCompletionAssetLocationAssetList.objects.all()
 
         return queryset
+
 
 class AssetLocationAssetListServiceHistoriesViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetLocationAssetListServiceHistories.objects.all()
@@ -561,6 +664,7 @@ class AssetLocationAssetListServiceHistoriesViewSet(NestedViewSetMixin, viewsets
 
         return queryset
 
+
 class ServiceHistoriesQuestionsViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = ServiceHistoriesQuestions.objects.all()
     serializer_class = ServiceHistoriesQuestionsSerializer
@@ -579,6 +683,7 @@ class ServiceHistoriesQuestionsViewSet(NestedViewSetMixin, viewsets.ModelViewSet
 
         return queryset
 
+
 class QuestionsValidValueViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = QuestionsValidValue.objects.all()
     serializer_class = QuestionsValidValueSerializer
@@ -596,6 +701,7 @@ class QuestionsValidValueViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         queryset = QuestionsValidValue.objects.all()
 
         return queryset
+
 
 class WorkOrderActivityCompletionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkOrderActivityCompletion.objects.all()
@@ -653,10 +759,15 @@ class WorkOrderActivityCompletionViewSet(NestedViewSetMixin, viewsets.ModelViewS
         return Response(serializer.data)
 
 # end copied from dev api
+
+
 class ServiceHistoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = ServiceHistory.objects.all()
     serializer_class = ServiceHistorySerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'service_hist_type', 'service_hist_desc', 'service_hist_bo', 'category', 'service_hist_subclass'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -671,10 +782,14 @@ class ServiceHistoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return queryset
 
+
 class ServiceHistoryQuestionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = ServiceHistoryQuestion.objects.all()
     serializer_class = ServiceHistoryQuestionSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'question_seq', 'question_cd', 'question_desc', 'service_history_id'
+    ]
 
     def get_permissions(self):
         if self.action == 'list':
@@ -688,6 +803,30 @@ class ServiceHistoryQuestionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         queryset = ServiceHistoryQuestion.objects.all()
 
         return queryset
+
+    @action(methods=['POST'], detail=False)
+    def get_service_history_qna(self, request):
+
+        data = json.loads(request.body)
+
+        service_history_id = data['service_history_id']
+        queryset_question = ServiceHistoryQuestion.objects.filter(service_history_id=service_history_id).values(
+            'id', 'question_seq', 'question_cd', 'question_desc', 'service_history_id')
+
+        data = []
+        for qs_qs in queryset_question:
+            queryset_answer = ServiceHistoryQuestionValidValue.objects.filter(service_history_question_id=qs_qs['id']).values(
+                'id', 'answer_seq', 'answer_cd', 'answer_text', 'answer_desc', 'point_value', 'style', 'service_history_question_id')
+
+            # for qs_aw in queryset_answer:
+            dictionary = {
+                'question': qs_qs,
+                'answer': queryset_answer
+            }
+            data.append(dictionary)
+
+        return Response(data)
+
 
 class ServiceHistoryQuestionValidValueViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = ServiceHistoryQuestionValidValue.objects.all()
@@ -706,6 +845,7 @@ class ServiceHistoryQuestionValidValueViewSet(NestedViewSetMixin, viewsets.Model
         queryset = ServiceHistoryQuestionValidValue.objects.all()
 
         return queryset
+
 
 class PlannerViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Planner.objects.all()
@@ -731,6 +871,7 @@ class PlannerViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return queryset
 
+
 class MaintenanceManagerViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = MaintenanceManager.objects.all()
     serializer_class = MaintenanceManagerSerializer
@@ -755,6 +896,7 @@ class MaintenanceManagerViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return queryset
 
+
 class MainOperationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = MainOperation.objects.all()
     serializer_class = MainOperationSerializer
@@ -772,6 +914,7 @@ class MainOperationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         queryset = MainOperation.objects.all()
 
         return queryset
+
 
 class FunctionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Function.objects.all()
@@ -791,6 +934,7 @@ class FunctionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return queryset
 
+
 class LocationTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = LocationType.objects.all()
     serializer_class = LocationTypeSerializer
@@ -808,6 +952,7 @@ class LocationTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         queryset = LocationType.objects.all()
 
         return queryset
+
 
 class SubFunctionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = SubFunction.objects.all()
@@ -827,6 +972,7 @@ class SubFunctionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return queryset
 
+
 class CostCenterViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = CostCenter.objects.all()
     serializer_class = CostCenterSerializer
@@ -844,6 +990,7 @@ class CostCenterViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         queryset = CostCenter.objects.all()
 
         return queryset
+
 
 class OperationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Operation.objects.all()
@@ -863,6 +1010,7 @@ class OperationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return queryset
 
+
 class WorkActivityEmployeeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkActivityEmployee.objects.all()
     serializer_class = WorkActivityEmployeeSerializer
@@ -878,5 +1026,63 @@ class WorkActivityEmployeeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = WorkActivityEmployee.objects.all()
+
+        return queryset
+
+    @action(methods=['POST'], detail=False)
+    def get_dashboard_status_statistic(self, request):
+
+        data = json.loads(request.body)
+
+        employee_id = data['employee_id']
+        now = datetime.now()
+
+        queryset_overall = WorkActivityEmployee.objects.filter(employee_id=employee_id).values(status=F(
+            'work_order_activity_completion_id__status')).annotate(total_status=Count('work_order_activity_completion_id__status'))
+        queryset_today = WorkActivityEmployee.objects.filter(created_date__date=now.strftime("%Y-%m-%d"), employee_id=employee_id).values(
+            status=F('work_order_activity_completion_id__status')).annotate(total_status=Count('work_order_activity_completion_id__status'))
+
+        data = {
+            'queryset_overall': queryset_overall,
+            'queryset_today': queryset_today
+        }
+
+        return Response(data)
+
+
+class WorkOrderActivityCompletionAssetLocationAssetListInboundViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.all()
+    serializer_class = WorkOrderActivityCompletionAssetLocationAssetListInboundSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        queryset = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.all()
+
+        return queryset
+
+
+class AssetLocationAssetListServiceHistoriesInboundViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetLocationAssetListServiceHistoriesInbound.objects.all()
+    serializer_class = AssetLocationAssetListServiceHistoriesInboundSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]
+
+    def get_queryset(self):
+        queryset = AssetLocationAssetListServiceHistoriesInbound.objects.all()
 
         return queryset

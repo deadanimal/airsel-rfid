@@ -20,7 +20,13 @@ from .models import (
     AssetLocation,
     AssetMeasurementType,
     AssetLocationSync,
-    AssetAttributeField
+    AssetAttributeField,
+    AssetMeasurementTypeInbound,
+    AssetAttributeInbound,
+    AssetServiceHistory,
+    AssetMaintenanceSpec,
+    AssetAttributeReference,
+    AssetAttributePredefine
 )
 
 class AssetSerializer(serializers.ModelSerializer):
@@ -105,4 +111,40 @@ class AssetAttributeFieldSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetAttributeField
+        fields = '__all__'
+
+class AssetMeasurementTypeInboundSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetMeasurementTypeInbound
+        fields = '__all__'
+
+class AssetAttributeInboundSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetAttributeInbound
+        fields = '__all__'
+
+class AssetServiceHistorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetServiceHistory
+        fields = '__all__'
+
+class AssetMaintenanceSpecSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetMaintenanceSpec
+        fields = '__all__'
+
+class AssetAttributeReferenceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetAttributeReference
+        fields = '__all__'
+
+class AssetAttributePredefineSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetAttributePredefine
         fields = '__all__'

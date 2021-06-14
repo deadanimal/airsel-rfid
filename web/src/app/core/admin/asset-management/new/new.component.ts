@@ -290,6 +290,7 @@ export class NewComponent implements OnInit {
   }
 
   showTable() {
+    this.getRegisteredData();
     let counter = 0
     for (let x in this.is_show1) {
       if (this.is_show1[x]) {
@@ -315,8 +316,13 @@ export class NewComponent implements OnInit {
       (res) => {
         console.log("res all data", res);
         res.forEach(function (val) {
-          val['isTick'] = false
-          tempData.push(val)
+          console.log(val['status'])
+          if (val['status']=="NP") {
+            console.log("masuk sini");
+
+            val['isTick'] = false
+            tempData.push(val)
+          }
         })
         console.log('tempData = ', tempData)
         this.tableTemp1 = tempData
@@ -387,6 +393,7 @@ export class NewComponent implements OnInit {
     let badgeFormatService = this.assetsBadgeNoService
     this.tableTemp1.forEach(function (itemVal) {
 
+      // badge logic is here
       if (itemVal['isTick'] == true) {
         let asspricat = itemVal.asset_primary_category
         let field = 'asset_primary_category=' + asspricat + '&status=AC'
@@ -395,6 +402,7 @@ export class NewComponent implements OnInit {
           (res) => {
             // console.log('res qweqwe', res)
             badgeFormatdata = res[0]
+            console.log("badgeFormatdata", badgeFormatdata);
             // console.log('badgeFormatdata asdasd = ', badgeFormatdata)
           }
         )
@@ -407,20 +415,20 @@ export class NewComponent implements OnInit {
           // updateformData.append('status', 'PR');
           // console.log('badgeFormatdata qweqwe = ', badgeFormatdata)
 
-          var skippedNo = badgeFormatdata.skipped_no
+          //var skippedNo = badgeFormatdata.skipped_no
+          var skippedNo = null;
           // console.log('skippedNo = ', skippedNo)
           let runNo = 1
           let firstSkippedNo: any
           let leftSkippedNo: any
           let currentNo = ''
 
-          console.log('badgeFormatdata.skipped_no.length = ', badgeFormatdata.skipped_no.length)
 
           if (badgeFormatdata.skipped_no.length > 0) {
             skippedNo.forEach(function (noTest) {
 
               if (runNo == 1) {
-                // console.log('noTest if = ', noTest)
+              // console.log('noTest if = ', noTest)
                 firstSkippedNo = noTest
                 // leftSkippedNo += '"0"'
               }
@@ -450,7 +458,8 @@ export class NewComponent implements OnInit {
             )
             currentNo = firstSkippedNo
           } else {
-            // firstSkippedNo = badgeFormatdata.latest_no
+            firstSkippedNo = badgeFormatdata.latest_no
+
             currentNo = badgeFormatdata.latest_no
 
             updateSkippedNo = {
@@ -468,7 +477,7 @@ export class NewComponent implements OnInit {
           let badgeNo = badgeFormatdata.short + '_' + currentNo.padStart(7, '0')
           updateformData = {
             status: task,
-            badge_no: badgeNo
+            badge_no: badgeNo, 
           }
 
           // console.log('itemVal = ', itemVal)
@@ -477,6 +486,8 @@ export class NewComponent implements OnInit {
             (res) => {
               console.log("res = ", res);
               resData = res
+              this.getRegisteredData()
+
             },
             error => {
               console.error("err", error);

@@ -9,7 +9,9 @@ export class UsersModel {
   public user_type: string;
   public profile_picture: string;
   public is_active: boolean;
+  public status: boolean;
   public date_joined: any;
+
 
   constructor(
     id: string,
@@ -22,6 +24,7 @@ export class UsersModel {
     user_type: string,
     profile_picture: string,
     is_active: boolean,
+    status: boolean,
     date_joined: any,
   ) {
     this.id = id;
@@ -34,6 +37,7 @@ export class UsersModel {
     this.user_type = user_type;
     this.profile_picture = profile_picture;
     this.is_active = is_active;
+    this.status = status;
     this.date_joined = date_joined;
   }
 }

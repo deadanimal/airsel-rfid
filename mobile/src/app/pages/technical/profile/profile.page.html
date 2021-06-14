@@ -2,10 +2,7 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="homePage('/technical/tabs/tab1')">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem;"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem;"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold;">
@@ -14,23 +11,19 @@
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px;"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px;">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="content-core">
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
+  <!-- <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button (click)="update()">
       <ion-icon name="pencil"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 
   <ion-grid class="ion-padding-top">
     <ion-row class="ion-justify-content-center ion-align-items-center">
@@ -51,10 +44,10 @@
                   <ion-input type="text" readonly formControlName="full_name"></ion-input>
                 </ion-item>
 
-                <ion-item>
+                <!-- <ion-item>
                   <ion-label position="stacked">Title</ion-label>
                   <ion-input type="text" readonly formControlName="job_title"></ion-input>
-                </ion-item>
+                </ion-item> -->
 
                 <ion-item>
                   <ion-label position="stacked">Email</ion-label>
@@ -67,24 +60,24 @@
                 </ion-item>
 
                 <ion-item>
-                  <ion-label position="stacked">Service Area</ion-label>
-                  <ion-input type="text" readonly formControlName="service_area"></ion-input>
+                  <ion-label position="stacked">Location/Department</ion-label>
+                  <ion-textarea type="text" rows="2" readonly formControlName="service_area"></ion-textarea>
                 </ion-item>
 
-                <ion-item>
+                <!-- <ion-item>
                   <ion-label position="stacked">Crewshift ID</ion-label>
                   <ion-input type="text" readonly formControlName="crewshift_id"></ion-input>
-                </ion-item>
+                </ion-item> -->
 
                 <ion-item>
-                  <ion-label position="stacked">Employee ID</ion-label>
+                  <ion-label position="stacked">WAMS Employee ID</ion-label>
                   <ion-input type="text" readonly formControlName="employee_id"></ion-input>
                 </ion-item>
 
-                <ion-item>
+                <!-- <ion-item>
                   <ion-label position="stacked">Department</ion-label>
                   <ion-input type="text" readonly formControlName="department"></ion-input>
-                </ion-item>
+                </ion-item> -->
               </ion-list>
             </form>
           </ion-card-content>

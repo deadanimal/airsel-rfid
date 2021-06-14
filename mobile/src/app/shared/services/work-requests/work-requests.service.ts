@@ -69,4 +69,13 @@ export class WorkRequestsService {
       })
     );
   }
+
+  submit_approval_profile(body): Observable<any> {
+    let urlSubmitApprovalProfile = this.url + "submit_approval_profile/";
+    return this.http.post<any>(urlSubmitApprovalProfile, body).pipe(
+      tap((res) => {
+        console.log("WorkRequestsModel", res);
+      })
+    );
+  }
 }

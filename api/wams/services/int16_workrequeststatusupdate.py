@@ -11,11 +11,11 @@ def get_workrequeststatusupdate(from_date, to_date):
     payload = {
         "from_date": from_date,
         "to_date": to_date,
-    };
+    }
 
-    r = requests.post("http://139.59.125.201/getWorkRequestStatusUpdate.php", data = payload)    
+    r = requests.post("http://174.138.28.157/getWorkRequestStatusUpdate.php", data = payload)    
 
-    return json.loads(r.content);
+    return json.loads(r.content)
 
     # wsdl = "https://pasb-dev-uwa-iws.oracleindustry.com/ouaf/webservices/CM-CM-WORKREQUEST?WSDL"
     # session = Session()

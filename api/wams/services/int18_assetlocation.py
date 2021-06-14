@@ -44,7 +44,7 @@ def get_assetlocation(from_date, to_date):
     }
 
     r = requests.post(
-        "http://139.59.125.201/getAssetLocation.php", data=payload)
+        "http://174.138.28.157/getAssetLocation.php", data=payload)
 
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:

@@ -2,585 +2,978 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="clickBack()">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold"> Asset Registration </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="content-core">
-  <mat-vertical-stepper
-    [linear]="isLinear"
-    #stepper
-    [disableRipple]="isDisableRipple"
-  >
-    <!-- <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Asset Owning</ng-template>
-        <div class="line-input">
-          <ion-item>
-            <ion-label position="stacked">Asset Owning Department</ion-label>
-            <ion-select
-              placeholder="Please select"
-              formControlName="owning_department"
-            >
-              <ion-select-option
-                *ngFor="let department of departments"
-                [value]="department.value"
-                >{{ department.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-        </div>
+  <div class="ion-padding" *ngIf="segmentModal == 'first'">
+    <mat-vertical-stepper [linear]="isLinear" #stepper [disableRipple]="isDisableRipple">
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Asset Grouping</ng-template>
+          <div class="line-input">
+            <ion-item>
+              <ion-label position="stacked">Asset Primary Category</ion-label>
+              <!-- <ion-select placeholder="Please select" (ionChange)='onChangeAssPrimaryCat($event.target.value)'
+                formControlName="asset_primary_category">
+                <ion-select-option *ngFor="let primarycategory of primarycategories"
+                  [value]="primarycategory.asset_type_code">
+                  {{ primarycategory.asset_type_description }}</ion-select-option>
+              </ion-select> -->
 
-        <div>
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Asset Hierarchy</ng-template>
-        <div class="line-input">
-          <ion-item>
-            <ion-label position="stacked">Main Operation</ion-label>
-            <ion-select placeholder="Please select" formControlName="level_1">
-              <ion-select-option
-                *ngFor="let hierarchylevel1 of hierarchylevel1s"
-                [value]="hierarchylevel1.value"
-                >{{ hierarchylevel1.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
+              <ionic-selectable [items]="primarycategories" itemValueField="id" itemTextField="asset_type_description"
+                [canSearch]="true" formControlName="asset_primary_category" (onChange)="onChangeAssPrimaryCat($event)">
+              </ionic-selectable>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.primary_category }}</small
+              > -->
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Asset Identity</ion-label>
+              <ion-input type="text" formControlName="asset_identity" [required]="true"></ion-input>
+              <!-- <ion-select placeholder="Please select" formControlName="identity">
+                <ion-select-option
+                  *ngFor="let identity of identities"
+                  [value]="identity.id"
+                  >{{ identity.name }}</ion-select-option
+                >
+              </ion-select> -->
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.identity }}</small
+              > -->
+            </ion-item>
 
-          <ion-item>
-            <ion-label position="stacked">Region</ion-label>
-            <ion-select placeholder="Please select" formControlName="level_2">
-              <ion-select-option
-                *ngFor="let region of regions"
-                [value]="region.id"
-                >{{ region.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">Operation</ion-label>
-            <ion-select placeholder="Please select" formControlName="level_3">
-              <ion-select-option
-                *ngFor="let hierarchylevel3 of hierarchylevel3s"
-                [value]="hierarchylevel3.value"
-                >{{ hierarchylevel3.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">Parent Location</ion-label>
-            <ion-input type="text" formControlName="level_4"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">Process/Function</ion-label>
-            <ion-select placeholder="Please select" formControlName="level_5">
-              <ion-select-option
-                *ngFor="let hierarchylevel5 of hierarchylevel5s"
-                [value]="hierarchylevel5.value"
-                >{{ hierarchylevel5.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">Sub-process/Sub-function</ion-label>
-            <ion-select placeholder="Please select" formControlName="level_6">
-              <ion-select-option
-                *ngFor="let hierarchylevel6 of hierarchylevel6s"
-                [value]="hierarchylevel6.value"
-                >{{ hierarchylevel6.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-        </div>
-        <div>
-          <ion-button color="danger" size="small" matStepperPrevious>
-            Back
-          </ion-button>
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
-      </form>
-    </mat-step> -->
-    <mat-step [stepControl]="thirdFormGroup">
-      <form [formGroup]="thirdFormGroup">
-        <ng-template matStepLabel>Asset Grouping</ng-template>
-        <div class="line-input">
-          <ion-item>
-            <ion-label position="stacked">Asset Primary Category</ion-label>
-            <ion-select
-              placeholder="Please select"
-              formControlName="primary_category"
-            >
-              <ion-select-option
-                *ngFor="let primarycategory of primarycategories"
-                [value]="primarycategory.id"
-                >{{ primarycategory.name }}</ion-select-option
-              >
-            </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.primary_category }}</small
-            > -->
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Asset Identity</ion-label>
-            <ion-input type="text" formControlName="identity"></ion-input>
-            <!-- <ion-select placeholder="Please select" formControlName="identity">
-              <ion-select-option
-                *ngFor="let identity of identities"
-                [value]="identity.id"
-                >{{ identity.name }}</ion-select-option
-              >
-            </ion-select> -->
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.identity }}</small
-            > -->
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">Sub-category 1</ion-label>
-            <ion-input type="text" formControlName="sub_category_1"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.sub_category_1 }}</small
-            > -->
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Sub-category 2</ion-label>
-            <ion-input type="text" formControlName="sub_category_2"></ion-input>
-            <!-- <small class="validation_messages"
+            <ion-item>
+              <ion-label position="stacked">Sub-category 1</ion-label>
+              <ion-input type="text" formControlName="sub_category_1"></ion-input>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.sub_category_1 }}</small
+              > -->
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Sub-category 2</ion-label>
+              <ion-input type="text" formControlName="sub_category_2"></ion-input>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.sub_category_2 }}</small
+              > -->
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Model number</ion-label>
+              <ion-input type="text" formControlName="model_number"></ion-input>
+              <!-- <small class="validation_messages"
               >{{ validation_messages.sub_category_2 }}</small
             > -->
-          </ion-item>
-        </div>
+            </ion-item>
+            <ion-input type="hidden" formControlName="bo" [value]="assetAttrData"></ion-input>
+          </div>
 
-        <!-- <div>
-          <ion-button color="danger" size="small" matStepperPrevious>
-            Back
-          </ion-button>
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div> -->
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="fourthFormGroup">
-      <form [formGroup]="fourthFormGroup">
-        <ng-template matStepLabel>Asset Categorization</ng-template>
-        <div class="line-input">
-          <div class="row">
+          <!-- <div>
+            <ion-button color="danger" size="small" matStepperPrevious>
+              Back
+            </ion-button>
+            <ion-button color="success" size="small" matStepperNext
+              >Next</ion-button
+            >
+          </div> -->
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Asset Categorization</ng-template>
+          <div class="line-input">
+            <div class="row">
+              <ion-item>
+                <ion-label position="stacked">Asset or Component Type</ion-label>
+                <ion-input type="text" formControlName="asset_or_component_type" [value]="assetOrComponent">
+                </ion-input>
+                <!-- <ion-select placeholder="Please select" formControlName="asset_or_component_type">
+                  <ion-select-option *ngFor="let assComp of assetOrCompList" [value]="assComp.id">{{ assComp.name }}
+                  </ion-select-option>
+                </ion-select> -->
+                <!-- <small class="validation_messages"
+                  >{{ validation_messages.type_asset }}</small
+                > -->
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Asset Class/Asset Category</ion-label>
+                <ion-input type="text" formControlName="asset_class_asset_category" [value]="assetCategoryData">
+                </ion-input>
+                <!-- <small class="validation_messages"
+                  >{{ validation_messages.category }}</small
+                > -->
+              </ion-item>
+              <ion-radio-group formControlName="handed_over_asset_or_procured">
+                <ion-list-header>
+                  <ion-label>Hand Over Asset or Procured</ion-label>
+                </ion-list-header>
+
+                <ion-item>
+                  <ion-label>Asset Handover</ion-label>
+                  <ion-radio slot="start" value="AH"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Procured</ion-label>
+                  <ion-radio slot="start" value="PC"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.acquired_by }}</small
+              > -->
+            </div>
+          </div>
+
+          <!-- <div>
+            <ion-button color="danger" size="small" matStepperPrevious>
+              Back
+            </ion-button>
+            <ion-button color="success" size="small" matStepperNext
+              >Next</ion-button
+            >
+          </div> -->
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel>Asset Owning</ng-template>
+          <div class="line-input">
+
             <ion-item>
-              <ion-label position="stacked">Asset or Component Type</ion-label>
-              <ion-select
-                placeholder="Please select"
-                formControlName="type_asset"
-              >
-                <ion-select-option
-                  *ngFor="let typeasset of typeassets"
-                  [value]="typeasset.id"
-                  >{{ typeasset.name }}</ion-select-option
-                >
+              <ion-label position="stacked">Asset Owning Department</ion-label>
+              <ion-select formControlName="asset_owning_department" placeholder="Please select">
+                <ion-select-option *ngFor="let assOwnDep of assOwningDepartList" [value]="assOwnDep.id">
+                  {{ assOwnDep.name }}
+                </ion-select-option>
               </ion-select>
               <!-- <small class="validation_messages"
-                >{{ validation_messages.type_asset }}</small
-              > -->
+                >{{ validation_messages.sub_category_2 }}</small> 
+              -->
             </ion-item>
             <ion-item>
-              <ion-label position="stacked"
-                >Asset Class/Asset Category</ion-label
-              >
-              <ion-select
-                placeholder="Please select"
-                formControlName="category"
-              >
-                <ion-select-option
-                  *ngFor="let category of categories"
-                  [value]="category.id"
-                  >{{ category.name }}</ion-select-option
-                >
+              <ion-label position="stacked">Main Operation</ion-label>
+              <ion-select formControlName="main_operation" placeholder="Please select">
+                <ion-select-option *ngFor="let mainOpList of mainOperationList" [value]="mainOpList.id">
+                  {{ mainOpList.name }}
+                </ion-select-option>
               </ion-select>
-              <!-- <small class="validation_messages"
-                >{{ validation_messages.category }}</small
-              > -->
             </ion-item>
-            <ion-radio-group formControlName="acquired_by">
+            <ion-item>
+              <ion-label position="stacked">Region</ion-label>
+              <ion-select formControlName="region" placeholder="Please select">
+                <ion-select-option *ngFor="let region of regions" [value]="region.id">{{ region.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Operation</ion-label>
+              <ion-select formControlName="operation" placeholder="Please select">
+                <ion-select-option *ngFor="let operateList of operationList" [value]="operateList.id">
+                  {{ operateList.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-radio-group (click)="onChangeParent($event.target.value)">
               <ion-list-header>
-                <ion-label>Hand Over Asset or Procured</ion-label>
+                <ion-label>Parent Location</ion-label>
+              </ion-list-header>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <div>
+                      <ion-item>
+                        <ion-label>New Parent</ion-label>
+                        <!-- <ion-radio (change)='onChangeParent($event.target.value)' slot="start" value="true" checked></ion-radio> -->
+                        <!-- <ion-radio (ionSelect)="onChangeParent('true')"></ion-radio> -->
+                        <ion-radio slot="start" value="0" selected="selected"></ion-radio>
+                      </ion-item>
+                    </div>
+                  </ion-col>
+                  <ion-col>
+                    <div>
+                      <ion-item>
+                        <ion-label>Existing Parent</ion-label>
+                        <ion-radio slot="start" value="1"></ion-radio>
+                      </ion-item>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-radio-group>
+
+            <ion-item *ngIf="parentLocaDiv == 0">
+              <ion-label position="stacked">New</ion-label>
+              <ion-input formControlName="new_parent_location" type="text"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="parentLocaDiv == 1">
+              <ion-label position="stacked">Existing</ion-label>
+              <ion-select formControlName="parent_location" type="text"></ion-select>
+            </ion-item>
+
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="fourthFormGroup">
+        <form [formGroup]="fourthFormGroup">
+          <ng-template matStepLabel>Asset Location</ng-template>
+          <div class="line-input">
+            <ion-radio-group (click)="onChangeAssLoc($event.target.value)">
+              <ion-list-header>
+                <ion-label>Asset Location</ion-label>
+              </ion-list-header>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>New</ion-label>
+                      <!-- <ion-radio (change)='onChangeParent($event.target.value)' slot="start" value="true" checked></ion-radio> -->
+                      <!-- <ion-radio (ionSelect)="onChangeParent('true')"></ion-radio> -->
+                      <ion-radio slot="start" value="0" checked></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>Existing</ion-label>
+                      <ion-radio slot="start" value="1"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-radio-group>
+
+            <ion-item *ngIf="assetLocDiv == 1">
+              <ion-label>Location</ion-label>
+
+              <!-- <ionic-selectable [items]="primarycategories" itemValueField="id" itemTextField="asset_type_description"
+                [canSearch]="true" formControlName="asset_primary_category" (onChange)="onChangeAssPrimaryCat($event)">
+              </ionic-selectable> -->
+              <ionic-selectable [items]="assetLocationData" itemValueField="uuid" itemTextField="description"
+                [canSearch]="true" formControlName="parent_location" (ionChange)="portChange($event)">
+              </ionic-selectable>
+            </ion-item>
+
+            <div *ngIf="assetLocDiv == 0">
+
+              <ion-item>
+                <ion-label position="stacked">Location Description</ion-label>
+                <ion-input formControlName="location_description" placeholder="Location Description"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Building</ion-label>
+                <ion-input formControlName="building" placeholder="Building"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Address 1</ion-label>
+                <ion-input formControlName="address_line_1" placeholder="Address 1"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Address 2</ion-label>
+                <ion-input formControlName="address_line_2" placeholder="Address 2"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Address 3</ion-label>
+                <ion-input formControlName="address_line_3" placeholder="Address 3"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">City</ion-label>
+                <ion-input formControlName="city" placeholder="City"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">State</ion-label>
+                <ion-select placeholder="Please select" formControlName="state">
+                  <ion-select-option *ngFor="let state of states" [value]="state.code">
+                    {{ state.state }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Postal Code</ion-label>
+                <ion-input formControlName="postal_code" placeholder="Postal Code"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Country</ion-label>
+                <ion-input formControlName="country" placeholder="Country"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Tag Number</ion-label>
+                <ion-input formControlName="tag_number" placeholder="Tag Number"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Location/Department</ion-label>
+                <ion-select placeholder="Please select" style="max-width: 100% !important;"
+                  formControlName="service_area">
+                  <ion-select-option *ngFor="let servArea of servAreaList" [value]="servArea.id">
+                    {{ servArea.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Location Main Contact</ion-label>
+                <ion-input formControlName="location_main_contact" placeholder="Location Main Contact"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Location/Asset Maintenance Manager</ion-label>
+                <!-- <ion-input formControlName="location_asset_maintenance_manager"
+                  placeholder="Location/Asset Maintenance Manager"></ion-input> -->
+                <!-- <ion-select placeholder="Please select" style="max-width: 100% !important;"
+                  formControlName="location_asset_maintenance_manager">
+                  <ion-select-option *ngFor="let maintMan of maintenanceManagerData" [value]="maintMan.id">
+                    {{ maintMan.description }}</ion-select-option>
+                </ion-select> -->
+                <ionic-selectable [items]="maintenanceManagerData" style="max-width: 100% !important;"
+                  itemValueField="id" itemTextField="description" [canSearch]="true"
+                  formControlName="location_asset_maintenance_manager" (ionChange)="onChangeLocAssMaiMan($event)">
+                </ionic-selectable>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Planner</ion-label>
+                <!-- <ion-input formControlName="maintenance_planner" placeholder="Planner"></ion-input> -->
+                <!-- <ion-select placeholder="Please select" formControlName="maintenance_planner">
+                  <ion-select-option *ngFor="let planner of plannerData" [value]="planner.id">
+                    {{ planner.description }}</ion-select-option>
+                </ion-select> -->
+                <ionic-selectable [items]="plannerData" style="max-width: 100% !important;" itemValueField="id"
+                  itemTextField="description" [canSearch]="true" formControlName="maintenance_planner"
+                  (ionChange)="onChangeLocAssMaiMan($event)">
+                </ionic-selectable>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">GIS/ESRI ID</ion-label>
+                <ion-input formControlName="gis_esri_id" placeholder="GIS/ESRI ID"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Latitude</ion-label>
+                <ion-input formControlName="latitude" placeholder="Latitude"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Longitude</ion-label>
+                <ion-input formControlName="longitude" placeholder="Longitude"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Asset Critically</ion-label>
+                <ion-select placeholder="Please select" formControlName="asset_criticality">
+                  <ion-select-option *ngFor="let assCrit of assCriticalList" [value]="assCrit.id">
+                    {{ assCrit.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Cost Center</ion-label>
+                <ion-input formControlName="cost_center" placeholder="Cost Center"></ion-input>
+              </ion-item>
+
+            </div>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="fifthFormGroup">
+        <form [formGroup]="fifthFormGroup">
+          <ng-template matStepLabel>Asset Detailed Description</ng-template>
+          <div class="line-input">
+
+            <ion-item>
+              <ion-label position="stacked">Size/Capacity 1</ion-label>
+              <ion-input type="number" formControlName="size_capacity_1"></ion-input>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.size_capacity_1 }}</small
+              > -->
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Measurement 1</ion-label>
+              <ion-input type="text" formControlName="size_capacity_1_unit_measurement"></ion-input>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.size_capacity_1_unit_measurement }}</small
+              > -->
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Size/Capacity 2</ion-label>
+              <ion-input type="number" formControlName="size_capacity_2"></ion-input>
+              <!-- <small class="validation_messages"
+                        >{{ validation_messages.size_capacity_2 }}</small
+                      > -->
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Measurement 2</ion-label>
+              <ion-input type="text" formControlName="size_capacity_2_unit_measurement"></ion-input>
+              <!-- <small class="validation_messages"
+                        >{{ validation_messages.size_capacity_2_unit_measurement }}</small
+                      > -->
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Size/Capacity 3</ion-label>
+              <ion-input type="number" formControlName="size_capacity_3"></ion-input>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.size_capacity_3 }}</small
+              > -->
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Measurement 3</ion-label>
+              <ion-input type="text" formControlName="size_capacity_3_unit_measurement"></ion-input>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.size_capacity_3_unit_measurement }}</small
+              > -->
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Detailed Description</ion-label>
+              <ion-input type="text" formControlName="detailed_description"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Serial Number</ion-label>
+              <ion-input type="text" formControlName="serial_number"></ion-input>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.serial_number }}</small
+              > -->
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Tag Number</ion-label>
+              <ion-input type="text" formControlName="asset_tag_number"></ion-input>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.asset_tag_number }}</small
+              > -->
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Purchased/Installed/Hand Over Date</ion-label>
+              <ion-datetime displayFormat="MMM, DD YYYY" formControlName="purchase_date_installed_handed_over_date">
+              </ion-datetime>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.purchase_date_installed_handed_over_date }}</small
+              > -->
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Condition Rating </ion-label>
+              <ion-select placeholder="Please select" formControlName="condition_rating">
+                <ion-select-option *ngFor="let rating of conditionRatingList" [value]="rating.id">{{ rating.name }}
+                </ion-select-option>
+              </ion-select>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.rating }}</small
+              > -->
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Status</ion-label>
+              <ion-select placeholder="Please select" formControlName="status">
+                <ion-select-option *ngFor="let status of statuses" [value]="status.value">{{ status.name }}
+                </ion-select-option>
+              </ion-select>
+              <!-- <small class="validation_messages"
+                >{{ validation_messages.status }}</small
+              > -->
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Maintenance Specification</ion-label>
+              <ion-input type="text" formControlName="maintenance_specification"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Measurement Type</ion-label>
+              <ion-select placeholder="Please select" formControlName="measurement_type">
+                <ion-select-option *ngFor="let measuringtype of measuringtypes" [value]="measuringtype.value">
+                  {{ measuringtype.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Warranty</ion-label>
+              <ion-select placeholder="Please select" formControlName="warranty">
+                <ion-select-option *ngFor="let warranti of warrantyList" [value]="warranti.id">
+                  {{ warranti.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Actual warranty period</ion-label>
+              <ion-input formControlName="actual_warranty_period" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Warranty vendor name</ion-label>
+              <ion-input formControlName="warranty_vendor_name" type="text"></ion-input>
+            </ion-item>
+          </div>
+
+          <!-- <div>
+            <ion-button color="danger" size="small" matStepperPrevious>
+              Back
+            </ion-button>
+            <ion-button color="success" size="small" matStepperNext
+              >Next</ion-button
+            >
+          </div> -->
+        </form>
+      </mat-step>
+      <!-- <mat-step [stepControl]="sixthFormGroup">
+        <form [formGroup]="sixthFormGroup">
+          <ng-template matStepLabel>Asset Warranty Information</ng-template>
+          <div class="line-input">
+            <ion-radio-group formControlName="is_warranty">
+              <ion-list-header>
+                <ion-label>Warranty</ion-label>
               </ion-list-header>
 
               <ion-item>
-                <ion-label>Asset Handover</ion-label>
-                <ion-radio slot="start" value="AH"></ion-radio>
+                <ion-label>Yes</ion-label>
+                <ion-radio slot="start" value="true"></ion-radio>
               </ion-item>
 
               <ion-item>
-                <ion-label>Procured</ion-label>
-                <ion-radio slot="start" value="PC"></ion-radio>
+                <ion-label>No</ion-label>
+                <ion-radio slot="start" value="false"></ion-radio>
               </ion-item>
             </ion-radio-group>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.acquired_by }}</small
-            > -->
+
+            <ion-item>
+              <ion-label position="stacked">Actual Warranty Period</ion-label>
+              <ion-input
+                type="number"
+                formControlName="warranty_period_actual"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Warranty Vendor Name</ion-label>
+              <ion-select
+                placeholder="Please select"
+                formControlName="warranty_vendor"
+              >
+                <ion-select-option
+                  *ngFor="let organisation of organisations"
+                  [value]="organisation.id"
+                  >{{ organisation.name }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
           </div>
-        </div>
 
-        <!-- <div>
-          <ion-button color="danger" size="small" matStepperPrevious>
-            Back
-          </ion-button>
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div> -->
-      </form>
-    </mat-step>
-    <mat-step>
-      <form>
-        <ng-template matStepLabel>Asset Location</ng-template>
-        <div class="line-input">
-          <ion-item>
-            <ion-label position="stacked">Main Operation</ion-label>
-            <ion-select placeholder="Please select"> </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Region</ion-label>
-            <ion-select placeholder="Please select">
-              <ion-select-option
-                *ngFor="let region of regions"
-                [value]="region.id"
-                >{{ region.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Operation</ion-label>
-            <ion-select placeholder="Please select"> </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Process/Function</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Sub-Process/System</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="fifthFormGroup">
-      <form [formGroup]="fifthFormGroup">
-        <ng-template matStepLabel>Asset Detailed Description</ng-template>
-        <div class="line-input">
-          <ion-item>
-            <ion-label position="stacked">Brand</ion-label>
-            <ion-input type="text" formControlName="brand"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.brand }}</small
-            > -->
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Model Number</ion-label>
-            <ion-input type="text" formControlName="model_no"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.model_no }}</small
-            > -->
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">Site/Capacity 1</ion-label>
-            <ion-input
-              type="number"
-              formControlName="size_capacity_1"
-            ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.size_capacity_1 }}</small
-            > -->
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"
-              >Site/Capacity 1 - Measurement</ion-label
+          <div>
+            <ion-button color="danger" size="small" matStepperPrevious>
+              Back
+            </ion-button>
+            <ion-button color="success" size="small" matStepperNext
+              >Next</ion-button
             >
-            <ion-input
-              type="number"
-              formControlName="size_capacity_1_measurement"
-            ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.size_capacity_1_measurement }}</small
-            > -->
-          </ion-item>
+          </div>
+        </form>
+      </mat-step> -->
+      <!-- <mat-step [stepControl]="seventhFormGroup">
+        <form [formGroup]="seventhFormGroup">
+          <ng-template matStepLabel>PO Detail</ng-template>
+          <div class="line-input">
+            <ion-item>
+              <ion-label position="stacked">Purchase Order Vendor Name</ion-label>
+              <ion-select placeholder="Please select" formControlName="po_vendor">
+                <ion-select-option
+                  *ngFor="let organisation of organisations"
+                  [value]="organisation.id"
+                  >{{ organisation.name }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Purchase Cost</ion-label>
+              <ion-input type="number" formControlName="po_cost"></ion-input>
+            </ion-item>
+          </div>
+        </form>
+      </mat-step> -->
+    </mat-vertical-stepper>
 
-          <ion-item>
-            <ion-label position="stacked">Site/Capacity 2</ion-label>
-            <ion-input
-              type="number"
-              formControlName="size_capacity_2"
-            ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.size_capacity_2 }}</small
-            > -->
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"
-              >Site/Capacity 2 - Measurement</ion-label
-            >
-            <ion-input
-              type="number"
-              formControlName="size_capacity_2_measurement"
-            ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.size_capacity_2_measurement }}</small
-            > -->
-          </ion-item>
+    <div class="ion-padding ion-text-center">
+      <ion-button color="primary" (click)="changeSegment('second')">Next</ion-button>
+      <ion-button color="light" (click)="clickBack()">Cancel</ion-button>
+    </div>
+  </div>
+  <div class="ion-padding" *ngIf="segmentModal == 'second'">
+    <h4 class="ion-text-center ion-padding">Asset Technical Spec</h4>
 
-          <ion-item>
-            <ion-label position="stacked">Site/Capacity 3</ion-label>
-            <ion-input
-              type="number"
-              formControlName="size_capacity_3"
-            ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.size_capacity_3 }}</small
-            > -->
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"
-              >Site/Capacity 3 - Measurement</ion-label
-            >
-            <ion-input
-              type="number"
-              formControlName="size_capacity_3_measurement"
-            ></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.size_capacity_3_measurement }}</small
-            > -->
-          </ion-item>
-
-          <!-- <ion-item>
-            <ion-label position="stacked">Parent Asset/Plate Number</ion-label>
-            <ion-input
-              type="text"
-              formControlName="parent_plate_number"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Asset/Plate Number</ion-label>
-            <ion-input type="text" formControlName="plate_number"></ion-input>
-          </ion-item> -->
-
-          <ion-item>
-            <ion-label position="stacked">Serial Number</ion-label>
-            <ion-input type="text" formControlName="serial_number"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.serial_number }}</small
-            > -->
-          </ion-item>
-          <!-- <ion-item>
-            <ion-label position="stacked">Vendor Part Number</ion-label>
-            <ion-input type="text" formControlName="vendor_part_no"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">SCADA ID</ion-label>
-            <ion-input type="text" formControlName="scada_id"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">External ID</ion-label>
-            <ion-input type="text" formControlName="external_id"></ion-input>
-          </ion-item> -->
-
-          <ion-item>
-            <ion-label position="stacked">Tag Number</ion-label>
-            <ion-input type="text" formControlName="tag_number"></ion-input>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.tag_number }}</small
-            > -->
-          </ion-item>
-          <!-- <ion-item>
-            <ion-label position="stacked">Pallet Number</ion-label>
-            <ion-input type="text" formControlName="pallet_number"></ion-input>
-          </ion-item> -->
-
-          <ion-item>
-            <ion-label position="stacked"
-              >Purchased/Installed/Hand Over Date</ion-label
-            >
-            <ion-datetime
-              displayFormat="MMM, DD YYYY"
-              formControlName="installed_at"
-            ></ion-datetime>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.installed_at }}</small
-            > -->
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Condition Rating </ion-label>
-            <ion-select placeholder="Please select" formControlName="rating">
-              <ion-select-option
-                *ngFor="let rating of ratings"
-                [value]="rating.value"
-                >{{ rating.name }}</ion-select-option
-              >
-            </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.rating }}</small
-            > -->
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">Status</ion-label>
-            <ion-select placeholder="Please select" formControlName="status">
-              <ion-select-option
-                *ngFor="let status of statuses"
-                [value]="status.value"
-                >{{ status.name }}</ion-select-option
-              >
-            </ion-select>
-            <!-- <small class="validation_messages"
-              >{{ validation_messages.status }}</small
-            > -->
-          </ion-item>
-          <!-- <ion-item>
-            <ion-label position="stacked">Maintenance Specification</ion-label>
-            <ion-input
-              type="text"
-              formControlName="maintenance_specification"
-            ></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">Bill of Material</ion-label>
-            <ion-input
-              type="text"
-              formControlName="bill_of_material"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Measurement Type</ion-label>
-            <ion-select
-              placeholder="Please select"
-              formControlName="measuring_type"
-            >
-              <ion-select-option
-                *ngFor="let measuringtype of measuringtypes"
-                [value]="measuringtype.value"
-                >{{ measuringtype.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item> -->
-        </div>
-
-        <!-- <div>
-          <ion-button color="danger" size="small" matStepperPrevious>
-            Back
-          </ion-button>
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div> -->
-      </form>
-    </mat-step>
-    <!-- <mat-step [stepControl]="sixthFormGroup">
+    <ion-list class="ion-padding line-input">
       <form [formGroup]="sixthFormGroup">
-        <ng-template matStepLabel>Asset Warranty Information</ng-template>
-        <div class="line-input">
-          <ion-radio-group formControlName="is_warranty">
-            <ion-list-header>
-              <ion-label>Warranty</ion-label>
-            </ion-list-header>
+        <!-- <div *ngIf="assetAttrColumn != ''"> -->
+        <ion-item *ngIf="assetAttrColumn.bottom_water_level == true">
+          <ion-label required position="stacked">Bottom water level</ion-label>
+          <ion-input formControlName="bottom_water_level" type="text"></ion-input>
+        </ion-item>
 
-            <ion-item>
-              <ion-label>Yes</ion-label>
-              <ion-radio slot="start" value="true"></ion-radio>
-            </ion-item>
+        <ion-item *ngIf="assetAttrColumn.brand == true">
+          <ion-label required position="stacked">Brand</ion-label>
+          <ion-input formControlName="brand" type="text"></ion-input>
+        </ion-item>
 
-            <ion-item>
-              <ion-label>No</ion-label>
-              <ion-radio slot="start" value="false"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
+        <ion-item *ngIf="assetAttrColumn.capacity_size == true">
+          <ion-label required position="stacked">Capacity size</ion-label>
+          <ion-input formControlName="capacity_size" type="text"></ion-input>
+        </ion-item>
 
-          <ion-item>
-            <ion-label position="stacked">Actual Warranty Period</ion-label>
-            <ion-input
-              type="number"
-              formControlName="warranty_period_actual"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Warranty Vendor Name</ion-label>
-            <ion-select
-              placeholder="Please select"
-              formControlName="warranty_vendor"
-            >
-              <ion-select-option
-                *ngFor="let organisation of organisations"
-                [value]="organisation.id"
-                >{{ organisation.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-        </div>
+        <ion-item *ngIf="assetAttrColumn.closing_torque == true">
+          <ion-label required position="stacked">Closing torque</ion-label>
+          <ion-input formControlName="closing_torque" type="text"></ion-input>
+        </ion-item>
 
-        <div>
-          <ion-button color="danger" size="small" matStepperPrevious>
-            Back
-          </ion-button>
-          <ion-button color="success" size="small" matStepperNext
-            >Next</ion-button
-          >
-        </div>
+        <ion-item *ngIf="assetAttrColumn.communication_protocol == true">
+          <ion-label required position="stacked">Comunication protocol</ion-label>
+          <ion-input formControlName="communication_protocol" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.coverage_range == true">
+          <ion-label required position="stacked">Coverage range</ion-label>
+          <ion-input formControlName="coverage_range" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.dimention == true">
+          <ion-label required position="stacked">Dimention</ion-label>
+          <ion-input formControlName="dimention" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.environmental_performance == true">
+          <ion-label required position="stacked">Environmental Performance</ion-label>
+          <ion-input formControlName="environmental_performance" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.flow_rate == true">
+          <ion-label required position="stacked">Flow rate</ion-label>
+          <ion-input formControlName="flow_rate" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.frequency == true">
+          <ion-label required position="stacked">Frequency</ion-label>
+          <ion-input formControlName="frequency" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.horse_power == true">
+          <ion-label required position="stacked">Horse power</ion-label>
+          <ion-input formControlName="horse_power" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.hysteresis == true">
+          <ion-label required position="stacked">Hysterasis</ion-label>
+          <ion-input formControlName="hysteresis" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.infrastructure_status == true">
+          <ion-label required position="stacked">Infrastracture status</ion-label>
+          <ion-input formControlName="infrastructure_status" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.infrastructure_status_reason == true">
+          <ion-label required position="stacked">Infrastracture status reason</ion-label>
+          <ion-input formControlName="infrastructure_status_reason" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.inlet_diameter == true">
+          <ion-label required position="stacked">Inlet diameter</ion-label>
+          <ion-input formControlName="inlet_diameter" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.installation == true">
+          <ion-label required position="stacked">Installation</ion-label>
+          <ion-input formControlName="installation" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.insulation == true">
+          <ion-label required position="stacked">Insulation</ion-label>
+          <ion-input formControlName="insulation" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.legal_name == true">
+          <ion-label required position="stacked">Legal name</ion-label>
+          <ion-input formControlName="legal_name" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.manufacturer == true">
+          <ion-label required position="stacked">Manufacturer</ion-label>
+          <!-- <ion-input formControlName="manufacturer" type="text"></ion-input> -->
+          <!-- <ion-select placeholder="Please select" formControlName="manufacturer">
+            <ion-select-option *ngFor="let assAttPreMan of assetAttPredefineMans" [value]="assAttPreMan.id">
+              {{ assAttPreMan.characteristic_value }}
+            </ion-select-option>
+          </ion-select> -->
+
+          <ionic-selectable [items]="assetAttPredefineMans" style="max-width: 100% !important;" itemValueField="id"
+            itemTextField="description" [canSearch]="true" formControlName="maintenance_planner"
+            (ionChange)="onChangeLocAssMaiMan($event)">
+          </ionic-selectable>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.manufacturer_year == true">
+          <ion-label required position="stacked">Manufacturer year</ion-label>
+          <ion-input formControlName="manufacturer_year" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.manufacture_part_number == true">
+          <ion-label required position="stacked">Manufacturer part number</ion-label>
+          <ion-input formControlName="manufacture_part_number" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.material_type == true">
+          <ion-label required position="stacked">Material type</ion-label>
+          <ion-input formControlName="material_type" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.model == true">
+          <ion-label required position="stacked">Model</ion-label>
+          <ion-input formControlName="model" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.motor_current == true">
+          <ion-label required position="stacked">Motor current</ion-label>
+          <ion-input formControlName="motor_current" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.no_of_channel == true">
+          <ion-label required position="stacked">No of channer</ion-label>
+          <ion-input formControlName="no_of_channel" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.no_of_phases == true">
+          <ion-label required position="stacked">No of phase</ion-label>
+          <ion-input formControlName="no_of_phases" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.no_of_stage == true">
+          <ion-label required position="stacked">No of stage</ion-label>
+          <ion-input formControlName="no_of_stage" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.opening_torque == true">
+          <ion-label required position="stacked">Opening torque</ion-label>
+          <ion-input formControlName="opening_torque" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.outlet_diameter == true">
+          <ion-label required position="stacked">Outlet diameter</ion-label>
+          <ion-input formControlName="outlet_diameter" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.power_supply_type == true">
+          <ion-label required position="stacked">Power supply type</ion-label>
+          <ion-input formControlName="power_supply_type" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.pump_head == true">
+          <ion-label required position="stacked">Pump head</ion-label>
+          <ion-input formControlName="pump_head" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.revolutions_per_minute == true">
+          <ion-label required position="stacked">Revolution per minute</ion-label>
+          <ion-input formControlName="revolutions_per_minute" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.source_from == true">
+          <ion-label required position="stacked">Source from</ion-label>
+          <ion-input formControlName="source_from" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.staging_height == true">
+          <ion-label required position="stacked">Staging height</ion-label>
+          <ion-input formControlName="staging_height" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.supply_location == true">
+          <ion-label required position="stacked">Supply location</ion-label>
+          <ion-input formControlName="supply_location" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.temperature == true">
+          <ion-label required position="stacked">Temperature</ion-label>
+          <ion-input formControlName="temperature" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.top_water_level == true">
+          <ion-label required position="stacked">Top water level</ion-label>
+          <ion-input formControlName="top_water_level" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.type == true">
+          <ion-label required position="stacked">Type</ion-label>
+          <ion-input formControlName="type" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.valve_diameter == true">
+          <ion-label required position="stacked">Value diameter</ion-label>
+          <ion-input formControlName="valve_diameter" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.valve_pressure_rating == true">
+          <ion-label required position="stacked">Valve pressuring rate</ion-label>
+          <ion-input formControlName="valve_pressure_rating" type="text"></ion-input>
+        </ion-item>
+
+        <ion-list-header *ngIf="assetAttrColumn != ''">
+          <ion-label>Vehicle</ion-label>
+        </ion-list-header>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_chasis_number == true">
+          <ion-label required position="stacked">chassis number</ion-label>
+          <ion-input formControlName="vehicle_chasis_number" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_engine_capacity == true">
+          <ion-label required position="stacked">engine capacity</ion-label>
+          <ion-input formControlName="vehicle_engine_capacity" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_engine_number == true">
+          <ion-label required position="stacked">engine number</ion-label>
+          <ion-input formControlName="vehicle_engine_number" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_vendor == true">
+          <ion-label required position="stacked">insurance vendor</ion-label>
+          <!-- <ion-input formControlName="vehicle_insurance_vendor" type="text"></ion-input> -->
+          <ion-select placeholder="Please select" formControlName="vehicle_insurance_vendor">
+            <ion-select-option *ngFor="let assAttPreInsVen of assetAttPredefinePreInsVens" [value]="assAttPreInsVen.id">
+              {{ assAttPreInsVen.characteristic_value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_model == true">
+          <ion-label required position="stacked">model</ion-label>
+          <ion-input formControlName="vehicle_model" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_auto_windscreen_insured == true">
+          <ion-label required position="stacked">insurance windscreen</ion-label>
+          <ion-input formControlName="vehicle_insurance_auto_windscreen_insured" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_cover_note_number == true">
+          <ion-label required position="stacked">insurance cover no</ion-label>
+          <ion-input formControlName="vehicle_insurance_cover_note_number" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_date_period_from == true">
+          <ion-label required position="stacked">insurance date from</ion-label>
+          <ion-input formControlName="vehicle_insurance_date_period_from" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_date_period_to == true">
+          <ion-label required position="stacked">insurance date to</ion-label>
+          <ion-input formControlName="vehicle_insurance_date_period_to" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_no_claim_discount == true">
+          <ion-label required position="stacked">insurance claim discount no</ion-label>
+          <ion-input formControlName="vehicle_insurance_no_claim_discount" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_policy_type == true">
+          <ion-label required position="stacked">insurance policy type</ion-label>
+          <!-- <ion-input formControlName="vehicle_insurance_policy_type" type="text"></ion-input> -->
+          <ion-select placeholder="Please select" formControlName="vehicle_insurance_policy_type">
+            <ion-select-option *ngFor="let assAttPreInsPol of assetAttPredefineInsPols" [value]="assAttPreInsPol.id">
+              {{ assAttPreInsPol.characteristic_value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_sum_insured == true">
+          <ion-label required position="stacked">insurance sum insured</ion-label>
+          <ion-input formControlName="vehicle_insurance_sum_insured" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_insurance_total_premium == true">
+          <ion-label required position="stacked">insurance total premium</ion-label>
+          <ion-input formControlName="vehicle_insurance_total_premium" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_puspakom_date_inspection == true">
+          <ion-label required position="stacked">puspakom date inspection</ion-label>
+          <ion-input formControlName="vehicle_puspakom_date_inspection" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_owner_status == true">
+          <ion-label required position="stacked">owner status</ion-label>
+          <!-- <ion-input formControlName="vehicle_owner_status" type="text"></ion-input> -->
+          <ion-select placeholder="Please select" formControlName="vehicle_owner_status">
+            <ion-select-option *ngFor="let assAttPreVehOwnSta of assetAttPredefineOwnStas"
+              [value]="assAttPreVehOwnSta.id">
+              {{ assAttPreVehOwnSta.characteristic_value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_register_date == true">
+          <ion-label required position="stacked">register date</ion-label>
+          <ion-input formControlName="vehicle_register_date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_roadtax_rate == true">
+          <ion-label required position="stacked">roadtax rate</ion-label>
+          <ion-input formControlName="vehicle_roadtax_rate" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_puspakom_expired_date == true">
+          <ion-label required position="stacked">puspakom expired date</ion-label>
+          <ion-input formControlName="vehicle_puspakom_expired_date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_spad_permit_date_period_to == true">
+          <ion-label required position="stacked">spad permit date to</ion-label>
+          <ion-input formControlName="vehicle_spad_permit_date_period_to" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_roadtax_renew_date == true">
+          <ion-label required position="stacked">roadtax renew date</ion-label>
+          <ion-input formControlName="vehicle_roadtax_renew_date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_roadtax_expired_date == true">
+          <ion-label required position="stacked">roadtax expire date</ion-label>
+          <ion-input formControlName="vehicle_roadtax_expired_date" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_spad_no_license_operator == true">
+          <ion-label required position="stacked">spad no license operator</ion-label>
+          <ion-input formControlName="vehicle_spad_no_license_operator" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_spad_permit_date_period_from == true">
+          <ion-label required position="stacked">spad permit date from</ion-label>
+          <ion-input formControlName="vehicle_spad_permit_date_period_from" type="date"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_seating_capacity == true">
+          <ion-label required position="stacked">seating capacity</ion-label>
+          <ion-input formControlName="vehicle_seating_capacity" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.vehicle_registration_owner == true">
+          <ion-label required position="stacked">registration owner</ion-label>
+          <!-- <ion-input formControlName="vehicle_registration_owner" type="text"></ion-input> -->
+          <ion-select placeholder="Please select" formControlName="vehicle_registration_owner">
+            <ion-select-option *ngFor="let assAttregOw of assetAttPredefineRegOwns"
+              [value]="assAttregOw.characteristic_value">
+              {{ assAttregOw.characteristic_value }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="assetAttrColumn.voltage == true">
+          <ion-label required position="stacked">Voltage</ion-label>
+          <ion-input formControlName="voltage" type="text"></ion-input>
+        </ion-item>
+        <!-- </div> -->
+
       </form>
-    </mat-step> -->
-    <!-- <mat-step [stepControl]="seventhFormGroup">
-      <form [formGroup]="seventhFormGroup">
-        <ng-template matStepLabel>PO Detail</ng-template>
-        <div class="line-input">
-          <ion-item>
-            <ion-label position="stacked">Purchase Order Vendor Name</ion-label>
-            <ion-select placeholder="Please select" formControlName="po_vendor">
-              <ion-select-option
-                *ngFor="let organisation of organisations"
-                [value]="organisation.id"
-                >{{ organisation.name }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Purchase Cost</ion-label>
-            <ion-input type="number" formControlName="po_cost"></ion-input>
-          </ion-item>
-        </div>
-      </form>
-    </mat-step> -->
-  </mat-vertical-stepper>
+    </ion-list>
 
-  <div class="ion-padding ion-text-center">
-    <ion-button color="primary" (click)="register()">Register</ion-button>
-    <ion-button color="light" (click)="clickBack()">Cancel</ion-button>
+    <div class="ion-text-center ion-padding">
+      <ion-button color="light" (click)="changeSegment('first')">Back</ion-button>
+      <ion-button *ngIf="process != 'view'" (click)="register()">Submit</ion-button>
+    </div>
   </div>
 </ion-content>

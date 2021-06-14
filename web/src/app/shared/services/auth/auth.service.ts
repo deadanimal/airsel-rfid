@@ -1,5 +1,4 @@
-import { Injectable } from "@angular/core";
-import { environment } from "src/environments/environment";
+import { Injectable } from "@angular/core"; import { environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { TokenResponse } from "./auth.model";
 import { Form } from "@angular/forms";
@@ -38,7 +37,7 @@ export class AuthService {
 
   constructor(private jwtService: JwtService, private http: HttpClient) {}
 
-  register(body: Form): Observable<any> {
+  register(body): Observable<any> {
     return this.http.post<any>(this.urlRegister, body).pipe(
       tap((res) => {
         console.log("Registration: ", res);
@@ -62,7 +61,7 @@ export class AuthService {
     );
   }
 
-  obtainToken(body: Form): Observable<any> {
+  obtainToken(body): Observable<any> {
     let jwtHelper: JwtHelperService = new JwtHelperService();
     return this.http.post<any>(this.urlTokenObtain, body).pipe(
       tap((res) => {
@@ -120,4 +119,27 @@ export class AuthService {
       })
     );
   }
+
+  decodedToken() {
+    let accessToken = localStorage.getItem("accessToken");
+    let jwtHelper: JwtHelperService = new JwtHelperService();
+    let decodedToken = jwtHelper.decodeToken(accessToken);
+    let user_obj = {
+      user_id: decodedToken.user_id,
+      username: decodedToken.username,
+      email: decodedToken.email,
+      user_type: decodedToken.user_type,
+    };
+    return user_obj;
+  }
+
+
+  // activation(body: Form): Observable<any> {
+  //   return this.http.post<any>(this.urlUser + "/activation", body).pipe(
+  //     tap((res) => {
+  //       console.log("Registration: ", res);
+  //     })
+  //   );
+  // }
+
 }

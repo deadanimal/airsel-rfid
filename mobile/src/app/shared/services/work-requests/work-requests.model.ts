@@ -1,5 +1,6 @@
 export class WorkRequestsModel {
   public id: string;
+  public badge_no: string;
   public description: string;
   public long_description: string;
   public required_by_date: string;
@@ -21,6 +22,7 @@ export class WorkRequestsModel {
   public node_id: string;
   public asset_id: string;
   public attachment: string;
+  public status: string;
   public record_by: string;
   public record_date: any;
   public modified_by: string;
@@ -28,6 +30,7 @@ export class WorkRequestsModel {
 
   constructor(
     id: string,
+    badge_no: string,
     description: string,
     long_description: string,
     required_by_date: string,
@@ -49,12 +52,14 @@ export class WorkRequestsModel {
     node_id: string,
     asset_id: string,
     attachment: string,
+    status: string,
     record_by: string,
     record_date: any,
     modified_by: string,
     modified_date: any
   ) {
     this.id = id;
+    this.badge_no = badge_no;
     this.description = description;
     this.long_description = long_description;
     this.required_by_date = required_by_date;
@@ -80,5 +85,6 @@ export class WorkRequestsModel {
     this.record_date = record_date;
     this.modified_by = modified_by;
     this.modified_date = modified_date;
+    this.status = status;
   }
 }
