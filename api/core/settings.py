@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'users',
     'wams',
     'inventory',
-    'employee'
+    'employee',
+    'audit_trail',
 ]
 
 MIDDLEWARE = [
