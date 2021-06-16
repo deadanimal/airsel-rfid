@@ -222,7 +222,7 @@ export class NewComponent implements OnInit {
     public toastr: NotifyService,
     public assetsRegistrationService: AssetsRegistrationService,
     public assetsBadgeNoService: AssetsBadgeNoService,
-    private spinner: NgxSpinnerService
+    public spinner: NgxSpinnerService
   ) {
     this.getRegisteredData()
   }
@@ -368,6 +368,7 @@ export class NewComponent implements OnInit {
   }
 
   confirm(task) {
+    console.log("task", task);
     swal.fire({
       title: 'Are you sure?',
       text: 'To change the status.',
@@ -379,12 +380,148 @@ export class NewComponent implements OnInit {
       cancelButtonText: 'Cancel',
       cancelButtonClass: 'btn btn-secondary'
     }).then((result) => {
-      this.changeStatus(task)
+
+      if (task=="PR") {
+        this.changeStatusPR(task)
+      } 
+      else if (task=="RJ") {
+        this.changeStatusRJ(task);
+      }
     })
   }
 
+  changeStatusRJ(task) {
+    let resData: any
+    let no = 0
+    let assetregser = this.assetsRegistrationService
+    this.tableTemp1.forEach(function (itemVal) {
+      if (itemVal['isTick'] == true) {
+
+        console.log('itemVal = ', itemVal.status)
+        if (itemVal.status == 'NP') {
+          let updateformData: any
+
+          updateformData = {
+            status: task
+          }
+          assetregser.update(itemVal['id'], updateformData).subscribe(
+            (res) => {
+              console.log("update status RJ", res);
+            },
+            error => {
+              console.error("err", error);
+            }
+          )
+        } else {
+          no++
+        }
+      }
+    })
+
+    // if (no > 0) {
+    //   swal.fire({
+    //     title: 'Warning',
+    //     text: 'The incomplete data cannot be save.',
+    //     type: 'warning',
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Ok',
+    //     confirmButtonClass: 'btn btn-warning'
+    //   }).then((result) => {
+    //     this.getRegisteredData()
+    //   })
+    // } else {
+    //   swal.fire({
+    //     title: 'Success',
+    //     text: 'Successfully Change Status',
+    //     type: 'success',
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Ok',
+    //     confirmButtonClass: 'btn btn-success'
+    //   }).then((result) => {
+    //     this.getRegisteredData()
+    //   })
+    // }
+    swal.fire({
+        title: 'Success',
+        text: 'Successfully Change Status',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok',
+        confirmButtonClass: 'btn btn-success'
+      }).then((result) => {
+        this.getRegisteredData()
+      })
+
+
+  }
+  changeStatusPR(task) {
+    let resData: any
+    let no = 0
+    let assetregser = this.assetsRegistrationService
+    this.tableTemp1.forEach(function (itemVal) {
+      if (itemVal['isTick'] == true) {
+
+        console.log('itemVal = ', itemVal.status)
+        if (itemVal.status == 'NP') {
+          let updateformData: any
+
+          updateformData = {
+            status: task
+          }
+          assetregser.update(itemVal['id'], updateformData).subscribe(
+            (res) => {
+              console.log("update status RJ", res);
+            },
+            error => {
+              console.error("err", error);
+            }
+          )
+        } else {
+          no++
+        }
+      }
+    })
+
+    // if (no > 0) {
+    //   swal.fire({
+    //     title: 'Warning',
+    //     text: 'The incomplete data cannot be save.',
+    //     type: 'warning',
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Ok',
+    //     confirmButtonClass: 'btn btn-warning'
+    //   }).then((result) => {
+    //     this.getRegisteredData()
+    //   })
+    // } else {
+    //   swal.fire({
+    //     title: 'Success',
+    //     text: 'Successfully Change Status',
+    //     type: 'success',
+    //     buttonsStyling: false,
+    //     confirmButtonText: 'Ok',
+    //     confirmButtonClass: 'btn btn-success'
+    //   }).then((result) => {
+    //     this.getRegisteredData()
+    //   })
+    // }
+    swal.fire({
+        title: 'Success',
+        text: 'Successfully Change Status',
+        type: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok',
+        confirmButtonClass: 'btn btn-success'
+      }).then((result) => {
+        this.getRegisteredData()
+      })
+
+
+  }
+
+
+
   changeStatus(task) {
-    this.spinner.show();
     let resData: any
     let badgeFormatdata
     // console.log('this.task = ', task)
@@ -392,8 +529,6 @@ export class NewComponent implements OnInit {
     let assetregser = this.assetsRegistrationService
     let badgeFormatService = this.assetsBadgeNoService
     this.tableTemp1.forEach(function (itemVal) {
-
-      // badge logic is here
       if (itemVal['isTick'] == true) {
         let asspricat = itemVal.asset_primary_category
         let field = 'asset_primary_category=' + asspricat + '&status=AC'
@@ -423,98 +558,115 @@ export class NewComponent implements OnInit {
           let leftSkippedNo: any
           let currentNo = ''
 
+          if (badgeFormatdata.skipped_no !== undefined) {
+            if (badgeFormatdata.skipped_no.length > 0) {
+              skippedNo.forEach(function (noTest) {
 
-          if (badgeFormatdata.skipped_no.length > 0) {
-            skippedNo.forEach(function (noTest) {
+                if (runNo == 1) {
+                // console.log('noTest if = ', noTest)
+                  firstSkippedNo = noTest
+                  // leftSkippedNo += '"0"'
+                }
+                // else {
+                //   console.log('noTest else = ', noTest)
+                //   // leftSkippedNo += '"' + noTest + '"'
+                // }
 
-              if (runNo == 1) {
-              // console.log('noTest if = ', noTest)
-                firstSkippedNo = noTest
-                // leftSkippedNo += '"0"'
+                runNo++
+              })
+
+              skippedNo.forEach((element, index) => {
+                if (element == firstSkippedNo) {
+                  skippedNo.splice(index, 1)
+                }
+              });
+              leftSkippedNo = skippedNo
+              updateSkippedNo = {
+                skipped_no: leftSkippedNo
               }
-              // else {
-              //   console.log('noTest else = ', noTest)
-              //   // leftSkippedNo += '"' + noTest + '"'
-              // }
 
-              runNo++
-            })
+              badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
+                (res) => {
+                },
+                (err) => {
+                }
+              )
+              currentNo = firstSkippedNo
+            } else {
+              firstSkippedNo = badgeFormatdata.latest_no
 
-            skippedNo.forEach((element, index) => {
-              if (element == firstSkippedNo) {
-                skippedNo.splice(index, 1)
+              currentNo = badgeFormatdata.latest_no
+
+              updateSkippedNo = {
+                latest_no: leftSkippedNo
               }
-            });
-            leftSkippedNo = skippedNo
-            updateSkippedNo = {
-              skipped_no: leftSkippedNo
+
+              badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
+                (res) => {
+                },
+                (err) => {
+                }
+              )
             }
 
-            badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
+            let badgeNo = badgeFormatdata.short + '_' + currentNo.padStart(7, '0')
+            updateformData = {
+              status: task,
+              badge_no: badgeNo, 
+            }
+
+            // console.log('itemVal = ', itemVal)
+            console.log('updateformData = ', updateformData)
+            assetregser.update(itemVal['id'], updateformData).subscribe(
               (res) => {
+                console.log("res = ", res);
+                resData = res
+                this.getRegisteredData()
+
               },
-              (err) => {
+              error => {
+                console.error("err", error);
               }
             )
-            currentNo = firstSkippedNo
-          } else {
-            firstSkippedNo = badgeFormatdata.latest_no
 
-            currentNo = badgeFormatdata.latest_no
-
-            updateSkippedNo = {
-              latest_no: leftSkippedNo
             }
 
-            badgeFormatService.update(badgeFormatdata.id, updateSkippedNo).subscribe(
-              (res) => {
-              },
-              (err) => {
-              }
-            )
-          }
-
-          let badgeNo = badgeFormatdata.short + '_' + currentNo.padStart(7, '0')
-          updateformData = {
-            status: task,
-            badge_no: badgeNo, 
-          }
-
-          // console.log('itemVal = ', itemVal)
-          console.log('updateformData = ', updateformData)
-          assetregser.update(itemVal['id'], updateformData).subscribe(
-            (res) => {
-              console.log("res = ", res);
-              resData = res
-              this.getRegisteredData()
-
-            },
-            error => {
-              console.error("err", error);
-            }
-          )
-          // }
+                    // }
         }, 100);
+        setTimeout(function () {
+
+          swal.fire({
+            title: 'Success',
+            text: 'Successfully Change Status',
+            type: 'success',
+            buttonsStyling: false,
+            confirmButtonText: 'Ok',
+            confirmButtonClass: 'btn btn-success'
+          }).then((result) => {
+          })
+
+
+        }, 1000);
+
+
+      } else {
+        console.log("should be here");
+        setTimeout(function () {
+          swal.fire({
+            title: 'Failed',
+            text: 'Fail to change status, please check your badge number.',
+            type: 'warning',
+            buttonsStyling: false,
+            confirmButtonText: 'Ok',
+            confirmButtonClass: 'btn btn-danger'
+          }).then((result) => {
+          })
+
+
+        }, 1000);
 
       }
     })
     // if (resData.length > 0) {
-    let spinnerServ = this.spinner
-    this.getRegisteredData()
-    setTimeout(function () {
-
-      spinnerServ.hide();
-      swal.fire({
-        title: 'Success',
-        text: 'Successfully Change Status',
-        type: 'success',
-        buttonsStyling: false,
-        confirmButtonText: 'Ok',
-        confirmButtonClass: 'btn btn-success'
-      }).then((result) => {
-      })
-
-
-    }, 1000);
-  }
+      }
 }
