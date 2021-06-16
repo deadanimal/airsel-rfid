@@ -14,8 +14,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 
 import { AssetLocationSyncService } from "src/app/shared/services/asset-location-sync/asset-location-sync.service";
-import { AssetsService } from "src/app/shared/services/assets/assets.service";
-import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
+import { AssetsService } from "src/app/shared/services/assets/assets.service"; import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
 import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";

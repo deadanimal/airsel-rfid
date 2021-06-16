@@ -322,7 +322,7 @@ export class ProcessedComponent implements OnInit {
       confirmButtonText: 'Ok',
       confirmButtonClass: 'btn btn-success'
     }).then((result) => {
-      this.getRegisteredData()
+      window.location.reload();
     })
     // }
   }
