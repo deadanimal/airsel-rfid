@@ -157,14 +157,14 @@ class WorkRequestStatusSerializer(serializers.ModelSerializer):
         model = WorkRequestStatus
         fields = '__all__'
 
-class WorkRequestStatusExtendedSerializer(serializers.ModelSerializer):
-    work_request_id = WorkRequestSerializer(read_only=True)
-    record_by = CustomUserSerializer(read_only=True)
-    modified_by = CustomUserSerializer(read_only=True)
+# class WorkRequestStatusExtendedSerializer(serializers.ModelSerializer):
+#     work_request_id = WorkRequestSerializer(read_only=True)
+#     # record_by = CustomUserSerializer(read_only=True)
+#     # modified_by = CustomUserSerializer(read_only=True)
     
-    class Meta:
-        model = WorkRequestStatus
-        fields = '__all__'
+#     class Meta:
+#         model = WorkRequestStatus
+#         fields = '__all__'
 
 class MeasurementTypeSerializer(serializers.ModelSerializer):
     

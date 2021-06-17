@@ -26,11 +26,13 @@ from operations.models import (
 
 
 def insert_into_work_order_activity(dict):
-    # print("insert_into_work_order_activity", dict)
+    print("insert_into_work_order_activity", dict)
     # find in the database first
     # if do not exist, insert data into database
     workorderactivitycompletion = WorkOrderActivityCompletion.objects.filter(
         activityid=dict['ACT_ID']).exists()
+
+    print("workorderactivitycompletion>>>",workorderactivitycompletion)
 
     # for WorkOrderActivityCompletion
     activityid = dict['ACT_ID'] if 'ACT_ID' in dict else ""
@@ -157,17 +159,31 @@ def insert_into_work_order_activity(dict):
     }
 
     # WorkOrderActivityCompletion operation
+    print('qqqqqqqqqqqqqqqqqq')
     if not workorderactivitycompletion:
         # insert data into database
+        print('wwwwwwwwwwwwww')
         workorderactivitycompletion = WorkOrderActivityCompletion(
             **dictionary_work_order_activity_completion)
         workorderactivitycompletion.save()
-        # work_order_activity_completion_id = workorderactivitycompletion.id
+        woac_id = workorderactivitycompletion.id
+        print('eeeeeeeeeeeeeeeeee',woac_id)
 
     else:
+        print('aaaaaaaaaaaaa')
         workorderactivitycompletion = WorkOrderActivityCompletion.objects.filter(
             **dictionary_work_order_activity_completion).values()
-        # work_order_activity_completion_id = workorderactivitycompletion[0]['id']
+        # workorderactivitycompletion = WorkOrderActivityCompletion.objects.filter(
+        #     **dictionary_work_order_activity_completion).values()
+
+        woac_data = WorkOrderActivityCompletion.objects.get(activityid=dict['ACT_ID'])
+        woac_id = woac_data.id
+        print(woac_id)
+
+        # field_object = WorkOrderActivityCompletion._meta.get_field(id)
+        # woac_id = field_object.value_from_object(workorderactivitycompletion)
+
+        # print('sssssssssssssssss',woac_id)
 
     # WorkActivityEmployee operation
     if employee_id != "":
@@ -180,25 +196,31 @@ def insert_into_work_order_activity(dict):
 
     ## check data make sure not empty
     if node_id != "" and asset_id != "":
+        print("lepas bocaahhhhhhhhhh")
 
         ## check if exist in inbound activity_id and asset_id
+        print('ddddddddddd')
         check_woacalali = {
+            "node_id": node_id,
             "asset_id": asset_id,
             "activityid":activityid
         }
+        print('ggggggggggggg')
         woacalali_exist = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.filter(**check_woacalali).exists()
+        
+        print('hhhhhhhhhhhhh')
         dictionary_work_order_activity_completion_asset_location_asset_list_inbound = {
             "node_id": node_id,
             "asset_id": asset_id,
             "activityid":activityid
         }
-        print("dictionary_work_order_activity_completion_asset_location_asset_list_inbound = ",dictionary_work_order_activity_completion_asset_location_asset_list_inbound)
+        # print("dictionary_work_order_activity_completion_asset_location_asset_list_inbound = ",dictionary_work_order_activity_completion_asset_location_asset_list_inbound)
         # woacalali_exist = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.filter(activityid=activityid).exists()
         woacalal = WorkOrderActivityCompletionAssetLocationAssetListInbound(
             **dictionary_work_order_activity_completion_asset_location_asset_list_inbound)
         woacalal.save()
 
-        print("woacalali ==== ",woacalal)
+        # print("woacalali ==== ",woacalal)
 
         # WorkOrderActivityCompletionAssetLocationAssetList operation
         if not woacalali_exist:
@@ -209,16 +231,48 @@ def insert_into_work_order_activity(dict):
                 **dictionary_work_order_activity_completion_asset_location_asset_list)
             woacalal_save.save()
 
-            print("woacalal data ==== ",woacalal)
+
+            # print("woacalal data ==== ",woacalal)
 
             # save into woac table
-            new_woacalal = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(asset_id=asset_id)
+
+
+            # if queryset is None :
+
+            # new_woacalal_count = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(asset_id=asset_id).count()
+            # print("new_woacalal_count",new_woacalal_count)
+
+            # if new_woacalal_count == 1 :
+
+                # new_woacalal = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(asset_id=asset_id)
+            # print("new_woacalal>>>",new_woacalal)
             woac_table = WorkOrderActivityCompletion.objects.get(activityid=activityid)
-            woac_table.asset_location_asset_list.add(new_woacalal)
+            woac_table.asset_location_asset_list.add(woacalal_save.id)
+            print("woac_table>>>",woac_table)
+
+            # else : 
+
+            #     print("woac_id ==== ",woac_id)
+            #     queryset = WorkOrderActivityCompletion.objects.filter(id=woac_id).values_list('asset_location_asset_list', flat=True)
+            #     print("queryset------------------",queryset)
+            #     print("queryset------------------",len(queryset))
+
+            #     woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(node_id=node_id,asset_id=asset_id).values_list('id', flat=True)
+            #     print("woacalal_table = ",woacalal_table)
+            #     for line in woacalal_table:
+
+            #         if line in queryset : 
+            #             print('exist',line)
+            #             woacalal_data = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(id=line)
+            #             print(woacalal_data)
+            #             woacalal_data.service_histories.add(alalsh)
+
              
     # check for asset location asset list service history
+    print("node_id>>>>",node_id)
+    print("asset_id>>>>",asset_id)
     if node_id != "" and asset_id != "":
-
+        print("dah lepas cokkkkkkkkkkk")
         ## check if exist in asset location asset list service history inbound for asset_id, activity_id, service_history_type
         check_alalsh = {
             "asset_id": asset_id,
@@ -243,9 +297,11 @@ def insert_into_work_order_activity(dict):
         # AssetLocationAssetListServiceHistories operation
         # if service_history_type != "" and svc_hist_type_req_fl != "":
 
-        alalsh = AssetLocationAssetListServiceHistories(
+        alalsh_table = AssetLocationAssetListServiceHistories(
             **dictionary_asset_location_asset_list_service_histories)
-        alalsh.save()
+        alalsh_table.save()
+        alalsh = alalsh_table.id
+
 
         # woacalali_table = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.get(node_id=node_id,asset_id=asset_id)
         # print("woacalal_table = ",woacalali_table)
@@ -274,16 +330,44 @@ def insert_into_work_order_activity(dict):
                 fill_the_data = "yes"
         
         print(fill_the_data)
+        print(svc_hist_type_req_fl)
         # if not alalshi_exist:
         if fill_the_data == "yes" and svc_hist_type_req_fl == "W1YS":
             # if svc_hist_type_req_fl == "W1YS":
 
             print('alalsh = ',alalsh)
 
-                # new_woacalsh = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(node_id=node_id,asset_id=asset_id)
+            ### need to add more checking for to make sure there is only one data to enter ( woacalal_table.service_histories.add(alalsh) )
+            
+            # new_woacalal_count = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(asset_id=asset_id).count()
+            # print("new_woacalal_count",new_woacalal_count)
+
+            # if new_woacalal_count == 1:
+
+                # if queryset is None :
+
             woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(node_id=node_id,asset_id=asset_id)
-            print("woacalal_table = ",woacalal_table)
+            print("tttttttttttttttttt = ",woacalal_table)
             woacalal_table.service_histories.add(alalsh)
+                
+            # else :
+
+            #     print("woac_id",woac_id)
+            #     # woac_data = WorkOrderActivityCompletion.objects.filter(id=woac_id).values()
+            #     queryset = WorkOrderActivityCompletion.objects.filter(id=woac_id).values_list('asset_location_asset_list', flat=True)
+            #     print("queryset=====================",queryset)
+
+            #     print('xxxxxxxxxxxxx')
+            #     woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(node_id=node_id,asset_id=asset_id).values_list('id', flat=True)
+            #     print("uuuuuuuuuuuuuuuuuuu = ",woacalal_table)
+            #     for line in woacalal_table:
+            #         print(line)
+            #         if line in queryset : 
+            #             print('exist',line)
+            #             woacalal_data = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(id=line)
+            #             print(woacalal_data)
+            #             woacalal_data.service_histories.add(alalsh)
+
 
 
 def get_workorderactivity(from_date, to_date):
@@ -292,8 +376,39 @@ def get_workorderactivity(from_date, to_date):
         "from_date": from_date,
         "to_date": to_date
     }
+
+    # data = []
+
+    # node_id = '831688426895'
+    # asset_id = '004678152672'
+
+    # woac_id = '5c6c7fdb-5579-498f-9600-10b0becfab2d'
+
+    # # woac_data = WorkOrderActivityCompletion.objects.filter(id=woac_id).values()
+    # queryset = WorkOrderActivityCompletion.objects.filter(id=woac_id).values_list('asset_location_asset_list', flat=True)
+    # # print("queryset",queryset)
+
+    # for line in queryset:
+    #     print(line)
+
+    # woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(node_id=node_id,asset_id=asset_id).values_list('id', flat=True)
+    # # print("woacalal_table = ",woacalal_table)
+    # for line in woacalal_table:
+
+    #     if line in queryset : 
+    #         print('exist',line)
+    #         woacalal_data = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(id=line)
+    #         print(woacalal_data)
+
+    #     # print(line)
+
+    # return json.loads(data)
+
+
+
     r = requests.post("http://174.138.28.157/getWorkOrderActivity.php", data=payload)
     print(r)
+
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:
         if (key == "results"):
@@ -310,6 +425,10 @@ def get_workorderactivity(from_date, to_date):
                     insert_into_work_order_activity(x)
 
     return json.loads(r.content)
+
+
+
+
 
     # wsdl = "https://pasb-dev-uwa-iws.oracleindustry.com/ouaf/webservices/CM-WORKORDERACTIVITY?WSDL"
     # session = Session()

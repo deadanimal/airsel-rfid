@@ -6,6 +6,7 @@ import {
   FormGroup,
   FormControl,
 } from "@angular/forms";
+import * as moment from "moment";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { AlertController, MenuController } from "@ionic/angular";
 // import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
@@ -19,6 +20,7 @@ import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-
 import { AssetAttributeService } from 'src/app/shared/services/asset-attribute/asset-attribute.service';
 import { AssetAttributeReferenceService } from 'src/app/shared/services/asset-attribute-reference/asset-attribute-reference.service';
 import { AssetAttributeColumnService } from 'src/app/shared/services/asset-attribute-column/asset-attribute-column.service';
+import { AssetAttributePredefineService } from 'src/app/shared/services/asset-attribute-predefine/asset-attribute-prodefine.service';
 
 @Component({
   selector: "app-asset-detail",
@@ -194,7 +196,8 @@ export class AssetDetailPage implements OnInit {
     private assetLocatioSyncService: AssetLocatioSyncService,
     private assetAttributeService: AssetAttributeService,
     private assetAttributeReferenceService: AssetAttributeReferenceService,
-    private assetAttributeColumnService: AssetAttributeColumnService
+    private assetAttributeColumnService: AssetAttributeColumnService,
+    private assetAttributePredefineService: AssetAttributePredefineService
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -236,21 +239,64 @@ export class AssetDetailPage implements OnInit {
         // } else if (this.asset_detail.asset_primary_category.match(/Motor/i)) {
         //   this.asset_type = "Motor";
         // }
-        this.assetLocatioSyncService.filter("node_id=" + this.asset_detail.node_id).subscribe(
-          (res) => {
-            // console.log("assetLocatioSyncServiceres", res);
-            // this.assetregistrations = res;
-            if (res.length > 0) {
-              this.assetLocatioSyncdata = res[0].description
-            } else {
-              this.assetLocatioSyncdata = '-'
+
+        if (this.asset_detail['attached_to_asset_id'] == '') {
+          this.assetLocatioSyncService.filter("node_id=" + this.asset_detail['node_id']).subscribe(
+            (res) => {
+              // console.log("assetLocatioSyncServiceres", res);
+              // this.assetregistrations = res;
+              // this.assetLocatioSyncdata = res[0].description
+              if (res.length > 0) {
+                this.assetLocatioSyncdata = res[0].description
+              } else {
+                this.assetLocatioSyncdata = '-'
+              }
+              // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
+            },
+            (err) => {
+              console.error("err", err);
             }
-            // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
-          },
-          (err) => {
-            console.error("err", err);
-          }
-        );
+          );
+        } else {
+
+          this.assetsService.filter("asset_id=" + this.asset_detail['attached_to_asset_id']).subscribe(
+            (resA) => {
+              console.log("assetqqqqqqqqq=res", resA);
+
+              this.assetLocatioSyncService.filter("node_id=" + resA[0]['node_id']).subscribe(
+                (resAls) => {
+                  console.log("resAls>><<>>", resAls)
+                  if (resAls.length > 0) {
+                    this.assetLocatioSyncdata = resAls[0].description
+                  } else {
+                    this.assetLocatioSyncdata = '-'
+                  }
+                  // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
+                },
+                (err) => {
+                  console.error("err", err);
+                }
+              );
+            }, (error) => {
+              console.log(error)
+            }
+          )
+        }
+        // this.assetLocatioSyncService.filter("node_id=" + this.asset_detail.node_id).subscribe(
+        //   (res) => {
+        //     // console.log("assetLocatioSyncServiceres", res);
+        //     // this.assetregistrations = res;
+        //     if (res.length > 0) {
+        //       this.assetLocatioSyncdata = res[0].description
+        //     } else {
+        //       this.assetLocatioSyncdata = '-'
+        //     }
+        //     // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
+        //   },
+        //   (err) => {
+        //     console.error("err", err);
+        //   }
+        // );
 
 
       }
@@ -1269,10 +1315,35 @@ export class AssetDetailPage implements OnInit {
           this.assetAttributedatas.push(assAttColTemp)
         }
       }
-      // console.log("this.assetAttributedatas ==== ", this.assetAttributedatas)
+
+      this.assetAttributedatas.forEach(ele => {
+        console.log("eleeleeleeleele", ele)
+        let filter = "attribute_field_name=" + ele.characteristic_type_name
+        this.assetAttributePredefineService.filter(filter).subscribe(
+          (res) => {
+
+            if (res.length > 0) {
+              ele.dropdown = 'yes'
+              ele.option = res
+            } else {
+              ele.dropdown = 'no'
+              ele.option = []
+            }
+
+          }, (err) => {
+
+          }
+        )
+      });
+
+      // setTimeout(() => {
+      console.log("this.assetAttributedatas ==== ", this.assetAttributedatas)
+      // }, 100);
+
 
       for (let i = 0; i < this.assetAttributedatas.length; i++) {
         // console.log("this.assetAttributedatas[1] ===== ", this.assetAttributedatas[i])
+
         if (this.assetAttributedatas[i].characteristic_type == '') {
           this.assetAttributeReferenceService.filter("attribute_field_name=" + this.assetAttributedatas[i].field_name).subscribe(
             (res) => {
@@ -1496,8 +1567,8 @@ export class AssetDetailPage implements OnInit {
 
   onKey(value, row) {
 
-    // console.log("row === ", row)
-    // console.log("value === ", value)
+    console.log("row === ", row)
+    console.log("value === ", value)
 
     this.assetAttributedatas.forEach(element => {
 
@@ -1526,7 +1597,8 @@ export class AssetDetailPage implements OnInit {
         // console.log("element = ", element)
 
         if (element.id == '') {
-          element.action_type = 'add';
+          element.action_type = 'ADD';
+          updateformData['action_type'] = 'ADD'
           // console.log('not exist cok')
           this.assetAttributeService.post(updateformData).subscribe(
             (resAAS) => {
@@ -1546,7 +1618,8 @@ export class AssetDetailPage implements OnInit {
             }
           );
         } else {
-          element.action_type = 'update';
+          element.action_type = 'UPDATE';
+          updateformData['action_type'] = 'UPDATE'
           // console.log('exist cok')
           this.assetAttributeService.update(element.id, updateformData).subscribe(
             (res) => {
@@ -1575,88 +1648,13 @@ export class AssetDetailPage implements OnInit {
       }
     });
 
+    setTimeout(() => {
+      console.log("this.assetAttributedatas", this.assetAttributedatas)
+    }, 1000);
+
   }
 
   updateDetails() {
-
-    // let updateAssAttrformData: any = {}
-    // updateAssAttrformData['description'] = this.asset_detail["description"]
-    // updateAssAttrformData['submitted_datetime'] = this.getCurrentDateTime()
-    // update asset data
-    // this.assetsService.update(this.asset_detail.id, updateAssAttrformData).subscribe(
-    //   (res) => {
-    //     // console.log("updateAssAttrformData = ", res)
-    //   },
-    //   (err) => {
-    //     console.error("err", err);
-    //   }
-    // );
-
-    // update asset attribute data
-    // this.assetAttributedatas.forEach(element => {
-
-    //   if (element.action_type == 'update') {
-
-    //     // console.log("this.assetAttributedatas[0].characteristic_type", this.assetAttributedatas[0].characteristic_type)
-
-    //     let updateformData: any = {}
-    //     updateformData['action_type'] = 'update'
-    //     updateformData['characteristic_type'] = element.characteristic_type
-    //     updateformData['characteristic_type_name'] = element.field_name
-    //     // updateformData['characteristic_value'] = element.characteristic_value
-    //     // updateformData['adhoc_value'] = element.characteristic_value
-
-    //     let characteristic_type_list = ["CM-MFG", "CM-WASTC", "CM-VRTVD", "CM-VOWNS", "CM-VROWN", "CM-VINPT"]
-    //     if (characteristic_type_list.indexOf(element.characteristic_type) !== -1) {
-    //       console.log(' already exists!')
-    //       updateformData['characteristic_value'] = element.characteristic_value
-    //     } else {
-    //       updateformData['adhoc_value'] = element.characteristic_value
-    //       console.log('not exist')
-    //     }
-    //     console.log("element = ", element)
-    //     console.log("element.id = ", element.id)
-    //     if (element.id != '') {
-    //       console.log("sini cok --->>")
-    //       this.assetAttributeService.update(element.id, updateformData).subscribe(
-    //         (res) => {
-    //           // console.log(res[0])
-    //           // this.assetAttributedatas.push(res)
-    //           // let obj = {
-    //           //   submitted_datetime: this.getCurrentDateTime(),
-    //           // }
-    //           // this.assetsService.update(this.asset_detail['id'], obj).subscribe(
-    //           //   (resp) => {
-    //           //     console.log('berjaya cok', resp)
-    //           //   }, (error) => {
-    //           //     console.log('tidak berjaya cok', error)
-    //           //   }
-    //           // )
-    //         },
-    //         (err) => {
-    //           console.error("err", err);
-    //         }
-    //       );
-    //     } else {
-    //       console.log("sana cok <<---")
-    //       this.assetAttributeService.post(updateformData).subscribe(
-    //         (resAAS) => {
-    //           let atID: any = []
-    //           // this.assetAttributedatas.push(res)
-    //           // this.assetAttributeId.forEach(ele => {
-    //           //   atID.push(ele)
-    //           // });
-    //           console.log("resAAS = ", resAAS)
-    //           this.assetAttributeId.push(resAAS.id)
-    //           console.log("assetAttributeId = ", this.assetAttributeId)
-
-    //         },
-    //         (err) => {
-    //           console.error("err", err);
-    //         }
-    //       );
-    //     }
-    //   }
 
     // });
     // setTimeout(() => {
@@ -1672,25 +1670,40 @@ export class AssetDetailPage implements OnInit {
     })
     // console.log("assetAttrIdExist---", assetAttrIdExist)
 
+    let selectedDate = new Date(this.asset_detail["effective_datetime"]);
     let obj = {
       asset_attributes: assetAttrIdExist,
       description: this.asset_detail["description"],
-      submitted_datetime: this.getCurrentDateTime()
+      effective_datetime: selectedDate,
+      submitted_datetime: new Date //moment(this.getCurrentDateTime()).toDate() // moment.utc(this.getCurrentDateTime()).toDate()
     }
-    // console.log("obj = ", obj)
-    if (this.assetAttributedatas.length == assetAttrIdExist.length) {
-      this.assetsService.update(this.asset_detail['id'], obj).subscribe(
-        (resp) => {
-          // console.log('berjaya cok', resp)
-        }, (error) => {
-          // console.log('tidak berjaya cok', error)
-        }, () => {
-          this.update()
-        }
-      )
-    } else {
-      this.warningAlert('Warning', 'Please fill in all question.')
-    }
+
+    console.log("this.asset_detail[effective_datetime]", this.asset_detail["effective_datetime"])
+
+    // let roo = this.asset_detail["effective_datetime"].setHours(this.asset_detail["effective_datetime"].getHours() - 2);
+    // console.log("datetime", roo)
+    console.log("obj = ", obj)
+    console.log(" this.selectedDate", selectedDate)
+    console.log("this.getCurrentDateTime()", this.getCurrentDateTime())
+
+    var twoHoursBefore = new Date();
+    twoHoursBefore.setHours(twoHoursBefore.getHours() - 2);
+
+    // if (this.assetAttributedatas.length == assetAttrIdExist.length) {
+
+    this.assetsService.update(this.asset_detail['id'], obj).subscribe(
+      (resp) => {
+        console.log('berjaya cok', resp)
+      }, (error) => {
+        // console.log('tidak berjaya cok', error)
+      }, () => {
+        this.update()
+      }
+    )
+
+    // } else {
+    //   this.warningAlert('Warning', 'Please fill in all question.')
+    // }
   }
 
   async warningAlert(header: string, message: string) {

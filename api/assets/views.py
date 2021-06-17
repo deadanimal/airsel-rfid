@@ -21,7 +21,7 @@ from datetime import datetime
 
 from .models import (
     Asset,
-    AssetRegistration,
+    AssetRegistration,AssetRegistrationBk,
     AssetGroup,
     AssetType,
     Rfid,
@@ -42,7 +42,7 @@ from .models import (
 
 from .serializers import (
     AssetSerializer,
-    AssetRegistrationSerializer,
+    AssetRegistrationSerializer,AssetRegistrationBkSerializer,
     AssetGroupSerializer,
     AssetTypeSerializer,
     RfidSerializer,
@@ -468,6 +468,28 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return Response(serializer.data)  
         # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
         # return Response(rejected_list_serializer.data) 
+
+
+class AssetRegistrationBkViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetRegistrationBk.objects.all()
+    serializer_class = AssetRegistrationBkSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'created_at'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    def get_queryset(self):
+        queryset = AssetRegistrationBk.objects.all()
+        return queryset
+
 
 class AssetBadgeFormatViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetBadgeFormat.objects.all()

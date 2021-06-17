@@ -30,7 +30,7 @@ router = NestedDefaultRouter()
 # Asset
 from assets.views import (
     AssetViewSet,
-    AssetRegistrationViewSet,
+    AssetRegistrationViewSet,AssetRegistrationBkViewSet,
     AssetGroupViewSet,
     AssetTypeViewSet,
     RfidViewSet,
@@ -71,6 +71,10 @@ rfids_router = router.register(
 
 assets_registration_router = router.register(
     'asset-registration', AssetRegistrationViewSet
+)
+
+assets_registration_bk_router = router.register(
+    'asset-registration-bk', AssetRegistrationBkViewSet
 )
 
 assets_attribute_column_router = router.register(

@@ -99,103 +99,106 @@ export class LoginPage implements OnInit {
       username: this.validations_form.value.username,
       password: this.validations_form.value.password,
     };
-    // STEP 1
-    this.authService
-      .obtainToken(this.validations_form.value, this.isLogin)
-      .subscribe(
-        (res) => {
-          // Success
 
-          console.log("resAD = ", res)
-          // STEP 2
-          this.isLoading = false;
-          this.navigateByRole(this.authService.userType);
-        },
-        (err) => {
-          // Failed
-          // STEP 3
-          this.isLoading = false;
-          console.error("err", err);
-          this.wamsService.getService(bodyAD).subscribe(
-            (resAD) => {
-              console.log("resAD = ", resAD)
-              console.log("sini 1")
-              // to find employee detail in table employee
-              if (resAD.status == "valid") {
-                this.employeeService
-                  .filter("hr_employee_number=" + resAD.staff_no)
-                  .subscribe(
-                    (resEmp) => {
-                      console.log("sini 2")
-                      // to create user account in PIPE who AD is valid
-                      // STEP 4
-                      if (resEmp.length > 0) {
-                        console.log("sini 3")
-                        let bodyPIPE = {
-                          username: this.validations_form.value.username,
-                          email: resAD.email ? resAD.email : "",
-                          password1: this.validations_form.value.password,
-                          password2: this.validations_form.value.password,
-                        };
-                        console.log("bodyPIPE = ", bodyPIPE)
-                        this.authService.registerAccount(bodyPIPE).subscribe(
-                          (resPIPE) => {
+    // // STEP 1
+    // this.authService
+    //   .obtainToken(this.validations_form.value, this.isLogin)
+    //   .subscribe(
+    //     (res) => {
+    //       // Success
 
-                            console.log("sini 4")
-                            if (resPIPE) {
-                              resAD["first_name"] = resAD.name;
-                              resAD["status"] = true;
-                              resAD["department"] = "";
-                              resAD["employee_id"] = resEmp[0].uuid;
-                              resAD["service_area"] = resAD.region;
-                              this.userService
-                                .update(resAD, resPIPE.user.pk)
-                                .subscribe((resPIPE) => {
-                                  this.retryLogin();
-                                });
-                            }
-                          },
-                          (err) => {
-                            console.error("err", err);
-                          }
-                        );
+    //       console.log("resAD = ", res)
+    //       // STEP 2
+    //       this.isLoading = false;
+    //       this.navigateByRole(this.authService.userType);
+    //     },
+    //     (err) => {
+
+    // Failed
+    // STEP 3
+
+    // console.error("err", err);
+    this.wamsService.getService(bodyAD).subscribe(
+      (resAD) => {
+        console.log("resAD = ", resAD)
+        console.log("sini 1")
+        // to find employee detail in table employee
+        if (resAD.status == "valid") {
+          this.employeeService
+            .filter("hr_employee_number=" + resAD.staff_no)
+            .subscribe(
+              (resEmp) => {
+                console.log("sini 2")
+                // to create user account in PIPE who AD is valid
+                // STEP 4
+                if (resEmp.length > 0) {
+                  console.log("sini 3")
+                  let bodyPIPE = {
+                    username: this.validations_form.value.username,
+                    email: resAD.email ? resAD.email : "",
+                    password1: this.validations_form.value.password,
+                    password2: this.validations_form.value.password,
+                  };
+                  console.log("bodyPIPE = ", bodyPIPE)
+                  this.authService.registerAccount(bodyPIPE).subscribe(
+                    (resPIPE) => {
+
+                      console.log("sini 4")
+                      if (resPIPE) {
+                        resAD["first_name"] = resAD.name;
+                        resAD["status"] = true;
+                        resAD["department"] = "";
+                        resAD["employee_id"] = resEmp[0].uuid;
+                        resAD["service_area"] = resAD.region;
+                        this.userService
+                          .update(resAD, resPIPE.user.pk)
+                          .subscribe((resPIPE) => {
+                            this.retryLogin();
+                          });
                       }
                     },
                     (err) => {
                       console.error("err", err);
                     }
                   );
+                }
+              },
+              (err) => {
+                console.error("err", err);
               }
-              else {
-                this.userNotExist()
-                //   // to create user account in PIPE who AD is invalid
-                //   // STEP 5
-                //   let bodyPIPE = {
-                //     username: this.validations_form.value.username,
-                //     // email: "",
-                //     password1: this.validations_form.value.password,
-                //     password2: this.validations_form.value.password,
-                //   };
-                //   this.authService.registerAccount(bodyPIPE).subscribe(
-                //     (resPIPE) => {
-                //       this.retryLogin();
-                //     },
-                //     (err) => {
-                //       console.error("err", err);
-                //     }
-                //   );
-              }
-            },
-            (err) => {
-              console.error("err", err);
-            }
-          );
-        },
-        () => {
-          // After
-          // this.toastr.openToastr("Welcome back");
+            );
         }
-      );
+        else {
+          this.userNotExist()
+          //   // to create user account in PIPE who AD is invalid
+          //   // STEP 5
+          //   let bodyPIPE = {
+          //     username: this.validations_form.value.username,
+          //     // email: "",
+          //     password1: this.validations_form.value.password,
+          //     password2: this.validations_form.value.password,
+          //   };
+          //   this.authService.registerAccount(bodyPIPE).subscribe(
+          //     (resPIPE) => {
+          //       this.retryLogin();
+          //     },
+          //     (err) => {
+          //       console.error("err", err);
+          //     }
+          //   );
+        }
+      },
+      (err) => {
+        console.error("err", err);
+      }
+    );
+
+    //   },
+    //   () => {
+    //     // After
+    //     // this.toastr.openToastr("Welcome back");
+    //   }
+    // );
 
     /* if (
       this.loginForm.username == "technical" ||

@@ -41,6 +41,7 @@ export class OperationalReadingPage implements OnInit {
 
   measurementtypes = [];
   process: string;
+  showButton = 'yes'
 
   constructor(
     public alertController: AlertController,
@@ -93,6 +94,7 @@ export class OperationalReadingPage implements OnInit {
         });
 
         if (this.router.getCurrentNavigation().extras.state.badge_no) {
+          this.showButton = 'yes'
           let badge_no = this.router.getCurrentNavigation().extras.state
             .badge_no;
           this.assetsService
@@ -118,6 +120,7 @@ export class OperationalReadingPage implements OnInit {
               });
             });
         } else {
+          this.showButton = 'no'
           this.assetsService
             .filter("asset_id=" + this.OpreationalReading.asset_id)
             .subscribe((res) => {
