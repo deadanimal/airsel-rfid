@@ -35,6 +35,10 @@ export class LoginComponent implements OnInit {
       emailForm: ['', Validators.required],
       passwordForm: ['', Validators.required]
     });
+
+    this.loginForm.value.emailForm = "";
+    this.loginForm.value.passwordForm = "";
+
   }
 
   onSubmit() {

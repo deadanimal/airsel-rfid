@@ -4,6 +4,7 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '
 import swal from 'sweetalert2';
 import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { UsersService } from "src/app/shared/services/users/users.service";
+import { JwtService } from 'src/app/shared/handler/jwt/jwt.service';
 
 
 
@@ -45,6 +46,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private userService: UsersService,
+    private jwtService: JwtService
+
   ) {
     this.location = location;
     this.router.events.subscribe((event: Event) => {
@@ -130,6 +133,7 @@ export class NavbarComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
+        this.jwtService.destroyToken();
         this.router.navigate(['/auth/login']);
 
         // to do

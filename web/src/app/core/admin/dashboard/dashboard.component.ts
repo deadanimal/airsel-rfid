@@ -31,8 +31,14 @@ import { WorkRequestService } from "src/app/shared/services/work-request/work-re
 import { formatDate } from "@angular/common";
 import { map } from "rxjs/operators";
 import { AssetsModel } from "src/app/shared/services/assets/assets.model";
+
+import { JwtService } from 'src/app/shared/handler/jwt/jwt.service';
+
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { WorkActivityEmployeeService } from "src/app/shared/services/work-activity-employee/work-activity-employee.service";
+
 
 @Component({
   selector: "app-dashboard",
@@ -47,9 +53,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private zone: NgZone,
     public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
     public assetsService: AssetsService,
+
+    public jwtService: JwtService,
+    private router: Router,
     public workRequestService: WorkRequestService,
     private workactivityService: WorkActivitiesService,
     private workactivityemployeeService: WorkActivityEmployeeService) { }
+
 
   // variables
   assetowningdepartment = [
@@ -720,16 +730,24 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private pieeight: am4charts.PieChart;
   private pienine: am4charts.PieChart;
 
+
   ngOnInit() {
-
-    //new update
-    this.getWorkOrderActivity();
-    this.getAssets();
-    // this.getAssetRegistered();
-    // this.getWorkRequest();
+    // check token
+    let accessToken = this.jwtService.getToken("accessToken");
+    if (accessToken === undefined) {
+      this.router.navigate(['/auth/login']);
 
 
+    } else {
+      this.getWorkOrderActivity();
+      this.getAssets();
+      // this.getAssetRegistered();
+      // this.getWorkRequest();
 
+    }
+
+
+   
     var calendarEl = document.getElementById("widget-calendar");
 
     var calendar = new Calendar(calendarEl, {
@@ -2054,4 +2072,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.pienine = chart;
   }
+  checkToken() {
+      }
+
 }
