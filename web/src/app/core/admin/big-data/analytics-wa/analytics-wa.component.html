@@ -32,7 +32,7 @@
               <h4 class="mb-0">Search filter</h4>
             </div>
             <div class="col-auto text-right">
-              <button class="btn btn-default btn-sm" (click)="getByDate($event)()">Search</button>
+              <button class="btn btn-default btn-sm" (click)="filter()">Search</button>
               <button class="btn btn-secondary btn-sm" (click)="reset()">Reset</button>
             </div>
           </div>
@@ -42,7 +42,7 @@
             <div class="col-lg-6 col-xs-12">
               <div class="form-group">
                 <label class="form-control-label">Owning Organization</label>
-                <select class="form-control form-control-sm">
+                <select class="form-control form-control-sm" [(ngModel)]="asset_owning">
                   <option value="">Please select</option>
                   <option *ngFor="let assetowningdepartment of assetowningdepartment"
                     [value]="assetowningdepartment.value">
@@ -53,16 +53,19 @@
             <div class="col-lg-6 col-xs-12">
               <div class="form-group">
                 <label class="form-control-label">Date Range</label>
-
-                <input id="dateRange" type="text" class="form-control form-control-sm"
-                  placeholder="Please select date range" bsDaterangepicker [bsConfig]="{
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  placeholder="Please select date range"
+                  bsDaterangepicker
+                  [(ngModel)] = "selected_date"
+                  [bsConfig]="{
                     isAnimated: true,
                     containerClass: 'theme-default',
                     rangeInputFormat: 'MM/DD/YYYY',
                     dateInputFormat: 'MM/DD/YYYY'
-                  }" 
-                  (ngModelChange)="getByDate($event)"
-                  [(ngModel)]="this.filters.date"/>
+                  }"
+                />
               </div>
             </div>
             <!-- <div class="col-lg-6 col-xs-12">

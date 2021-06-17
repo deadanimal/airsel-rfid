@@ -48,6 +48,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
 import { InventoryManagementDashboardComponent } from './inventory-management/inventory-management-dashboard/inventory-management-dashboard.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 // import { StockCountComponent } from './inventory-management/stock-count/stock-count.component';
 // import { StockReceiveReturnComponent } from './inventory-management/stock-receive-return/stock-receive-return.component';
 // import { IssuanceReversalComponent } from './inventory-management/issuance-reversal/issuance-reversal.component';
@@ -78,7 +79,8 @@ import { InventoryManagementDashboardComponent } from './inventory-management/in
     InventoryStoreKeeperComponent,
     InventoryStoreCodesComponent,
     UtilityUserPrivilegesComponent,
-    InventoryDashboardComponent
+    InventoryDashboardComponent,
+    PasswordResetComponent
     // StockCountComponent,
     // StockReceiveReturnComponent,
     // IssuanceReversalComponent,

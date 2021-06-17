@@ -1,90 +1,70 @@
-<div class="header pb-6">
-    <div class="container-fluid">
-        <div class="header-body">
-            <div class="row align-items-center py-4">
-                <div class="col-lg-12 col-12">
-                    <h6 class=" h2 text-dark d-inline-block mb-0">Profile</h6>
-                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                            <li class="breadcrumb-item">
-                                <a href="javascript:void(0)"> <i class="fas fa-user text-dark"> </i> </a>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
+<div class="header pb-6 background-theme">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Profile &nbsp;</h6>
 
-                <br>
-                <br>
-                <div class="col-lg-12 col-12">
-                  <h6 class=" h3 text-dark d-inline-block mb-0">Change Password</h6>
-                </div>
 
-            </div>
+          <ng-template #popTemplate>
+            <h4 class="text-center">Information</h4>
+            <small class="text-justify">User able to view and update the profile.</small>
+          </ng-template>
         </div>
-        <div class="row">
-          <div class="col-6">
-            <form [formGroup]="passwordresetFormGroup">
-               <div class="row pb-3">
-                <div class="col-12">
-                  <div class="form-group">
-                    <label class="form-control-label required-field"
-                      >Old Password</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control text-dark"
-                      formControlName="old_password"
-                    />
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-group">
-                    <label class="form-control-label required-field"
-                      >New Password (Must be more than 8 characters)</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control text-dark"
-                      formControlName="new_password1"
-                    />
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-group">
-                    <label class="form-control-label required-field"
-                      >Re-Type New Password</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control text-dark"
-                      formControlName="new_password2"
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="text-center">
-                <button
-                  class="btn btn-default"
-                  (click)="resetpassword()"
-                  type="button"
-                  
-                >
-                  Hantar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
+      </div>
     </div>
+  </div>
 </div>
 
-<div class="container-fluid mt--6">
-    <div class="row">
-        <div class="col">
-            
-        </div>
-    </div>
+<div class="container-fluid mt--9">
+ <div class="card">
+   <div class="card-body">
+     <div class="row">
+     <div class="col-xl-2">
+       <img alt="Image placeholder" src="assets/img/icons/common/boss.svg" style="float: left;"  height="70%" width="70%">
+     </div>
+     <div class="col-xl-6 text-left">
+	   <h1>{{cuser.username}}</h1>
+       <h5>{{ roles[cuser.user_type] }}</h5>
+     </div>
+     <div class="col-xl-4">
+
+       <a *ngIf="cuser.user_type!='CR'" disabled class="btn btn-sm btn-dark text-white" style="float: right;">
+         Change Password
+       </a>
+
+       <a *ngIf="cuser.user_type=='CR'" class="btn btn-sm btn-dark text-white" style="float: right;" [routerLink]="['/password-reset']">
+         Change Password
+       </a>
+
+     </div>
+   </div>
+ </div>
+</div>
+
+  <div class="card">
+  <div class="card-header">
+	<h3 class="mb-0">Additional Information</h3>
+  </div>
+  <div class="card-body">
+	<div class="row">
+	 <div class="col-xl-6">
+	   <label class="form-control-label">Full Name</label>
+       <input class="form-control" [(ngModel)]="cuser.first_name" [ngModelOptions]="{standalone: true}" type="text" readonly>
+	   <label class="form-control-label">Location/Department</label>
+       <input class="form-control" [(ngModel)]="cuser.service_area" [ngModelOptions]="{standalone: true}" type="text" readonly>
+	   <label class="form-control-label">WAMS Employee ID</label>
+       <input class="form-control" [(ngModel)]="cuser.employee_id" [ngModelOptions]="{standalone: true}" type="text" readonly>
+
+	 </div>
+	 <div class="col-xl-6">
+	   <label class="form-control-label">Phone Number</label>
+       <input class="form-control" [(ngModel)]="cuser.phone_no" [ngModelOptions]="{standalone: true}" type="text" readonly>
+	   <label class="form-control-label">Email</label>
+       <input class="form-control" [(ngModel)]="cuser.email" [ngModelOptions]="{standalone: true}" type="text" readonly>
+
+	 </div>
+	</div>
+  </div>
+</div>
 </div>

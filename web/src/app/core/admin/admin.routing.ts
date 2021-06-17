@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ManagementComponent } from './management/management.component';
 import { ReportComponent } from './report/report.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ErrorComponent } from './error/error.component';
 import { UtilityUserComponent } from './utility-user/utility-user.component';
@@ -29,6 +30,7 @@ import { DisposalComponent } from './inventory-management/disposal/disposal.comp
 import { ScReportComponent } from './inventory-management/sc-report/sc-report.component';
 import { ScVarianceComponent } from './inventory-management/sc-variance/sc-variance.component';
 import { InventoryManagementDashboardComponent } from './inventory-management/inventory-management-dashboard/inventory-management-dashboard.component';
+
 
 export const AdminRoutes: Routes = [
     {
@@ -138,6 +140,11 @@ export const AdminRoutes: Routes = [
                 path: 'profile',
                 component: ProfileComponent
             },
+            {
+                path: 'password-reset',
+                component: PasswordResetComponent 
+            },
+
             {
                 path: 'report',
                 component: ReportComponent

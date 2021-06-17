@@ -451,6 +451,16 @@ contact_information_router = router.register(
     'contact-information', ContactInformationViewSet
 )
 
+
+## audit_trail app
+from audit_trail.views import (
+    AuditTrailViewSet,
+)
+
+audit_trail_router = router.register(
+    'audit_trail', AuditTrailViewSet,
+)
+
 ############################################# url
 
 urlpatterns = [

@@ -28,6 +28,7 @@ class CustomUser(AbstractUser):
     service_area = models.CharField(max_length=50, blank=True)
     crewshift_id = models.CharField(max_length=50, blank=True)
     department = models.CharField(max_length=50, blank=True)
+    mobile_access = models.BooleanField(default=True)
 
     #USER_TYPE = [
     #    ('AM', 'Asset Management System'),

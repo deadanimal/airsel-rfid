@@ -44,9 +44,7 @@
             data-target="#navbar-search-main" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
-        </form>
-      </div>
-    </div>
+        </form> </div> </div>
   </div>
 
   <div class="row">
@@ -117,15 +115,15 @@
               </div>
             </div>
 
-            <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'" [headerHeight]="50"
-              [footerHeight]="50" [rowHeight]="'auto'" [limit]="entries != -1 ? entries : undefined" [rows]="temp"
-              (activate)="onActivate($event)">
+            <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+              [rowHeight]="'auto'" [limit]="entries" [rows]="temp"
+              (activate)="onActivate($event)" [scrollbarH]="true" style="overflow-y: scroll;">
               <ngx-datatable-column>
                 <ng-template ngx-datatable-header-template>
-                  <span>ID</span>
+                  <span>No.</span>
                 </ng-template>
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ row.id }}
+                <ng-template let-row="temp" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  {{ rowIndex + 1 }}
                 </ng-template>
               </ngx-datatable-column>
               <ngx-datatable-column>
@@ -136,16 +134,7 @@
                   {{ row.username }}
                 </ng-template>
               </ngx-datatable-column>
-              <!--
-              <ngx-datatable-column>
-                <ng-template ngx-datatable-header-template>
-                  <span>Name</span>
-                </ng-template>
-                <ng-template let-row="row" ngx-datatable-cell-template>
-                  {{ row.name }}
-                </ng-template>
-              </ngx-datatable-column>
-              -->
+
               <ngx-datatable-column>
                 <ng-template ngx-datatable-header-template>
                   <span>Email</span>
@@ -154,6 +143,7 @@
                   {{ row.email }}
                 </ng-template>
               </ngx-datatable-column>
+
               <ngx-datatable-column>
                 <ng-template ngx-datatable-header-template>
                   <span>User Type</span>
@@ -162,6 +152,17 @@
                   {{ findUserType(row.user_type) }}
                 </ng-template>
               </ngx-datatable-column>
+
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span>Status</span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <h5 *ngIf="row.status == true">Active</h5>
+                  <h5 *ngIf="row.status == false">Not-active</h5>
+                </ng-template>
+              </ngx-datatable-column>
+
               <ngx-datatable-column>
                 <ng-template ngx-datatable-header-template>
                   <span>Actions</span>
@@ -316,11 +317,11 @@
           <div class="form-group">
             <label class="form-control-label mr-3">Status</label>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="active" class="custom-control-input" formControlName="is_active" value="true" />
+              <input type="radio" id="active" class="custom-control-input" formControlName="status" value="true" />
               <label class="custom-control-label" for="active">Active</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="notactive" class="custom-control-input" formControlName="is_active"
+              <input type="radio" id="notactive" class="custom-control-input" formControlName="status"
                 value="false" />
               <label class="custom-control-label" for="notactive">Not Active</label>
             </div>

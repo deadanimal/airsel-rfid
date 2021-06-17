@@ -14,8 +14,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 
 import { AssetLocationSyncService } from "src/app/shared/services/asset-location-sync/asset-location-sync.service";
-import { AssetsService } from "src/app/shared/services/assets/assets.service";
-import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
+import { AssetsService } from "src/app/shared/services/assets/assets.service"; import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
 import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";
@@ -198,6 +197,7 @@ export class RegistrationComponent implements OnInit {
 
   // table
   ColumnMode = ColumnMode;
+
   // Stepper
   isLinear = false;
   isDisableRipple = true;
@@ -466,8 +466,8 @@ export class RegistrationComponent implements OnInit {
   ]
 
   warranty = [
-    { value: "Available", name: "Y" },
-    { value: "Not Available", name: "N" },
+    { value: "Available", name: "Yes" },
+    { value: "Not Available", name: "No" },
   ]
   typeassets = [];
   categories = [];
@@ -669,128 +669,128 @@ export class RegistrationComponent implements OnInit {
   countryDefault = "Malaysia"
 
   is_show1 = {
-    parent_location: true, //
+    parent_location: false, //
     location_description: true, //
-    building: true, //
-    address_line_1: true,  //
-    address_line_2: true, //
-    address_line_3: true, //
-    city: true, //
-    state: true, //
-    postal_code: true, //
-    country: true, //
-    tag_number: true, //
+    building: false, //
+    address_line_1: false,  //
+    address_line_2: false, //
+    address_line_3: false, //
+    city: false, //
+    state: false, //
+    postal_code: false, //
+    country: false, //
+    tag_number: false, //
     service_area: true, //
-    maintenance_planner: true, //
-    location_main_contact: true, //
-    location_asset_maintenance_manager: true, //
-    gis_esri_id: true, //
-    latitude: true, //
-    longitude: true, //
-    asset_critically: true, //
-    cost_center: true,
+    maintenance_planner: false, //
+    location_main_contact: false, //
+    location_asset_maintenance_manager: false, //
+    gis_esri_id: false, //
+    latitude: false, //
+    longitude: false, //
+    asset_critically: false, //
+    cost_center: false,
     // asset_owning_depart: true,
-    sub_process_system: true,
-    brand: true,
-    size_capacity_1: true,
-    size_capacity_2: true,
-    size_capacity_3: true,
-    maintenance_specification: true,
+    sub_process_system: false,
+    brand: false,
+    size_capacity_1: false,
+    size_capacity_2: false,
+    size_capacity_3: false,
+    maintenance_specification: false,
     asset_owning_department: true,
-    asset_or_component_type: true,
-    badge_no: true,
-    size_capacity_1_unit_measurement: true,
-    size_capacity_2_unit_measurement: true,
-    size_capacity_3_unit_measurement: true,
-    measurement_type: true,
-    main_operation: true,
-    asset_class_asset_category: true,
-    internal_asset_identity: true,
-    sub_category_1: true,
-    parent_asset_plate_number: true,
-    purchase_date_installed_handed_over_date: true,
-    warranty: true,
-    region: true,
-    handed_over_asset_or_procured: true,
-    asset_primary_category: true,
-    sub_category_2: true,
-    asset_plate_number: true,
-    condition_rating: true,
-    actual_warranty_period: true,
-    operation: true,
-    process_function: true,
-    model_number: true,
+    asset_or_component_type: false,
+    badge_no: false,
+    size_capacity_1_unit_measurement: false,
+    size_capacity_2_unit_measurement: false,
+    size_capacity_3_unit_measurement: false,
+    measurement_type: false,
+    main_operation: false,
+    asset_class_asset_category: false,
+    internal_asset_identity: false,
+    sub_category_1: false,
+    parent_asset_plate_number: false,
+    purchase_date_installed_handed_over_date: false,
+    warranty: false,
+    region: false,
+    handed_over_asset_or_procured: false,
+    asset_primary_category: false,
+    sub_category_2: false,
+    asset_plate_number: false,
+    condition_rating: false,
+    actual_warranty_period: false,
+    operation: false,
+    process_function: false,
+    model_number: false,
     detailed_description: true,
-    serial_number: true,
-    asset_status: true,
-    warranty_vendor_name: true,
-    asset_tag_number: true,
-    asset_identity: true,
-    bottom_water_level: true,
-    closing_torque: true,
-    dimention: true,
-    frequency: true,
-    infrastructure_status: true,
-    installation: true,
-    manufacturer: true,
-    material_type: true,
-    no_of_channel: true,
-    opening_torque: true,
-    pump_head: true,
-    staging_height: true,
-    top_water_level: true,
-    valve_pressure_rating: true,
-    vehicle_engine_number: true,
-    vehicle_insurance_auto_windscreen_insured: true,
-    vehicle_insurance_sum_insured: true,
-    vehicle_owner_status: true,
-    vehicle_puspakom_expired_date: true,
-    vehicle_roadtax_expired_date: true,
-    vehicle_seating_capacity: true,
-    communication_protocol: true,
-    environmental_performance: true,
-    horse_power: true,
-    infrastructure_status_reason: true,
-    insulation: true,
-    manufacturer_year: true,
-    model: true,
-    no_of_phases: true,
-    outlet_diameter: true,
-    revolutions_per_minute: true,
-    supply_location: true,
-    type: true,
-    vehicle_chasis_number: true,
-    vehicle_insurance_vendor: true,
-    vehicle_insurance_cover_note_number: true,
-    vehicle_insurance_no_claim_discount: true,
-    vehicle_insurance_total_premium: true,
-    vehicle_register_date: true,
-    vehicle_spad_permit_date_period_to: true,
-    vehicle_spad_no_license_operator: true,
-    vehicle_registration_owner: true,
-    capacity_size: true,
-    coverage_range: true,
-    flow_rate: true,
-    hysteresis: true,
-    inlet_diameter: true,
-    legal_name: true,
-    manufacture_part_number: true,
-    motor_current: true,
-    no_of_stage: true,
-    power_supply_type: true,
-    source_from: true,
-    temperature: true,
-    valve_diameter: true,
-    vehicle_engine_capacity: true,
-    vehicle_model: true,
-    vehicle_insurance_date_period_from: true,
-    vehicle_insurance_policy_type: true,
-    vehicle_puspakom_date_inspection: true,
-    vehicle_roadtax_rate: true,
-    vehicle_roadtax_renew_date: true,
-    vehicle_spad_permit_date_period_from: true,
-    voltage: true,
-    vehicle_insurance_date_period_to: true
+    serial_number: false,
+    asset_status: false,
+    warranty_vendor_name: false,
+    asset_tag_number: false,
+    asset_identity: false,
+    bottom_water_level: false,
+    closing_torque: false,
+    dimention: false,
+    frequency: false,
+    infrastructure_status: false,
+    installation: false,
+    manufacturer: false,
+    material_type: false,
+    no_of_channel: false,
+    opening_torque: false,
+    pump_head: false,
+    staging_height: false,
+    top_water_level: false,
+    valve_pressure_rating: false,
+    vehicle_engine_number: false,
+    vehicle_insurance_auto_windscreen_insured: false,
+    vehicle_insurance_sum_insured: false,
+    vehicle_owner_status: false,
+    vehicle_puspakom_expired_date: false,
+    vehicle_roadtax_expired_date: false,
+    vehicle_seating_capacity: false,
+    communication_protocol: false,
+    environmental_performance: false,
+    horse_power: false,
+    infrastructure_status_reason: false,
+    insulation: false,
+    manufacturer_year: false,
+    model: false,
+    no_of_phases: false,
+    outlet_diameter: false,
+    revolutions_per_minute: false,
+    supply_location: false,
+    type: false,
+    vehicle_chasis_number: false,
+    vehicle_insurance_vendor: false,
+    vehicle_insurance_cover_note_number: false,
+    vehicle_insurance_no_claim_discount: false,
+    vehicle_insurance_total_premium: false,
+    vehicle_register_date: false,
+    vehicle_spad_permit_date_period_to: false,
+    vehicle_spad_no_license_operator: false,
+    vehicle_registration_owner: false,
+    capacity_size: false,
+    coverage_range: false,
+    flow_rate: false,
+    hysteresis: false,
+    inlet_diameter: false,
+    legal_name: false,
+    manufacture_part_number: false,
+    motor_current: false,
+    no_of_stage: false,
+    power_supply_type: false,
+    source_from: false,
+    temperature: false,
+    valve_diameter: false,
+    vehicle_engine_capacity: false,
+    vehicle_model: false,
+    vehicle_insurance_date_period_from: false,
+    vehicle_insurance_policy_type: false,
+    vehicle_puspakom_date_inspection: false,
+    vehicle_roadtax_rate: false,
+    vehicle_roadtax_renew_date: false,
+    vehicle_spad_permit_date_period_from: false,
+    voltage: false,
+    vehicle_insurance_date_period_to: false
   }
 
   tableShow1 = false
@@ -863,11 +863,11 @@ export class RegistrationComponent implements OnInit {
       main_operation: ["", Validators.compose([Validators.required])], //
       region: ["", Validators.compose([Validators.required])], //
       operation: ["",],
-      parent_location: ["", ], //
-      new_parent_location: ["", ], //
+      parent_location: ["",], //
+      new_parent_location: ["",], //
       process_function: ["",],
       sub_process_system: ["",],
-      location_description: ["", Validators.compose([Validators.required])], //
+      location_description: ["",], //
       building: ["",],
       address_line_1: ["", Validators.compose([Validators.required])], //
       address_line_2: ["",],
@@ -877,6 +877,7 @@ export class RegistrationComponent implements OnInit {
       postal_code: ["", Validators.compose([Validators.required])], //
       country: ["", Validators.compose([Validators.required])], //
       tag_number: ["",],
+      rfid_hex_code: ["",],
       service_area: ["", Validators.compose([Validators.required])], //
       location_main_contact: ["",],
       location_asset_maintenance_manager: ["",],
@@ -885,7 +886,7 @@ export class RegistrationComponent implements OnInit {
       latitude: ["", Validators.compose([Validators.required])], //
       longitude: ["", Validators.compose([Validators.required])], //
       asset_critically: ["", Validators.compose([Validators.required])], //
-      cost_center: ["", Validators.compose([Validators.required])], //
+      cost_center: ["",], //
       brand: ["",],
       model_number: ["",],
       size_capacity_1: ["",],
@@ -898,7 +899,7 @@ export class RegistrationComponent implements OnInit {
       asset_plate_number: ["",],
       detailed_description: ["",],
       serial_number: ["", Validators.compose([Validators.required])], //
-      asset_tag_number: ["",],
+      // asset_tag_number: ["",],
       purchase_date_installed_handed_over_date: ["", Validators.compose([Validators.required])], //
       condition_rating: ["", Validators.compose([Validators.required])],  //
       status: ["",],
@@ -1039,21 +1040,31 @@ export class RegistrationComponent implements OnInit {
       (res) => {
         if (res) {
           this.primarycategories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("at") !== -1)
+            if(data.category !== undefined) {
+              if (data.category.toString().toLowerCase().indexOf("at") !== -1)
               return true;
-            return false;
+            } else {
+              return false;
+            }
           });
 
           this.typeassets = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
+            if(data.category !== undefined) {
+              if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
               return true;
-            return false;
+            } else {
+              return false;
+            }
+
           });
 
           this.categories = res.filter(function (data) {
-            if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
+            if(data.category !== undefined) {
+              if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
               return true;
-            return false;
+            } else {
+              return false;
+            }
           });
         }
       },
@@ -1123,13 +1134,13 @@ export class RegistrationComponent implements OnInit {
     // document.getElementsByClassName("dz-preview-single")[0].innerHTML = "";
 
     this.getAssetPrimaryCategory()
-    //this.getExistingParent()
+    this.getExistingParent()
     this.getAssetAttributePredefine()
     this.getMaintenanceManager()
     this.getCostCenter();
     this.getMeasurementTypes()
     this.getContactInformation()
-    // this.classCategory();
+    // this.classCategory()
 
   }
 
@@ -1137,7 +1148,7 @@ export class RegistrationComponent implements OnInit {
 
   getAssetPrimaryCategory() {
     this.assetTypesService.get().subscribe((response) => {
-      console.log('response from API is ', response);
+      console.log('assetprimarycategory', response);
       this.assetprimarycategory = response;
       console.log("AAA", this.assetprimarycategory)
     }, (error) => {
@@ -1239,11 +1250,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   maintenanceSpec: any;
-  getMaintenanceSpec() {
+  getMaintenanceSpec(assetPrimaryCategory) {
 
     let temp = [];
 
-    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
+    // const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
 
     this.assetMaintenanceSpecService.get().subscribe((response) => {
       console.log('response from API is ', response);
@@ -1259,11 +1270,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   tableMaintenanceSpec: any;
-  getTableMaintenanceSpec() {
+  getTableMaintenanceSpec(assetPrimaryCategory) {
 
     let temp = [];
 
-    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetPrimary")).value
+    // const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetPrimary")).value
 
     this.assetMaintenanceSpecService.get().subscribe((response) => {
       console.log('response from API is ', response);
@@ -1288,30 +1299,32 @@ export class RegistrationComponent implements OnInit {
   }
 
   public ShowProcessFunction: boolean = false
+  process_Function: any
   toggleShowProcessFunction(event) {
 
-    const value = (<HTMLInputElement>document.getElementById("processFx")).value
-    console.log("prosess", value);
-    if (value == "NEW PROCESS/FUNCTION")
+    // const value = (<HTMLInputElement>document.getElementById("processFx")).value
+    // console.log("prosess", value);
+    if (this.process_Function == "NEW PROCESS/FUNCTION")
       this.ShowProcessFunction = true;
     else
       this.ShowProcessFunction = false;
   }
 
   public ShowSubProcessFunction: boolean = false
+  sub_process_Function: any;
   toggleShowSubProcessFunction(event) {
 
-    const value = (<HTMLInputElement>document.getElementById("subProcessSystem")).value
-    console.log("Subprosess", value);
-    if (value == "NEW PROCESS/FUNCTION")
+    // const value = (<HTMLInputElement>document.getElementById("subProcessSystem")).value
+    // console.log("Subprosess", value);
+    if (this.sub_process_Function == "NEW PROCESS/FUNCTION")
       this.ShowSubProcessFunction = true;
     else
       this.ShowSubProcessFunction = false;
   }
 
   class_category: any;
-  classCategory() {
-    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
+  classCategory(assetPrimaryCategory) {
+    // const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
 
     console.log("Asset type Code", assetPrimaryCategory)
 
@@ -1327,8 +1340,8 @@ export class RegistrationComponent implements OnInit {
   showBO: boolean = true;
   bo: any;
   boStatus: any;
-  getBoValue() {
-    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
+  getBoValue(assetPrimaryCategory) {
+    // const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
 
     for (let i in this.assetprimarycategory) {
 
@@ -1352,7 +1365,7 @@ export class RegistrationComponent implements OnInit {
   detailedDescription: any
   getDetailedDescription() {
     const assetIdentity = (<HTMLInputElement>document.getElementById("asset_identity")).value
-    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
+    // const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
     const SubCategory_1 = (<HTMLInputElement>document.getElementById("SubCategory_1")).value
     const SubCategory_2 = (<HTMLInputElement>document.getElementById("SubCategory_2")).value
     const model_number = (<HTMLInputElement>document.getElementById("model_number")).value
@@ -1364,20 +1377,89 @@ export class RegistrationComponent implements OnInit {
     const size_capacity_3_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_3_unit_measurement")).value
 
     console.log("SubCategory_1", SubCategory_1)
-    this.detailedDescription = assetIdentity + "-" + assetPrimaryCategory + "-" + SubCategory_1 + "-" + SubCategory_2 + "-" + model_number + "-" + size_capacity_1 + "-" + size_capacity_1_unit_measurement + "-" + size_capacity_2 + "-" + size_capacity_2_unit_measurement + "-" + size_capacity_3 + "-" + size_capacity_3_unit_measurement;
+    this.detailedDescription = assetIdentity + "-" + this.assetPrimary + "-" + SubCategory_1 + "-" + SubCategory_2 + "-" + model_number + "-" + size_capacity_1 + "-" + size_capacity_1_unit_measurement + "-" + size_capacity_2 + "-" + size_capacity_2_unit_measurement + "-" + size_capacity_3 + "-" + size_capacity_3_unit_measurement;
 
   }
 
-  formJoin: FormGroup;
+  LocationDescription: any;
+  existLocation: any;
+  getLocationDescription() {
+
+    let value: any;
+    let assetIdentity = (<HTMLInputElement>document.getElementById("asset_identity")).value
+
+    if (this.newParent) {
+      let newParent = (<HTMLInputElement>document.getElementById("newParent")).value
+      console.log("newParent", newParent)
+      value = newParent;
+
+      this.LocationDescription = value + "-" + assetIdentity;
+      console.log('LocationDescription is ', this.LocationDescription)
+
+    }
+    else if (this.existingParent) {
+      console.log("existingParent", this.existLocation)
+
+      let existingParent: any;
+
+      this.assetLocationSyncService.get().subscribe((response) => {
+        // console.log('response from API is ', response);
+
+        existingParent = response.filter((value) => value.node_id.includes(this.existLocation));
+        console.log("existing parent", existingParent[0].description);
+
+        value = existingParent[0].description;
+        console.log("value", value)
+
+        this.LocationDescription = value + "-" + assetIdentity;
+        console.log('LocationDescription is ', this.LocationDescription)
+
+      }, (error) => {
+        console.log('Error is ', error)
+      })
+    }
+
+
+
+  }
+
+  // stepper: any;
+  reset(stepper) {
+
+    console.log("stepper", stepper)
+    this.spinner.hide();
+    swal
+      .fire({
+        title: "Warning",
+        text: "The form will be reset",
+        type: "warning",
+        showCancelButton: true,
+
+      }).then((result) => {
+        // this.firstFormGroup.reset();
+        // this.secondFormGroup.reset();
+
+        console.log("resilt", result)
+
+        if (result.value) {
+          stepper.reset();
+        }
+
+
+      });
+    // this.closeModal()
+  }
 
   submitRegistration() {
 
     const SubmitObject = new AssetsRegistrationModel();
 
+    // if (this.firstFormGroup.valid) {
+
     SubmitObject.node_id = this.firstFormGroup.value.parent_location
     SubmitObject.asset_identity = this.firstFormGroup.value.asset_identity;
     SubmitObject.parent_location = this.firstFormGroup.value.parent_location;
-    SubmitObject.location_description = "";
+    SubmitObject.location_description = this.LocationDescription;
     SubmitObject.building = this.firstFormGroup.value.building;
     SubmitObject.address_line_1 = this.firstFormGroup.value.address_line_1;
     SubmitObject.address_line_2 = this.firstFormGroup.value.address_line_2;
@@ -1387,6 +1469,7 @@ export class RegistrationComponent implements OnInit {
     SubmitObject.postal_code = this.firstFormGroup.value.postal_code;
     SubmitObject.country = this.firstFormGroup.value.country;
     SubmitObject.tag_number = this.firstFormGroup.value.tag_number;
+    SubmitObject.hex_code = this.firstFormGroup.value.rfid_hex_code
     SubmitObject.service_area = this.firstFormGroup.value.service_area;
     SubmitObject.location_main_contact = this.firstFormGroup.value.location_main_contact;
     SubmitObject.location_asset_maintenance_manager = this.firstFormGroup.value.location_asset_maintenance_manager;
@@ -1417,7 +1500,7 @@ export class RegistrationComponent implements OnInit {
     SubmitObject.size_capacity_3_unit_measurement = this.firstFormGroup.value.size_capacity_3_unit_measurement;
     SubmitObject.detailed_description = this.detailedDescription;
     SubmitObject.serial_number = this.firstFormGroup.value.serial_number;
-    SubmitObject.asset_tag_number = this.firstFormGroup.value.asset_tag_number;
+    // SubmitObject.asset_tag_number = this.firstFormGroup.value.asset_tag_number;
     SubmitObject.serial_number = this.firstFormGroup.value.serial_number;
     SubmitObject.purchase_date_installed_handed_over_date = this.firstFormGroup.value.purchase_date_installed_handed_over_date;
     SubmitObject.condition_rating = this.firstFormGroup.value.condition_rating;
@@ -1500,12 +1583,11 @@ export class RegistrationComponent implements OnInit {
     SubmitObject.voltage = this.secondFormGroup.value.voltage
     SubmitObject.asset_status = this.secondFormGroup.value.asset_status
     SubmitObject.status = this.secondFormGroup.value.status
-    
+
 
 
     this.assetsRegistrationService.post(SubmitObject).subscribe(
       (res) => {
-        console.log("yeaaayyy = ", res);
         // this.saveAssetType(createAssetTypeData)
         // this.successAlert()
 
@@ -1517,7 +1599,9 @@ export class RegistrationComponent implements OnInit {
             type: "success",
           }).then((result) => {
           });
-        this.closeModal()
+          this.modalRegisterAsset.hide();
+        //this.closeModal()
+          this.getRegisteredData();
       },
       error => {
         console.error("err", error);
@@ -1533,9 +1617,21 @@ export class RegistrationComponent implements OnInit {
             // invalidControl.
             // this.getRegisteredData()
           });
-        this.closeModal()
+        this.modalRegisterAsset.hide();
+        //this.closeModal()
       }
     )
+    // }
+    // else {
+    //   swal
+    //     .fire({
+    //       title: "Failed",
+    //       text: "The submission has failed",
+    //       type: "warning",
+    //     }).then((result) => {
+    //     });
+
+    // }
 
   }
 
@@ -1563,7 +1659,7 @@ export class RegistrationComponent implements OnInit {
 
   onSelect({ selected }) {
     this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
+    this.selected.push(selected);
   }
 
   onActivate(event) {
@@ -1831,6 +1927,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   showTable() {
+
+    // this.getRegisteredData();
+
     let counter = 0
     for (let x in this.is_show1) {
       if (this.is_show1[x]) {
@@ -1844,7 +1943,7 @@ export class RegistrationComponent implements OnInit {
       // console.log('bluek')
     }
 
-    this.getTableMaintenanceSpec();
+    
   }
 
   onFileChange(event: any) {
@@ -1868,6 +1967,7 @@ export class RegistrationComponent implements OnInit {
 
   closeModal() {
     this.modal.hide();
+    // this.modalService.hide();
   }
 
   submitFileExcel() {
@@ -1880,8 +1980,8 @@ export class RegistrationComponent implements OnInit {
       let checkStatus = 'CO'
       const formData = new FormData();
       // console.log("loopval",loopval['Asset Owning Department'])
-      console.log("loopval",loopval)
-      
+      console.log("loopval", loopval)
+
 
       // formData.asset_owning_department = loopval.asset_owning_department
       formData.append('asset_owning_department', (loopval.asset_owning_department != undefined ? loopval.asset_owning_department : ''));
@@ -2026,7 +2126,7 @@ export class RegistrationComponent implements OnInit {
 
     })
 
-    console.log("excel data",this.dataFromExcelFile)
+    console.log("excel data", this.dataFromExcelFile)
     this.spinner.hide();
     swal
       .fire({
@@ -2057,43 +2157,38 @@ export class RegistrationComponent implements OnInit {
     )
   }
 
-  AssetChange() {
+
+  assetPrimary: any;
+  AssetChange(event) {
+
+    console.log("assetPrimary", event)
     let tempData = [];
+
+    let asset_primary = this.assetprimarycategory.filter((value) => value.asset_type_code.includes(event));
+    console.log("Asset_primary_category", asset_primary[0].asset_type_description)
+
     this.assetsAttributeColumnService.get().subscribe(
       (res) => {
-        res.forEach(function (assetprimer) {
-          // console.log("asset primary uina =",assetprimer);
-          tempData.push(assetprimer)
-        })
-        this.assetprimarycolumnselector = tempData
-        let assetprimaryregister1 = (<HTMLInputElement>document.getElementById('assetselector')).value;
-        // let assetprimaryregister1 = this.assetprimarycategory.map(b => b.value);
-        let assetprimaryregister2 = this.assetprimarycolumnselector.map(a => a.asset_type_id);
-
-        // console.log("asset = ",assetprimaryregister2);
-
-        if (assetprimaryregister2.indexOf(assetprimaryregister1) !== -1) {
-          this.assetprimaryselector = this.assetprimarycolumnselector.filter(function (primary) {
-            return primary.asset_type_id == assetprimaryregister1;
-          })
-
-          this.assetprimaryselectorshow = Object.values(this.assetprimaryselector)
+        // tempData = res;
+        console.log("res", res)
 
 
-        }
-        else {
-          this.assetprimaryselectorshow = this.assetprimaryselectorshowdefault
-        }
+        tempData = res.filter((value) => value.asset_type_id.includes(asset_primary[0].asset_type_description));
+        console.log("tempData", tempData);
+
+        this.assetprimaryselectorshow = tempData;
+        // console.log("assetprimaryselectorshow", this.assetprimaryselectorshow[0].bottom_water_level)
       },
       error => {
         console.error("err", error);
       }
     )
 
-    this.classCategory();
-    this.getBoValue();
-    this.getMaintenanceSpec();
+    this.classCategory(event);
+    this.getBoValue(event);
+    this.getMaintenanceSpec(event);
     this.getDetailedDescription();
+    this.getTableMaintenanceSpec(event);
 
   }
 
