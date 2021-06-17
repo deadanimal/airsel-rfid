@@ -113,7 +113,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <h3 class="mb-0">WAMS: Asset Condition Store</h3>
+          <h3 class="mb-0">WAMS: Asset Condition Score</h3>
         </div>
         <div class="card-body">
           <div class="row">
@@ -152,13 +152,14 @@
             <div class="col-lg-6 col-xs-12">
               <p>
                 Asset that completed Preventive Maintenance:
-                <strong>37,298 nos</strong>
+                <!-- <strong>37,298 nos</strong> -->
+                <strong>{{completedPreventiveMaintenance}}</strong>
               </p>
               <span class="text-info"> ● </span>
               <small
                 >PM Trigger have been completed on
                 <strong class="font-weight-bolder"
-                  >November 2019.</strong
+                  >{{latestMonth | date:'MMMM y'}}.</strong
                 ></small
               ><br />
               <span class="text-info"> ● </span>
@@ -166,7 +167,7 @@
                 >Hence, the asset condition ratings will be completely captured
                 by
                 <strong class="font-weight-bolder"
-                  >November 2020.</strong
+                  >{{latestMonth | date:'MMMM y'}}</strong
                 ></small
               ><br /><br />
 

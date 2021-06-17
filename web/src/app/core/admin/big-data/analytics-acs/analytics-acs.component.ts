@@ -10,6 +10,7 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { formatDate } from "@angular/common";
 import { map, tap, catchError } from "rxjs/operators";
+import { WorkOrderActivityCompletionService } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service";
 
 am4core.useTheme(am4themes_animated);
 
@@ -22,11 +23,13 @@ export class AnalyticsAcsComponent implements OnInit {
 
   constructor(
     private zone: NgZone,
-    public assetsService: AssetsService) { }
+    public assetsService: AssetsService,
+    public workOrderActivityCompletionService: WorkOrderActivityCompletionService) { }
 
   ngOnInit() {
     // console.log("today",this.today)
     this.getAssets();
+    this.getWorkOrderActivityCompletion();
     // this.getAssetConditionStores()
   }
 
@@ -52,7 +55,7 @@ export class AnalyticsAcsComponent implements OnInit {
   tableAssetConditionStores: any;
 
   assetowningdepartment = [
-    { value: "CBD", name: "CUSTOMER BILLING SERVICES" },
+    { value: "CBS", name: "CUSTOMER BILLING SERVICES" },
     { value: "DISTRIBUTION", name: "DISTRIBUTION" },
     { value: "ES-D", name: "ENGINEERING SERVICES – DISTRIBUTION" },
     { value: "FLEET", name: "FLEET" },
@@ -65,6 +68,27 @@ export class AnalyticsAcsComponent implements OnInit {
   ];
 
   lastmonth = new Date
+  // workOrderActivityCompletion: any;
+  completedPreventiveMaintenance: number = 0;
+  latestMonth = new Date();
+
+  getWorkOrderActivityCompletion(){
+    this.workOrderActivityCompletionService.get().subscribe((response) => {
+      console.log('response from API is ', response);
+      // this.workOrderActivityCompletion = response;
+      
+      for(let i in response){
+
+        if( response[i].field_1 == "PREVENTIVE MAINTENANCE"){
+          this.completedPreventiveMaintenance += response[i].asset_location_asset_list.length
+        }
+      }
+      console.log("completedPreventiveMaintenance", this.completedPreventiveMaintenance)
+
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
 
   getAssets() {
     this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
@@ -154,7 +178,7 @@ export class AnalyticsAcsComponent implements OnInit {
   getAssetConditionStores() {
 
     this.tableAssetConditionStores = [
-      { title: "CBD", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "CBS", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
       { title: "DISTRIBUTION", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
       { title: "ES-D", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
       { title: "FLEET", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
@@ -168,7 +192,7 @@ export class AnalyticsAcsComponent implements OnInit {
 
     for (let i in this.assets) {
 
-      if (this.assets[i].owning_access_group == "CBD") {
+      if (this.assets[i].owning_access_group == "CBS") {
         this.tableAssetConditionStores[0].noasset += 1;
 
         if (this.assets[i].condition_rating < 2)

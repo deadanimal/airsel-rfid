@@ -17,14 +17,31 @@
         </div>
       </div>
 
+      <!-- <div class="row pl-3 pr-3">
+        <div class="col-lg-12 col-xs-12">
+          <div class="form-group row">
+            <label class="form-control-label col-lg-6 col-xs-12">Date Range</label>
+            <div class="col-lg-6 col-xs-12">
+              <input id="dateRange" type="text" class="form-control form-control-sm"
+                placeholder="Please select date range" bsDaterangepicker [bsConfig]="{
+                isAnimated: true,
+                containerClass: 'theme-default',
+                rangeInputFormat: 'MM/DD/YYYY',
+                dateInputFormat: 'MM/DD/YYYY'
+              }" (ngModelChange)="getByDate($event)" [(ngModel)]="selected_date" />
+            </div>
+          </div>
+
+          
+        </div>
+
+      </div> -->
+
       <h2 class="mb-0 p-2 bg-default font-weight-bolder text-white text-center">
         Work Activity Statistics
       </h2>
       <div class="row pl-3 pr-3">
-        <div
-          class="col-xl-3 col-md-6 p-0"
-          *ngFor="let workActivity of workActivityStats"
-        >
+        <div class="col-xl-3 col-md-6 p-0" *ngFor="let workActivity of workActivityStats">
           <div class="card card-stats" [ngClass]="workActivity.color">
             <div class="card-body">
               <div class="row text-center">
@@ -35,13 +52,8 @@
                   <h1 class="font-weight-bolder text-white">
                     {{ workActivity.total | number }}
                   </h1>
-                  <span class="badge badge-secondary badge-lg"
-                    ><span
-                      class="font-weight-bold"
-                      [ngClass]="workActivity.textcolor"
-                      >+{{ workActivity.today | number }} Today</span
-                    ></span
-                  >
+                  <!-- <span class="badge badge-secondary badge-lg"><span class="font-weight-bold"
+                      [ngClass]="workActivity.textcolor">+{{ workActivity.today | number }} Today</span></span> -->
                 </div>
               </div>
             </div>
@@ -53,6 +65,9 @@
 </div>
 
 <div class="container-fluid mt--6">
+  <h2 class="mb-0 p-2 bg-default font-weight-bolder text-white text-center">
+    Work Activity Backlog
+  </h2>
   <div class="row">
     <div class="col">
       <div class="card">
@@ -189,10 +204,8 @@
             </div>
           </div>
 
-          <small style="color: white;"
-            >*Users are reminded to complete work activity within required by
-            date.</small
-          >
+          <small style="color: white;">*Users are reminded to complete work activity within required by
+            date.</small>
         </div>
       </div>
 
@@ -220,7 +233,7 @@
         </div>
         <div class="card-body">
           <h3 class="mb-0">Asset Registered: <strong>{{ asset_registered_length }} nos</strong></h3>
-          <small>Data as of 30 Mac 2020</small>
+          <small>Data as of {{dateToday | date:'MMMM d, y'}}</small>
           <div id="chartdivtwo" style="width: 100%; height: 500px;"></div>
         </div>
       </div>
@@ -242,21 +255,14 @@
                   <small>Data as of {{today | date:'d MMMM y'}}</small><br />
 
                   <span class="text-info"> ● </span>
-                  <small
-                    >New asset register on {{firstDayLastMonth | date:'MMMM'}}:
-                    <strong class="font-weight-bolder"
-                      >{{ totalassetsLastMonth }}</strong
-                    ></small
-                  >
+                  <small>New asset register on {{firstDayLastMonth | date:'MMMM'}}:
+                    <strong class="font-weight-bolder">{{ totalassetsLastMonth }}</strong></small>
                 </div>
-                <div
-                  class="col"
-                  style="
+                <div class="col" style="
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                  "
-                >
+                  ">
                   <p class="font-weight-bolder" style="font-size: 48px;">
                     {{ totalAssetToday }}
                   </p>
@@ -271,28 +277,18 @@
             <div class="col-lg-6 col-xs-12">
               <p>
                 Asset that completed Preventive Maintenance:
-                <strong>37,298 nos</strong>
+                <strong>{{completedPreventiveMaintenance}}</strong>
               </p>
               <span class="text-info"> ● </span>
-              <small
-                >PM Trigger have been completed on
-                <strong class="font-weight-bolder"
-                  >November 2019.</strong
-                ></small
-              ><br />
+              <small>PM Trigger have been completed on
+                <strong class="font-weight-bolder">{{latestMonth | date:'MMMM y'}}.</strong></small><br />
               <span class="text-info"> ● </span>
-              <small
-                >Hence, the asset condition ratings will be completely captured
+              <small>Hence, the asset condition ratings will be completely captured
                 by
-                <strong class="font-weight-bolder"
-                  >November 2020.</strong
-                ></small
-              ><br /><br />
+                <strong class="font-weight-bolder">{{latestMonth | date:'MMMM y'}}.</strong></small><br /><br />
 
-              <small class="text-muted"
-                >* No record due to the remaining assets are waiting for
-                maintenance schedule / no maintenance activity conducted</small
-              >
+              <small class="text-muted">* No record due to the remaining assets are waiting for
+                maintenance schedule / no maintenance activity conducted</small>
             </div>
             <div class="table-responsive pt-3">
               <table class="table align-items-center table-flush">
@@ -310,11 +306,9 @@
                 </thead>
 
                 <tbody>
-                  <tr
-                    *ngFor="
+                  <tr *ngFor="
                       let tableAssetConditionStore of tableAssetConditionStores
-                    "
-                  >
+                    ">
                     <td class="font-weight-bolder">
                       {{ tableAssetConditionStore.title }}
                     </td>
@@ -324,34 +318,19 @@
                     <td class="text-center font-weight-bolder">
                       {{ tableAssetConditionStore.zero | number }}
                     </td>
-                    <td
-                      class="text-center font-weight-bolder"
-                      style="background-color: #9dcb82;"
-                    >
+                    <td class="text-center font-weight-bolder" style="background-color: #9dcb82;">
                       {{ tableAssetConditionStore.one | number }}
                     </td>
-                    <td
-                      class="text-center font-weight-bolder"
-                      style="background-color: #bbdcac;"
-                    >
+                    <td class="text-center font-weight-bolder" style="background-color: #bbdcac;">
                       {{ tableAssetConditionStore.two | number }}
                     </td>
-                    <td
-                      class="text-center font-weight-bolder"
-                      style="background-color: #fbff04;"
-                    >
+                    <td class="text-center font-weight-bolder" style="background-color: #fbff04;">
                       {{ tableAssetConditionStore.three | number }}
                     </td>
-                    <td
-                      class="text-center font-weight-bolder"
-                      style="background-color: #f9b81a;"
-                    >
+                    <td class="text-center font-weight-bolder" style="background-color: #f9b81a;">
                       {{ tableAssetConditionStore.four | number }}
                     </td>
-                    <td
-                      class="text-center font-weight-bolder"
-                      style="background-color: #f50f1d;"
-                    >
+                    <td class="text-center font-weight-bolder" style="background-color: #f50f1d;">
                       {{ tableAssetConditionStore.five | number }}
                     </td>
                   </tr>
@@ -369,16 +348,12 @@
       <div class="card">
         <div class="card-header">
           <h3 class="mb-0">
-            WAMS: Total Asset Maintenance generated in March 2019
+            WAMS: Total Asset Maintenance generated in {{latestMonth | date:'MMMM y'}}
           </h3>
         </div>
         <div class="card-body">
-          <small
-            >Total Asset Maintenance generated in WAMS in March 2019:
-            <span class="font-weight-bolder" style="font-size: 24px;"
-              >8,341 nos</span
-            ></small
-          >
+          <small>Total Asset Maintenance generated in WAMS in March 2019:
+            <span class="font-weight-bolder" style="font-size: 24px;">8,341 nos</span></small>
 
           <div class="row pt-3">
             <div class="col-lg-3 col-xs-12">
