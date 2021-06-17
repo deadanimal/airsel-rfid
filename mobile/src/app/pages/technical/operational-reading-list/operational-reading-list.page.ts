@@ -51,7 +51,7 @@ export class OperationalReadingListPage implements OnInit {
     private operationalreadingService: OperationalReadingsService,
     private assetsService: AssetsService,
     private wamsService: WamsService
-  ) {}
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");

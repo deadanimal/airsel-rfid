@@ -90,6 +90,21 @@ export class WorkActivityPage implements OnInit {
 
         console.log("this.workactivity = ", this.workactivity);
 
+        console.log("this.workactivity['id']", this.workactivity['created_date'])
+        if (this.workactivity['status'] == 'New') {
+          let obj = {
+            status: 'InProgress'
+          }
+
+          this.workOrderActivityCompletionService.update(this.workactivity['id'], obj).subscribe(
+            (resUp) => {
+              console.log("resUp", resUp)
+            }, (errUp) => {
+              console.log("errUp", errUp)
+            }
+          )
+        }
+
         let node_id_1 = "node_id=" + this.workactivity.node_id_1
         this.assetLocatioSyncService.filter(node_id_1).subscribe(
           (resAls) => {
@@ -141,6 +156,16 @@ export class WorkActivityPage implements OnInit {
           },
         },
       ],
+    });
+
+    await alert.present();
+  }
+
+  async warningAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['ok']
     });
 
     await alert.present();
@@ -267,7 +292,8 @@ export class WorkActivityPage implements OnInit {
     this.servicehistories.splice(index, 1);
   }
 
-
+  setButton = true
+  buttonArr = []
   getWOrkActivityData(getdata) {
     let woacalalsh = []
     getdata.forEach((element) => {
@@ -285,7 +311,17 @@ export class WorkActivityPage implements OnInit {
 
       setTimeout(() => {
         this.workactivityData.forEach(element => {
+          console.log("workactivityData=>>>", element)
           let asset_id = "asset_id=" + element.asset_id
+
+          /// set data to array for submit button
+          if (element.reading_datetime == null) {
+            this.buttonArr.push(element)
+            if (this.buttonArr.length == 0) {
+              this.setButton = false
+            }
+          }
+
           this.assetsService.filter(asset_id).subscribe(
             (res) => {
               element.badge_number = res[0].badge_no
@@ -304,7 +340,7 @@ export class WorkActivityPage implements OnInit {
             }
           )
         });
-      }, 2000);
+      }, 1000);
     });
   }
 
@@ -346,17 +382,18 @@ export class WorkActivityPage implements OnInit {
     };
 
     console.log("modified_date", woacassLocAssLisFormData);
+    if (this.buttonArr.length == 0) {
+      this.workOrderActivityCompletionService
+        .update(this.workactivity.id, woacassLocAssLisFormData)
+        .subscribe(
+          (res) => {
+            console.log("res = ", res);
 
-    this.workOrderActivityCompletionService
-      .update(this.workactivity.id, woacassLocAssLisFormData)
-      .subscribe(
-        (res) => {
-          console.log("res = ", res);
-
-          this.presentAlert("Success", "Successfully update data.");
-        },
-        (err) => { }
-      );
+            this.presentAlert("Success", "Successfully update data.");
+          },
+          (err) => { }
+        );
+    }
   }
 
   async searchBadgeNo(asset) {
@@ -383,88 +420,95 @@ export class WorkActivityPage implements OnInit {
         {
           text: "Search",
           handler: (data) => {
-            if (data.badge_no) {
-              this.loadingController
-                .create({
-                  message: "Please wait...",
-                })
-                .then((loading) => {
-                  loading.present();
+            if (data.badge_no == asset['badge_number']) {
+              if (data.badge_no) {
+                this.loadingController
+                  .create({
+                    message: "Please wait...",
+                  })
+                  .then((loading) => {
+                    loading.present();
 
-                  this.assetsService
-                    .filter("badge_no=" + data.badge_no)
-                    .subscribe(
-                      (res) => {
-                        // if find, go to asset detail list
-                        if (res.length > 0) {
-                          loading.dismiss();
-                          let navigationExtras: NavigationExtras = {
-                            state: {
-                              badge_no: res[0].badge_no,
-                              asset,
-                            },
-                          };
+                    this.assetsService
+                      .filter("badge_no=" + data.badge_no)
+                      .subscribe(
+                        (res) => {
+                          // if find, go to asset detail list
+                          if (res.length > 0) {
+                            loading.dismiss();
+                            let navigationExtras: NavigationExtras = {
+                              state: {
+                                badge_no: res[0].badge_no,
+                                asset,
+                              },
+                            };
 
-                          this.router.navigate(
-                            ["/technical/work-activity-asset"],
-                            navigationExtras
-                          );
-                        }
-                        // else, find the asset in the wams to pump into PIPE's asset table
-                        else {
-                          // get data from wams
-                          this.wamsService
-                            .getAssetBadgeNo(data.badge_no)
-                            .subscribe(
-                              (res) => {
-                                loading.dismiss();
+                            this.router.navigate(
+                              ["/technical/work-activity-asset"],
+                              navigationExtras
+                            );
+                          }
+                          // else, find the asset in the wams to pump into PIPE's asset table
+                          else {
+                            // get data from wams
+                            this.wamsService
+                              .getAssetBadgeNo(data.badge_no)
+                              .subscribe(
+                                (res) => {
+                                  loading.dismiss();
 
-                                if (res.results.length > 0) {
-                                  let navigationExtras: NavigationExtras = {
-                                    state: {
-                                      badge_no: data.badge_no,
-                                      asset,
-                                    },
-                                  };
+                                  if (res.results.length > 0) {
+                                    let navigationExtras: NavigationExtras = {
+                                      state: {
+                                        badge_no: data.badge_no,
+                                        asset,
+                                      },
+                                    };
 
-                                  this.router.navigate(
-                                    ["/technical/work-activity-asset"],
-                                    navigationExtras
-                                  );
-                                } else {
+                                    this.router.navigate(
+                                      ["/technical/work-activity-asset"],
+                                      navigationExtras
+                                    );
+                                  } else {
+                                    this.presentAlert(
+                                      "Error",
+                                      "Sorry, asset is not found in the database."
+                                    );
+                                  }
+                                },
+                                (err) => {
+                                  console.error("err", err);
+                                  loading.dismiss();
+
                                   this.presentAlert(
                                     "Error",
-                                    "Sorry, asset is not found in the database."
+                                    "Sorry, there is a technical problem going on."
                                   );
                                 }
-                              },
-                              (err) => {
-                                console.error("err", err);
-                                loading.dismiss();
+                              );
+                          }
+                        },
+                        (err) => {
+                          console.log("err assetlsService = ", err);
+                          loading.dismiss();
 
-                                this.presentAlert(
-                                  "Error",
-                                  "Sorry, there is a technical problem going on."
-                                );
-                              }
-                            );
+                          this.presentAlert(
+                            "Error",
+                            "Sorry, there is a technical problem going on."
+                          );
                         }
-                      },
-                      (err) => {
-                        console.log("err assetlsService = ", err);
-                        loading.dismiss();
-
-                        this.presentAlert(
-                          "Error",
-                          "Sorry, there is a technical problem going on."
-                        );
-                      }
-                    );
-                });
+                      );
+                  });
+              } else {
+                this.presentAlert(
+                  "Error",
+                  "Please enter badge number to find asset detail"
+                );
+              }
             } else {
-              this.presentAlert(
+              this.warningAlert(
                 "Error",
-                "Please enter badge number to find asset detail"
+                "Batch number not match. Please try again,"
               );
             }
           },
@@ -602,16 +646,23 @@ export class WorkActivityPage implements OnInit {
                   loading.dismiss();
                   // if find, go to asset detail list
                   if (res.length > 0) {
-                    let navigationExtras: NavigationExtras = {
-                      state: {
-                        badge_no: res[0].badge_no,
-                      },
-                    };
+                    if (res[0].badge_no == asset['badge_number']) {
+                      let navigationExtras: NavigationExtras = {
+                        state: {
+                          badge_no: res[0].badge_no,
+                        },
+                      };
 
-                    this.router.navigate(
-                      ["/technical/work-activity-asset"],
-                      navigationExtras
-                    );
+                      this.router.navigate(
+                        ["/technical/work-activity-asset"],
+                        navigationExtras
+                      );
+                    } else {
+                      this.warningAlert(
+                        "Error",
+                        "Batch number not match. Please try again,"
+                      );
+                    }
                   }
                   // else, suggest the user to use QR scanner OR search by badge number
                   else {
@@ -645,77 +696,84 @@ export class WorkActivityPage implements OnInit {
         this.scanValue = data;
 
         if (this.scanValue != "") {
-          this.loadingController
-            .create({
-              message: "Please wait...",
-            })
-            .then((loading) => {
-              loading.present();
+          if (this.scanValue == asset['badge_number']) {
+            this.loadingController
+              .create({
+                message: "Please wait...",
+              })
+              .then((loading) => {
+                loading.present();
 
-              this.assetsService.filter("badge_no=" + this.scanValue).subscribe(
-                (res) => {
-                  // if find, go to asset detail list
-                  if (res.length > 0) {
-                    loading.dismiss();
-                    let navigationExtras: NavigationExtras = {
-                      state: {
-                        badge_no: res[0].badge_no,
-                      },
-                    };
+                this.assetsService.filter("badge_no=" + this.scanValue).subscribe(
+                  (res) => {
+                    // if find, go to asset detail list
+                    if (res.length > 0) {
+                      loading.dismiss();
+                      let navigationExtras: NavigationExtras = {
+                        state: {
+                          badge_no: res[0].badge_no,
+                        },
+                      };
 
-                    this.router.navigate(
-                      ["/technical/work-activity-asset"],
-                      navigationExtras
-                    );
-                  }
-                  // else, find the asset in the wams to pump into PIPE's asset table
-                  else {
-                    // get data from wams
-                    this.wamsService.getAssetBadgeNo(this.scanValue).subscribe(
-                      (res) => {
-                        loading.dismiss();
+                      this.router.navigate(
+                        ["/technical/work-activity-asset"],
+                        navigationExtras
+                      );
+                    }
+                    // else, find the asset in the wams to pump into PIPE's asset table
+                    else {
+                      // get data from wams
+                      this.wamsService.getAssetBadgeNo(this.scanValue).subscribe(
+                        (res) => {
+                          loading.dismiss();
 
-                        if (res.results.length > 0) {
-                          let navigationExtras: NavigationExtras = {
-                            state: {
-                              badge_no: this.scanValue,
-                            },
-                          };
+                          if (res.results.length > 0) {
+                            let navigationExtras: NavigationExtras = {
+                              state: {
+                                badge_no: this.scanValue,
+                              },
+                            };
 
-                          this.router.navigate(
-                            ["/technical/work-activity-asset"],
-                            navigationExtras
-                          );
-                        } else {
+                            this.router.navigate(
+                              ["/technical/work-activity-asset"],
+                              navigationExtras
+                            );
+                          } else {
+                            this.presentAlert(
+                              "Error",
+                              "Sorry, asset is not found in the database."
+                            );
+                          }
+                        },
+                        (err) => {
+                          console.error("err", err);
+                          loading.dismiss();
+
                           this.presentAlert(
                             "Error",
-                            "Sorry, asset is not found in the database."
+                            "Sorry, there is a technical problem going on."
                           );
                         }
-                      },
-                      (err) => {
-                        console.error("err", err);
-                        loading.dismiss();
+                      );
+                    }
+                  },
+                  (err) => {
+                    console.log("err assetlsService = ", err);
+                    loading.dismiss();
 
-                        this.presentAlert(
-                          "Error",
-                          "Sorry, there is a technical problem going on."
-                        );
-                      }
+                    this.presentAlert(
+                      "Error",
+                      "Sorry, there is a technical problem going on."
                     );
                   }
-                },
-                (err) => {
-                  console.log("err assetlsService = ", err);
-                  loading.dismiss();
-
-                  this.presentAlert(
-                    "Error",
-                    "Sorry, there is a technical problem going on."
-                  );
-                }
-              );
-            });
+                );
+              });
+          } else {
+            this.warningAlert(
+              "Error",
+              "Batch number not match. Please try again,"
+            );
+          }
         } else {
           this.presentAlert("Error", "QR code is invalid. Please try again.");
         }

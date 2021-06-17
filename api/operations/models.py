@@ -299,12 +299,12 @@ class WorkRequest(models.Model):
 class WorkRequestStatus(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    work_request_id = models.ForeignKey(WorkRequest, on_delete=models.CASCADE, related_name='work_request_status_work_request_id', null=True)
-    status = models.CharField(max_length=50, default='NA')
+    work_request_id = models.CharField(max_length=50, blank=True,null=True)#models.ForeignKey(WorkRequest, on_delete=models.CASCADE, related_name='work_request_status_work_request_id', null=True)
+    status = models.CharField(max_length=50, blank=True)
     
-    record_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='work_request_status_record_by', null=True)
+    # record_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='work_request_status_record_by', null=True)
     record_date = models.DateTimeField(auto_now_add=True)
-    modified_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='work_request_status_modified_by', null=True)
+    # modified_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='work_request_status_modified_by', null=True)
     modified_date = models.DateTimeField(auto_now=True)
 
     class Meta:

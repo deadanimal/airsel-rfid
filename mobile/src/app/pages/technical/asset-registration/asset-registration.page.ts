@@ -183,6 +183,7 @@ export class AssetRegistrationPage implements OnInit {
     { value: "WS", name: "Wash Water System" },
     { value: "NA", name: "Not Available" },
   ];
+
   categories = [];
   identities = [];
   primarycategories = [];
@@ -194,6 +195,39 @@ export class AssetRegistrationPage implements OnInit {
     { value: "TP", name: "Temperature" },
     { value: "OT", name: "Other" },
   ];
+
+  measurement_types = [
+    { desc: 'Bar', value: 'bar' },
+    { desc: 'Celsius', value: '°C' },
+    { desc: 'Hour', value: 'hr' },
+    { desc: 'Kilogram', value: 'kg' },
+    { desc: 'Kilometer', value: 'km' },
+    { desc: 'Kilowatt', value: 'kW' },
+    { desc: 'Megapascal Pressure Unit', value: 'Mpa' },
+    { desc: 'Meter', value: 'm' },
+    { desc: 'Meter per second', value: 'm/s' },
+    { desc: 'Milimetre', value: 'mm' },
+    { desc: 'Millions of Gallons per Day', value: 'MGD' },
+    { desc: 'Millions of liters per day ', value: 'MLD' },
+    { desc: 'Miligram', value: 'mg' },
+    { desc: 'Revolutions per minute', value: 'RPM' },
+    { desc: 'Horsepower', value: 'hp' },
+    { desc: 'Voltage', value: 'V' },
+    { desc: 'Cubic meter', value: 'm³' },
+    { desc: 'Cubic meter per hour', value: 'm³/hr' },
+    { desc: 'Decibels woth reference to one milliwatt', value: 'dBm' },
+    { desc: 'Liter per second', value: 'l/s' },
+    { desc: 'Megametre per second', value: 'mm/s' },
+    { desc: 'Millihenrys', value: 'mH' },
+    { desc: 'Millivolts', value: 'mV' },
+    { desc: 'pH', value: 'pH' },
+    { desc: 'Percent', value: '%' },
+    { desc: 'Watt', value: 'W' },
+    { desc: 'Voltage direct current', value: 'VDC' },
+    { desc: 'nanometers', value: 'nm' },
+    { desc: 'Milliamperes', value: 'mA' },
+    { desc: 'Pound per square inch', value: 'psi' },
+  ]
 
   // asset attribute // 
   assetAttrColumn: any
@@ -909,10 +943,10 @@ export class AssetRegistrationPage implements OnInit {
         console.log("element = ---", element);
         this.assetAttrData = element.asset_bussiness_object
         this.assetCategoryData = element.asset_category
-        if (element.asset_category == 'W1-TrackedGeneralAsset' || element.asset_category == 'W1-IOSvcGeneralAsset') {
-          this.assetOrComponent = 'Asset'
-        } else { // W1-IOSvcGeneralComponent , W1-TrackedGeneralComponent
+        if (element.asset_category == 'W1-TrackedGeneralComponent' || element.asset_category == 'W1-IOSvcGeneralComponent') {
           this.assetOrComponent = 'Component'
+        } else { // W1-IOSvcGeneralComponent , W1-TrackedGeneralComponent
+          this.assetOrComponent = 'Asset'
         }
       }
     });

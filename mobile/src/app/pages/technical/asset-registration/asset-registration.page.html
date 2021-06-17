@@ -95,7 +95,7 @@
             <div class="row">
               <ion-item>
                 <ion-label position="stacked">Asset or Component Type</ion-label>
-                <ion-input type="text" formControlName="asset_or_component_type" [value]="assetOrComponent">
+                <ion-input type="text" formControlName="asset_or_component_type" readonly [value]="assetOrComponent">
                 </ion-input>
                 <!-- <ion-select placeholder="Please select" formControlName="asset_or_component_type">
                   <ion-select-option *ngFor="let assComp of assetOrCompList" [value]="assComp.id">{{ assComp.name }}
@@ -320,7 +320,7 @@
                 <ion-input formControlName="location_main_contact" placeholder="Location Main Contact"></ion-input>
               </ion-item>
               <ion-item>
-                <ion-label position="stacked">Location/Asset Maintenance Manager</ion-label>
+                <ion-label position="stacked">Maintenance Manager</ion-label>
                 <!-- <ion-input formControlName="location_asset_maintenance_manager"
                   placeholder="Location/Asset Maintenance Manager"></ion-input> -->
                 <!-- <ion-select placeholder="Please select" style="max-width: 100% !important;"
@@ -387,10 +387,13 @@
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Measurement 1</ion-label>
-              <ion-input type="text" formControlName="size_capacity_1_unit_measurement"></ion-input>
-              <!-- <small class="validation_messages"
-                >{{ validation_messages.size_capacity_1_unit_measurement }}</small
-              > -->
+              <!-- <ion-input type="text" formControlName="size_capacity_1_unit_measurement"></ion-input> -->
+
+              <ion-select placeholder="Please select" formControlName="size_capacity_1_unit_measurement">
+                <ion-select-option *ngFor="let meaType1 of measurement_types" [value]="meaType1.value">
+                  {{ meaType1.desc }}</ion-select-option>
+              </ion-select>
+
             </ion-item>
 
             <ion-item>
@@ -402,10 +405,13 @@
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Measurement 2</ion-label>
-              <ion-input type="text" formControlName="size_capacity_2_unit_measurement"></ion-input>
-              <!-- <small class="validation_messages"
-                        >{{ validation_messages.size_capacity_2_unit_measurement }}</small
-                      > -->
+              <!-- <ion-input type="text" formControlName="size_capacity_2_unit_measurement"></ion-input> -->
+
+              <ion-select placeholder="Please select" formControlName="size_capacity_2_unit_measurement">
+                <ion-select-option *ngFor="let meaType2 of measurement_types" [value]="meaType2.value">
+                  {{ meaType2.desc }}</ion-select-option>
+              </ion-select>
+
             </ion-item>
 
             <ion-item>
@@ -417,10 +423,13 @@
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Measurement 3</ion-label>
-              <ion-input type="text" formControlName="size_capacity_3_unit_measurement"></ion-input>
-              <!-- <small class="validation_messages"
-                >{{ validation_messages.size_capacity_3_unit_measurement }}</small
-              > -->
+              <!-- <ion-input type="text" formControlName="size_capacity_3_unit_measurement"></ion-input> -->
+
+              <ion-select placeholder="Please select" formControlName="size_capacity_3_unit_measurement">
+                <ion-select-option *ngFor="let meaType3 of measurement_types" [value]="meaType3.value">
+                  {{ meaType3.desc }}</ion-select-option>
+              </ion-select>
+
             </ion-item>
 
             <ion-item>
@@ -463,16 +472,13 @@
               > -->
             </ion-item>
 
-            <ion-item>
+            <!-- <ion-item>
               <ion-label position="stacked">Status</ion-label>
               <ion-select placeholder="Please select" formControlName="status">
                 <ion-select-option *ngFor="let status of statuses" [value]="status.value">{{ status.name }}
                 </ion-select-option>
               </ion-select>
-              <!-- <small class="validation_messages"
-                >{{ validation_messages.status }}</small
-              > -->
-            </ion-item>
+            </ion-item> -->
             <ion-item>
               <ion-label position="stacked">Maintenance Specification</ion-label>
               <ion-input type="text" formControlName="maintenance_specification"></ion-input>
@@ -701,7 +707,7 @@
           </ion-select> -->
 
           <ionic-selectable [items]="assetAttPredefineMans" style="max-width: 100% !important;" itemValueField="id"
-            itemTextField="description" [canSearch]="true" formControlName="maintenance_planner"
+            itemTextField="characteristic_value" [canSearch]="true" formControlName="manufacturer"
             (ionChange)="onChangeLocAssMaiMan($event)">
           </ionic-selectable>
         </ion-item>
@@ -811,9 +817,9 @@
           <ion-input formControlName="valve_pressure_rating" type="text"></ion-input>
         </ion-item>
 
-        <ion-list-header *ngIf="assetAttrColumn != ''">
+        <!-- <ion-list-header *ngIf="assetAttrColumn != ''">
           <ion-label>Vehicle</ion-label>
-        </ion-list-header>
+        </ion-list-header> -->
 
         <ion-item *ngIf="assetAttrColumn.vehicle_chasis_number == true">
           <ion-label required position="stacked">chassis number</ion-label>

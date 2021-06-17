@@ -90,9 +90,13 @@ export class MaintenanceWorkDetailPage implements OnInit {
         this.type = this.router.getCurrentNavigation().extras.state.type;
         this.status = this.router.getCurrentNavigation().extras.state.status;
         this.workactivities = this.router.getCurrentNavigation().extras.state.work_activity;
+        console.log("this.router.getCurrentNavigation().extras.state", this.router.getCurrentNavigation().extras.state)
         this.workactivities.forEach(eleWorAct => {
 
+          console.log("this.status", this.status)
+          console.log("eleWorAct.status", eleWorAct.status)
           if (eleWorAct.status == this.status) {
+            console.log("eleWorAct>>>", eleWorAct)
             this.workactivitiesDatas.push(eleWorAct)
 
             eleWorAct.status = (eleWorAct.status == 'InProgress' ? 'In Progress' : eleWorAct.status)
@@ -112,9 +116,9 @@ export class MaintenanceWorkDetailPage implements OnInit {
             );
           }
         });
-        console.log("this.workactivities = ", this.workactivities)
-        console.log("this.status = ", this.status)
-        console.log("this.type = ", this.type)
+        // console.log("this.workactivities = ", this.workactivities)
+        // console.log("this.status = ", this.status)
+        // console.log("this.type = ", this.type)
         this.image = '../../../../assets/technical/' + this.router.getCurrentNavigation().extras.state.image;
         this.name = this.router.getCurrentNavigation().extras.state.name;
 
@@ -129,28 +133,28 @@ export class MaintenanceWorkDetailPage implements OnInit {
         //   return false;
         // });
 
-        this.completeds = this.workactivities.filter((data) => {
-          if (data.bo_status.toString().indexOf("Completed") !== -1)
-            return true;
-          return false;
-        });
+        // this.completeds = this.workactivities.filter((data) => {
+        //   if (data.bo_status.toString().indexOf("Completed") !== -1)
+        //     return true;
+        //   return false;
+        // });
 
         // filter status based on BO_STATUS_CD from WAMS
-        this.pendings = this.workactivities.filter((data) => {
-          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("nw") !== -1)
-            return true;
-          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("ip") !== -1)
-            return true;
-          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("bl") !== -1)
-            return true;
-          return false;
-        });
+        // this.pendings = this.workactivities.filter((data) => {
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("nw") !== -1)
+        //     return true;
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("ip") !== -1)
+        //     return true;
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("bl") !== -1)
+        //     return true;
+        //   return false;
+        // });
 
-        this.completeds = this.workactivities.filter((data) => {
-          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("active") !== -1)
-            return true;
-          return false;
-        });
+        // this.completeds = this.workactivities.filter((data) => {
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("active") !== -1)
+        //     return true;
+        //   return false;
+        // });
       }
     });
   }

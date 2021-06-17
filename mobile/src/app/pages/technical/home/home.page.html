@@ -2,10 +2,7 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="homePage('/technical/tabs/tab1')">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold"> TAMS Mobile </ion-title>
@@ -15,12 +12,8 @@
       </ion-button>
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px"
-          >{{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -30,29 +23,19 @@
   <ion-list class="list-core">
     <ion-list-header>
       <h3 class="ion-no-margin">
-        <ion-icon
-          name="bar-chart"
-          style="display: inline-block; vertical-align: middle"
-        ></ion-icon>
-        <span
-          style="
+        <ion-icon name="bar-chart" style="display: inline-block; vertical-align: middle"></ion-icon>
+        <span style="
             display: inline-block;
             vertical-align: middle;
             margin-left: 0.7rem;
-          "
-          >Total Work Activity Assign:
+          ">Total Work Activity Assign:
         </span>
-        <ion-badge
-          color="primary"
-          mode="ios"
-          style="
+        <ion-badge color="primary" mode="ios" style="
             display: inline-block;
             vertical-align: middle;
             margin-left: 0.7rem;
             font-size: 0.8rem;
-          "
-          >{{ workactivities.length }}</ion-badge
-        >
+          ">{{ workOrderActComp.length }}</ion-badge>
       </h3>
     </ion-list-header>
 
@@ -70,7 +53,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <h1>{{ calculateStatus("New") }}</h1>
+                    <h1>{{ calculateStatus(workOrderActComp,"New") }}</h1>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -80,11 +63,8 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
-                    <ion-badge color="medium"
-                      ><span
-                        >+{{ calculateToday("New") }} today</span
-                      ></ion-badge
-                    >
+                    <!-- <ion-badge color="medium"><span>+{{ calculateToday(workOrderActComp,"New") }} today</span>
+                    </ion-badge> -->
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -104,7 +84,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <h1>{{ calculateStatus("Backlog") }}</h1>
+                    <h1>{{ calculateStatus( workOrderActComp,"BackLog") }}</h1>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -114,7 +94,8 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
-                    <ion-badge color="medium"><span>+{{ calculateToday("Backlog") }} today</span></ion-badge>
+                    <!-- <ion-badge color="medium"><span>+{{ calculateToday(workOrderActComp,"Backlog") }} today</span>
+                    </ion-badge> -->
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -137,7 +118,7 @@
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
                     <h1 style="color: white">
-                      {{ calculateStatus("In Progress") }}
+                      {{ calculateStatus(workOrderActComp,"InProgress") }}
                     </h1>
                   </ion-label>
                 </ion-col>
@@ -148,7 +129,8 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
-                    <ion-badge color="medium"><span>+{{ calculateToday("In Progress") }} today</span></ion-badge>
+                    <!-- <ion-badge color="medium"><span>+{{ calculateToday(workOrderActComp,"InProgress") }} today</span>
+                    </ion-badge> -->
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -168,7 +150,7 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <h1>{{ calculateStatus("Completed") }}</h1>
+                    <h1>{{ calculateStatus(workOrderActComp,"Completed") }}</h1>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -178,7 +160,8 @@
 
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-right">
-                    <ion-badge color="medium"><span>+{{ calculateToday("Completed") }} today</span></ion-badge>
+                    <!-- <ion-badge color="medium"><span>+{{ calculateToday(workOrderActComp,"Completed") }} today</span>
+                    </ion-badge> -->
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -191,13 +174,11 @@
     <ion-list-header>
       <h3 class="ion-no-margin">
         <ion-icon name="list" style="vertical-align: middle"></ion-icon>
-        <span
-          style="
+        <span style="
             display: inline-block;
             vertical-align: middle;
             margin-left: 0.7rem;
-          "
-          >Task
+          ">Task
         </span>
       </h3>
     </ion-list-header>
@@ -205,11 +186,7 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card
-            class="card-core ion-no-margin"
-            mode="ios"
-            (click)="openPage('/technical/maintenance-work-list')"
-          >
+          <ion-card class="card-core ion-no-margin" mode="ios" (click)="openPage('/technical/maintenance-work-list')">
             <ion-card-content class="ion-no-padding">
               <img src="assets/svg/activity.svg" />
             </ion-card-content>
@@ -222,11 +199,7 @@
         </ion-col>
 
         <ion-col>
-          <ion-card
-            class="card-core ion-no-margin"
-            mode="ios"
-            (click)="openPage('/technical/work-request-list')"
-          >
+          <ion-card class="card-core ion-no-margin" mode="ios" (click)="openPage('/technical/work-request-list')">
             <ion-card-content class="ion-no-padding">
               <img src="assets/svg/request.svg" />
             </ion-card-content>
@@ -241,11 +214,8 @@
 
       <ion-row>
         <ion-col>
-          <ion-card
-            class="card-core ion-no-margin"
-            mode="ios"
-            (click)="openPage('/technical/operational-reading-list')"
-          >
+          <ion-card class="card-core ion-no-margin" mode="ios"
+            (click)="openPage('/technical/operational-reading-list')">
             <ion-card-content class="ion-no-padding">
               <img src="assets/svg/reading.svg" />
             </ion-card-content>
@@ -258,11 +228,7 @@
         </ion-col>
 
         <ion-col>
-          <ion-card
-            class="card-core ion-no-margin"
-            mode="ios"
-            (click)="openPage('/technical/asset-registration-list')"
-          >
+          <ion-card class="card-core ion-no-margin" mode="ios" (click)="openPage('/technical/asset-registration-list')">
             <ion-card-content class="ion-no-padding">
               <img src="assets/svg/registration.svg" />
             </ion-card-content>

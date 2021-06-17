@@ -64,7 +64,7 @@ from .serializers import (
     WorkRequestSerializer,
     WorkRequestExtendedSerializer,
     WorkRequestStatusSerializer,
-    WorkRequestStatusExtendedSerializer,
+    # WorkRequestStatusExtendedSerializer,
     MeasurementTypeSerializer,
     MeasurementTypeExtendedSerializer,
     OperationalReadingSerializer,
@@ -524,7 +524,7 @@ class WorkRequestStatusViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = WorkRequestStatusSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'work_request_id', 'status', 'record_by', 'modified_by'
+        'work_request_id', 'status'
     ]
 
     def get_permissions(self):
@@ -539,14 +539,14 @@ class WorkRequestStatusViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         queryset = WorkRequestStatus.objects.all()
         return queryset
 
-    @action(methods=['GET'], detail=False)
-    def extended(self, request, *args, **kwargs):
+    # @action(methods=['GET'], detail=False)
+    # def extended(self, request, *args, **kwargs):
 
-        queryset = WorkRequestStatus.objects.all()
-        serializer_class = WorkRequestStatusExtendedSerializer(
-            queryset, many=True)
+    #     queryset = WorkRequestStatus.objects.all()
+    #     serializer_class = WorkRequestStatusExtendedSerializer(
+    #         queryset, many=True)
 
-        return Response(serializer_class.data)
+    #     return Response(serializer_class.data)
 
 
 class MeasurementTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -584,6 +584,7 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     filterset_fields = [
         'asset_id', 'badge_number'
     ]
+    ordering = ['-date_created']
 
     def get_permissions(self):
         if self.action == 'list':

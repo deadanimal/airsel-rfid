@@ -19,7 +19,7 @@
 <ion-content class="content-core">
   <div class="ion-padding">
     <h4 class="ion-text-center ion-padding">Operational Reading</h4>
-    <ion-list class="line-input" style="padding-top: 100px">
+    <ion-list class="line-input">
       <form [formGroup]="operationalreadingFormGroup">
         <ion-item>
           <ion-label position="stacked">Asset Description</ion-label>
@@ -126,8 +126,8 @@
     </ion-card>
 
     <div class="ion-text-center ion-padding">
-      <ion-button color="light" (click)="clickBack()">Cancel</ion-button>
-      <ion-button color="primary" (click)="submit()">Submit</ion-button>
+      <ion-button color="light" (click)="clickBack()">Back</ion-button>
+      <ion-button *ngIf="showButton == 'yes'" color="primary" (click)="submit()">Submit</ion-button>
     </div>
   </div>
 </ion-content>

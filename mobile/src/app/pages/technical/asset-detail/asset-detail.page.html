@@ -63,8 +63,16 @@
     <ion-list class="ion-padding line-input">
       <ion-item *ngFor="let assetAttr of assetAttributedatas">
         <ion-label position="stacked">{{assetAttr.field_name | titlecase}}</ion-label>
-        <ion-input type="text" (change)="onKey($event.target.value,assetAttr)" value="{{assetAttr.field_value}}">
+
+        <ion-input type="text" *ngIf="assetAttr.dropdown == 'no'" (change)="onKey($event.target.value,assetAttr)"
+          value="{{assetAttr.field_value}}">
         </ion-input>
+
+        <ion-select *ngIf="assetAttr.dropdown == 'yes'" (ionChange)="onKey($event.target.value,assetAttr)">
+          <ion-select-option *ngFor="let assAtt of assetAttr.option" [value]="assAtt.characteristic_value">
+            {{assAtt.characteristic_value}}</ion-select-option>
+        </ion-select>
+
       </ion-item>
     </ion-list>
 
