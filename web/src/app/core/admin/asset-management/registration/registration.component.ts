@@ -1271,11 +1271,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   tableMaintenanceSpec: any;
-  getTableMaintenanceSpec() {
+  getTableMaintenanceSpec(assetPrimaryCategory) {
 
     let temp = [];
 
-    const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetPrimary")).value
+    // const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetPrimary")).value
 
     this.assetMaintenanceSpecService.get().subscribe((response) => {
       console.log('response from API is ', response);
@@ -1944,7 +1944,7 @@ export class RegistrationComponent implements OnInit {
       // console.log('bluek')
     }
 
-    this.getTableMaintenanceSpec();
+    
   }
 
   onFileChange(event: any) {
@@ -2189,6 +2189,7 @@ export class RegistrationComponent implements OnInit {
     this.getBoValue(event);
     this.getMaintenanceSpec(event);
     this.getDetailedDescription();
+    this.getTableMaintenanceSpec(event);
 
   }
 

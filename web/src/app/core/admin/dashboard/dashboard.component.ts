@@ -31,6 +31,8 @@ import { WorkRequestService } from "src/app/shared/services/work-request/work-re
 import { formatDate } from "@angular/common";
 import { map } from "rxjs/operators";
 import { AssetsModel } from "src/app/shared/services/assets/assets.model";
+import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
+import { WorkActivityEmployeeService } from "src/app/shared/services/work-activity-employee/work-activity-employee.service";
 
 @Component({
   selector: "app-dashboard",
@@ -45,7 +47,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     private zone: NgZone,
     public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
     public assetsService: AssetsService,
-    public workRequestService: WorkRequestService) { }
+    public workRequestService: WorkRequestService,
+    private workactivityService: WorkActivitiesService,
+    private workactivityemployeeService: WorkActivityEmployeeService) { }
 
   // variables
   assetowningdepartment = [
@@ -71,8 +75,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   totalBackLogYesterday: any
   backLogPercentageToday: any
   backLogPercentageYesterday: any
+  dateToday = new Date();
 
 
+  completedPreventiveMaintenance: number = 0;
+  latestMonth = new Date();
   getWorkOrderActivity() {
 
     // let temp = []
@@ -81,13 +88,26 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.WorkOrderActivity = response;
       console.log("WorkOrderActivity", this.WorkOrderActivity);
 
-      this.getTotalWorkOrder();
+      //work activity statistic
+      this.workorderactivity = response;
+      this.calcWorkActivityStatistic();
 
-      this.backLog = this.WorkOrderActivity.filter((value) => value.bo_status_cd.includes("Backlog"));
-      console.log("BackLog", this.backLog);
+      this.getTotalWorkOrder();
       // this.updateFilter();
 
-      this.getTotalBackLog()
+      this.getTotalBackLog();
+      this.getChartData();
+      this.initChartOne();
+
+      //calculate preventive maintenance
+      for (let i in response) {
+
+        if (response[i].field_1 == "PREVENTIVE MAINTENANCE") {
+          this.completedPreventiveMaintenance += response[i].asset_location_asset_list.length
+        }
+      }
+      console.log("completedPreventiveMaintenance", this.completedPreventiveMaintenance)
+
     }, (error) => {
       console.log('Error is ', error)
     })
@@ -103,6 +123,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log("yesterday", yesterday)
 
     let yesterdayBacklog = []
+
+    this.backLog = this.WorkOrderActivity.filter((value) => value.status.includes("BackLog"));
+    console.log("BackLog", this.backLog);
 
     for (let i in this.backLog) {
 
@@ -137,6 +160,91 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+  chartData: any;
+
+  getChartData() {
+
+    this.workOrderActivityCompletionService
+
+    let data = [
+      { category: "CBS", value1: 0, value2: 0 },
+      { category: "DISTRIBUTION", value1: 0, value2: 0 },
+      { category: "ES-D", value1: 0, value2: 0 },
+      { category: "FLEET", value1: 0, value2: 0 },
+      { category: "LAND", value1: 0, value2: 0 },
+      { category: "NRW", value1: 0, value2: 0 },
+      { category: "PD-N", value1: 0, value2: 0 },
+      { category: "PD-S", value1: 0, value2: 0 },
+      { category: "SCADA", value1: 0, value2: 0 },
+      { category: "WQ", value1: 0, value2: 0 },
+    ];
+
+    for (let i in this.workOrderActivityCompletionService) {
+
+      if (this.workOrderActivityCompletionService[i].owning_organization == "CBS") {
+        data[0].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[0].value2 += 1;
+        }
+      }
+      else if (this.workOrderActivityCompletionService[i].owning_organization == "DISTRIBUTION") {
+        data[1].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[1].value2 += 1;
+        }
+      }
+      else if (this.workOrderActivityCompletionService[i].owning_organization == "ES-D") {
+        data[2].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[2].value2 += 1;
+        }
+      }
+      else if (this.workOrderActivityCompletionService[i].owning_organization == "FLEET") {
+        data[3].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[3].value2 += 1;
+        }
+      }
+      else if (this.workOrderActivityCompletionService[i].owning_organization == "LAND") {
+        data[4].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[4].value2 += 1;
+        }
+      }
+      else if (this.workOrderActivityCompletionService[i].owning_organization == "NRW") {
+        data[5].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[5].value2 += 1;
+        }
+      }
+      else if (this.workOrderActivityCompletionService[i].owning_organization == "PD-N") {
+        data[6].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[6].value2 += 1;
+        }
+      }
+      else if (this.workOrderActivityCompletionService[i].owning_organization == "PD-S") {
+        data[7].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[7].value2 += 1;
+        }
+      }
+      else if (this.workOrderActivityCompletionService[i].owning_organization == "SCADA") {
+        data[8].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[8].value2 += 1;
+        }
+      }
+      else if (this.workOrderActivityCompletionService[i].owning_organization == "WQ") {
+        data[9].value1 += 1;
+        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+          data[9].value2 += 1;
+        }
+      }
+    }
+    console.log("data", data);
+    this.chartData = data;
+  }
   //end work activity
 
   //asset condition score
@@ -165,11 +273,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log('assets', this.assets);
       this.totalAssets = this.assets.length
       console.log('totalAssets', this.totalAssets);
-      
 
+      //calculate asset condition rating
       this.getTotalAssetToday();
       this.calcPercentageAssetConditionRating();
       this.getAssetConditionStores();
+
+      //calculate total asset registered
+      this.asset_registered_length = response.length;
+      this.getChartdata();
 
     }, (error) => {
       console.log('Error is ', error)
@@ -399,40 +511,106 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   asset_registered_length: number = 0;
   assetRegistration: AssetsModel[] = [];
 
-  getAssetRegistered() {
-    // for default value of chart
-    // call api
-    // 
-    this.assetsService.get().subscribe(
-      (res) => {
-        // console.log("Resss", res);
-        this.asset_registered_length = res.length;
-      },
-      (err) => {
+  chartData2: any
+  getChartdata() {
+
+    this.chartData2 = [
+      { title: "CBS", total: 0, },
+      { title: "DISTRIBUTION", total: 0, },
+      { title: "ES-D", total: 0, },
+      { title: "FLEET", total: 0, },
+      { title: "LAND", total: 0, },
+      { title: "NRW", total: 0, },
+      { title: "PD-N", total: 0, },
+      { title: "PD-S", total: 0, },
+      { title: "SCADA", total: 0, },
+      { title: "WQ", total: 0, },
+    ];
+
+    for (let i in this.assets) {
+
+      if (this.assets[i].owning_access_group == "CBS") {
+        this.chartData2[0].total += 1;
 
       }
-    );
+      else if (this.assets[i].owning_access_group == "DISTRIBUTION") {
+        this.chartData2[1].total += 1;
+
+      }
+      else if (this.assets[i].owning_access_group == "ES-D") {
+        this.chartData2[2].total += 1;
+
+      }
+      else if (this.assets[i].owning_access_group == "FLEET") {
+        this.chartData2[3].total += 1;
+
+      }
+      else if (this.assets[i].owning_access_group == "LAND") {
+        this.chartData2[4].total += 1;
+
+      }
+      else if (this.assets[i].owning_access_group == "NRW") {
+        this.chartData2[5].total += 1;
+
+      }
+      else if (this.assets[i].owning_access_group == "PD-N") {
+        this.chartData2[6].total += 1;
+
+      }
+      else if (this.assets[i].owning_access_group == "PD-S") {
+        this.chartData2[7].total += 1;
+
+      }
+      else if (this.assets[i].owning_access_group == "SCADA") {
+        this.chartData2[8].total += 1;
+
+      }
+      else if (this.assets[i].owning_access_group == "WQ") {
+        this.chartData2[9].total += 1;
+      }
+    }
+
+    console.log("chartdata2", this.chartData2)
+    this.initChartTwo();
 
   }
 
   //end Total Asset Registered
 
-  //chart department
+  // work activity statistic
 
-  workRequest: any;
+  workactivities = [];
+  workorderactivity: any;
 
-  getWorkRequest() {
-    this.workRequestService.get().subscribe((response) => {
-      this.workRequest = response;
-      console.log('work Request', this.workRequest);
+  workActivityStats = []
 
+  calcWorkActivityStatistic() {
 
+    let data = [
+      { title: "Completed", total: 0, today: 0, color: "bg-green", textcolor: "text-green", },
+      { title: "In Progress", total: 0, today: 0, color: "bg-yellow", textcolor: "text-yellow", },
+      { title: "Backlog", total: 0, today: 0, color: "bg-red", textcolor: "text-red", },
+      { title: "Total Generated", total: 0, today: 0, color: "bg-blue", textcolor: "text-blue", },
+    ];
 
-    }, (error) => {
-      console.log('Error is ', error)
-    })
+    for (let i in this.workorderactivity) {
+
+      if (this.workorderactivity[i].status == "Completed")
+        data[0].total += 1;
+      else if (this.workorderactivity[i].status == "InProgress")
+        data[1].total += 1;
+      else if (this.workorderactivity[i].status == "BackLog")
+        data[2].total += 1;
+    }
+    data[3].total = data[0].total + data[1].total + data[2].total
+
+    console.log("data",data)
+    this.workActivityStats = data;
+
+    
   }
 
+  //end work activity statistic
 
 
   // Map
@@ -458,36 +636,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   // Chart
   compareChart: am4charts.XYChart;
 
-  workActivityStats = [
-    {
-      title: "Completed",
-      total: 1450,
-      today: 35,
-      color: "bg-green",
-      textcolor: "text-green",
-    },
-    {
-      title: "In Progress",
-      total: 130,
-      today: 8,
-      color: "bg-yellow",
-      textcolor: "text-yellow",
-    },
-    {
-      title: "Backlog",
-      total: 16,
-      today: 70,
-      color: "bg-red",
-      textcolor: "text-red",
-    },
-    {
-      title: "Total Generated",
-      total: 1596,
-      today: 180,
-      color: "bg-blue",
-      textcolor: "text-blue",
-    },
-  ];
+
 
   centerDistricts = [
     {
@@ -559,7 +708,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private chartone: am4charts.XYChart;
   private charttwo: am4charts.XYChart;
 
-  
+
 
   private pieone: am4charts.PieChart;
   private pietwo: am4charts.PieChart;
@@ -576,8 +725,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     //new update
     this.getWorkOrderActivity();
     this.getAssets();
-    this.getAssetRegistered();
-    this.getWorkRequest();
+    // this.getAssetRegistered();
+    // this.getWorkRequest();
 
 
 
@@ -806,7 +955,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     bullet2.label.fill = am4core.color("#ffffff");
 
     this.compareChart.scrollbarX = new am4core.Scrollbar();
-    
+
   }
 
   addMarker() {
@@ -1414,53 +1563,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     let chart = am4core.create("chartdivone", am4charts.XYChart);
     chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
-    chart.data = [
-      {
-        category: "ES-D",
-        value1: 1033,
-        value2: 3428,
-      },
-      {
-        category: "DISTRIBUTION",
-        value1: 677,
-        value2: 3089,
-      },
-      {
-        category: "PD-N",
-        value1: 236,
-        value2: 2365,
-      },
-      {
-        category: "NRW",
-        value1: 831,
-        value2: 1894,
-      },
-      {
-        category: "PD-S",
-        value1: 52,
-        value2: 1077,
-      },
-      {
-        category: "FLEET",
-        value1: 314,
-        value2: 988,
-      },
-      {
-        category: "WQ",
-        value1: 70,
-        value2: 86,
-      },
-      {
-        category: "OTS",
-        value1: 2,
-        value2: 15,
-      },
-      {
-        category: "CBS",
-        value1: 0,
-        value2: 0,
-      },
-    ];
+    chart.data = this.chartData;
 
     chart.colors.step = 2;
     chart.padding(30, 30, 10, 30);
@@ -1523,205 +1626,55 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initChartTwo() {
+
+    am4core.useTheme(am4themes_animated);
+
+    // Create chart instance
     let chart = am4core.create("chartdivtwo", am4charts.XYChart);
 
-    // some extra padding for range labels
     chart.paddingBottom = 50;
 
     chart.cursor = new am4charts.XYCursor();
     chart.scrollbarX = new am4core.Scrollbar();
 
-    // will use this to store colors of the same items
-    let colors = {};
+    // Modify chart's colors
+    chart.colors.list = [
+      am4core.color("#809fd5"),
+    ];
+
+
+    // Add data
+    chart.data = this.chartData2
+
+    console.log("this.chartData 2", this.chartData2)
+    // Create axes
 
     let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "category";
-    categoryAxis.renderer.minGridDistance = 10;
+    categoryAxis.dataFields.category = "title";
     categoryAxis.renderer.grid.template.location = 0;
-    categoryAxis.dataItems.template.text = "{realName}";
-    categoryAxis.renderer.fontSize = "10";
-    // categoryAxis.adapter.add("tooltipText", function (tooltipText, target) {
-    // return categoryAxis.tooltipDataItem.dataContext.realName;
-    // });
+    categoryAxis.renderer.minGridDistance = 30;
+
+    categoryAxis.renderer.labels.template.adapter.add("dy", function (dy, target) {
+      if (target.dataItem && target.dataItem.index && 2 == 2) {
+        return dy + 25;
+      }
+      return dy;
+    });
 
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.tooltip.disabled = true;
-    valueAxis.min = 0;
 
-    // single column series for all data
-    let columnSeries = chart.series.push(new am4charts.ColumnSeries());
-    columnSeries.columns.template.width = am4core.percent(80);
-    columnSeries.tooltipText = "{provider}: {realName}, {valueY}";
-    columnSeries.dataFields.categoryX = "category";
-    columnSeries.dataFields.valueY = "value";
-    columnSeries.columns.template.fill = am4core.color("#809FD6");
-    columnSeries.columns.template.stroke = am4core.color("#809FD6");
+    // Create series
+    let series = chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.valueY = "total";
+    series.dataFields.categoryX = "title";
+    series.name = "Totals";
+    series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+    series.columns.template.fillOpacity = .8;
 
-    // second value axis for quantity
-    let valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis2.renderer.opposite = true;
-    valueAxis2.syncWithAxis = valueAxis;
-    valueAxis2.tooltip.disabled = true;
+    let columnTemplate = series.columns.template;
+    columnTemplate.strokeWidth = 2;
+    columnTemplate.strokeOpacity = 1;
 
-    // quantity line series
-    let lineSeries = chart.series.push(new am4charts.LineSeries());
-    lineSeries.tooltipText = "{valueY}";
-    lineSeries.dataFields.categoryX = "category";
-    lineSeries.dataFields.valueY = "quantity";
-    lineSeries.yAxis = valueAxis2;
-    lineSeries.bullets.push(new am4charts.CircleBullet());
-    lineSeries.stroke = chart.colors.getIndex(13);
-    lineSeries.fill = lineSeries.stroke;
-    lineSeries.strokeWidth = 2;
-    lineSeries.snapTooltip = true;
-
-    // when data validated, adjust location of data item based on count
-    /* lineSeries.events.on("datavalidated", function () {
-      lineSeries.dataItems.each(function (dataItem) {
-        // if count divides by two, location is 0 (on the grid)
-        if (
-          dataItem.dataContext.count / 2 ==
-          Math.round(dataItem.dataContext.count / 2)
-        ) {
-          dataItem.setLocation("categoryX", 0);
-        }
-        // otherwise location is 0.5 (middle)
-        else {
-          dataItem.setLocation("categoryX", 0.5);
-        }
-      });
-    }); */
-
-    // fill adapter, here we save color value to colors object so that each time the item has the same name, the same color is used
-    // columnSeries.columns.template.adapter.add("fill", function (fill, target) {
-    //   let name = target.dataItem.dataContext.realName;
-    //   if (!colors[name]) {
-    //     colors[name] = chart.colors.next();
-    //   }
-    //   target.stroke = colors[name];
-    //   return colors[name];
-    // });
-
-    let rangeTemplate = categoryAxis.axisRanges.template;
-    rangeTemplate.tick.disabled = false;
-    rangeTemplate.tick.location = 0;
-    rangeTemplate.tick.strokeOpacity = 0.6;
-    rangeTemplate.tick.length = 60;
-    rangeTemplate.grid.strokeOpacity = 0.5;
-    rangeTemplate.label.tooltip = new am4core.Tooltip();
-    rangeTemplate.label.tooltip.dy = -10;
-    rangeTemplate.label.cloneTooltip = false;
-
-    ///// DATA
-    let chartData = [];
-    let lineSeriesData = [];
-
-    let data = {
-      NRW: {
-        DMZ: 18829,
-        WBA: 709,
-        TRA: 2110,
-      },
-      PRODUCTION: {
-        NRO: 10402,
-        SRO: 7942,
-      },
-      "ES-DISTRIBUTION": {
-        PH: 16080,
-        VALVE: 2297,
-      },
-      DISTRIBUTION: {
-        RESVR: 10388,
-      },
-      OTS: {
-        INST: 7867,
-        EM: 345,
-      },
-      FLEET: {
-        FLEET: 1177,
-      },
-      "WATER QUALITY": {
-        LAB: 556,
-        RMS: 3,
-        ONLA: 40,
-        SPA: 1275,
-        SURV: 292,
-      },
-      CBS: {
-        AMR: 820,
-      },
-    };
-
-    // process data ant prepare it for the chart
-    for (var providerName in data) {
-      let providerData = data[providerName];
-
-      // add data of one provider to temp array
-      let tempArray = [];
-      let count = 0;
-      // add items
-      for (var itemName in providerData) {
-        if (itemName != "quantity") {
-          count++;
-          // we generate unique category for each column (providerName + "_" + itemName) and store realName
-          tempArray.push({
-            category: providerName + "_" + itemName,
-            realName: itemName,
-            value: providerData[itemName],
-            provider: providerName,
-          });
-        }
-      }
-      // sort temp array
-      tempArray.sort(function (a, b) {
-        if (a.value > b.value) {
-          return 1;
-        } else if (a.value < b.value) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-
-      // add quantity and count to middle data item (line series uses it)
-      let lineSeriesDataIndex = Math.floor(count / 2);
-      tempArray[lineSeriesDataIndex].quantity = providerData.quantity;
-      tempArray[lineSeriesDataIndex].count = count;
-      // push to the final data
-      am4core.array.each(tempArray, function (item) {
-        chartData.push(item);
-      });
-
-      // create range (the additional label at the bottom)
-      let range = categoryAxis.axisRanges.create();
-      range.category = tempArray[0].category;
-      range.endCategory = tempArray[tempArray.length - 1].category;
-      range.label.text = tempArray[0].provider;
-      range.label.dy = 30;
-      range.label.truncate = true;
-      range.label.fontWeight = "bold";
-      range.label.tooltipText = tempArray[0].provider;
-
-      // range.label.adapter.add("maxWidth", function (maxWidth, target) {
-      //   let range = target.dataItem;
-      //   let startPosition = categoryAxis.categoryToPosition(range.category, 0);
-      //   let endPosition = categoryAxis.categoryToPosition(range.endCategory, 1);
-      //   let startX = categoryAxis.positionToCoordinate(startPosition);
-      //   let endX = categoryAxis.positionToCoordinate(endPosition);
-      //   return endX - startX;
-      // });
-    }
-
-    chart.data = chartData;
-
-    // last tick
-    let range = categoryAxis.axisRanges.create();
-    range.category = chart.data[chart.data.length - 1].category;
-    range.label.disabled = true;
-    range.tick.location = 1;
-    range.grid.location = 1;
-
-    this.charttwo = chart;
   }
 
   initPieOne() {
