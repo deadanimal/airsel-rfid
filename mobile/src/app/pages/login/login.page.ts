@@ -26,6 +26,7 @@ import { WamsService } from "src/app/shared/services/wams/wams.service";
 export class LoginPage implements OnInit {
   // Form
   validations_form: FormGroup;
+  submit_form: FormGroup;
   validation_messages = {
     username: [
       { type: "required", message: "Username is required." },
@@ -52,6 +53,13 @@ export class LoginPage implements OnInit {
     },
   };
 
+  // set a default password for user create user account
+  // use this password to login to obtain token in our system
+  // were not using their input password to login to our system.
+  // their input password will only check at AD
+  // if exist in AD then login to our system using this below password and the input username
+  defaultPassword = 'air$elUs3r'
+
   constructor(
     public alertController: AlertController,
     public menu: MenuController,
@@ -72,6 +80,7 @@ export class LoginPage implements OnInit {
 
     this.validations_form = this.formBuilder.group({
       username: new FormControl(
+        // "mobileapps",
         // "haziq_y",
         // "fadhillah",
         "",
@@ -82,8 +91,11 @@ export class LoginPage implements OnInit {
         ])
       ),
       password: new FormControl(
-        // "5e1AIS04339",
+        // "M0bile@321",
+        // "air$elUs3r",
+        // this.defaultPassword,
         // "415F@dhill@h",
+        // "air$elUs3r",
         "",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),
@@ -100,7 +112,8 @@ export class LoginPage implements OnInit {
       password: this.validations_form.value.password,
     };
 
-    // // STEP 1
+    // // STEP 1 = 
+    ////// to check the credential exist in current database or not
     // this.authService
     //   .obtainToken(this.validations_form.value, this.isLogin)
     //   .subscribe(
@@ -114,53 +127,116 @@ export class LoginPage implements OnInit {
     //     },
     //     (err) => {
 
-    // Failed
-    // STEP 3
+    // // Failed
+    // // STEP 3
 
-    // console.error("err", err);
+    // // console.error("err", err);
+
+    /////// to check credential at wams 
     this.wamsService.getService(bodyAD).subscribe(
       (resAD) => {
-        console.log("resAD = ", resAD)
+
         console.log("sini 1")
+        console.log("resAD = ", resAD)
+        let staff_id = resAD['staff_no']
         // to find employee detail in table employee
+
+        ////// check respon status
         if (resAD.status == "valid") {
+
+          ///// get the employee data from the respon based on hr_employee_number
+          // this.employeeService
+          //   .filter("hr_employee_number=" + resAD.staff_no)
+          //   .subscribe(
+          //     (resEmp) => {
+
           this.employeeService
-            .filter("hr_employee_number=" + resAD.staff_no)
+            .filter("hr_employee_number=" + staff_id)
             .subscribe(
               (resEmp) => {
-                console.log("sini 2")
+
+                console.log("sini 2", resEmp)
+                console.log("resEmp[0].uuid", resEmp[0].uuid)
                 // to create user account in PIPE who AD is valid
                 // STEP 4
                 if (resEmp.length > 0) {
                   console.log("sini 3")
+
                   let bodyPIPE = {
                     username: this.validations_form.value.username,
                     email: resAD.email ? resAD.email : "",
-                    password1: this.validations_form.value.password,
-                    password2: this.validations_form.value.password,
+                    // email: '',
+                    password1: this.defaultPassword,
+                    password2: this.defaultPassword,
                   };
-                  console.log("bodyPIPE = ", bodyPIPE)
-                  this.authService.registerAccount(bodyPIPE).subscribe(
-                    (resPIPE) => {
 
-                      console.log("sini 4")
-                      if (resPIPE) {
+                  ////// check in table user whether the user exist or not
+                  this.userService.filter('employee_id=' + resEmp[0].uuid).subscribe(
+                    (resUserSer) => {
+                      console.log("resUserSer == ", resUserSer)
+                      // console.log("resUserSerid == ", resUserSer[0]['id'])
+
+                      //// if user not will create new user 
+                      if (resUserSer.length == 0) {
+                        console.log("acc not exist")
+
+                        console.log("bodyPIPE = ", bodyPIPE)
+                        this.authService.registerAccount(bodyPIPE).subscribe(
+                          (resPIPE) => {
+
+                            console.log("sini 4", resPIPE)
+
+                            if (resPIPE) {
+
+                              resAD["first_name"] = resAD.name;
+                              resAD["status"] = true;
+                              resAD["department"] = "";
+                              resAD["employee_id"] = resEmp[0].uuid;
+                              resAD["service_area"] = resAD.region;
+                              resAD["user_type"] = 'PL';
+
+                              this.userService
+                                .update(resAD, resPIPE.user.pk)
+                                .subscribe((resPIPE) => {
+                                  console.log("relogin => ", resPIPE)
+                                  this.retryLogin();
+
+                                });
+                            }
+                          },
+                          (err) => {
+                            console.error("err", err);
+                          }
+                        );
+
+                      } else { ////// if user exist will update the info
+                        console.log("acc exist")
+
                         resAD["first_name"] = resAD.name;
                         resAD["status"] = true;
                         resAD["department"] = "";
-                        resAD["employee_id"] = resEmp[0].uuid;
                         resAD["service_area"] = resAD.region;
+
+                        console.log("resUserSer['id']", resUserSer[0]['id'])
                         this.userService
-                          .update(resAD, resPIPE.user.pk)
-                          .subscribe((resPIPE) => {
-                            this.retryLogin();
-                          });
+                          .update(resAD, resUserSer[0]['id'])
+                          .subscribe(
+                            (resPIPE) => {
+                              console.log("relogin => ", resPIPE
+                              )
+                              this.retryLogin();
+
+                            });
                       }
+
+
                     },
-                    (err) => {
-                      console.error("err", err);
+                    (errUserSer) => {
+                      console.log("errUserSer", errUserSer)
                     }
-                  );
+                  )
+                } else {
+                  this.empNotExist()
                 }
               },
               (err) => {
@@ -169,6 +245,7 @@ export class LoginPage implements OnInit {
             );
         }
         else {
+          this.isLoading = false;
           this.userNotExist()
           //   // to create user account in PIPE who AD is invalid
           //   // STEP 5
@@ -193,12 +270,12 @@ export class LoginPage implements OnInit {
       }
     );
 
-    //   },
-    //   () => {
-    //     // After
-    //     // this.toastr.openToastr("Welcome back");
-    //   }
-    // );
+    // //   },
+    // //   () => {
+    // //     // After
+    // //     // this.toastr.openToastr("Welcome back");
+    // //   }
+    // // );
 
     /* if (
       this.loginForm.username == "technical" ||
@@ -230,8 +307,19 @@ export class LoginPage implements OnInit {
   }
 
   retryLogin() {
+
+    this.submit_form = this.formBuilder.group({
+      username: new FormControl(
+        this.validations_form.value.username,
+        // "",
+      ),
+      password: new FormControl(
+        this.defaultPassword,
+        // "",
+      ),
+    });
     this.authService
-      .obtainToken(this.validations_form.value, this.isLogin)
+      .obtainToken(this.submit_form.value, this.isLogin)
       .subscribe(
         (res) => {
           // Success
@@ -322,6 +410,16 @@ export class LoginPage implements OnInit {
     const alert = await this.alertController.create({
       header: "Wrong Credential",
       message: "You have entered wrong credentials. Please try again.",
+      buttons: ["OK"],
+    });
+
+    await alert.present();
+  }
+
+  async empNotExist() {
+    const alert = await this.alertController.create({
+      header: "Data Not Found",
+      message: "Employee not exist. Please try again.",
       buttons: ["OK"],
     });
 

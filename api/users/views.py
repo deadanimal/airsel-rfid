@@ -93,6 +93,7 @@ class CustomUserViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
         'user_type',
+        'employee_id','username','email',
         'is_active'
     ]
 

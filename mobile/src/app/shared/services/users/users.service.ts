@@ -16,7 +16,7 @@ export class UsersService {
   public umodels: UsersModel[] = [];
   public umodel: UsersModel;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   post(body: Form): Observable<UsersModel> {
     return this.http.post<any>(this.url, body).pipe(
@@ -47,6 +47,7 @@ export class UsersService {
 
   update(body, id: string): Observable<UsersModel> {
     let urlUpdate = this.url + id + "/";
+    console.log("urlUpdate", urlUpdate)
     return this.http.patch<UsersModel>(urlUpdate, body).pipe(
       tap((res) => {
         console.log("UsersModel", res);
@@ -64,6 +65,7 @@ export class UsersService {
 
   filter(field: string): Observable<UsersModel[]> {
     let urlFilter = this.url + "?" + field;
+    console.log("urlFilter", urlFilter)
     return this.http.get<UsersModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("UsersModel", res);
