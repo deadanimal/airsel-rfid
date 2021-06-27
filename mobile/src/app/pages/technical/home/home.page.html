@@ -111,7 +111,7 @@
               <ion-row class="ion-no-padding">
                 <ion-col class="ion-no-padding">
                   <ion-label class="ion-text-center">
-                    <p style="color: white">In Progress</p>
+                    <p style="color: white">Active</p>
                   </ion-label>
                 </ion-col>
 
@@ -228,7 +228,9 @@
         </ion-col>
 
         <ion-col>
-          <ion-card class="card-core ion-no-margin" mode="ios" (click)="openPage('/technical/asset-registration-list')">
+          <!-- <ion-card class="card-core ion-no-margin" mode="ios" (click)="openPage('/technical/asset-registration-list')"> -->
+          <ion-card class="card-core ion-no-margin" mode="ios"
+            (click)="alertWarning('Asset Registration','Coming Soon.')">
             <ion-card-content class="ion-no-padding">
               <img src="assets/svg/registration.svg" />
             </ion-card-content>

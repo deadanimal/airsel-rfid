@@ -72,6 +72,7 @@ def insert_into_work_order_activity(dict):
     crew_shift_id = dict['CREW_SHIFT_ID'] if 'CREW_SHIFT_ID' in dict else ""
     sched_duration = dict['SCHED_DURATION'] if 'SCHED_DURATION' in dict else ""
     break_in_dttm = dict['BREAK_IN_DTTM'] if 'BREAK_IN_DTTM' in dict else ""
+    work_category = dict['WORK_CATEGORY'] if 'WORK_CATEGORY' in dict else ""
 
     # for WorkActivityEmployee
     employee_id = dict['EMPLOYEE_ID'] if 'EMPLOYEE_ID' in dict else ""
@@ -141,7 +142,7 @@ def insert_into_work_order_activity(dict):
         "sched_duration": sched_duration,
         "break_in_dttm": break_in_dttm,
         "status": 'New',
-        "field_1": 'PREVENTIVE MAINTENANCE'
+        "field_1": work_category
     }
 
     dictionary_work_activity_employee = {
@@ -190,9 +191,19 @@ def insert_into_work_order_activity(dict):
         employee = Employee.objects.get(employee_id=employee_id)
         workorderactivitycompletion = WorkOrderActivityCompletion.objects.get(
             activityid=activityid)
-        workactivityemployee = WorkActivityEmployee.objects.create(
-            employee_id=employee, work_order_activity_completion_id=workorderactivitycompletion)
-        workactivityemployee.save()
+
+        check_wae = {
+            "employee_id": employee,
+            "work_order_activity_completion_id":workorderactivitycompletion
+        }
+
+        print(check_wae)
+        wae_exist = WorkActivityEmployee.objects.filter(**check_wae).exists()
+
+        if not wae_exist:
+            workactivityemployee = WorkActivityEmployee.objects.create(
+                employee_id=employee, work_order_activity_completion_id=workorderactivitycompletion)
+            workactivityemployee.save()
 
     ## check data make sure not empty
     if node_id != "" and asset_id != "":

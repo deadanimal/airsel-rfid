@@ -16,6 +16,7 @@ import { NotificationsService } from "src/app/shared/services/notifications/noti
 import { WorkRequestsService } from "src/app/shared/services/work-requests/work-requests.service";
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: "app-work-request-list",
@@ -46,7 +47,8 @@ export class WorkRequestListPage implements OnInit {
     public notificationService: NotificationsService,
     private workrequestService: WorkRequestsService,
     private assetService: AssetsService,
-    private wamsService: WamsService
+    private wamsService: WamsService,
+    private authService: AuthService
   ) { }
 
   private L(...args: any[]) {
@@ -61,12 +63,18 @@ export class WorkRequestListPage implements OnInit {
     broadcaster._debug = true;
     // this.onRegister2DBarcodeListener();
     // this.onRegisterRFIDListener();
+    this.getWorkRequest()
   }
 
   getWorkRequest() {
-    this.workrequestService.get().subscribe(
+    console.log("this.authService.userID", this.authService.userID)
+    let objUser = {
+      userid: this.authService.userID
+    }
+    console.log("objUser >>>>>>>>>> ", objUser)
+    this.workrequestService.desc_order_list(objUser).subscribe(
       (res) => {
-        // console.log("workrequest = ", res);
+        console.log("workrequest res = ", res);
         this.addGetBadgeNumber(res);
       },
       (err) => {
@@ -320,7 +328,9 @@ export class WorkRequestListPage implements OnInit {
         if (res) {
           this.presentAlert(
             "Success",
-            "Your work request have successfully approved."
+            // "Your work request have successfully approved."
+            // "Work request successfully submitted for approval."
+            "Your work request has been successfully submitted for approval"
           );
         }
         loading.dismiss();

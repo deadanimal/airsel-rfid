@@ -189,7 +189,10 @@ from operations.views import (
     PlannerViewSet,MaintenanceManagerViewSet,WorkRequestViewSet,MainOperationViewSet,FunctionViewSet,LocationTypeViewSet,
     SubFunctionViewSet,CostCenterViewSet,OperationViewSet,WorkActivityEmployeeViewSet,
     WorkOrderActivityCompletionAssetLocationAssetListInboundViewSet,
-    AssetLocationAssetListServiceHistoriesInboundViewSet
+    AssetLocationAssetListServiceHistoriesInboundViewSet,
+    WorkOrderActivityCompletionPipeViewSet,
+    OperationalReadingPipeViewSet,
+    WorkRequestPipeViewSet
 )
 
 service_history_router = router.register(
@@ -209,6 +212,9 @@ maintenance_manager_router = router.register(
 )
 work_request_router = router.register(
     'work-request', WorkRequestViewSet
+)
+work_requests_pipe_router = router.register(
+    'work-request-pipe', WorkRequestPipeViewSet
 )
 main_operation_router = router.register(
     'main-operation-organizations', MainOperationViewSet
@@ -250,6 +256,10 @@ operational_readings_router = router.register(
     'operational-readings', OperationalReadingViewSet
 )
 
+operational_readings_pipe_router = router.register(
+    'operational-readings-pipe', OperationalReadingPipeViewSet
+)
+
 work_orders_router = router.register(
     'work-orders', WorkOrderViewSet
 )
@@ -289,6 +299,10 @@ work_activity_employee_router = router.register(
 
 work_order_activity_completion_router = router.register(
     'work-order-activity-completion', WorkOrderActivityCompletionViewSet
+)
+
+work_order_activity_completion_pipe_router = router.register(
+    'work-order-activity-completion-pipe', WorkOrderActivityCompletionPipeViewSet
 )
 
 work_order_activity_completion_asset_location_asset_list_router = router.register(

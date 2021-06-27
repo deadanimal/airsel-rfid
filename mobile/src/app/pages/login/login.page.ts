@@ -83,6 +83,8 @@ export class LoginPage implements OnInit {
         // "mobileapps",
         // "haziq_y",
         // "fadhillah",
+        // "shafiq_ab",
+        // "mahadzir_nadzri",
         "",
         Validators.compose([
           Validators.required,
@@ -92,10 +94,10 @@ export class LoginPage implements OnInit {
       ),
       password: new FormControl(
         // "M0bile@321",
-        // "air$elUs3r",
-        // this.defaultPassword,
         // "415F@dhill@h",
-        // "air$elUs3r",
+        // "5e1AIS05163",
+        // "AIS03951++",
+        // "Ais1868@",
         "",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),

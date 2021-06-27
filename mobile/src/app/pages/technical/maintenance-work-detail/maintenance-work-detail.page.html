@@ -39,7 +39,12 @@
   <ion-card *ngFor="let workactivity of workactivitiesDatas">
     <ion-card-header>
       <ion-fab horizontal="end">
-        <ion-fab-button size="small" color="light" (click)="clickWorkActivity(workactivity)">
+        <ion-fab-button *ngIf="workactivity.record_by == null" size="small" color="light"
+          (click)="presentAlertConfirm(workactivity)">
+          <ion-icon name="build"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button *ngIf="workactivity.record_by != null" size="small" color="light"
+          (click)="clickWorkActivity(workactivity)">
           <ion-icon name="build"></ion-icon>
         </ion-fab-button>
       </ion-fab>

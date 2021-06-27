@@ -2,7 +2,7 @@ import csv
 import requests
 import json
 
-with open('asset_type-Sheet1.csv', mode='r', encoding='utf-8-sig') as csv_file:
+with open('asset_type.csv', mode='r', encoding='utf-8-sig') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     line_count = 0
     for row in csv_reader:

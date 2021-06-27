@@ -2,23 +2,15 @@
   <ion-toolbar mode="ios" class="ion-no-border toolbar-core">
     <ion-buttons slot="start">
       <ion-button (click)="clickBack()">
-        <ion-icon
-          src="../../../../assets/icon/air-selangor-icon.svg"
-          style="font-size: 2rem"
-        ></ion-icon>
+        <ion-icon src="../../../../assets/icon/air-selangor-icon.svg" style="font-size: 2rem"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title style="font-weight: bold"></ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotification()">
         <ion-icon slot="icon-only" name="notifications"></ion-icon>
-        <ion-badge
-          size="small"
-          color="danger"
-          style="position: absolute; right: -5px; top: 1px"
-        >
-          {{ notificationService.totalnotificationbyuser }}</ion-badge
-        >
+        <ion-badge size="small" color="danger" style="position: absolute; right: -5px; top: 1px">
+          {{ notificationService.totalnotificationbyuser }}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -56,87 +48,67 @@
       <img [src]="capturedSnapURL" />
     </ion-card> -->
 
-    <ion-list class="ion-padding line-input" style="padding-top: 50px">
+    <h4 class="ion-text-center ion-padding">Work Request</h4>
+    <ion-list class="ion-padding line-input">
       <form [formGroup]="workrequestFormGroup">
         <ion-item>
           <ion-label position="stacked">Badge No</ion-label>
-          <ion-input
-            type="text"
-            formControlName="badge_no"
-            readonly
-          ></ion-input>
+          <ion-input type="text" formControlName="badge_no" [disabled]='true' readonly></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Asset ID</ion-label>
-          <ion-input
-            type="text"
-            formControlName="asset_id"
-            readonly
-          ></ion-input>
+          <ion-input type="text" formControlName="asset_id" [disabled]='true' readonly></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Asset Description</ion-label>
-          <ion-textarea
-            rows="3"
-            formControlName="asset_description"
-            readonly
-          ></ion-textarea>
+          <ion-textarea rows="3" formControlName="asset_description" [disabled]='true' readonly></ion-textarea>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Asset Location</ion-label>
-          <ion-textarea
-            rows="3"
-            formControlName="location"
-            readonly
-          ></ion-textarea>
+          <ion-textarea rows="3" formControlName="location" [disabled]='true' readonly></ion-textarea>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Work Request Description</ion-label>
-          <ion-input type="text" formControlName="description"></ion-input>
+          <ion-input *ngIf="process != 'view'" type="text" formControlName="description"></ion-input>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="description" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked"
-            >Work Request Detail Description</ion-label
-          >
-          <ion-textarea
-            rows="3"
-            formControlName="long_description"
-          ></ion-textarea>
+          <ion-label position="stacked">Work Request Detail Description</ion-label>
+          <ion-textarea *ngIf="process != 'view'" rows="3" formControlName="long_description"></ion-textarea>
+          <ion-textarea *ngIf="process == 'view'" rows="3" [disabled]='true' formControlName="long_description">
+          </ion-textarea>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Required By Date</ion-label>
-          <ion-datetime
-            displayFormat="YYYY-MM-DD"
-            formControlName="required_by_date"
-          ></ion-datetime>
+          <ion-datetime *ngIf="process != 'view'" displayFormat="YYYY-MM-DD" formControlName="required_by_date">
+          </ion-datetime>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="required_by_date" [disabled]='true'
+            readonly></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Downtime Start Date Time</ion-label>
-          <ion-datetime
-            displayFormat="YYYY-MM-DD HH:mm"
-            formControlName="downtime_start"
-          >
+          <ion-datetime *ngIf="process != 'view'" displayFormat="YYYY-MM-DD HH:mm" formControlName="downtime_start">
           </ion-datetime>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="downtime_start" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Planner</ion-label>
-          <ionic-selectable
-            [items]="plannerData"
-            itemValueField="planner"
-            itemTextField="description"
-            [canSearch]="true"
-            formControlName="planner"
-            (onChange)="onChangePlanner($event)"
-          >
+          <ionic-selectable *ngIf="process != 'view'" [items]="plannerData" itemValueField="planner"
+            itemTextField="description" [canSearch]="true" formControlName="planner"
+            (onChange)="onChangePlanner($event)">
           </ionic-selectable>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="planner" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <!-- <ion-item>
@@ -154,37 +126,33 @@
 
         <ion-item>
           <ion-label position="stacked">Work Class</ion-label>
-          <ion-select
-            formControlName="work_class"
-            (ionChange)="onChangeWorkClass($event.target.value)"
-          >
+          <ion-select *ngIf="process != 'view'" formControlName="work_class"
+            (ionChange)="onChangeWorkClass($event.target.value)">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option
-              *ngFor="let wcd of workClassData"
-              [value]="wcd.name"
-            >
+            <ion-select-option *ngFor="let wcd of workClassData" [value]="wcd.name">
               {{wcd.name}}
             </ion-select-option>
           </ion-select>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="work_class" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <!-- capital -->
         <ion-item>
           <ion-label position="stacked">Work Category</ion-label>
-          <ion-select formControlName="work_category">
+          <ion-select *ngIf="process != 'view'" formControlName="work_category">
             <ion-select-option value="">Please select</ion-select-option>
-            <ion-select-option
-              *ngFor="let wcatd of workCategoryDataqwe"
-              [value]="wcatd.value"
-            >
+            <ion-select-option *ngFor="let wcatd of workCategoryDataqwe" [value]="wcatd.value">
               {{wcatd.description}}
             </ion-select-option>
           </ion-select>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="work_category" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Work Priority</ion-label>
-          <ion-select formControlName="work_priority">
+          <ion-select *ngIf="process != 'view'" formControlName="work_priority">
             <ion-select-option value="">Please select</ion-select-option>
             <ion-select-option value="01">01 - Low</ion-select-option>
             <ion-select-option value="02">02 - Low</ion-select-option>
@@ -196,20 +164,21 @@
             <ion-select-option value="08">08 - Very High</ion-select-option>
             <ion-select-option value="09">09 - Very High</ion-select-option>
           </ion-select>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="work_priority" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Requestor</ion-label>
-          <ion-input type="text" formControlName="requestor"></ion-input>
+          <ion-input *ngIf="process != 'view'" type="text" formControlName="requestor"></ion-input>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="requestor" [disabled]='true' readonly>
+          </ion-input>
+
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Owning Organization</ion-label>
-          <ion-input
-            type="text"
-            formControlName="owning_access_group"
-            readonly
-          ></ion-input>
+          <ion-input type="text" formControlName="owning_access_group" [disabled]='true' readonly></ion-input>
         </ion-item>
       </form>
     </ion-list>
@@ -227,38 +196,44 @@
       <form [formGroup]="workrequestFormGroup">
         <ion-item>
           <ion-label position="stacked">First Name</ion-label>
-          <ion-input type="text" formControlName="first_name"></ion-input>
+          <ion-input *ngIf="process != 'view'" type="text" formControlName="first_name"></ion-input>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="first_name" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Last Name</ion-label>
-          <ion-input type="text" formControlName="last_name"></ion-input>
+          <ion-input *ngIf="process != 'view'" type="text" formControlName="last_name"></ion-input>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="last_name" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Primary Phone</ion-label>
-          <ion-input type="tel" formControlName="primary_phone"></ion-input>
+          <ion-input *ngIf="process != 'view'" type="tel" formControlName="primary_phone"></ion-input>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="primary_phone" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Mobile Phone</ion-label>
-          <ion-input type="tel" formControlName="mobile_phone"></ion-input>
+          <ion-input *ngIf="process != 'view'" type="tel" formControlName="mobile_phone"></ion-input>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="mobile_phone" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Home Phone</ion-label>
-          <ion-input type="tel" formControlName="home_phone"></ion-input>
+          <ion-input *ngIf="process != 'view'" type="tel" formControlName="home_phone"></ion-input>
+          <ion-input *ngIf="process == 'view'" type="text" formControlName="home_phone" [disabled]='true' readonly>
+          </ion-input>
         </ion-item>
       </form>
     </ion-list>
 
     <div class="ion-text-center ion-padding">
-      <ion-button color="light" (click)="changeSegment('first')"
-        >Back</ion-button
-      >
-      <ion-button *ngIf="process != 'view'" (click)="submit()"
-        >Submit</ion-button
-      >
+      <ion-button color="light" (click)="changeSegment('first')">Back</ion-button>
+      <ion-button *ngIf="process != 'view'" (click)="submit()">Submit</ion-button>
     </div>
   </div>
 </ion-content>

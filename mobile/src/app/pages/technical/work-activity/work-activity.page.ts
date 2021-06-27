@@ -26,6 +26,7 @@ import { WorkOrderActivityCompletionAssLocAssListService } from "src/app/shared/
 import { WorkOrderActivityCompletionService } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
 import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: "app-work-activity",
@@ -65,7 +66,8 @@ export class WorkActivityPage implements OnInit {
     private ngZone: NgZone,
     private assetsService: AssetsService,
     private wamsService: WamsService,
-    private assetLocatioSyncService: AssetLocatioSyncService
+    private assetLocatioSyncService: AssetLocatioSyncService,
+    private authService: AuthService
   ) {
     this.workactivityFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -93,7 +95,9 @@ export class WorkActivityPage implements OnInit {
         console.log("this.workactivity['id']", this.workactivity['created_date'])
         if (this.workactivity['status'] == 'New') {
           let obj = {
-            status: 'InProgress'
+            status: 'InProgress',
+            record_by: this.authService.userID,
+            modified_by: this.authService.userID
           }
 
           this.workOrderActivityCompletionService.update(this.workactivity['id'], obj).subscribe(
@@ -292,7 +296,7 @@ export class WorkActivityPage implements OnInit {
     this.servicehistories.splice(index, 1);
   }
 
-  setButton = true
+  setButton = false
   buttonArr = []
   getWOrkActivityData(getdata) {
     let woacalalsh = []
@@ -312,14 +316,12 @@ export class WorkActivityPage implements OnInit {
       setTimeout(() => {
         this.workactivityData.forEach(element => {
           console.log("workactivityData=>>>", element)
+          console.log("reading_datetime=>>>", element.reading_datetime)
           let asset_id = "asset_id=" + element.asset_id
 
           /// set data to array for submit button
-          if (element.reading_datetime == null) {
+          if (element.reading_datetime != null || element.reading_datetime != '') {
             this.buttonArr.push(element)
-            if (this.buttonArr.length == 0) {
-              this.setButton = false
-            }
           }
 
           this.assetsService.filter(asset_id).subscribe(
@@ -340,6 +342,12 @@ export class WorkActivityPage implements OnInit {
             }
           )
         });
+
+        console.log("this.buttonArr", this.buttonArr.length)
+        if (this.buttonArr.length == 0) {
+          this.setButton = true
+        }
+
       }, 1000);
     });
   }
@@ -381,19 +389,23 @@ export class WorkActivityPage implements OnInit {
       submitted_datetime: this.getCurrentDateTime(),
     };
 
-    console.log("modified_date", woacassLocAssLisFormData);
-    if (this.buttonArr.length == 0) {
-      this.workOrderActivityCompletionService
-        .update(this.workactivity.id, woacassLocAssLisFormData)
-        .subscribe(
-          (res) => {
-            console.log("res = ", res);
+    console.log("this.workactivity.id>>>>>>>", this.workactivity.id)
+    console.log("woacassLocAssLisFormData>>>>>>>", woacassLocAssLisFormData);
 
-            this.presentAlert("Success", "Successfully update data.");
-          },
-          (err) => { }
-        );
-    }
+    // if (this.buttonArr.length == 0) {
+    this.workOrderActivityCompletionService
+      .update(this.workactivity.id, woacassLocAssLisFormData)
+      .subscribe(
+        (res) => {
+          console.log("res = ", res);
+
+          this.presentAlert("Success", "Successfully update data.");
+        },
+        (err) => {
+          console.log("workOrderActivityCompletionService err", err)
+        }
+      );
+    // }
   }
 
   async searchBadgeNo(asset) {

@@ -38,9 +38,11 @@ export class HomePage implements OnInit {
     private workactivityemployeeService: WorkActivityEmployeeService,
     private workOrderActivityCompletionService: WorkOrderActivityCompletionService
   ) {
+    console.log("this.authService>>", this.authService)
+    console.log("this.authService.userID", this.authService.userID)
     this.userService.getOne(this.authService.userID).subscribe(
       (res) => {
-        // if (res) console.log("res", res);
+        console.log("authService res", res)
       },
       (err) => {
         console.error("err", err);
@@ -48,54 +50,60 @@ export class HomePage implements OnInit {
     );
   }
 
+  userid = ''
   ionViewDidEnter() {
+    this.userid = this.authService.userID
+    console.log("this.authService.userID ionViewDidEnter", this.authService.userID)
     console.log("ionViewDidEnter HomePage");
 
     let woacArr: any[]
 
     // setInterval(() => {
 
-    this.workOrderActivityCompletionService.get().subscribe(
-      (res) => {
-        console.log("res", res);
+    // this.workOrderActivityCompletionService.get().subscribe(
+    let objUser = {
+      userid: this.authService.userID
+    }
+    this.workOrderActivityCompletionService.asc_ordered_list(objUser).subscribe((res) => {
+      console.log("res", res);
 
-        woacArr = res;
-        woacArr.forEach(element => {
+      woacArr = res;
+      woacArr.forEach(element => {
 
-          console.log("currentDate", this.getCurrentDateTime())
-          console.log("required_by_dt", element.required_by_dt)
+        console.log("currentDate", this.getCurrentDateTime())
+        console.log("required_by_dt", element.required_by_dt)
 
-          if (element.required_by_dt < this.getCurrentDateTime()) {
+        if (element.required_by_dt < this.getCurrentDateTime()) {
 
-            if (element['status'] != 'Completed' || element['status'] != 'BackLog') {
-              let obj = {
-                status: 'BackLog'
-              }
-              console.log("backlog")
-
-              element.status = 'BackLog'
-              this.workactivities.push(element)
-              // this.workactivities.push(element)
-
-              this.workOrderActivityCompletionService.update(element['id'], obj).subscribe(
-                (resUp) => {
-                  console.log("resUp", resUp)
-                }, (errUp) => {
-                  console.log("errUp", errUp)
-                }
-              )
-            } else {
-
-              console.log("completed")
-              this.workactivities.push(element)
-
+          if (element['status'] != 'Completed' || element['status'] != 'BackLog') {
+            let obj = {
+              status: 'BackLog'
             }
-          } else {
-            console.log("New")
+            console.log("backlog")
+
+            element.status = 'BackLog'
             this.workactivities.push(element)
+            // this.workactivities.push(element)
+
+            this.workOrderActivityCompletionService.update(element['id'], obj).subscribe(
+              (resUp) => {
+                console.log("resUp", resUp)
+              }, (errUp) => {
+                console.log("errUp", errUp)
+              }
+            )
+          } else {
+
+            console.log("completed")
+            this.workactivities.push(element)
+
           }
-        })
-      },
+        } else {
+          console.log("New")
+          this.workactivities.push(element)
+        }
+      })
+    },
       (err) => {
         console.error("err", err);
       }
@@ -144,7 +152,17 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.getWorkActivities()
+
+    console.log("this.authService.userID ngOnInit", this.authService.userID)
+    let objUser = {
+      userid: this.authService.userID
+    }
+    this.getWorkActivities(objUser)
+
+    setInterval(() => {
+      this.getWorkActivities(objUser)
+    }, 10000);
+
   }
 
   initializeItems() { }
@@ -161,9 +179,9 @@ export class HomePage implements OnInit {
   }
 
   workOrderActComp: any = []
-  getWorkActivities() {
+  getWorkActivities(objUser) {
 
-    this.workOrderActivityCompletionService.get().subscribe(
+    this.workOrderActivityCompletionService.asc_ordered_list(objUser).subscribe(
       (res) => {
         console.log("workOrderActivityCompletionService_res", res);
         this.workOrderActComp = res
@@ -289,5 +307,15 @@ export class HomePage implements OnInit {
   openNotification() {
     this.menu.enable(true, "menuNotification");
     this.menu.open("menuNotification");
+  }
+
+  async alertWarning(header, message) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['ok'],
+    });
+
+    await alert.present();
   }
 }

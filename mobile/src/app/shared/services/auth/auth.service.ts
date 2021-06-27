@@ -32,7 +32,7 @@ export class AuthService {
   public userID: string;
   public userType: string;
 
-  constructor(private jwtService: JwtService, private http: HttpClient) {}
+  constructor(private jwtService: JwtService, private http: HttpClient) { }
 
   registerAccount(body): Observable<any> {
     return this.http.post<any>(this.urlRegister, body).pipe(

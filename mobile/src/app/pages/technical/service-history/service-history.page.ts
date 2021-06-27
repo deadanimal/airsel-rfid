@@ -151,7 +151,7 @@ export class ServiceHistoryPage implements OnInit {
                     );
                 });
                 setTimeout(() => {
-                  // console.log("ServiceHistoryListAll >>== ", this.ServiceHistoryListAll)
+                  console.log("ServiceHistoryListAll >>== ", this.ServiceHistoryListAll)
                   console.log("serviceHistoryArray >>== ", this.serviceHistoryArray)
                   this.ServiceHistoryListAll.forEach(eleSerHis => {
                     console.log("eleSerHis.service_hist_type ==", eleSerHis)
@@ -179,6 +179,7 @@ export class ServiceHistoryPage implements OnInit {
   }
 
   serviceHistoryArray = []
+  listOfAllrequired = []
   getWorkOrderActComAssLocAssLis(workoacalal) {
     // console.log("workoacalalqwewqe", workoacalal)
 
@@ -186,12 +187,13 @@ export class ServiceHistoryPage implements OnInit {
       .getOne(workoacalal.id)
       .subscribe(
         (woacalalres) => {
-          // console.log("woacalalres === ", woacalalres)
+          console.log("woacalalres === ", woacalalres)
           this.workOrderActComAssLocAssLis = woacalalres
           woacalalres.service_histories.forEach(element => {
             this.assetLocationAssetListServiceHistoriesService.getOne(element).subscribe(
               (res) => {
-                // console.log("assetLocationAssetListServiceHistoriesService===", res)
+                console.log("assetLocationAssetListServiceHistoriesService===", res)
+                this.listOfAllrequired.push(res)
                 // console.log("assetLocationAssetListServiceHistoriesService===", res['service_history_type'])
 
                 if (res['service_history_type'] == 'Failure') {
@@ -205,7 +207,7 @@ export class ServiceHistoryPage implements OnInit {
                     this.serviceHistoryArray.push(res.service_history_type)
                   }
                 } else {
-                  if (res.question.length) {
+                  if (res.question.length > 0) {
                     this.serviceHistoryArray.push(res.service_history_type)
                   }
                 }
@@ -262,6 +264,7 @@ export class ServiceHistoryPage implements OnInit {
   failureComponentData = []
   selectedAssetType = ''
   selectedServiceHistory = ''
+  selectedServiceHistoryType = ''
 
   onChangeServiceHistory(event) {
 
@@ -285,6 +288,8 @@ export class ServiceHistoryPage implements OnInit {
     // console.log("assetType = ", assetType['service_hist_desc'])
     this.selectedServiceHistory = assetType['service_hist_desc']
     this.selectedAssetType = assetType['category']
+    this.selectedServiceHistoryType = assetType['service_hist_type']
+    console.log(this.selectedAssetType, "---", this.selectedServiceHistory)
     this.questionAndAnswerData = []
     if (assetType['category'] == "Failure") {
       this.questionAndAnswerDowntimeDiv = '0'
@@ -443,20 +448,50 @@ export class ServiceHistoryPage implements OnInit {
 
   clickSaveServiceHistory() {
 
+    let servHist = [];
     let servHistQues = [];
     let woacalalData = []
+    let alalshData = []
+    let idToBeUpdate = ''
 
-    if (this.workOrderActComAssLocAssLis.service_histories.length > 0) {
+    // if (this.workOrderActComAssLocAssLis.service_histories.length > 0) {
+    //   console.log("sana length = ", this.workOrderActComAssLocAssLis.service_histories.length)
+    //   this.workOrderActComAssLocAssLis.service_histories
+    //     .forEach(element => {
+    //       // this.AssLocAssLisArrId
+    //       woacalalData.push(element)
+    //     });
+    // } else {
+    //   console.log("sini length = ", this.workOrderActComAssLocAssLis.service_histories.length)
+    //   woacalalData = []
+    // }
+
+    if (this.listOfAllrequired.length > 0) {
       console.log("sana length = ", this.workOrderActComAssLocAssLis.service_histories.length)
-      this.workOrderActComAssLocAssLis.service_histories
-        .forEach(element => {
-          // this.AssLocAssLisArrId
-          woacalalData.push(element)
-        });
+      this.listOfAllrequired.forEach(element => {
+        // this.AssLocAssLisArrId
+        console.log("element==>>", element)
+
+        // // set for question_id
+        // servHistQues.push(element.id)
+
+        // set for service_history_id
+        woacalalData.push(element.id)
+
+        console.log(this.selectedServiceHistoryType, "==", element.service_history_type)
+        if (this.selectedServiceHistoryType == element.service_history_type) {
+          console.log('ada cok----->>>>>>')
+
+          // get ALALSH id to be update
+          idToBeUpdate = element.id
+        }
+      });
     } else {
       console.log("sini length = ", this.workOrderActComAssLocAssLis.service_histories.length)
       woacalalData = []
     }
+    console.log('idToBeUpdate>>>', idToBeUpdate)
+    console.log('servHistQues>>>', servHistQues)
 
     if (this.selectedAssetType == 'Failure') {
 
@@ -476,28 +511,53 @@ export class ServiceHistoryPage implements OnInit {
 
         console.log("assLocAssLisSerHisData = ", assLocAssLisSerHisData)
 
-        this.assetLocationAssetListServiceHistoriesService.post(assLocAssLisSerHisData).subscribe(
-          (res) => {
-            console.log("updatefailureformData = ", res)
+        if (idToBeUpdate == '') {
+          this.assetLocationAssetListServiceHistoriesService.post(assLocAssLisSerHisData).subscribe(
+            (res) => {
+              console.log("updatefailureformData = ", res)
 
-            woacalalData.push(res.id)
+              woacalalData.push(res.id)
 
-            let woacassLocAssLisFormData = {
-              service_histories: woacalalData
-            }
-
-            this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
-              (woacalalRes) => {
-                console.log("woacalalRes =", woacalalRes)
-                this.alertWorkActivityAsset('Work Activity', 'SuccessFully Save Data.')
-              }, (woacalalErr) => {
-                console.log(woacalalErr)
+              let woacassLocAssLisFormData = {
+                service_histories: woacalalData
               }
-            )
-          }, (err) => {
-            console.log(err)
-          }
-        )
+
+              this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
+                (woacalalRes) => {
+                  console.log("woacalalRes =", woacalalRes)
+                  this.alertWorkActivityAsset('Work Activity', 'SuccessFully Save Data.')
+                }, (woacalalErr) => {
+                  console.log(woacalalErr)
+                }
+              )
+            }, (err) => {
+              console.log(err)
+            }
+          )
+        } else {
+          this.assetLocationAssetListServiceHistoriesService.update(idToBeUpdate, assLocAssLisSerHisData).subscribe(
+            (res) => {
+              console.log("updatefailureformData = ", res)
+
+              // woacalalData.push(res.id)
+
+              // let woacassLocAssLisFormData = {
+              //   service_histories: woacalalData
+              // }
+
+              // this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
+              //   (woacalalRes) => {
+              //     console.log("woacalalRes =", woacalalRes)
+              this.alertWorkActivityAsset('Work Activity', 'SuccessFully Save Data.')
+              //   }, (woacalalErr) => {
+              //     console.log(woacalalErr)
+              //   }
+              // )
+            }, (err) => {
+              console.log(err)
+            }
+          )
+        }
       }
     } else if (this.selectedAssetType == 'Downtime') {
 
@@ -514,28 +574,55 @@ export class ServiceHistoryPage implements OnInit {
 
         console.log("assLocAssLisSerHisData = ", assLocAssLisSerHisData)
 
-        this.assetLocationAssetListServiceHistoriesService.post(assLocAssLisSerHisData).subscribe(
-          (res) => {
-            console.log("updatefailureformData = ", res)
+        if (idToBeUpdate == '') {
+          console.log("this is a new data ", idToBeUpdate)
+          this.assetLocationAssetListServiceHistoriesService.post(assLocAssLisSerHisData).subscribe(
+            (res) => {
+              console.log("updatefailureformData = ", res)
 
-            woacalalData.push(res.id)
+              woacalalData.push(res.id)
 
-            let woacassLocAssLisFormData = {
-              service_histories: woacalalData
-            }
-
-            this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
-              (woacalalRes) => {
-                console.log("woacalalRes =", woacalalRes)
-                this.alertWorkActivityAsset('Work Activity', 'SuccessFully Save Data.')
-              }, (woacalalErr) => {
-                console.log(woacalalErr)
+              let woacassLocAssLisFormData = {
+                service_histories: woacalalData
               }
-            )
-          }, (err) => {
-            console.log(err)
-          }
-        )
+
+              this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
+                (woacalalRes) => {
+                  console.log("woacalalRes =", woacalalRes)
+                  this.alertWorkActivityAsset('Work Activity', 'SuccessFully Save Data.')
+                }, (woacalalErr) => {
+                  console.log(woacalalErr)
+                }
+              )
+            }, (err) => {
+              console.log(err)
+            }
+          )
+        } else {
+          console.log("this is a existing data ", idToBeUpdate)
+          this.assetLocationAssetListServiceHistoriesService.update(idToBeUpdate, assLocAssLisSerHisData).subscribe(
+            (res) => {
+              console.log("updatefailureformData = ", res)
+
+              // woacalalData.push(res.id)
+
+              // let woacassLocAssLisFormData = {
+              //   service_histories: woacalalData
+              // }
+
+              // this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
+              //   (woacalalRes) => {
+              //     console.log("woacalalRes =", woacalalRes)
+              this.alertWorkActivityAsset('Work Activity', 'SuccessFully Save Data.')
+              //   }, (woacalalErr) => {
+              //     console.log(woacalalErr)
+              //   }
+              // )
+            }, (err) => {
+              console.log(err)
+            }
+          )
+        }
       }
     } else {
       if (this.questionAndAnswerData.length != this.updateformData.length) {
@@ -628,48 +715,80 @@ export class ServiceHistoryPage implements OnInit {
                           // downtime_reason: this.updateformData[x].question_seq,
                           question: servHistQues
                         }
+                        console.log("assLocAssLisSerHisData>><<<<><", assLocAssLisSerHisData)
+                        if (idToBeUpdate == '') {
+                          console.log(assLocAssLisSerHisData)
+                          this.assetLocationAssetListServiceHistoriesService.post(assLocAssLisSerHisData).subscribe(
+                            (alslshRes) => {
+                              console.log("alslshRes", alslshRes)
+                              console.log("alslshRes", alslshRes.id)
 
-                        console.log(assLocAssLisSerHisData)
-                        this.assetLocationAssetListServiceHistoriesService.post(assLocAssLisSerHisData).subscribe(
-                          (alslshRes) => {
-                            console.log("alslshRes", alslshRes)
+                              woacalalData.push(alslshRes.id)
 
-                            // console.log("siniiiiii length = ", this.workOrderActComAssLocAssLis)
-                            // if (this.workOrderActComAssLocAssLis.service_histories.length > 0) {
-                            //   console.log("sana length = ", this.workOrderActComAssLocAssLis.service_histories.length)
-                            //   this.workOrderActComAssLocAssLis.service_histories
-                            //     .forEach(element => {
-                            //       // this.AssLocAssLisArrId
-                            //       woacalalData.push(element)
-                            //     });
-                            // } else {
-                            //   console.log("sini length = ", this.workOrderActComAssLocAssLis.service_histories.length)
-                            //   woacalalData = []
-                            // }
-
-                            woacalalData.push(alslshRes.id)
-
-                            // let woacassLocAssLisDataFormData = new FormData();
-                            // woacassLocAssLisDataFormData.append('service_histories',woacalalData)
-                            let woacassLocAssLisFormData = {
-                              service_histories: woacalalData
-                            }
-
-                            this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
-                              (woacalalRes) => {
-                                console.log("woacalalRes =", woacalalRes)
-                                this.alertWorkActivityAsset('Work Activity', 'SuccessFully Save Data.')
-                                // this.presentAlertConfirm()
-                              }, (woacalalErr) => {
-                                console.log(woacalalErr)
+                              // let woacassLocAssLisDataFormData = new FormData();
+                              // woacassLocAssLisDataFormData.append('service_histories',woacalalData)
+                              let woacassLocAssLisFormData = {
+                                service_histories: woacalalData
                               }
-                            )
 
-                          }, (alslshErr) => {
-                            console.log("alslshErr", alslshErr)
-                          }, () => {
-                          }
-                        )
+                              this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
+                                (woacalalRes) => {
+                                  console.log("woacalalRes =", woacalalRes)
+                                  this.alertWorkActivityAsset('Work Activity', 'Your service history has been successfully updated.')
+                                  // this.presentAlertConfirm()
+                                }, (woacalalErr) => {
+                                  console.log(woacalalErr)
+                                }
+                              )
+
+                            }, (alslshErr) => {
+                              console.log("alslshErr", alslshErr)
+                            }, () => {
+                            }
+                          )
+                        } else {
+                          console.log(assLocAssLisSerHisData)
+                          this.assetLocationAssetListServiceHistoriesService.update(idToBeUpdate, assLocAssLisSerHisData).subscribe(
+                            (alslshRes) => {
+                              console.log("alslshRes", alslshRes)
+
+                              // console.log("siniiiiii length = ", this.workOrderActComAssLocAssLis)
+                              // if (this.workOrderActComAssLocAssLis.service_histories.length > 0) {
+                              //   console.log("sana length = ", this.workOrderActComAssLocAssLis.service_histories.length)
+                              //   this.workOrderActComAssLocAssLis.service_histories
+                              //     .forEach(element => {
+                              //       // this.AssLocAssLisArrId
+                              //       woacalalData.push(element)
+                              //     });
+                              // } else {
+                              //   console.log("sini length = ", this.workOrderActComAssLocAssLis.service_histories.length)
+                              //   woacalalData = []
+                              // }
+
+                              // woacalalData.push(alslshRes.id)
+
+                              // let woacassLocAssLisDataFormData = new FormData();
+                              // woacassLocAssLisDataFormData.append('service_histories',woacalalData)
+                              // let woacassLocAssLisFormData = {
+                              //   service_histories: woacalalData
+                              // }
+
+                              // this.workOrderActivityCompletionAssLocAssListService.update(this.servHist.id, woacassLocAssLisFormData).subscribe(
+                              //   (woacalalRes) => {
+                              //     console.log("woacalalRes =", woacalalRes)
+                              this.alertWorkActivityAsset('Work Activity', 'SuccessFully Save Data.')
+                              //     // this.presentAlertConfirm()
+                              //   }, (woacalalErr) => {
+                              //     console.log(woacalalErr)
+                              //   }
+                              // )
+
+                            }, (alslshErr) => {
+                              console.log("alslshErr", alslshErr)
+                            }, () => {
+                            }
+                          )
+                        }
                         // console.log("here 111111111111")
 
                       }
@@ -737,20 +856,21 @@ export class ServiceHistoryPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm!',
-      message: 'Are you sure to submit the answer ?',
+      message: 'Are sure want to complete the service history?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Yes',
+          handler: () => {
+            this.clickSaveServiceHistory()
+            console.log('Confirm Okay');
+          }
+        },
+        {
+          text: 'No',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            this.clickSaveServiceHistory()
-            console.log('Confirm Okay');
           }
         }
       ]

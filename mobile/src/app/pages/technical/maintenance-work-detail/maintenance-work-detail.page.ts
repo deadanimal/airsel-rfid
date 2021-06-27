@@ -16,6 +16,8 @@ import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
 
 @Component({
   selector: "app-maintenance-work-detail",
@@ -73,7 +75,9 @@ export class MaintenanceWorkDetailPage implements OnInit {
     private router: Router,
     public notificationService: NotificationsService,
     private assetLocatioSyncService: AssetLocatioSyncService,
-    private workactivityService: WorkActivitiesService
+    private workactivityService: WorkActivitiesService,
+    private authService: AuthService,
+    private workOrderActivityCompletionService: WorkOrderActivityCompletionService
   ) {
     this.workactivityFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -99,7 +103,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
             console.log("eleWorAct>>>", eleWorAct)
             this.workactivitiesDatas.push(eleWorAct)
 
-            eleWorAct.status = (eleWorAct.status == 'InProgress' ? 'In Progress' : eleWorAct.status)
+            eleWorAct.status = (eleWorAct.status == 'InProgress' ? 'Active' : (eleWorAct.status == 'BackLog' ? 'Backlog' : eleWorAct.status))
             this.statuses = eleWorAct.status
 
             this.assetLocatioSyncService.filter("node_id=" + eleWorAct.node_id_1).subscribe(
@@ -241,10 +245,47 @@ export class MaintenanceWorkDetailPage implements OnInit {
   }
 
   clickWorkActivity(work_activity) {
+    console.log("work_activity.id------>>>>", work_activity)
+    if (work_activity.record_by == null || work_activity.record_by == '') {
+      if (work_activity.status == 'New') {
+
+        let workOrderActivityFormGroup = {
+          status: "InProgress",
+          record_by: this.authService.userID,
+          modified_by: this.authService.userID
+        }
+        this.workOrderActivityCompletionService
+          .update(work_activity.id, workOrderActivityFormGroup)
+          .subscribe(
+            (res) => {
+              console.log("res", res);
+            },
+            (err) => {
+              console.error("err", err);
+            }
+          );
+      } else if (work_activity.status == 'Backlog') {
+
+        let workOrderActivityFormGroup = {
+          record_by: this.authService.userID,
+          modified_by: this.authService.userID
+        }
+        this.workOrderActivityCompletionService
+          .update(work_activity.id, workOrderActivityFormGroup)
+          .subscribe(
+            (res) => {
+              console.log("res", res);
+            },
+            (err) => {
+              console.error("err", err);
+            }
+          );
+      }
+    }
     if (work_activity.bo_status == "New") {
       this.workactivityFormGroup.patchValue({
         ...work_activity,
-        bo_status: "InProgress",
+        bo_status: "InProgress"
       });
       this.workactivityService
         .update(work_activity.id, this.workactivityFormGroup.value)
@@ -278,5 +319,32 @@ export class MaintenanceWorkDetailPage implements OnInit {
 
   clickBack() {
     this.router.navigate(["/technical/maintenance-work-list"]);
+  }
+
+  async presentAlertConfirm(workactivity) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Are you sure you want to proceed?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.clickWorkActivity(workactivity)
+            console.log('Confirm Okay');
+          }
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
