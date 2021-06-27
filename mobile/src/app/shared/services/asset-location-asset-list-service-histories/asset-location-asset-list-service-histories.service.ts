@@ -45,8 +45,9 @@ export class AssetLocationAssetListServiceHistoriesService {
     );
   }
 
-  update(body: Form): Observable<AssetLocationAssetListServiceHistoriesModel> {
-    return this.http.patch<AssetLocationAssetListServiceHistoriesModel>(this.url, body).pipe(
+  update(id, body): Observable<AssetLocationAssetListServiceHistoriesModel> {
+    let urlID = this.url + id + "/";
+    return this.http.patch<AssetLocationAssetListServiceHistoriesModel>(urlID, body).pipe(
       tap((res) => {
         console.log("AssetLocationAssetListServiceHistoriesModel", res);
       })

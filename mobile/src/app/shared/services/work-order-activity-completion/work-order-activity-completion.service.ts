@@ -10,7 +10,7 @@ import { WorkOrderActivityCompletionModel } from "./work-order-activity-completi
   providedIn: "root",
 })
 export class WorkOrderActivityCompletionService {
-  url: string = environment.baseUrl + "v1/work-order-activity-completion/";
+  url: string = environment.baseUrl + "v1/work-order-activity-completion-pipe/";
 
   // Data
   public wamodels: WorkOrderActivityCompletionModel[] = [];
@@ -77,6 +77,15 @@ export class WorkOrderActivityCompletionService {
     return this.http.post<any[]>(url, body).pipe(
       tap((res) => {
         // console.log("WorkOrderActivityCompletionModel", res);
+      })
+    );
+  }
+
+  asc_ordered_list(body): Observable<WorkOrderActivityCompletionModel[]> {
+    let urlOrdered = this.url + "asc_ordered_list/";
+    return this.http.post<any>(urlOrdered, body).pipe(
+      tap((res) => {
+        console.log("WorkOrderActivityCompletionModel", res);
       })
     );
   }

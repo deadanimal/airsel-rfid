@@ -27,17 +27,17 @@
 
       <ion-item>
         <ion-label position="stacked">Badge No</ion-label>
-        <ion-input type="text" [value]="asset_detail.badge_no" readonly></ion-input>
+        <ion-input type="text" [disabled]="true" [value]="asset_detail.badge_no" readonly></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Asset ID</ion-label>
-        <ion-input type="text" [value]="asset_detail.asset_id" readonly></ion-input>
+        <ion-input type="text" [disabled]="true" [value]="asset_detail.asset_id" readonly></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Asset Type</ion-label>
-        <ion-input type="text" readonly [value]="asset_detail.asset_type" readonly></ion-input>
+        <ion-input type="text" [disabled]="true" readonly [value]="asset_detail.asset_type" readonly></ion-input>
       </ion-item>
 
       <ion-item>
@@ -51,7 +51,7 @@
 
       <ion-item>
         <ion-label position="stacked">Asset Location</ion-label>
-        <ion-textarea rows="2" [value]="assetLocatioSyncdata" readonly></ion-textarea>
+        <ion-textarea rows="3" [disabled]="true" [value]="assetLocatioSyncdata" readonly></ion-textarea>
       </ion-item>
     </ion-list>
 

@@ -136,6 +136,8 @@ export class WorkRequestPage implements OnInit {
       int10_type: new FormControl(""),
       work_request_id: new FormControl(""),
       work_request_status: new FormControl(""),
+      record_by: new FormControl(this.authService.userID),
+      modified_by: new FormControl(this.authService.userID)
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -204,6 +206,19 @@ export class WorkRequestPage implements OnInit {
                   });
                 }
               });
+
+            let filterPlanner = "planner=" + this.workrequestFormGroup.value.planner
+            this.plannerService.filter(filterPlanner).subscribe(
+              (res) => {
+                console.log("plannerService", res)
+                this.workrequestFormGroup.patchValue({
+                  planner: res[0].description
+                });
+
+              }, (err) => {
+                console.log("err", err)
+              }
+            )
           }
         }
       }
@@ -431,6 +446,7 @@ export class WorkRequestPage implements OnInit {
       ),
       planner: this.plannerSelected,
     });
+
     console.log("workrequestFormGroup = ", this.workrequestFormGroup.value);
 
     this.loadingController
@@ -445,7 +461,8 @@ export class WorkRequestPage implements OnInit {
             loading.dismiss();
             this.alertWorkRequest(
               "Work Request",
-              "Your work request have successfully submitted into the system. Thank you.",
+              // "Your work request have successfully submitted into the system. Thank you.",
+              "Your work request has been successfully created. Please submit for approval",
               true
             );
           },

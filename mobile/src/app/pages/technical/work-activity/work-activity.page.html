@@ -64,8 +64,10 @@
             <ion-icon name="search"></ion-icon>
           </ion-fab-button>
 
-          <ion-fab-button *ngIf="workActData.reading_datetime != null" size="small" color="success">
-            <ion-icon name="checkmark-circle"></ion-icon>
+          <ion-fab-button *ngIf="workActData.reading_datetime != null" size="small" color="success"
+            (click)="clickViewAsset(workActData)">
+            <ion-icon name="search"></ion-icon>
+            <!-- <ion-icon name="checkmark-circle"></ion-icon> -->
           </ion-fab-button>
 
         </ion-fab>
@@ -124,7 +126,7 @@
     <div class="ion-text-center ion-padding">
       <ion-button color="light" (click)="clickBack()">Back</ion-button>
       <!-- <ion-button color="primary" (click)="close()">Close</ion-button> -->
-      <ion-button color="primary" [disabled]="setButton" (click)="submit()">Submit</ion-button>
+      <ion-button color="primary" [disabled]="setButton" (click)="submit()">Close Out</ion-button>
     </div>
   </div>
 </ion-content>

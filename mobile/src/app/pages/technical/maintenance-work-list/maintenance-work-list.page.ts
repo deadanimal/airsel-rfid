@@ -15,6 +15,7 @@ import { NotificationsService } from "src/app/shared/services/notifications/noti
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
 import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
+import { AuthService } from "src/app/shared/services/auth/auth.service";
 
 am4core.useTheme(am4themes_animated);
 
@@ -66,7 +67,8 @@ export class MaintenanceWorkListPage implements OnInit {
     public notificationService: NotificationsService,
     private workactivityService: WorkActivitiesService,
     private wamsService: WamsService,
-    private workOrderActivityCompletionService: WorkOrderActivityCompletionService
+    private workOrderActivityCompletionService: WorkOrderActivityCompletionService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() { }
@@ -117,7 +119,11 @@ export class MaintenanceWorkListPage implements OnInit {
     // PREVENTIVE MAINTENANCE -> PREVENTIVE MAINTENANCE,
     // UPGRADE -> REDESIGN
 
-    this.workOrderActivityCompletionService.get().subscribe(
+    console.log("this.authService.userID ngOnInit", this.authService.userID)
+    let obj = {
+      userid: this.authService.userID
+    }
+    this.workOrderActivityCompletionService.asc_ordered_list(obj).subscribe(
       (res) => {
         console.log("workOrderActivityCompletionService_res", res);
         // res.forEach(function(data_qq){

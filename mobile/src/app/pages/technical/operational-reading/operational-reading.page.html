@@ -23,29 +23,31 @@
       <form [formGroup]="operationalreadingFormGroup">
         <ion-item>
           <ion-label position="stacked">Asset Description</ion-label>
-          <ion-textarea rows="3" readonly formControlName="asset_description"></ion-textarea>
+          <ion-textarea rows="3" [disabled]="true" readonly formControlName="asset_description"></ion-textarea>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Badge Number</ion-label>
-          <ion-input type="text" readonly formControlName="badge_number"></ion-input>
+          <ion-input type="text" [disabled]="true" readonly formControlName="badge_number"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Location</ion-label>
-          <ion-textarea rows="3" readonly formControlName="location"></ion-textarea>
+          <ion-textarea rows="3" [disabled]="true" readonly formControlName="location"></ion-textarea>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Measurement Type</ion-label>
           <!-- <ion-input type="text" formControlName="measurent_type"></ion-input> -->
 
-          <ion-select formControlName="measurent_type">
+          <ion-select formControlName="measurent_type" *ngIf="showButton == 'yes'">
             <ion-select-option value="">Please select</ion-select-option>
             <ion-select-option *ngFor="let choice of MeasurementTypeData" [value]="choice.measurement_type">
               {{choice.measurement_type}}
             </ion-select-option>
           </ion-select>
+          <ion-input type="text" *ngIf="showButton == 'no'" [disabled]="true" readonly formControlName="measurent_type">
+          </ion-input>
           <!-- <ion-select formControlName="measurent_type">
             <ion-select-option selected value="RUNNING-HOUR">RUNNING HOUR</ion-select-option>
             <ion-select-option value="TEMPERATURE-SENSOR">TEMPERATURE SENSOR</ion-select-option>
@@ -61,7 +63,14 @@
 
         <ion-item>
           <ion-label position="stacked">Reading Date</ion-label>
-          <ion-datetime displayFormat="YYYY-MM-DD HH:mm:ss" formControlName="reading_datetime"></ion-datetime>
+          <ion-datetime *ngIf="showButton == 'yes'" displayFormat="YYYY-MM-DD HH:mm:ss"
+            formControlName="reading_datetime">
+          </ion-datetime>
+          <ion-datetime *ngIf="showButton == 'no'" [disabled]="true" displayFormat="YYYY-MM-DD HH:mm:ss"
+            formControlName="reading_datetime">
+          </ion-datetime>
+          <!-- <ion-input *ngIf="showButton == yes" type="text" [disabled]="true" readonly
+            formControlName="reading_datetime"></ion-input> -->
         </ion-item>
 
         <!-- <ion-item>
@@ -71,13 +80,16 @@
 
         <ion-item>
           <ion-label position="stacked">Current Value</ion-label>
-          <ion-input type="number" formControlName="current_value"></ion-input>
+          <ion-input *ngIf="showButton == 'yes'" type="number" formControlName="current_value"></ion-input>
+          <ion-input *ngIf="showButton == 'no'" type="number" [disabled]="true" readonly
+            formControlName="current_value">
+          </ion-input>
         </ion-item>
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="stacked">Initial Value</ion-label>
           <ion-input type="number" formControlName="initial_value_flag"></ion-input>
-        </ion-item>
+        </ion-item> -->
 
         <!-- <ion-item>
           <ion-label position="stacked">Owning Organization</ion-label>

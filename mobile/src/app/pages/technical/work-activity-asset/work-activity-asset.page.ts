@@ -83,8 +83,8 @@ export class WorkActivityAssetPage implements OnInit {
   worOrdActComAssLocAssLisNot: any = []
   serviceHistArr = []
   getAllData() {
-    this.workactivityasset = this.router.getCurrentNavigation().extras.state.asset;
 
+    this.workactivityasset = this.router.getCurrentNavigation().extras.state.asset;
     console.log("this.workactivityasset = ", this.workactivityasset)
 
     this.workactivityassetFormGroup.patchValue({
@@ -99,9 +99,10 @@ export class WorkActivityAssetPage implements OnInit {
     // this.buttonStatus = ''
     this.worOrdActComAssLocAssLisNot = []
     this.workOrdActComAssLocAssLisReq = []
+
+    let bstat = ''
     this.workactivityasset.service_histories.forEach(element => {
       // this.buttonStatus : Boolean
-      let bstat = ''
       this.assetLocationAssetListServiceHistoriesService.getOne(element).subscribe(
         (res) => {
           console.log("serviceHistoryQuestionService", res)
@@ -122,21 +123,27 @@ export class WorkActivityAssetPage implements OnInit {
           if (res.svc_hist_type_req_fl == 'W1YS') {
             this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
             if (res.service_history_type == "FAILURE") {
-              if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+              console.log("yyyyyyyyyyy")
+              if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
                 this.workOrdActComAssLocAssLisReq.push(res)
+                console.log("zzzzzzzzzzzzzzzzzzzzzz")
+                bstat = 'yes'
               }
             } else if (res.service_history_type == "DOWNTIME") {
-              if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
+              if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '') {
                 this.workOrdActComAssLocAssLisReq.push(res)
+                bstat = 'yes'
               }
             } else {
-              if (res.comments != '' && res.question != []) {
+              if (res.question.length > 0) {
                 this.workOrdActComAssLocAssLisReq.push(res)
+                console.log('res.question != []----<<<>>>', res.question.length)
+                bstat = 'yes'
               }
             }
           } else {
             if (res.service_history_type == "FAILURE") {
-              if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+              if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
                 this.worOrdActComAssLocAssLisNot.push(res)
               }
             } else if (res.service_history_type == "DOWNTIME") {
@@ -144,29 +151,28 @@ export class WorkActivityAssetPage implements OnInit {
                 this.worOrdActComAssLocAssLisNot.push(res)
               }
             } else {
-              if (res.comments != '' && res.question != []) {
+              if (res.question.length > 0) {
                 this.worOrdActComAssLocAssLisNot.push(res)
               }
             }
           }
 
-          bstat = 'no'
           if (res.service_history_type == "FAILURE") {
             if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
               this.workOrderActivityCompletionAssLocAssLisData.push(res)
-              bstat = 'yes'
+              // bstat = 'yes'
               this.serviceHistArr.push(res.service_history_type)
             }
           } else if (res.service_history_type == "DOWNTIME") {
             if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
               this.workOrderActivityCompletionAssLocAssLisData.push(res)
-              bstat = 'yes'
+              // bstat = 'yes'
               this.serviceHistArr.push(res.service_history_type)
             }
           } else {
-            if (res.comments != '' && res.question != []) {
+            if (res.question.length > 0) {
               this.workOrderActivityCompletionAssLocAssLisData.push(res)
-              bstat = 'yes'
+              // bstat = 'yes'
               this.serviceHistArr.push(res.service_history_type)
             }
           }
@@ -183,6 +189,10 @@ export class WorkActivityAssetPage implements OnInit {
         }
       )
     });
+
+    setTimeout(() => {
+      console.log("workOrdActComAssLocAssLisReq", this.workOrdActComAssLocAssLisReq)
+    }, 1000);
 
     // if (this.router.getCurrentNavigation().extras.state.badge_no) {
     let badge_no = this.router.getCurrentNavigation().extras.state
@@ -254,21 +264,27 @@ export class WorkActivityAssetPage implements OnInit {
               if (res.svc_hist_type_req_fl == 'W1YS') {
                 this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
                 if (res.service_history_type == "FAILURE") {
-                  if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+                  if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
                     this.workOrdActComAssLocAssLisReq.push(res)
+                    bstat = 'yes'
+                    this.buttonStatusArr.push(bstat)
                   }
                 } else if (res.service_history_type == "DOWNTIME") {
                   if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
                     this.workOrdActComAssLocAssLisReq.push(res)
+                    bstat = 'yes'
+                    this.buttonStatusArr.push(bstat)
                   }
                 } else {
-                  if (res.comments != '' && res.question != []) {
+                  if (res.question.length > 0) {
                     this.workOrdActComAssLocAssLisReq.push(res)
+                    bstat = 'yes'
+                    this.buttonStatusArr.push(bstat)
                   }
                 }
               } else {
                 if (res.service_history_type == "FAILURE") {
-                  if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+                  if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
                     this.worOrdActComAssLocAssLisNot.push(res)
                   }
                 } else if (res.service_history_type == "DOWNTIME") {
@@ -276,39 +292,43 @@ export class WorkActivityAssetPage implements OnInit {
                     this.worOrdActComAssLocAssLisNot.push(res)
                   }
                 } else {
-                  if (res.comments != '' && res.question != []) {
+                  if (res.question.length > 0) {
                     this.worOrdActComAssLocAssLisNot.push(res)
                   }
                 }
               }
 
-              bstat = 'no'
               if (res.service_history_type == "FAILURE") {
-                if (res.failure_type != '' && res.failure_mode != '' && res.failure_repair && res.failure_component != '' && res.comments != '') {
+                if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
                   this.workOrderActivityCompletionAssLocAssLisData.push(res)
-                  bstat = 'yes'
+                  // bstat = 'yes'
                   this.serviceHistArr.push(res.service_history_type)
                 }
               } else if (res.service_history_type == "DOWNTIME") {
                 if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
                   this.workOrderActivityCompletionAssLocAssLisData.push(res)
-                  bstat = 'yes'
+                  // bstat = 'yes'
                   this.serviceHistArr.push(res.service_history_type)
                 }
               } else {
-                if (res.comments != '' && res.question != []) {
+                if (res.question.length > 0) {
                   this.workOrderActivityCompletionAssLocAssLisData.push(res)
-                  bstat = 'yes'
+                  // bstat = 'yes'
                   this.serviceHistArr.push(res.service_history_type)
                 }
               }
-              this.buttonStatusArr.push(bstat)
-              console.log("this.buttonStatusArr = ", this.buttonStatusArr)
-              if (this.buttonStatusArr.indexOf('no') == -1) {
-                this.buttonStatus = false
-              } else {
+              console.log("this.buttonStatusArr.length = ", this.buttonStatusArr.length)
+              console.log("this.workOrderActivityCompletionAssLocAssLisDataReq.length = ", this.workOrderActivityCompletionAssLocAssLisDataReq.length)
+              if (this.workOrderActivityCompletionAssLocAssLisDataReq.length == this.buttonStatusArr.length) {
                 this.buttonStatus = true
+              } else {
+                this.buttonStatus = false
               }
+              // if (this.buttonStatusArr.indexOf('yes') == -1) {
+              //   this.buttonStatus = false
+              // } else {
+              //   this.buttonStatus = true
+              // }
 
             }, (err) => {
               console.log(err)
@@ -316,6 +336,7 @@ export class WorkActivityAssetPage implements OnInit {
           )
 
         })
+
         setTimeout(() => {
 
           let check = []
@@ -396,21 +417,21 @@ export class WorkActivityAssetPage implements OnInit {
 
         if (element.service_history_type == "FAILURE") {
           console.log("sini fail")
-          if (element.failure_type != '' && element.failure_mode != '' && element.failure_repair && element.failure_component != '' && element.comments != '') {
+          if (element.failure_type != '' && element.failure_root_cause != '' && element.failure_repair != '' && element.failure_mode != '' && element.failure_component != '') {
             check.push(element.service_history_type)
-            //   console.log('FAILURE')
+            console.log('FAILURE')
           }
         } else if (element.service_history_type == "DOWNTIME") {
           console.log("sini down")
           if (element.start_date_time != '' && element.start_date_time != '' && element.end_date_time != '' && element.downtime_reason != '' && element.comments != '') {
             check.push(element.service_history_type)
-            //   console.log('DOWNTIME')
+            console.log('DOWNTIME')
           }
         } else {
           console.log("sini else")
           if (element.question != []) {
             check.push(element.service_history_type)
-            //   console.log('else')
+            console.log('else')
           }
         }
       }
@@ -421,27 +442,27 @@ export class WorkActivityAssetPage implements OnInit {
     console.log("check==", check.length)
 
     console.log("modified_date", woacassLocAssLisFormData)
-    // if (check.length == this.workOrderActivityCompletionAssLocAssLisDataReq.length) {
-    //   this.workOrderActivityCompletionAssLocAssListService
-    //     .update(
-    //       this.workactivityasset.id,
-    //       woacassLocAssLisFormData
-    //     )
-    //     .subscribe(
-    //       (res) => {
-    //         console.log("workOrderActivityCompletionAssLocAssListService res", res);
-    //         // this.alertWorkActivityAsset(
-    //         //   "Work Activity",
-    //         //   "Your work activity have successfully submitted into the system. Thank you."
-    //         // );
-    //       },
-    //       (err) => {
-    //         console.error("err", err);
-    //       }
-    //     );
-    // } else {
-    //   this.alertWarning('Warning', 'Please answer all required service history')
-    // }
+    if (check.length == this.workOrderActivityCompletionAssLocAssLisDataReq.length) {
+      this.workOrderActivityCompletionAssLocAssListService
+        .update(
+          this.workactivityasset.id,
+          woacassLocAssLisFormData
+        )
+        .subscribe(
+          (res) => {
+            console.log("workOrderActivityCompletionAssLocAssListService res", res);
+            this.alertWorkActivityAsset(
+              "Work Activity",
+              "Your service history has been successfully updated into the system."
+            );
+          },
+          (err) => {
+            console.error("err", err);
+          }
+        );
+    } else {
+      this.alertWarning('Warning', 'Please answer all required service history')
+    }
   }
 
   async alertWorkActivityAsset(header, message) {
@@ -452,7 +473,7 @@ export class WorkActivityAssetPage implements OnInit {
         {
           text: "OK",
           handler: () => {
-            this.router.navigate(["/technical/maintenance-work-list"]);
+            this.router.navigate(["/technical/work-activity"]);
           },
         },
       ],
@@ -477,7 +498,7 @@ export class WorkActivityAssetPage implements OnInit {
   }
 
   clickBack() {
-    this.router.navigate(["/technical/maintenance-work-list"]);
+    this.router.navigate(["/technical/work-activity"]);
   }
 
   async clickAddServiceHistory(servicehistory) {

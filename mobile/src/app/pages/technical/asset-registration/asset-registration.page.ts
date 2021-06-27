@@ -227,6 +227,12 @@ export class AssetRegistrationPage implements OnInit {
     { desc: 'nanometers', value: 'nm' },
     { desc: 'Milliamperes', value: 'mA' },
     { desc: 'Pound per square inch', value: 'psi' },
+    { desc: "Ampere", value: 'amp' },
+    { desc: "Kilovolt Ampere", value: 'kva' },
+    { desc: "Hertz", value: 'hz' },
+    { desc: "Ampere", value: 'amp' },
+    { desc: "Ampere", value: 'amp' },
+    { desc: "Ampere", value: 'amp' },
   ]
 
   // asset attribute // 

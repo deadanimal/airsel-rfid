@@ -45,7 +45,7 @@ export class AssetDetailListPage implements OnInit {
         if (res[0].attached_to_asset_id == '') {
           this.assetLocatioSyncService.filter("node_id=" + this.assetregistrations[0].node_id).subscribe(
             (res) => {
-              // console.log("assetLocatioSyncServiceres", res);
+              console.log("assetLocatioSyncServiceres>>>", res);
               // this.assetregistrations = res;
               // this.assetLocatioSyncdata = res[0].description
               if (res.length > 0) {
