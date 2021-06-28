@@ -3,6 +3,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 
 import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
 import { AssetsService } from 'src/app/shared/services/assets/assets.service';
+import { WorkOrderActivityCompletionAssetLocationAssetListService } from 'src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.service';
 
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -11,6 +12,7 @@ import { formatDate } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { AssetsModel } from 'src/app/shared/services/assets/assets.model';
 import { WorkOrderActivityCompletionModel } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.model';
+import { WorkOrderActivityCompletionAssetLocationAssetListModel } from 'src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.model';
 
 am4core.useTheme(am4themes_animated);
 
@@ -26,12 +28,13 @@ export class AnalyticsWaComponent implements OnInit {
   constructor(
     private zone: NgZone,
     public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
-    public assetsService: AssetsService) { }
+    public assetsService: AssetsService,
+    public WOACALALS: WorkOrderActivityCompletionAssetLocationAssetListService) { }
 
   ngOnInit() {
 
-    this.getWorkOrderActivity();
-    // this.getAssets();
+    // this.getWorkOrderActivity();
+    this.getAssets();
   }
 
   assetowningdepartment = [
@@ -70,7 +73,7 @@ export class AnalyticsWaComponent implements OnInit {
 
       this.getTotalBackLog();
       this.getChartData();
-      this.initChartOne();
+      // this.initChartOne();
     }, (error) => {
       console.log('Error is ', error)
     })
@@ -142,84 +145,179 @@ export class AnalyticsWaComponent implements OnInit {
       { category: "WQ", value1: 0, value2: 0 },
     ];
 
-    for (let i in this.workOrderActivityCompletionService) {
+    let temp = this.WorkOrderActivity;
+    let temp2: any;
+    let temp3: any;
 
-      if (this.workOrderActivityCompletionService[i].owning_organization == "CBS") {
-        data[0].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[0].value2 += 1;
+    console.log("temp", temp)
+
+    for (let j in temp) {
+
+      console.log("id : ", temp[j].asset_location_asset_list[0])
+
+      this.WOACALALS.get().pipe(map(x => x.filter(i => i.id == temp[j].asset_location_asset_list[0]))).subscribe((response) => {
+        console.log('response from API is ', response);
+        temp2 = response;
+        console.log("temp2", temp2);
+
+        temp3 = this.assets.filter((value) => value.asset_id.includes(temp2[0].asset_id));
+
+        console.log("temp3", temp3);
+        console.log("owning org", temp3[0].owning_access_group);
+
+        if (temp3[0].owning_access_group == "CBS") {
+          data[0].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[0].value2 += 1;
+          }
         }
-      }
-      else if (this.workOrderActivityCompletionService[i].owning_organization == "DISTRIBUTION") {
-        data[1].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[1].value2 += 1;
+        else if (temp3[0].owning_access_group == "DISTRIBUTION") {
+          data[1].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[1].value2 += 1;
+          }
         }
-      }
-      else if (this.workOrderActivityCompletionService[i].owning_organization == "ES-D") {
-        data[2].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[2].value2 += 1;
+        else if (temp3[0].owning_access_group == "ES-D") {
+          data[2].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[2].value2 += 1;
+          }
         }
-      }
-      else if (this.workOrderActivityCompletionService[i].owning_organization == "FLEET") {
-        data[3].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[3].value2 += 1;
+        else if (temp3[0].owning_access_group == "FLEET") {
+          data[3].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[3].value2 += 1;
+          }
         }
-      }
-      else if (this.workOrderActivityCompletionService[i].owning_organization == "LAND") {
-        data[4].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[4].value2 += 1;
+        else if (temp3[0].owning_access_group == "LAND") {
+          data[4].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[4].value2 += 1;
+          }
         }
-      }
-      else if (this.workOrderActivityCompletionService[i].owning_organization == "NRW") {
-        data[5].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[5].value2 += 1;
+        else if (temp3[0].owning_access_group == "NRW") {
+          data[5].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[5].value2 += 1;
+          }
         }
-      }
-      else if (this.workOrderActivityCompletionService[i].owning_organization == "PD-N") {
-        data[6].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[6].value2 += 1;
+        else if (temp3[0].owning_access_group == "PD-N") {
+          data[6].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[6].value2 += 1;
+          }
         }
-      }
-      else if (this.workOrderActivityCompletionService[i].owning_organization == "PD-S") {
-        data[7].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[7].value2 += 1;
+        else if (temp3[0].owning_access_group == "PD-S") {
+          data[7].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[7].value2 += 1;
+          }
         }
-      }
-      else if (this.workOrderActivityCompletionService[i].owning_organization == "SCADA") {
-        data[8].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[8].value2 += 1;
+        else if (temp3[0].owning_access_group == "SCADA") {
+          data[8].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[8].value2 += 1;
+          }
         }
-      }
-      else if (this.workOrderActivityCompletionService[i].owning_organization == "WQ") {
-        data[9].value1 += 1;
-        if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-          data[9].value2 += 1;
+        else if (temp3[0].owning_access_group == "WQ") {
+          data[9].value1 += 1;
+          if (temp[j].status == "BackLog") {
+            data[9].value2 += 1;
+          }
         }
-      }
+
+        console.log("data", data);
+        this.chartData = data;
+        console.log("Chartdata", this.chartData);
+
+        this.initChartOne();
+
+      }, (error) => {
+        console.log('Error is ', error)
+      })
     }
-    console.log("data", data);
-    this.chartData = data;
+    // console.log("data", data);
+    // this.chartData = data;
+
+    // for (let i in this.workOrderActivityCompletionService) {
+
+    //   if (this.workOrderActivityCompletionService[i].owning_organization == "CBS") {
+    //     data[0].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[0].value2 += 1;
+    //     }
+    //   }
+    //   else if (this.workOrderActivityCompletionService[i].owning_organization == "DISTRIBUTION") {
+    //     data[1].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[1].value2 += 1;
+    //     }
+    //   }
+    //   else if (this.workOrderActivityCompletionService[i].owning_organization == "ES-D") {
+    //     data[2].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[2].value2 += 1;
+    //     }
+    //   }
+    //   else if (this.workOrderActivityCompletionService[i].owning_organization == "FLEET") {
+    //     data[3].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[3].value2 += 1;
+    //     }
+    //   }
+    //   else if (this.workOrderActivityCompletionService[i].owning_organization == "LAND") {
+    //     data[4].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[4].value2 += 1;
+    //     }
+    //   }
+    //   else if (this.workOrderActivityCompletionService[i].owning_organization == "NRW") {
+    //     data[5].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[5].value2 += 1;
+    //     }
+    //   }
+    //   else if (this.workOrderActivityCompletionService[i].owning_organization == "PD-N") {
+    //     data[6].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[6].value2 += 1;
+    //     }
+    //   }
+    //   else if (this.workOrderActivityCompletionService[i].owning_organization == "PD-S") {
+    //     data[7].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[7].value2 += 1;
+    //     }
+    //   }
+    //   else if (this.workOrderActivityCompletionService[i].owning_organization == "SCADA") {
+    //     data[8].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[8].value2 += 1;
+    //     }
+    //   }
+    //   else if (this.workOrderActivityCompletionService[i].owning_organization == "WQ") {
+    //     data[9].value1 += 1;
+    //     if (this.workOrderActivityCompletionService[i].status == "BackLog") {
+    //       data[9].value2 += 1;
+    //     }
+    //   }
+    // }
+
   }
 
-  // assets: any;
-  // getAssets() {
-  //   this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
-  //     console.log('response from API is ', response);
-  //     this.assets = response;
-  //     console.log('assets', this.assets);
+  assets: any;
+  getAssets() {
+    this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
+      console.log('response from API is ', response);
+      this.assets = response;
+      console.log('assets', this.assets);
 
-  //   }, (error) => {
-  //     console.log('Error is ', error)
-  //   })
-  // }
+      this.getWorkOrderActivity();
+
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
 
   asset_owning: any;
   selected_date: any;
@@ -254,9 +352,9 @@ export class AnalyticsWaComponent implements OnInit {
 
         temp = response;
         for (let i in temp) {
-          if (formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') >= formatDate(from, 'yyyy-MM-dd', 'en_US') && formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(to, 'yyyy-MM-dd', 'en_US')){
-            console.log("data"+i, formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US'));
-            
+          if (formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') >= formatDate(from, 'yyyy-MM-dd', 'en_US') && formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(to, 'yyyy-MM-dd', 'en_US')) {
+            console.log("data" + i, formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US'));
+
             temp2.push(temp[i])
 
           }
@@ -331,59 +429,64 @@ export class AnalyticsWaComponent implements OnInit {
     });
   }
 
+  // data = [
+  //   {
+  //     category: "ES-D",
+  //     value1: 1033,
+  //     value2: 3428,
+  //   },
+  //   {
+  //     category: "DISTRIBUTION",
+  //     value1: 677,
+  //     value2: 3089,
+  //   },
+  //   {
+  //     category: "PD-N",
+  //     value1: 236,
+  //     value2: 2365,
+  //   },
+  //   {
+  //     category: "NRW",
+  //     value1: 831,
+  //     value2: 1894,
+  //   },
+  //   {
+  //     category: "PD-S",
+  //     value1: 52,
+  //     value2: 1077,
+  //   },
+  //   {
+  //     category: "FLEET",
+  //     value1: 314,
+  //     value2: 988,
+  //   },
+  //   {
+  //     category: "WQ",
+  //     value1: 70,
+  //     value2: 86,
+  //   },
+  //   {
+  //     category: "OTS",
+  //     value1: 2,
+  //     value2: 15,
+  //   },
+  //   {
+  //     category: "CBS",
+  //     value1: 0,
+  //     value2: 0,
+  //   },
+  // ];
+
   initChartOne() {
+
     let chart = am4core.create("chartdivone", am4charts.XYChart);
     chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
-    // chart.data = [
-    //   {
-    //     category: "ES-D",
-    //     value1: 1033,
-    //     value2: 3428,
-    //   },
-    //   {
-    //     category: "DISTRIBUTION",
-    //     value1: 677,
-    //     value2: 3089,
-    //   },
-    //   {
-    //     category: "PD-N",
-    //     value1: 236,
-    //     value2: 2365,
-    //   },
-    //   {
-    //     category: "NRW",
-    //     value1: 831,
-    //     value2: 1894,
-    //   },
-    //   {
-    //     category: "PD-S",
-    //     value1: 52,
-    //     value2: 1077,
-    //   },
-    //   {
-    //     category: "FLEET",
-    //     value1: 314,
-    //     value2: 988,
-    //   },
-    //   {
-    //     category: "WQ",
-    //     value1: 70,
-    //     value2: 86,
-    //   },
-    //   {
-    //     category: "OTS",
-    //     value1: 2,
-    //     value2: 15,
-    //   },
-    //   {
-    //     category: "CBS",
-    //     value1: 0,
-    //     value2: 0,
-    //   },
-    // ];
+    // chart.data = this.data
 
     chart.data = this.chartData;
+
+    console.log("Chart Data2", chart.data)
 
 
     chart.colors.step = 2;
@@ -405,8 +508,8 @@ export class AnalyticsWaComponent implements OnInit {
 
     let series1 = chart.series.push(new am4charts.ColumnSeries());
     series1.columns.template.width = am4core.percent(80);
-    series1.columns.template.tooltipText =
-      "{name}: {valueX.totalPercent.formatNumber('#.00')}%";
+    series1.columns.template.tooltipText = "{name}: {valueX}";
+      // "{name}: {valueX.totalPercent.formatNumber('#.00')}%";
     series1.name = "Total Work Activity Generated";
     series1.dataFields.categoryY = "category";
     series1.dataFields.valueX = "value1";
@@ -424,8 +527,8 @@ export class AnalyticsWaComponent implements OnInit {
 
     let series2 = chart.series.push(new am4charts.ColumnSeries());
     series2.columns.template.width = am4core.percent(80);
-    series2.columns.template.tooltipText =
-      "{name}: {valueX.totalPercent.formatNumber('#.00')}%";
+    series2.columns.template.tooltipText = "{name}: {valueX}";
+      // "{name}: {valueX.totalPercent.formatNumber('#.00')}%";
     series2.name = "Numbers of Work Activity Backlog *";
     series2.dataFields.categoryY = "category";
     series2.dataFields.valueX = "value2";
