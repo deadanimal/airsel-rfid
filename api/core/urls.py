@@ -190,7 +190,7 @@ from operations.views import (
     SubFunctionViewSet,CostCenterViewSet,OperationViewSet,WorkActivityEmployeeViewSet,
     WorkOrderActivityCompletionAssetLocationAssetListInboundViewSet,
     AssetLocationAssetListServiceHistoriesInboundViewSet,
-    WorkOrderActivityCompletionPipeViewSet,
+    # WorkOrderActivityCompletionPipeViewSet,
     OperationalReadingPipeViewSet,
     WorkRequestPipeViewSet
 )
@@ -301,9 +301,9 @@ work_order_activity_completion_router = router.register(
     'work-order-activity-completion', WorkOrderActivityCompletionViewSet
 )
 
-work_order_activity_completion_pipe_router = router.register(
-    'work-order-activity-completion-pipe', WorkOrderActivityCompletionPipeViewSet
-)
+# work_order_activity_completion_pipe_router = router.register(
+#     'work-order-activity-completion-pipe', WorkOrderActivityCompletionPipeViewSet
+# )
 
 work_order_activity_completion_asset_location_asset_list_router = router.register(
     'work-order-activity-completion-asset-location-asset-list', WorkOrderActivityCompletionAssetLocationAssetListViewSet

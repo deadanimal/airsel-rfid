@@ -92,7 +92,7 @@ export class WorkActivityPage implements OnInit {
 
         console.log("this.workactivity = ", this.workactivity);
 
-        console.log("this.workactivity['id']", this.workactivity['created_date'])
+        console.log("this.workactivity['id']", this.workactivity['asset_location_asset_list'])
         if (this.workactivity['status'] == 'New') {
           let obj = {
             status: 'InProgress',
@@ -125,9 +125,18 @@ export class WorkActivityPage implements OnInit {
 
         // console.log("this.workactivity = ", this.workactivity['asset_location_asset_list']);
         // let getWOrkActivityData = this.workactivity['asset_location_asset_list']
-        this.getWOrkActivityData(
-          this.workactivity["asset_location_asset_list"]
-        );
+        this.workOrderActivityCompletionService.getOne(this.workactivity['id']).subscribe(
+          (resUp) => {
+            console.log("workOrderActivityCompletionService >>> ", resUp)
+
+            this.getWOrkActivityData(
+              resUp["asset_location_asset_list"]
+            );
+
+          }, (errUp) => {
+            console.log("workOrderActivityCompletionService err", errUp)
+          }
+        )
         // this.workactivity['asset_location_asset_list'].forEach(element => {
         //   console.log('element', element);
         // });
@@ -385,8 +394,8 @@ export class WorkActivityPage implements OnInit {
   submit() {
     let woacassLocAssLisFormData = {
       status: "InProgress",
-      completiondatetime: this.getCurrentDateTime(),
-      submitted_datetime: this.getCurrentDateTime(),
+      completiondatetime: new Date(),
+      submitted_datetime: new Date(),
     };
 
     console.log("this.workactivity.id>>>>>>>", this.workactivity.id)

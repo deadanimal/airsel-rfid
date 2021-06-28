@@ -510,8 +510,8 @@ class WorkOrderActivityCompletion(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
 
     # new filed added for user id
-    record_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_record_by', null=True,blank=True)
-    modified_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_modified_by', null=True,blank=True)
+    # record_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_record_by', null=True,blank=True)
+    # modified_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='%(app_label)s_%(class)s_modified_by', null=True,blank=True)
 
     class meta:
         ordering = ['-created_date']

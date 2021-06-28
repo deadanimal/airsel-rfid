@@ -109,6 +109,7 @@ export class MaintenanceWorkListPage implements OnInit {
     // this.createPieChartR();
   }
 
+
   getWorkActivities() {
     // From database
     // FLEET COMPLIANCE -> COMPLIANCE,
@@ -118,19 +119,26 @@ export class MaintenanceWorkListPage implements OnInit {
     // PREDICTIVE MAINTENANCE -> PREDICTIVE MAINTENANCE,
     // PREVENTIVE MAINTENANCE -> PREVENTIVE MAINTENANCE,
     // UPGRADE -> REDESIGN
-
+    let userId = this.authService.userID
     console.log("this.authService.userID ngOnInit", this.authService.userID)
     let obj = {
       userid: this.authService.userID
     }
+    let listWorkOrdActComp: any = []
     this.workOrderActivityCompletionService.asc_ordered_list(obj).subscribe(
       (res) => {
         console.log("workOrderActivityCompletionService_res", res);
-        // res.forEach(function(data_qq){
-
-        // })
+        res.forEach(function (data_qq) {
+          if (data_qq.field_2 == '' || data_qq.field_2 == userId) {
+            listWorkOrdActComp.push(data_qq)
+            console.log("if", data_qq.field_1)
+          } else {
+            console.log("else")
+          }
+        })
+        console.log("listWorkOrdActComp>>>>>>", listWorkOrdActComp)
         if (res) {
-          this.cmArray = res.filter(function (data) {
+          this.cmArray = listWorkOrdActComp.filter(function (data) {
             if (data.field_1
               .indexOf("CORRECTIVE MAINTENANCE") !== -1) {
               return true;
@@ -138,7 +146,7 @@ export class MaintenanceWorkListPage implements OnInit {
             return false;
           });
 
-          this.pmArray = res.filter(function (data) {
+          this.pmArray = listWorkOrdActComp.filter(function (data) {
             if (data.field_1
               .indexOf("PREVENTIVE MAINTENANCE") !== -1) {
               return true;
@@ -146,7 +154,7 @@ export class MaintenanceWorkListPage implements OnInit {
             return false;
           });
 
-          this.itcArray = res.filter(function (data) {
+          this.itcArray = listWorkOrdActComp.filter(function (data) {
             if (data.field_1
               .indexOf("INSTALLATION TESTING AND COM") !== -1) {
               return true;
@@ -154,7 +162,7 @@ export class MaintenanceWorkListPage implements OnInit {
             return false;
           });
 
-          this.pdmArray = res.filter(function (data) {
+          this.pdmArray = listWorkOrdActComp.filter(function (data) {
             console.log(data)
             console.log(data.field_1)
             if (data.field_1 == "PREDICTIVE MAINTENANCE") {
@@ -165,14 +173,14 @@ export class MaintenanceWorkListPage implements OnInit {
 
           console.log("this.pdmArray = ", this.pdmArray)
 
-          this.dArray = res.filter(function (data) {
+          this.dArray = listWorkOrdActComp.filter(function (data) {
             if (data.field_1 == "RETIRE") {
               return true;
             }
             return false;
           });
 
-          this.cArray = res.filter(function (data) {
+          this.cArray = listWorkOrdActComp.filter(function (data) {
             if (
               data.field_1 == "FLEET COMPLIANCE") {
               return true;
@@ -180,12 +188,9 @@ export class MaintenanceWorkListPage implements OnInit {
             return false;
           });
 
-          this.rArray = res.filter(function (data) {
+          this.rArray = listWorkOrdActComp.filter(function (data) {
             if (
-              data.field_1
-                .toLowerCase()
-                .indexOf("REDESIGN") !== -1
-            ) {
+              data.field_1 == "UPGRADE") {
               return true;
             }
             return false;
