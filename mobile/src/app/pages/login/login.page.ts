@@ -73,6 +73,7 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // window.location.reload();
     this.menu.enable(false, "menuNotification");
 
     // "username": "hafez_azman",

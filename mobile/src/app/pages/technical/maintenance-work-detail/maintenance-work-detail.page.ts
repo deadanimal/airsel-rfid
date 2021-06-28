@@ -62,6 +62,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
   workactivities = [];
   workactivitiesData: any[];
   workactivitiesDatas: any = [];
+  userIdLogIn = ''
 
   // FormGroup
   workactivityFormGroup: FormGroup;
@@ -79,6 +80,8 @@ export class MaintenanceWorkDetailPage implements OnInit {
     private authService: AuthService,
     private workOrderActivityCompletionService: WorkOrderActivityCompletionService
   ) {
+
+    this.userIdLogIn = this.authService.userID
     this.workactivityFormGroup = this.formBuilder.group({
       id: new FormControl(""),
       bo_status: new FormControl(""),
@@ -100,24 +103,32 @@ export class MaintenanceWorkDetailPage implements OnInit {
           console.log("this.status", this.status)
           console.log("eleWorAct.status", eleWorAct.status)
           if (eleWorAct.status == this.status) {
-            console.log("eleWorAct>>>", eleWorAct)
-            this.workactivitiesDatas.push(eleWorAct)
 
-            eleWorAct.status = (eleWorAct.status == 'InProgress' ? 'Active' : (eleWorAct.status == 'BackLog' ? 'Backlog' : eleWorAct.status))
-            this.statuses = eleWorAct.status
+            if (eleWorAct.field_2 == '' || eleWorAct.field_2 == this.authService.userID) {
+              console.log("eleWorAct>>>", eleWorAct)
+              this.workactivitiesDatas.push(eleWorAct)
 
-            this.assetLocatioSyncService.filter("node_id=" + eleWorAct.node_id_1).subscribe(
-              (res) => {
-                console.log("assetLocatioSyncServiceres", res);
-                // this.assetregistrations = res;
-                this.assetLocatioSyncdata = res[0].description
-                eleWorAct.assetLocatioSyncdata = res[0].description
-                // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
-              },
-              (err) => {
-                console.error("err", err);
-              }
-            );
+              eleWorAct.status = (eleWorAct.status == 'InProgress' ? 'Active' : (eleWorAct.status == 'BackLog' ? 'Backlog' : eleWorAct.status))
+              this.statuses = eleWorAct.status
+
+              this.assetLocatioSyncService.filter("node_id=" + eleWorAct.node_id_1).subscribe(
+                (res) => {
+                  console.log("assetLocatioSyncServiceres", res);
+                  // this.assetregistrations = res;
+                  if (res.length > 0) {
+                    this.assetLocatioSyncdata = res[0].description
+                    eleWorAct.assetLocatioSyncdata = res[0].description
+                    // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
+                  } else {
+                    this.assetLocatioSyncdata = '-'
+                    eleWorAct.assetLocatioSyncdata = '-'
+                  }
+                },
+                (err) => {
+                  console.error("err", err);
+                }
+              );
+            }
           }
         });
         // console.log("this.workactivities = ", this.workactivities)
@@ -246,38 +257,40 @@ export class MaintenanceWorkDetailPage implements OnInit {
 
   clickWorkActivity(work_activity) {
     console.log("work_activity.id------>>>>", work_activity)
-    if (work_activity.record_by == null || work_activity.record_by == '') {
+    if (work_activity.field_2 == '') {
+      console.log("masuk sini field_2", this.authService.userID)
       if (work_activity.status == 'New') {
-
+        console.log("status-----new----", this.authService.userID)
         let workOrderActivityFormGroup = {
           status: "InProgress",
-          record_by: this.authService.userID,
-          modified_by: this.authService.userID
+          field_2: this.authService.userID,
         }
+        console.log("workOrderActivityFormGroup >>>>>>> ", workOrderActivityFormGroup)
         this.workOrderActivityCompletionService
           .update(work_activity.id, workOrderActivityFormGroup)
           .subscribe(
             (res) => {
-              console.log("res", res);
+              console.log("workOrderActivityCompletionService--res", res);
             },
             (err) => {
-              console.error("err", err);
+              console.log("workOrderActivityCompletionService--err", err);
             }
           );
       } else if (work_activity.status == 'Backlog') {
-
+        console.log("qqqqqqqqqqq---------")
         let workOrderActivityFormGroup = {
-          record_by: this.authService.userID,
-          modified_by: this.authService.userID
+          field_2: this.authService.userID,
         }
+
+        console.log("workOrderActivityFormGroup >>>>>>> ", workOrderActivityFormGroup)
         this.workOrderActivityCompletionService
           .update(work_activity.id, workOrderActivityFormGroup)
           .subscribe(
             (res) => {
-              console.log("res", res);
+              console.log("workOrderActivityCompletionService--res", res);
             },
             (err) => {
-              console.error("err", err);
+              console.log("workOrderActivityCompletionService--err", err);
             }
           );
       }

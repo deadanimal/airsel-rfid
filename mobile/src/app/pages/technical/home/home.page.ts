@@ -70,8 +70,8 @@ export class HomePage implements OnInit {
       woacArr = res;
       woacArr.forEach(element => {
 
-        console.log("currentDate", this.getCurrentDateTime())
-        console.log("required_by_dt", element.required_by_dt)
+        // console.log("currentDate", this.getCurrentDateTime())
+        // console.log("required_by_dt", element.required_by_dt)
 
         if (element.required_by_dt < this.getCurrentDateTime()) {
 
@@ -79,7 +79,7 @@ export class HomePage implements OnInit {
             let obj = {
               status: 'BackLog'
             }
-            console.log("backlog")
+            // console.log("backlog")
 
             element.status = 'BackLog'
             this.workactivities.push(element)
@@ -87,9 +87,9 @@ export class HomePage implements OnInit {
 
             this.workOrderActivityCompletionService.update(element['id'], obj).subscribe(
               (resUp) => {
-                console.log("resUp", resUp)
+                // console.log("resUp", resUp)
               }, (errUp) => {
-                console.log("errUp", errUp)
+                // console.log("errUp", errUp)
               }
             )
           } else {
@@ -180,11 +180,23 @@ export class HomePage implements OnInit {
 
   workOrderActComp: any = []
   getWorkActivities(objUser) {
-
+    let array: any = []
+    let userId = this.authService.userID
+    console.log("userId >>>>>>>>>", userId)
     this.workOrderActivityCompletionService.asc_ordered_list(objUser).subscribe(
       (res) => {
         console.log("workOrderActivityCompletionService_res", res);
-        this.workOrderActComp = res
+        res.forEach(function (data_) {
+          console.log("data_.field_2", data_.field_2)
+          if (data_.field_2 == '' || data_.field_2 == userId) {
+            console.log('if')
+            array.push(data_)
+          } else {
+            console.log('else')
+          }
+        })
+        this.workOrderActComp = array
+        // this.workOrderActComp = res
       },
       (err) => {
         console.error("err", err);
@@ -231,6 +243,7 @@ export class HomePage implements OnInit {
   }
 
   calculateStatus(array, status) {
+    // console.log("calculateStatus array>>>", array)
     // console.log("temparray=====", array)
     // console.log("status=====", status)
     // let count = 0;

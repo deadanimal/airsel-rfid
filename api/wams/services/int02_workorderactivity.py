@@ -76,7 +76,7 @@ def insert_into_work_order_activity(dict):
 
     # for WorkActivityEmployee
     employee_id = dict['EMPLOYEE_ID'] if 'EMPLOYEE_ID' in dict else ""
-
+    print('employee_id === ',employee_id)
     # for WorkOrderActivityCompletionAssetLocationAssetList
     node_id = dict['NODE_ID'] if 'NODE_ID' in dict else ""
     asset_id = dict['ASSET_ID'] if 'ASSET_ID' in dict else ""
@@ -179,7 +179,7 @@ def insert_into_work_order_activity(dict):
 
         woac_data = WorkOrderActivityCompletion.objects.get(activityid=dict['ACT_ID'])
         woac_id = woac_data.id
-        print(woac_id)
+        print("ooooo ",woac_id)
 
         # field_object = WorkOrderActivityCompletion._meta.get_field(id)
         # woac_id = field_object.value_from_object(workorderactivitycompletion)
@@ -187,7 +187,9 @@ def insert_into_work_order_activity(dict):
         # print('sssssssssssssssss',woac_id)
 
     # WorkActivityEmployee operation
+    print("------------------------------",employee_id)
     if employee_id != "":
+        print("ttttttttttttttttttttttttttt",employee_id)
         employee = Employee.objects.get(employee_id=employee_id)
         workorderactivitycompletion = WorkOrderActivityCompletion.objects.get(
             activityid=activityid)
@@ -287,8 +289,8 @@ def insert_into_work_order_activity(dict):
         ## check if exist in asset location asset list service history inbound for asset_id, activity_id, service_history_type
         check_alalsh = {
             "asset_id": asset_id,
-            # "activityid":activityid,
-            # "service_history_type":service_history_type
+            "activityid":activityid,
+            "service_history_type":service_history_type
         }
         alalshi_exist = AssetLocationAssetListServiceHistoriesInbound.objects.filter(**check_alalsh).exists()
         print("alalshi_exist = ",alalshi_exist)
@@ -342,42 +344,42 @@ def insert_into_work_order_activity(dict):
         
         print(fill_the_data)
         print(svc_hist_type_req_fl)
-        # if not alalshi_exist:
-        if fill_the_data == "yes" and svc_hist_type_req_fl == "W1YS":
-            # if svc_hist_type_req_fl == "W1YS":
+        if not alalshi_exist:
+            if fill_the_data == "yes" and svc_hist_type_req_fl == "W1YS":
+                # if svc_hist_type_req_fl == "W1YS":
 
-            print('alalsh = ',alalsh)
+                print('alalsh = ',alalsh)
 
-            ### need to add more checking for to make sure there is only one data to enter ( woacalal_table.service_histories.add(alalsh) )
-            
-            # new_woacalal_count = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(asset_id=asset_id).count()
-            # print("new_woacalal_count",new_woacalal_count)
-
-            # if new_woacalal_count == 1:
-
-                # if queryset is None :
-
-            woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(node_id=node_id,asset_id=asset_id)
-            print("tttttttttttttttttt = ",woacalal_table)
-            woacalal_table.service_histories.add(alalsh)
+                ### need to add more checking for to make sure there is only one data to enter ( woacalal_table.service_histories.add(alalsh) )
                 
-            # else :
+                # new_woacalal_count = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(asset_id=asset_id).count()
+                # print("new_woacalal_count",new_woacalal_count)
 
-            #     print("woac_id",woac_id)
-            #     # woac_data = WorkOrderActivityCompletion.objects.filter(id=woac_id).values()
-            #     queryset = WorkOrderActivityCompletion.objects.filter(id=woac_id).values_list('asset_location_asset_list', flat=True)
-            #     print("queryset=====================",queryset)
+                # if new_woacalal_count == 1:
 
-            #     print('xxxxxxxxxxxxx')
-            #     woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(node_id=node_id,asset_id=asset_id).values_list('id', flat=True)
-            #     print("uuuuuuuuuuuuuuuuuuu = ",woacalal_table)
-            #     for line in woacalal_table:
-            #         print(line)
-            #         if line in queryset : 
-            #             print('exist',line)
-            #             woacalal_data = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(id=line)
-            #             print(woacalal_data)
-            #             woacalal_data.service_histories.add(alalsh)
+                    # if queryset is None :
+
+                woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(node_id=node_id,asset_id=asset_id)
+                print("tttttttttttttttttt = ",woacalal_table)
+                woacalal_table.service_histories.add(alalsh)
+                    
+                # else :
+
+                #     print("woac_id",woac_id)
+                #     # woac_data = WorkOrderActivityCompletion.objects.filter(id=woac_id).values()
+                #     queryset = WorkOrderActivityCompletion.objects.filter(id=woac_id).values_list('asset_location_asset_list', flat=True)
+                #     print("queryset=====================",queryset)
+
+                #     print('xxxxxxxxxxxxx')
+                #     woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(node_id=node_id,asset_id=asset_id).values_list('id', flat=True)
+                #     print("uuuuuuuuuuuuuuuuuuu = ",woacalal_table)
+                #     for line in woacalal_table:
+                #         print(line)
+                #         if line in queryset : 
+                #             print('exist',line)
+                #             woacalal_data = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(id=line)
+                #             print(woacalal_data)
+                #             woacalal_data.service_histories.add(alalsh)
 
 
 

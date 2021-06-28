@@ -10,7 +10,7 @@ import { WorkOrderActivityCompletionModel } from "./work-order-activity-completi
   providedIn: "root",
 })
 export class WorkOrderActivityCompletionService {
-  url: string = environment.baseUrl + "v1/work-order-activity-completion-pipe/";
+  url: string = environment.baseUrl + "v1/work-order-activity-completion/";
 
   // Data
   public wamodels: WorkOrderActivityCompletionModel[] = [];

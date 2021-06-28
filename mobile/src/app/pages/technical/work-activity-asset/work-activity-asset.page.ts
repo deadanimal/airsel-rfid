@@ -82,6 +82,7 @@ export class WorkActivityAssetPage implements OnInit {
   workOrdActComAssLocAssLisReq: any = []
   worOrdActComAssLocAssLisNot: any = []
   serviceHistArr = []
+  buttonDisable: boolean
   getAllData() {
 
     this.workactivityasset = this.router.getCurrentNavigation().extras.state.asset;
@@ -124,7 +125,7 @@ export class WorkActivityAssetPage implements OnInit {
             this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
             if (res.service_history_type == "FAILURE") {
               console.log("yyyyyyyyyyy")
-              if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
+              if (res.failure_type != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
                 this.workOrdActComAssLocAssLisReq.push(res)
                 console.log("zzzzzzzzzzzzzzzzzzzzzz")
                 bstat = 'yes'
@@ -142,19 +143,19 @@ export class WorkActivityAssetPage implements OnInit {
               }
             }
           } else {
-            if (res.service_history_type == "FAILURE") {
-              if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
-                this.worOrdActComAssLocAssLisNot.push(res)
-              }
-            } else if (res.service_history_type == "DOWNTIME") {
-              if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
-                this.worOrdActComAssLocAssLisNot.push(res)
-              }
-            } else {
-              if (res.question.length > 0) {
-                this.worOrdActComAssLocAssLisNot.push(res)
-              }
-            }
+            // if (res.service_history_type == "FAILURE") {
+            // if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
+            this.worOrdActComAssLocAssLisNot.push(res)
+            // }
+            // } else if (res.service_history_type == "DOWNTIME") {
+            //   if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
+            //     this.worOrdActComAssLocAssLisNot.push(res)
+            //   }
+            // } else {
+            //   if (res.question.length > 0) {
+            //     this.worOrdActComAssLocAssLisNot.push(res)
+            //   }
+            // }
           }
 
           if (res.service_history_type == "FAILURE") {
@@ -191,6 +192,11 @@ export class WorkActivityAssetPage implements OnInit {
     });
 
     setTimeout(() => {
+      if (this.workOrdActComAssLocAssLisReq.length == this.workOrderActivityCompletionAssLocAssLisDataReq.length) {
+        this.buttonDisable = false
+      } else {
+        this.buttonDisable = true
+      }
       console.log("workOrdActComAssLocAssLisReq", this.workOrdActComAssLocAssLisReq)
     }, 1000);
 
@@ -264,7 +270,7 @@ export class WorkActivityAssetPage implements OnInit {
               if (res.svc_hist_type_req_fl == 'W1YS') {
                 this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
                 if (res.service_history_type == "FAILURE") {
-                  if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
+                  if (res.failure_type != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
                     this.workOrdActComAssLocAssLisReq.push(res)
                     bstat = 'yes'
                     this.buttonStatusArr.push(bstat)
@@ -283,19 +289,19 @@ export class WorkActivityAssetPage implements OnInit {
                   }
                 }
               } else {
-                if (res.service_history_type == "FAILURE") {
-                  if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
-                    this.worOrdActComAssLocAssLisNot.push(res)
-                  }
-                } else if (res.service_history_type == "DOWNTIME") {
-                  if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
-                    this.worOrdActComAssLocAssLisNot.push(res)
-                  }
-                } else {
-                  if (res.question.length > 0) {
-                    this.worOrdActComAssLocAssLisNot.push(res)
-                  }
-                }
+                // if (res.service_history_type == "FAILURE") {
+                //   if (res.failure_type != '' && res.failure_root_cause != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
+                this.worOrdActComAssLocAssLisNot.push(res)
+                //   }
+                // } else if (res.service_history_type == "DOWNTIME") {
+                //   if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '' && res.comments != '') {
+                //     this.worOrdActComAssLocAssLisNot.push(res)
+                //   }
+                // } else {
+                //   if (res.question.length > 0) {
+                //     this.worOrdActComAssLocAssLisNot.push(res)
+                //   }
+                // }
               }
 
               if (res.service_history_type == "FAILURE") {
@@ -338,13 +344,18 @@ export class WorkActivityAssetPage implements OnInit {
         })
 
         setTimeout(() => {
+          if (this.workOrdActComAssLocAssLisReq.length == this.workOrderActivityCompletionAssLocAssLisDataReq.length) {
+            this.buttonDisable = false
+          } else {
+            this.buttonDisable = true
+          }
+          console.log("workOrdActComAssLocAssLisReq", this.workOrdActComAssLocAssLisReq)
+        }, 1000);
+        setTimeout(() => {
 
           let check = []
           let stat = ''
-          console.log("buttonArray", buttonArray)
-          console.log("this.workOrderActivityCompletionAssLocAssLisDataReq", buttonArrayReq)
           buttonArrayReq.forEach(elemButt => {
-            console.log("elemButt", elemButt)
             if (buttonArray.indexOf(elemButt) == -1) {
               check.push('yes')
             } else {
@@ -442,27 +453,27 @@ export class WorkActivityAssetPage implements OnInit {
     console.log("check==", check.length)
 
     console.log("modified_date", woacassLocAssLisFormData)
-    if (check.length == this.workOrderActivityCompletionAssLocAssLisDataReq.length) {
-      this.workOrderActivityCompletionAssLocAssListService
-        .update(
-          this.workactivityasset.id,
-          woacassLocAssLisFormData
-        )
-        .subscribe(
-          (res) => {
-            console.log("workOrderActivityCompletionAssLocAssListService res", res);
-            this.alertWorkActivityAsset(
-              "Work Activity",
-              "Your service history has been successfully updated into the system."
-            );
-          },
-          (err) => {
-            console.error("err", err);
-          }
-        );
-    } else {
-      this.alertWarning('Warning', 'Please answer all required service history')
-    }
+    // if (check.length == this.workOrderActivityCompletionAssLocAssLisDataReq.length) {
+    this.workOrderActivityCompletionAssLocAssListService
+      .update(
+        this.workactivityasset.id,
+        woacassLocAssLisFormData
+      )
+      .subscribe(
+        (res) => {
+          console.log("workOrderActivityCompletionAssLocAssListService res", res);
+          this.alertWorkActivityAsset(
+            "Work Activity",
+            "Your service history has been successfully updated into the system."
+          );
+        },
+        (err) => {
+          console.error("err", err);
+        }
+      );
+    // } else {
+    //   this.alertWarning('Warning', 'Please answer all required service history')
+    // }
   }
 
   async alertWorkActivityAsset(header, message) {

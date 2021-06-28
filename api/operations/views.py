@@ -80,7 +80,7 @@ from .serializers import (
     SubFunctionSerializer, CostCenterSerializer, OperationSerializer, WorkActivityEmployeeSerializer,
     WorkOrderActivityCompletionAssetLocationAssetListInboundSerializer,
     AssetLocationAssetListServiceHistoriesInboundSerializer,
-    WorkOrderActivityCompletionPipeSerializer,
+    # WorkOrderActivityCompletionPipeSerializer,
     WorkRequestPipeSerializer,
     OperationalReadingPipeSerializer
 )
@@ -957,12 +957,126 @@ class QuestionsValidValueViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return queryset
 
-class WorkOrderActivityCompletionPipeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+# class WorkOrderActivityCompletionPipeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+#     queryset = WorkOrderActivityCompletion.objects.all()
+#     serializer_class = WorkOrderActivityCompletionPipeSerializer
+#     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+#     filterset_fields = [
+#         'activityid', 'bo_status_cd', 'act_type_cd', 'service_class_cd', 'descr100','descrlong','field_1','field_2','status','owning_organization','record_by','modified_by'
+#     ]
+
+#     def get_permissions(self):
+#         if self.action == 'list':
+#             permission_classes = [AllowAny]
+#         else:
+#             permission_classes = [AllowAny]
+
+#         return [permission() for permission in permission_classes]
+
+#     def get_queryset(self):
+#         queryset = WorkOrderActivityCompletion.objects.all()
+
+#         # FROM APPLICATION/JSON THROUGH API
+#         if bool(self.request.data):
+#             print("enter bool()")
+#             if 'from_date' in self.request.data and 'to_date' in self.request.data:
+
+#                 from_date = self.request.data.get('from_date', None)
+#                 to_date = self.request.data.get('to_date', None)
+
+#                 if from_date is not None and to_date is not None:
+#                     # print(WorkOrderActivityCompletion.objects.filter(submitted_datetime__range=(from_date,to_date)).query)
+#                     queryset = WorkOrderActivityCompletion.objects.filter(
+#                         submitted_datetime__range=(from_date, to_date))
+
+#         return queryset
+
+#     @action(methods=['POST'], detail=False)
+#     def extended_all(self, request, *args, **kwargs):
+
+#         from_date = self.request.data['from_date']
+#         to_date = self.request.data['to_date']
+
+#         queryset = WorkOrderActivityCompletion.objects.all()
+
+#         if from_date is not None and to_date is not None:
+#             queryset = WorkOrderActivityCompletion.objects.filter(
+#                 submitted_datetime__range=(from_date, to_date))
+
+#         serializer = WorkOrderActivityCompletionExtendedSerializer(
+#             queryset, many=True)
+#         return Response(serializer.data)
+
+#     @action(methods=['GET'], detail=True)
+#     def extended(self, request, *args, **kwargs):
+#         work_order_activity = self.get_object()
+
+#         serializer = WorkOrderActivityCompletionExtendedSerializer(
+#             work_order_activity)
+#         return Response(serializer.data)
+
+#     # @action(methods=['GET'], detail=False)
+#     @action(methods=['POST'], detail=False)
+#     def asc_ordered_list(self, request, *args, **kwargs):
+        
+#         userid = self.request.data['userid']
+#         user_details = CustomUser.objects.filter(id=userid).values('employee_id')
+
+#         # print(user_details)
+#         emp_id = ''
+
+#         for i in user_details:
+#             emp_id = i['employee_id']
+
+#         work_act_emp = WorkActivityEmployee.objects.filter(employee_id=emp_id).values('work_order_activity_completion_id').order_by('created_date')
+#         # print("work_act_emp",work_act_emp)
+
+#         work_order_act_comp = []
+#         no = 0
+#         for j in work_act_emp:
+#             print("work_act_emp------------------",j['work_order_activity_completion_id'])
+#             print("no -- ",no)
+#             # if no <= 1:
+#             woac_det = WorkOrderActivityCompletion.objects.filter(id=j['work_order_activity_completion_id']).values('id','activityid','completiondatetime','bo_status_cd','user_id_1','act_type_cd','wo_id','act_dpos_flg','service_class_cd','requestor_id','required_by_dt','work_priority_flg','descr100','descrlong','w1_descr100_upr','held_for_parts_flg','anniversary_value','emergency_flg','act_num','planner_cd','total_priority','total_priority_src_flg','node_id_1','asset_id_1','percentage','seqno','participation_flg','cost_center_cd','percentage_2','act_resrc_reqmt_id','descrlong_1','resrc_src_flg','resrc_type_id','w1_quantity','unit_price','w1_duration','crew_shift_id','sched_duration','break_in_dttm','actvn_dttm','tmpl_act_id','maint_sched_id','maint_sched_id','status','owning_organization','field_1','field_2','submitted_datetime','created_date','modified_date','record_by','modified_by','asset_location_asset_list')
+#             # woac_det = WorkOrderActivityCompletion.objects.get(id=j['work_order_activity_completion_id']).values_list()
+#             work_order_act_comp.insert(no,woac_det[0])
+        
+#             # print(woac_det)
+#             print(woac_det[0])
+
+#             no = no + 1
+
+#         # print("work_order_act_comp>>>>>>>",work_order_act_comp)
+#         # queryset = OperationalReading.objects.values('id','description','long_description','required_by_date','approval_profile','bo','creation_datetime','creation_user','downtime_start','planner','work_class','work_category','work_priority','requestor','owning_access_group','first_name','last_name','primary_phone','mobile_phone','home_phone','node_id','asset_id','status','int10_type','work_request_id','work_request_status','created_date','modified_date').order_by('-modified_date')
+#         # queryset = WorkOrderActivityCompletion.objects.all().order_by('required_by_dt')
+#         # queryset1 = WorkOrderActivityCompletion.objects.filter(record_by=userid).order_by('required_by_dt')
+#         # queryset2 = WorkOrderActivityCompletion.objects.filter(record_by__isnull=True,status='BackLog').order_by('required_by_dt')
+#         # queryset3 = WorkOrderActivityCompletion.objects.filter(status='New').order_by('required_by_dt')
+#         # result_list = list(chain(queryset1,queryset2,queryset3))
+
+#         # serializer_class = WorkOrderActivityCompletionPipeSerializer(
+#         #     work_order_act_comp, many=True)
+
+#         return Response(work_order_act_comp)
+
+#     @action(methods=['POST'], detail=False)
+#     def get_created_by(self, request, *args, **kwargs):
+
+#         userid = self.request.data['userid']
+#         print("userid ==== ",userid)
+#         queryset = WorkOrderActivityCompletion.objects.filter(record_by=userid)
+
+#         serializer = WorkOrderActivityCompletionSerializer(
+#             queryset, many=True)
+#         return Response(serializer.data)
+
+
+class WorkOrderActivityCompletionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = WorkOrderActivityCompletion.objects.all()
-    serializer_class = WorkOrderActivityCompletionPipeSerializer
+    serializer_class = WorkOrderActivityCompletionSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_fields = [
-        'activityid', 'bo_status_cd', 'act_type_cd', 'service_class_cd', 'descr100','descrlong','field_1','field_2','status','owning_organization','record_by','modified_by'
+        'activityid', 'bo_status_cd', 'act_type_cd', 'service_class_cd', 'descr100','descrlong','field_1','field_2','status','owning_organization'
     ]
 
     def get_permissions(self):
@@ -997,11 +1111,12 @@ class WorkOrderActivityCompletionPipeViewSet(NestedViewSetMixin, viewsets.ModelV
         from_date = self.request.data['from_date']
         to_date = self.request.data['to_date']
 
-        queryset = WorkOrderActivityCompletion.objects.all()
+        # queryset = WorkOrderActivityCompletion.objects.all()
+        queryset = WorkOrderActivityCompletion.objects.values_list('id','activityid','completiondatetime','bo_status_cd','user_id_1','act_type_cd','wo_id','act_dpos_flg','service_class_cd','requestor_id','required_by_dt','work_priority_flg','descr100','descrlong','w1_descr100_upr','held_for_parts_flg','anniversary_value','emergency_flg','act_num','planner_cd','total_priority','total_priority_src_flg','node_id_1','asset_id_1','percentage','seqno','participation_flg','cost_center_cd','percentage_2','act_resrc_reqmt_id','descrlong_1','resrc_src_flg','resrc_type_id','w1_quantity','unit_price','w1_duration','crew_shift_id','sched_duration','break_in_dttm','actvn_dttm','tmpl_act_id','maint_sched_id','maint_trigger_id','status','owning_organization','field_1','field_2','submitted_datetime','created_date','modified_date','asset_location_asset_list')
 
-        if from_date is not None and to_date is not None:
-            queryset = WorkOrderActivityCompletion.objects.filter(
-                submitted_datetime__range=(from_date, to_date))
+        # if from_date is not None and to_date is not None:
+        #     queryset = WorkOrderActivityCompletion.objects.filter(
+        #         submitted_datetime__range=(from_date, to_date)).values('id','activityid','completiondatetime','bo_status_cd','user_id_1','act_type_cd','wo_id','act_dpos_flg','service_class_cd','requestor_id','required_by_dt','work_priority_flg','descr100','descrlong','w1_descr100_upr','held_for_parts_flg','anniversary_value','emergency_flg','act_num','planner_cd','total_priority','total_priority_src_flg','node_id_1','asset_id_1','percentage','seqno','participation_flg','cost_center_cd','percentage_2','act_resrc_reqmt_id','descrlong_1','resrc_src_flg','resrc_type_id','w1_quantity','unit_price','w1_duration','crew_shift_id','sched_duration','break_in_dttm','actvn_dttm','tmpl_act_id','maint_sched_id','maint_trigger_id','status','owning_organization','field_1','field_2','submitted_datetime','created_date','modified_date','asset_location_asset_list')
 
         serializer = WorkOrderActivityCompletionExtendedSerializer(
             queryset, many=True)
@@ -1022,7 +1137,7 @@ class WorkOrderActivityCompletionPipeViewSet(NestedViewSetMixin, viewsets.ModelV
         userid = self.request.data['userid']
         user_details = CustomUser.objects.filter(id=userid).values('employee_id')
 
-        # print(user_details)
+        print(user_details)
         emp_id = ''
 
         for i in user_details:
@@ -1035,20 +1150,16 @@ class WorkOrderActivityCompletionPipeViewSet(NestedViewSetMixin, viewsets.ModelV
         no = 0
         for j in work_act_emp:
             print("work_act_emp------------------",j['work_order_activity_completion_id'])
-            woac_det = WorkOrderActivityCompletion.objects.filter(id=j['work_order_activity_completion_id']).values('id','activityid','completiondatetime','bo_status_cd','user_id_1','act_type_cd','wo_id','act_dpos_flg','service_class_cd','requestor_id','required_by_dt','work_priority_flg','descr100','descrlong','w1_descr100_upr','held_for_parts_flg','anniversary_value','emergency_flg','act_num','planner_cd','total_priority','total_priority_src_flg','node_id_1','asset_id_1','percentage','seqno','participation_flg','cost_center_cd','percentage_2','act_resrc_reqmt_id','descrlong_1','resrc_src_flg','resrc_type_id','w1_quantity','unit_price','w1_duration','crew_shift_id','sched_duration','break_in_dttm','actvn_dttm','tmpl_act_id','maint_sched_id','maint_sched_id','status','owning_organization','field_1','field_2','submitted_datetime','created_date','modified_date','record_by','modified_by','asset_location_asset_list')
-            work_order_act_comp.insert(no,woac_det)
+            print("no -- ",no)
+            # if no <= 1:
+            woac_det = WorkOrderActivityCompletion.objects.filter(id=j['work_order_activity_completion_id']).values('id','activityid','completiondatetime','bo_status_cd','user_id_1','act_type_cd','wo_id','act_dpos_flg','service_class_cd','requestor_id','required_by_dt','work_priority_flg','descr100','descrlong','w1_descr100_upr','held_for_parts_flg','anniversary_value','emergency_flg','act_num','planner_cd','total_priority','total_priority_src_flg','node_id_1','asset_id_1','percentage','seqno','participation_flg','cost_center_cd','percentage_2','act_resrc_reqmt_id','descrlong_1','resrc_src_flg','resrc_type_id','w1_quantity','unit_price','w1_duration','crew_shift_id','sched_duration','break_in_dttm','actvn_dttm','tmpl_act_id','maint_sched_id','maint_sched_id','status','owning_organization','field_1','field_2','submitted_datetime','created_date','modified_date','asset_location_asset_list')
+            # woac_det = WorkOrderActivityCompletion.objects.get(id=j['work_order_activity_completion_id']).values_list()
+            work_order_act_comp.insert(no,woac_det[0])
+        
+            # print(woac_det)
+            print(woac_det[0])
+
             no = no + 1
-
-        print("work_order_act_comp>>>>>>>",work_order_act_comp)
-        # queryset = OperationalReading.objects.values('id','description','long_description','required_by_date','approval_profile','bo','creation_datetime','creation_user','downtime_start','planner','work_class','work_category','work_priority','requestor','owning_access_group','first_name','last_name','primary_phone','mobile_phone','home_phone','node_id','asset_id','status','int10_type','work_request_id','work_request_status','created_date','modified_date').order_by('-modified_date')
-        # queryset = WorkOrderActivityCompletion.objects.all().order_by('required_by_dt')
-        # queryset1 = WorkOrderActivityCompletion.objects.filter(record_by=userid).order_by('required_by_dt')
-        # queryset2 = WorkOrderActivityCompletion.objects.filter(record_by__isnull=True,status='BackLog').order_by('required_by_dt')
-        # queryset3 = WorkOrderActivityCompletion.objects.filter(status='New').order_by('required_by_dt')
-        # result_list = list(chain(queryset1,queryset2,queryset3))
-
-        # serializer_class = WorkOrderActivityCompletionPipeSerializer(
-        #     work_order_act_comp, many=True)
 
         return Response(work_order_act_comp)
 
@@ -1063,71 +1174,6 @@ class WorkOrderActivityCompletionPipeViewSet(NestedViewSetMixin, viewsets.ModelV
             queryset, many=True)
         return Response(serializer.data)
 
-
-class WorkOrderActivityCompletionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
-    queryset = WorkOrderActivityCompletion.objects.all()
-    serializer_class = WorkOrderActivityCompletionSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-
-    def get_permissions(self):
-        if self.action == 'list':
-            permission_classes = [AllowAny]
-        else:
-            permission_classes = [AllowAny]
-
-        return [permission() for permission in permission_classes]
-
-    def get_queryset(self):
-        queryset = WorkOrderActivityCompletion.objects.all()
-
-        # FROM APPLICATION/JSON THROUGH API
-        if bool(self.request.data):
-            print("enter bool()")
-            if 'from_date' in self.request.data and 'to_date' in self.request.data:
-
-                from_date = self.request.data.get('from_date', None)
-                to_date = self.request.data.get('to_date', None)
-
-                if from_date is not None and to_date is not None:
-                    # print(WorkOrderActivityCompletion.objects.filter(submitted_datetime__range=(from_date,to_date)).query)
-                    queryset = WorkOrderActivityCompletion.objects.filter(
-                        submitted_datetime__range=(from_date, to_date))
-
-        return queryset
-
-    @action(methods=['POST'], detail=False)
-    def extended_all(self, request, *args, **kwargs):
-
-        from_date = self.request.data['from_date']
-        to_date = self.request.data['to_date']
-
-        queryset = WorkOrderActivityCompletion.objects.all()
-
-        if from_date is not None and to_date is not None:
-            queryset = WorkOrderActivityCompletion.objects.filter(
-                submitted_datetime__range=(from_date, to_date))
-
-        serializer = WorkOrderActivityCompletionExtendedSerializer(
-            queryset, many=True)
-        return Response(serializer.data)
-
-    @action(methods=['GET'], detail=True)
-    def extended(self, request, *args, **kwargs):
-        work_order_activity = self.get_object()
-
-        serializer = WorkOrderActivityCompletionExtendedSerializer(
-            work_order_activity)
-        return Response(serializer.data)
-
-    @action(methods=['GET'], detail=False)
-    def asc_ordered_list(self, request, *args, **kwargs):
-        
-        # queryset = OperationalReading.objects.values('id','description','long_description','required_by_date','approval_profile','bo','creation_datetime','creation_user','downtime_start','planner','work_class','work_category','work_priority','requestor','owning_access_group','first_name','last_name','primary_phone','mobile_phone','home_phone','node_id','asset_id','status','int10_type','work_request_id','work_request_status','created_date','modified_date').order_by('-modified_date')
-        queryset = WorkOrderActivityCompletion.objects.all().order_by('required_by_dt')
-        serializer_class = WorkOrderActivityCompletionSerializer(
-            queryset, many=True)
-
-        return Response(serializer_class.data)
 
 # end copied from dev api
 
@@ -1179,23 +1225,33 @@ class ServiceHistoryQuestionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     def get_service_history_qna(self, request):
 
         data = json.loads(request.body)
-
+        print("data",data)
         service_history_id = data['service_history_id']
         queryset_question = ServiceHistoryQuestion.objects.filter(service_history_id=service_history_id).values(
             'id', 'question_seq', 'question_cd', 'question_desc', 'service_history_id')
 
         data = []
         for qs_qs in queryset_question:
+            valid_value = []
             queryset_answer = ServiceHistoryQuestionValidValue.objects.filter(service_history_question_id=qs_qs['id']).values(
                 'id', 'answer_seq', 'answer_cd', 'answer_text', 'answer_desc', 'point_value', 'style', 'service_history_question_id')
 
             # for qs_aw in queryset_answer:
+
+            no = 0
+            for qs_ans in queryset_answer:
+                print("qs_ans",qs_ans)
+                print("qs_ans",qs_ans['style'])
+                if qs_ans['style'] == 'W1RB':
+                    valid_value.insert(no,qs_ans)
+                    no += 1
+
+
             dictionary = {
                 'question': qs_qs,
-                'answer': queryset_answer
+                'answer': valid_value
             }
             data.append(dictionary)
-
         return Response(data)
 
 
