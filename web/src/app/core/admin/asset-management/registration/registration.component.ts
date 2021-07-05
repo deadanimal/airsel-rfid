@@ -2105,8 +2105,8 @@ export class RegistrationComponent implements OnInit {
       formData.append('voltage', (loopval.voltage != undefined ? loopval.voltage : ''))
 
       formData.forEach(function (loopvaldata) {
-        // console.log('loopvaldata = ', loopvaldata)
-        if (loopvaldata == '') {
+        console.log("incomplete dataset", loopvaldata);
+        if (loopvaldata == '' || loopvaldata == null) {
           checkStatus = 'IC'
         }
       })

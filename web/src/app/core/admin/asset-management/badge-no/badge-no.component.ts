@@ -1,5 +1,4 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
-import {
+import { Component, OnInit, TemplateRef } from "@angular/core"; import {
   Validators,
   FormBuilder,
   FormGroup,
@@ -36,7 +35,9 @@ export class BadgeNoComponent implements OnInit {
     // ignoreBackdropClick: true,
   };
 
+
   // Datatable
+  currentRow: any;
   entries: number = 5;
   selected: any[] = [];
   temp = [];
@@ -64,14 +65,17 @@ export class BadgeNoComponent implements OnInit {
       short: ["", Validators.required],
       description: ["", Validators.required],
       status: ["IC", Validators.required],
-      latest_no: ["", Validators.required]
+      latest_no: ["", Validators.required],
+      skipped_no: ["", Validators.required]
+
     })
     this.assetTypeFormDesc = this.formBuilder.group({
       asset_primary_category: ["", Validators.required],
       short: ["", Validators.required],
       description: ["", Validators.required],
       status: ["IC", Validators.required],
-      latest_no: ["", Validators.required]
+      latest_no: ["", Validators.required],
+      skipped_no: ["", Validators.required]
     })
   }
 
@@ -96,6 +100,7 @@ export class BadgeNoComponent implements OnInit {
         // console.log("assetTypesService = ", res);
         // console.log('tempData = ', tempData)
         this.assetTypeList = res
+        console.log("SS", res);
       },
       error => {
         console.error("err", error);
@@ -104,6 +109,8 @@ export class BadgeNoComponent implements OnInit {
   }
 
   openModal(modalNotification: TemplateRef<any>) {
+    this.assetTypeForm.reset();
+    this.assetTypeFormDesc.reset();
     this.getAssetTypeData()
     // console.log("openModal");
     this.modal = this.modalService.show(modalNotification, this.modalConfig);
@@ -130,14 +137,21 @@ export class BadgeNoComponent implements OnInit {
   }
 
   submitAssetType() {
-    console.log('assetTypeForm = ', this.assetTypeForm.value)
+    // TO DO - parse comma delimited string into array 
+    let skipped_no = this.assetTypeForm.value.skipped_no
+    let formatted_skipped_no = skipped_no.split(',');
+
+    // TO DO - patchValue skipped no with formatted_skipped_no
+    this.assetTypeForm.patchValue({
+      "skipped_no": formatted_skipped_no
+    });
+    
 
     let createAssetTypeData: any = {}
     createAssetTypeData['name'] = this.assetTypeForm.value.asset_primary_category
 
     this.assetsBadgeNoService.create(this.assetTypeForm.value).subscribe(
       (res) => {
-        console.log("yeaaayyy = ", res);
         this.saveAssetType(createAssetTypeData)
         this.successAlert()
       },
@@ -159,11 +173,17 @@ export class BadgeNoComponent implements OnInit {
   }
 
   submitAssetTypeDesc() {
-    console.log('assetTypeForm = ', this.assetTypeFormDesc.value)
+    // TO DO - parse comma delimited string into array 
+    let skipped_no = this.assetTypeFormDesc.value.skipped_no
+    let formatted_skipped_no = skipped_no.split(',');
+
+    // TO DO - patchValue skipped no with formatted_skipped_no
+    this.assetTypeFormDesc.patchValue({
+      "skipped_no": formatted_skipped_no
+    });
 
     this.assetsBadgeNoService.create(this.assetTypeFormDesc.value).subscribe(
       (res) => {
-        console.log("yeaaayyy = ", res);
         this.successAlert()
       },
       error => {
@@ -263,6 +283,58 @@ export class BadgeNoComponent implements OnInit {
     }).then((result) => {
       // this.closeModal()
     });
+  }
+
+  editFormat(row, modalNotification: TemplateRef<any>) {
+    this.modal = this.modalService.show(modalNotification, this.modalConfig);
+    this.currentRow = row;
+
+    //  asset_primary_category: ["", Validators.required],
+    //  short: ["", Validators.required],
+    //  description: ["", Validators.required],
+    //  status: ["IC", Validators.required],
+    //  latest_no: ["", Validators.required],
+    //  skipped_no: ["", Validators.required]
+
+
+
+    //patchValue
+    this.assetTypeFormDesc.patchValue({
+
+      "asset_primary_category": row.asset_primary_category,
+      "short": row.short,
+      "description": row.description,
+      "status": row.status,
+      "latest_no": row.latest_no,
+      "skipped_no": row.skipped_no,
+    })
+
+  }
+
+
+  submitAssetTypeDescUpdate() {
+
+    let skipped_no = this.assetTypeFormDesc.value.skipped_no
+    console.log("si buduh", typeof(skipped_no))
+
+    if (typeof(skipped_no) == "string") {
+      let formatted_skipped_no = skipped_no.split(',');
+    }
+
+    this.assetTypeFormDesc.patchValue({
+      "skipped_no": formatted_skipped_no
+    });
+
+    this.assetsBadgeNoService.update(this.currentRow.id, this.assetTypeFormDesc.value).subscribe(
+      (res) => {
+        this.successAlert()
+      },
+      error => {
+        console.error("err", error);
+      }
+    )
+
+  
   }
 
 }

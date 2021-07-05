@@ -38,7 +38,7 @@ export enum SelectionType {
 })
 export class NewComponent implements OnInit {
   // Tabs
-  firstTab: boolean = true
+  firstTab: boolean = true 
   secondTab: boolean = false
   thirdTab: boolean = false
 
@@ -50,6 +50,8 @@ export class NewComponent implements OnInit {
   worksheet: any;
   fileUploaded: File;
   jsonData: any;
+  badge_format_data: string = 'NA';
+
   data: [][]
 
   // Modal
@@ -455,56 +457,55 @@ export class NewComponent implements OnInit {
 
   }
   changeStatusPR(task) {
+    var badgeFormatData: string = "NA";
     let resData: any
     let no = 0
     let assetregser = this.assetsRegistrationService
+    let badgeFormatService = this.assetsBadgeNoService
     this.tableTemp1.forEach(function (itemVal) {
       if (itemVal['isTick'] == true) {
-
-        console.log('itemVal = ', itemVal.status)
-        if (itemVal.status == 'NP') {
-          let updateformData: any
-
-          updateformData = {
-            status: task
-          }
-          assetregser.update(itemVal['id'], updateformData).subscribe(
-            (res) => {
-              console.log("update status RJ", res);
-            },
-            error => {
-              console.error("err", error);
+        let asspricat = itemVal.asset_primary_category
+        let field = 'asset_primary_category=' + asspricat + '&status=AC'
+        // console.log('field = ', field)
+        badgeFormatService.filter(field).subscribe(
+          (res) => {
+            if (res.length > 1) {
+              badgeFormatData = res[0].short + res[0].latest_no + no;
+              console.log("badgeFormatdata", res[0]);
+              // console.log('badgeFormatdata asdasd = ', badgeFormatdata)
+            } else {
+              badgeFormatData = 'NA'
             }
-          )
-        } else {
-          no++
-        }
+          },
+          (err) => {
+            console.log("err", err);
+          }
+        )
+        setTimeout(function () {
+
+
+          console.log('itemVal = ', itemVal.status)
+          if (itemVal.status == 'NP') {
+            let updateformData: any
+
+            updateformData = {
+              status: task,
+              badge_no: 'NA' 
+            }
+            assetregser.update(itemVal['id'], updateformData).subscribe(
+              (res) => {
+                console.log("update status RJ", res);
+              },
+              error => {
+                console.error("err", error);
+              }
+            )
+          } else {
+            no++
+          }
+       }, 1000);
       }
     })
-
-    // if (no > 0) {
-    //   swal.fire({
-    //     title: 'Warning',
-    //     text: 'The incomplete data cannot be save.',
-    //     type: 'warning',
-    //     buttonsStyling: false,
-    //     confirmButtonText: 'Ok',
-    //     confirmButtonClass: 'btn btn-warning'
-    //   }).then((result) => {
-    //     this.getRegisteredData()
-    //   })
-    // } else {
-    //   swal.fire({
-    //     title: 'Success',
-    //     text: 'Successfully Change Status',
-    //     type: 'success',
-    //     buttonsStyling: false,
-    //     confirmButtonText: 'Ok',
-    //     confirmButtonClass: 'btn btn-success'
-    //   }).then((result) => {
-    //     this.getRegisteredData()
-    //   })
-    // }
     swal.fire({
         title: 'Success',
         text: 'Successfully Change Status',
