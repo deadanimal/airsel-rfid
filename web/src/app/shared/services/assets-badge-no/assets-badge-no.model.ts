@@ -6,6 +6,8 @@ export class AssetsBadgeNoModel {
   public description: string;
   public status: string;
   public latest_no: string;
+  public skipped_no: any 
+
 
   constructor(
     id: string,
@@ -14,7 +16,9 @@ export class AssetsBadgeNoModel {
     short: string,
     description: string,
     status: string,
-    latest_no: string
+    latest_no: string,
+    skipped_no: any 
+
   ) {
     this.id = id;
     this.asset_uuid = asset_uuid;
@@ -23,5 +27,6 @@ export class AssetsBadgeNoModel {
     this.description = description;
     this.status = status;
     this.latest_no = latest_no;
+    this.skipped_no = skipped_no;
   }
 }
