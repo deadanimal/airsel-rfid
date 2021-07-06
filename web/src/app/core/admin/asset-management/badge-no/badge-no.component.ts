@@ -319,11 +319,12 @@ export class BadgeNoComponent implements OnInit {
 
     if (typeof(skipped_no) == "string") {
       let formatted_skipped_no = skipped_no.split(',');
-    }
 
-    this.assetTypeFormDesc.patchValue({
-      "skipped_no": formatted_skipped_no
-    });
+      this.assetTypeFormDesc.patchValue({
+        "skipped_no": formatted_skipped_no
+      });
+
+    }
 
     this.assetsBadgeNoService.update(this.currentRow.id, this.assetTypeFormDesc.value).subscribe(
       (res) => {

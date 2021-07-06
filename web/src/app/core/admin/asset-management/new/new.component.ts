@@ -457,23 +457,72 @@ export class NewComponent implements OnInit {
 
   }
   changeStatusPR(task) {
+    let finalNo: string;
+    let updatedlatestNo: any;
+    let updatedSkippedNo: any;
+    let no = 0
     var badgeFormatData: string = "NA";
     let resData: any
-    let no = 0
     let assetregser = this.assetsRegistrationService
     let badgeFormatService = this.assetsBadgeNoService
     this.tableTemp1.forEach(function (itemVal) {
       if (itemVal['isTick'] == true) {
         let asspricat = itemVal.asset_primary_category
         let field = 'asset_primary_category=' + asspricat + '&status=AC'
-        // console.log('field = ', field)
+
         badgeFormatService.filter(field).subscribe(
           (res) => {
-            if (res.length > 1) {
-              badgeFormatData = res[0].short + res[0].latest_no + no;
-              console.log("badgeFormatdata", res[0]);
-              // console.log('badgeFormatdata asdasd = ', badgeFormatdata)
+            // ISSUE here condition wrong
+            if (res.length >= 1) {
+              console.log("MATCH FOUND");
+
+              // by latest no
+              if (res[0].skipped_no[0] == 0 || res[0].skipped_no.length == 0) {
+                let currentNo = +parseInt(res[0].latest_no) + 1;
+                finalNo = String(currentNo);
+                
+                // Later need to enhance this badge generation
+                badgeFormatData = res[0].short + "_000000" + finalNo;
+                updatedlatestNo = {
+                  latest_no: currentNo, 
+                }
+
+                badgeFormatService.update(res[0].id, updatedlatestNo).subscribe(
+                  (res) => {
+                    console.log("Updating Latest no", res);
+                  },
+                  (err) => {
+                    console.log("Updating Latest no", res);
+                  }
+                )
+              } 
+
+              // by skipped no  
+              else {
+                let currentNo = res[0].skipped_no[0]
+                console.log("CNO", currentNo);
+                //badgeFormatData = res[0].short + "_" + currentNo.padStart(7, '0');
+                badgeFormatData = res[0].short + "_000000" + currentNo;
+
+                updatedSkippedNo = {
+                  skipped_no: res[0].skipped_no.slice(1)
+                }
+
+                badgeFormatService.update(res[0].id, updatedSkippedNo).subscribe(
+                  (res) => {
+                    console.log("Updating Skipped no", res);
+                  },
+                  (err) => {
+                    console.log("Updating Skipped no", res);
+                  }
+                )
+
+              }
+
+                            
+              
             } else {
+              console.log("MATCH NOT FOUND");
               badgeFormatData = 'NA'
             }
           },
@@ -490,11 +539,11 @@ export class NewComponent implements OnInit {
 
             updateformData = {
               status: task,
-              badge_no: 'NA' 
+              badge_no: badgeFormatData 
             }
             assetregser.update(itemVal['id'], updateformData).subscribe(
               (res) => {
-                console.log("update status RJ", res);
+                console.log("update status NP", res);
               },
               error => {
                 console.error("err", error);
