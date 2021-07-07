@@ -19,4 +19,3 @@ coverage.*
 node_modules/
 bkp/
 
-web/dist
