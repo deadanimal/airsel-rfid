@@ -112,554 +112,574 @@
 
           <accordion [isAnimated]="true">
             <accordion-group>
-              <div accordion-heading>
-                <span>Asset Location</span>
-              </div>
-              <div class="row">
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkName"
-                      [(ngModel)]="is_show1.parent_location">
-                    <label class="custom-control-label" for="checkName">
-                      Parent Location
-                    </label>
-                  </div>
+                <div accordion-heading>
+                    <span>Asset Location</span>
                 </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkDate"
-                      [(ngModel)]="is_show1.location_description">
-                    <label class="custom-control-label" for="checkDate">
-                      Location Description
-                    </label>
-                  </div>
-                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkName" [(ngModel)]="is_show1.parent_location">
+                            <label class="custom-control-label" for="checkName">
+                                Parent Location
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAmount"
-                      [(ngModel)]="is_show1.building">
-                    <label class="custom-control-label" for="checkAmount">
-                      Building
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkDate" [(ngModel)]="is_show1.location_description">
+                            <label class="custom-control-label" for="checkDate">
+                                Location Description
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress1"
-                      [(ngModel)]="is_show1.address_line_1">
-                    <label class="custom-control-label" for="checkAddress1">
-                      Address 1
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAmount" [(ngModel)]="is_show1.building">
+                            <label class="custom-control-label" for="checkAmount">
+                                Building
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress2"
-                      [(ngModel)]="is_show1.address_line_2">
-                    <label class="custom-control-label" for="checkAddress2">
-                      Address 2
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAddress1" [(ngModel)]="is_show1.address_line_1">
+                            <label class="custom-control-label" for="checkAddress1">
+                                Address 1
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAddress3"
-                      [(ngModel)]="is_show1.address_line_3">
-                    <label class="custom-control-label" for="checkAddress3">
-                      Address 3
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAddress2" [(ngModel)]="is_show1.address_line_2">
+                            <label class="custom-control-label" for="checkAddress2">
+                                Address 2
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCity"
-                      [(ngModel)]="is_show1.city">
-                    <label class="custom-control-label" for="checkCity">
-                      City
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAddress3" [(ngModel)]="is_show1.address_line_3">
+                            <label class="custom-control-label" for="checkAddress3">
+                                Address 3
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkState"
-                      [(ngModel)]="is_show1.state">
-                    <label class="custom-control-label" for="checkState">
-                      State
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkCity" [(ngModel)]="is_show1.city">
+                            <label class="custom-control-label" for="checkCity">
+                                City
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkPostcode"
-                      [(ngModel)]="is_show1.postal_code">
-                    <label class="custom-control-label" for="checkPostcode">
-                      Postcode
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkState" [(ngModel)]="is_show1.state">
+                            <label class="custom-control-label" for="checkState">
+                                State
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCountry"
-                      [(ngModel)]="is_show1.country">
-                    <label class="custom-control-label" for="checkCountry">
-                      Country
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkPostcode" [(ngModel)]="is_show1.postal_code">
+                            <label class="custom-control-label" for="checkPostcode">
+                                Postcode
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="email_address"
-                      [(ngModel)]="is_show1.tag_number">
-                    <label class="custom-control-label" for="email_address">
-                      Tag Number
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkCountry" [(ngModel)]="is_show1.country">
+                            <label class="custom-control-label" for="checkCountry">
+                                Country
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkStatus"
-                      [(ngModel)]="is_show1.service_area">
-                    <label class="custom-control-label" for="checkStatus">
-                      Service Area
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="email_address" [(ngModel)]="is_show1.tag_number">
+                            <label class="custom-control-label" for="email_address">
+                                Tag Number
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkMethod"
-                      [(ngModel)]="is_show1.maintenance_planner">
-                    <label class="custom-control-label" for="checkMethod">
-                      Maintenance Planner
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkStatus" [(ngModel)]="is_show1.service_area">
+                            <label class="custom-control-label" for="checkStatus">
+                                Service Area
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkLocMainContra"
-                      [(ngModel)]="is_show1.location_main_contact">
-                    <label class="custom-control-label" for="checkLocMainContra">
-                      Location Main Contact
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkMethod" [(ngModel)]="is_show1.maintenance_planner">
+                            <label class="custom-control-label" for="checkMethod">
+                                Maintenance Planner
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkLocAssetMainte"
-                      [(ngModel)]="is_show1.location_asset_maintenance_manager">
-                    <label class="custom-control-label" for="checkLocAssetMainte">
-                      Location Maintenance Manager
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkLocMainContra" [(ngModel)]="is_show1.location_main_contact">
+                            <label class="custom-control-label" for="checkLocMainContra">
+                                Location Main Contact
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkGISESRI"
-                      [(ngModel)]="is_show1.gis_esri_id">
-                    <label class="custom-control-label" for="checkGISESRI">
-                      GIS/ESRI ID
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkLocAssetMainte"
+                                [(ngModel)]="is_show1.location_asset_maintenance_manager">
+                            <label class="custom-control-label" for="checkLocAssetMainte">
+                                Location Maintenance Manager
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkLatitude"
-                      [(ngModel)]="is_show1.latitude">
-                    <label class="custom-control-label" for="checkLatitude">
-                      Latitude
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkGISESRI" [(ngModel)]="is_show1.gis_esri_id">
+                            <label class="custom-control-label" for="checkGISESRI">
+                                GIS/ESRI ID
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkLongitude"
-                      [(ngModel)]="is_show1.longitude">
-                    <label class="custom-control-label" for="checkLongitude">
-                      Longitude
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkLatitude" [(ngModel)]="is_show1.latitude">
+                            <label class="custom-control-label" for="checkLatitude">
+                                Latitude
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssetCritical"
-                      [(ngModel)]="is_show1.asset_critically">
-                    <label class="custom-control-label" for="checkAssetCritical">
-                      Asset Criticallity
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkLongitude" [(ngModel)]="is_show1.longitude">
+                            <label class="custom-control-label" for="checkLongitude">
+                                Longitude
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkCostCenter"
-                      [(ngModel)]="is_show1.cost_center">
-                    <label class="custom-control-label" for="checkCostCenter">
-                      Cost Center
-                    </label>
-                  </div>
-                </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssetCritical" [(ngModel)]="is_show1.asset_critically">
+                            <label class="custom-control-label" for="checkAssetCritical">
+                                Asset Criticallity
+                            </label>
+                        </div>
+                    </div>
 
-              </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkCostCenter" [(ngModel)]="is_show1.cost_center">
+                            <label class="custom-control-label" for="checkCostCenter">
+                                Cost Center
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
             </accordion-group>
             <accordion-group>
-              <div accordion-heading>
-                <span>Asset Detail</span>
-              </div>
-              <div class="row">
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSubProSys"
-                      [(ngModel)]="is_show1.sub_process_system">
-                    <label class="custom-control-label" for="checkSubProSys">
-                      Sub-Process/System
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkBrand"
-                      [(ngModel)]="is_show1.brand">
-                    <label class="custom-control-label" for="checkBrand">
-                      Brand
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSizeCapa1"
-                      [(ngModel)]="is_show1.size_capacity_1">
-                    <label class="custom-control-label" for="checkSizeCapa1">
-                      Size Capacity 1
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSizeCapa2"
-                      [(ngModel)]="is_show1.size_capacity_2">
-                    <label class="custom-control-label" for="checkSizeCapa2">
-                      Size Capacity 2
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSizeCapa3"
-                      [(ngModel)]="is_show1.size_capacity_3">
-                    <label class="custom-control-label" for="checkSizeCapa3">
-                      Size Capacity 3
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkMainSpec"
-                      [(ngModel)]="is_show1.maintenance_specification">
-                    <label class="custom-control-label" for="checkMainSpec">
-                      Maintenance Specification
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssOweDepa"
-                      [(ngModel)]="is_show1.asset_owning_department">
-                    <label class="custom-control-label" for="checkAssOweDepa">
-                      Asset Owning Department
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssOrCompType"
-                      [(ngModel)]="is_show1.asset_or_component_type">
-                    <label class="custom-control-label" for="checkAssOrCompType">
-                      Asset Component Type
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkBadgeNo"
-                      [(ngModel)]="is_show1.badge_no">
-                    <label class="custom-control-label" for="checkBadgeNo">
-                      Batch No
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSizeCapa1UM"
-                      [(ngModel)]="is_show1.size_capacity_1_unit_measurement">
-                    <label class="custom-control-label" for="checkSizeCapa1UM">
-                      Size apacity 1 Unit
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSizeCapa2UM"
-                      [(ngModel)]="is_show1.size_capacity_2_unit_measurement">
-                    <label class="custom-control-label" for="checkSizeCapa2UM">
-                      Size apacity 2 Unit
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSizeCapa3UM"
-                      [(ngModel)]="is_show1.size_capacity_3_unit_measurement">
-                    <label class="custom-control-label" for="checkSizeCapa3UM">
-                      Size apacity 3 Unit
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkMeasureType"
-                      [(ngModel)]="is_show1.measurement_type">
-                    <label class="custom-control-label" for="checkMeasureType">
-                      Measurement Type
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkMainOperation"
-                      [(ngModel)]="is_show1.main_operation">
-                    <label class="custom-control-label" for="checkMainOperation">
-                      Main Operation
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssClassAssCat"
-                      [(ngModel)]="is_show1.asset_class_asset_category">
-                    <label class="custom-control-label" for="checkAssClassAssCat">
-                      Asset Class/Asset Category
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkInternalAssId"
-                      [(ngModel)]="is_show1.internal_asset_identity">
-                    <label class="custom-control-label" for="checkInternalAssId">
-                      Internal Asset Indentity
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSubCat1"
-                      [(ngModel)]="is_show1.sub_category_1">
-                    <label class="custom-control-label" for="checkSubCat1">
-                      Sub Category 1
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                      id="checkParentAssPlateNum" [(ngModel)]="is_show1.parent_asset_plate_number">
-                    <label class="custom-control-label" for="checkParentAssPlateNum">
-                      Parent Asset/Plate No
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkPurcDateInstHand"
-                      [(ngModel)]="is_show1.purchase_date_installed_handed_over_date">
-                    <label class="custom-control-label" for="checkPurcDateInstHand">
-                      Purchase/Installed/Handed Date
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkWarranty"
-                      [(ngModel)]="is_show1.warranty">
-                    <label class="custom-control-label" for="checkWarranty">
-                      Warranty
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkRegion"
-                      [(ngModel)]="is_show1.region">
-                    <label class="custom-control-label" for="checkRegion">
-                      Region
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input"
-                      id="checkHandedOverAssetProc" [(ngModel)]="is_show1.handed_over_asset_or_procured">
-                    <label class="custom-control-label" for="checkHandedOverAssetProc">
-                      Handed Over Asset Or Procured
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSubCat2"
-                      [(ngModel)]="is_show1.sub_category_2">
-                    <label class="custom-control-label" for="checkSubCat2">
-                      Sub Category 2
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssPlateNum"
-                      [(ngModel)]="is_show1.asset_plate_number">
-                    <label class="custom-control-label" for="checkAssPlateNum">
-                      Asset Plate Number
-                    </label>
-                  </div>
+                <div accordion-heading>
+                    <span>Asset Detail</span>
                 </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkConditionRate"
-                      [(ngModel)]="is_show1.condition_rating">
-                    <label class="custom-control-label" for="checkConditionRate">
-                      Condition Rating
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkWarrPer"
-                      [(ngModel)]="is_show1.actual_warranty_period">
-                    <label class="custom-control-label" for="checkWarrPer">
-                      Actual Warranty Period
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkOperation"
-                      [(ngModel)]="is_show1.operation">
-                    <label class="custom-control-label" for="checkOperation">
-                      Operation
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkProFunc"
-                      [(ngModel)]="is_show1.process_function">
-                    <label class="custom-control-label" for="checkProFunc">
-                      Process Function
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkModelNum"
-                      [(ngModel)]="is_show1.model_number">
-                    <label class="custom-control-label" for="checkModelNum">
-                      Model Number
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkdetailedDesc"
-                      [(ngModel)]="is_show1.detailed_description">
-                    <label class="custom-control-label" for="checkdetailedDesc">
-                      Detailed Description
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkSerialNum"
-                      [(ngModel)]="is_show1.serial_number">
-                    <label class="custom-control-label" for="checkSerialNum">
-                      Serial Number
-                    </label>
-                  </div>
-                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSubProSys" [(ngModel)]="is_show1.sub_process_system">
+                            <label class="custom-control-label" for="checkSubProSys">
+                                Sub-Process/System
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkBrand" [(ngModel)]="is_show1.brand">
+                            <label class="custom-control-label" for="checkBrand">
+                                Brand
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSizeCapa1" [(ngModel)]="is_show1.size_capacity_1">
+                            <label class="custom-control-label" for="checkSizeCapa1">
+                                Size Capacity 1
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSizeCapa2" [(ngModel)]="is_show1.size_capacity_2">
+                            <label class="custom-control-label" for="checkSizeCapa2">
+                                Size Capacity 2
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSizeCapa3" [(ngModel)]="is_show1.size_capacity_3">
+                            <label class="custom-control-label" for="checkSizeCapa3">
+                                Size Capacity 3
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkMainSpec" [(ngModel)]="is_show1.maintenance_specification">
+                            <label class="custom-control-label" for="checkMainSpec">
+                                Maintenance Specification
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssOweDepa" [(ngModel)]="is_show1.asset_owning_department">
+                            <label class="custom-control-label" for="checkAssOweDepa">
+                                Asset Owning Department
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssOrCompType" [(ngModel)]="is_show1.asset_or_component_type">
+                            <label class="custom-control-label" for="checkAssOrCompType">
+                                Asset Component Type
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkBadgeNo" [(ngModel)]="is_show1.badge_no">
+                            <label class="custom-control-label" for="checkBadgeNo">
+                                Batch No
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSizeCapa1UM"
+                                [(ngModel)]="is_show1.size_capacity_1_unit_measurement">
+                            <label class="custom-control-label" for="checkSizeCapa1UM">
+                                Size apacity 1 Unit
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSizeCapa2UM"
+                                [(ngModel)]="is_show1.size_capacity_2_unit_measurement">
+                            <label class="custom-control-label" for="checkSizeCapa2UM">
+                                Size apacity 2 Unit
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSizeCapa3UM"
+                                [(ngModel)]="is_show1.size_capacity_3_unit_measurement">
+                            <label class="custom-control-label" for="checkSizeCapa3UM">
+                                Size apacity 3 Unit
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkMeasureType" [(ngModel)]="is_show1.measurement_type">
+                            <label class="custom-control-label" for="checkMeasureType">
+                                Measurement Type
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkMainOperation" [(ngModel)]="is_show1.main_operation">
+                            <label class="custom-control-label" for="checkMainOperation">
+                                Main Operation
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssClassAssCat" [(ngModel)]="is_show1.asset_class_asset_category">
+                            <label class="custom-control-label" for="checkAssClassAssCat">
+                                Asset Class/Asset Category
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkInternalAssId" [(ngModel)]="is_show1.internal_asset_identity">
+                            <label class="custom-control-label" for="checkInternalAssId">
+                                Internal Asset Indentity
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSubCat1" [(ngModel)]="is_show1.sub_category_1">
+                            <label class="custom-control-label" for="checkSubCat1">
+                                Sub Category 1
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkParentAssPlateNum"
+                                [(ngModel)]="is_show1.parent_asset_plate_number">
+                            <label class="custom-control-label" for="checkParentAssPlateNum">
+                                Parent Asset/Plate No
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkPurcDateInstHand"
+                                [(ngModel)]="is_show1.purchase_date_installed_handed_over_date">
+                            <label class="custom-control-label" for="checkPurcDateInstHand">
+                                Purchase Date/Installed/Handed Over Date
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkWarranty" [(ngModel)]="is_show1.warranty">
+                            <label class="custom-control-label" for="checkWarranty">
+                                Warranty
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkRegion" [(ngModel)]="is_show1.region">
+                            <label class="custom-control-label" for="checkRegion">
+                                Region
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkHandedOverAssetProc"
+                                [(ngModel)]="is_show1.handed_over_asset_or_procured">
+                            <label class="custom-control-label" for="checkHandedOverAssetProc">
+                                Handed Over Asset Or Procured
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssPriCat" [(ngModel)]="is_show1.asset_primary_category">
+                            <label class="custom-control-label" for="checkAssPriCat">
+                                Asset Primary Category
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSubCat2" [(ngModel)]="is_show1.sub_category_2">
+                            <label class="custom-control-label" for="checkSubCat2">
+                                Sub Category 2
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssPlateNum" [(ngModel)]="is_show1.asset_plate_number">
+                            <label class="custom-control-label" for="checkAssPlateNum">
+                                Asset Plate Number
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssStatus"
-                      [(ngModel)]="is_show1.asset_status">
-                    <label class="custom-control-label" for="checkAssStatus">
-                      Asset Status
-                    </label>
-                  </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkConditionRate" [(ngModel)]="is_show1.condition_rating">
+                            <label class="custom-control-label" for="checkConditionRate">
+                                Condition Rating
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkWarrPer" [(ngModel)]="is_show1.actual_warranty_period">
+                            <label class="custom-control-label" for="checkWarrPer">
+                                Actual Warranty Period
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkOperation" [(ngModel)]="is_show1.operation">
+                            <label class="custom-control-label" for="checkOperation">
+                                Operation
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkProFunc" [(ngModel)]="is_show1.process_function">
+                            <label class="custom-control-label" for="checkProFunc">
+                                Process Function
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkModelNum" [(ngModel)]="is_show1.model_number">
+                            <label class="custom-control-label" for="checkModelNum">
+                                Model Number
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkdetailedDesc" [(ngModel)]="is_show1.detailed_description">
+                            <label class="custom-control-label" for="checkdetailedDesc">
+                                Detailed Description
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkSerialNum" [(ngModel)]="is_show1.serial_number">
+                            <label class="custom-control-label" for="checkSerialNum">
+                                Serial Number
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssStatus" [(ngModel)]="is_show1.asset_status">
+                            <label class="custom-control-label" for="checkAssStatus">
+                                Asset Status
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkWarrStatName" [(ngModel)]="is_show1.warranty_vendor_name">
+                            <label class="custom-control-label" for="checkWarrStatName">
+                                Warranty Vendor Name
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssTagNum" [(ngModel)]="is_show1.asset_tag_number">
+                            <label class="custom-control-label" for="checkAssTagNum">
+                                Asset Tag Number
+                            </label>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkWarrStatName"
-                      [(ngModel)]="is_show1.warranty_vendor_name">
-                    <label class="custom-control-label" for="checkWarrStatName">
-                      Warranty Vendor Name
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssTagNum"
-                      [(ngModel)]="is_show1.asset_tag_number">
-                    <label class="custom-control-label" for="checkAssTagNum">
-                      Asset Tag Number
-                    </label>
-                  </div>
-                </div>
-              </div>
             </accordion-group>
             <accordion-group>
-              <div accordion-heading>
-                <span>Asset Technical Spec</span>
-              </div>
-              <div class="row">
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssIdentity"
-                      [(ngModel)]="is_show1.asset_identity">
-                    <label class="custom-control-label" for="checkAssIdentity">
-                      Asset Identity
-                    </label>
-                  </div>
+                <div accordion-heading>
+                    <span>Asset Technical Spec</span>
                 </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssIdentity" [(ngModel)]="is_show1.asset_identity">
+                            <label class="custom-control-label" for="checkAssIdentity">
+                                Asset Identity
+                            </label>
+                        </div>
+                    </div>
 
-                <div class="col-md-3 col-sm-6">
-                  <div class="custom-control custom-checkbox">
-                    <input (change)="onChange()" type="checkbox" class="custom-control-input" id="checkAssPriCat"
-                      [(ngModel)]="is_show1.asset_primary_category">
-                    <label class="custom-control-label" for="checkAssPriCat">
-                      Asset Primary Category
-                    </label>
-                  </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="custom-control custom-checkbox">
+                            <input (change)="onChange()" type="checkbox" class="custom-control-input"
+                                id="checkAssPriCat" [(ngModel)]="is_show1.asset_primary_category">
+                            <label class="custom-control-label" for="checkAssPriCat">
+                                Asset Primary Category
+                            </label>
+                        </div>
+                    </div>
+
                 </div>
-              </div>
             </accordion-group>
-          </accordion>
+           
+        </accordion>
 
 
           <div class="row mt-3 mb-2">
@@ -735,7 +755,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.parent_location">
                       <ng-template ngx-datatable-header-template>
                         <span>Parent Location</span>
@@ -747,7 +767,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.location_description">
                       <ng-template ngx-datatable-header-template>
                         <span>Location Description</span>
@@ -759,7 +779,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.building">
                       <ng-template ngx-datatable-header-template>
                         <span>building</span>
@@ -770,7 +790,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.address_line_1">
                       <ng-template ngx-datatable-header-template>
                         <span>Address Line 1</span>
@@ -781,7 +801,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.address_line_2">
                       <ng-template ngx-datatable-header-template>
                         <span>Address Line 2</span>
@@ -792,7 +812,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.address_line_3">
                       <ng-template ngx-datatable-header-template>
                         <span>Address Line 3</span>
@@ -803,7 +823,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date" *ngIf="is_show1.city">
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date" *ngIf="is_show1.city">
                       <ng-template ngx-datatable-header-template>
                         <span>City</span>
                       </ng-template>
@@ -813,7 +833,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date" *ngIf="is_show1.state">
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date" *ngIf="is_show1.state">
                       <ng-template ngx-datatable-header-template>
                         <span>State</span>
                       </ng-template>
@@ -830,7 +850,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.postal_code">
                       <ng-template ngx-datatable-header-template>
                         <span>Postal Code</span>
@@ -841,7 +861,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.country">
                       <ng-template ngx-datatable-header-template>
                         <span>Country</span>
@@ -852,7 +872,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.tag_number">
                       <ng-template ngx-datatable-header-template>
                         <span>Tag Number</span>
@@ -863,7 +883,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.service_area">
                       <ng-template ngx-datatable-header-template>
                         <span>Service Area</span>
@@ -881,7 +901,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.maintenance_planner">
                       <ng-template ngx-datatable-header-template>
                         <span>Maintenance Planner</span>
@@ -900,7 +920,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.location_main_contact">
                       <ng-template ngx-datatable-header-template>
                         <span>Location Main Contact</span>
@@ -919,7 +939,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.location_asset_maintenance_manager">
                       <ng-template ngx-datatable-header-template>
                         <span>Location Asset Maintenance Manager</span>
@@ -940,7 +960,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.gis_esri_id">
                       <ng-template ngx-datatable-header-template>
                         <span>GIS ESRI ID</span>
@@ -951,7 +971,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.latitude">
                       <ng-template ngx-datatable-header-template>
                         <span>latitude</span>
@@ -963,7 +983,7 @@
                     </ngx-datatable-column>
 
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.longitude">
                       <ng-template ngx-datatable-header-template>
                         <span>Longitude</span>
@@ -974,7 +994,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.asset_critically">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Criticality</span>
@@ -992,7 +1012,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.cost_center">
                       <ng-template ngx-datatable-header-template>
                         <span>Cost Center</span>
@@ -1009,7 +1029,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.asset_owning_department">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Owning Depart</span>
@@ -1028,7 +1048,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.sub_process_system">
                       <ng-template ngx-datatable-header-template>
                         <span>Sub Process System</span>
@@ -1046,7 +1066,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date" *ngIf="is_show1.brand">
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date" *ngIf="is_show1.brand">
                       <ng-template ngx-datatable-header-template>
                         <span>Brand</span>
                       </ng-template>
@@ -1056,7 +1076,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.size_capacity_1">
                       <ng-template ngx-datatable-header-template>
                         <span>Size Capacity 1</span>
@@ -1068,7 +1088,7 @@
                     </ngx-datatable-column>
 
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.size_capacity_2">
                       <ng-template ngx-datatable-header-template>
                         <span>Size Capacity 2</span>
@@ -1079,7 +1099,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.size_capacity_3">
                       <ng-template ngx-datatable-header-template>
                         <span>Size Capacity 3</span>
@@ -1090,7 +1110,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.maintenance_specification">
                       <ng-template ngx-datatable-header-template>
                         <span>Maintenance Specification</span>
@@ -1111,7 +1131,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.asset_or_component_type">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Or Component Type</span>
@@ -1122,7 +1142,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.badge_no">
                       <ng-template ngx-datatable-header-template>
                         <span>Badge No</span>
@@ -1133,7 +1153,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.size_capacity_1_unit_measurement">
                       <ng-template ngx-datatable-header-template>
                         <span>size_capacity_1_unit_measurement</span>
@@ -1145,7 +1165,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.size_capacity_2_unit_measurement">
                       <ng-template ngx-datatable-header-template>
                         <span>size_capacity_2_unit_measurement</span>
@@ -1157,7 +1177,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.size_capacity_3_unit_measurement">
                       <ng-template ngx-datatable-header-template>
                         <span>size_capacity_3_unit_measurement</span>
@@ -1169,7 +1189,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.measurement_type">
                       <ng-template ngx-datatable-header-template>
                         <span>Measurement Type</span>
@@ -1187,7 +1207,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.main_operation">
                       <ng-template ngx-datatable-header-template>
                         <span>Main Operation</span>
@@ -1205,7 +1225,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.asset_class_asset_category">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Class Asset Category</span>
@@ -1217,7 +1237,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.internal_asset_identity">
                       <ng-template ngx-datatable-header-template>
                         <span>Internal Asset Adentity</span>
@@ -1228,7 +1248,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.sub_category_1">
                       <ng-template ngx-datatable-header-template>
                         <span>Sub Category 1</span>
@@ -1239,7 +1259,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.parent_asset_plate_number">
                       <ng-template ngx-datatable-header-template>
                         <span>Parent Asset Plate Number</span>
@@ -1251,7 +1271,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.purchase_date_installed_handed_over_date">
                       <ng-template ngx-datatable-header-template>
                         <span>Purchase Installed Handed Over Date</span>
@@ -1263,7 +1283,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.warranty">
                       <ng-template ngx-datatable-header-template>
                         <span>Warranty</span>
@@ -1274,7 +1294,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.region">
                       <ng-template ngx-datatable-header-template>
                         <span>Region</span>
@@ -1285,7 +1305,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.handed_over_asset_or_procured">
                       <ng-template ngx-datatable-header-template>
                         <span>Handed Over Asset Or Procured</span>
@@ -1301,7 +1321,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.asset_primary_category">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Primary Category</span>
@@ -1313,7 +1333,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.sub_category_2">
                       <ng-template ngx-datatable-header-template>
                         <span>sub_category_2</span>
@@ -1324,7 +1344,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.asset_plate_number">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Plate Number</span>
@@ -1335,7 +1355,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.condition_rating">
                       <ng-template ngx-datatable-header-template>
                         <span>Condition Rating</span>
@@ -1353,7 +1373,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.actual_warranty_period">
                       <ng-template ngx-datatable-header-template>
                         <span>Actual Warranty Period</span>
@@ -1364,7 +1384,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.operation">
                       <ng-template ngx-datatable-header-template>
                         <span>Operation</span>
@@ -1381,7 +1401,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.process_function">
                       <ng-template ngx-datatable-header-template>
                         <span>Process Function</span>
@@ -1398,7 +1418,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.model_number">
                       <ng-template ngx-datatable-header-template>
                         <span>Model Number</span>
@@ -1409,7 +1429,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.detailed_description">
                       <ng-template ngx-datatable-header-template>
                         <span>Detailed Description</span>
@@ -1420,7 +1440,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.serial_number">
                       <ng-template ngx-datatable-header-template>
                         <span>Serial Number</span>
@@ -1431,7 +1451,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.asset_status">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Status</span>
@@ -1442,7 +1462,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.warranty_vendor_name">
                       <ng-template ngx-datatable-header-template>
                         <span>Warranty Vendor Name</span>
@@ -1453,7 +1473,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.asset_identity">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Identity</span>
@@ -1464,7 +1484,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false" prop="created_date"
+                    <ngx-datatable-column [width]="140" [resizeable]="true" prop="created_date"
                       *ngIf="is_show1.asset_tag_number">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Tag Number</span>
@@ -1475,7 +1495,7 @@
                       </ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column [width]="140" [resizeable]="false">
+                    <ngx-datatable-column [width]="140" [resizeable]="true">
                       <ng-template ngx-datatable-header-template>
                         <span>Asset Attribute</span>
                       </ng-template>
@@ -1915,8 +1935,6 @@
         <div class="col-md-4" *ngIf="assetprimaryshow[0].vehicle_insurance_vendor">
           <div class="form-group" id="vehicle_insurance_vendor">
             <label class="form-control-label">Vehicle Insurance Vendor</label>
-            <!-- <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="vehicle_insurance_vendor" class="form-control" value="{{rowData.asset_identity}}" /> -->
 
             <select class="form-control custom-select custom-select-sm" name="vehicle_insurance_vendor"
               (change)="onKey($event.target.value,$event.target.name,rowData)"
@@ -2196,7 +2214,7 @@
 
                 <ng-select [items]="assetprimarycategory" bindLabel="asset_type_description" bindValue="asset_type_code"
                   formControlName="asset_primary_category" (change)="AssetChange(assetPrimary)"
-                  [(ngModel)]="assetPrimary" id="assetselector" [clearable]="false">
+                  [(ngModel)]="assetPrimary" id="assetselector" [clearable]="false" >
                 </ng-select>
                 <mat-hint
                   *ngIf="firstFormGroup.controls['asset_primary_category'].hasError('required') && firstFormGroup.controls['asset_primary_category'].touched && firstFormGroup.controls['asset_primary_category'].invalid "
@@ -2211,7 +2229,7 @@
               <div class="form-group">
                 <label class="form-control-label">Asset Identity<span class="mandatory">*</span></label>
                 <input type="text" formControlName="asset_identity" class="form-control form-control-sm"
-                  id="asset_identity" (change)="getDetailedDescription()" />
+                  id="asset_identity" (change)="getDetailedDescription()"/>
                 <mat-hint
                   *ngIf="firstFormGroup.controls['asset_identity'].hasError('required') && firstFormGroup.controls['asset_identity'].touched && firstFormGroup.controls['asset_identity'].invalid "
                   class="validation_messages"><small>This field is required</small></mat-hint>
@@ -2239,30 +2257,9 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Type<span class="mandatory">*</span></label>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="custom-control custom-checkbox">
-                      <input type="radio" class="custom-control-input" name="asset_or_component_type" id="assetcategory"
-                        formControlName="asset_or_component_type" value="Asset">
-                      <label class="custom-control-label" for="assetcategory">
-                        Asset
-                      </label>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="custom-control custom-checkbox">
-                      <input type="radio" class="custom-control-input" name="asset_or_component_type"
-                        id="componentcategory" formControlName="asset_or_component_type" value="Component">
-                      <label class="custom-control-label" for="componentcategory">
-                        Component
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <mat-hint
-                  *ngIf="firstFormGroup.controls['asset_or_component_type'].hasError('required') && firstFormGroup.controls['asset_or_component_type'].touched && firstFormGroup.controls['asset_or_component_type'].invalid "
-                  class="validation_messages"><small>This field is required</small></mat-hint>
+                <label class="form-control-label">Type</label>
+                <input type="text" formControlName="asset_or_component_type" class="form-control form-control-sm"
+                  id="asset_or_component_type" (change)="get_asset_or_component_type()" disabled value="{{ asset_or_component }}"/>
               </div>
             </div>
             <div class="col-md-6">
@@ -2306,16 +2303,9 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Specification<span class="mandatory">*</span></label>
-                <!-- <input type="text" formControlName="class_category" class="form-control form-control-sm" value="{{class_category}}" /> -->
 
-                <!-- <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="specification">
-                  <option value="">Please select</option>
-                  <option *ngFor="let specification of specification" [value]="specification.value">
-                    {{ specification.name }}</option>
-                </select> -->
-
-                <ng-select [items]="specification" bindLabel="name" bindValue="value" formControlName="specification" [clearable]="false">
+                <ng-select [items]="specification" bindLabel="name" bindValue="value" formControlName="specification"
+                  [clearable]="false" required>
                 </ng-select>
 
                 <mat-hint
@@ -2377,7 +2367,8 @@
                     {{ region.name }}</option>
                 </select> -->
 
-                <ng-select [items]="region" bindLabel="name" bindValue="value" formControlName="region" [clearable]="false">
+                <ng-select [items]="region" bindLabel="name" bindValue="value" formControlName="region"
+                  [clearable]="false">
                 </ng-select>
 
                 <mat-hint
@@ -2394,7 +2385,8 @@
                     {{ operation.name }}</option>
                 </select> -->
 
-                <ng-select [items]="operation" bindLabel="name" bindValue="value" formControlName="operation" [clearable]="false">
+                <ng-select [items]="operation" bindLabel="name" bindValue="value" formControlName="operation"
+                  [clearable]="false">
                 </ng-select>
               </div>
             </div>
@@ -2427,10 +2419,12 @@
                 </div>
 
                 <input *ngIf="newParent" type="text" placeholder="Enter New Parent"
-                  formControlName="new_parent_location" class="form-control form-control-sm" id="newParent" (change)="getLocationDescription()"/>
+                  formControlName="new_parent_location" class="form-control form-control-sm" id="newParent"
+                  (change)="getLocationDescription()" />
 
                 <ng-select *ngIf="existingParent" [items]="test" bindLabel="description" bindValue="node_id"
-                  formControlName="parent_location" id="existingParent" (change)="getLocationDescription(existLocation)" [(ngModel)]="existLocation">
+                  formControlName="parent_location" id="existingParent" (change)="getLocationDescription(existLocation)"
+                  [(ngModel)]="existLocation">
                 </ng-select>
                 <mat-hint
                   *ngIf="firstFormGroup.controls['parent_location'].hasError('required') && firstFormGroup.controls['parent_location'].touched && firstFormGroup.controls['parent_location'].invalid "
@@ -2451,7 +2445,8 @@
                 </select> -->
 
                 <ng-select [items]="processFunction" bindLabel="name" bindValue="value"
-                  formControlName="process_function" (change)="toggleShowProcessFunction(process_Function)" [(ngModel)]="process_Function" id="processFx" [clearable]="false">
+                  formControlName="process_function" (change)="toggleShowProcessFunction(process_Function)"
+                  [(ngModel)]="process_Function" id="processFx" [clearable]="false">
                 </ng-select>
 
                 <input *ngIf="ShowProcessFunction" type="text" formControlName="process_function"
@@ -2475,8 +2470,8 @@
                 </select> -->
 
                 <ng-select [items]="subProcessSystem" bindLabel="name" bindValue="value"
-                  formControlName="sub_process_system" (change)="toggleShowSubProcessFunction(sub_process_Function)" [(ngModel)]="sub_process_Function"
-                  id="subProcessSystem" [clearable]="false">
+                  formControlName="sub_process_system" (change)="toggleShowSubProcessFunction(sub_process_Function)"
+                  [(ngModel)]="sub_process_Function" id="subProcessSystem" [clearable]="false">
                 </ng-select>
 
 
@@ -2490,8 +2485,9 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Location Description<span class="mandatory">*</span></label>
-                <input type="text" formControlName="location_description" class="form-control form-control-sm" value="{{LocationDescription}}" disabled/>
+                <label class="form-control-label">Location Description</label>
+                <input type="text" formControlName="location_description" class="form-control form-control-sm"
+                  value="{{LocationDescription}}" disabled />
                 <mat-hint
                   *ngIf="firstFormGroup.controls['location_description'].hasError('required') && firstFormGroup.controls['location_description'].touched && firstFormGroup.controls['location_description'].invalid "
                   class="validation_messages"><small>This field is required</small></mat-hint>
@@ -2550,7 +2546,8 @@
                     {{ state.name }}</option>
                 </select> -->
 
-                <ng-select [items]="state" bindLabel="name" bindValue="value" formControlName="state" [clearable]="false">
+                <ng-select [items]="state" bindLabel="name" bindValue="value" formControlName="state"
+                  [clearable]="false">
                 </ng-select>
                 <mat-hint
                   *ngIf="firstFormGroup.controls['state'].hasError('required') && firstFormGroup.controls['state'].touched && firstFormGroup.controls['state'].invalid "
@@ -2589,7 +2586,8 @@
               <div class="form-group">
                 <label class="form-control-label">Service Area<span class="mandatory">*</span></label>
                 <!-- <input type="text" formControlName="service_area" class="form-control form-control-sm" /> -->
-                <ng-select [items]="serviceArea" bindLabel="Name" bindValue="value" formControlName="service_area" [clearable]="false">
+                <ng-select [items]="serviceArea" bindLabel="Name" bindValue="value" formControlName="service_area"
+                  [clearable]="false">
                 </ng-select>
                 <mat-hint
                   *ngIf="firstFormGroup.controls['service_area'].hasError('required') && firstFormGroup.controls['service_area'].touched && firstFormGroup.controls['service_area'].invalid "
@@ -2734,9 +2732,14 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Unit Measurement 1</label>
-                <input type="text" formControlName="size_capacity_1_unit_measurement"
+                <!-- <input type="text" formControlName="size_capacity_1_unit_measurement"
                   class="form-control form-control-sm" id="size_capacity_1_unit_measurement"
-                  (change)="getDetailedDescription()" />
+                  (change)="getDetailedDescription()" /> -->
+
+                <ng-select [items]="measurement_types" bindLabel="desc" bindValue="value"
+                  formControlName="size_capacity_1_unit_measurement" [clearable]="false"
+                  (change)="getUnitMeasurement1(unit_measurement_1)" [(ngModel)]="unit_measurement_1">
+                </ng-select>
               </div>
             </div>
           </div>
@@ -2751,9 +2754,14 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Unit Measurement 2</label>
-                <input type="text" formControlName="size_capacity_2_unit_measurement"
+                <!-- <input type="text" formControlName="size_capacity_2_unit_measurement"
                   class="form-control form-control-sm" id="size_capacity_2_unit_measurement"
-                  (change)="getDetailedDescription()" />
+                  (change)="getDetailedDescription()" /> -->
+
+                <ng-select [items]="measurement_types" bindLabel="desc" bindValue="value"
+                  formControlName="size_capacity_2_unit_measurement" [clearable]="false"
+                  (change)="getUnitMeasurement2(unit_measurement_2)" [(ngModel)]="unit_measurement_2">
+                </ng-select>
               </div>
             </div>
           </div>
@@ -2768,9 +2776,14 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Unit Measurement 3</label>
-                <input type="text" formControlName="size_capacity_3_unit_measurement"
+                <!-- <input type="text" formControlName="size_capacity_3_unit_measurement"
                   class="form-control form-control-sm" id="size_capacity_3_unit_measurement"
-                  (change)="getDetailedDescription()" />
+                  (change)="getDetailedDescription()" /> -->
+
+                  <ng-select [items]="measurement_types" bindLabel="desc" bindValue="value"
+                  formControlName="size_capacity_3_unit_measurement" [clearable]="false"
+                  (change)="getUnitMeasurement3(unit_measurement_3)" [(ngModel)]="unit_measurement_3">
+                </ng-select>
               </div>
             </div>
           </div>
@@ -2798,7 +2811,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Serial Number</label>
+                <label class="form-control-label">Serial Number<span class="mandatory">*</span></label>
                 <input type="text" formControlName="serial_number" class="form-control form-control-sm" />
                 <mat-hint
                   *ngIf="firstFormGroup.controls['serial_number'].hasError('required') && firstFormGroup.controls['serial_number'].touched && firstFormGroup.controls['serial_number'].invalid "
@@ -2823,7 +2836,7 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Purchase Date/Installed/Handed Over</label>
+                <label class="form-control-label">Purchase Date/Installed/Handed Over<span class="mandatory">*</span></label>
                 <input type="date" formControlName="purchase_date_installed_handed_over_date"
                   class="form-control form-control-sm" />
                 <mat-hint
@@ -2901,16 +2914,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Warranty<span class="mandatory">*</span></label>
-                <!-- <input type="text" formControlName="warranty" class="form-control form-control-sm" /> -->
-
-                <!-- <select class="form-control custom-select form-control-sm custom-select-sm" id="warranty"
-                  (change)="checkWarrantyStatus()" formControlName="warranty">
-                  <option value="">Please select</option>
-                  <option *ngFor="let warranty of warranty" [value]="warranty.value">
-                    {{ warranty.name }}</option>
-                </select> -->
-
-                <ng-select [items]="warranty" bindLabel="name" bindValue="value" formControlName="warranty" [clearable]="false">
+                <ng-select [items]="warranty" bindLabel="name" bindValue="value" formControlName="warranty"
+                  [clearable]="false">
                 </ng-select>
 
                 <mat-hint
@@ -3502,7 +3507,7 @@
 
   <div class="modal-footer">
     <button *ngIf="modalRegisterAsset" class="btn btn-default btn-sm mr-auto" type="submit"
-      (click)="submitRegistration()">
+      (click)="submitRegistration()" [disabled]= "!firstFormGroup.valid"> 
       Register
     </button>
 
