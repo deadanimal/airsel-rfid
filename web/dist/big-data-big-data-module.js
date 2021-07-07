@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"header pb-6\">\n  <div class=\"container-fluid\">\n    <div class=\"header-body\">\n      <div class=\"row align-items-center py-4\">\n        <div class=\"col-lg-6 col-7\">\n          <h6 class=\"h2 text-dark d-inline-block mb-0\">\n            Big Data Analytics - Total Asset Maintenance\n          </h6>\n\n          <nav aria-label=\"breadcrumb\" class=\"d-none d-md-inline-block ml-md-4\">\n            <ol class=\"breadcrumb breadcrumb-links breadcrumb-dark\">\n              <li class=\"breadcrumb-item\">\n                <a href=\"javascript:void(0)\">\n                  <i class=\"far fa-chart-bar text-dark\"> </i>\n                </a>\n              </li>\n            </ol>\n          </nav>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div class=\"container-fluid mt--6\">\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card\">\n        <div class=\"card-header\">\n          <div class=\"row\">\n            <div class=\"col\">\n              <h4 class=\"mb-0\">Search filter</h4>\n            </div>\n            <div class=\"col-auto text-right\">\n              <button class=\"btn btn-default btn-sm\">Search</button>\n              <button class=\"btn btn-secondary btn-sm\">Reset</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"card-body\">\n          <div class=\"row\">\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Owning Organization</label>\n                <select class=\"form-control form-control-sm\">\n                  <option value=\"\">Please select</option>\n                </select>\n              </div>\n            </div>\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Work Category</label>\n                <select class=\"form-control form-control-sm\">\n                  <option value=\"\">Please select</option>\n                </select>\n              </div>\n            </div>\n          </div>\n          <div class=\"row\">\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Date Range</label>\n                <input\n                  type=\"text\"\n                  class=\"form-control form-control-sm\"\n                  placeholder=\"Please select date range\"\n                  bsDaterangepicker\n                  [bsConfig]=\"{\n                    isAnimated: true,\n                    containerClass: 'theme-default',\n                    rangeInputFormat: 'MM/DD/YYYY',\n                    dateInputFormat: 'MM/DD/YYYY'\n                  }\"\n                />\n              </div>\n            </div>\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Region</label>\n                <select class=\"form-control form-control-sm\">\n                  <option value=\"\">Please select</option>\n                </select>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card\">\n        <div class=\"card-header\">\n          <h3 class=\"mb-0\">\n            WAMS: Total Asset Maintenance generated in March 2019\n          </h3>\n        </div>\n        <div class=\"card-body\">\n          <small\n            >Total Asset Maintenance generated in WAMS in March 2019:\n            <span class=\"font-weight-bolder\" style=\"font-size: 24px;\"\n              >8,341 nos</span\n            ></small\n          >\n\n          <div class=\"row pt-3\">\n            <div class=\"col-lg-3 col-xs-12\">\n              <div id=\"piedivone\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">Distribution</h3>\n            </div>\n\n            <div class=\"col-lg-3 col-xs-12\">\n              <div id=\"piedivtwo\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">ES-D</h3>\n            </div>\n\n            <div class=\"col-lg-3 col-xs-12\">\n              <div id=\"piedivthree\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">NRW</h3>\n            </div>\n\n            <div class=\"col-lg-3 col-xs-12\">\n              <div id=\"piedivfour\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">PD-N</h3>\n            </div>\n          </div>\n\n          <div class=\"row pt-3\">\n            <div class=\"col-lg-1\"></div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivfive\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">SCADA</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivsix\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">WQ</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivseven\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">FLEET</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piediveight\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">PD-S</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivnine\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">CBS</h3>\n            </div>\n\n            <div class=\"col-lg-1\"></div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"header pb-6\">\n  <div class=\"container-fluid\">\n    <div class=\"header-body\">\n      <div class=\"row align-items-center py-4\">\n        <div class=\"col-lg-6 col-7\">\n          <h6 class=\"h2 text-dark d-inline-block mb-0\">\n            Big Data Analytics - Total Asset Maintenance\n          </h6>\n\n          <nav aria-label=\"breadcrumb\" class=\"d-none d-md-inline-block ml-md-4\">\n            <ol class=\"breadcrumb breadcrumb-links breadcrumb-dark\">\n              <li class=\"breadcrumb-item\">\n                <a href=\"javascript:void(0)\">\n                  <i class=\"far fa-chart-bar text-dark\"> </i>\n                </a>\n              </li>\n            </ol>\n          </nav>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div class=\"container-fluid mt--6\">\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card\">\n        <div class=\"card-header\">\n          <div class=\"row\">\n            <div class=\"col\">\n              <h4 class=\"mb-0\">Search filter</h4>\n            </div>\n            <div class=\"col-auto text-right\">\n              <button class=\"btn btn-default btn-sm\">Search</button>\n              <button class=\"btn btn-secondary btn-sm\">Reset</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"card-body\">\n          <div class=\"row\">\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Owning Organization</label>\n                <select class=\"form-control form-control-sm\">\n                  <option value=\"\">Please select</option>\n                </select>\n              </div>\n            </div>\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Work Category</label>\n                <select class=\"form-control form-control-sm\">\n                  <option value=\"\">Please select</option>\n                </select>\n              </div>\n            </div>\n          </div>\n          <div class=\"row\">\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Date Range</label>\n                <input\n                  type=\"text\"\n                  class=\"form-control form-control-sm\"\n                  placeholder=\"Please select date range\"\n                  bsDaterangepicker\n                  [bsConfig]=\"{\n                    isAnimated: true,\n                    containerClass: 'theme-default',\n                    rangeInputFormat: 'MM/DD/YYYY',\n                    dateInputFormat: 'MM/DD/YYYY'\n                  }\"\n                />\n              </div>\n            </div>\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Region</label>\n                <select class=\"form-control form-control-sm\">\n                  <option value=\"\">Please select</option>\n                </select>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card\">\n        <div class=\"card-header\">\n          <h3 class=\"mb-0\">\n            WAMS: Total Asset Maintenance generated in March 2019\n          </h3>\n        </div>\n        <div class=\"card-body\">\n          <small\n            >Total Asset Maintenance generated in WAMS in March 2019:\n            <span class=\"font-weight-bolder\" style=\"font-size: 24px;\"\n              >8,341 nos</span\n            ></small\n          >\n\n          <div class=\"row pt-3\">\n            <div class=\"col-lg-1\"></div>\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivone\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">CBS</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivtwo\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">DISTRIBUTION</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivthree\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">ESD</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivfour\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">FLEET</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivfive\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">LAND</h3>\n            </div>\n            <div class=\"col-lg-1\"></div>\n          </div>\n\n          <div class=\"row pt-3\">\n            <div class=\"col-lg-1\"></div>\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivsix\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">NRW</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivseven\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">PD-N</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piediveight\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">PD-S</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivnine\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">SCADA</h3>\n            </div>\n\n            <div class=\"col-lg-2 col-xs-12\">\n              <div id=\"piedivten\" style=\"width: 100%;\"></div>\n              <h3 class=\"m-0 text-center\">WQ</h3>\n            </div>\n\n            <div class=\"col-lg-1\"></div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n");
 
 /***/ }),
 
@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"header pb-6\">\n  <div class=\"container-fluid\">\n    <div class=\"header-body\">\n      <div class=\"row align-items-center py-4\">\n        <div class=\"col-lg-6 col-7\">\n          <h6 class=\"h2 text-dark d-inline-block mb-0\">\n            Big Data Analytics - Total Asset Registered\n          </h6>\n\n          <nav aria-label=\"breadcrumb\" class=\"d-none d-md-inline-block ml-md-4\">\n            <ol class=\"breadcrumb breadcrumb-links breadcrumb-dark\">\n              <li class=\"breadcrumb-item\">\n                <a href=\"javascript:void(0)\">\n                  <i class=\"far fa-chart-bar text-dark\"> </i>\n                </a>\n              </li>\n            </ol>\n          </nav>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div class=\"container-fluid mt--6\">\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card\">\n        <div class=\"card-header\">\n          <div class=\"row\">\n            <div class=\"col\">\n              <h4 class=\"mb-0\">Search filter</h4>\n            </div>\n            <div class=\"col-auto text-right\">\n              <button class=\"btn btn-default btn-sm\" (click)=\"filter()\">Search</button>\n              <button class=\"btn btn-secondary btn-sm\" (click)=\"getAssetRegistered()\">Reset</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"card-body\">\n          <div class=\"row\">\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Owning Organization</label>\n                <select class=\"form-control form-control-sm\" [(ngModel)] = \"asset_owning\">\n                  <option value=\"\">Please select</option>\n                  <option *ngFor=\"let assetowningdepartment of assetowningdepartment\" value=\"{{assetowningdepartment.value}}\">\n                    {{assetowningdepartment.name}}\n                  </option>\n                </select>\n              </div>\n            </div>\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Date Range</label>\n                <input\n                  type=\"text\"\n                  class=\"form-control form-control-sm\"\n                  placeholder=\"Please select date range\"\n                  bsDaterangepicker\n                  [(ngModel)] = \"selected_date\"\n                  [bsConfig]=\"{\n                    isAnimated: true,\n                    containerClass: 'theme-default',\n                    rangeInputFormat: 'MM/DD/YYYY',\n                    dateInputFormat: 'MM/DD/YYYY'\n                  }\"\n                />\n              </div>\n            </div>\n           </div>\n          \n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card\">\n        <div class=\"card-header\">\n          <h3 class=\"mb-0\">WAMS: Total Asset Registered</h3>\n        </div>\n        <div class=\"card-body\">\n          <h3 class=\"mb-0\">Asset Registered: <strong>{{ asset_registered_length }} nos</strong></h3>\n          <small>Data as of {{dateToday | date:'MMMM d, y'}}</small>\n          <div id=\"chartdivtwo\" style=\"width: 100%; height: 500px;\"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"header pb-6\">\n  <div class=\"container-fluid\">\n    <div class=\"header-body\">\n      <div class=\"row align-items-center py-4\">\n        <div class=\"col-lg-6 col-7\">\n          <h6 class=\"h2 text-dark d-inline-block mb-0\">\n            Big Data Analytics - Total Asset Registered\n          </h6>\n\n          <nav aria-label=\"breadcrumb\" class=\"d-none d-md-inline-block ml-md-4\">\n            <ol class=\"breadcrumb breadcrumb-links breadcrumb-dark\">\n              <li class=\"breadcrumb-item\">\n                <a href=\"javascript:void(0)\">\n                  <i class=\"far fa-chart-bar text-dark\"> </i>\n                </a>\n              </li>\n            </ol>\n          </nav>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div class=\"container-fluid mt--6\">\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card\">\n        <div class=\"card-header\">\n          <div class=\"row\">\n            <div class=\"col\">\n              <h4 class=\"mb-0\">Search filter</h4>\n            </div>\n            <div class=\"col-auto text-right\">\n              <button class=\"btn btn-default btn-sm\" (click)=\"filter()\">Search</button>\n              <button class=\"btn btn-secondary btn-sm\" (click)=\"getAssetRegistered()\">Reset</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"card-body\">\n          <div class=\"row\">\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Owning Organization</label>\n                <select class=\"form-control form-control-sm\" [(ngModel)]=\"asset_owning\">\n                  <option value=\"\">Please select</option>\n                  <option *ngFor=\"let assetowningdepartment of assetowningdepartment\"\n                    value=\"{{assetowningdepartment.value}}\">\n                    {{assetowningdepartment.name}}\n                  </option>\n                </select>\n              </div>\n            </div>\n            <div class=\"col-lg-6 col-xs-12\">\n              <div class=\"form-group\">\n                <label class=\"form-control-label\">Date Range</label>\n                <input type=\"text\" class=\"form-control form-control-sm\" placeholder=\"Please select date range\"\n                  bsDaterangepicker [(ngModel)]=\"selected_date\" [bsConfig]=\"{\n                    isAnimated: true,\n                    containerClass: 'theme-default',\n                    rangeInputFormat: 'MM/DD/YYYY',\n                    dateInputFormat: 'MM/DD/YYYY'\n                  }\" />\n              </div>\n            </div>\n          </div>\n\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"row\">\n    <div class=\"col\">\n      <div class=\"card\">\n        <div class=\"card-header\">\n          <h3 class=\"mb-0\">WAMS: Total Asset Registered</h3>\n        </div>\n        <div class=\"card-body\">\n          <h3 class=\"mb-0\">Asset Registered: <strong>{{ asset_registered_length }} nos</strong></h3>\n          <small>Data as of {{dateToday | date:'MMMM d, y'}}</small>\n          <div id=\"chartdivtwo\" style=\"width: 100%; height: 500px;\"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>");
 
 /***/ }),
 
@@ -484,6 +484,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @amcharts/amcharts4/core */ "./node_modules/@amcharts/amcharts4/core.js");
 /* harmony import */ var _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @amcharts/amcharts4/charts */ "./node_modules/@amcharts/amcharts4/charts.js");
 /* harmony import */ var _amcharts_amcharts4_themes_animated__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @amcharts/amcharts4/themes/animated */ "./node_modules/@amcharts/amcharts4/themes/animated.js");
+/* harmony import */ var src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/services/assets/assets.service */ "./src/app/shared/services/assets/assets.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_services_work_order_activity_completion_work_order_activity_completion_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service */ "./src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service.ts");
+/* harmony import */ var src_app_shared_services_WorkOrderActivityCompletionAssetLocationAssetList_WorkOrderActivityCompletionAssetLocationAssetList_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.service */ "./src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.service.ts");
+
+
+
+
 
 
 
@@ -491,24 +499,301 @@ __webpack_require__.r(__webpack_exports__);
 
 _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["useTheme"](_amcharts_amcharts4_themes_animated__WEBPACK_IMPORTED_MODULE_4__["default"]);
 var AnalyticsTamComponent = /** @class */ (function () {
-    function AnalyticsTamComponent(zone) {
+    function AnalyticsTamComponent(zone, assetsService, workOrderActivityCompletionService, WOACALALS) {
         this.zone = zone;
+        this.assetsService = assetsService;
+        this.workOrderActivityCompletionService = workOrderActivityCompletionService;
+        this.WOACALALS = WOACALALS;
     }
-    AnalyticsTamComponent.prototype.ngOnInit = function () { };
-    AnalyticsTamComponent.prototype.ngAfterViewInit = function () {
+    AnalyticsTamComponent.prototype.ngOnInit = function () {
+        this.getAssets();
+    };
+    AnalyticsTamComponent.prototype.getAssets = function () {
         var _this = this;
-        this.zone.runOutsideAngular(function () {
-            _this.initPieOne();
-            _this.initPieTwo();
-            _this.initPieThree();
-            _this.initPieFour();
-            _this.initPieFive();
-            _this.initPieSix();
-            _this.initPieSeven();
-            _this.initPieEight();
-            _this.initPieNine();
+        this.assetsService.get().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (x) { return x.filter(function (i) { return i.owning_access_group != ""; }); })).subscribe(function (response) {
+            console.log('response from API is ', response);
+            _this.assets = response;
+            console.log('assets', _this.assets);
+            _this.getWorkOrderActivity();
+        }, function (error) {
+            console.log('Error is ', error);
         });
     };
+    AnalyticsTamComponent.prototype.getWorkOrderActivity = function () {
+        var _this = this;
+        // let temp = []
+        this.workOrderActivityCompletionService.get().subscribe(function (response) {
+            console.log('response from API is ', response);
+            _this.WorkOrderActivity = response;
+            console.log("WorkOrderActivity", _this.WorkOrderActivity);
+            _this.getChartData();
+            // this.initChartOne();
+        }, function (error) {
+            console.log('Error is ', error);
+        });
+    };
+    AnalyticsTamComponent.prototype.getChartData = function () {
+        var _this = this;
+        this.workOrderActivityCompletionService;
+        var cbs = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var distribution = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var esd = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var fleet = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var land = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var nrw = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var pdn = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var pds = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var scada = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var wq = [
+            { type: "Preventive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7") },
+            { type: "Corrective Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6") },
+            { type: "Predictive Maintenance", total: 0, color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000") },
+        ];
+        var temp = this.WorkOrderActivity;
+        var temp2;
+        var temp3;
+        console.log("temp", temp);
+        var _loop_1 = function (j) {
+            console.log("id : ", temp[j]);
+            this_1.WOACALALS.get().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (x) { return x.filter(function (i) { return i.id == temp[j].asset_location_asset_list[0]; }); })).subscribe(function (response) {
+                console.log('response from API is ', response);
+                temp2 = response;
+                console.log("temp2", temp2);
+                temp3 = _this.assets.filter(function (value) { return value.asset_id.includes(temp2[0].asset_id); });
+                console.log("temp3 debug", temp3);
+                if (temp3[0].owning_access_group == "CBS") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        cbs[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        cbs[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        cbs[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                else if (temp3[0].owning_access_group == "DISTRIBUTION") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        distribution[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        distribution[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        distribution[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                else if (temp3[0].owning_access_group == "ES-D") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        esd[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        esd[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        esd[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                else if (temp3[0].owning_access_group == "FLEET") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        fleet[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        fleet[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        fleet[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                else if (temp3[0].owning_access_group == "LAND") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        land[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        land[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        land[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                else if (temp3[0].owning_access_group == "NRW") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        nrw[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        nrw[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        nrw[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                else if (temp3[0].owning_access_group == "PD-N") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        pdn[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        pdn[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        pdn[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                else if (temp3[0].owning_access_group == "PD-S") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        pds[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        pds[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        pds[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                else if (temp3[0].owning_access_group == "SCADA") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        scada[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        scada[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        scada[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                else if (temp3[0].owning_access_group == "WQ") {
+                    if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
+                        wq[0].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "CORRECTIVE MAINTENANCE") {
+                        wq[1].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
+                        wq[2].total += temp[j].asset_location_asset_list.length;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
+                }
+                console.log("cbs", cbs);
+                console.log("dist", distribution);
+                console.log("esd", esd);
+                console.log("fleet", fleet);
+                console.log("land", land);
+                console.log("nrw", nrw);
+                console.log("pdn", pdn);
+                console.log("pds", pds);
+                console.log("scada", scada);
+                console.log("wq", wq);
+                _this.ESD = esd;
+                _this.CBS = cbs;
+                _this.DISTRIBUTION = distribution;
+                _this.ESD = esd;
+                _this.FLEET = fleet;
+                _this.LAND = land;
+                _this.NRW = nrw;
+                _this.PDN = pdn;
+                _this.PDS = pds;
+                _this.SCADA = scada;
+                _this.WQ = wq;
+                _this.initPieOne();
+                _this.initPieTwo();
+                _this.initPieThree();
+                _this.initPieFour();
+                _this.initPieFive();
+                _this.initPieSix();
+                _this.initPieSeven();
+                _this.initPieEight();
+                _this.initPieNine();
+                _this.initPieTen();
+                // this.chartData = data;
+                // console.log("Chartdata", this.chartData);
+                _this.initPieTwo();
+            }, function (error) {
+                console.log('Error is ', error);
+            });
+        };
+        var this_1 = this;
+        for (var j in temp) {
+            _loop_1(j);
+        }
+    };
+    // ngAfterViewInit() {
+    //   this.zone.runOutsideAngular(() => {
+    //     this.initPieOne();
+    //     this.initPieTwo();
+    //     this.initPieThree();
+    //     this.initPieFour();
+    //     this.initPieFive();
+    //     this.initPieSix();
+    //     this.initPieSeven();
+    //     this.initPieEight();
+    //     this.initPieNine();
+    //     this.initPieTen();
+    //   });
+    // }
     AnalyticsTamComponent.prototype.ngOnDestroy = function () {
         var _this = this;
         this.zone.runOutsideAngular(function () {
@@ -530,28 +815,14 @@ var AnalyticsTamComponent = /** @class */ (function () {
                 _this.pieeight.dispose();
             if (_this.pienine)
                 _this.pienine.dispose();
+            if (_this.pieten)
+                _this.pieten.dispose();
         });
     };
     AnalyticsTamComponent.prototype.initPieOne = function () {
         var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piedivone", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        chart.data = [
-            {
-                type: "Preventive Maintenance",
-                total: 120,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7"),
-            },
-            {
-                type: "Corrective Maintenance",
-                total: 0,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6"),
-            },
-            {
-                type: "Predictive Maintenance",
-                total: 0,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000"),
-            },
-        ];
+        chart.data = this.CBS;
         chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
         // chart.depth = 120;
         var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
@@ -571,23 +842,7 @@ var AnalyticsTamComponent = /** @class */ (function () {
     AnalyticsTamComponent.prototype.initPieTwo = function () {
         var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piedivtwo", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        chart.data = [
-            {
-                type: "Preventive Maintenance",
-                total: 2492,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7"),
-            },
-            {
-                type: "Corrective Maintenance",
-                total: 17,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6"),
-            },
-            {
-                type: "Predictive Maintenance",
-                total: 400,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000"),
-            },
-        ];
+        chart.data = this.DISTRIBUTION;
         chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
         // chart.depth = 120;
         var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
@@ -607,23 +862,7 @@ var AnalyticsTamComponent = /** @class */ (function () {
     AnalyticsTamComponent.prototype.initPieThree = function () {
         var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piedivthree", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        chart.data = [
-            {
-                type: "Preventive Maintenance",
-                total: 1547,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7"),
-            },
-            {
-                type: "Corrective Maintenance",
-                total: 4,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6"),
-            },
-            {
-                type: "Predictive Maintenance",
-                total: 0,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000"),
-            },
-        ];
+        chart.data = this.ESD;
         chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
         // chart.depth = 120;
         var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
@@ -643,23 +882,7 @@ var AnalyticsTamComponent = /** @class */ (function () {
     AnalyticsTamComponent.prototype.initPieFour = function () {
         var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piedivfour", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        chart.data = [
-            {
-                type: "Preventive Maintenance",
-                total: 1345,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7"),
-            },
-            {
-                type: "Corrective Maintenance",
-                total: 19,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6"),
-            },
-            {
-                type: "Predictive Maintenance",
-                total: 7,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000"),
-            },
-        ];
+        chart.data = this.FLEET;
         chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
         // chart.depth = 120;
         var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
@@ -679,23 +902,7 @@ var AnalyticsTamComponent = /** @class */ (function () {
     AnalyticsTamComponent.prototype.initPieFive = function () {
         var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piedivfive", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        chart.data = [
-            {
-                type: "Preventive Maintenance",
-                total: 3,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7"),
-            },
-            {
-                type: "Corrective Maintenance",
-                total: 55,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6"),
-            },
-            {
-                type: "Predictive Maintenance",
-                total: 0,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000"),
-            },
-        ];
+        chart.data = this.LAND;
         chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
         // chart.depth = 120;
         var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
@@ -715,23 +922,7 @@ var AnalyticsTamComponent = /** @class */ (function () {
     AnalyticsTamComponent.prototype.initPieSix = function () {
         var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piedivsix", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        chart.data = [
-            {
-                type: "Preventive Maintenance",
-                total: 11,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7"),
-            },
-            {
-                type: "Corrective Maintenance",
-                total: 4,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6"),
-            },
-            {
-                type: "Predictive Maintenance",
-                total: 0,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000"),
-            },
-        ];
+        chart.data = this.NRW;
         chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
         // chart.depth = 120;
         var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
@@ -751,23 +942,7 @@ var AnalyticsTamComponent = /** @class */ (function () {
     AnalyticsTamComponent.prototype.initPieSeven = function () {
         var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piedivseven", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        chart.data = [
-            {
-                type: "Preventive Maintenance",
-                total: 133,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7"),
-            },
-            {
-                type: "Corrective Maintenance",
-                total: 92,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6"),
-            },
-            {
-                type: "Predictive Maintenance",
-                total: 0,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000"),
-            },
-        ];
+        chart.data = this.PDN;
         chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
         // chart.depth = 120;
         var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
@@ -787,23 +962,7 @@ var AnalyticsTamComponent = /** @class */ (function () {
     AnalyticsTamComponent.prototype.initPieEight = function () {
         var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piediveight", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        chart.data = [
-            {
-                type: "Preventive Maintenance",
-                total: 2050,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7"),
-            },
-            {
-                type: "Corrective Maintenance",
-                total: 30,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6"),
-            },
-            {
-                type: "Predictive Maintenance",
-                total: 0,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000"),
-            },
-        ];
+        chart.data = this.PDS;
         chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
         // chart.depth = 120;
         var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
@@ -823,23 +982,7 @@ var AnalyticsTamComponent = /** @class */ (function () {
     AnalyticsTamComponent.prototype.initPieNine = function () {
         var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piedivnine", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        chart.data = [
-            {
-                type: "Preventive Maintenance",
-                total: 12,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#2174C7"),
-            },
-            {
-                type: "Corrective Maintenance",
-                total: 0,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#D8D6D6"),
-            },
-            {
-                type: "Predictive Maintenance",
-                total: 0,
-                color: _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("#BF9000"),
-            },
-        ];
+        chart.data = this.SCADA;
         chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
         // chart.depth = 120;
         var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
@@ -856,8 +999,31 @@ var AnalyticsTamComponent = /** @class */ (function () {
         series.slices.template.propertyFields.fill = "color";
         this.pienine = chart;
     };
+    AnalyticsTamComponent.prototype.initPieTen = function () {
+        var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["create"]("piedivten", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieChart3D"]);
+        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+        chart.data = this.WQ;
+        chart.innerRadius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](40);
+        // chart.depth = 120;
+        var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_3__["PieSeries3D"]());
+        series.dataFields.value = "total";
+        // series.dataFields.depthValue = "total";
+        series.dataFields.category = "type";
+        series.slices.template.cornerRadius = 5;
+        series.colors.step = 3;
+        series.ticks.template.disabled = true;
+        series.alignLabels = false;
+        series.labels.template.text = "{value}";
+        series.labels.template.radius = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["percent"](-40);
+        series.labels.template.fill = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_2__["color"]("white");
+        series.slices.template.propertyFields.fill = "color";
+        this.pieten = chart;
+    };
     AnalyticsTamComponent.ctorParameters = function () { return [
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] }
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] },
+        { type: src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_5__["AssetsService"] },
+        { type: src_app_shared_services_work_order_activity_completion_work_order_activity_completion_service__WEBPACK_IMPORTED_MODULE_7__["WorkOrderActivityCompletionService"] },
+        { type: src_app_shared_services_WorkOrderActivityCompletionAssetLocationAssetList_WorkOrderActivityCompletionAssetLocationAssetList_service__WEBPACK_IMPORTED_MODULE_8__["WorkOrderActivityCompletionAssetLocationAssetListService"] }
     ]; };
     AnalyticsTamComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -865,7 +1031,10 @@ var AnalyticsTamComponent = /** @class */ (function () {
             template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./analytics-tam.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/core/admin/big-data/analytics-tam/analytics-tam.component.html")).default,
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./analytics-tam.component.scss */ "./src/app/core/admin/big-data/analytics-tam/analytics-tam.component.scss")).default]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
+            src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_5__["AssetsService"],
+            src_app_shared_services_work_order_activity_completion_work_order_activity_completion_service__WEBPACK_IMPORTED_MODULE_7__["WorkOrderActivityCompletionService"],
+            src_app_shared_services_WorkOrderActivityCompletionAssetLocationAssetList_WorkOrderActivityCompletionAssetLocationAssetList_service__WEBPACK_IMPORTED_MODULE_8__["WorkOrderActivityCompletionAssetLocationAssetListService"]])
     ], AnalyticsTamComponent);
     return AnalyticsTamComponent;
 }());
@@ -1326,10 +1495,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_shared_services_work_order_activity_completion_work_order_activity_completion_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service */ "./src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service.ts");
 /* harmony import */ var src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/assets/assets.service */ "./src/app/shared/services/assets/assets.service.ts");
-/* harmony import */ var _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @amcharts/amcharts4/core */ "./node_modules/@amcharts/amcharts4/core.js");
-/* harmony import */ var _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @amcharts/amcharts4/charts */ "./node_modules/@amcharts/amcharts4/charts.js");
-/* harmony import */ var _amcharts_amcharts4_themes_animated__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @amcharts/amcharts4/themes/animated */ "./node_modules/@amcharts/amcharts4/themes/animated.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var src_app_shared_services_WorkOrderActivityCompletionAssetLocationAssetList_WorkOrderActivityCompletionAssetLocationAssetList_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.service */ "./src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.service.ts");
+/* harmony import */ var _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @amcharts/amcharts4/core */ "./node_modules/@amcharts/amcharts4/core.js");
+/* harmony import */ var _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @amcharts/amcharts4/charts */ "./node_modules/@amcharts/amcharts4/charts.js");
+/* harmony import */ var _amcharts_amcharts4_themes_animated__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @amcharts/amcharts4/themes/animated */ "./node_modules/@amcharts/amcharts4/themes/animated.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 
 
 
@@ -1338,12 +1509,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-_amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__["useTheme"](_amcharts_amcharts4_themes_animated__WEBPACK_IMPORTED_MODULE_6__["default"]);
+
+
+_amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_5__["useTheme"](_amcharts_amcharts4_themes_animated__WEBPACK_IMPORTED_MODULE_7__["default"]);
 var AnalyticsWaComponent = /** @class */ (function () {
-    function AnalyticsWaComponent(zone, workOrderActivityCompletionService, assetsService) {
+    function AnalyticsWaComponent(zone, workOrderActivityCompletionService, assetsService, WOACALALS) {
         this.zone = zone;
         this.workOrderActivityCompletionService = workOrderActivityCompletionService;
         this.assetsService = assetsService;
+        this.WOACALALS = WOACALALS;
         this.assetowningdepartment = [
             { value: "CBS", name: "CUSTOMER BILLING SERVICES" },
             { value: "DISTRIBUTION", name: "DISTRIBUTION" },
@@ -1358,8 +1532,8 @@ var AnalyticsWaComponent = /** @class */ (function () {
         ];
     }
     AnalyticsWaComponent.prototype.ngOnInit = function () {
-        this.getWorkOrderActivity();
-        // this.getAssets();
+        // this.getWorkOrderActivity();
+        this.getAssets();
     };
     AnalyticsWaComponent.prototype.getWorkOrderActivity = function () {
         var _this = this;
@@ -1372,7 +1546,7 @@ var AnalyticsWaComponent = /** @class */ (function () {
             // this.updateFilter();
             _this.getTotalBackLog();
             _this.getChartData();
-            _this.initChartOne();
+            // this.initChartOne();
         }, function (error) {
             console.log('Error is ', error);
         });
@@ -1387,9 +1561,9 @@ var AnalyticsWaComponent = /** @class */ (function () {
         this.backLog = this.WorkOrderActivity.filter(function (value) { return value.status.includes("BackLog"); });
         console.log("BackLog", this.backLog);
         for (var i in this.backLog) {
-            var filteredData = Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') < Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(today, 'yyyy-MM-dd', 'en_US');
+            var filteredData = Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') < Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(today, 'yyyy-MM-dd', 'en_US');
             console.log("filtered backlog", filteredData);
-            if (Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') < Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(today, 'yyyy-MM-dd', 'en_US'))
+            if (Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') < Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(today, 'yyyy-MM-dd', 'en_US'))
                 yesterdayBacklog[i] = this.backLog[i];
             // if (formatDate(this.backLog[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(this.yesterday, 'yyyy-MM-dd', 'en_US'))
             //   yesterdayBacklog[i] = this.backLog[i]
@@ -1410,83 +1584,202 @@ var AnalyticsWaComponent = /** @class */ (function () {
         console.log("Temp Total work order", this.tempTotalWorkOrder);
     };
     AnalyticsWaComponent.prototype.getChartData = function () {
+        var _this = this;
         this.workOrderActivityCompletionService;
         var data = [
-            { category: "CBS", value1: 0, value2: 0 },
-            { category: "DISTRIBUTION", value1: 0, value2: 0 },
-            { category: "ES-D", value1: 0, value2: 0 },
-            { category: "FLEET", value1: 0, value2: 0 },
-            { category: "LAND", value1: 0, value2: 0 },
-            { category: "NRW", value1: 0, value2: 0 },
-            { category: "PD-N", value1: 0, value2: 0 },
-            { category: "PD-S", value1: 0, value2: 0 },
-            { category: "SCADA", value1: 0, value2: 0 },
-            { category: "WQ", value1: 0, value2: 0 },
+            { category: "CBS", value1: 0, value2: 0, value3: 0 },
+            { category: "DISTRIBUTION", value1: 0, value2: 0, value3: 0 },
+            { category: "ES-D", value1: 0, value2: 0, value3: 0 },
+            { category: "FLEET", value1: 0, value2: 0, value3: 0 },
+            { category: "LAND", value1: 0, value2: 0, value3: 0 },
+            { category: "NRW", value1: 0, value2: 0, value3: 0 },
+            { category: "PD-N", value1: 0, value2: 0, value3: 0 },
+            { category: "PD-S", value1: 0, value2: 0, value3: 0 },
+            { category: "SCADA", value1: 0, value2: 0, value3: 0 },
+            { category: "WQ", value1: 0, value2: 0, value3: 0 },
         ];
-        for (var i in this.workOrderActivityCompletionService) {
-            if (this.workOrderActivityCompletionService[i].owning_organization == "CBS") {
-                data[0].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[0].value2 += 1;
+        var temp = this.WorkOrderActivity;
+        var temp2;
+        var temp3;
+        var test = [];
+        console.log("temp", temp);
+        var _loop_1 = function (j) {
+            console.log("id : ", temp[j].asset_location_asset_list[0]);
+            this_1.WOACALALS.get().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (x) { return x.filter(function (i) { return i.id == temp[j].asset_location_asset_list[0]; }); })).subscribe(function (response) {
+                console.log('response from API is ', response);
+                temp2 = response;
+                console.log("temp2", temp2);
+                temp3 = _this.assets.filter(function (value) { return value.asset_id.includes(temp2[0].asset_id); });
+                console.log("temp3 debug", temp3);
+                console.log("owning org", temp3[0].owning_access_group);
+                if (temp3[0].owning_access_group == "CBS") {
+                    if (temp[j].status == "BackLog") {
+                        data[0].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[0].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[0].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
-            else if (this.workOrderActivityCompletionService[i].owning_organization == "DISTRIBUTION") {
-                data[1].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[1].value2 += 1;
+                else if (temp3[0].owning_access_group == "DISTRIBUTION") {
+                    if (temp[j].status == "BackLog") {
+                        data[1].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[1].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[1].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
-            else if (this.workOrderActivityCompletionService[i].owning_organization == "ES-D") {
-                data[2].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[2].value2 += 1;
+                else if (temp3[0].owning_access_group == "ES-D") {
+                    if (temp[j].status == "BackLog") {
+                        data[2].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[2].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[2].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
-            else if (this.workOrderActivityCompletionService[i].owning_organization == "FLEET") {
-                data[3].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[3].value2 += 1;
+                else if (temp3[0].owning_access_group == "FLEET") {
+                    // data[3].value1 += 1;
+                    if (temp[j].status == "BackLog") {
+                        data[3].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[3].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[3].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
-            else if (this.workOrderActivityCompletionService[i].owning_organization == "LAND") {
-                data[4].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[4].value2 += 1;
+                else if (temp3[0].owning_access_group == "LAND") {
+                    if (temp[j].status == "BackLog") {
+                        data[4].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[4].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[4].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
-            else if (this.workOrderActivityCompletionService[i].owning_organization == "NRW") {
-                data[5].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[5].value2 += 1;
+                else if (temp3[0].owning_access_group == "NRW") {
+                    if (temp[j].status == "BackLog") {
+                        data[5].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[5].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[5].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
-            else if (this.workOrderActivityCompletionService[i].owning_organization == "PD-N") {
-                data[6].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[6].value2 += 1;
+                else if (temp3[0].owning_access_group == "PD-N") {
+                    if (temp[j].status == "BackLog") {
+                        data[6].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[6].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[6].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
-            else if (this.workOrderActivityCompletionService[i].owning_organization == "PD-S") {
-                data[7].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[7].value2 += 1;
+                else if (temp3[0].owning_access_group == "PD-S") {
+                    if (temp[j].status == "BackLog") {
+                        data[7].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[7].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[7].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
-            else if (this.workOrderActivityCompletionService[i].owning_organization == "SCADA") {
-                data[8].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[8].value2 += 1;
+                else if (temp3[0].owning_access_group == "SCADA") {
+                    if (temp[j].status == "BackLog") {
+                        data[8].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[8].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[8].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
-            else if (this.workOrderActivityCompletionService[i].owning_organization == "WQ") {
-                data[9].value1 += 1;
-                if (this.workOrderActivityCompletionService[i].status == "BackLog") {
-                    data[9].value2 += 1;
+                else if (temp3[0].owning_access_group == "WQ") {
+                    if (temp[j].status == "BackLog") {
+                        data[9].value1 += 1;
+                    }
+                    else if (temp[j].status == "InProgress") {
+                        data[9].value2 += 1;
+                    }
+                    else if (temp[j].status == "New") {
+                        data[9].value3 += 1;
+                    }
+                    else {
+                        console.log("Failed ", temp3[0].owning_access_group);
+                    }
                 }
-            }
+                else {
+                    console.log("Failed ", temp3[0].owning_access_group);
+                }
+                console.log("data", data);
+                _this.chartData = data;
+                console.log("Chartdata", _this.chartData);
+                console.log("test", test);
+                _this.initChartOne();
+            }, function (error) {
+                console.log('Error is ', error);
+            });
+        };
+        var this_1 = this;
+        for (var j in temp) {
+            _loop_1(j);
         }
-        console.log("data", data);
-        this.chartData = data;
+    };
+    AnalyticsWaComponent.prototype.getAssets = function () {
+        var _this = this;
+        this.assetsService.get().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (x) { return x.filter(function (i) { return i.owning_access_group != ""; }); })).subscribe(function (response) {
+            console.log('response from API is ', response);
+            _this.assets = response;
+            console.log('assets', _this.assets);
+            _this.getWorkOrderActivity();
+        }, function (error) {
+            console.log('Error is ', error);
+        });
     };
     AnalyticsWaComponent.prototype.filter = function () {
         var _this = this;
@@ -1507,12 +1800,12 @@ var AnalyticsWaComponent = /** @class */ (function () {
                 var to = _this.selected_date[1];
                 console.log("from", from);
                 console.log("to", to);
-                console.log("from 2", Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(from, 'yyyy-MM-dd', 'en_US'));
-                console.log("to 2", Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(to, 'yyyy-MM-dd', 'en_US'));
+                console.log("from 2", Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(from, 'yyyy-MM-dd', 'en_US'));
+                console.log("to 2", Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(to, 'yyyy-MM-dd', 'en_US'));
                 temp = response;
                 for (var i in temp) {
-                    if (Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') >= Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(from, 'yyyy-MM-dd', 'en_US') && Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') <= Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(to, 'yyyy-MM-dd', 'en_US')) {
-                        console.log("data" + i, Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US'));
+                    if (Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') >= Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(from, 'yyyy-MM-dd', 'en_US') && Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') <= Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(to, 'yyyy-MM-dd', 'en_US')) {
+                        console.log("data" + i, Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US'));
                         temp2.push(temp[i]);
                     }
                 }
@@ -1525,7 +1818,7 @@ var AnalyticsWaComponent = /** @class */ (function () {
                 temp = response.filter(function (value) { return value.owning_organization.includes(_this.asset_owning); });
                 console.log("temp", temp);
                 for (var i in temp) {
-                    if (Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') >= Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(from, 'yyyy-MM-dd', 'en_US') && Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') <= Object(_angular_common__WEBPACK_IMPORTED_MODULE_7__["formatDate"])(to, 'yyyy-MM-dd', 'en_US'))
+                    if (Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') >= Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(from, 'yyyy-MM-dd', 'en_US') && Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') <= Object(_angular_common__WEBPACK_IMPORTED_MODULE_8__["formatDate"])(to, 'yyyy-MM-dd', 'en_US'))
                         temp2.push(temp[i]);
                 }
             }
@@ -1538,24 +1831,6 @@ var AnalyticsWaComponent = /** @class */ (function () {
             console.log('Error is ', error);
         });
     };
-    // public filters = <any>{
-    //   "to": '',
-    //   "from": '',
-    // };
-    // filteredWOA = []
-    // public getByDate(event) {
-    //   this.filters['from'] = event[0];
-    //   this.filters['to'] = event[1];
-    //   console.log(this.filters['from'], '===', this.filters['to'])
-    //   for (let i in this.WorkOrderActivity) {
-    //     const filteredData = formatDate(this.WorkOrderActivity[i].modified_date, 'yyyy-MM-dd', 'en_US') >= formatDate(this.filters['from'], 'yyyy-MM-dd', 'en_US') && formatDate(this.WorkOrderActivity[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(this.filters['to'], 'yyyy-MM-dd', 'en_US');
-    //     console.log("filtered date", filteredData)
-    //     if (formatDate(this.WorkOrderActivity[i].modified_date, 'yyyy-MM-dd', 'en_US') >= formatDate(this.filters['from'], 'yyyy-MM-dd', 'en_US') && formatDate(this.WorkOrderActivity[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(this.filters['to'], 'yyyy-MM-dd', 'en_US'))
-    //       this.filteredWOA[i] = this.WorkOrderActivity[i]
-    //   }
-    //   console.log("filteredWOA", this.filteredWOA)
-    //   this.totalWorkOrder = this.filteredWOA.length
-    // }
     AnalyticsWaComponent.prototype.reset = function () {
         this.totalWorkOrder = this.WorkOrderActivity.length;
     };
@@ -1573,111 +1848,73 @@ var AnalyticsWaComponent = /** @class */ (function () {
         });
     };
     AnalyticsWaComponent.prototype.initChartOne = function () {
-        var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__["create"]("chartdivone", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_5__["XYChart"]);
-        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        // chart.data = [
-        //   {
-        //     category: "ES-D",
-        //     value1: 1033,
-        //     value2: 3428,
-        //   },
-        //   {
-        //     category: "DISTRIBUTION",
-        //     value1: 677,
-        //     value2: 3089,
-        //   },
-        //   {
-        //     category: "PD-N",
-        //     value1: 236,
-        //     value2: 2365,
-        //   },
-        //   {
-        //     category: "NRW",
-        //     value1: 831,
-        //     value2: 1894,
-        //   },
-        //   {
-        //     category: "PD-S",
-        //     value1: 52,
-        //     value2: 1077,
-        //   },
-        //   {
-        //     category: "FLEET",
-        //     value1: 314,
-        //     value2: 988,
-        //   },
-        //   {
-        //     category: "WQ",
-        //     value1: 70,
-        //     value2: 86,
-        //   },
-        //   {
-        //     category: "OTS",
-        //     value1: 2,
-        //     value2: 15,
-        //   },
-        //   {
-        //     category: "CBS",
-        //     value1: 0,
-        //     value2: 0,
-        //   },
-        // ];
+        // Themes begin
+        _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_5__["useTheme"](_amcharts_amcharts4_themes_animated__WEBPACK_IMPORTED_MODULE_7__["default"]);
+        // Themes end
+        // Create chart instance
+        var chart = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_5__["create"]("chartdivone", _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__["XYChart"]);
+        // Add data
         chart.data = this.chartData;
-        chart.colors.step = 2;
-        chart.padding(30, 30, 10, 30);
-        chart.legend = new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_5__["Legend"]();
-        chart;
-        var categoryAxis = chart.yAxes.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_5__["CategoryAxis"]());
+        // Create axes
+        var categoryAxis = chart.xAxes.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__["CategoryAxis"]());
         categoryAxis.dataFields.category = "category";
         categoryAxis.renderer.grid.template.location = 0;
-        categoryAxis.renderer.minGridDistance = 30;
-        var valueAxis = chart.xAxes.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_5__["ValueAxis"]());
+        var valueAxis = chart.yAxes.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__["ValueAxis"]());
+        valueAxis.renderer.inside = true;
+        valueAxis.renderer.labels.template.disabled = true;
         valueAxis.min = 0;
-        valueAxis.max = 100;
-        valueAxis.strictMinMax = true;
         valueAxis.calculateTotals = true;
-        valueAxis.renderer.minWidth = 50;
-        var series1 = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_5__["ColumnSeries"]());
-        series1.columns.template.width = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__["percent"](80);
-        series1.columns.template.tooltipText =
-            "{name}: {valueX.totalPercent.formatNumber('#.00')}%";
-        series1.name = "Total Work Activity Generated";
-        series1.dataFields.categoryY = "category";
-        series1.dataFields.valueX = "value1";
-        series1.dataFields.valueXShow = "totalPercent";
-        series1.dataItems.template.locations.categoryY = 0.5;
-        series1.stacked = true;
-        series1.tooltip.pointerOrientation = "vertical";
-        series1.columns.template.fill = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__["color"]("#F8A879");
-        var bullet1 = series1.bullets.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_5__["LabelBullet"]());
-        bullet1.interactionsEnabled = false;
-        bullet1.label.text = "{valueX}";
-        bullet1.label.fill = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__["color"]("#ffffff");
-        bullet1.locationX = 0.5;
-        var series2 = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_5__["ColumnSeries"]());
-        series2.columns.template.width = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__["percent"](80);
-        series2.columns.template.tooltipText =
-            "{name}: {valueX.totalPercent.formatNumber('#.00')}%";
-        series2.name = "Numbers of Work Activity Backlog *";
-        series2.dataFields.categoryY = "category";
-        series2.dataFields.valueX = "value2";
-        series2.dataFields.valueXShow = "totalPercent";
-        series2.dataItems.template.locations.categoryY = 0.5;
-        series2.stacked = true;
-        series2.tooltip.pointerOrientation = "vertical";
-        series2.columns.template.fill = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__["color"]("#9DCB83");
-        var bullet2 = series2.bullets.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_5__["LabelBullet"]());
-        bullet2.interactionsEnabled = false;
-        bullet2.label.text = "{valueX}";
-        bullet2.locationX = 0.5;
-        bullet2.label.fill = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__["color"]("#ffffff");
-        chart.scrollbarX = new _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_4__["Scrollbar"]();
+        // Create series
+        function createSeries(field, name) {
+            // Set up series
+            var series = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__["ColumnSeries"]());
+            series.name = name;
+            series.dataFields.valueY = field;
+            series.dataFields.categoryX = "category";
+            series.sequencedInterpolation = true;
+            // Make it stacked
+            series.stacked = true;
+            // Configure columns
+            series.columns.template.width = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_5__["percent"](60);
+            series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+            // Add label
+            var labelBullet = series.bullets.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__["LabelBullet"]());
+            labelBullet.label.text = "{valueY}";
+            labelBullet.label.fill = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_5__["color"]("#fff");
+            labelBullet.locationY = 0.5;
+            labelBullet.label.hideOversized = true;
+            return series;
+        }
+        createSeries("value1", "BackLog");
+        createSeries("value2", "Active");
+        createSeries("value3", "New");
+        // Create series for total
+        var totalSeries = chart.series.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__["ColumnSeries"]());
+        totalSeries.dataFields.valueY = "none";
+        totalSeries.dataFields.categoryX = "category";
+        totalSeries.stacked = true;
+        totalSeries.hiddenInLegend = true;
+        totalSeries.columns.template.strokeOpacity = 0;
+        var totalBullet = totalSeries.bullets.push(new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__["LabelBullet"]());
+        totalBullet.dy = -20;
+        totalBullet.label.text = "{valueY.total}";
+        totalBullet.label.hideOversized = false;
+        totalBullet.label.fontSize = 18;
+        totalBullet.label.background.fill = totalSeries.stroke;
+        totalBullet.label.background.fillOpacity = 0.2;
+        totalBullet.label.padding(5, 10, 5, 10);
+        totalBullet.label.fill = _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_5__["color"]("#000000");
+        valueAxis.extraMax = 0.1;
+        valueAxis.calculateTotals = true;
+        // Legend
+        chart.legend = new _amcharts_amcharts4_charts__WEBPACK_IMPORTED_MODULE_6__["Legend"]();
         this.chartone = chart;
     };
     AnalyticsWaComponent.ctorParameters = function () { return [
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] },
         { type: src_app_shared_services_work_order_activity_completion_work_order_activity_completion_service__WEBPACK_IMPORTED_MODULE_2__["WorkOrderActivityCompletionService"] },
-        { type: src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_3__["AssetsService"] }
+        { type: src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_3__["AssetsService"] },
+        { type: src_app_shared_services_WorkOrderActivityCompletionAssetLocationAssetList_WorkOrderActivityCompletionAssetLocationAssetList_service__WEBPACK_IMPORTED_MODULE_4__["WorkOrderActivityCompletionAssetLocationAssetListService"] }
     ]; };
     AnalyticsWaComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1687,7 +1924,8 @@ var AnalyticsWaComponent = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
             src_app_shared_services_work_order_activity_completion_work_order_activity_completion_service__WEBPACK_IMPORTED_MODULE_2__["WorkOrderActivityCompletionService"],
-            src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_3__["AssetsService"]])
+            src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_3__["AssetsService"],
+            src_app_shared_services_WorkOrderActivityCompletionAssetLocationAssetList_WorkOrderActivityCompletionAssetLocationAssetList_service__WEBPACK_IMPORTED_MODULE_4__["WorkOrderActivityCompletionAssetLocationAssetListService"]])
     ], AnalyticsWaComponent);
     return AnalyticsWaComponent;
 }());
@@ -2096,6 +2334,79 @@ var TableauComponent = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"]])
     ], TableauComponent);
     return TableauComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.service.ts":
+/*!************************************************************************************************************************************************!*\
+  !*** ./src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.service.ts ***!
+  \************************************************************************************************************************************************/
+/*! exports provided: WorkOrderActivityCompletionAssetLocationAssetListService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkOrderActivityCompletionAssetLocationAssetListService", function() { return WorkOrderActivityCompletionAssetLocationAssetListService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+
+
+var WorkOrderActivityCompletionAssetLocationAssetListService = /** @class */ (function () {
+    function WorkOrderActivityCompletionAssetLocationAssetListService(http) {
+        this.http = http;
+        this.url = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].baseUrl + "v1/work-order-activity-completion-asset-location-asset-list/";
+        // Data
+        this.atmodels = [];
+    }
+    WorkOrderActivityCompletionAssetLocationAssetListService.prototype.post = function (body) {
+        return this.http.post(this.url, body).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (res) {
+        }));
+    };
+    WorkOrderActivityCompletionAssetLocationAssetListService.prototype.get = function () {
+        var _this = this;
+        return this.http.get(this.url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (res) {
+            _this.atmodels = res;
+        }));
+    };
+    WorkOrderActivityCompletionAssetLocationAssetListService.prototype.getOne = function (id) {
+        var _this = this;
+        var urlID = this.url + id + "/";
+        return this.http.get(urlID).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (res) {
+            _this.atmodel = res;
+        }));
+    };
+    WorkOrderActivityCompletionAssetLocationAssetListService.prototype.update = function (body) {
+        return this.http.patch(this.url, body).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (res) {
+        }));
+    };
+    WorkOrderActivityCompletionAssetLocationAssetListService.prototype.delete = function (id) {
+        return this.http.delete(this.url + id + "/").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (res) {
+        }));
+    };
+    WorkOrderActivityCompletionAssetLocationAssetListService.prototype.filter = function (field) {
+        var urlFilter = this.url + "?" + field + "/";
+        return this.http.get(urlFilter).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (res) {
+        }));
+    };
+    WorkOrderActivityCompletionAssetLocationAssetListService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }
+    ]; };
+    WorkOrderActivityCompletionAssetLocationAssetListService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: "root",
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]])
+    ], WorkOrderActivityCompletionAssetLocationAssetListService);
+    return WorkOrderActivityCompletionAssetLocationAssetListService;
 }());
 
 
