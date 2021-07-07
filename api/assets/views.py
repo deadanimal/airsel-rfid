@@ -17,11 +17,13 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.http import HttpResponse
 
 from datetime import datetime
+# from datetime import datetime
+import pytz
 
 
 from .models import (
     Asset,
-    AssetRegistration,
+    AssetRegistration,AssetRegistrationBk,
     AssetGroup,
     AssetType,
     Rfid,
@@ -42,7 +44,7 @@ from .models import (
 
 from .serializers import (
     AssetSerializer,
-    AssetRegistrationSerializer,
+    AssetRegistrationSerializer,AssetRegistrationBkSerializer,
     AssetGroupSerializer,
     AssetTypeSerializer,
     RfidSerializer,
@@ -244,6 +246,43 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         )
         response['Content-Disposition'] = 'attachment; filename="' + file_name +'"'
         return response
+
+    @action(methods=['GET'], detail=False)
+    def udpate_effective_datetime(self, request, *args, **kwargs):
+        
+        print("ttettetettete")
+        queryset = Asset.objects.all()[:15]
+
+
+        # for i in queryset:
+
+        #     print("effective_datetime >> ",i.effective_datetime)
+
+        #     # eff_datetime = format_datetime(i.effective_datetime)
+        #     # print("eff_datetime",eff_datetime)
+        #     # 2016-11-15 00:00:00+00:00
+        #     # "%Y-%m-%d-%H.%M.%S"
+
+        #     timezone = pytz.timezone('Asia/Kuala_Lumpur')
+        #     # datetime_data = timestamp.strftime((i.effective_datetime, '%Y-%m-%d %H:%M:%S')
+        #     # print("datetime_data",datetime_data)
+
+        #     datetime_timezone = timezone.localize(datetime_data)
+
+        #     datetime.datetime(i.effective_datetime, tzinfo=<UTC>)
+        #     print("effective_datetime1111 >>> ",effective_datetime)
+            
+        #     effective_datetime = datetime_timezone.astimezone(pytz.utc)
+
+        #     print("effective_datetime2222 >>> ",effective_datetime)
+
+        
+        # asset.approval_by = self.request.user
+        # asset.approval_at = datetime.now()
+        # asset.save()
+
+        # serializer = AssetSerializer(asset)
+        # return Response(serializer.data)
 
 
 class AssetGroupViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -468,6 +507,28 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return Response(serializer.data)  
         # rejected_list_serializer = AssetRegistrationSerializer(rejected_list_asset_list, many=True)
         # return Response(rejected_list_serializer.data) 
+
+
+class AssetRegistrationBkViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetRegistrationBk.objects.all()
+    serializer_class = AssetRegistrationBkSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filterset_fields = [
+        'created_at'
+    ]
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    def get_queryset(self):
+        queryset = AssetRegistrationBk.objects.all()
+        return queryset
+
 
 class AssetBadgeFormatViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AssetBadgeFormat.objects.all()

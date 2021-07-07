@@ -37,26 +37,32 @@ def insert_into_failure_profile(dict):
 
 def get_failureprofile():
 
-    FailureProfile.objects.all().delete()
 
     r = requests.post("http://174.138.28.157/getFailureProfile.php")
-
+    
     json_dictionary = json.loads(r.content)
-    for key in json_dictionary:
-        if (key == "results"):
-            print(key, ":", json_dictionary[key])
-            if (type(json_dictionary[key]) == dict):
-                # return single json
-                print("dict")
-                insert_into_failure_profile(json_dictionary[key])
-            elif (type(json_dictionary[key]) == list):
-                # return array of json
-                print("list")
-                results_json = json_dictionary[key]
-                for x in results_json:
-                    insert_into_failure_profile(x)
 
-    return json.loads(r.content)
+    
+    if json_dictionary:
+        FailureProfile.objects.all().delete()
+        for key in json_dictionary:
+            if (key == "results"):
+                print(key, ":", json_dictionary[key])
+                if (type(json_dictionary[key]) == dict):
+                    # return single json
+                    print("dict")
+                    insert_into_failure_profile(json_dictionary[key])
+                elif (type(json_dictionary[key]) == list):
+                    # return array of json
+                    print("list")
+                    results_json = json_dictionary[key]
+                    for x in results_json:
+                        insert_into_failure_profile(x)
+
+        return json.loads(r.content)
+    else:
+        print('error ',r.status_code)
+
 
     # wsdl = "https://pasb-dev-uwa-iws.oracleindustry.com/ouaf/webservices/CM-FAILUREPROFILE?WSDL"
     # session = Session()

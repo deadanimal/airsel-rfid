@@ -76,7 +76,7 @@
               <!-- <ion-icon color="secondary" name="close-circle"></ion-icon> -->
             </ion-fab>
             <ion-card-title>Service History Type
-              <!-- <ion-icon color="danger" name="checkmark-circle"></ion-icon> -->
+              <ion-icon color="success" name="checkmark-circle"></ion-icon>
               <!-- <ion-icon color="secondary" name="close-circle"></ion-icon> -->
             </ion-card-title>
             <ion-card-subtitle>{{ woacalalReq.service_history_type }}</ion-card-subtitle>
@@ -111,7 +111,8 @@
       <small>*Note: Fulfill all <b>REQUIRED</b> service history before submitting the work
         activity.</small><br />
       <ion-button color="light" (click)="clickBack()">Back</ion-button>
-      <ion-button *ngIf="workOrderActivityCompletionAssLocAssLisData != []" color="primary" (click)="submit()">Submit
+      <ion-button *ngIf="workOrderActivityCompletionAssLocAssLisData != []" [disabled]="buttonDisable" color="primary"
+        (click)="submit()">Submit
       </ion-button>
       <!-- <ion-button *ngIf="workOrderActivityCompletionAssLocAssLis != []" color="primary" (click)="submit()">Submit
       </ion-button> -->

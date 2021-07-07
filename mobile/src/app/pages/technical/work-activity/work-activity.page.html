@@ -28,7 +28,7 @@
       <form [formGroup]="workactivityFormGroup">
 
         <ion-item>
-          <ion-label position="stacked">Work Activity No:</ion-label>
+          <ion-label position="stacked">Work Activity Id:</ion-label>
           <ion-input type="text" [value]="workactivity.activityid" readonly></ion-input>
         </ion-item>
 
@@ -59,9 +59,17 @@
     <ion-card *ngFor="let workActData of workactivityData">
       <ion-card-header>
         <ion-fab horizontal="end">
-          <ion-fab-button size="small" color="primary" (click)="clickViewAsset(workActData)">
+          <ion-fab-button *ngIf="workActData.reading_datetime == null" size="small" color="primary"
+            (click)="clickViewAsset(workActData)">
             <ion-icon name="search"></ion-icon>
           </ion-fab-button>
+
+          <ion-fab-button *ngIf="workActData.reading_datetime != null" size="small" color="success"
+            (click)="clickViewAsset(workActData)">
+            <ion-icon name="search"></ion-icon>
+            <!-- <ion-icon name="checkmark-circle"></ion-icon> -->
+          </ion-fab-button>
+
         </ion-fab>
         <!-- <ion-card-title>Asset ID: {{ workActData.ASSET_ID }}</ion-card-title> -->
         <ion-card-title>Badge No<br />{{ workActData.badge_number }}</ion-card-title>
@@ -118,7 +126,7 @@
     <div class="ion-text-center ion-padding">
       <ion-button color="light" (click)="clickBack()">Back</ion-button>
       <!-- <ion-button color="primary" (click)="close()">Close</ion-button> -->
-      <ion-button color="primary" (click)="submit()">Submit</ion-button>
+      <ion-button color="primary" [disabled]="setButton" (click)="submit()">Close Out</ion-button>
     </div>
   </div>
 </ion-content>

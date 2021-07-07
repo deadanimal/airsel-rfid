@@ -16,6 +16,8 @@ import { InventoryInfoPage } from "../inventory-info/inventory-info.page";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
 
 @Component({
   selector: "app-maintenance-work-detail",
@@ -60,6 +62,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
   workactivities = [];
   workactivitiesData: any[];
   workactivitiesDatas: any = [];
+  userIdLogIn = ''
 
   // FormGroup
   workactivityFormGroup: FormGroup;
@@ -73,8 +76,12 @@ export class MaintenanceWorkDetailPage implements OnInit {
     private router: Router,
     public notificationService: NotificationsService,
     private assetLocatioSyncService: AssetLocatioSyncService,
-    private workactivityService: WorkActivitiesService
+    private workactivityService: WorkActivitiesService,
+    private authService: AuthService,
+    private workOrderActivityCompletionService: WorkOrderActivityCompletionService
   ) {
+
+    this.userIdLogIn = this.authService.userID
     this.workactivityFormGroup = this.formBuilder.group({
       id: new FormControl(""),
       bo_status: new FormControl(""),
@@ -90,31 +97,43 @@ export class MaintenanceWorkDetailPage implements OnInit {
         this.type = this.router.getCurrentNavigation().extras.state.type;
         this.status = this.router.getCurrentNavigation().extras.state.status;
         this.workactivities = this.router.getCurrentNavigation().extras.state.work_activity;
+        console.log("this.router.getCurrentNavigation().extras.state", this.router.getCurrentNavigation().extras.state)
         this.workactivities.forEach(eleWorAct => {
 
+          console.log("this.status", this.status)
+          console.log("eleWorAct.status", eleWorAct.status)
           if (eleWorAct.status == this.status) {
-            this.workactivitiesDatas.push(eleWorAct)
 
-            eleWorAct.status = (eleWorAct.status == 'InProgress' ? 'In Progress' : eleWorAct.status)
-            this.statuses = eleWorAct.status
+            if (eleWorAct.field_2 == '' || eleWorAct.field_2 == this.authService.userID) {
+              console.log("eleWorAct>>>", eleWorAct)
+              this.workactivitiesDatas.push(eleWorAct)
 
-            this.assetLocatioSyncService.filter("node_id=" + eleWorAct.node_id_1).subscribe(
-              (res) => {
-                console.log("assetLocatioSyncServiceres", res);
-                // this.assetregistrations = res;
-                this.assetLocatioSyncdata = res[0].description
-                eleWorAct.assetLocatioSyncdata = res[0].description
-                // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
-              },
-              (err) => {
-                console.error("err", err);
-              }
-            );
+              eleWorAct.status = (eleWorAct.status == 'InProgress' ? 'Active' : (eleWorAct.status == 'BackLog' ? 'Backlog' : eleWorAct.status))
+              this.statuses = eleWorAct.status
+
+              this.assetLocatioSyncService.filter("node_id=" + eleWorAct.node_id_1).subscribe(
+                (res) => {
+                  console.log("assetLocatioSyncServiceres", res);
+                  // this.assetregistrations = res;
+                  if (res.length > 0) {
+                    this.assetLocatioSyncdata = res[0].description
+                    eleWorAct.assetLocatioSyncdata = res[0].description
+                    // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
+                  } else {
+                    this.assetLocatioSyncdata = '-'
+                    eleWorAct.assetLocatioSyncdata = '-'
+                  }
+                },
+                (err) => {
+                  console.error("err", err);
+                }
+              );
+            }
           }
         });
-        console.log("this.workactivities = ", this.workactivities)
-        console.log("this.status = ", this.status)
-        console.log("this.type = ", this.type)
+        // console.log("this.workactivities = ", this.workactivities)
+        // console.log("this.status = ", this.status)
+        // console.log("this.type = ", this.type)
         this.image = '../../../../assets/technical/' + this.router.getCurrentNavigation().extras.state.image;
         this.name = this.router.getCurrentNavigation().extras.state.name;
 
@@ -129,28 +148,28 @@ export class MaintenanceWorkDetailPage implements OnInit {
         //   return false;
         // });
 
-        this.completeds = this.workactivities.filter((data) => {
-          if (data.bo_status.toString().indexOf("Completed") !== -1)
-            return true;
-          return false;
-        });
+        // this.completeds = this.workactivities.filter((data) => {
+        //   if (data.bo_status.toString().indexOf("Completed") !== -1)
+        //     return true;
+        //   return false;
+        // });
 
         // filter status based on BO_STATUS_CD from WAMS
-        this.pendings = this.workactivities.filter((data) => {
-          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("nw") !== -1)
-            return true;
-          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("ip") !== -1)
-            return true;
-          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("bl") !== -1)
-            return true;
-          return false;
-        });
+        // this.pendings = this.workactivities.filter((data) => {
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("nw") !== -1)
+        //     return true;
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("ip") !== -1)
+        //     return true;
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("bl") !== -1)
+        //     return true;
+        //   return false;
+        // });
 
-        this.completeds = this.workactivities.filter((data) => {
-          if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("active") !== -1)
-            return true;
-          return false;
-        });
+        // this.completeds = this.workactivities.filter((data) => {
+        //   if (data.BO_STATUS_CD.toString().toLowerCase().indexOf("active") !== -1)
+        //     return true;
+        //   return false;
+        // });
       }
     });
   }
@@ -237,10 +256,49 @@ export class MaintenanceWorkDetailPage implements OnInit {
   }
 
   clickWorkActivity(work_activity) {
+    console.log("work_activity.id------>>>>", work_activity)
+    if (work_activity.field_2 == '') {
+      console.log("masuk sini field_2", this.authService.userID)
+      if (work_activity.status == 'New') {
+        console.log("status-----new----", this.authService.userID)
+        let workOrderActivityFormGroup = {
+          status: "InProgress",
+          field_2: this.authService.userID,
+        }
+        console.log("workOrderActivityFormGroup >>>>>>> ", workOrderActivityFormGroup)
+        this.workOrderActivityCompletionService
+          .update(work_activity.id, workOrderActivityFormGroup)
+          .subscribe(
+            (res) => {
+              console.log("workOrderActivityCompletionService--res", res);
+            },
+            (err) => {
+              console.log("workOrderActivityCompletionService--err", err);
+            }
+          );
+      } else if (work_activity.status == 'Backlog') {
+        console.log("qqqqqqqqqqq---------")
+        let workOrderActivityFormGroup = {
+          field_2: this.authService.userID,
+        }
+
+        console.log("workOrderActivityFormGroup >>>>>>> ", workOrderActivityFormGroup)
+        this.workOrderActivityCompletionService
+          .update(work_activity.id, workOrderActivityFormGroup)
+          .subscribe(
+            (res) => {
+              console.log("workOrderActivityCompletionService--res", res);
+            },
+            (err) => {
+              console.log("workOrderActivityCompletionService--err", err);
+            }
+          );
+      }
+    }
     if (work_activity.bo_status == "New") {
       this.workactivityFormGroup.patchValue({
         ...work_activity,
-        bo_status: "InProgress",
+        bo_status: "InProgress"
       });
       this.workactivityService
         .update(work_activity.id, this.workactivityFormGroup.value)
@@ -274,5 +332,32 @@ export class MaintenanceWorkDetailPage implements OnInit {
 
   clickBack() {
     this.router.navigate(["/technical/maintenance-work-list"]);
+  }
+
+  async presentAlertConfirm(workactivity) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Are you sure you want to proceed?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.clickWorkActivity(workactivity)
+            console.log('Confirm Okay');
+          }
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

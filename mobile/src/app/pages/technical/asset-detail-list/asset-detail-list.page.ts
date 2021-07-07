@@ -30,21 +30,8 @@ export class AssetDetailListPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.state) {
 
-        // this.loadingController
-        //   .create({
-        //     message: "Please wait ...",
-        //     duration: 1000
-        //   })
-        //   .then((loading) => {
-
-        //     setTimeout(function () {
-        // loading.present();
-
         this.getAsset(this.router.getCurrentNavigation().extras.state.badge_no);
 
-        //   }, 1000);
-
-        // });
       }
     });
   }
@@ -53,25 +40,52 @@ export class AssetDetailListPage implements OnInit {
     // console.log("badge_no =", badge_no)
     this.assetsService.filter("badge_no=" + badge_no).subscribe(
       (res) => {
-        // console.log("res", res);
+        console.log("assetregistrations=res", res);
         this.assetregistrations = res;
-
-        this.assetLocatioSyncService.filter("node_id=" + this.assetregistrations[0].node_id).subscribe(
-          (res) => {
-            // console.log("assetLocatioSyncServiceres", res);
-            // this.assetregistrations = res;
-            // this.assetLocatioSyncdata = res[0].description
-            if (res.length > 0) {
-              this.assetLocatioSyncdata = res[0].description
-            } else {
-              this.assetLocatioSyncdata = '-'
+        if (res[0].attached_to_asset_id == '') {
+          this.assetLocatioSyncService.filter("node_id=" + this.assetregistrations[0].node_id).subscribe(
+            (res) => {
+              console.log("assetLocatioSyncServiceres>>>", res);
+              // this.assetregistrations = res;
+              // this.assetLocatioSyncdata = res[0].description
+              if (res.length > 0) {
+                this.assetLocatioSyncdata = res[0].description
+              } else {
+                this.assetLocatioSyncdata = '-'
+              }
+              // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
+            },
+            (err) => {
+              console.error("err", err);
             }
-            // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
-          },
-          (err) => {
-            console.error("err", err);
-          }
-        );
+          );
+        } else {
+
+          this.assetsService.filter("asset_id=" + res[0].attached_to_asset_id).subscribe(
+            (resA) => {
+              console.log("assetqqqqqqqqq=res", resA);
+
+              this.assetLocatioSyncService.filter("node_id=" + resA[0]['node_id']).subscribe(
+                (resAls) => {
+                  console.log("resAls>><<>>", resAls)
+                  if (resAls.length > 0) {
+                    this.assetLocatioSyncdata = resAls[0].description
+                  } else {
+                    this.assetLocatioSyncdata = '-'
+                  }
+                  // console.log(" this.assetLocatioSyncdata = ", this.assetLocatioSyncdata)
+                },
+                (err) => {
+                  console.error("err", err);
+                }
+              );
+
+              this.assetregistrations = res;
+            }, (error) => {
+              console.log(error)
+            }
+          )
+        }
       },
       (err) => {
         console.error("err", err);

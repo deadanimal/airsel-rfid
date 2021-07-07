@@ -13,6 +13,8 @@ import { NotificationsService } from "src/app/shared/services/notifications/noti
 import { UsersService } from "src/app/shared/services/users/users.service";
 import { WorkActivitiesService } from "src/app/shared/services/work-activities/work-activities.service";
 import { WorkActivityEmployeeService } from "src/app/shared/services/work-activity-employee/work-activity-employee.service";
+import { WorkOrderActivityCompletionService } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service';
+import { element } from 'protractor';
 
 @Component({
   selector: "app-home",
@@ -33,11 +35,14 @@ export class HomePage implements OnInit {
     public notificationService: NotificationsService,
     private userService: UsersService,
     private workactivityService: WorkActivitiesService,
-    private workactivityemployeeService: WorkActivityEmployeeService
+    private workactivityemployeeService: WorkActivityEmployeeService,
+    private workOrderActivityCompletionService: WorkOrderActivityCompletionService
   ) {
+    console.log("this.authService>>", this.authService)
+    console.log("this.authService.userID", this.authService.userID)
     this.userService.getOne(this.authService.userID).subscribe(
       (res) => {
-        // if (res) console.log("res", res);
+        console.log("authService res", res)
       },
       (err) => {
         console.error("err", err);
@@ -45,18 +50,66 @@ export class HomePage implements OnInit {
     );
   }
 
+  userid = ''
   ionViewDidEnter() {
+    this.userid = this.authService.userID
+    console.log("this.authService.userID ionViewDidEnter", this.authService.userID)
     console.log("ionViewDidEnter HomePage");
 
-    this.workactivityService.get().subscribe(
-      (res) => {
-        console.log("res", res);
-        this.workactivities = res;
-      },
+    let woacArr: any[]
+
+    // setInterval(() => {
+
+    // this.workOrderActivityCompletionService.get().subscribe(
+    let objUser = {
+      userid: this.authService.userID
+    }
+    this.workOrderActivityCompletionService.asc_ordered_list(objUser).subscribe((res) => {
+      console.log("res", res);
+
+      woacArr = res;
+      woacArr.forEach(element => {
+
+        // console.log("currentDate", this.getCurrentDateTime())
+        // console.log("required_by_dt", element.required_by_dt)
+
+        if (element.required_by_dt < this.getCurrentDateTime()) {
+
+          if (element['status'] != 'Completed' || element['status'] != 'BackLog') {
+            let obj = {
+              status: 'BackLog'
+            }
+            // console.log("backlog")
+
+            element.status = 'BackLog'
+            this.workactivities.push(element)
+            // this.workactivities.push(element)
+
+            this.workOrderActivityCompletionService.update(element['id'], obj).subscribe(
+              (resUp) => {
+                // console.log("resUp", resUp)
+              }, (errUp) => {
+                // console.log("errUp", errUp)
+              }
+            )
+          } else {
+
+            console.log("completed")
+            this.workactivities.push(element)
+
+          }
+        } else {
+          console.log("New")
+          this.workactivities.push(element)
+        }
+      })
+    },
       (err) => {
         console.error("err", err);
       }
     );
+
+    // }, 10000);
 
     this.workactivityemployeeService
       .get_dashboard_status_statistic({
@@ -67,9 +120,52 @@ export class HomePage implements OnInit {
       });
   }
 
-  ngOnInit() {}
+  getCurrentDateTime() {
+    let selectedDate = new Date();
+    let year = selectedDate.getFullYear();
+    let month =
+      selectedDate.getMonth() + 1 < 10
+        ? "0" + (selectedDate.getMonth() + 1)
+        : selectedDate.getMonth() + 1;
+    let day =
+      selectedDate.getDate() < 10
+        ? "0" + selectedDate.getDate()
+        : selectedDate.getDate();
+    let formatDate = year + "-" + month + "-" + day;
 
-  initializeItems() {}
+    let hour =
+      selectedDate.getHours() < 10
+        ? "0" + selectedDate.getHours()
+        : selectedDate.getHours();
+    let minute =
+      selectedDate.getMinutes() < 10
+        ? "0" + selectedDate.getMinutes()
+        : selectedDate.getMinutes();
+    let second =
+      selectedDate.getSeconds() < 10
+        ? "0" + selectedDate.getSeconds()
+        : selectedDate.getSeconds();
+    let formatTime = hour + ":" + minute + ":" + second;
+
+    // return formatDate + "T" + formatTime + "Z";
+    return formatDate;
+  }
+
+  ngOnInit() {
+
+    console.log("this.authService.userID ngOnInit", this.authService.userID)
+    let objUser = {
+      userid: this.authService.userID
+    }
+    this.getWorkActivities(objUser)
+
+    setInterval(() => {
+      this.getWorkActivities(objUser)
+    }, 10000);
+
+  }
+
+  initializeItems() { }
 
   async notesAlert() {
     const alert = await this.alertController.create({
@@ -80,6 +176,36 @@ export class HomePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  workOrderActComp: any = []
+  getWorkActivities(objUser) {
+    let array: any = []
+    let userId = this.authService.userID
+    console.log("userId >>>>>>>>>", userId)
+    this.workOrderActivityCompletionService.asc_ordered_list(objUser).subscribe(
+      (res) => {
+        console.log("workOrderActivityCompletionService_res", res);
+        res.forEach(function (data_) {
+          console.log("data_.field_2", data_.field_2)
+          if (data_.field_2 == '' || data_.field_2 == userId) {
+            console.log('if')
+            array.push(data_)
+          } else {
+            console.log('else')
+          }
+        })
+        this.workOrderActComp = array
+        // this.workOrderActComp = res
+      },
+      (err) => {
+        console.error("err", err);
+      },
+      () => {
+        console.log("Http request is completed");
+      }
+    );
+
   }
 
   async openInfo() {
@@ -102,7 +228,7 @@ export class HomePage implements OnInit {
         {
           text: "Cancel",
           role: "cancel",
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: "Yes, logout it!",
@@ -116,7 +242,10 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  calculateStatus(status: string) {
+  calculateStatus(array, status) {
+    // console.log("calculateStatus array>>>", array)
+    // console.log("temparray=====", array)
+    // console.log("status=====", status)
     // let count = 0;
     // for (let i = 0; i < this.workactivities.length; i++) {
     //   if (this.workactivities[i].bo_status === status) count++;
@@ -124,19 +253,35 @@ export class HomePage implements OnInit {
     // return count;
 
     // Overall status
-    if (this.workorderactivitycompletionstatus) {
-      if (this.workorderactivitycompletionstatus.queryset_overall.length > 0) {
-        let result =
-          this.workorderactivitycompletionstatus.queryset_overall.find(
-            (obj) => {
-              return obj.status == status;
-            }
-          );
-        if (result) {
-          return result.total_status ? result.total_status : 0;
-        } else return 0;
-      } else return 0;
-    } else return 0;
+    // if (this.workorderactivitycompletionstatus) {
+    //   if (this.workorderactivitycompletionstatus.queryset_overall.length > 0) {
+    //     let result =
+    //       this.workorderactivitycompletionstatus.queryset_overall.find(
+    //         (obj) => {
+    //           return obj.status == status;
+    //         }
+    //       );
+    //     if (result) {
+    //       return result.total_status ? result.total_status : 0;
+    //     } else return 0;
+    //   } else return 0;
+    // } else return 0;
+
+
+    if (array.length > 0) {
+      let tempArray = array.filter(function (data) {
+        if (
+          data.status
+            .toLowerCase()
+            .indexOf(status.toLowerCase()) !== -1
+        )
+          return true;
+        return false;
+      });
+      return tempArray.length > 0 ? tempArray.length : 0;
+    } else {
+      return 0;
+    }
   }
 
   calculateToday(status: string) {
@@ -175,5 +320,15 @@ export class HomePage implements OnInit {
   openNotification() {
     this.menu.enable(true, "menuNotification");
     this.menu.open("menuNotification");
+  }
+
+  async alertWarning(header, message) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['ok'],
+    });
+
+    await alert.present();
   }
 }

@@ -10,13 +10,14 @@ import { WorkRequestsModel } from "./work-requests.model";
   providedIn: "root",
 })
 export class WorkRequestsService {
-  url: string = environment.baseUrl + "v1/work-requests/";
+  url: string = environment.baseUrl + "v1/work-request-pipe/";
+  // url: string = environment.baseUrl + "v1/work-requests/";
 
   // Data
   public wrmodels: WorkRequestsModel[] = [];
   public wrmodel: WorkRequestsModel;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   post(body: Form): Observable<WorkRequestsModel> {
     return this.http.post<any>(this.url, body).pipe(
@@ -77,5 +78,22 @@ export class WorkRequestsService {
         console.log("WorkRequestsModel", res);
       })
     );
+  }
+
+  desc_order_list(body): Observable<WorkRequestsModel[]> {
+    let urlOrdered = this.url + "desc_ordered_list/";
+    return this.http.post<any>(urlOrdered, body).pipe(
+      tap((res) => {
+        console.log("WorkOrderActivityCompletionModel", res);
+        this.wrmodels = res;
+      })
+    );
+    // let urlDescOrdLis = this.url + "desc_ordered_list"
+    // return this.http.get<any>(urlDescOrdLis).pipe(
+    //   tap((res) => {
+    //     console.log("WorkRequestsModel", res);
+    //     this.wrmodels = res;
+    //   })
+    // );
   }
 }

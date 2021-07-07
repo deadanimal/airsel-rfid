@@ -5,6 +5,9 @@ import json
 import requests
 import xmltodict
 
+from datetime import datetime
+import pytz
+
 from assets.models import (
     Asset,
     AssetAttribute,
@@ -41,8 +44,20 @@ def insert_into_asset(dict):
     bo = dict['BUS_OBJ_CD'] if 'BUS_OBJ_CD' in dict else ""
     bo_status = dict['BO_STATUS_CD'] if 'BO_STATUS_CD' in dict else ""
     owning_access_group = dict['OWNING_ACCESS_GRP_CD'] if 'OWNING_ACCESS_GRP_CD' in dict else ""
-    effective_datetime = format_datetime(
-        dict['EFF_DTTM']) if 'EFF_DTTM' in dict else ""
+    # effective_datetime = format_datetime(dict['EFF_DTTM']) if 'EFF_DTTM' in dict else ""
+
+    # convert effctive_datetime into UTC
+    
+    timezone = pytz.timezone('Asia/Kuala_Lumpur')
+    datetime_data = datetime.strptime(dict['EFF_DTTM'], "%Y-%m-%d-%H.%M.%S")
+    print("datetime_data",datetime_data)
+
+    datetime_timezone = timezone.localize(datetime_data)
+    effective_datetime = datetime_timezone.astimezone(pytz.utc)
+
+    print("effective_datetime",effective_datetime)
+    # end convert affective datetime
+
     node_id = dict['NODE_ID'] if 'NODE_ID' in dict else ""
     badge_no = dict['BADGE_NUMBER'] if 'BADGE_NUMBER' in dict else ""
     serial_no = dict['SERIAL_NUMBER'] if 'SERIAL_NUMBER' in dict else ""
@@ -126,7 +141,7 @@ def insert_into_asset(dict):
             print("here 10")
             
             asset = Asset.objects.get(asset_id=asset_id)
-            asset_measurement_type = AssetMeasurementType.objects.create(measurement_type=measurement_types)
+            asset_measurement_type = AssetMeasurementType.objects.create(measurement_type=measurement_types,action_type='UNCHANGED')
             asset.measurement_types.add(asset_measurement_type)
 
     # to save characteristic_type && characteristic_value if exist
@@ -152,13 +167,13 @@ def insert_into_asset(dict):
             if characteristic_type in characteristic_type_list:
                 asset = Asset.objects.get(asset_id=asset_id)
                 asset_attribute = AssetAttribute.objects.create(
-                    characteristic_type=characteristic_type, characteristic_value=characteristic_value)
+                    characteristic_type=characteristic_type, characteristic_value=characteristic_value,action_type='UNCHANGED')
                 asset.asset_attributes.add(asset_attribute)
                 print('found',asset_attribute)
             else:
                 asset = Asset.objects.get(asset_id=asset_id)
                 asset_attribute = AssetAttribute.objects.create(
-                    characteristic_type=characteristic_type, adhoc_value=characteristic_value)
+                    characteristic_type=characteristic_type, adhoc_value=characteristic_value,action_type='UNCHANGED')
                 asset.asset_attributes.add(asset_attribute)
                 print("not found",asset_attribute)
 

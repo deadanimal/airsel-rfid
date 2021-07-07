@@ -17,6 +17,7 @@ import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { WamsService } from "src/app/shared/services/wams/wams.service";
 
 import { Subscription } from "rxjs";
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: "app-operational-reading-list",
@@ -50,8 +51,9 @@ export class OperationalReadingListPage implements OnInit {
     private assetregistrationService: AssetRegistrationsService,
     private operationalreadingService: OperationalReadingsService,
     private assetsService: AssetsService,
-    private wamsService: WamsService
-  ) {}
+    private wamsService: WamsService,
+    private authService: AuthService
+  ) { }
 
   private L(...args: any[]) {
     let v = args.join(" ");
@@ -86,11 +88,16 @@ export class OperationalReadingListPage implements OnInit {
   }
 
   onRegister2DBarcodeListener() {
+
     this.loadingController
       .create({
         message: "Please scan the QR code...",
+        // dismissOnPageChange: true; 
+        showBackdrop: true,
+        // enableBackdropDismiss: true;
       })
       .then((loading) => {
+
         loading.present();
 
         console.log("[register onRegister2DBarcodeListener] ");
@@ -148,9 +155,13 @@ export class OperationalReadingListPage implements OnInit {
   }
 
   getOperationalReading() {
-    this.operationalreadingService.get().subscribe(
+    console.log("this.authService.userID", this.authService.userID)
+    let objUser = {
+      userid: this.authService.userID
+    }
+    this.operationalreadingService.getDescOrderList(objUser).subscribe(
       (res) => {
-        // console.log("res", res);
+        console.log("this.operationalreadingService res", res);
         this.operationalreadings = res;
         // this.groupByAssetID(res);
       },

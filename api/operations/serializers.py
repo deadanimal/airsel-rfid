@@ -136,7 +136,15 @@ class WorkCategoryExtendedSerializer(serializers.ModelSerializer):
         model = WorkCategory
         fields = '__all__'
 
+## field for AIS view
 class WorkRequestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = WorkRequest
+        fields = ('id','description','long_description','required_by_date','approval_profile','bo','creation_datetime','creation_user','downtime_start','planner','work_class','work_category','work_priority','requestor','owning_access_group','first_name','last_name','primary_phone','mobile_phone','home_phone','node_id','asset_id','status','int10_type','work_request_id','work_request_status','created_date','modified_date')
+
+## new field added for pipe view
+class WorkRequestPipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WorkRequest
@@ -157,14 +165,14 @@ class WorkRequestStatusSerializer(serializers.ModelSerializer):
         model = WorkRequestStatus
         fields = '__all__'
 
-class WorkRequestStatusExtendedSerializer(serializers.ModelSerializer):
-    work_request_id = WorkRequestSerializer(read_only=True)
-    record_by = CustomUserSerializer(read_only=True)
-    modified_by = CustomUserSerializer(read_only=True)
+# class WorkRequestStatusExtendedSerializer(serializers.ModelSerializer):
+#     work_request_id = WorkRequestSerializer(read_only=True)
+#     # record_by = CustomUserSerializer(read_only=True)
+#     # modified_by = CustomUserSerializer(read_only=True)
     
-    class Meta:
-        model = WorkRequestStatus
-        fields = '__all__'
+#     class Meta:
+#         model = WorkRequestStatus
+#         fields = '__all__'
 
 class MeasurementTypeSerializer(serializers.ModelSerializer):
     
@@ -180,7 +188,15 @@ class MeasurementTypeExtendedSerializer(serializers.ModelSerializer):
         model = MeasurementType
         fields = '__all__'
 
+# field for AIS view
 class OperationalReadingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OperationalReading
+        fields = ('id','asset_id','badge_number','current_value','measurent_identifier','measurent_type','initial_value_flag','owning_organization','reading_datetime','submitted_datetime','created_date','modified_date')
+
+## new field added for pipe view
+class OperationalReadingPipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OperationalReading
@@ -221,12 +237,22 @@ class QuestionsValidValueSerializer(serializers.ModelSerializer):
         model = QuestionsValidValue
         fields = '__all__'
 
+## field for AIS view
 class WorkOrderActivityCompletionSerializer(serializers.ModelSerializer):
 
-	class Meta:
-		model = WorkOrderActivityCompletion
-		fields = '__all__'
+    class Meta:
+        model = WorkOrderActivityCompletion
+        fields = '__all__'
+        # fields = ('id','activityid','completiondatetime','bo_status_cd','user_id_1','act_type_cd','wo_id','act_dpos_flg','service_class_cd','requestor_id','required_by_dt','work_priority_flg','descr100','descrlong','w1_descr100_upr','held_for_parts_flg','anniversary_value','emergency_flg','act_num','planner_cd','total_priority','total_priority_src_flg','node_id_1','asset_id_1','percentage','seqno','participation_flg','cost_center_cd','percentage_2','act_resrc_reqmt_id','descrlong_1','resrc_src_flg','resrc_type_id','w1_quantity','unit_price','w1_duration','crew_shift_id','sched_duration','break_in_dttm','actvn_dttm','tmpl_act_id','maint_sched_id','maint_trigger_id','status','owning_organization','field_1','field_2','submitted_datetime','created_date','modified_date','asset_location_asset_list')
 
+## new field added for pipe view
+# class WorkOrderActivityCompletionPipeSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = WorkOrderActivityCompletion
+#         fields = '__all__'
+#         # fields = ('id','activityid','completiondatetime','bo_status_cd','user_id_1','act_type_cd','wo_id','act_dpos_flg','service_class_cd','requestor_id','required_by_dt','work_priority_flg','descr100','descrlong','w1_descr100_upr','held_for_parts_flg','anniversary_value','emergency_flg','act_num','planner_cd','total_priority','total_priority_src_flg','node_id_1','asset_id_1','percentage','seqno','participation_flg','cost_center_cd','percentage_2','act_resrc_reqmt_id','descrlong_1','resrc_src_flg','resrc_type_id','w1_quantity','unit_price','w1_duration','crew_shift_id','sched_duration','break_in_dttm','actvn_dttm','tmpl_act_id','maint_sched_id','maint_trigger_id','status','owning_organization','field_1','field_2','submitted_datetime','created_date','modified_date','asset_location_asset_list')
+	
 class ServiceHistoriesQuestionsExtendedSerializer(serializers.ModelSerializer):
     
     valid_value = QuestionsValidValueSerializer(many=True)

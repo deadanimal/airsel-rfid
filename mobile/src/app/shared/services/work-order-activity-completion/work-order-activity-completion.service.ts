@@ -80,4 +80,13 @@ export class WorkOrderActivityCompletionService {
       })
     );
   }
+
+  asc_ordered_list(body): Observable<WorkOrderActivityCompletionModel[]> {
+    let urlOrdered = this.url + "asc_ordered_list/";
+    return this.http.post<any>(urlOrdered, body).pipe(
+      tap((res) => {
+        console.log("WorkOrderActivityCompletionModel", res);
+      })
+    );
+  }
 }

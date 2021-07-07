@@ -34,16 +34,21 @@
     <h4 style="color: var(--ion-color-primary)">{{ name }}</h4>
   </div>
   <div *ngIf="workactivities.length == 0">
-    <h6 class="ion-text-center">You have no {{ status }} Work Activity</h6>
+    <h6 class="ion-text-center">You have Id {{ status }} Work Activity</h6>
   </div>
   <ion-card *ngFor="let workactivity of workactivitiesDatas">
     <ion-card-header>
       <ion-fab horizontal="end">
-        <ion-fab-button size="small" color="light" (click)="clickWorkActivity(workactivity)">
+        <ion-fab-button *ngIf="workactivity.field_2 == ''" size="small" color="light"
+          (click)="presentAlertConfirm(workactivity)">
+          <ion-icon name="build"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button *ngIf="workactivity.field_2 != ''" size="small" color="light"
+          (click)="clickWorkActivity(workactivity)">
           <ion-icon name="build"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-      <ion-card-title>Work Activity No</ion-card-title>
+      <ion-card-title>Work Activity ID</ion-card-title>
       <ion-card-subtitle>{{ workactivity.activityid }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>

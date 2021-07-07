@@ -10,13 +10,13 @@ import { OperationalReadingsModel } from "./operational-readings.model";
   providedIn: "root",
 })
 export class OperationalReadingsService {
-  url: string = environment.baseUrl + "v1/operational-readings/";
+  url: string = environment.baseUrl + "v1/operational-readings-pipe/";
 
   // Data
   public ormodels: OperationalReadingsModel[] = [];
   public ormodel: OperationalReadingsModel;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   post(body: Form): Observable<OperationalReadingsModel> {
     return this.http.post<any>(this.url, body).pipe(
@@ -66,6 +66,15 @@ export class OperationalReadingsService {
     return this.http.get<OperationalReadingsModel[]>(urlFilter).pipe(
       tap((res) => {
         console.log("OperationalReadingsModel", res);
+      })
+    );
+  }
+
+  getDescOrderList(body): Observable<OperationalReadingsModel[]> {
+    let urlOrdered = this.url + "asc_ordered_list/";
+    return this.http.post<any>(urlOrdered, body).pipe(
+      tap((res) => {
+        console.log("WorkOrderActivityCompletionModel", res);
       })
     );
   }

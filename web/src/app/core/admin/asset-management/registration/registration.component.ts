@@ -289,6 +289,39 @@ export class RegistrationComponent implements OnInit {
     { value: "SOUTH", name: "SOUTH" },
   ];
 
+  measurement_types = [
+    { desc: 'Bar', value: 'bar' },
+    { desc: 'Celsius', value: '°C' },
+    { desc: 'Hour', value: 'hr' },
+    { desc: 'Kilogram', value: 'kg' },
+    { desc: 'Kilometer', value: 'km' },
+    { desc: 'Kilowatt', value: 'kW' },
+    { desc: 'Megapascal Pressure Unit', value: 'Mpa' },
+    { desc: 'Meter', value: 'm' },
+    { desc: 'Meter per second', value: 'm/s' },
+    { desc: 'Milimetre', value: 'mm' },
+    { desc: 'Millions of Gallons per Day', value: 'MGD' },
+    { desc: 'Millions of liters per day ', value: 'MLD' },
+    { desc: 'Miligram', value: 'mg' },
+    { desc: 'Revolutions per minute', value: 'RPM' },
+    { desc: 'Horsepower', value: 'hp' },
+    { desc: 'Voltage', value: 'V' },
+    { desc: 'Cubic meter', value: 'm³' },
+    { desc: 'Cubic meter per hour', value: 'm³/hr' },
+    { desc: 'Decibels woth reference to one milliwatt', value: 'dBm' },
+    { desc: 'Liter per second', value: 'l/s' },
+    { desc: 'Megametre per second', value: 'mm/s' },
+    { desc: 'Millihenrys', value: 'mH' },
+    { desc: 'Millivolts', value: 'mV' },
+    { desc: 'pH', value: 'pH' },
+    { desc: 'Percent', value: '%' },
+    { desc: 'Watt', value: 'W' },
+    { desc: 'Voltage direct current', value: 'VDC' },
+    { desc: 'nanometers', value: 'nm' },
+    { desc: 'Milliamperes', value: 'mA' },
+    { desc: 'Pound per square inch', value: 'psi' },
+  ]
+
   state = [
     { value: "JHR", name: "JOHOR" },
     { value: "KDH", name: "KEDAH" },
@@ -886,7 +919,7 @@ export class RegistrationComponent implements OnInit {
       latitude: ["", Validators.compose([Validators.required])], //
       longitude: ["", Validators.compose([Validators.required])], //
       asset_critically: ["", Validators.compose([Validators.required])], //
-      cost_center: ["",], //
+      cost_center: ["", Validators.compose([Validators.required])], //
       brand: ["",],
       model_number: ["",],
       size_capacity_1: ["",],
@@ -901,11 +934,11 @@ export class RegistrationComponent implements OnInit {
       serial_number: ["", Validators.compose([Validators.required])], //
       // asset_tag_number: ["",],
       purchase_date_installed_handed_over_date: ["", Validators.compose([Validators.required])], //
-      condition_rating: ["", Validators.compose([Validators.required])],  //
+      condition_rating: ["", Validators.compose([Validators.required])], //
       status: ["",],
       maintenance_specification: ["",],
       measurement_type: ["",],
-      warranty: ["", Validators.compose([Validators.required])],  //
+      warranty: ["", Validators.compose([Validators.required])], //
       actual_warranty_period: ["",],
       warranty_vendor_name: ["",],
       bo: ["",]
@@ -1040,18 +1073,18 @@ export class RegistrationComponent implements OnInit {
       (res) => {
         if (res) {
           this.primarycategories = res.filter(function (data) {
-            if(data.category !== undefined) {
+            if (data.category !== undefined) {
               if (data.category.toString().toLowerCase().indexOf("at") !== -1)
-              return true;
+                return true;
             } else {
               return false;
             }
           });
 
           this.typeassets = res.filter(function (data) {
-            if(data.category !== undefined) {
+            if (data.category !== undefined) {
               if (data.category.toString().toLowerCase().indexOf("ac") !== -1)
-              return true;
+                return true;
             } else {
               return false;
             }
@@ -1059,9 +1092,9 @@ export class RegistrationComponent implements OnInit {
           });
 
           this.categories = res.filter(function (data) {
-            if(data.category !== undefined) {
+            if (data.category !== undefined) {
               if (data.category.toString().toLowerCase().indexOf("ag") !== -1)
-              return true;
+                return true;
             } else {
               return false;
             }
@@ -1363,6 +1396,26 @@ export class RegistrationComponent implements OnInit {
   }
 
   detailedDescription: any
+  unit_measurement_1: any
+  unit_measurement_2: any
+  unit_measurement_3: any
+
+  getUnitMeasurement1(event) {
+    // console.log("event", event)
+    this.unit_measurement_1 = event;
+    this.getDetailedDescription();
+  }
+  getUnitMeasurement2(event) {
+    // console.log("event", event)
+    this.unit_measurement_2 = event;
+    this.getDetailedDescription();
+  }
+  getUnitMeasurement3(event) {
+    // console.log("event", event)
+    this.unit_measurement_3 = event;
+    this.getDetailedDescription();
+  }
+
   getDetailedDescription() {
     const assetIdentity = (<HTMLInputElement>document.getElementById("asset_identity")).value
     // const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
@@ -1370,15 +1423,16 @@ export class RegistrationComponent implements OnInit {
     const SubCategory_2 = (<HTMLInputElement>document.getElementById("SubCategory_2")).value
     const model_number = (<HTMLInputElement>document.getElementById("model_number")).value
     const size_capacity_1 = (<HTMLInputElement>document.getElementById("size_capacity_1")).value
-    const size_capacity_1_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_1_unit_measurement")).value
+    // const size_capacity_1_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_1_unit_measurement")).value
     const size_capacity_2 = (<HTMLInputElement>document.getElementById("size_capacity_2")).value
-    const size_capacity_2_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_2_unit_measurement")).value
+    // const size_capacity_2_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_2_unit_measurement")).value
     const size_capacity_3 = (<HTMLInputElement>document.getElementById("size_capacity_3")).value
-    const size_capacity_3_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_3_unit_measurement")).value
+    // const size_capacity_3_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_3_unit_measurement")).value
 
     console.log("SubCategory_1", SubCategory_1)
-    this.detailedDescription = assetIdentity + "-" + this.assetPrimary + "-" + SubCategory_1 + "-" + SubCategory_2 + "-" + model_number + "-" + size_capacity_1 + "-" + size_capacity_1_unit_measurement + "-" + size_capacity_2 + "-" + size_capacity_2_unit_measurement + "-" + size_capacity_3 + "-" + size_capacity_3_unit_measurement;
+    this.detailedDescription = assetIdentity + "-" + this.assetPrimary + "-" + SubCategory_1 + "-" + SubCategory_2 + "-" + model_number + "-" + size_capacity_1 + "-" + this.unit_measurement_1 + "-" + size_capacity_2 + "-" + this.unit_measurement_2 + "-" + size_capacity_3 + "-" + this.unit_measurement_3;
 
+    console.log("detailedDescription", this.detailedDescription)
   }
 
   LocationDescription: any;
@@ -1418,7 +1472,26 @@ export class RegistrationComponent implements OnInit {
         console.log('Error is ', error)
       })
     }
+  }
 
+  asset_or_component: any;
+  get_asset_or_component_type(event){
+
+    console.log("qwertyuiop", event);
+
+    console.log("qwertyuiop 2", this.assetprimarycategory);
+    for (let i in this.assetprimarycategory) {
+      if (this.assetprimarycategory[i].asset_type_code == event) {
+        
+        console.log("asset_bussiness_object", this.assetprimarycategory[i].asset_bussiness_object)
+        if (this.assetprimarycategory[i].asset_bussiness_object == 'W1-TrackedGeneralComponent' || this.assetprimarycategory[i].asset_bussiness_object == 'W1-IOSvcGeneralComponent') {
+          this.asset_or_component = 'COMPONENT'
+        } else { // W1-IOSvcGeneralComponent , W1-TrackedGeneralComponent
+          this.asset_or_component = 'ASSET'
+        }
+      }
+    }
+    console.log("asset_or_component", this.asset_or_component)
 
 
   }
@@ -1452,187 +1525,191 @@ export class RegistrationComponent implements OnInit {
 
   submitRegistration() {
 
-    const SubmitObject = new AssetsRegistrationModel();
+    swal
+      .fire({
+        title: "Submit Registration",
+        text: "Are you sure want to submit?",
+        type: "question",
+        showCancelButton: true,
 
-    // if (this.firstFormGroup.valid) {
+      }).then((result) => {
+        // this.firstFormGroup.reset();
+        // this.secondFormGroup.reset();
 
-    SubmitObject.node_id = this.firstFormGroup.value.parent_location
-    SubmitObject.asset_identity = this.firstFormGroup.value.asset_identity;
-    SubmitObject.parent_location = this.firstFormGroup.value.parent_location;
-    SubmitObject.location_description = this.LocationDescription;
-    SubmitObject.building = this.firstFormGroup.value.building;
-    SubmitObject.address_line_1 = this.firstFormGroup.value.address_line_1;
-    SubmitObject.address_line_2 = this.firstFormGroup.value.address_line_2;
-    SubmitObject.address_line_3 = this.firstFormGroup.value.address_line_3;
-    SubmitObject.city = this.firstFormGroup.value.city;
-    SubmitObject.state = this.firstFormGroup.value.state;
-    SubmitObject.postal_code = this.firstFormGroup.value.postal_code;
-    SubmitObject.country = this.firstFormGroup.value.country;
-    SubmitObject.tag_number = this.firstFormGroup.value.tag_number;
-    SubmitObject.hex_code = this.firstFormGroup.value.rfid_hex_code
-    SubmitObject.service_area = this.firstFormGroup.value.service_area;
-    SubmitObject.location_main_contact = this.firstFormGroup.value.location_main_contact;
-    SubmitObject.location_asset_maintenance_manager = this.firstFormGroup.value.location_asset_maintenance_manager;
-    SubmitObject.maintenance_planner = this.firstFormGroup.value.maintenance_planner;
-    SubmitObject.gis_esri_id = this.firstFormGroup.value.gis_esri_id;
-    SubmitObject.latitude = this.firstFormGroup.value.latitude;
-    SubmitObject.longitude = this.firstFormGroup.value.longitude;
-    SubmitObject.asset_criticality = this.firstFormGroup.value.asset_critically;
-    SubmitObject.cost_center = this.firstFormGroup.value.cost_center;
-    SubmitObject.asset_owning_department = this.firstFormGroup.value.asset_owning_department;
-    SubmitObject.main_operation = this.firstFormGroup.value.main_operation;
-    SubmitObject.region = this.firstFormGroup.value.region;
-    SubmitObject.operation = this.firstFormGroup.value.operation;
-    SubmitObject.process_function = this.firstFormGroup.value.process_function;
-    SubmitObject.sub_process_system = this.firstFormGroup.value.sub_process_system;
-    SubmitObject.asset_or_component_type = this.firstFormGroup.value.asset_or_component_type;
-    SubmitObject.maintenance_specification = this.firstFormGroup.value.maintenance_specification;
-    SubmitObject.asset_primary_category = this.firstFormGroup.value.asset_primary_category;
-    SubmitObject.sub_category_1 = this.firstFormGroup.value.sub_category_1;
-    SubmitObject.sub_category_2 = this.firstFormGroup.value.sub_category_2;
-    SubmitObject.brand = this.firstFormGroup.value.brand;
-    SubmitObject.model_number = this.firstFormGroup.value.model_number;
-    SubmitObject.size_capacity_1 = this.firstFormGroup.value.size_capacity_1;
-    SubmitObject.size_capacity_1_unit_measurement = this.firstFormGroup.value.size_capacity_1_unit_measurement;
-    SubmitObject.size_capacity_2 = this.firstFormGroup.value.size_capacity_2;
-    SubmitObject.size_capacity_2_unit_measurement = this.firstFormGroup.value.size_capacity_2_unit_measurement;
-    SubmitObject.size_capacity_3 = this.firstFormGroup.value.size_capacity_3;
-    SubmitObject.size_capacity_3_unit_measurement = this.firstFormGroup.value.size_capacity_3_unit_measurement;
-    SubmitObject.detailed_description = this.detailedDescription;
-    SubmitObject.serial_number = this.firstFormGroup.value.serial_number;
-    // SubmitObject.asset_tag_number = this.firstFormGroup.value.asset_tag_number;
-    SubmitObject.serial_number = this.firstFormGroup.value.serial_number;
-    SubmitObject.purchase_date_installed_handed_over_date = this.firstFormGroup.value.purchase_date_installed_handed_over_date;
-    SubmitObject.condition_rating = this.firstFormGroup.value.condition_rating;
-    SubmitObject.maintenance_specification = this.firstFormGroup.value.maintenance_specification;
-    SubmitObject.measurement_type = this.firstFormGroup.value.measurement_type;
-    SubmitObject.warranty = this.firstFormGroup.value.warranty;
-    SubmitObject.actual_warranty_period = this.firstFormGroup.value.actual_warranty_period;
-    SubmitObject.warranty_vendor_name = this.firstFormGroup.value.warranty_vendor_name;
-    SubmitObject.asset_class_asset_category = this.class_category;
-    SubmitObject.handed_over_asset_or_procured = this.firstFormGroup.value.status;
+        console.log("resilt", result)
 
-    SubmitObject.new_parent_location = this.firstFormGroup.value.new_parent_location
-    SubmitObject.bo = this.bo
-    SubmitObject.bo_status = this.boStatus
+        if (result.value) {
 
-    SubmitObject.bottom_water_level = this.secondFormGroup.value.bottom_water_level
-    SubmitObject.closing_torque = this.secondFormGroup.value.closing_torque
-    SubmitObject.dimention = this.secondFormGroup.value.dimention
-    SubmitObject.frequency = this.secondFormGroup.value.frequency
-    SubmitObject.infrastructure_status = this.secondFormGroup.value.infrastructure_status
-    SubmitObject.installation = this.secondFormGroup.value.installation
-    SubmitObject.manufacturer = this.secondFormGroup.value.manufacturer
-    SubmitObject.material_type = this.secondFormGroup.value.material_type
-    SubmitObject.no_of_channel = this.secondFormGroup.value.no_of_channel
-    SubmitObject.opening_torque = this.secondFormGroup.value.opening_torque
-    SubmitObject.pump_head = this.secondFormGroup.value.pump_head
-    SubmitObject.staging_height = this.secondFormGroup.value.staging_height
-    SubmitObject.top_water_level = this.secondFormGroup.value.top_water_level
-    SubmitObject.valve_pressure_rating = this.secondFormGroup.value.valve_pressure_rating
-    SubmitObject.vehicle_engine_number = this.secondFormGroup.value.vehicle_engine_number
-    SubmitObject.vehicle_insurance_auto_windscreen_insured = this.secondFormGroup.value.vehicle_insurance_auto_windscreen_insured
-    SubmitObject.vehicle_insurance_date_period_to = this.secondFormGroup.value.vehicle_insurance_date_period_to
-    SubmitObject.vehicle_insurance_sum_insured = this.secondFormGroup.value.vehicle_insurance_sum_insured
-    SubmitObject.vehicle_owner_status = this.secondFormGroup.value.vehicle_owner_status
-    SubmitObject.vehicle_puspakom_expired_date = this.secondFormGroup.value.vehicle_puspakom_expired_date
-    SubmitObject.vehicle_roadtax_expired_date = this.secondFormGroup.value.vehicle_roadtax_expired_date
-    SubmitObject.vehicle_seating_capacity = this.secondFormGroup.value.vehicle_seating_capacity
-    SubmitObject.communication_protocol = this.secondFormGroup.value.communication_protocol
-    SubmitObject.environmental_performance = this.secondFormGroup.value.environmental_performance
-    SubmitObject.horse_power = this.secondFormGroup.value.horse_power
-    SubmitObject.infrastructure_status_reason = this.secondFormGroup.value.infrastructure_status_reason
-    SubmitObject.insulation = this.secondFormGroup.value.insulation
-    SubmitObject.manufacturer_year = this.secondFormGroup.value.manufacturer_year
-    SubmitObject.model = this.secondFormGroup.value.model
-    SubmitObject.no_of_phases = this.secondFormGroup.value.no_of_phases
-    SubmitObject.outlet_diameter = this.secondFormGroup.value.outlet_diameter
-    SubmitObject.revolutions_per_minute = this.secondFormGroup.value.revolutions_per_minute
-    SubmitObject.supply_location = this.secondFormGroup.value.supply_location
-    SubmitObject.type = this.secondFormGroup.value.type
-    SubmitObject.vehicle_chasis_number = this.secondFormGroup.value.vehicle_chasis_number
-    SubmitObject.vehicle_insurance_vendor = this.secondFormGroup.value.vehicle_insurance_vendor
-    SubmitObject.vehicle_insurance_cover_note_number = this.secondFormGroup.value.vehicle_insurance_cover_note_number
-    SubmitObject.vehicle_insurance_no_claim_discount = this.secondFormGroup.value.vehicle_insurance_no_claim_discount
-    SubmitObject.vehicle_insurance_total_premium = this.secondFormGroup.value.vehicle_insurance_total_premium
-    SubmitObject.vehicle_register_date = this.secondFormGroup.value.vehicle_register_date
-    SubmitObject.vehicle_spad_permit_date_period_to = this.secondFormGroup.value.vehicle_spad_permit_date_period_to
-    SubmitObject.vehicle_spad_no_license_operator = this.secondFormGroup.value.vehicle_spad_no_license_operator
-    SubmitObject.vehicle_registration_owner = this.secondFormGroup.value.vehicle_registration_owner
-    SubmitObject.capacity_size = this.secondFormGroup.value.capacity_size
-    SubmitObject.coverage_range = this.secondFormGroup.value.coverage_range
-    SubmitObject.flow_rate = this.secondFormGroup.value.flow_rate
-    SubmitObject.hysteresis = this.secondFormGroup.value.hysteresis
-    SubmitObject.inlet_diameter = this.secondFormGroup.value.inlet_diameter
-    SubmitObject.legal_name = this.secondFormGroup.value.legal_name
-    SubmitObject.manufacture_part_number = this.secondFormGroup.value.manufacture_part_number
-    SubmitObject.motor_current = this.secondFormGroup.value.motor_current
-    SubmitObject.no_of_stage = this.secondFormGroup.value.no_of_stage
-    SubmitObject.power_supply_type = this.secondFormGroup.value.power_supply_type
-    SubmitObject.source_from = this.secondFormGroup.value.source_from
-    SubmitObject.temperature = this.secondFormGroup.value.temperature
-    SubmitObject.valve_diameter = this.secondFormGroup.value.valve_diameter
-    SubmitObject.vehicle_engine_capacity = this.secondFormGroup.value.vehicle_engine_capacity
-    SubmitObject.vehicle_model = this.secondFormGroup.value.vehicle_model
-    SubmitObject.vehicle_insurance_date_period_from = this.secondFormGroup.value.vehicle_insurance_date_period_from
-    SubmitObject.vehicle_insurance_policy_type = this.secondFormGroup.value.vehicle_insurance_policy_type
-    SubmitObject.vehicle_puspakom_date_inspection = this.secondFormGroup.value.vehicle_puspakom_date_inspection
-    SubmitObject.vehicle_roadtax_rate = this.secondFormGroup.value.vehicle_roadtax_rate
-    SubmitObject.vehicle_roadtax_renew_date = this.secondFormGroup.value.vehicle_roadtax_renew_date
-    SubmitObject.vehicle_spad_permit_date_period_from = this.secondFormGroup.value.vehicle_spad_permit_date_period_from
-    SubmitObject.voltage = this.secondFormGroup.value.voltage
-    SubmitObject.asset_status = this.secondFormGroup.value.asset_status
-    SubmitObject.status = this.secondFormGroup.value.status
+          const SubmitObject = new AssetsRegistrationModel();
+
+          // if (this.firstFormGroup.valid) {
+
+          SubmitObject.node_id = this.firstFormGroup.value.parent_location.toUpperCase( )
+          SubmitObject.asset_identity = this.firstFormGroup.value.asset_identity.toUpperCase( )
+          SubmitObject.parent_location = this.firstFormGroup.value.parent_location.toUpperCase( )
+          SubmitObject.location_description = this.LocationDescription.toUpperCase( )
+          SubmitObject.building = this.firstFormGroup.value.building.toUpperCase( )
+          SubmitObject.address_line_1 = this.firstFormGroup.value.address_line_1.toUpperCase( )
+          SubmitObject.address_line_2 = this.firstFormGroup.value.address_line_2.toUpperCase( )
+          SubmitObject.address_line_3 = this.firstFormGroup.value.address_line_3.toUpperCase( )
+          SubmitObject.city = this.firstFormGroup.value.city.toUpperCase( )
+          SubmitObject.state = this.firstFormGroup.value.state.toUpperCase( )
+          SubmitObject.postal_code = this.firstFormGroup.value.postal_code.toUpperCase( )
+          SubmitObject.country = this.firstFormGroup.value.country.toUpperCase( )
+          SubmitObject.tag_number = this.firstFormGroup.value.tag_number.toUpperCase( )
+          SubmitObject.hex_code = this.firstFormGroup.value.rfid_hex_code.toUpperCase( )
+          SubmitObject.service_area = this.firstFormGroup.value.service_area.toUpperCase( )
+          SubmitObject.location_main_contact = this.firstFormGroup.value.location_main_contact.toUpperCase( )
+          SubmitObject.location_asset_maintenance_manager = this.firstFormGroup.value.location_asset_maintenance_manager.toUpperCase( )
+          SubmitObject.maintenance_planner = this.firstFormGroup.value.maintenance_planner.toUpperCase( )
+          SubmitObject.gis_esri_id = this.firstFormGroup.value.gis_esri_id.toUpperCase( )
+          SubmitObject.latitude = this.firstFormGroup.value.latitude.toUpperCase( )
+          SubmitObject.longitude = this.firstFormGroup.value.longitude.toUpperCase( )
+          SubmitObject.asset_criticality = this.firstFormGroup.value.asset_critically.toUpperCase( )
+          SubmitObject.cost_center = this.firstFormGroup.value.cost_center.toUpperCase( )
+          SubmitObject.asset_owning_department = this.firstFormGroup.value.asset_owning_department.toUpperCase( )
+          SubmitObject.main_operation = this.firstFormGroup.value.main_operation.toUpperCase( )
+          SubmitObject.region = this.firstFormGroup.value.region.toUpperCase( );
+          SubmitObject.operation = this.firstFormGroup.value.operation.toUpperCase( );
+          SubmitObject.process_function = this.firstFormGroup.value.process_function.toUpperCase( );
+          SubmitObject.sub_process_system = this.firstFormGroup.value.sub_process_system.toUpperCase( );
+          SubmitObject.asset_or_component_type = this.asset_or_component.toUpperCase( );
+          SubmitObject.maintenance_specification = this.firstFormGroup.value.maintenance_specification.toUpperCase( );
+          SubmitObject.asset_primary_category = this.firstFormGroup.value.asset_primary_category.toUpperCase( );
+          SubmitObject.sub_category_1 = this.firstFormGroup.value.sub_category_1.toUpperCase( );
+          SubmitObject.sub_category_2 = this.firstFormGroup.value.sub_category_2.toUpperCase( );
+          SubmitObject.brand = this.firstFormGroup.value.brand.toUpperCase( );
+          SubmitObject.model_number = this.firstFormGroup.value.model_number.toUpperCase( );
+          SubmitObject.size_capacity_1 = this.firstFormGroup.value.size_capacity_1.toUpperCase( );
+          SubmitObject.size_capacity_1_unit_measurement = this.firstFormGroup.value.size_capacity_1_unit_measurement.toUpperCase( );
+          SubmitObject.size_capacity_2 = this.firstFormGroup.value.size_capacity_2.toUpperCase( );
+          SubmitObject.size_capacity_2_unit_measurement = this.firstFormGroup.value.size_capacity_2_unit_measurement.toUpperCase( );
+          SubmitObject.size_capacity_3 = this.firstFormGroup.value.size_capacity_3.toUpperCase( );
+          SubmitObject.size_capacity_3_unit_measurement = this.firstFormGroup.value.size_capacity_3_unit_measurement.toUpperCase( );
+          SubmitObject.detailed_description = this.detailedDescription.toUpperCase( );
+          SubmitObject.serial_number = this.firstFormGroup.value.serial_number.toUpperCase( );
+          // SubmitObject.asset_tag_number = this.firstFormGroup.value.asset_tag_number;
+          SubmitObject.serial_number = this.firstFormGroup.value.serial_number.toUpperCase( );
+          SubmitObject.purchase_date_installed_handed_over_date = this.firstFormGroup.value.purchase_date_installed_handed_over_date.toUpperCase( );
+          SubmitObject.condition_rating = this.firstFormGroup.value.condition_rating.toUpperCase( );
+          SubmitObject.maintenance_specification = this.firstFormGroup.value.maintenance_specification.toUpperCase( );
+          SubmitObject.measurement_type = this.firstFormGroup.value.measurement_type.toUpperCase( );
+          SubmitObject.warranty = this.firstFormGroup.value.warranty.toUpperCase( );
+          SubmitObject.actual_warranty_period = this.firstFormGroup.value.actual_warranty_period.toUpperCase( );
+          SubmitObject.warranty_vendor_name = this.firstFormGroup.value.warranty_vendor_name.toUpperCase( );
+          SubmitObject.asset_class_asset_category = this.class_category.toUpperCase( );
+          SubmitObject.handed_over_asset_or_procured = this.firstFormGroup.value.status.toUpperCase( );
+
+          SubmitObject.new_parent_location = this.firstFormGroup.value.new_parent_location.toUpperCase( )
+          SubmitObject.bo = this.bo.toUpperCase( )
+          SubmitObject.bo_status = this.boStatus.toUpperCase( )
+
+          SubmitObject.bottom_water_level = this.secondFormGroup.value.bottom_water_level.toUpperCase( )
+          SubmitObject.closing_torque = this.secondFormGroup.value.closing_torque.toUpperCase( )
+          SubmitObject.dimention = this.secondFormGroup.value.dimention.toUpperCase( )
+          SubmitObject.frequency = this.secondFormGroup.value.frequency.toUpperCase( )
+          SubmitObject.infrastructure_status = this.secondFormGroup.value.infrastructure_status.toUpperCase( )
+          SubmitObject.installation = this.secondFormGroup.value.installation.toUpperCase( )
+          SubmitObject.manufacturer = this.secondFormGroup.value.manufacturer.toUpperCase( )
+          SubmitObject.material_type = this.secondFormGroup.value.material_type.toUpperCase( )
+          SubmitObject.no_of_channel = this.secondFormGroup.value.no_of_channel.toUpperCase( )
+          SubmitObject.opening_torque = this.secondFormGroup.value.opening_torque.toUpperCase( )
+          SubmitObject.pump_head = this.secondFormGroup.value.pump_head.toUpperCase( )
+          SubmitObject.staging_height = this.secondFormGroup.value.staging_height.toUpperCase( )
+          SubmitObject.top_water_level = this.secondFormGroup.value.top_water_level.toUpperCase( )
+          SubmitObject.valve_pressure_rating = this.secondFormGroup.value.valve_pressure_rating.toUpperCase( )
+          SubmitObject.vehicle_engine_number = this.secondFormGroup.value.vehicle_engine_number.toUpperCase( )
+          SubmitObject.vehicle_insurance_auto_windscreen_insured = this.secondFormGroup.value.vehicle_insurance_auto_windscreen_insured.toUpperCase( )
+          SubmitObject.vehicle_insurance_date_period_to = this.secondFormGroup.value.vehicle_insurance_date_period_to.toUpperCase( )
+          SubmitObject.vehicle_insurance_sum_insured = this.secondFormGroup.value.vehicle_insurance_sum_insured.toUpperCase( )
+          SubmitObject.vehicle_owner_status = this.secondFormGroup.value.vehicle_owner_status.toUpperCase( )
+          SubmitObject.vehicle_puspakom_expired_date = this.secondFormGroup.value.vehicle_puspakom_expired_date.toUpperCase( )
+          SubmitObject.vehicle_roadtax_expired_date = this.secondFormGroup.value.vehicle_roadtax_expired_date.toUpperCase( )
+          SubmitObject.vehicle_seating_capacity = this.secondFormGroup.value.vehicle_seating_capacity.toUpperCase( )
+          SubmitObject.communication_protocol = this.secondFormGroup.value.communication_protocol.toUpperCase( )
+          SubmitObject.environmental_performance = this.secondFormGroup.value.environmental_performance.toUpperCase( )
+          SubmitObject.horse_power = this.secondFormGroup.value.horse_power.toUpperCase( )
+          SubmitObject.infrastructure_status_reason = this.secondFormGroup.value.infrastructure_status_reason.toUpperCase( )
+          SubmitObject.insulation = this.secondFormGroup.value.insulation.toUpperCase( )
+          SubmitObject.manufacturer_year = this.secondFormGroup.value.manufacturer_year.toUpperCase( )
+          SubmitObject.model = this.secondFormGroup.value.model.toUpperCase( )
+          SubmitObject.no_of_phases = this.secondFormGroup.value.no_of_phases.toUpperCase( )
+          SubmitObject.outlet_diameter = this.secondFormGroup.value.outlet_diameter.toUpperCase( )
+          SubmitObject.revolutions_per_minute = this.secondFormGroup.value.revolutions_per_minute.toUpperCase( )
+          SubmitObject.supply_location = this.secondFormGroup.value.supply_location.toUpperCase( )
+          SubmitObject.type = this.secondFormGroup.value.type.toUpperCase( )
+          SubmitObject.vehicle_chasis_number = this.secondFormGroup.value.vehicle_chasis_number.toUpperCase( )
+          SubmitObject.vehicle_insurance_vendor = this.secondFormGroup.value.vehicle_insurance_vendor.toUpperCase( )
+          SubmitObject.vehicle_insurance_cover_note_number = this.secondFormGroup.value.vehicle_insurance_cover_note_number.toUpperCase( )
+          SubmitObject.vehicle_insurance_no_claim_discount = this.secondFormGroup.value.vehicle_insurance_no_claim_discount.toUpperCase( )
+          SubmitObject.vehicle_insurance_total_premium = this.secondFormGroup.value.vehicle_insurance_total_premium.toUpperCase( )
+          SubmitObject.vehicle_register_date = this.secondFormGroup.value.vehicle_register_date.toUpperCase( )
+          SubmitObject.vehicle_spad_permit_date_period_to = this.secondFormGroup.value.vehicle_spad_permit_date_period_to.toUpperCase( )
+          SubmitObject.vehicle_spad_no_license_operator = this.secondFormGroup.value.vehicle_spad_no_license_operator.toUpperCase( )
+          SubmitObject.vehicle_registration_owner = this.secondFormGroup.value.vehicle_registration_owner.toUpperCase( )
+          SubmitObject.capacity_size = this.secondFormGroup.value.capacity_size.toUpperCase( )
+          SubmitObject.coverage_range = this.secondFormGroup.value.coverage_range.toUpperCase( )
+          SubmitObject.flow_rate = this.secondFormGroup.value.flow_rate.toUpperCase( )
+          SubmitObject.hysteresis = this.secondFormGroup.value.hysteresis.toUpperCase( )
+          SubmitObject.inlet_diameter = this.secondFormGroup.value.inlet_diameter.toUpperCase( )
+          SubmitObject.legal_name = this.secondFormGroup.value.legal_name.toUpperCase( )
+          SubmitObject.manufacture_part_number = this.secondFormGroup.value.manufacture_part_number.toUpperCase( )
+          SubmitObject.motor_current = this.secondFormGroup.value.motor_current.toUpperCase( )
+          SubmitObject.no_of_stage = this.secondFormGroup.value.no_of_stage.toUpperCase( )
+          SubmitObject.power_supply_type = this.secondFormGroup.value.power_supply_type.toUpperCase( )
+          SubmitObject.source_from = this.secondFormGroup.value.source_from.toUpperCase( )
+          SubmitObject.temperature = this.secondFormGroup.value.temperature.toUpperCase( )
+          SubmitObject.valve_diameter = this.secondFormGroup.value.valve_diameter.toUpperCase( )
+          SubmitObject.vehicle_engine_capacity = this.secondFormGroup.value.vehicle_engine_capacity.toUpperCase( )
+          SubmitObject.vehicle_model = this.secondFormGroup.value.vehicle_model.toUpperCase( )
+          SubmitObject.vehicle_insurance_date_period_from = this.secondFormGroup.value.vehicle_insurance_date_period_from.toUpperCase( )
+          SubmitObject.vehicle_insurance_policy_type = this.secondFormGroup.value.vehicle_insurance_policy_type.toUpperCase( )
+          SubmitObject.vehicle_puspakom_date_inspection = this.secondFormGroup.value.vehicle_puspakom_date_inspection.toUpperCase( )
+          SubmitObject.vehicle_roadtax_rate = this.secondFormGroup.value.vehicle_roadtax_rate.toUpperCase( )
+          SubmitObject.vehicle_roadtax_renew_date = this.secondFormGroup.value.vehicle_roadtax_renew_date.toUpperCase( )
+          SubmitObject.vehicle_spad_permit_date_period_from = this.secondFormGroup.value.vehicle_spad_permit_date_period_from.toUpperCase( )
+          SubmitObject.voltage = this.secondFormGroup.value.voltage.toUpperCase( )
+          SubmitObject.asset_status = this.secondFormGroup.value.asset_status.toUpperCase( )
+          SubmitObject.status = this.secondFormGroup.value.status.toUpperCase( )
 
 
 
-    this.assetsRegistrationService.post(SubmitObject).subscribe(
-      (res) => {
-        // this.saveAssetType(createAssetTypeData)
-        // this.successAlert()
+          this.assetsRegistrationService.post(SubmitObject).subscribe(
+            (res) => {
+              // this.saveAssetType(createAssetTypeData)
+              // this.successAlert()
 
-        this.spinner.hide();
-        swal
-          .fire({
-            title: "success",
-            text: "The submission has success",
-            type: "success",
-          }).then((result) => {
-          });
-          this.modalRegisterAsset.hide();
-        //this.closeModal()
-          this.getRegisteredData();
-      },
-      error => {
-        console.error("err", error);
+              this.spinner.hide();
+              swal
+                .fire({
+                  title: "success",
+                  text: "The submission has success",
+                  type: "success",
+                }).then((result) => {
+                });
+              this.modalRegisterAsset.hide();
+              //this.closeModal()
+              this.getRegisteredData();
+            },
+            error => {
+              console.error("err", error);
 
-        this.spinner.hide();
-        swal
-          .fire({
-            title: "failed",
-            text: "The submission has failed",
-            type: "warning",
-          }).then((result) => {
-            // const invalidControl = this.firstFormGroup.controls['asset_identity'].invalid;
-            // invalidControl.
-            // this.getRegisteredData()
-          });
-        this.modalRegisterAsset.hide();
-        //this.closeModal()
-      }
-    )
-    // }
-    // else {
-    //   swal
-    //     .fire({
-    //       title: "Failed",
-    //       text: "The submission has failed",
-    //       type: "warning",
-    //     }).then((result) => {
-    //     });
+              this.spinner.hide();
+              swal
+                .fire({
+                  title: "failed",
+                  text: "The submission has failed",
+                  type: "warning",
+                }).then((result) => {
+                  
+                });
+              this.modalRegisterAsset.hide();
+              //this.closeModal()
+            }
+          )
 
-    // }
-
+        }
+      });
   }
 
 
@@ -1698,6 +1775,9 @@ export class RegistrationComponent implements OnInit {
 
   openModalAssetAttribute(modalNotification: TemplateRef<any>, row) {
 
+    let temp = this.assetprimarycategory.filter((value) => value.asset_type_code.includes(row.asset_primary_category));
+    console.log("Asset_primary_category", temp[0].asset_type_description)
+
     let tempData = [];
     this.assetsAttributeColumnService.get().subscribe(
       (res) => {
@@ -1706,10 +1786,10 @@ export class RegistrationComponent implements OnInit {
           tempData.push(assetprimer);
         })
         this.assetattributecolumnapi = tempData;
-        let assetprimary1 = row.asset_primary_category;
+        // let assetprimary1 = row.asset_primary_category;
+        let assetprimary1 = temp[0].asset_type_description;
         let assetprimary2 = this.assetattributecolumnapi.map(a => a.asset_type_id);
         // let result = this.map(({ foo }) => foo)
-
 
         this.rowData = '';
         this.rowData = row;
@@ -1943,7 +2023,7 @@ export class RegistrationComponent implements OnInit {
       // console.log('bluek')
     }
 
-    
+
   }
 
   onFileChange(event: any) {
@@ -2189,6 +2269,7 @@ export class RegistrationComponent implements OnInit {
     this.getMaintenanceSpec(event);
     this.getDetailedDescription();
     this.getTableMaintenanceSpec(event);
+    this.get_asset_or_component_type(event);
 
   }
 
@@ -2307,15 +2388,15 @@ export class RegistrationComponent implements OnInit {
     //   })
     // }
     swal.fire({
-        title: 'Success',
-        text: 'Successfully Change Status',
-        type: 'success',
-        buttonsStyling: false,
-        confirmButtonText: 'Ok',
-        confirmButtonClass: 'btn btn-success'
-      }).then((result) => {
-        this.getRegisteredData()
-      })
+      title: 'Success',
+      text: 'Successfully Change Status',
+      type: 'success',
+      buttonsStyling: false,
+      confirmButtonText: 'Ok',
+      confirmButtonClass: 'btn btn-success'
+    }).then((result) => {
+      this.getRegisteredData()
+    })
 
   }
 

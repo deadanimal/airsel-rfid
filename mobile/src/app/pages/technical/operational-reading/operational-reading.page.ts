@@ -22,6 +22,7 @@ import { MeasurementTypePage } from "../measurement-type/measurement-type.page";
 import { AssetsService } from 'src/app/shared/services/assets/assets.service';
 import { OwningorganisationsService } from 'src/app/shared/services/owning-organisations/owning-organisations.service';
 import { AssetLocatioSyncService } from 'src/app/shared/services/asset-location-sync/asset-location-sync.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: "app-operational-reading",
@@ -41,6 +42,7 @@ export class OperationalReadingPage implements OnInit {
 
   measurementtypes = [];
   process: string;
+  showButton = 'yes'
 
   constructor(
     public alertController: AlertController,
@@ -58,7 +60,8 @@ export class OperationalReadingPage implements OnInit {
     private camera: Camera,
     private assetsService: AssetsService,
     private owningorganisationsService: OwningorganisationsService,
-    private assetLocatioSyncService: AssetLocatioSyncService
+    private assetLocatioSyncService: AssetLocatioSyncService,
+    private authService: AuthService
   ) {
     this.getOwningOrganisationsList()
     this.operationalreadingFormGroup = this.formBuilder.group({
@@ -75,6 +78,8 @@ export class OperationalReadingPage implements OnInit {
       modified_date: new FormControl(""),
       location: new FormControl(""),
       asset_description: new FormControl(""),
+      record_by: new FormControl(this.authService.userID),
+      modified_by: new FormControl(this.authService.userID)
       // record_date: new FormControl(
       //   this.datePipe.transform(this.myDate, "yyyy-MM-dd")
       // ),
@@ -93,6 +98,8 @@ export class OperationalReadingPage implements OnInit {
         });
 
         if (this.router.getCurrentNavigation().extras.state.badge_no) {
+          this.showButton = 'yes'
+          console.log("this.showButton", this.showButton)
           let badge_no = this.router.getCurrentNavigation().extras.state
             .badge_no;
           this.assetsService
@@ -118,6 +125,8 @@ export class OperationalReadingPage implements OnInit {
               });
             });
         } else {
+          this.showButton = 'no'
+          console.log("this.showButton", this.showButton)
           this.assetsService
             .filter("asset_id=" + this.OpreationalReading.asset_id)
             .subscribe((res) => {
@@ -134,7 +143,11 @@ export class OperationalReadingPage implements OnInit {
               this.MeasurementTypeData = res[0].measurement_types
               this.operationalreadingFormGroup.patchValue({
                 asset_description: res[0].description,
+                measurent_type: this.OpreationalReading.measurent_type,
+                reading_datetime: this.OpreationalReading['reading_datetime'],
+                current_value: this.OpreationalReading['current_value'],
               });
+              console.log("this.operationalreadingFormGroup", this.operationalreadingFormGroup)
               this.getAssetLocationSync(res[0].node_id)
               this.getAssetExtended(res[0].id)
             });
@@ -238,7 +251,8 @@ export class OperationalReadingPage implements OnInit {
           console.log("res", res);
           this.alertOperationalReading(
             "Operational Reading",
-            "Your operational reading have successfully submitted into the system. Thank you."
+            // "Your operational reading have successfully submitted into the system. Thank you."
+            "Your operational reading has been successfully updated into the system."
           );
         },
         (err) => {

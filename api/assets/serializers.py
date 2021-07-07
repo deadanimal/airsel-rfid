@@ -10,7 +10,7 @@ from django.utils.timezone import now
 
 from .models import (
     Asset,
-    AssetRegistration,
+    AssetRegistration,AssetRegistrationBk,
     AssetGroup,
     AssetType,
     Rfid,
@@ -45,6 +45,12 @@ class AssetRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssetRegistration
+        fields = '__all__'
+
+class AssetRegistrationBkSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AssetRegistrationBk
         fields = '__all__'
 
 class AssetGroupSerializer(serializers.ModelSerializer):
