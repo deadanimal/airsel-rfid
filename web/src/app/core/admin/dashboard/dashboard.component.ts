@@ -587,7 +587,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   calcWorkActivityStatistic() {
 
     let data = [
-      { title: "Completed", total: 0, today: 0, color: "bg-green", textcolor: "text-green", },
+      { title: "New", total: 0, today: 0, color: "bg-green", textcolor: "text-green", },
       { title: "In Progress", total: 0, today: 0, color: "bg-yellow", textcolor: "text-yellow", },
       { title: "Backlog", total: 0, today: 0, color: "bg-red", textcolor: "text-red", },
       { title: "Total Generated", total: 0, today: 0, color: "bg-blue", textcolor: "text-blue", },
@@ -595,7 +595,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     for (let i in this.workorderactivity) {
 
-      if (this.workorderactivity[i].status == "Completed")
+      if (this.workorderactivity[i].status == "New")
         data[0].total += 1;
       else if (this.workorderactivity[i].status == "InProgress")
         data[1].total += 1;
