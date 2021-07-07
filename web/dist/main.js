@@ -783,7 +783,7 @@ var FooterComponent = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".cursor-pointer {\n  cursor: pointer;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9waXBlbGluZS1kZXYvcGlwZWxpbmUtd29yay9haXJzZWwtcmZpZC1mdWxsLXN0YWNrL3dlYi9zcmMvYXBwL2NvbXBvbmVudHMvbmF2YmFyL25hdmJhci5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvY29tcG9uZW50cy9uYXZiYXIvbmF2YmFyLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBQTtBQ0NKIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9uYXZiYXIvbmF2YmFyLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmN1cnNvci1wb2ludGVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG59IiwiLmN1cnNvci1wb2ludGVyIHtcbiAgY3Vyc29yOiBwb2ludGVyO1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (".cursor-pointer {\n  cursor: pointer;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9pc21haWxpYnJhaGltL0RvY3VtZW50cy9HaXRIdWIvYWlyc2VsLXJmaWQvd2ViL3NyYy9hcHAvY29tcG9uZW50cy9uYXZiYXIvbmF2YmFyLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL25hdmJhci9uYXZiYXIuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxlQUFBO0FDQ0oiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRzL25hdmJhci9uYXZiYXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY3Vyc29yLXBvaW50ZXIge1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbn0iLCIuY3Vyc29yLXBvaW50ZXIge1xuICBjdXJzb3I6IHBvaW50ZXI7XG59Il19 */");
 
 /***/ }),
 
@@ -1265,7 +1265,7 @@ var Service = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".btn .badge-floating.badge:not(.badge-circle) {\n  -webkit-transform: translate(-30%, 50%);\n          transform: translate(-30%, 50%);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9waXBlbGluZS1kZXYvcGlwZWxpbmUtd29yay9haXJzZWwtcmZpZC1mdWxsLXN0YWNrL3dlYi9zcmMvYXBwL2V4YW1wbGVzL3ByZXNlbnRhdGlvbi9wcmVzZW50YXRpb24uY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL2V4YW1wbGVzL3ByZXNlbnRhdGlvbi9wcmVzZW50YXRpb24uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBTUk7RUFDRSx1Q0FBQTtVQUFBLCtCQUFBO0FDTE4iLCJmaWxlIjoic3JjL2FwcC9leGFtcGxlcy9wcmVzZW50YXRpb24vcHJlc2VudGF0aW9uLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy9cbi8vIEJhZGdlIGZsb2F0aW5nXG4vL1xuXG4uYnRuIHtcbiAgLmJhZGdlLWZsb2F0aW5nIHtcbiAgICAmLmJhZGdlOm5vdCguYmFkZ2UtY2lyY2xlKSB7XG4gICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtMzAlLCA1MCUpO1xuICAgIH1cbiAgfVxufVxuIiwiLmJ0biAuYmFkZ2UtZmxvYXRpbmcuYmFkZ2U6bm90KC5iYWRnZS1jaXJjbGUpIHtcbiAgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTMwJSwgNTAlKTtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".btn .badge-floating.badge:not(.badge-circle) {\n  -webkit-transform: translate(-30%, 50%);\n          transform: translate(-30%, 50%);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9pc21haWxpYnJhaGltL0RvY3VtZW50cy9HaXRIdWIvYWlyc2VsLXJmaWQvd2ViL3NyYy9hcHAvZXhhbXBsZXMvcHJlc2VudGF0aW9uL3ByZXNlbnRhdGlvbi5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvZXhhbXBsZXMvcHJlc2VudGF0aW9uL3ByZXNlbnRhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFNSTtFQUNFLHVDQUFBO1VBQUEsK0JBQUE7QUNMTiIsImZpbGUiOiJzcmMvYXBwL2V4YW1wbGVzL3ByZXNlbnRhdGlvbi9wcmVzZW50YXRpb24uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvL1xuLy8gQmFkZ2UgZmxvYXRpbmdcbi8vXG5cbi5idG4ge1xuICAuYmFkZ2UtZmxvYXRpbmcge1xuICAgICYuYmFkZ2U6bm90KC5iYWRnZS1jaXJjbGUpIHtcbiAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKC0zMCUsIDUwJSk7XG4gICAgfVxuICB9XG59XG4iLCIuYnRuIC5iYWRnZS1mbG9hdGluZy5iYWRnZTpub3QoLmJhZGdlLWNpcmNsZSkge1xuICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtMzAlLCA1MCUpO1xufSJdfQ== */");
 
 /***/ }),
 
@@ -2043,7 +2043,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/pipeline-dev/pipeline-work/airsel-rfid-full-stack/web/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/ismailibrahim/Documents/GitHub/airsel-rfid/web/src/main.ts */"./src/main.ts");
 
 
 /***/ })
