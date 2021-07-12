@@ -658,8 +658,8 @@
                                         </div>
                                     </div>
 
-                                    <ngx-datatable class="bootstrap selection-cell" [scrollbarH]="true"
-                                        [footerHeight]="50" [rowHeight]="75"
+                                    <ngx-datatable class="bootstrap selection-cell" [columnMode]="'force'" [scrollbarH]="true"
+                                        [footerHeight]="50" [rowHeight]="'auto'"
                                         [limit]="entries != -1 ? entries : undefined" [rows]="tableTemp1"
                                         (activate)="onActivate($event)">>
 
