@@ -93,14 +93,14 @@
       <div class="card">
         <div class="card-header">
           <h3 class="mb-0">
-            WAMS: Total Asset Maintenance generated in March 2019
+            WAMS: Total Asset Maintenance generated in {{ date | date:'MMMM, y'}}
           </h3>
         </div>
         <div class="card-body">
           <small
-            >Total Asset Maintenance generated in WAMS in March 2019:
+            >Total Asset Maintenance generated in WAMS in {{ date | date:'MMMM, y'}}:
             <span class="font-weight-bolder" style="font-size: 24px;"
-              >8,341 nos</span
+              >{{ totalAssetMaintenance }} nos</span
             ></small
           >
 

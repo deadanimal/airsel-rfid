@@ -355,12 +355,7 @@ export class RegistrationComponent implements OnInit {
     { value: "WQ-LABORATORY SERVICES", name: "WQ-LABORATORY SERVICES" },
   ];
 
-  specification = [
-    { name: "AMR-MAINTENANCE-180D-G-KS-HS-S", value: "AMR FLOWMETER MAINTENANCE 180 DAYS-G,KS,HS,SB" },
-    { name: "AMR-FLOWMETER-MAINTENANCE-180D", value: "AMR FLOWMETER MAINTENANCE 180 DAYS-HQ" },
-    { name: "AMR-MAINTENANCE-180-KL-K-S-HL", value: "AMR FLOWMETER MAINTENANCE 180 DAYS-KT,K,S,HL" },
-    { name: "AMR-MAINTENANCE-180D-P-KL", value: "AMR FLOWMETER MAINTENANCE 180 DAYS-P,KL" }
-  ]
+
 
   processFunction = [
     { value: "BALANCING RESERVOIR", name: "BALANCING RESERVOIR" },
@@ -891,7 +886,7 @@ export class RegistrationComponent implements OnInit {
       asset_or_component_type: ["",],
       handed_over_asset_or_procured: ["",],
       class_category: ["",],
-      specification: ["", Validators.compose([Validators.required])], //
+      specification: ["",], //
       asset_owning_department: ["", Validators.compose([Validators.required])], //
       main_operation: ["", Validators.compose([Validators.required])], //
       region: ["", Validators.compose([Validators.required])], //
@@ -1418,19 +1413,43 @@ export class RegistrationComponent implements OnInit {
 
   getDetailedDescription() {
     const assetIdentity = (<HTMLInputElement>document.getElementById("asset_identity")).value
-    // const assetPrimaryCategory = (<HTMLInputElement>document.getElementById("assetselector")).value
     const SubCategory_1 = (<HTMLInputElement>document.getElementById("SubCategory_1")).value
     const SubCategory_2 = (<HTMLInputElement>document.getElementById("SubCategory_2")).value
     const model_number = (<HTMLInputElement>document.getElementById("model_number")).value
     const size_capacity_1 = (<HTMLInputElement>document.getElementById("size_capacity_1")).value
-    // const size_capacity_1_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_1_unit_measurement")).value
     const size_capacity_2 = (<HTMLInputElement>document.getElementById("size_capacity_2")).value
-    // const size_capacity_2_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_2_unit_measurement")).value
     const size_capacity_3 = (<HTMLInputElement>document.getElementById("size_capacity_3")).value
-    // const size_capacity_3_unit_measurement = (<HTMLInputElement>document.getElementById("size_capacity_3_unit_measurement")).value
 
-    console.log("SubCategory_1", SubCategory_1)
-    this.detailedDescription = assetIdentity + "-" + this.assetPrimary + "-" + SubCategory_1 + "-" + SubCategory_2 + "-" + model_number + "-" + size_capacity_1 + "-" + this.unit_measurement_1 + "-" + size_capacity_2 + "-" + this.unit_measurement_2 + "-" + size_capacity_3 + "-" + this.unit_measurement_3;
+    this.detailedDescription = assetIdentity + "-" + this.assetPrimary
+
+    if (SubCategory_1 != "" && SubCategory_1 != null)
+      this.detailedDescription = this.detailedDescription + "-" + SubCategory_1
+
+    if (SubCategory_2 != "" && SubCategory_2 != null)
+      this.detailedDescription = this.detailedDescription + "-" + SubCategory_2
+
+    if (model_number != "" && model_number != null)
+      this.detailedDescription = this.detailedDescription + "-" + model_number
+
+    if (size_capacity_1 != "" && size_capacity_1 != null)
+      this.detailedDescription = this.detailedDescription + "-" + size_capacity_1
+
+    if (this.unit_measurement_1 != "" && this.unit_measurement_1 != null)
+      this.detailedDescription = this.detailedDescription + "-" + this.unit_measurement_1
+
+    if (size_capacity_2 != "" && size_capacity_2 != null)
+      this.detailedDescription = this.detailedDescription + "-" + size_capacity_2
+
+    if (this.unit_measurement_2 != "" && this.unit_measurement_2 != null)
+      this.detailedDescription = this.detailedDescription + "-" + this.unit_measurement_2
+
+    if (size_capacity_3 != "" && size_capacity_3 != null)
+      this.detailedDescription = this.detailedDescription + "-" + size_capacity_3
+
+    if (this.unit_measurement_3 != "" && this.unit_measurement_3 != null)
+      this.detailedDescription = this.detailedDescription + "-" + this.unit_measurement_3
+
+    // this.detailedDescription = assetIdentity + "-" + this.assetPrimary + "-" + SubCategory_1 + "-" + SubCategory_2 + "-" + model_number + "-" + size_capacity_1 + "-" + this.unit_measurement_1 + "-" + size_capacity_2 + "-" + this.unit_measurement_2 + "-" + size_capacity_3 + "-" + this.unit_measurement_3;
 
     console.log("detailedDescription", this.detailedDescription)
   }
@@ -1475,14 +1494,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   asset_or_component: any;
-  get_asset_or_component_type(event){
+  get_asset_or_component_type(event) {
 
-    console.log("qwertyuiop", event);
-
-    console.log("qwertyuiop 2", this.assetprimarycategory);
     for (let i in this.assetprimarycategory) {
       if (this.assetprimarycategory[i].asset_type_code == event) {
-        
+
         console.log("asset_bussiness_object", this.assetprimarycategory[i].asset_bussiness_object)
         if (this.assetprimarycategory[i].asset_bussiness_object == 'W1-TrackedGeneralComponent' || this.assetprimarycategory[i].asset_bussiness_object == 'W1-IOSvcGeneralComponent') {
           this.asset_or_component = 'COMPONENT'
@@ -1492,8 +1508,16 @@ export class RegistrationComponent implements OnInit {
       }
     }
     console.log("asset_or_component", this.asset_or_component)
+  }
 
-
+  specification: any;
+  get_specification(event) {
+    if (event == "AMR-FLOWMETER") {
+      this.specification = 'AMR-FLOWMETER';
+    }
+    else {
+      this.specification = '';
+    }
   }
 
   // stepper: any;
@@ -1701,7 +1725,7 @@ export class RegistrationComponent implements OnInit {
                   text: "The submission has failed",
                   type: "warning",
                 }).then((result) => {
-                  
+
                 });
               this.modalRegisterAsset.hide();
               //this.closeModal()
@@ -2270,6 +2294,7 @@ export class RegistrationComponent implements OnInit {
     this.getDetailedDescription();
     this.getTableMaintenanceSpec(event);
     this.get_asset_or_component_type(event);
+    this.get_specification(event);
 
   }
 

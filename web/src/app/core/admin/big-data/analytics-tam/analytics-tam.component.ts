@@ -40,7 +40,6 @@ export class AnalyticsTamComponent implements OnInit {
     this.getAssets()
   }
 
-
   assets: any;
   getAssets() {
     this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
@@ -55,7 +54,9 @@ export class AnalyticsTamComponent implements OnInit {
     })
   }
 
+  totalAssetMaintenance = 0;
   WorkOrderActivity: any
+  date = new Date()
   getWorkOrderActivity() {
 
     // let temp = []
@@ -79,51 +80,92 @@ export class AnalyticsTamComponent implements OnInit {
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
+
     ];
     let distribution = [
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
     ];
     let esd = [
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
     ];
     let fleet = [
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
     ];
     let land = [
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
     ];
     let nrw = [
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
     ];
     let pdn = [
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
     ];
     let pds = [
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
     ];
     let scada = [
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
     ];
     let wq = [
       { type: "Preventive Maintenance", total: 0, color: am4core.color("#2174C7") },
       { type: "Corrective Maintenance", total: 0, color: am4core.color("#D8D6D6") },
       { type: "Predictive Maintenance", total: 0, color: am4core.color("#BF9000") },
+      { type: "Compliance", total: 0, color: am4core.color("#eb4034") },
+      { type: "Installation Testing Commissioning", total: 0, color: am4core.color("#d9eb34") },
+      { type: "Disposal", total: 0, color: am4core.color("#32ba37") },
+      { type: "Redesign", total: 0, color: am4core.color("#32bab8") },
     ];
 
 
@@ -147,6 +189,7 @@ export class AnalyticsTamComponent implements OnInit {
         console.log("temp3 debug", temp3);
 
         if (temp3[0].owning_access_group == "CBS") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             cbs[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -156,11 +199,24 @@ export class AnalyticsTamComponent implements OnInit {
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             cbs[2].total += temp[j].asset_location_asset_list.length;
           }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            cbs[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            cbs[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            cbs[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            cbs[6].total += temp[j].asset_location_asset_list.length;
+          }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "DISTRIBUTION") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             distribution[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -170,11 +226,24 @@ export class AnalyticsTamComponent implements OnInit {
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             distribution[2].total += temp[j].asset_location_asset_list.length;
           }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            distribution[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            distribution[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            distribution[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            distribution[6].total += temp[j].asset_location_asset_list.length;
+          }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "ES-D") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             esd[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -184,11 +253,24 @@ export class AnalyticsTamComponent implements OnInit {
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             esd[2].total += temp[j].asset_location_asset_list.length;
           }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            esd[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            esd[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            esd[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            esd[6].total += temp[j].asset_location_asset_list.length;
+          }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "FLEET") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             fleet[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -198,11 +280,24 @@ export class AnalyticsTamComponent implements OnInit {
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             fleet[2].total += temp[j].asset_location_asset_list.length;
           }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            fleet[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            fleet[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            fleet[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            fleet[6].total += temp[j].asset_location_asset_list.length;
+          }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "LAND") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             land[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -212,11 +307,24 @@ export class AnalyticsTamComponent implements OnInit {
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             land[2].total += temp[j].asset_location_asset_list.length;
           }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            land[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            land[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            land[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            land[6].total += temp[j].asset_location_asset_list.length;
+          }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "NRW") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             nrw[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -226,11 +334,24 @@ export class AnalyticsTamComponent implements OnInit {
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             nrw[2].total += temp[j].asset_location_asset_list.length;
           }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            nrw[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            nrw[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            nrw[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            nrw[6].total += temp[j].asset_location_asset_list.length;
+          }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "PD-N") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             pdn[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -240,11 +361,24 @@ export class AnalyticsTamComponent implements OnInit {
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             pdn[2].total += temp[j].asset_location_asset_list.length;
           }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            pdn[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            pdn[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            pdn[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            pdn[6].total += temp[j].asset_location_asset_list.length;
+          }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "PD-S") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             pds[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -254,11 +388,24 @@ export class AnalyticsTamComponent implements OnInit {
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             pds[2].total += temp[j].asset_location_asset_list.length;
           }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            pds[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            pds[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            pds[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            pds[6].total += temp[j].asset_location_asset_list.length;
+          }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "SCADA") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             scada[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -268,11 +415,24 @@ export class AnalyticsTamComponent implements OnInit {
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             scada[2].total += temp[j].asset_location_asset_list.length;
           }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            scada[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            scada[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            scada[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            scada[6].total += temp[j].asset_location_asset_list.length;
+          }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "WQ") {
+          this.totalAssetMaintenance += temp[j].asset_location_asset_list.length
           if (temp[j].field_1 == "PREVENTIVE MAINTENANCE") {
             wq[0].total += temp[j].asset_location_asset_list.length;
           }
@@ -281,6 +441,18 @@ export class AnalyticsTamComponent implements OnInit {
           }
           else if (temp[j].field_1 == "PREDICTIVE MAINTENANCE") {
             wq[2].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "FLEET COMPLIANCE") {
+            wq[3].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "INSTALLATION TESTING AND COM") {
+            wq[4].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "RETIRE") {
+            wq[5].total += temp[j].asset_location_asset_list.length;
+          }
+          else if (temp[j].field_1 == "UPGRADE") {
+            wq[6].total += temp[j].asset_location_asset_list.length;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
