@@ -8,6 +8,7 @@ import { map } from "rxjs/operators";
 import { WorkOrderActivityCompletionModel } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.model";
 import { WorkOrderActivityCompletionService } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service";
 import { WorkOrderActivityCompletionAssetLocationAssetListService } from "src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.service";
+import { NgxSpinnerService } from "ngx-spinner";
 
 am4core.useTheme(am4themes_animated);
 
@@ -32,7 +33,8 @@ export class AnalyticsTamComponent implements OnInit {
     private zone: NgZone,
     public assetsService: AssetsService,
     public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
-    public WOACALALS: WorkOrderActivityCompletionAssetLocationAssetListService
+    public WOACALALS: WorkOrderActivityCompletionAssetLocationAssetListService,
+    private SpinnerService: NgxSpinnerService
 
   ) { }
 
@@ -42,12 +44,16 @@ export class AnalyticsTamComponent implements OnInit {
 
   assets: any;
   getAssets() {
+    this.SpinnerService.show();
+
     this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
       console.log('response from API is ', response);
       this.assets = response;
       console.log('assets', this.assets);
 
       this.getWorkOrderActivity();
+
+      
 
     }, (error) => {
       console.log('Error is ', error)
@@ -471,7 +477,6 @@ export class AnalyticsTamComponent implements OnInit {
         console.log("scada", scada);
         console.log("wq", wq);
 
-        this.ESD = esd
         this.CBS = cbs
         this.DISTRIBUTION = distribution
         this.ESD = esd
@@ -496,7 +501,9 @@ export class AnalyticsTamComponent implements OnInit {
 
         // this.chartData = data;
         // console.log("Chartdata", this.chartData);
-        this.initPieTwo();
+        // this.initPieTwo();
+
+        this.SpinnerService.hide();
 
 
 
@@ -507,20 +514,20 @@ export class AnalyticsTamComponent implements OnInit {
 
   }
 
-  // ngAfterViewInit() {
-  //   this.zone.runOutsideAngular(() => {
-  //     this.initPieOne();
-  //     this.initPieTwo();
-  //     this.initPieThree();
-  //     this.initPieFour();
-  //     this.initPieFive();
-  //     this.initPieSix();
-  //     this.initPieSeven();
-  //     this.initPieEight();
-  //     this.initPieNine();
-  //     this.initPieTen();
-  //   });
-  // }
+  ngAfterViewInit() {
+    this.zone.runOutsideAngular(() => {
+      this.initPieOne();
+      this.initPieTwo();
+      this.initPieThree();
+      this.initPieFour();
+      this.initPieFive();
+      this.initPieSix();
+      this.initPieSeven();
+      this.initPieEight();
+      this.initPieNine();
+      this.initPieTen();
+    });
+  }
 
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {

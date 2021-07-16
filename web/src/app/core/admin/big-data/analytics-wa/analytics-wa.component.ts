@@ -14,6 +14,7 @@ import { AssetsModel } from 'src/app/shared/services/assets/assets.model';
 import { WorkOrderActivityCompletionModel } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.model';
 import { WorkOrderActivityCompletionAssetLocationAssetListModel } from 'src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.model';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+import { NgxSpinnerService } from "ngx-spinner";  
 
 am4core.useTheme(am4themes_animated);
 
@@ -30,7 +31,8 @@ export class AnalyticsWaComponent implements OnInit {
     private zone: NgZone,
     public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
     public assetsService: AssetsService,
-    public WOACALALS: WorkOrderActivityCompletionAssetLocationAssetListService) { }
+    public WOACALALS: WorkOrderActivityCompletionAssetLocationAssetListService,
+    private SpinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
 
@@ -130,8 +132,6 @@ export class AnalyticsWaComponent implements OnInit {
   chartData: any;
 
   getChartData() {
-
-    this.workOrderActivityCompletionService
 
     let data = [
       { category: "CBS", value1: 0, value2: 0, value3: 0 },
@@ -330,12 +330,14 @@ export class AnalyticsWaComponent implements OnInit {
 
   assets: any;
   getAssets() {
+    this.SpinnerService.show();  
     this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
       console.log('response from API is ', response);
       this.assets = response;
       console.log('assets', this.assets);
 
       this.getWorkOrderActivity();
+      this.SpinnerService.hide();
 
     }, (error) => {
       console.log('Error is ', error)
@@ -349,6 +351,8 @@ export class AnalyticsWaComponent implements OnInit {
 
     let temp: any = []
     let temp2: any = []
+
+    
 
 
     this.workOrderActivityCompletionService.get().subscribe((response) => {
@@ -452,6 +456,13 @@ export class AnalyticsWaComponent implements OnInit {
     valueAxis.renderer.labels.template.disabled = true;
     valueAxis.min = 0;
     valueAxis.calculateTotals = true;
+
+     // Modify chart's colors
+     chart.colors.list = [
+      am4core.color("#f5365b"),
+      am4core.color("#fed602"),
+      am4core.color("#2bce89"),
+    ];
 
     // Create series
     function createSeries(field, name) {

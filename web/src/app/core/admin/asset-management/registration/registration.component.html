@@ -1561,7 +1561,7 @@
           <div class="form-group">
             <label class="form-control-label">Asset Identity</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="asset_identity"
-              id="asset_identity" class="form-control" value="{{rowData.asset_identity}}" />
+              id="asset_identity" class="form-control" value="{{rowData.asset_identity}}" disabled/>
           </div>
         </div>
 
@@ -1569,7 +1569,7 @@
           <div class="form-group">
             <label class="form-control-label">Asset Primary Category</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="asset_primary_category" class="form-control" value="{{rowData.asset_primary_category}}" />
+              name="asset_primary_category" class="form-control" value="{{rowData.asset_primary_category}}" disabled/>
           </div>
         </div>
 
@@ -1577,7 +1577,7 @@
           <div class="form-group">
             <label class="form-control-label">Parent Location</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="parent_location"
-              class="form-control" value="{{rowData.parent_location}}" />
+              class="form-control" value="{{rowData.parent_location}}" disabled/>
           </div>
         </div>
 
