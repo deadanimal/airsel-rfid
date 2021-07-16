@@ -52,6 +52,8 @@ export class AssetsRegistrationService {
     );
   }
 
+  // test
+
   getNewProcessedList(): Observable<AssetsRegistrationModel[]> {
     let NewUrl: string = environment.baseUrl + "v1/asset-registration/new_processed_list/";
     return this.http.get<any>(NewUrl).pipe(

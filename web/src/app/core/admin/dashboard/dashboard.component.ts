@@ -46,6 +46,7 @@ import { WorkActivityEmployeeService } from "src/app/shared/services/work-activi
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
+  today: any;
 
 
   constructor(
