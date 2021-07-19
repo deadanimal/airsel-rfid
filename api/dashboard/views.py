@@ -32,13 +32,15 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     @action(methods=['GET'], detail=False)
     def analytics_tar(self, request):
     
-        temp = {}
-    
+        res = [] 
         owning_access_group = ["CBS","DISTRIBUTION", "ES-D", "FLEET", "LAND", "NRW", "PD-N", "PD-S", "SCADA", "WQ"]
         for oag in owning_access_group:
-            temp[oag] = len(Asset.objects.filter(owning_access_group=oag))
+            temp = {}
+            temp["title"] = oag
+            temp["total"] = len(Asset.objects.filter(owning_access_group=oag))
+            res.append(temp)
         
-        return Response(temp)
+        return Response(res)
 
 
 #def analytics_tar_filtered_by_datetime(self, request, *args, **kwargs):

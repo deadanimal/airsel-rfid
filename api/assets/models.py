@@ -467,6 +467,7 @@ class AssetRegistrationBk(models.Model):
 
     #Approval
     APPROVAL_STATUS = [
+        ('TP', 'To Process'),
         ('CO', 'Completed'),
         ('IC','Incomplete'),
         ('NP','New Process'),
