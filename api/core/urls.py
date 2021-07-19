@@ -22,6 +22,7 @@ from users.views import (
     ActivateAccount
 )
 
+
 class NestedDefaultRouter(NestedRouterMixin, routers.DefaultRouter):
     pass
 
@@ -475,6 +476,15 @@ audit_trail_router = router.register(
     'audit_trail', AuditTrailViewSet,
 )
 
+## dashboard 
+from dashboard.views import (
+    DashboardViewSet,
+)
+
+dashboard_router = router.register(
+    'analytics', DashboardViewSet,
+)
+
 ############################################# url
 
 urlpatterns = [
@@ -498,5 +508,7 @@ urlpatterns = [
     #url('activate_account/<slug:uidb64>/<slug:token>/', ActivateAccount.as_view(), name='activate_account')
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
                 ActivateAccount.as_view(), name='activate'),
+
+
 
 ]
