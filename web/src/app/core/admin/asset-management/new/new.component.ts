@@ -383,13 +383,17 @@ export class NewComponent implements OnInit {
       cancelButtonText: 'Cancel',
       cancelButtonClass: 'btn btn-secondary'
     }).then((result) => {
+      console.log('result = ', result.value)
+      if (result.value == true) {
+        if (task=="PR") {
+          this.changeStatusPR(task)
+        } 
+        else if (task=="RJ") {
+          this.changeStatusRJ(task);
+        }
 
-      if (task=="PR") {
-        this.changeStatusPR(task)
-      } 
-      else if (task=="RJ") {
-        this.changeStatusRJ(task);
       }
+
     })
   }
 
@@ -483,7 +487,7 @@ export class NewComponent implements OnInit {
                 finalNo = String(currentNo);
                 
                 // Later need to enhance this badge generation
-                badgeFormatData = res[0].short + "_000000" + finalNo;
+                badgeFormatData = res[0].short + "-" + finalNo.padStart(7, '0');
                 updatedlatestNo = {
                   latest_no: currentNo, 
                 }
@@ -503,7 +507,7 @@ export class NewComponent implements OnInit {
                 let currentNo = res[0].skipped_no[0]
                 console.log("CNO", currentNo);
                 //badgeFormatData = res[0].short + "_" + currentNo.padStart(7, '0');
-                badgeFormatData = res[0].short + "_000000" + currentNo;
+                badgeFormatData = res[0].short + "_" + currentNo.padStart(7, '0');;
 
                 updatedSkippedNo = {
                   skipped_no: res[0].skipped_no.slice(1)

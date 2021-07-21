@@ -31,7 +31,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'status',
             'service_area',
             'crewshift_id',
-            'department'
+            'department',
+            'mobile_access',
         )
         read_only_fields = ('email', 'id')
 
