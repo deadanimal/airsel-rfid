@@ -1511,7 +1511,7 @@
                 <div class="card-footer">
                   <div class="row">
                     <div class="col text-right">
-                      <!-- <button class="btn btn-danger" (click)="confirm('RJ')">Reject</button> -->
+                      <button class="btn btn-secondary">Save</button>
                       <button class="btn btn-default" (click)="confirm('NP')">Process</button>
                     </div>
                   </div>
@@ -1562,7 +1562,7 @@
           <div class="form-group">
             <label class="form-control-label">Asset Identity</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="asset_identity"
-              id="asset_identity" class="form-control" value="{{rowData.asset_identity}}" />
+              id="asset_identity" class="form-control" value="{{rowData.asset_identity}}" disabled/>
           </div>
         </div>
 
@@ -1570,7 +1570,7 @@
           <div class="form-group">
             <label class="form-control-label">Asset Primary Category</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)"
-              name="asset_primary_category" class="form-control" value="{{rowData.asset_primary_category}}" />
+              name="asset_primary_category" class="form-control" value="{{rowData.asset_primary_category}}" disabled/>
           </div>
         </div>
 
@@ -1578,7 +1578,7 @@
           <div class="form-group">
             <label class="form-control-label">Parent Location</label>
             <input type="text" (change)="onKey($event.target.value,$event.target.name,row)" name="parent_location"
-              class="form-control" value="{{rowData.parent_location}}" />
+              class="form-control" value="{{rowData.parent_location}}" disabled/>
           </div>
         </div>
 
@@ -2168,12 +2168,12 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-default btn-sm" (click)="ModalAssetAttribute.hide()">
-      OK
+    <button class="btn btn-default btn-sm">
+      Save
     </button>
-    <!-- <button class="btn btn-secondary btn-sm" type="button" (click)="ModalAssetAttribute.hide()">
+    <button class="btn btn-secondary btn-sm" type="button" (click)="ModalAssetAttribute.hide()">
       Close
-    </button> -->
+    </button>
   </div>
 </ng-template>
 
@@ -2303,15 +2303,18 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Specification<span class="mandatory">*</span></label>
+                <label class="form-control-label">Specification</label>
 
-                <ng-select [items]="specification" bindLabel="name" bindValue="value" formControlName="specification"
-                  [clearable]="false" required>
-                </ng-select>
+                <!-- <ng-select [items]="specification" bindLabel="name" bindValue="value" formControlName="specification"
+                  [clearable]="false" required> -->
+                <!-- </ng-select> -->
 
-                <mat-hint
+                <input type="text" formControlName="specification" class="form-control form-control-sm"
+                  value="{{specification}}" disabled />
+
+                <!-- <mat-hint
                   *ngIf="firstFormGroup.controls['specification'].hasError('required') && firstFormGroup.controls['specification'].touched && firstFormGroup.controls['specification'].invalid "
-                  class="validation_messages"><small>This field is required</small></mat-hint>
+                  class="validation_messages"><small>This field is required</small></mat-hint> -->
               </div>
             </div>
           </div>
@@ -3079,14 +3082,7 @@
             <div class="col-md-4" *ngIf="assetprimaryselectorshow[0].manufacturer">
               <div class="form-group">
                 <label class="form-control-label">Manufacturer</label>
-                <!-- <input type="text" formControlName="manufacturer" class="form-control form-control-sm" /> -->
-
-                <!-- <select class="form-control custom-select form-control-sm custom-select-sm" id="manufacturer"
-                  formControlName="manufacturer">
-                  <option value="">Please select</option>
-                  <option *ngFor="let manufacturer of manufacturer" [value]="manufacturer.characteristic_value">
-                    {{ manufacturer.characteristic_value }}</option>
-                </select> -->
+                
 
                 <ng-select [items]="manufacturer" bindLabel="characteristic_value" bindValue="characteristic_value"
                   formControlName="manufacturer" [clearable]="false">

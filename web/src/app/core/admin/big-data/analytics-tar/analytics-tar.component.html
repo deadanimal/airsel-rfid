@@ -1,3 +1,4 @@
+
 <div class="header pb-6">
   <div class="container-fluid">
     <div class="header-body">
@@ -78,10 +79,17 @@
         </div>
         <div class="card-body">
           <h3 class="mb-0">Asset Registered: <strong>{{ asset_registered_length }} nos</strong></h3>
-          <small>Data as of {{dateToday | date:'MMMM d, y'}}</small>
+          <small *ngIf="currentDate">Data as of {{dateToday | date:'MMMM d, y'}}</small>
+
+          <small *ngIf="filteredDate">Data as of {{fromDate | date:'MMMM d, y'}} - {{toDate | date:'MMMM d, y'}}</small>
+
           <div id="chartdivtwo" style="width: 100%; height: 500px;"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise" [fullScreen] = "false">  
+  <p style="color: white">Please Wait. </p>  
+  </ngx-spinner>  

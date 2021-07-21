@@ -27,6 +27,7 @@ import { AnalyticsTarComponent } from './analytics-tar/analytics-tar.component';
 import { AnalyticsWaComponent } from './analytics-wa/analytics-wa.component';
 import { AnalyticsAcsComponent } from './analytics-acs/analytics-acs.component';
 import { AnalyticsTamComponent } from './analytics-tam/analytics-tam.component';
+import {  NgxSpinnerModule } from "ngx-spinner"; 
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AnalyticsTamComponent } from './analytics-tam/analytics-tam.component';
     ReactiveFormsModule,
     PopoverModule.forRoot(),
     RatingModule.forRoot(),
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgxSpinnerModule
   ]
 })
 export class BigDataModule { }

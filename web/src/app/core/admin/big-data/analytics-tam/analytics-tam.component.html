@@ -44,19 +44,13 @@
                 <label class="form-control-label">Owning Organization</label>
                 <select class="form-control form-control-sm">
                   <option value="">Please select</option>
+                  <option *ngFor="let assetowningdepartment of assetowningdepartment" value="{{assetowningdepartment.value}}">
+                    {{assetowningdepartment.name}}
+                  </option>
                 </select>
               </div>
             </div>
-            <div class="col-lg-6 col-xs-12">
-              <div class="form-group">
-                <label class="form-control-label">Work Category</label>
-                <select class="form-control form-control-sm">
-                  <option value="">Please select</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
+
             <div class="col-lg-6 col-xs-12">
               <div class="form-group">
                 <label class="form-control-label">Date Range</label>
@@ -74,15 +68,9 @@
                 />
               </div>
             </div>
-            <div class="col-lg-6 col-xs-12">
-              <div class="form-group">
-                <label class="form-control-label">Region</label>
-                <select class="form-control form-control-sm">
-                  <option value="">Please select</option>
-                </select>
-              </div>
-            </div>
+            
           </div>
+          
         </div>
       </div>
     </div>
@@ -93,16 +81,15 @@
       <div class="card">
         <div class="card-header">
           <h3 class="mb-0">
-            WAMS: Total Asset Maintenance generated in March 2019
+            WAMS: Total Asset Maintenance generated in {{ date | date:'MMMM, y'}}
           </h3>
         </div>
         <div class="card-body">
           <small
-            >Total Asset Maintenance generated in WAMS in March 2019:
+            >Total Asset Maintenance generated in WAMS in {{ date | date:'MMMM, y'}}:
             <span class="font-weight-bolder" style="font-size: 24px;"
-              >8,341 nos</span
-            ></small
-          >
+              >{{ totalAssetMaintenance }} nos</span
+            ></small>
 
           <div class="row pt-3">
             <div class="col-lg-1"></div>
@@ -167,3 +154,7 @@
     </div>
   </div>
 </div>
+
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise" [fullScreen] = "false">  
+  <p style="color: white">Please Wait. </p>  
+  </ngx-spinner>  

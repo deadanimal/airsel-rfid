@@ -14,6 +14,7 @@ import { AssetsModel } from 'src/app/shared/services/assets/assets.model';
 import { WorkOrderActivityCompletionModel } from 'src/app/shared/services/work-order-activity-completion/work-order-activity-completion.model';
 import { WorkOrderActivityCompletionAssetLocationAssetListModel } from 'src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.model';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+import { NgxSpinnerService } from "ngx-spinner";  
 
 am4core.useTheme(am4themes_animated);
 
@@ -30,7 +31,8 @@ export class AnalyticsWaComponent implements OnInit {
     private zone: NgZone,
     public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
     public assetsService: AssetsService,
-    public WOACALALS: WorkOrderActivityCompletionAssetLocationAssetListService) { }
+    public WOACALALS: WorkOrderActivityCompletionAssetLocationAssetListService,
+    private SpinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
 
@@ -131,19 +133,17 @@ export class AnalyticsWaComponent implements OnInit {
 
   getChartData() {
 
-    this.workOrderActivityCompletionService
-
     let data = [
-      { category: "CBS", value1: 0, value2: 0, value3: 0 },
-      { category: "DISTRIBUTION", value1: 0, value2: 0, value3: 0 },
-      { category: "ES-D", value1: 0, value2: 0, value3: 0 },
-      { category: "FLEET", value1: 0, value2: 0, value3: 0 },
-      { category: "LAND", value1: 0, value2: 0, value3: 0 },
-      { category: "NRW", value1: 0, value2: 0, value3: 0 },
-      { category: "PD-N", value1: 0, value2: 0, value3: 0 },
-      { category: "PD-S", value1: 0, value2: 0, value3: 0 },
-      { category: "SCADA", value1: 0, value2: 0, value3: 0 },
-      { category: "WQ", value1: 0, value2: 0, value3: 0 },
+      { category: "CBS", backLog: 0, inprogress: 0, new: 0 },
+      { category: "DISTRIBUTION", backLog: 0, inprogress: 0, new: 0 },
+      { category: "ES-D", backLog: 0, inprogress: 0, new: 0 },
+      { category: "FLEET", backLog: 0, inprogress: 0, new: 0 },
+      { category: "LAND", backLog: 0, inprogress: 0, new: 0 },
+      { category: "NRW", backLog: 0, inprogress: 0, new: 0 },
+      { category: "PD-N", backLog: 0, inprogress: 0, new: 0 },
+      { category: "PD-S", backLog: 0, inprogress: 0, new: 0 },
+      { category: "SCADA", backLog: 0, inprogress: 0, new: 0 },
+      { category: "WQ", backLog: 0, inprogress: 0, new: 0 },
     ];
 
     let temp = this.WorkOrderActivity;
@@ -170,13 +170,13 @@ export class AnalyticsWaComponent implements OnInit {
 
         if (temp3[0].owning_access_group == "CBS") {
           if (temp[j].status == "BackLog") {
-            data[0].value1 += 1;
+            data[0].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[0].value2 += 1;
+            data[0].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[0].value3 += 1;
+            data[0].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
@@ -184,13 +184,13 @@ export class AnalyticsWaComponent implements OnInit {
         }
         else if (temp3[0].owning_access_group == "DISTRIBUTION") {
           if (temp[j].status == "BackLog") {
-            data[1].value1 += 1;
+            data[1].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[1].value2 += 1;
+            data[1].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[1].value3 += 1;
+            data[1].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
@@ -198,28 +198,28 @@ export class AnalyticsWaComponent implements OnInit {
         }
         else if (temp3[0].owning_access_group == "ES-D") {
           if (temp[j].status == "BackLog") {
-            data[2].value1 += 1;
+            data[2].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[2].value2 += 1;
+            data[2].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[2].value3 += 1;
+            data[2].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
           }
         }
         else if (temp3[0].owning_access_group == "FLEET") {
-          // data[3].value1 += 1;
+          // data[3].backLog += 1;
           if (temp[j].status == "BackLog") {
-            data[3].value1 += 1;
+            data[3].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[3].value2 += 1;
+            data[3].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[3].value3 += 1;
+            data[3].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
@@ -227,13 +227,13 @@ export class AnalyticsWaComponent implements OnInit {
         }
         else if (temp3[0].owning_access_group == "LAND") {
           if (temp[j].status == "BackLog") {
-            data[4].value1 += 1;
+            data[4].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[4].value2 += 1;
+            data[4].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[4].value3 += 1;
+            data[4].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
@@ -241,13 +241,13 @@ export class AnalyticsWaComponent implements OnInit {
         }
         else if (temp3[0].owning_access_group == "NRW") {
           if (temp[j].status == "BackLog") {
-            data[5].value1 += 1;
+            data[5].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[5].value2 += 1;
+            data[5].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[5].value3 += 1;
+            data[5].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
@@ -255,13 +255,13 @@ export class AnalyticsWaComponent implements OnInit {
         }
         else if (temp3[0].owning_access_group == "PD-N") {
           if (temp[j].status == "BackLog") {
-            data[6].value1 += 1;
+            data[6].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[6].value2 += 1;
+            data[6].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[6].value3 += 1;
+            data[6].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
@@ -269,13 +269,13 @@ export class AnalyticsWaComponent implements OnInit {
         }
         else if (temp3[0].owning_access_group == "PD-S") {
           if (temp[j].status == "BackLog") {
-            data[7].value1 += 1;
+            data[7].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[7].value2 += 1;
+            data[7].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[7].value3 += 1;
+            data[7].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
@@ -283,13 +283,13 @@ export class AnalyticsWaComponent implements OnInit {
         }
         else if (temp3[0].owning_access_group == "SCADA") {
           if (temp[j].status == "BackLog") {
-            data[8].value1 += 1;
+            data[8].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[8].value2 += 1;
+            data[8].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[8].value3 += 1;
+            data[8].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
@@ -297,13 +297,13 @@ export class AnalyticsWaComponent implements OnInit {
         }
         else if (temp3[0].owning_access_group == "WQ") {
           if (temp[j].status == "BackLog") {
-            data[9].value1 += 1;
+            data[9].backLog += 1;
           }
           else if (temp[j].status == "InProgress") {
-            data[9].value2 += 1;
+            data[9].inprogress += 1;
           }
           else if (temp[j].status == "New") {
-            data[9].value3 += 1;
+            data[9].new += 1;
           }
           else {
             console.log("Failed ", temp3[0].owning_access_group)
@@ -330,12 +330,14 @@ export class AnalyticsWaComponent implements OnInit {
 
   assets: any;
   getAssets() {
+    this.SpinnerService.show();  
     this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
       console.log('response from API is ', response);
       this.assets = response;
       console.log('assets', this.assets);
 
       this.getWorkOrderActivity();
+      this.SpinnerService.hide();
 
     }, (error) => {
       console.log('Error is ', error)
@@ -453,6 +455,13 @@ export class AnalyticsWaComponent implements OnInit {
     valueAxis.min = 0;
     valueAxis.calculateTotals = true;
 
+     // Modify chart's colors
+     chart.colors.list = [
+      am4core.color("#f5365b"),
+      am4core.color("#fed602"),
+      am4core.color("#2bce89"),
+    ];
+
     // Create series
     function createSeries(field, name) {
 
@@ -480,9 +489,9 @@ export class AnalyticsWaComponent implements OnInit {
       return series;
     }
 
-    createSeries("value1", "BackLog");
-    createSeries("value2", "Active");
-    createSeries("value3", "New");
+    createSeries("backLog", "BackLog");
+    createSeries("inprogress", "Active");
+    createSeries("new", "New");
 
 
     // Create series for total

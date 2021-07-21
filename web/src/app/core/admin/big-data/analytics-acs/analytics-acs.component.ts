@@ -11,6 +11,7 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { formatDate } from "@angular/common";
 import { map, tap, catchError } from "rxjs/operators";
 import { WorkOrderActivityCompletionService } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service";
+import { NgxSpinnerService } from "ngx-spinner";  
 
 am4core.useTheme(am4themes_animated);
 
@@ -24,7 +25,8 @@ export class AnalyticsAcsComponent implements OnInit {
   constructor(
     private zone: NgZone,
     public assetsService: AssetsService,
-    public workOrderActivityCompletionService: WorkOrderActivityCompletionService) { }
+    public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
+    private SpinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
     // console.log("today",this.today)
@@ -91,6 +93,7 @@ export class AnalyticsAcsComponent implements OnInit {
   }
 
   getAssets() {
+    this.SpinnerService.show();
     this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
       console.log('response from API is ', response);
       this.assets = response;
@@ -102,12 +105,15 @@ export class AnalyticsAcsComponent implements OnInit {
       this.calcPercentageAssetConditionRating();
       this.getAssetConditionStores();
 
+      this.SpinnerService.hide();
+
     }, (error) => {
       console.log('Error is ', error)
     })
   }
 
   reset() {
+    this.SpinnerService.show();
 
     this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
       console.log('response from API is ', response);
@@ -118,6 +124,8 @@ export class AnalyticsAcsComponent implements OnInit {
 
       this.calcPercentageAssetConditionRating();
       this.getAssetConditionStores();
+
+      this.SpinnerService.hide();
 
     }, (error) => {
       console.log('Error is ', error)
@@ -158,7 +166,6 @@ export class AnalyticsAcsComponent implements OnInit {
     this.totalassetsLastMonth = this.assetsLastMonth.length
     console.log("total lastmonth", this.totalAssetToday)
     console.log("assets last month", this.assetsLastMonth)
-
   }
 
   calcPercentageAssetConditionRating() {
@@ -178,16 +185,16 @@ export class AnalyticsAcsComponent implements OnInit {
   getAssetConditionStores() {
 
     this.tableAssetConditionStores = [
-      { title: "CBS", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "DISTRIBUTION", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "ES-D", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "FLEET", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "LAND", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "NRW", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "PD-N", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "PD-S", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "SCADA", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "WQ", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "CBS", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "DISTRIBUTION", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "ES-D", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "FLEET", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "LAND", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "NRW", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "PD-N", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "PD-S", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "SCADA", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "WQ", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
     ];
 
     for (let i in this.assets) {
@@ -346,6 +353,8 @@ export class AnalyticsAcsComponent implements OnInit {
 
   filter() {
 
+    this.SpinnerService.show();
+
     let temp: AssetsModel[] = [];
     let temp2: AssetsModel[] = [];
 
@@ -399,6 +408,7 @@ export class AnalyticsAcsComponent implements OnInit {
       this.calcPercentageAssetConditionRating();
       this.getAssetConditionStores();
 
+      this.SpinnerService.hide();
 
 
     }, (error) => {
