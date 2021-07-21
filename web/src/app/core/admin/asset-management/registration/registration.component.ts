@@ -2057,7 +2057,7 @@ export class RegistrationComponent implements OnInit {
 
     this.dataFromExcelFile.forEach(function (loopval, index) {
 
-      let checkStatus = 'CO'
+      let checkStatus = 'TP'
       const formData = new FormData();
       // console.log("loopval",loopval['Asset Owning Department'])
       console.log("loopval", loopval)
@@ -2184,12 +2184,12 @@ export class RegistrationComponent implements OnInit {
       formData.append('vehicle_spad_permit_date_period_from', (loopval.vehicle_spad_permit_date_period_from != undefined ? loopval.vehicle_spad_permit_date_period_from : ''))
       formData.append('voltage', (loopval.voltage != undefined ? loopval.voltage : ''))
 
-      formData.forEach(function (loopvaldata) {
-        console.log("incomplete dataset", loopvaldata);
-        if (loopvaldata == '' || loopvaldata == null) {
-          checkStatus = 'IC'
-        }
-      })
+      //formData.forEach(function (loopvaldata) {
+      //  console.log("incomplete dataset", loopvaldata);
+      //  if (loopvaldata == '' || loopvaldata == null) {
+      //    checkStatus = 'IC'
+      //  }
+      //})
 
       formData.append('status', checkStatus)
 

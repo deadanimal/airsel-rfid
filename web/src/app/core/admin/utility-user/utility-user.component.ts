@@ -83,6 +83,7 @@ export class UtilityUserComponent implements OnInit {
       // default for is_active is false
       is_active: new FormControl("", [Validators.required]),
       status: new FormControl("", [Validators.required]),
+      mobile_access: new FormControl("", [Validators.required]),
       password1: "bg6yaaz3pv",
       password2: "bg6yaaz3pv",
     });
@@ -208,6 +209,7 @@ export class UtilityUserComponent implements OnInit {
 
     console.log("status", this.userFormGroup.value.status);
 
+    // web 
     if (this.userFormGroup.value.status == "false") {
       this.userFormGroup.patchValue({
           status: false,
@@ -221,8 +223,19 @@ export class UtilityUserComponent implements OnInit {
       });
     }
 
-    
-    console.log("bastard2", this.userFormGroup.value);
+    // mobile access
+    if (this.userFormGroup.value.mobile_access == "false") {
+      this.userFormGroup.patchValue({
+          mobile_access: false,
+      });
+
+    } else {
+      this.userFormGroup.patchValue({
+          mobile_access: true,
+      });
+    }
+
+
     
     this.userService
       .update(this.userFormGroup.value.id, this.userFormGroup.value)

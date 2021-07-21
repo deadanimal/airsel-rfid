@@ -1,5 +1,4 @@
-import { Component, OnInit, TemplateRef } from "@angular/core"; import {
-  Validators,
+import { Component, OnInit, TemplateRef } from "@angular/core"; import { Validators,
   FormBuilder,
   FormGroup,
   FormControl,
@@ -45,6 +44,8 @@ export class BadgeNoComponent implements OnInit {
   SelectionType = SelectionType;
   rows: any = [];
   tableTemp: any = [];
+  tableRows: any = [];
+
   assetTypeList: any = [];
   assTypeList: any
   assetTypeForm: FormGroup;
@@ -85,13 +86,34 @@ export class BadgeNoComponent implements OnInit {
       (res) => {
         // console.log("getBadgeNoData = ", res);
         // console.log('tempData = ', tempData)
-        this.tableTemp = res
+        this.tableRows = res;
+        this.tableTemp = this.tableRows.map((prop, key) => {
+          return {
+            ...prop,
+            // id: key,
+          };
+        });
+
       },
       error => {
         console.error("err", error);
       }
     )
   }
+  filterTable($event) {
+    let val = $event.target.value;
+    this.tableTemp = this.tableRows.filter(function (d) {
+      for (var key in d) {
+        if (d[key]) {
+          if (d[key].toString().toLowerCase().indexOf(val) !== -1) {
+            return true;
+          }
+        }
+      }
+      return false;
+    });
+  }
+
 
   getAssetTypeData() {
     let tempData = []
@@ -315,7 +337,6 @@ export class BadgeNoComponent implements OnInit {
   submitAssetTypeDescUpdate() {
 
     let skipped_no = this.assetTypeFormDesc.value.skipped_no
-    console.log("si buduh", typeof(skipped_no))
 
     if (typeof(skipped_no) == "string") {
       let formatted_skipped_no = skipped_no.split(',');

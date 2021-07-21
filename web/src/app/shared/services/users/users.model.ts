@@ -10,6 +10,7 @@ export class UsersModel {
   public profile_picture: string;
   public is_active: boolean;
   public status: boolean;
+  public mobile_access: boolean;
   public date_joined: any;
 
 
@@ -25,6 +26,7 @@ export class UsersModel {
     profile_picture: string,
     is_active: boolean,
     status: boolean,
+    mobile_access: boolean,
     date_joined: any,
   ) {
     this.id = id;
@@ -38,6 +40,7 @@ export class UsersModel {
     this.profile_picture = profile_picture;
     this.is_active = is_active;
     this.status = status;
+    this.mobile_access = mobile_access;
     this.date_joined = date_joined;
   }
 }
