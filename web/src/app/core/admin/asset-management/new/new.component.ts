@@ -507,7 +507,7 @@ export class NewComponent implements OnInit {
                 let currentNo = res[0].skipped_no[0]
                 console.log("CNO", currentNo);
                 //badgeFormatData = res[0].short + "_" + currentNo.padStart(7, '0');
-                badgeFormatData = res[0].short + "_" + currentNo.padStart(7, '0');;
+                badgeFormatData = res[0].short + "-" + currentNo.padStart(7, '0');;
 
                 updatedSkippedNo = {
                   skipped_no: res[0].skipped_no.slice(1)
