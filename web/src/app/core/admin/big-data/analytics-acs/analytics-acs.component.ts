@@ -166,7 +166,6 @@ export class AnalyticsAcsComponent implements OnInit {
     this.totalassetsLastMonth = this.assetsLastMonth.length
     console.log("total lastmonth", this.totalAssetToday)
     console.log("assets last month", this.assetsLastMonth)
-
   }
 
   calcPercentageAssetConditionRating() {
@@ -186,16 +185,16 @@ export class AnalyticsAcsComponent implements OnInit {
   getAssetConditionStores() {
 
     this.tableAssetConditionStores = [
-      { title: "CBS", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "DISTRIBUTION", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "ES-D", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "FLEET", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "LAND", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "NRW", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "PD-N", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "PD-S", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "SCADA", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
-      { title: "WQ", noasset: 0, zero: 0, one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "CBS", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "DISTRIBUTION", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "ES-D", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "FLEET", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "LAND", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "NRW", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "PD-N", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "PD-S", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "SCADA", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
+      { title: "WQ", noasset: 0,  one: 0, two: 0, three: 0, four: 0, five: 0 },
     ];
 
     for (let i in this.assets) {

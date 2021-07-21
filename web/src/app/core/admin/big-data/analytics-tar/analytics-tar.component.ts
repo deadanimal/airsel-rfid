@@ -9,6 +9,8 @@ import { AssetsModel } from 'src/app/shared/services/assets/assets.model';
 import { map, tap, catchError } from "rxjs/operators";
 import { formatDate } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";  
+import { TarService } from "src/app/shared/services/analytic-tar/analytic-tar.service"
+
 
 am4core.useTheme(am4themes_animated);
 
@@ -42,12 +44,17 @@ export class AnalyticsTarComponent implements OnInit {
   constructor(
     private zone: NgZone,
     private assetsService: AssetsService,
-    private SpinnerService: NgxSpinnerService
+    private SpinnerService: NgxSpinnerService,
+    private tarService: TarService,
 
   ) { }
 
   ngOnInit() {
+    this.getTAR();
     this.getAssetRegistered();
+    // this.initChartTwo();
+
+    
   }
 
   ngAfterViewInit() {
@@ -68,11 +75,52 @@ export class AnalyticsTarComponent implements OnInit {
     });
   }
 
+  chartData: any
+  getTAR(){
+    this.tarService.get().subscribe(
+      (res) => {
+        console.log("TARSER", res)
+        this.chartData = res
+        this.initChartTwo()
+        // this.chartData = [
+        //   { title: "CBS", total: 0, },
+        //   { title: "DISTRIBUTION", total: 0, },
+        //   { title: "ES-D", total: 0, },
+        //   { title: "FLEET", total: 0, },
+        //   { title: "LAND", total: 0, },
+        //   { title: "NRW", total: 0, },
+        //   { title: "PD-N", total: 0, },
+        //   { title: "PD-S", total: 0, },
+        //   { title: "SCADA", total: 0, },
+        //   { title: "WQ", total: 0, },
+        // ];
+
+        // this.chartData[0].total = res["CBS"]
+        // this.chartData[1].total = res["DISTRIBUTION"]
+        // this.chartData[2].total = res["ES-D"]
+        // this.chartData[3].total = res["FLEET"]
+        // this.chartData[4].total = res["LAND"]
+        // this.chartData[5].total = res["NRW"]
+        // this.chartData[6].total = res["PD-N"]
+        // this.chartData[7].total = res["PD-S"]
+        // this.chartData[8].total = res["SCADA"]
+        // this.chartData[9].total = res["WQ"]
+
+        console.log("chartData", this.chartData)
+
+      },
+      (err) => {
+
+      }
+    );
+
+  }
+
   assets: any;
 
   getAssetRegistered() {
 
-    this.SpinnerService.show();
+    // this.SpinnerService.show();
     this.currentDate = true
     this.filteredDate = false
 
@@ -84,7 +132,7 @@ export class AnalyticsTarComponent implements OnInit {
 
         this.getChartdata();
 
-        this.SpinnerService.hide();
+        // this.SpinnerService.hide();
 
       },
       (err) => {
@@ -106,6 +154,10 @@ export class AnalyticsTarComponent implements OnInit {
 
     let temp: AssetsModel[] = [];
     let temp2: AssetsModel[] = [];
+
+    // for (let i in this.assets){
+
+    // }
 
     this.SpinnerService.show();
     this.assetsService.get().pipe(map(x => x.filter(i => i.registered_datetime != null))).subscribe((response) => {
@@ -160,6 +212,10 @@ export class AnalyticsTarComponent implements OnInit {
       console.log('assets', this.assets);
 
       this.getChartdata();
+      
+      // this.initChartTwo();
+
+      console.log("filtered chartdata", this.chartData)
       // this.initChartTwo();
 
       this.SpinnerService.hide();
@@ -169,7 +225,7 @@ export class AnalyticsTarComponent implements OnInit {
     })
   }
 
-  chartData: any
+  // 
   getChartdata() {
 
     this.chartData = [
@@ -217,13 +273,7 @@ export class AnalyticsTarComponent implements OnInit {
       else if (this.assets[i].owning_access_group == "WQ") {
         this.chartData[9].total += 1;
       }
-      else {
-        // this.nullassetOwning.push(this.assets[i])
-      }
     }
-
-    console.log("chartdata before", this.chartData)
-
 
     console.log("chartdata", this.chartData)
     this.initChartTwo();
@@ -246,12 +296,6 @@ export class AnalyticsTarComponent implements OnInit {
     chart.colors.list = [
       am4core.color("#809fd5"),
     ];
-
-    for (let i in this.chartData){
-      console.log("index", i)
-      if (this.chartData[i].total == 0)
-        this.chartData.splice(i, 1);
-    }
 
     // Add data
     chart.data = this.chartData

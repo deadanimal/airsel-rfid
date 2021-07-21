@@ -9,6 +9,7 @@ import { WorkOrderActivityCompletionModel } from "src/app/shared/services/work-o
 import { WorkOrderActivityCompletionService } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service";
 import { WorkOrderActivityCompletionAssetLocationAssetListService } from "src/app/shared/services/WorkOrderActivityCompletionAssetLocationAssetList/WorkOrderActivityCompletionAssetLocationAssetList.service";
 import { NgxSpinnerService } from "ngx-spinner";
+import { formatDate } from "@angular/common";
 
 am4core.useTheme(am4themes_animated);
 
@@ -28,6 +29,19 @@ export class AnalyticsTamComponent implements OnInit {
   private pieeight: am4charts.PieChart;
   private pienine: am4charts.PieChart;
   private pieten: am4charts.PieChart;
+
+  assetowningdepartment = [
+    { value: "CBS", name: "CUSTOMER BILLING SERVICES" },
+    { value: "DISTRIBUTION", name: "DISTRIBUTION" },
+    { value: "ES-D", name: "ENGINEERING SERVICES – DISTRIBUTION" },
+    { value: "FLEET", name: "FLEET" },
+    { value: "LAND", name: "LAND" },
+    { value: "NRW", name: "NRW" },
+    { value: "PD-N", name: "PRODUCTION NORTHERN" },
+    { value: "PD-S", name: "PRODUCTION SOUTHERN" },
+    { value: "SCADA", name: "SCADA" },
+    { value: "WQ", name: "WATER QUALITY" },
+  ];
 
   constructor(
     private zone: NgZone,
@@ -512,6 +526,74 @@ export class AnalyticsTamComponent implements OnInit {
       })
     }
 
+  }
+  asset_owning: any;
+  selected_date: any;
+
+  filter() {
+
+    let temp: any = []
+    let temp2: any = []
+
+    this.workOrderActivityCompletionService.get().subscribe((response) => {
+      // temp = response
+      // console.log("temp", temp)
+
+      console.log("asset_owning", this.asset_owning)
+      console.log("response", response)
+
+      if (this.asset_owning != null && this.selected_date == null) {
+        temp = response.filter((value) => value.owning_organization.includes(this.asset_owning));
+        console.log("temp", temp);
+        temp2 = temp;
+
+      }
+      else if (this.asset_owning == null && this.selected_date != null) {
+        let from = this.selected_date[0]
+        let to = this.selected_date[1]
+
+        console.log("from", from);
+        console.log("to", to);
+        console.log("from 2", formatDate(from, 'yyyy-MM-dd', 'en_US'));
+        console.log("to 2", formatDate(to, 'yyyy-MM-dd', 'en_US'));
+
+        temp = response;
+        for (let i in temp) {
+          if (formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') >= formatDate(from, 'yyyy-MM-dd', 'en_US') && formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(to, 'yyyy-MM-dd', 'en_US')) {
+            console.log("data" + i, formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US'));
+
+            temp2.push(temp[i])
+
+          }
+        }
+      }
+      else if (this.asset_owning != null && this.selected_date != null) {
+
+        let from = this.selected_date[0]
+        let to = this.selected_date[1]
+        console.log("from", from);
+        console.log("to", to);
+
+        temp = response.filter((value) => value.owning_organization.includes(this.asset_owning));
+        console.log("temp", temp);
+
+        for (let i in temp) {
+          if (formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') >= formatDate(from, 'yyyy-MM-dd', 'en_US') && formatDate(temp[i].modified_date, 'yyyy-MM-dd', 'en_US') <= formatDate(to, 'yyyy-MM-dd', 'en_US'))
+            temp2.push(temp[i])
+        }
+      }
+
+      console.log("temp2", temp2)
+      console.log("temp2 length", temp2.length)
+
+      // this.assets = temp2
+      // console.log('assets', this.assets);
+      // this.totalWorkOrder = temp2.length
+
+
+    }, (error) => {
+      console.log('Error is ', error)
+    })
   }
 
   ngAfterViewInit() {
