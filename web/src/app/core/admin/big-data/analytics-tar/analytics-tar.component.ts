@@ -77,6 +77,8 @@ export class AnalyticsTarComponent implements OnInit {
 
   chartData: any
   getTAR(){
+    this.SpinnerService.show();
+
     this.tarService.get().subscribe(
       (res) => {
         console.log("TARSER", res)
@@ -107,6 +109,7 @@ export class AnalyticsTarComponent implements OnInit {
         // this.chartData[9].total = res["WQ"]
 
         console.log("chartData", this.chartData)
+        this.SpinnerService.hide();
 
       },
       (err) => {
@@ -131,8 +134,6 @@ export class AnalyticsTarComponent implements OnInit {
         this.asset_registered_length = res.length;
 
         this.getChartdata();
-
-        // this.SpinnerService.hide();
 
       },
       (err) => {
