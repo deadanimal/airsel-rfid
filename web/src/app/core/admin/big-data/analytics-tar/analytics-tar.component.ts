@@ -77,36 +77,24 @@ export class AnalyticsTarComponent implements OnInit {
 
   chartData: any
   getTAR(){
+    this.SpinnerService.show();
+
     this.tarService.get().subscribe(
       (res) => {
         console.log("TARSER", res)
         this.chartData = res
-        this.initChartTwo()
-        // this.chartData = [
-        //   { title: "CBS", total: 0, },
-        //   { title: "DISTRIBUTION", total: 0, },
-        //   { title: "ES-D", total: 0, },
-        //   { title: "FLEET", total: 0, },
-        //   { title: "LAND", total: 0, },
-        //   { title: "NRW", total: 0, },
-        //   { title: "PD-N", total: 0, },
-        //   { title: "PD-S", total: 0, },
-        //   { title: "SCADA", total: 0, },
-        //   { title: "WQ", total: 0, },
-        // ];
 
-        // this.chartData[0].total = res["CBS"]
-        // this.chartData[1].total = res["DISTRIBUTION"]
-        // this.chartData[2].total = res["ES-D"]
-        // this.chartData[3].total = res["FLEET"]
-        // this.chartData[4].total = res["LAND"]
-        // this.chartData[5].total = res["NRW"]
-        // this.chartData[6].total = res["PD-N"]
-        // this.chartData[7].total = res["PD-S"]
-        // this.chartData[8].total = res["SCADA"]
-        // this.chartData[9].total = res["WQ"]
+        for(let i in this.chartData){
+          this.asset_registered_length += this.chartData[i].total
+        }
+        console.log("total", this.asset_registered_length)
+        
+        this.initChartTwo()
+
+       
 
         console.log("chartData", this.chartData)
+        this.SpinnerService.hide();
 
       },
       (err) => {
@@ -131,8 +119,6 @@ export class AnalyticsTarComponent implements OnInit {
         this.asset_registered_length = res.length;
 
         this.getChartdata();
-
-        // this.SpinnerService.hide();
 
       },
       (err) => {
