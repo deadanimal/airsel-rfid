@@ -19,8 +19,7 @@ export class EmployeeService {
   constructor(private http: HttpClient) {}
 
   post(body): Observable<EmployeeModel> {
-    return this.http.post<any>(this.url, body).pipe(
-      tap((res) => {
+    return this.http.post<any>(this.url, body).pipe( tap((res) => {
         console.log("EmployeeModel", res);
       })
     );

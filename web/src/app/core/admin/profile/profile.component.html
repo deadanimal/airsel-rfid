@@ -29,10 +29,6 @@
      </div>
      <div class="col-xl-4">
 
-       <a *ngIf="cuser.user_type!='CR'" disabled class="btn btn-sm btn-dark text-white" style="float: right;">
-         Change Password
-       </a>
-
        <a *ngIf="cuser.user_type=='CR'" class="btn btn-sm btn-dark text-white" style="float: right;" [routerLink]="['/password-reset']">
          Change Password
        </a>
@@ -50,16 +46,16 @@
 	<div class="row">
 	 <div class="col-xl-6">
 	   <label class="form-control-label">Full Name</label>
-       <input class="form-control" [(ngModel)]="cuser.first_name" [ngModelOptions]="{standalone: true}" type="text" readonly>
+       <input class="form-control" [(ngModel)]="profile.last_name" [ngModelOptions]="{standalone: true}" type="text" readonly>
 	   <label class="form-control-label">Location/Department</label>
        <input class="form-control" [(ngModel)]="cuser.service_area" [ngModelOptions]="{standalone: true}" type="text" readonly>
 	   <label class="form-control-label">WAMS Employee ID</label>
-       <input class="form-control" [(ngModel)]="cuser.employee_id" [ngModelOptions]="{standalone: true}" type="text" readonly>
+       <input class="form-control" [(ngModel)]="profile.employee_id" [ngModelOptions]="{standalone: true}" type="text" readonly>
 
 	 </div>
 	 <div class="col-xl-6">
 	   <label class="form-control-label">Phone Number</label>
-       <input class="form-control" [(ngModel)]="cuser.phone_no" [ngModelOptions]="{standalone: true}" type="text" readonly>
+       <input class="form-control" [(ngModel)]="profile.phone_no" [ngModelOptions]="{standalone: true}" type="text" readonly>
 	   <label class="form-control-label">Email</label>
        <input class="form-control" [(ngModel)]="cuser.email" [ngModelOptions]="{standalone: true}" type="text" readonly>
 

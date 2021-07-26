@@ -53,4 +53,17 @@ export class WamsService {
       })
     );
   }
+
+  getAssetBadgeNo(badge_no): Observable<any> {
+    let body = {
+      service_name: "getAsset",
+      badge_number: badge_no,
+    };
+    return this.http.post<any>(this.url, body).pipe(
+      tap((res) => {
+        console.log("getAsset", res);
+      })
+    );
+  }
+
 }

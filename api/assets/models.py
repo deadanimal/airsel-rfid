@@ -320,7 +320,9 @@ class AssetRegistration(models.Model):
         ('NP','New Process'),
         ('PR','Processed'),
         ('AP', 'Approved'),
-        ('RJ', 'Rejected')
+        ('RJ', 'Rejected'),
+        ('TP', 'To Process')
+
     ]
     status = models.CharField(
         max_length=2,

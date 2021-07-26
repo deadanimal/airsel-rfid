@@ -1,5 +1,4 @@
-import { Injectable } from "@angular/core"; import { environment } from "src/environments/environment";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core"; import { environment } from "src/environments/environment"; import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { TokenResponse } from "./auth.model";
 import { Form } from "@angular/forms";
 import { JwtHelperService } from "@auth0/angular-jwt";
@@ -139,6 +138,14 @@ export class AuthService {
     };
     return user_obj;
   }
+  registerAccount(body): Observable<any> {
+    return this.http.post<any>(this.urlRegister, body).pipe(
+      tap((res) => {
+        console.log("Registration: ", res);
+      })
+    );
+  }
+
 
 
   // activation(body: Form): Observable<any> {
