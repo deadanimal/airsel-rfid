@@ -1544,7 +1544,7 @@
 <ng-template #assetAttribute>
   <div class="modal-header bg-default">
     <h6 class="modal-title my-auto text-white">
-      List of Asset
+      List of Asset Attribute
     </h6>
 
     <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button"
@@ -2618,7 +2618,7 @@
                   class="form-control form-control-sm" /> -->
 
                 <ng-select [items]="maintenanceManager" bindLabel="description" bindValue="maintenance_manager"
-                  formControlName="location_asset_maintenance_manager" [clearable]="false">
+                  formControlName="location_asset_maintenance_manager" [clearable]="true">
                 </ng-select>
               </div>
             </div>
@@ -2627,8 +2627,8 @@
                 <label class="form-control-label">Maintenance Planner<span class="mandatory">*</span></label>
                 <!-- <input type="text" formControlName="maintenance_planner" class="form-control form-control-sm" /> -->
 
-                <ng-select [items]="maintenanceManager" bindLabel="description" bindValue="maintenance_manager"
-                  formControlName="maintenance_planner" [clearable]="false">
+                <ng-select [items]="maintenancePlanner" bindLabel="description" bindValue="planner"
+                  formControlName="maintenance_planner" [clearable]="true">
                 </ng-select>
 
                 <mat-hint
@@ -2646,7 +2646,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Latitude<span class="mandatory">*</span></label>
+                <label class="form-control-label">Latitude</label>
                 <input type="text" formControlName="latitude" class="form-control form-control-sm" />
                 <mat-hint
                   *ngIf="firstFormGroup.controls['latitude'].hasError('required') && firstFormGroup.controls['latitude'].touched && firstFormGroup.controls['latitude'].invalid "
@@ -2657,7 +2657,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Longitude<span class="mandatory">*</span></label>
+                <label class="form-control-label">Longitude</label>
                 <input type="text" formControlName="longitude" class="form-control form-control-sm" />
                 <mat-hint
                   *ngIf="firstFormGroup.controls['longitude'].hasError('required') && firstFormGroup.controls['longitude'].touched && firstFormGroup.controls['longitude'].invalid "
@@ -2667,15 +2667,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Asset Criticallity<span class="mandatory">*</span></label>
-                <!-- <input type="text" formControlName="asset_critically" class="form-control form-control-sm" /> -->
-
-                <!-- <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="asset_critically">
-                  <option value="">Please select</option>
-                  <option *ngFor="let assetCriticality of assetCriticality" [value]="assetCriticality.value">
-                    {{ assetCriticality.name }}</option>
-                </select> -->
-
+                
                 <ng-select [items]="assetCriticality" bindLabel="name" bindValue="value"
                   formControlName="asset_critically" [clearable]="false">
                 </ng-select>
@@ -2852,14 +2844,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Condition Rating<span class="mandatory">*</span></label>
-                <!-- <input type="text" formControlName="condition_rating" class="form-control form-control-sm" /> -->
-
-                <!-- <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="condition_rating">
-                  <option value="">Please select</option>
-                  <option *ngFor="let conditionRating of conditionRating" [value]="conditionRating.value">
-                    {{ conditionRating.name }}</option>
-                </select> -->
+                
 
                 <ng-select [items]="conditionRating" bindLabel="name" bindValue="value"
                   formControlName="condition_rating" [clearable]="false">
@@ -2870,42 +2855,21 @@
                   class="validation_messages"><small>This field is required</small></mat-hint>
               </div>
             </div>
-            <!-- <div class="col-md-6">
-              <div class="form-group">
-                <label class="form-control-label">Status</label>
-                <input type="text" formControlName="status" class="form-control form-control-sm" />
-              </div>
-            </div> -->
+            
           </div>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Maintenance Specification</label>
-                <!-- <input type="text" formControlName="maintenance_planner" class="form-control form-control-sm" /> -->
-
-                <!-- <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="maintenance_planner">
-                  <option value="">Please select</option>
-                  <option *ngFor="let maintenanceSpec of maintenanceSpec" [value]="maintenanceSpec.maintenance_spec_cd">
-                    {{ maintenanceSpec.maintenance_spec_cd }}</option>
-                </select> -->
 
                 <ng-select [items]="maintenanceSpec" bindLabel="maintenance_spec_cd" bindValue="maintenance_spec_cd"
-                  formControlName="maintenance_planner" [clearable]="false">
+                  formControlName="maintenance_planner" [clearable]="true">
                 </ng-select>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-control-label">Measurement Type</label>
-                <!-- <input type="text" formControlName="measurement_type" class="form-control form-control-sm" /> -->
-
-                <!-- <select class="form-control custom-select form-control-sm custom-select-sm"
-                  formControlName="measurement_type">
-                  <option value="">Please select</option>
-                  <option *ngFor="let measurementTypes of measurementTypes" [value]="measurementTypes.measurement_type">
-                    {{ measurementTypes.description }}</option>
-                </select> -->
 
                 <ng-select [items]="measurementTypes" bindLabel="description" bindValue="measurement_type"
                   formControlName="measurement_type" [clearable]="false">
@@ -2916,7 +2880,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Warranty<span class="mandatory">*</span></label>
+                <label class="form-control-label">Warranty</label>
                 <ng-select [items]="warranty" bindLabel="name" bindValue="value" formControlName="warranty"
                   [clearable]="false">
                 </ng-select>
@@ -2928,7 +2892,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label class="form-control-label">Actual Warranty Period</label>
+                <label class="form-control-label">Actual Warranty Period (Month)</label>
                 <input type="text" formControlName="actual_warranty_period" class="form-control form-control-sm" />
               </div>
             </div>
