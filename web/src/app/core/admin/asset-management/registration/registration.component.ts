@@ -30,6 +30,7 @@ import { MaintenanceManagerService } from "src/app/shared/services/maintenance-m
 import { CostCenterService } from "src/app/shared/services/cost-center/cost-center.service";
 import { AssetMaintenanceSpecService } from "src/app/shared/services/asset-maintenance-spec/asset-maintenance-spec.service";
 import { MeasurementTypesService } from "src/app/shared/services/measurement-types/measurement-types.service";
+import { MaintenancePlannerService } from "src/app/shared/services/maintenance-planner/maintenance-planner.service";
 import { ContactInformationService } from "src/app/shared/services/contact-information/contact-information.service";
 // import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
 import { system } from '@amcharts/amcharts4/core';
@@ -868,6 +869,7 @@ export class RegistrationComponent implements OnInit {
     public assetLocationSyncService: AssetLocationSyncService,
     public assetAttributePredefineService: AssetAttributePredefineService,
     public maintenanceManagerService: MaintenanceManagerService,
+    public maintenancePlannerService: MaintenancePlannerService,
     public assetMaintenanceSpecService: AssetMaintenanceSpecService,
     public measurementTypesService: MeasurementTypesService,
     public costCenterservice: CostCenterService,
@@ -911,8 +913,8 @@ export class RegistrationComponent implements OnInit {
       location_asset_maintenance_manager: ["",],
       maintenance_planner: ["", Validators.compose([Validators.required])], //
       gis_esri_id: ["",],
-      latitude: ["", Validators.compose([Validators.required])], //
-      longitude: ["", Validators.compose([Validators.required])], //
+      latitude: ["", ], //
+      longitude: ["", ], //
       asset_critically: ["", Validators.compose([Validators.required])], //
       cost_center: ["", Validators.compose([Validators.required])], //
       brand: ["",],
@@ -933,7 +935,7 @@ export class RegistrationComponent implements OnInit {
       status: ["",],
       maintenance_specification: ["",],
       measurement_type: ["",],
-      warranty: ["", Validators.compose([Validators.required])], //
+      warranty: ["", ], //
       actual_warranty_period: ["",],
       warranty_vendor_name: ["",],
       bo: ["",]
@@ -1165,6 +1167,7 @@ export class RegistrationComponent implements OnInit {
     this.getExistingParent()
     this.getAssetAttributePredefine()
     this.getMaintenanceManager()
+    this.getMaintenancePlanner();
     this.getCostCenter();
     this.getMeasurementTypes()
     this.getContactInformation()
@@ -1202,6 +1205,18 @@ export class RegistrationComponent implements OnInit {
       console.log('response from API is ', response);
       this.maintenanceManager = response;
       console.log("maintenance manager", this.maintenanceManager);
+      // this.updateFilter();
+    }, (error) => {
+      console.log('Error is ', error)
+    })
+  }
+
+  maintenancePlanner: any;
+  getMaintenancePlanner() {
+    this.maintenancePlannerService.get().subscribe((response) => {
+      // console.log('response from API is ', response);
+      this.maintenancePlanner = response;
+      // console.log("maintenance planner", this.maintenancePlanner);
       // this.updateFilter();
     }, (error) => {
       console.log('Error is ', error)

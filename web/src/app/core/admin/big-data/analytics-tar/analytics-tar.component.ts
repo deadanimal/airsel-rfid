@@ -116,7 +116,7 @@ export class AnalyticsTarComponent implements OnInit {
       (res) => {
         console.log("Resss", res);
         this.assets = res;
-        this.asset_registered_length = res.length;
+        // this.asset_registered_length = res.length;
 
         this.getChartdata();
 
