@@ -105,7 +105,7 @@ export class AssetsRegistrationService {
   }
 
   filter(field: string): Observable<AssetsRegistrationModel[]> {
-    let urlFilter = this.url + "?" + field + "/";
+    let urlFilter = this.url + "?" + field + "";
     return this.http.get<AssetsRegistrationModel[]>(urlFilter).pipe(
       tap((res) => {
       })

@@ -1,5 +1,6 @@
 export class AssetsRegistrationModel {
   public id: string;
+  public created_by: string;
   public asset_id: string;
   public node_id: string;
   public hex_code: string;
@@ -135,6 +136,7 @@ export class AssetsRegistrationModel {
 
   constructor(
     id: string,
+    created_by: string,
     asset_id: string,
     node_id: string,
     hex_code: string,
@@ -269,6 +271,7 @@ export class AssetsRegistrationModel {
     bo:string
   ) {
     this.id = id;
+    this.created_by = created_by;
     this.asset_id = asset_id;
     this.node_id = node_id;
     this.hex_code = hex_code;

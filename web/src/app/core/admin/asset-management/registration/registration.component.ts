@@ -1,5 +1,4 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
-import {
+import { Component, OnInit, TemplateRef } from "@angular/core"; import {
   Validators,
   FormBuilder,
   FormGroup,
@@ -17,6 +16,7 @@ import { AssetLocationSyncService } from "src/app/shared/services/asset-location
 import { AssetsService } from "src/app/shared/services/assets/assets.service"; import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
 import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { UsersService } from "src/app/shared/services/users/users.service";
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
 import { NotifyService } from "src/app/shared/handler/notify/notify.service";
@@ -42,6 +42,7 @@ import { ContactInformationModel } from "src/app/shared/services/contact-informa
 // import { AssetsRegistrationModel } from "src/app/shared/services/assets-registration/assets-registration.model";
 
 export class AssetsRegistrationModel {
+  public created_by: string;
   public id: string;
   public asset_id: string;
   public node_id: string;
@@ -198,6 +199,9 @@ export class RegistrationComponent implements OnInit {
 
   // table
   ColumnMode = ColumnMode;
+  cuser: any;
+  crole: any;
+
 
   // Stepper
   isLinear = false;
@@ -874,6 +878,7 @@ export class RegistrationComponent implements OnInit {
     public measurementTypesService: MeasurementTypesService,
     public costCenterservice: CostCenterService,
     public contactInformationService: ContactInformationService,
+    public userService: UsersService,
     private spinner: NgxSpinnerService
   ) {
     this.getAssets();
@@ -1041,6 +1046,19 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+    // get user 
+    this.cuser = this.authService.decodedToken();
+
+    this.userService.filter("username=" + this.cuser.username).subscribe(
+      (res) => {
+        console.log("REs", res);
+        this.crole = res[0].user_type
+      },
+      (err) => {
+        console.log("err", err);
+
+      }
+    );
 
     this.regionsService.get().subscribe(
       (res) => {
@@ -1710,7 +1728,9 @@ export class RegistrationComponent implements OnInit {
           SubmitObject.voltage = this.secondFormGroup.value.voltage
           SubmitObject.asset_status = this.secondFormGroup.value.asset_status
           SubmitObject.status = this.secondFormGroup.value.status
+          SubmitObject.created_by = this.cuser.username
 
+          console.log("SubmitObject", SubmitObject);
 
 
           this.assetsRegistrationService.post(SubmitObject).subscribe(
@@ -2093,6 +2113,7 @@ export class RegistrationComponent implements OnInit {
 
     let assetregserv = this.assetsRegistrationService
     this.spinner.show();
+    let currentUser = this.cuser;
 
     this.dataFromExcelFile.forEach(function (loopval, index) {
 
@@ -2222,6 +2243,8 @@ export class RegistrationComponent implements OnInit {
       formData.append('vehicle_roadtax_renew_date', (loopval.vehicle_roadtax_renew_date != undefined ? loopval.vehicle_roadtax_renew_date : ''))
       formData.append('vehicle_spad_permit_date_period_from', (loopval.vehicle_spad_permit_date_period_from != undefined ? loopval.vehicle_spad_permit_date_period_from : ''))
       formData.append('voltage', (loopval.voltage != undefined ? loopval.voltage : ''))
+      formData.append('created_by', (currentUser.username))
+
 
       //formData.forEach(function (loopvaldata) {
       //  console.log("incomplete dataset", loopvaldata);
@@ -2260,13 +2283,26 @@ export class RegistrationComponent implements OnInit {
   }
 
   getRegisteredData() {
+    let filterString = ""
+
+    console.log("SS", this.crole);
+    if (this.crole == "PL") {
+      filterString = "status=TP&username" + this.cuser.username;
+      //filterString = "status=TP"
+
+
+    } else {
+      filterString = "status=TP"
+    }
+
     let tempData = []
-    this.assetsRegistrationService.getNewRegList().subscribe(
+    this.assetsRegistrationService.filter("status=TP").subscribe(
       (res) => {
         console.log("whaa", res);
         res.forEach(function (val) {
           val['isTick'] = false
           tempData.push(val)
+          console.log("status", val.status);
         })
         this.tableTemp1 = tempData
       },
@@ -2366,7 +2402,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   changeStatus(task) {
-    console.log("goes here");
     let resData: any
     // console.log('this.task = ', task)
     let no = 0
@@ -2376,7 +2411,7 @@ export class RegistrationComponent implements OnInit {
       if (itemVal['isTick'] == true) {
 
         console.log('itemVal = ', itemVal.status)
-        if (itemVal.status == 'IC') {
+        if (itemVal.status == 'TP') {
           // const updateformData = new FormData();
           console.log("itemVal", itemVal);
           let updateformData: any
