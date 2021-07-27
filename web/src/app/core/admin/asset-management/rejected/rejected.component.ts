@@ -1,5 +1,4 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
-import {
+import { Component, OnInit, TemplateRef } from "@angular/core"; import {
   Validators,
   FormBuilder,
   FormGroup,
@@ -15,6 +14,7 @@ import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
 import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { UsersService } from "src/app/shared/services/users/users.service";
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
 import { NotifyService } from "src/app/shared/handler/notify/notify.service";
@@ -36,6 +36,8 @@ export enum SelectionType {
 })
 export class RejectedComponent implements OnInit {
   // Tabs
+  cuser: any;
+  crole: any;
   firstTab: boolean = true
   secondTab: boolean = false
   thirdTab: boolean = false
@@ -154,6 +156,7 @@ export class RejectedComponent implements OnInit {
     public regionsService: RegionsService,
     public toastr: NotifyService,
     public assetsRegistrationService: AssetsRegistrationService,
+    public userService: UsersService,
     // public spinner: NgxSpinnerService,
   ) {
     this.getRegisteredData()
@@ -161,6 +164,21 @@ export class RejectedComponent implements OnInit {
 
 
   ngOnInit() {
+    this.cuser = this.authService.decodedToken();
+
+    this.userService.filter("username=" + this.cuser.username).subscribe(
+      (res) => {
+        console.log("REs", res);
+        this.crole = res[0].user_type
+        console.log("RR", this.crole);
+      },
+      (err) => {
+        console.log("err", err);
+
+      }
+    );
+
+
   }
 
   entriesChange($event) {
@@ -413,7 +431,17 @@ export class RejectedComponent implements OnInit {
   }
 
   getRegisteredData() {
+    let filterString = ""
+
+    console.log("SS", this.crole);
+    if (this.crole == "PL") {
+      filterString = "status=RJ&username" + this.cuser.username;
+    } else {
+      filterString = "status=RJ"
+    }
+
     let tempData = []
+
     this.assetsRegistrationService.getRejectedList().subscribe(
       (res) => {
         console.log("res all data", res);

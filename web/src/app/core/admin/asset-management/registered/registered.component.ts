@@ -16,6 +16,7 @@ import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { AssetGroupsService } from "src/app/shared/services/asset-groups/asset-groups.service";
 import { AssetTypesService } from "src/app/shared/services/asset-types/asset-types.service";
 import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { UsersService } from "src/app/shared/services/users/users.service";
 import { OrganisationsService } from "src/app/shared/services/organisations/organisations.service";
 import { RegionsService } from "src/app/shared/services/regions/regions.service";
 import { NotifyService } from "src/app/shared/handler/notify/notify.service";
@@ -36,6 +37,9 @@ export enum SelectionType {
   styleUrls: ['./registered.component.scss']
 })
 export class RegisteredComponent implements OnInit {
+  cuser: any;
+  crole: any;
+
   // Tabs
   firstTab: boolean = true
   secondTab: boolean = false
@@ -156,6 +160,7 @@ export class RegisteredComponent implements OnInit {
     public regionsService: RegionsService,
     public toastr: NotifyService,
     public assetsRegistrationService: AssetsRegistrationService,
+    public userService: UsersService,
     // public spinner: NgxSpinnerService,
   ) {
     this.getRegisteredData()
@@ -415,6 +420,15 @@ export class RegisteredComponent implements OnInit {
   }
 
   getRegisteredData() {
+    let filterString = ""
+
+    console.log("SS", this.crole);
+    if (this.crole == "PL") {
+      filterString = "status=AP&username" + this.cuser.username;
+    } else {
+      filterString = "status=AP"
+    }
+
     let tempData = []
     this.assetsRegistrationService.getApprovedList().subscribe(
       (res) => {
