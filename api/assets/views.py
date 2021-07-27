@@ -406,8 +406,10 @@ class AssetRegistrationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         'node_id',
         'hex_code',
         'created_at',
+        'asset_identity',
+        'asset_criticality',
         'status',
-        'created_by'
+        'created_by',
     ]
 
     def get_permissions(self):
