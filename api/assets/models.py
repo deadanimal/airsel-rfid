@@ -187,6 +187,7 @@ class Asset(models.Model):
 class AssetRegistration(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created_by = models.CharField(max_length=20, default='',null=True, blank=True)
     asset_id = models.CharField(max_length=12, default='',null=True, blank=True)
     badge_no = models.CharField(max_length=100, default='',null=True, blank=True)
     node_id = models.CharField(max_length=12, default='',null=True, blank=True)
