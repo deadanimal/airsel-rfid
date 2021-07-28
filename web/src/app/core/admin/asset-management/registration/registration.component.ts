@@ -880,7 +880,6 @@ export class RegistrationComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {
     this.getAssets();
-    this.getRegisteredData();
 
     this.firstFormGroup = this.formBuilder.group({
       // asset_primary_category: ["", validators.required],
@@ -1044,6 +1043,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+
     // get user 
     this.cuser = this.authService.decodedToken();
 
@@ -1054,7 +1054,9 @@ export class RegistrationComponent implements OnInit {
       },
       (err) => {
         console.log("err", err);
-
+      },
+      () => {
+        this.getRegisteredData();
       }
     );
 
@@ -2269,19 +2271,15 @@ export class RegistrationComponent implements OnInit {
 
   getRegisteredData() {
     let filterString = ""
-
-    console.log("SS", this.crole);
     if (this.crole == "PL") {
-      filterString = "status=TP&username" + this.cuser.username;
-      //filterString = "status=TP"
-
+      filterString = "status=TP&created_by=" + this.cuser.username;
 
     } else {
       filterString = "status=TP"
     }
 
     let tempData = []
-    this.assetsRegistrationService.filter("status=TP").subscribe(
+    this.assetsRegistrationService.filter(filterString).subscribe(
       (res) => {
         console.log("whaa", res);
         res.forEach(function (val) {
