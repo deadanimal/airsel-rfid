@@ -48,8 +48,6 @@
                                     <div class="col-md-6 text-right">
                                         <button class="btn btn-default" (click)="openModal(addNewAssetType)">Add New
                                             Asset Type</button>
-                                        <button class="btn btn-default" (click)="openModal(addNewAssetTypeDesc)">Add
-                                            Asset Type Description</button>
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +230,7 @@
     </div>
 
     <div class="modal-footer">
-        <button class="btn btn-default" (click)="submitAssetType()">
+        <button class="btn btn-default" [disabled]="assetTypeForm.invalid" (click)="submitAssetType()">
             Submit
         </button>
         <button class="btn btn-secondary" type="button" (click)="closeModal()">

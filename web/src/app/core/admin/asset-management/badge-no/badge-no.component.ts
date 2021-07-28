@@ -63,7 +63,14 @@ export class BadgeNoComponent implements OnInit {
 
     this.assetTypeForm = this.formBuilder.group({
       asset_primary_category: ["", Validators.required],
-      short: ["", Validators.required],
+      short: ["",
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(4),
+        ]),
+      ],
+
       description: ["", Validators.required],
       status: ["IC", Validators.required],
       latest_no: ["", Validators.required],
@@ -165,7 +172,8 @@ export class BadgeNoComponent implements OnInit {
 
     // TO DO - patchValue skipped no with formatted_skipped_no
     this.assetTypeForm.patchValue({
-      "skipped_no": formatted_skipped_no
+      "skipped_no": formatted_skipped_no,
+      "short": this.assetTypeForm.value.short.toUpperCase()
     });
     
 
