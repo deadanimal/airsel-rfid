@@ -36,6 +36,7 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=False)
     def analytics_tar(self, request):
+        start = int(time.time())
     
         res = [] 
         for oag in owning_access_group:
@@ -43,7 +44,8 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             temp["title"] = oag
             temp["total"] = len(Asset.objects.filter(owning_access_group=oag))
             res.append(temp)
-        
+
+        print(int(time.time()) - start)
         return Response(res)
 
     @action(methods=['GET'], detail=False)
@@ -82,18 +84,25 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         
         return Response(res)
 
-    #@action(methods=['GET'], detail=False)
-    #def analytics_asc(self, request):
-    #
-    #    res = [] 
-    #    owning_access_group = ["CBS","DISTRIBUTION", "ES-D", "FLEET", "LAND", "NRW", "PD-N", "PD-S", "SCADA", "WQ"]
-    #    for oag in owning_access_group:
-    #        temp = {}
-    #        temp["title"] = oag
-    #        temp["total"] = len(Asset.objects.filter(owning_access_group=oag))
-    #        res.append(temp)
-    #    
-    #    return Response(res)
+    @action(methods=['GET'], detail=False)
+    def analytics_asc(self, request):
+    
+        res = [] 
+        owning_access_group = ["CBS","DISTRIBUTION", "ES-D", "FLEET", "LAND", "NRW", "PD-N", "PD-S", "SCADA", "WQ"]
+        for oag in owning_access_group:
+            temp = {}
+            temp["title"] = oag
+            temp["total"] = len(Asset.objects.filter(owning_access_group=oag))
+            res.append(temp)
+        
+        return Response(res)
+
+    @action(methods=['GET'], detail=False)
+    def analytics_wa(self, request):
+        res = []
+        return Response(res)
+
+
 
 
 
