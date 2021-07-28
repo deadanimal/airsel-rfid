@@ -692,6 +692,9 @@
                                                     *ngIf="row.status == 'AP'">Approved</span>
                                                 <span class="badge badge-info"
                                                     *ngIf="row.status == 'PR'">Processed</span>
+                                                <span class="badge badge-info"
+                                                    *ngIf="row.status == 'NP'">Processing</span>
+
                                                 <span class="badge badge-warning"
                                                     *ngIf="row.status == 'CO'">Complete</span>
                                                 <span class="badge badge-info"
@@ -1314,6 +1317,7 @@
                                             </ng-template>
                                         </ngx-datatable-column>
 
+                                        <!--
                                         <ngx-datatable-column [width]="140" [sortable]="true" [resizeable]="false">
                                             <ng-template ngx-datatable-header-template>
                                                 <span></span>
@@ -1322,6 +1326,7 @@
                                                 <span><i class="fa fa-file text-default"></i></span>
                                             </ng-template>
                                         </ngx-datatable-column>
+                                        -->
                                     </ngx-datatable>
                                 </div>
 

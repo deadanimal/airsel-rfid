@@ -159,7 +159,6 @@ export class RejectedComponent implements OnInit {
     public userService: UsersService,
     // public spinner: NgxSpinnerService,
   ) {
-    this.getRegisteredData()
   }
 
 
@@ -175,6 +174,10 @@ export class RejectedComponent implements OnInit {
       (err) => {
         console.log("err", err);
 
+      },
+      () => {
+
+        this.getRegisteredData()
       }
     );
 
@@ -433,16 +436,15 @@ export class RejectedComponent implements OnInit {
   getRegisteredData() {
     let filterString = ""
 
-    console.log("SS", this.crole);
     if (this.crole == "PL") {
-      filterString = "status=RJ&username" + this.cuser.username;
+      filterString = "status=RJ&created_by=" + this.cuser.username;
     } else {
       filterString = "status=RJ"
     }
 
     let tempData = []
 
-    this.assetsRegistrationService.getRejectedList().subscribe(
+    this.assetsRegistrationService.filter(filterString).subscribe(
       (res) => {
         console.log("res all data", res);
         res.forEach(function (val) {

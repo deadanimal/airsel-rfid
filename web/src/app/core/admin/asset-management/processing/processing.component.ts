@@ -161,11 +161,25 @@ export class ProcessingComponent implements OnInit {
     public userService: UsersService,
     // public spinner: NgxSpinnerService,
   ) {
-    this.getRegisteredData()
   }
 
 
   ngOnInit() {
+    this.cuser = this.authService.decodedToken();
+
+    this.userService.filter("username=" + this.cuser.username).subscribe(
+      (res) => {
+        console.log("REs", res);
+        this.crole = res[0].user_type
+      },
+      (err) => {
+        console.log("err", err);
+      },
+      () => {
+        this.getRegisteredData();
+      }
+    );
+
   }
 
   entriesChange($event) {
@@ -420,16 +434,15 @@ export class ProcessingComponent implements OnInit {
   getRegisteredData() {
     let filterString = ""
 
-    console.log("SS", this.crole);
     if (this.crole == "PL") {
-      filterString = "status=NP&username" + this.cuser.username;
+      filterString = "status=NP&created_by=" + this.cuser.username;
     } else {
       filterString = "status=NP"
     }
 
 
     let tempData = []
-    this.assetsRegistrationService.getProcessedList().subscribe(
+    this.assetsRegistrationService.filter(filterString).subscribe(
       (res) => {
         console.log("res all data", res);
         res.forEach(function (val) {
