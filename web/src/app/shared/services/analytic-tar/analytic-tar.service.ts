@@ -11,7 +11,7 @@ import { TARModel } from "./analytic-tar.model";
 
 export class TarService {
 //   url: string = environment.baseUrl + "v1/analytics/analytics_tar";
-url: string = "https://airsel-rfid.prototype.com.my/v1/analytics/analytics_tar/"
+url: string = environment.baseUrl + "v1/analytics/"
 
   //Data
   public gmodels: TARModel[] = [];
@@ -19,11 +19,18 @@ url: string = "https://airsel-rfid.prototype.com.my/v1/analytics/analytics_tar/"
 
   constructor(private http: HttpClient) {}
 
-  get(): Observable<TARModel[]> {
-    return this.http.get<any>(this.url).pipe(
+  get_analytics_tar(): Observable<any> {
+    return this.http.get<any>(this.url + "analytics_tar/").pipe(
       tap((res) => {
-        this.gmodels = res;
       })
     );
   }
+
+  get_analytics_wa(): Observable<any> {
+    return this.http.get<any>(this.url + "analytics_wa/").pipe(
+      tap((res) => {
+      })
+    );
+  }
+
 }

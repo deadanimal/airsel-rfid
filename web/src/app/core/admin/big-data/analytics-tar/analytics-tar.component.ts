@@ -79,7 +79,7 @@ export class AnalyticsTarComponent implements OnInit {
   getTAR(){
     this.SpinnerService.show();
 
-    this.tarService.get().subscribe(
+    this.tarService.get_analytics_tar().subscribe(
       (res) => {
         console.log("TARSER", res)
         this.chartData = res

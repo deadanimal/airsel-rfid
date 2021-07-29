@@ -49,33 +49,45 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return Response(res)
 
     @action(methods=['GET'], detail=False)
-    def analytics_tam(self, request):
+    def analytics_wa(self, request):
         start = int(time.time())
 
-    
         res = [] 
         assets_id = []
         assets = []
 
-        #woacl = [i.asset_location_asset_list[0] for i in WorkOrderActivityCompletion.objects.all()]
         woacl = []
-        data = WorkOrderActivityCompletion.objects.all()
-        for i in data:
-            print(i.__dict__)
-        
-        for i in woacl:
-            assets_id.append(WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(id=i)[0].asset_id)
-
-        for i in assets_id:
-            assets.append(Asset.objects.filter(id=i)[0])
+        temp2 = WorkOrderActivityCompletionAssetLocationAssetList.objects.all()
+        asset = []
+        for i in temp2:
+            asset.append(i.asset_id)
+ 
 
         for oag in owning_access_group:
             temp = {}
-            temp["title"] = oag
+            temp["category"] = oag
+            temp["inprogress"] = 0
+            temp["backLog"] = 0
+            temp["new"] = 0
 
-            for i in assets:
-                if i.title == oag:
-                    temp["total"] += 1
+                   
+            for k in asset:
+                c = Asset.objects.filter(asset_id=k)
+                if len(c) > 0:
+                    for i in c:
+                        if i.owning_access_group == oag:
+                            # from asset -> woaclacl -> woacl
+                            waclacl = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(asset_id=i)
+                            if len(waclacl) > 0:
+                                wacl = WorkOrderActivityCompletion.objects.get(asset_location_asset_list=waclacl[0].id)
+                                if wacl.status == "InProgress":
+                                    temp["inprogress"]+=1
+                                if wacl.status == "BackLog":
+                                    temp["backLog"]+=1
+                                if wacl.status == "New":
+                                    temp["new"]+=1
+                    
+                    
 
             res.append(temp)
         
@@ -98,7 +110,7 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return Response(res)
 
     @action(methods=['GET'], detail=False)
-    def analytics_wa(self, request):
+    def analytics_tam(self, request):
         res = []
         return Response(res)
 

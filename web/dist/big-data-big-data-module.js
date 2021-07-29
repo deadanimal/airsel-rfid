@@ -1391,7 +1391,7 @@ var AnalyticsTarComponent = /** @class */ (function () {
     AnalyticsTarComponent.prototype.getTAR = function () {
         var _this = this;
         this.SpinnerService.show();
-        this.tarService.get().subscribe(function (res) {
+        this.tarService.get_analytics_tar().subscribe(function (res) {
             console.log("TARSER", res);
             _this.chartData = res;
             for (var i in _this.chartData) {
@@ -1619,6 +1619,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm2015/ngx-spinner.js");
+/* harmony import */ var src_app_shared_services_analytic_tar_analytic_tar_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! src/app/shared/services/analytic-tar/analytic-tar.service */ "./src/app/shared/services/analytic-tar/analytic-tar.service.ts");
+
 
 
 
@@ -1632,7 +1634,8 @@ __webpack_require__.r(__webpack_exports__);
 
 _amcharts_amcharts4_core__WEBPACK_IMPORTED_MODULE_5__["useTheme"](_amcharts_amcharts4_themes_animated__WEBPACK_IMPORTED_MODULE_7__["default"]);
 var AnalyticsWaComponent = /** @class */ (function () {
-    function AnalyticsWaComponent(zone, workOrderActivityCompletionService, assetsService, WOACALALS, SpinnerService) {
+    function AnalyticsWaComponent(tarService, zone, workOrderActivityCompletionService, assetsService, WOACALALS, SpinnerService) {
+        this.tarService = tarService;
         this.zone = zone;
         this.workOrderActivityCompletionService = workOrderActivityCompletionService;
         this.assetsService = assetsService;
@@ -1652,8 +1655,8 @@ var AnalyticsWaComponent = /** @class */ (function () {
         ];
     }
     AnalyticsWaComponent.prototype.ngOnInit = function () {
-        // this.getWorkOrderActivity();
-        this.getAssets();
+        this.getWorkOrderActivity();
+        //this.getAssets();
     };
     AnalyticsWaComponent.prototype.getWorkOrderActivity = function () {
         var _this = this;
@@ -1717,177 +1720,181 @@ var AnalyticsWaComponent = /** @class */ (function () {
             { category: "SCADA", backLog: 0, inprogress: 0, new: 0 },
             { category: "WQ", backLog: 0, inprogress: 0, new: 0 },
         ];
-        var temp = this.WorkOrderActivity;
-        var temp2;
-        var temp3;
-        var test = [];
-        console.log("temp", temp);
-        var _loop_1 = function (j) {
-            console.log("id : ", temp[j].asset_location_asset_list[0]);
-            this_1.WOACALALS.get().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (x) { return x.filter(function (i) { return i.id == temp[j].asset_location_asset_list[0]; }); })).subscribe(function (response) {
-                console.log('response from API is ', response);
-                temp2 = response;
-                console.log("temp2", temp2);
-                temp3 = _this.assets.filter(function (value) { return value.asset_id.includes(temp2[0].asset_id); });
-                console.log("temp3 debug", temp3);
-                console.log("owning org", temp3[0].owning_access_group);
-                if (temp3[0].owning_access_group == "CBS") {
-                    if (temp[j].status == "BackLog") {
-                        data[0].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[0].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[0].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else if (temp3[0].owning_access_group == "DISTRIBUTION") {
-                    if (temp[j].status == "BackLog") {
-                        data[1].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[1].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[1].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else if (temp3[0].owning_access_group == "ES-D") {
-                    if (temp[j].status == "BackLog") {
-                        data[2].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[2].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[2].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else if (temp3[0].owning_access_group == "FLEET") {
-                    // data[3].backLog += 1;
-                    if (temp[j].status == "BackLog") {
-                        data[3].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[3].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[3].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else if (temp3[0].owning_access_group == "LAND") {
-                    if (temp[j].status == "BackLog") {
-                        data[4].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[4].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[4].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else if (temp3[0].owning_access_group == "NRW") {
-                    if (temp[j].status == "BackLog") {
-                        data[5].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[5].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[5].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else if (temp3[0].owning_access_group == "PD-N") {
-                    if (temp[j].status == "BackLog") {
-                        data[6].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[6].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[6].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else if (temp3[0].owning_access_group == "PD-S") {
-                    if (temp[j].status == "BackLog") {
-                        data[7].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[7].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[7].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else if (temp3[0].owning_access_group == "SCADA") {
-                    if (temp[j].status == "BackLog") {
-                        data[8].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[8].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[8].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else if (temp3[0].owning_access_group == "WQ") {
-                    if (temp[j].status == "BackLog") {
-                        data[9].backLog += 1;
-                    }
-                    else if (temp[j].status == "InProgress") {
-                        data[9].inprogress += 1;
-                    }
-                    else if (temp[j].status == "New") {
-                        data[9].new += 1;
-                    }
-                    else {
-                        console.log("Failed ", temp3[0].owning_access_group);
-                    }
-                }
-                else {
-                    console.log("Failed ", temp3[0].owning_access_group);
-                }
-                console.log("data", data);
-                _this.chartData = data;
-                console.log("Chartdata", _this.chartData);
-                console.log("test", test);
-                _this.initChartOne();
-            }, function (error) {
-                console.log('Error is ', error);
-            });
-        };
-        var this_1 = this;
-        for (var j in temp) {
-            _loop_1(j);
-        }
+        //let temp = this.WorkOrderActivity;
+        //let temp2: any;
+        //let temp3: any;
+        //let test = []
+        //console.log("temp", temp)
+        //for (let j in temp) {
+        //  console.log("id : ", temp[j].asset_location_asset_list[0])
+        //  this.WOACALALS.get().pipe(map(x => x.filter(i => i.id == temp[j].asset_location_asset_list[0]))).subscribe((response) => {
+        //    console.log('response from API is ', response);
+        //    temp2 = response;
+        //    console.log("temp2", temp2);
+        //    temp3 = this.assets.filter((value) => value.asset_id.includes(temp2[0].asset_id));
+        //    console.log("temp3 debug", temp3);
+        //    console.log("owning org", temp3[0].owning_access_group);
+        //    if (temp3[0].owning_access_group == "CBS") {
+        //      if (temp[j].status == "BackLog") {
+        //        data[0].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[0].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[0].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else if (temp3[0].owning_access_group == "DISTRIBUTION") {
+        //      if (temp[j].status == "BackLog") {
+        //        data[1].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[1].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[1].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else if (temp3[0].owning_access_group == "ES-D") {
+        //      if (temp[j].status == "BackLog") {
+        //        data[2].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[2].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[2].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else if (temp3[0].owning_access_group == "FLEET") {
+        //      // data[3].backLog += 1;
+        //      if (temp[j].status == "BackLog") {
+        //        data[3].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[3].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[3].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else if (temp3[0].owning_access_group == "LAND") {
+        //      if (temp[j].status == "BackLog") {
+        //        data[4].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[4].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[4].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else if (temp3[0].owning_access_group == "NRW") {
+        //      if (temp[j].status == "BackLog") {
+        //        data[5].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[5].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[5].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else if (temp3[0].owning_access_group == "PD-N") {
+        //      if (temp[j].status == "BackLog") {
+        //        data[6].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[6].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[6].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else if (temp3[0].owning_access_group == "PD-S") {
+        //      if (temp[j].status == "BackLog") {
+        //        data[7].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[7].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[7].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else if (temp3[0].owning_access_group == "SCADA") {
+        //      if (temp[j].status == "BackLog") {
+        //        data[8].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[8].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[8].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else if (temp3[0].owning_access_group == "WQ") {
+        //      if (temp[j].status == "BackLog") {
+        //        data[9].backLog += 1;
+        //      }
+        //      else if (temp[j].status == "InProgress") {
+        //        data[9].inprogress += 1;
+        //      }
+        //      else if (temp[j].status == "New") {
+        //        data[9].new += 1;
+        //      }
+        //      else {
+        //        console.log("Failed ", temp3[0].owning_access_group)
+        //      }
+        //    }
+        //    else {
+        //      console.log("Failed ", temp3[0].owning_access_group)
+        //    }
+        //    console.log("data", data);
+        //    this.chartData = data;
+        //    console.log("Chartdata", this.chartData);
+        //    console.log("test", test)
+        //    this.initChartOne();
+        //  }, (error) => {
+        //    console.log('Error is ', error)
+        //  })
+        //}
+        this.tarService.get_analytics_wa().subscribe(function (res) {
+            console.log(res);
+            _this.chartData = res;
+        }, function (err) {
+            console.log(err);
+        }, function () {
+            _this.initChartOne();
+        });
     };
     AnalyticsWaComponent.prototype.getAssets = function () {
         var _this = this;
@@ -2038,6 +2045,7 @@ var AnalyticsWaComponent = /** @class */ (function () {
         this.chartone = chart;
     };
     AnalyticsWaComponent.ctorParameters = function () { return [
+        { type: src_app_shared_services_analytic_tar_analytic_tar_service__WEBPACK_IMPORTED_MODULE_11__["TarService"] },
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] },
         { type: src_app_shared_services_work_order_activity_completion_work_order_activity_completion_service__WEBPACK_IMPORTED_MODULE_2__["WorkOrderActivityCompletionService"] },
         { type: src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_3__["AssetsService"] },
@@ -2050,7 +2058,8 @@ var AnalyticsWaComponent = /** @class */ (function () {
             template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./analytics-wa.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/core/admin/big-data/analytics-wa/analytics-wa.component.html")).default,
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./analytics-wa.component.scss */ "./src/app/core/admin/big-data/analytics-wa/analytics-wa.component.scss")).default]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_analytic_tar_analytic_tar_service__WEBPACK_IMPORTED_MODULE_11__["TarService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
             src_app_shared_services_work_order_activity_completion_work_order_activity_completion_service__WEBPACK_IMPORTED_MODULE_2__["WorkOrderActivityCompletionService"],
             src_app_shared_services_assets_assets_service__WEBPACK_IMPORTED_MODULE_3__["AssetsService"],
             src_app_shared_services_WorkOrderActivityCompletionAssetLocationAssetList_WorkOrderActivityCompletionAssetLocationAssetList_service__WEBPACK_IMPORTED_MODULE_4__["WorkOrderActivityCompletionAssetLocationAssetListService"],
@@ -2567,14 +2576,16 @@ var TarService = /** @class */ (function () {
     function TarService(http) {
         this.http = http;
         //   url: string = environment.baseUrl + "v1/analytics/analytics_tar";
-        this.url = "https://airsel-rfid.prototype.com.my/v1/analytics/analytics_tar/";
+        this.url = "https://airsel-rfid.prototype.com.my/v1/analytics/";
         //Data
         this.gmodels = [];
     }
-    TarService.prototype.get = function () {
-        var _this = this;
-        return this.http.get(this.url).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (res) {
-            _this.gmodels = res;
+    TarService.prototype.get_analytics_tar = function () {
+        return this.http.get(this.url + "analytics_tar/").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (res) {
+        }));
+    };
+    TarService.prototype.get_analytics_wa = function () {
+        return this.http.get(this.url + "analytics_wa/").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (res) {
         }));
     };
     TarService.ctorParameters = function () { return [
