@@ -328,11 +328,14 @@ export class AnalyticsWaComponent implements OnInit {
     //    console.log('Error is ', error)
     //  })
     //}
+    this.SpinnerService.show();
     this.tarService.get_analytics_wa().subscribe(
       (res) => {
         console.log(res);
 
         this.chartData = res;
+        this.SpinnerService.hide();
+
 
 
       },
