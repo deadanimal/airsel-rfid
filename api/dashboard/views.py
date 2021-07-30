@@ -13,9 +13,8 @@ from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import viewsets, status
 from rest_framework_extensions.mixins import NestedViewSetMixin
+from datetime import datetime, timedelta
 import time
-
-
 
 
 owning_access_group = ["CBS","DISTRIBUTION", "ES-D", "FLEET", "LAND", "NRW", "PD-N", "PD-S", "SCADA", "WQ"]
@@ -97,17 +96,40 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return Response(res)
 
     @action(methods=['GET'], detail=False)
-    def analytics_asc(self, request):
-    
-        res = [] 
-        owning_access_group = ["CBS","DISTRIBUTION", "ES-D", "FLEET", "LAND", "NRW", "PD-N", "PD-S", "SCADA", "WQ"]
-        for oag in owning_access_group:
-            temp = {}
-            temp["title"] = oag
-            temp["total"] = len(Asset.objects.filter(owning_access_group=oag))
-            res.append(temp)
+    def analytics_acs(self, request):
+        context = {}
+
+        # calculate total asset today
+        ## get asset today
+        asset_today = Asset.objects.filter(registered_datetime__date=datetime.now().date())
+        context["asset_today"] = len(asset_today)
+
+        ## get asset last month
+        asset_last_month = Asset.objects.filter(registered_datetime__month=datetime.now().month - 1)
+        context["asset_last_month"] = len(asset_last_month)
+
+        # calculate percentage asset condition rating
+        ## get sum all asset condition_rating
+        assets = Asset.objects.all()
+        total_asset_condition_rating = int(sum(float(i.condition_rating) for i in assets))
+        percentage_asset_condition = int(total_asset_condition_rating/len(assets) * 100)
+        context["total_asset_condition_rating"] = total_asset_condition_rating
+        context["percentage_asset_condition"] = percentage_asset_condition
+
+        # calculate asset condition score
+        ## susah sikit ni
+
+        # calculate work order completion
+        ## get woacl where status field_1 == preventive maintenance
+        ## get sum(woacl.asset_location_asset_list.length)
+
+        #woacl = sum((len(i.asset_location_asset_list)) for i in WorkOrderActivityCompletion.objects.filter(field_1="PREVENTIVE MAINTENANCE"))
+        #context["woacl"] = woacl
+        test = WorkOrderActivityCompletion.objects.filter(field_1="PREVENTIVE MAINTENANCE")
+        for i in test:
+            print(i.asset_location_asset_list)
         
-        return Response(res)
+        return Response(context)
 
     @action(methods=['GET'], detail=False)
     def analytics_tam(self, request):
