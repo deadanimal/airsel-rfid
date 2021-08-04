@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from assets.models import Asset
 from django.http import JsonResponse
-from .models import Dashboard
-from .serializers import DashboardSerializer
+from .models import Dashboard, TAR, ASC, ASC2, WA
+from .serializers import DashboardSerializer, TarSerializer, WASerializer, ACSSerializer, ACS2Serializer
 
 from operations.models import WorkOrderActivityCompletion, WorkOrderActivityCompletionAssetLocationAssetList
 
@@ -36,24 +36,26 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         return queryset
 
     @action(methods=['GET'], detail=False)
-    def analytics_tar(self, request):
-        start = int(time.time())
+    def analytics_tar_compute(self, request):
     
-        res = [] 
         for oag in owning_access_group:
             temp = {}
             temp["title"] = oag
             temp["total"] = len(Asset.objects.filter(owning_access_group=oag))
-            res.append(temp)
-
-        print(int(time.time()) - start)
+			
+	    serializer = TarSerializer(data=temp)
+	    valid = serializer.is_valid(raise_exception=True)
+   	    serializer.save()
+	    
+	res = {
+		"msg": "computation initiated"
+	}
         return Response(res)
 
     @action(methods=['GET'], detail=False)
     def analytics_wa(self, request):
         start = int(time.time())
 
-        res = [] 
         assets_id = []
         assets = []
 
@@ -87,13 +89,14 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
                                     temp["backLog"]+=1
                                 if wacl.status == "New":
                                     temp["new"]+=1
-                    
-                    
 
-            res.append(temp)
-        
-
-        print("time taken", int(time.time()) - start)
+	    serializer = WASerializer(data=temp)
+	    valid = serializer.is_valid(raise_exception=True)
+   	    serializer.save()
+	    
+	res = {
+		"msg": "computation initiated"
+	}
         
         return Response(res)
 
@@ -114,6 +117,10 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
         context["percentage_asset_condition"] = percentage_asset_condition
 
         context["asset_condition_score"] = []
+	serializer = ACSSerializer(data=context)
+	valid = serializer.is_valid(raise_exception=True)
+   	serializer.save()
+
 
         for i in owning_access_group:
 
@@ -126,27 +133,19 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             score["four"] = len(Asset.objects.filter(owning_access_group = i, condition_rating=4))
             score["five"] = len(Asset.objects.filter(owning_access_group = i, condition_rating=5))
 
-            context["asset_condition_score"].append(score)
-            
+	    serializer = ACSSerializer(data=score)
+       	    valid = serializer.is_valid(raise_exception=True)
+   	    serializer.save()
 
-        return Response(context)
+        res = {
+		"msg": "computation initiated"
+	}   
+
+        return Response(res)
 
     @action(methods=['GET'], detail=False)
     def analytics_tam(self, request):
         res = []
         return Response(res)
 
-
-
-
-
-
-
-
-#def analytics_tar_filtered_by_datetime(self, request, *args, **kwargs):
-#    temp = {
-#
-#    }
-#
-#    assest = Asset.objects.all()
 
