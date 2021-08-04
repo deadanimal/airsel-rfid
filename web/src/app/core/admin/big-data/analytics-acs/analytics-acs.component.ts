@@ -12,6 +12,7 @@ import { formatDate } from "@angular/common";
 import { map, tap, catchError } from "rxjs/operators";
 import { WorkOrderActivityCompletionService } from "src/app/shared/services/work-order-activity-completion/work-order-activity-completion.service";
 import { NgxSpinnerService } from "ngx-spinner";  
+import { TarService } from "src/app/shared/services/analytic-tar/analytic-tar.service"
 
 am4core.useTheme(am4themes_animated);
 
@@ -26,13 +27,20 @@ export class AnalyticsAcsComponent implements OnInit {
     private zone: NgZone,
     public assetsService: AssetsService,
     public workOrderActivityCompletionService: WorkOrderActivityCompletionService,
+    private tarService: TarService,
     private SpinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
-    // console.log("today",this.today)
-    this.getAssets();
+    //this.getAssets();
     this.getWorkOrderActivityCompletion();
-    // this.getAssetConditionStores()
+    this.getTAR();
+
+    let date = new Date()
+    var firstDayThisMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.firstDayLastMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.firstDayLastMonth.setMonth(this.firstDayLastMonth.getMonth() - 1)
+
+
   }
 
   //variables
@@ -74,7 +82,7 @@ export class AnalyticsAcsComponent implements OnInit {
   completedPreventiveMaintenance: number = 0;
   latestMonth = new Date();
 
-  getWorkOrderActivityCompletion(){
+  getWorkOrderActivityCompletion() {
     this.workOrderActivityCompletionService.get().subscribe((response) => {
       console.log('response from API is ', response);
       // this.workOrderActivityCompletion = response;
@@ -92,6 +100,27 @@ export class AnalyticsAcsComponent implements OnInit {
     })
   }
 
+  getTAR() {
+    this.SpinnerService.show();
+    this.tarService.get_analytics_acs().subscribe(
+      (res) => {
+        this.totalAssetToday = res["asset_today"];
+        this.totalassetsLastMonth = res["asset_last_month"];
+        this.PercentageAssetConditionRating = res["percentage_asset_condition"];
+        this.tableAssetConditionStores = res["asset_condition_score"];
+
+      },
+      (err) => {
+        console.log("err", err);
+
+      },
+      () => {
+        this.SpinnerService.hide();
+      }
+    );
+
+  }
+
   getAssets() {
     this.SpinnerService.show();
     this.assetsService.get().pipe(map(x => x.filter(i => i.owning_access_group != ""))).subscribe((response) => {
@@ -105,7 +134,6 @@ export class AnalyticsAcsComponent implements OnInit {
       this.calcPercentageAssetConditionRating();
       this.getAssetConditionStores();
 
-      this.SpinnerService.hide();
 
     }, (error) => {
       console.log('Error is ', error)
@@ -155,6 +183,7 @@ export class AnalyticsAcsComponent implements OnInit {
     this.firstDayLastMonth = new Date(date.getFullYear(), date.getMonth(), 1);
     this.firstDayLastMonth.setMonth(this.firstDayLastMonth.getMonth() - 1)
 
+
     console.log("firstDayThisMonth", firstDayThisMonth)
     console.log("firstDayLastMonth", this.firstDayLastMonth)
 
@@ -179,7 +208,7 @@ export class AnalyticsAcsComponent implements OnInit {
     this.PercentageAssetConditionRating = (this.totalConditionRating / this.totalAssets * 100).toFixed(2)
 
     console.log("totalConditionRating", this.totalConditionRating)
-    console.log("PercentageAssetConditionRating", this.PercentageAssetConditionRating)
+    console.log("PercentageAssetCtableAssetConditionStoresonditionRating", this.PercentageAssetConditionRating)
   }
 
   getAssetConditionStores() {
@@ -360,9 +389,6 @@ export class AnalyticsAcsComponent implements OnInit {
 
 
     this.assetsService.get().pipe(map(x => x.filter(i => i.registered_datetime != null))).subscribe((response) => {
-      // temp = response
-      // console.log("temp", temp)
-
       console.log("asset_owning", this.asset_owning)
 
       if (this.asset_owning != null && this.selected_date == null) {

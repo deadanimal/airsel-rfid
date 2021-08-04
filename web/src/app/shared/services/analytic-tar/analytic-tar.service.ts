@@ -33,4 +33,11 @@ url: string = environment.baseUrl + "v1/analytics/"
     );
   }
 
+  get_analytics_acs(): Observable<any> {
+    return this.http.get<any>(this.url + "analytics_acs/").pipe(
+      tap((res) => {
+      })
+    );
+  }
+
 }
