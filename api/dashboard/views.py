@@ -18,6 +18,8 @@ import time
 
 
 owning_access_group = ["CBS","DISTRIBUTION", "ES-D", "FLEET", "LAND", "NRW", "PD-N", "PD-S", "SCADA", "WQ"]
+rating = [1,2,3,4,5]
+
 class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Dashboard.objects.all()
     serializer_class = DashboardSerializer 
@@ -97,38 +99,36 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=False)
     def analytics_acs(self, request):
-        context = {}
 
-        # calculate total asset today
-        ## get asset today
+        context = {}
         asset_today = Asset.objects.filter(registered_datetime__date=datetime.now().date())
         context["asset_today"] = len(asset_today)
 
-        ## get asset last month
         asset_last_month = Asset.objects.filter(registered_datetime__month=datetime.now().month - 1)
         context["asset_last_month"] = len(asset_last_month)
 
-        # calculate percentage asset condition rating
-        ## get sum all asset condition_rating
         assets = Asset.objects.all()
         total_asset_condition_rating = int(sum(float(i.condition_rating) for i in assets))
         percentage_asset_condition = int(total_asset_condition_rating/len(assets) * 100)
         context["total_asset_condition_rating"] = total_asset_condition_rating
         context["percentage_asset_condition"] = percentage_asset_condition
 
-        # calculate asset condition score
-        ## susah sikit ni
+        context["asset_condition_score"] = []
 
-        # calculate work order completion
-        ## get woacl where status field_1 == preventive maintenance
-        ## get sum(woacl.asset_location_asset_list.length)
+        for i in owning_access_group:
 
-        #woacl = sum((len(i.asset_location_asset_list)) for i in WorkOrderActivityCompletion.objects.filter(field_1="PREVENTIVE MAINTENANCE"))
-        #context["woacl"] = woacl
-        test = WorkOrderActivityCompletion.objects.filter(field_1="PREVENTIVE MAINTENANCE")
-        for i in test:
-            print(i.asset_location_asset_list)
-        
+            score = {}
+            score['title'] = i
+            score["noasset"] = len(Asset.objects.filter(owning_access_group = i))
+            score["one"] = len(Asset.objects.filter(owning_access_group = i, condition_rating=1))
+            score["two"] = len(Asset.objects.filter(owning_access_group = i, condition_rating=2))
+            score["three"] = len(Asset.objects.filter(owning_access_group = i, condition_rating=3))
+            score["four"] = len(Asset.objects.filter(owning_access_group = i, condition_rating=4))
+            score["five"] = len(Asset.objects.filter(owning_access_group = i, condition_rating=5))
+
+            context["asset_condition_score"].append(score)
+            
+
         return Response(context)
 
     @action(methods=['GET'], detail=False)

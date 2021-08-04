@@ -197,31 +197,31 @@
         <form [formGroup]="assetTypeForm">
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Asset Type</label>
+                    <label class="form-control-label">Asset Type<span class="mandatory">*</span></label>
                     <input class="form-control" formControlName='asset_primary_category' name="asset_primary_category"
                         type="text">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Short Name</label>
-                    <input class="form-control" formControlName="short" name="short" type="text">
+                    <label class="form-control-label">Short Name<span class="mandatory">*</span></label>
+                    <input class="form-control" formControlName="short" name="short" placeholder="4 characters" type="text">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Description</label>
+                    <label class="form-control-label">Description<span class="mandatory">*</span></label>
                     <input class="form-control" formControlName="description" name="description" type="text">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Status</label>
+                    <label class="form-control-label">Status<span class="mandatory">*</span></label>
                     <select class="form-control" formControlName="status" name="status" type="text">
                         <option value="AC">Active</option>
                         <option value="IC">Inactive</option>
                     </select>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Latest No</label>
+                    <label class="form-control-label">Latest No<span class="mandatory">*</span></label>
                     <input class="form-control" formControlName="latest_no" name="latest_no" type="text">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Skipped No</label>
+                    <label class="form-control-label">Skipped No<span class="mandatory">*</span></label>
                     <input class="form-control" formControlName="skipped_no" name="skipped_no" placeholder="1,2,3,4" type="text">
                 </div>
 
@@ -255,7 +255,7 @@
         <form [formGroup]="assetTypeFormDesc">
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Asset Type</label>
+                    <label class="form-control-label">Asset Type<span class="mandatory">*</span></label>
                     <select class="form-control" formControlName='asset_primary_category' name="asset_primary_category"
                         type="text">
                         <option value="">Please Select Asset Type</option>
@@ -264,26 +264,26 @@
                     </select>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Short Name</label>
+                    <label class="form-control-label">Short Name (4 Characters)<span class="mandatory">*</span></label>
                     <input class="form-control" formControlName="short" name="short" type="text">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Description</label>
+                    <label class="form-control-label">Description<span class="mandatory">*</span></label>
                     <input class="form-control" formControlName="description" name="description" type="text">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Status</label>
+                    <label class="form-control-label">Status<span class="mandatory">*</span></label>
                     <select class="form-control" formControlName="status" name="status" type="text">
                         <option value="AC">Active</option>
                         <option value="IC">Inactive</option>
                     </select>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Latest No</label>
+                    <label class="form-control-label">Latest No<span class="mandatory">*</span></label>
                     <input class="form-control" formControlName="latest_no" name="latest_no" type="text">
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="form-control-label">Skipped No</label>
+                    <label class="form-control-label">Skipped No<span class="mandatory">*</span></label>
                     <input class="form-control" formControlName="skipped_no" name="skipped_no" placeholder="1,2,3,4" type="text">
                 </div>
 
@@ -305,7 +305,7 @@
 <ng-template #editModal>
     <div class="modal-header bg-default">
         <h6 class="modal-title my-auto text-white">
-            Edit Asset Type Description
+            Edit Asset Type 
         </h6>
 
         <button aria-label="Close" class="close" data-dismiss="modalViewAsset" type="button" (click)="closeModal()">
