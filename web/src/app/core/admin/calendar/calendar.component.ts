@@ -190,7 +190,7 @@ export class CalendarComponent implements OnInit {
       value: "S1",
     },
     {
-      name: "On-Progress",
+      name: "Active",
       value: "S2",
     },
     {

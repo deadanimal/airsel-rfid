@@ -40,4 +40,25 @@ url: string = environment.baseUrl + "v1/analytics/"
     );
   }
 
+  post_analytics_tar(): Observable<any> {
+    return this.http.post<any>(this.url + "analytics_tar/", {}).pipe(
+      tap((res) => {
+      })
+    );
+  }
+
+  post_analytics_wa(): Observable<any> {
+    return this.http.post<any>(this.url + "analytics_wa/", {}).pipe(
+      tap((res) => {
+      })
+    );
+  }
+
+  post_analytics_acs(): Observable<any> {
+    return this.http.post<any>(this.url + "analytics_acs/", {}).pipe(
+      tap((res) => {
+      })
+    );
+  }
+
 }

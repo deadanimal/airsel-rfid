@@ -40,6 +40,7 @@ export class AnalyticsWaComponent implements OnInit {
   ngOnInit() {
 
     this.getWorkOrderActivity();
+    this.waCompute();
     //this.getAssets();
   }
 
@@ -83,6 +84,17 @@ export class AnalyticsWaComponent implements OnInit {
     }, (error) => {
       console.log('Error is ', error)
     })
+  }
+
+  waCompute() {
+    this.tarService.post_analytics_wa().subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   getTotalBackLog() {
