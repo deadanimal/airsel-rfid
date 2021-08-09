@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Dashboard, TAR, WA, ACS, ACS2
+from .models import Dashboard, TAR, WA, ACS, ACS2, TAM
 
 class DashboardSerializer(serializers.ModelSerializer):
 
@@ -29,4 +29,10 @@ class ACS2Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = ACS2 
+        fields = '__all__'
+
+class TAMSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TAM 
         fields = '__all__'
