@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'employee',
     'audit_trail',
     'dashboard',
-    'schedule',
 ]
 
 MIDDLEWARE = [

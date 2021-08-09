@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render 
 from rest_framework.response import Response
 from assets.models import Asset
 from django.http import JsonResponse
-from .models import Dashboard, TAR, ACS, ACS2, WA
-from .serializers import DashboardSerializer, TarSerializer, WASerializer, ACSSerializer, ACS2Serializer
+from .models import Dashboard, TAR, ACS, ACS2, WA, TAM
+from .serializers import DashboardSerializer, TarSerializer, WASerializer, ACSSerializer, ACS2Serializer, TAMSerializer
 
 from operations.models import WorkOrderActivityCompletion, WorkOrderActivityCompletionAssetLocationAssetList
 
@@ -145,57 +145,70 @@ class DashboardViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
         return Response(res)
 
-    @action(methods=['GET'], detail=False)
+    @action(methods=['GET', 'POST'], detail=False)
     def analytics_tam(self, request):
-        res = {}
+        
+        # restructure data for chart
         if request.method == 'GET':
-            # to do 
-            # compute totalAssetMaintenance
-            # group by maintenance type
 
-            temp = WorkOrderActivityCompletionAssetLocationAssetList.objects.all()
-            asset = []
-            for i in temp:
-                asset.append(i.asset_id)
- 
 
-            res = []
-            totat_asset_maintenance = 0
-            for i in owning_access_group:
-                temp = {}
-                temp['owning_access_group'] = i
-                temp['total'] = 0
-                #for k in asset:
-                #    c = Asset.objects.filter(asset_id=k)
-                #    if len(c) > 0:
-                #        for mtype in maintenance_group:
-                #            for s in c:
-                #                if s.owning_access_group == i:
-                #                    waclacl = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(asset_id=s)
-                #                    if len(waclacl) > 0:
-                #                        wacl = WorkOrderActivityCompletion.objects.get(asset_location_asset_list=waclacl[0].id)
-                #                        if wacl.field_1 == mtype:
-                #                            temp["type"] = mtype
-                #                            temp["total"] += len(wacl.asset_location_asset_list.all())
+            return_view = {}
+            total = 0
+            for oag in owning_access_group:
+                return_view[oag] = []
+                data = TAM.objects.filter(owning_access_group=oag)
+                for j in data:
+                    k = {
+                            "type":j.type, 
+                            "total":j.total
+                    }
+                    total += int(j.total)
+                    return_view[oag].append(k)
+                 
+            return_view["totalAssetMaintenance"] = total
+            return Response(return_view)
 
+
+
+        if request.method == 'POST':
+
+            res = {}
+            for oag in owning_access_group:
+                res[oag] = {}
                 for mtype in maintenance_group:
-                    temp["type"] = mtype
-                    for k in asset[0:10]:
-                        c = Asset.objects.filter(asset_id=k)
-                        print(len(c))
-                        if len(c) > 0:
-                            for s in c:
-                                if s.owning_access_group == i:
-                                    waclacl = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(asset_id=s)
-                                    if len(waclacl) > 0:
-                                        wacl = WorkOrderActivityCompletion.objects.get(asset_location_asset_list = waclacl[0].id)
-                                        if wacl.field_1 == mtype:
-                                            temp["total"] += len(wacl.asset_location_asset_list.all())
+                    res[oag][mtype] = 0
 
-                                    
-                                    
-                                            res.append(temp)
+            waclacl = WorkOrderActivityCompletionAssetLocationAssetList.objects.all()
+            asset = []
+            for i in waclacl:
+                asset.append(i.asset_id)
+
+            for j in asset:
+                k = Asset.objects.filter(asset_id=j)
+                if len(k) > 0:
+                    for l in k:
+                        waclacl = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(asset_id=l)
+                        if len(waclacl) > 0:
+                            wacl = WorkOrderActivityCompletion.objects.get(asset_location_asset_list=waclacl[0].id)
+                            res[l.owning_access_group][wacl.field_1] += len(wacl.asset_location_asset_list.all())
+            
+            # restructure before save
+            temp2 = []
+            temp = {}
+            TAM.objects.all().delete()
+            for oag in owning_access_group:
+                temp["owning_access_group"] = oag
+                for mtype in maintenance_group:
+                    temp["type"] = mtype 
+                    temp["total"] = res[oag][mtype]
                     
+                    serializer = TAMSerializer(data=temp)
+                    valid = serializer.is_valid(raise_exception=True)
+                    serializer.save()
+
+            res = TAM.objects.all().values()
+
+                                 
         print(res)
         return Response(res)
 
