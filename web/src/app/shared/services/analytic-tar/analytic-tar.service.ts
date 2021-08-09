@@ -40,6 +40,14 @@ url: string = environment.baseUrl + "v1/analytics/"
     );
   }
 
+  get_analytics_tam(): Observable<any> {
+    return this.http.get<any>(this.url + "analytics_tam/").pipe(
+      tap((res) => {
+      })
+    );
+  }
+
+
   post_analytics_tar(): Observable<any> {
     return this.http.post<any>(this.url + "analytics_tar/", {}).pipe(
       tap((res) => {
@@ -60,5 +68,13 @@ url: string = environment.baseUrl + "v1/analytics/"
       })
     );
   }
+
+  post_analytics_tam(): Observable<any> {
+    return this.http.post<any>(this.url + "analytics_tam/", {}).pipe(
+      tap((res) => {
+      })
+    );
+  }
+
 
 }
