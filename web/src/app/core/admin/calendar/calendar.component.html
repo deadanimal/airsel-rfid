@@ -161,38 +161,6 @@
           <div class="row">
             <div class="col-lg-4 col-xs-12">
               <div class="form-group">
-                <label class="form-control-label">Department</label>
-                <ng-select
-                  [items]="departmentArray"
-                  [multiple]="true"
-                  [closeOnSelect]="false"
-                  [searchable]="false"
-                  bindLabel="name"
-                  bindValue="value"
-                  placeholder="Please select department"
-                  [(ngModel)]="searchInput.department"
-                >
-                </ng-select>
-              </div>
-            </div>
-            <div class="col-lg-4 col-xs-12">
-              <div class="form-group">
-                <label class="form-control-label">Region</label>
-                <ng-select
-                  [items]="regionArray"
-                  [multiple]="true"
-                  [closeOnSelect]="false"
-                  [searchable]="false"
-                  bindLabel="name"
-                  bindValue="value"
-                  placeholder="Please select region"
-                  [(ngModel)]="searchInput.region"
-                >
-                </ng-select>
-              </div>
-            </div>
-            <div class="col-lg-4 col-xs-12">
-              <div class="form-group">
                 <label class="form-control-label">Status</label>
                 <ng-select
                   [items]="statusArray"

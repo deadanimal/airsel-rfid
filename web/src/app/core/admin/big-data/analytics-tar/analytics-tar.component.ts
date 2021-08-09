@@ -51,6 +51,7 @@ export class AnalyticsTarComponent implements OnInit {
 
   ngOnInit() {
     this.getTAR();
+    this.computeTAR();
     this.getAssetRegistered();
     // this.initChartTwo();
 
@@ -76,6 +77,16 @@ export class AnalyticsTarComponent implements OnInit {
   }
 
   chartData: any
+  computeTAR() {
+    this.tarService.post_analytics_tar().subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      },
+    );
+  }
   getTAR() {
     this.SpinnerService.show();
 
@@ -83,6 +94,8 @@ export class AnalyticsTarComponent implements OnInit {
       (res) => {
         console.log("TARSER", res)
         this.chartData = res
+
+        this.SpinnerService.hide();
 
         for(let i in this.chartData){
           this.asset_registered_length += this.chartData[i].total
@@ -94,7 +107,6 @@ export class AnalyticsTarComponent implements OnInit {
        
 
         console.log("chartData", this.chartData)
-        this.SpinnerService.hide();
 
       },
       (err) => {
