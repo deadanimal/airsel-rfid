@@ -30,7 +30,7 @@
     </ion-slide>
   </ion-slides>
 
-  <form class="form" [formGroup]="validations_form" (ngSubmit)="login()">
+  <form class="form" [formGroup]="validations_form" (ngSubmit)="login()" style="margin:0px;">
     <h3 class="ion-margin-start">Sign in</h3>
     <ion-item lines="none">
       <ion-label position="stacked">Username</ion-label>
@@ -80,7 +80,8 @@
       <ion-spinner name="bubbles"></ion-spinner>
     </ion-button>
   </form>
-  <div class="lower-content" style=" left: 40%;position:absolute;bottom:0;">
+  <div class="lower-content" style="position:absolute;bottom:0;left:40%">
     <p class="text-center">Version 1.0.1</p>
+    <div style="height:10px;">&nbsp;</div>
   </div>
 </ion-content>
