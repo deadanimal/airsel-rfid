@@ -116,9 +116,10 @@ export class AnalyticsAcsComponent implements OnInit {
     this.SpinnerService.show();
     this.tarService.get_analytics_acs().subscribe(
       (res) => {
-        this.totalAssetToday = res["message_1"]["asset_today"];
-        this.totalassetsLastMonth = res["message_1"]["asset_last_month"];
-        this.PercentageAssetConditionRating = res["message_1"]["percentage_asset_condition"];
+        console.log("ss", res);
+        this.totalAssetToday = res["message_1"][0]["asset_today"];
+        this.totalassetsLastMonth = res["message_1"][0]["asset_last_month"];
+        this.PercentageAssetConditionRating = res["message_1"][0]["percentage_asset_condition"];
         this.tableAssetConditionStores = res["message_2"];
 
       },
