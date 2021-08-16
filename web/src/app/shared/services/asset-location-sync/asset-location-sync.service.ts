@@ -63,4 +63,13 @@ export class AssetLocationSyncService {
       })
     );
   }
+
+  customGet(): Observable<AssetLocationSync[]> {
+    return this.http.get<any>(this.url + "get_asset_location").pipe(
+      tap((res) => {
+      })
+    );
+  }
+
+
 }
