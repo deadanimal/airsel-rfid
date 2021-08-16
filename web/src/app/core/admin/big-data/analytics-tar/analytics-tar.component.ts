@@ -98,7 +98,7 @@ export class AnalyticsTarComponent implements OnInit {
         this.SpinnerService.hide();
 
         for(let i in this.chartData){
-          this.asset_registered_length += this.chartData[i].total
+          this.asset_registered_length += +this.chartData[i].total
         }
         console.log("total", this.asset_registered_length)
         

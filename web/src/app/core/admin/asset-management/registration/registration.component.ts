@@ -1184,6 +1184,7 @@ export class RegistrationComponent implements OnInit {
     // document.getElementsByClassName("dz-preview-single")[0].innerHTML = "";
 
     this.getAssetPrimaryCategory()
+
     this.getExistingParent()
     this.getAssetAttributePredefine()
     this.getMaintenanceManager()
@@ -1209,7 +1210,7 @@ export class RegistrationComponent implements OnInit {
 
   test: any;
   getExistingParent() {
-    this.assetLocationSyncService.get().subscribe((response) => {
+    this.assetLocationSyncService.customGet().subscribe((response) => {
       console.log('response from API is ', response);
       this.test = response;
       console.log("existing parent", this.test);
@@ -1492,6 +1493,8 @@ export class RegistrationComponent implements OnInit {
   LocationDescription: any;
   existLocation: any;
   getLocationDescription() {
+    // call dropdown item test
+    //
 
     let value: any;
     let assetIdentity = (<HTMLInputElement>document.getElementById("asset_identity")).value

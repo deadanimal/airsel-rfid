@@ -178,7 +178,11 @@ export class BadgeNoComponent implements OnInit {
     
 
     let createAssetTypeData: any = {}
-    createAssetTypeData['name'] = this.assetTypeForm.value.asset_primary_category
+    createAssetTypeData['asset_type_code'] = this.assetTypeForm.value.asset_primary_category;
+    createAssetTypeData['asset_type_description'] = this.assetTypeForm.value.asset_primary_category;
+    createAssetTypeData['status'] = "ACTIVE";
+    createAssetTypeData['assessment_class'] = this.assetTypeForm.value.asset_primary_category;
+    createAssetTypeData['profile_failure'] = this.assetTypeForm.value.asset_primary_category;
 
     this.assetsBadgeNoService.create(this.assetTypeForm.value).subscribe(
       (res) => {
@@ -187,6 +191,9 @@ export class BadgeNoComponent implements OnInit {
       },
       error => {
         console.error("err", error);
+      },
+      () => {
+
       }
     )
   }
@@ -194,7 +201,7 @@ export class BadgeNoComponent implements OnInit {
   saveAssetType(createAssetTypeData) {
     this.assetTypesService.post(createAssetTypeData).subscribe(
       (res) => {
-        console.log('res = ', res)
+        console.log('res target = ', res)
       },
       (err) => {
         console.log('err = ', (err))

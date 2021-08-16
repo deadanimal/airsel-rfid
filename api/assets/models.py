@@ -496,7 +496,7 @@ class AssetBadgeFormat(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     asset_uuid = models.CharField(max_length=100, default='NA')
     asset_primary_category = models.CharField(max_length=100, default='NA')
-    short = models.CharField(max_length=100, default='NA')
+    short = models.CharField(max_length=100,unique=True, null=True, blank=True)
     description = models.CharField(max_length=100, default='NA')
 
     STATUS_ARRAY = [
