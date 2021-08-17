@@ -491,6 +491,7 @@ export class WorkRequestListPage implements OnInit {
     this.loadingController
       .create({
         message: "Please scan the QR code...",
+        backdropDismiss:true,
       })
       .then((loading) => {
         loading.present();
@@ -522,6 +523,7 @@ export class WorkRequestListPage implements OnInit {
     this.loadingController
       .create({
         message: "Please scan the RFID tag...",
+        backdropDismiss:true,
       })
       .then((loading) => {
         loading.present();

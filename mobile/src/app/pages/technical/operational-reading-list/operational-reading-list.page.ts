@@ -92,6 +92,7 @@ export class OperationalReadingListPage implements OnInit {
     this.loadingController
       .create({
         message: "Please scan the QR code...",
+        backdropDismiss:true,
         // dismissOnPageChange: true; 
         showBackdrop: true,
         // enableBackdropDismiss: true;
@@ -127,6 +128,7 @@ export class OperationalReadingListPage implements OnInit {
     this.loadingController
       .create({
         message: "Please scan the RFID tag...",
+        backdropDismiss:true,
       })
       .then((loading) => {
         loading.present();

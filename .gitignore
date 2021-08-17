@@ -19,3 +19,4 @@ coverage.*
 node_modules/
 bkp/
 
+mobile/src/app/pages/login/login.page.ts
