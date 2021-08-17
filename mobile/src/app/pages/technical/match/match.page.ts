@@ -6,6 +6,7 @@ import { AlertController, MenuController } from "@ionic/angular";
 
 import { AssetRegistrationsService } from "src/app/shared/services/asset-registrations/asset-registrations.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
+import { AssetsService } from 'src/app/shared/services/assets/assets.service';
 
 @Component({
   selector: "app-match",
@@ -24,7 +25,7 @@ export class MatchPage implements OnInit {
     public alertController: AlertController,
     public menu: MenuController,
     private ngZone: NgZone,
-    private assetregistrationService: AssetRegistrationsService,
+    private assetsService: AssetsService,
     public notificationService: NotificationsService,
     private router: Router
   ) { }
@@ -90,7 +91,7 @@ export class MatchPage implements OnInit {
         hex_code: this.hex_code,
         badge_no: this.badge_no,
       };
-      this.assetregistrationService.patch_asset(body).subscribe(
+      this.assetsService.patch_asset(body).subscribe(
         (res) => {
           console.log("res", res);
           this.presentAlert(

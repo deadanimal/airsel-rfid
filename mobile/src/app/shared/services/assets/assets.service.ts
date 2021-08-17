@@ -12,7 +12,7 @@ import { AssetsModel } from "./assets.model";
 export class AssetsService {
   url: string = environment.baseUrl + "v1/assets/";
 
-  // Data
+  // Data 
   public amodels: AssetsModel[] = [];
   public amodel: AssetsModel;
 
@@ -85,6 +85,15 @@ export class AssetsService {
       tap((res: AssetsModel) => {
         console.log("AssetsModel", res);
         this.amodel = res;
+      })
+    );
+  }
+
+  patch_asset(body): Observable<AssetsModel> {
+    let urlPatchAsset = this.url + "patch_asset/";
+    return this.http.post<any>(urlPatchAsset, body).pipe(
+      tap((res) => {
+        console.log("AssetsModel", res);
       })
     );
   }
