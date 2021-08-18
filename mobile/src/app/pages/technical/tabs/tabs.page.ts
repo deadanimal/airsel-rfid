@@ -43,7 +43,7 @@ export class TabsPage implements OnInit {
   ngOnInit() {
     console.log("ngOnInit TabsPage");
 
-//    broadcaster._debug = true;
+    broadcaster._debug = true;
     // this.onRegister2DBarcodeListener();
     // this.onRegisterRFIDListener();
   }
@@ -75,13 +75,13 @@ export class TabsPage implements OnInit {
               console.log("this.bBarcode = ", this.bBarcode);
               if (this.bBarcode) {
                 loading.dismiss();
-//                broadcaster.removeEventListener(ev, listener);
+                broadcaster.removeEventListener(ev, listener);
                 this.updateQrbarcode(event.data);
               }
             });
           }
         };
-//        broadcaster.addEventListener(ev, isGlobal, listener);
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -106,13 +106,13 @@ export class TabsPage implements OnInit {
               console.log("this.bRfid = ", this.bRfid);
               if (this.bRfid) {
                 loading.dismiss();
-//                broadcaster.removeEventListener(ev, listener);
+                broadcaster.removeEventListener(ev, listener);
                 this.updateRfid(event.data);
               }
             });
           }
         };
-//        broadcaster.addEventListener(ev, isGlobal, listener);
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
