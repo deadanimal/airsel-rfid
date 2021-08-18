@@ -296,7 +296,7 @@ export class TabsPage implements OnInit {
         if (this.scanValue != "") {
           this.loadingController
             .create({
-              message: this.scanValue,
+              message: "Please wait...",
             })
             .then((loading) => {
               loading.present(); 

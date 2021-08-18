@@ -3,7 +3,6 @@ declare var broadcaster: any;
 import { Component, NgZone, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AlertController, MenuController } from "@ionic/angular";
-import { Platform } from '@ionic/angular';
 
 import { AssetsService } from "src/app/shared/services/assets/assets.service";
 import { NotificationsService } from "src/app/shared/services/notifications/notifications.service";
@@ -27,13 +26,8 @@ export class MatchPage implements OnInit {
     private ngZone: NgZone,
     private assetsService: AssetsService,
     public notificationService: NotificationsService,
-    private router: Router,
-    private platform: Platform
-  ) { 
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      console.log('Handler was called!');
-    });
-  }
+    private router: Router
+  ) {}
 
   private L(...args: any[]) {
     let v = args.join(" ");
