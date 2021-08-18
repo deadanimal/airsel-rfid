@@ -46,9 +46,8 @@ export class ProfilePage implements OnInit {
       // crewshift_id: new FormControl(this.userService.umodel.crewshift_id)
     });
     this.getEmployeeData(this.userService.umodel.employee_id)
-    
     this.platform.backButton.subscribeWithPriority(10, () => {
-      console.log('Handler was called!');
+      console.log('removed back');
     });
   }
 
