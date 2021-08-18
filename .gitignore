@@ -21,3 +21,4 @@ bkp/
 
 mobile/src/app/pages/login/login.page.ts
 mobile/src/app/pages/login/login.page.ts
+mobile/src/app/pages/technical/tabs/tabs.page.ts

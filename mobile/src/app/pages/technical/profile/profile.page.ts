@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AlertController, MenuController } from "@ionic/angular";
+import { Platform } from '@ionic/angular';
 
 import { NotificationsService } from 'src/app/shared/services/notifications/notifications.service';
 import { UsersService } from "src/app/shared/services/users/users.service";
@@ -28,7 +29,8 @@ export class ProfilePage implements OnInit {
     private router: Router,
     public notificationService: NotificationsService,
     private userService: UsersService,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private platform: Platform
   ) {
     console.log("this.userService.umodel = ", this.userService.umodel)
     this.userFormGroup = this.formBuilder.group({
@@ -44,6 +46,10 @@ export class ProfilePage implements OnInit {
       // crewshift_id: new FormControl(this.userService.umodel.crewshift_id)
     });
     this.getEmployeeData(this.userService.umodel.employee_id)
+    
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      console.log('Handler was called!');
+    });
   }
 
   ngOnInit() {
@@ -87,4 +93,5 @@ export class ProfilePage implements OnInit {
     this.menu.enable(true, "menuNotification");
     this.menu.open("menuNotification");
   }
+
 }
