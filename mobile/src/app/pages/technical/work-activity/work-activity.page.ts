@@ -392,29 +392,41 @@ export class WorkActivityPage implements OnInit {
   }
 
   submit() {
-    let woacassLocAssLisFormData = {
-      status: "InProgress",
-      completiondatetime: new Date(),
-      submitted_datetime: new Date(),
-    };
+    console.log("workactivityData", this.workactivityData);
 
-    console.log("this.workactivity.id>>>>>>>", this.workactivity.id)
-    console.log("woacassLocAssLisFormData>>>>>>>", woacassLocAssLisFormData);
+    var checker = true;
+    this.workactivityData.forEach(element => {
+      if(this.workactivityData.reading_datetime == '' || this.workactivityData.reading_datetime == null){
+        checker = false;
+      }
+    }); 
 
-    // if (this.buttonArr.length == 0) {
-    this.workOrderActivityCompletionService
-      .update(this.workactivity.id, woacassLocAssLisFormData)
+    if(checker == true){
+      let woacassLocAssLisFormData = {
+        status: "InProgress",
+        completiondatetime: new Date(),
+        submitted_datetime: new Date(),
+      };
+  
+      console.log("this.workactivity.id>>>>>>>", this.workactivity.id)
+      console.log("woacassLocAssLisFormData>>>>>>>", woacassLocAssLisFormData);
+      
+      this.workOrderActivityCompletionService.update(this.workactivity.id, woacassLocAssLisFormData)
       .subscribe(
         (res) => {
           console.log("res = ", res);
-
+  
           this.presentAlert("Success", "Successfully update data.");
         },
         (err) => {
           console.log("workOrderActivityCompletionService err", err)
         }
-      );
-    // }
+      ); 
+    }else {
+      this.warningAlert('Error', 'Please complete all required work activity')
+      return false;
+    }
+    
   }
 
   async searchBadgeNo(asset) {

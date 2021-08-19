@@ -111,8 +111,11 @@
       <small>*Note: Fulfill all <b>REQUIRED</b> service history before submitting the work
         activity.</small><br />
       <ion-button color="light" (click)="clickBack()">Back</ion-button>
-      <ion-button *ngIf="workOrderActivityCompletionAssLocAssLisData != []" [disabled]="buttonDisable" color="primary"
+      <ion-button *ngIf="workOrderActivityCompletionAssLocAssLisData != []" color="primary"
         (click)="submit()">Submit
+      </ion-button>
+      <ion-button *ngIf="workOrderActivityCompletionAssLocAssLisData == []" color="secondary"
+        disabled>Submit
       </ion-button>
       <!-- <ion-button *ngIf="workOrderActivityCompletionAssLocAssLis != []" color="primary" (click)="submit()">Submit
       </ion-button> -->

@@ -102,6 +102,10 @@ export class WorkActivityAssetPage implements OnInit {
     this.workOrdActComAssLocAssLisReq = []
 
     let bstat = ''
+    this.workOrderActivityCompletionAssLocAssLisData = [];
+    this.workOrderActivityCompletionAssLocAssLisDataAll = [];
+    this.workOrderActivityCompletionAssLocAssLisDataReq = [];
+
     this.workactivityasset.service_histories.forEach(element => {
       // this.buttonStatus : Boolean
       this.assetLocationAssetListServiceHistoriesService.getOne(element).subscribe(
@@ -426,24 +430,30 @@ export class WorkActivityAssetPage implements OnInit {
       if (element.svc_hist_type_req_fl == 'W1YS') {
         console.log("elementW1YS-----", element)
 
-        if (element.service_history_type == "FAILURE") {
-          console.log("sini fail")
-          if (element.failure_type != '' && element.failure_root_cause != '' && element.failure_repair != '' && element.failure_mode != '' && element.failure_component != '') {
-            check.push(element.service_history_type)
-            console.log('FAILURE')
-          }
-        } else if (element.service_history_type == "DOWNTIME") {
-          console.log("sini down")
-          if (element.start_date_time != '' && element.start_date_time != '' && element.end_date_time != '' && element.downtime_reason != '' && element.comments != '') {
-            check.push(element.service_history_type)
-            console.log('DOWNTIME')
-          }
+        // if (element.service_history_type == "FAILURE") {
+        //   console.log("sini fail")
+        //   if (element.failure_type != '' && element.failure_root_cause != '' && element.failure_repair != '' && element.failure_mode != '' && element.failure_component != '') {
+        //     check.push(element.service_history_type)
+        //     console.log('FAILURE')
+        //   }
+        // } else if (element.service_history_type == "DOWNTIME") {
+        //   console.log("sini down")
+        //   if (element.start_date_time != '' && element.start_date_time != '' && element.end_date_time != '' && element.downtime_reason != '' && element.comments != '') {
+        //     check.push(element.service_history_type)
+        //     console.log('DOWNTIME')
+        //   }
+        // } else {
+        //   console.log("sini else")
+        //   if (element.service_history_type != []) {
+        //     check.push(element.service_history_type)
+        //     console.log('else')
+        //   }
+        // }
+
+        if (element.service_history_type != '') {
+           check.push(element.service_history_type)
         } else {
-          console.log("sini else")
-          if (element.question != []) {
-            check.push(element.service_history_type)
-            console.log('else')
-          }
+          console.log(element)
         }
       }
 
@@ -453,7 +463,7 @@ export class WorkActivityAssetPage implements OnInit {
     console.log("check==", check.length)
 
     console.log("modified_date", woacassLocAssLisFormData)
-    // if (check.length == this.workOrderActivityCompletionAssLocAssLisDataReq.length) {
+    if (check.length == this.workOrdActComAssLocAssLisReq.length) {
     this.workOrderActivityCompletionAssLocAssListService
       .update(
         this.workactivityasset.id,
@@ -471,9 +481,9 @@ export class WorkActivityAssetPage implements OnInit {
           console.error("err", err);
         }
       );
-    // } else {
-    //   this.alertWarning('Warning', 'Please answer all required service history')
-    // }
+    } else {
+       this.alertWarning('Warning', 'Please answer all required service history')
+    }
   }
 
   async alertWorkActivityAsset(header, message) {
@@ -518,7 +528,7 @@ export class WorkActivityAssetPage implements OnInit {
       servHistArr: this.serviceHistArr
     }
     const modal = await this.modalController.create({
-      component: ServiceHistoryPage,
+      component: ServiceHistoryPage, 
       componentProps: { servicehistory: servicehistory, servHistArr: this.serviceHistArr },
     });
     modal.onDidDismiss().then((data) => {
