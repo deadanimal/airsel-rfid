@@ -396,14 +396,14 @@ export class WorkActivityPage implements OnInit {
 
     var checker = true;
     this.workactivityData.forEach(element => {
-      if(this.workactivityData.reading_datetime == '' || this.workactivityData.reading_datetime == null){
+      if(element.reading_datetime == '' || element.reading_datetime == null){
         checker = false;
       }
     }); 
 
     if(checker == true){
       let woacassLocAssLisFormData = {
-        status: "InProgress",
+        status: "Completed",
         completiondatetime: new Date(),
         submitted_datetime: new Date(),
       };
