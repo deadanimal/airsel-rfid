@@ -35,6 +35,8 @@ export class WamsService {
   getWorkOrderActivity(): Observable<any> {
     let body = {
       service_name: "getWorkOrderActivity",
+      // from_date: "2021-08-20T00:00:00+00:00",
+      // to_date: "2021-08-20T23:59:59+00:00"
     };
     return this.http.post<any>(this.url, body).pipe(
       tap((res) => {

@@ -87,10 +87,11 @@ export class LoginPage implements OnInit {
       username: new FormControl(
         // "mobileapps",
         // "haziq_y",
-         "fadhillah",
+        // "fadhillah",
         // "shafiq_ab",
         // "mahadzir_nadzri",
         // "mohdhuzaimi",
+         "",
         Validators.compose([
           Validators.required,
           // Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"),
@@ -100,11 +101,11 @@ export class LoginPage implements OnInit {
       password: new FormControl(
         // "M0bile@321",
         // "415F@dhill@h",
-         "5e1AIS05163",
+        // "5e1AIS05163",
         // "5e1AIS01780",
         // "AIS03951++",
         // "Ais1868@",
-        // "",
+         "",
         Validators.compose([Validators.minLength(6), Validators.required])
       ),
     });

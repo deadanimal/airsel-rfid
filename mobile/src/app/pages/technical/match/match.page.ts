@@ -60,10 +60,14 @@ export class MatchPage implements OnInit {
       if (event.SCAN_STATE == "success") {
         this.ngZone.run(() => {
           if (this.bBarcode) {
-            broadcaster.removeEventListener(ev, listener);
             this.badge_no = event.data;
+            // broadcaster.removeEventListener(ev, listener);
+            // broadcaster.removeEventListener(ev, isGlobal, listener);
           }
         });
+      }else{
+        // broadcaster.removeEventListener(ev, listener);
+        // broadcaster.removeEventListener(ev, isGlobal, listener);
       }
     };
 
@@ -81,10 +85,14 @@ export class MatchPage implements OnInit {
       if (event.SCAN_STATE == "success") {
         this.ngZone.run(() => {
           if (this.bRfid) {
-            broadcaster.removeEventListener(ev, listener);
             this.hex_code = event.data;
+            // broadcaster.removeEventListener(ev, listener);
+            // broadcaster.removeEventListener(ev, isGlobal, listener);
           }
         });
+      }else{
+        // broadcaster.removeEventListener(ev, listener);
+        // broadcaster.removeEventListener(ev, isGlobal, listener);
       }
     };
     broadcaster.addEventListener(ev, isGlobal, listener);
@@ -101,6 +109,8 @@ export class MatchPage implements OnInit {
       this.assetsService.patch_asset(body).subscribe(
         (res) => {
           console.log("res", res);
+          this.hex_code = "";
+          this.badge_no = "";
           this.presentAlert(
             "Success",
             "Your hex code have successfully updated in the database"

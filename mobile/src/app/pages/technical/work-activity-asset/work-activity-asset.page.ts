@@ -131,12 +131,13 @@ export class WorkActivityAssetPage implements OnInit {
               console.log("yyyyyyyyyyy")
               if (res.failure_type != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
                 this.workOrdActComAssLocAssLisReq.push(res)
-                console.log("zzzzzzzzzzzzzzzzzzzzzz")
+                console.log("workOrdActComAssLocAssLisReq", res)
                 bstat = 'yes'
               }
             } else if (res.service_history_type == "DOWNTIME") {
               if (res.start_date_time != '' && res.start_date_time != '' && res.end_date_time != '' && res.downtime_reason != '') {
                 this.workOrdActComAssLocAssLisReq.push(res)
+                console.log("workOrdActComAssLocAssLisReq", res)
                 bstat = 'yes'
               }
             } else {
@@ -329,6 +330,8 @@ export class WorkActivityAssetPage implements OnInit {
               }
               console.log("this.buttonStatusArr.length = ", this.buttonStatusArr.length)
               console.log("this.workOrderActivityCompletionAssLocAssLisDataReq.length = ", this.workOrderActivityCompletionAssLocAssLisDataReq.length)
+              console.log("workOrderActivityCompletionAssLocAssLisDataReq = ", this.workOrderActivityCompletionAssLocAssLisDataReq)
+              
               if (this.workOrderActivityCompletionAssLocAssLisDataReq.length == this.buttonStatusArr.length) {
                 this.buttonStatus = true
               } else {
