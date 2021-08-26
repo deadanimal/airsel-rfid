@@ -180,23 +180,23 @@ export class HomePage implements OnInit {
 
   workOrderActComp: any = []
   getWorkActivities(objUser) {
-    let array: any = []
+  //  let array: any = []
     let userId = this.authService.userID
     console.log("userId >>>>>>>>>", userId)
     this.workOrderActivityCompletionService.asc_ordered_list(objUser).subscribe(
       (res) => {
         console.log("workOrderActivityCompletionService_res", res);
-        res.forEach(function (data_) {
-          console.log("data_.field_2", data_.field_2)
-          if (data_.field_2 == '' || data_.field_2 == userId) {
-            console.log('if')
-            array.push(data_)
-          } else {
-            console.log('else')
-          }
-        })
-        this.workOrderActComp = array
-        // this.workOrderActComp = res
+        // res.forEach(function (data_) {
+        //   console.log("data_.field_2", data_.field_2)
+        //   if (data_.field_2 == '' || data_.field_2 == userId) {
+        //     console.log('if')
+        //     array.push(data_)
+        //   } else {
+        //     console.log('else')
+        //   }
+        // })
+        // this.workOrderActComp = array
+        this.workOrderActComp = res
       },
       (err) => {
         console.error("err", err);

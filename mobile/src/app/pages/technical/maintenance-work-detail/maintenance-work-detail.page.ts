@@ -104,7 +104,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
           console.log("eleWorAct.status", eleWorAct.status)
           if (eleWorAct.status == this.status) {
 
-            if (eleWorAct.field_2 == '' || eleWorAct.field_2 == this.authService.userID) {
+//            if (eleWorAct.field_2 == '' || eleWorAct.field_2 == this.authService.userID) {
               console.log("eleWorAct>>>", eleWorAct)
               this.workactivitiesDatas.push(eleWorAct)
 
@@ -128,7 +128,7 @@ export class MaintenanceWorkDetailPage implements OnInit {
                   console.error("err", err);
                 }
               );
-            }
+//            }
           }
         });
         // console.log("this.workactivities = ", this.workactivities)

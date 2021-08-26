@@ -127,16 +127,18 @@ export class MaintenanceWorkListPage implements OnInit {
     let listWorkOrdActComp: any = []
     this.workOrderActivityCompletionService.asc_ordered_list(obj).subscribe(
       (res) => {
-        console.log("workOrderActivityCompletionService_res", res);
-        res.forEach(function (data_qq) {
-          if (data_qq.field_2 == '' || data_qq.field_2 == userId) {
-            listWorkOrdActComp.push(data_qq)
-            console.log("if", data_qq.field_1)
-          } else {
-            console.log("else")
-          }
-        })
+        // console.log("workOrderActivityCompletionService_res", res);
+        // res.forEach(function (data_qq) {
+        //   if (data_qq.field_2 == '' || data_qq.field_2 == userId) {
+        //     listWorkOrdActComp.push(data_qq)
+        //     console.log("if", data_qq.field_1)
+        //   } else {
+        //     console.log("else")
+        //   }
+        // })
+        listWorkOrdActComp = res;
         console.log("listWorkOrdActComp>>>>>>", listWorkOrdActComp)
+        
         if (res) {
           this.cmArray = listWorkOrdActComp.filter(function (data) {
             if (data.field_1
@@ -207,6 +209,17 @@ export class MaintenanceWorkListPage implements OnInit {
         console.log("Http request is completed");
       }
     );
+
+    // let temp = []
+    // this.workOrderActivityCompletionService.get().subscribe((response) => {
+    //   console.log('response from API is ', response);
+    //   this.workorderactivities = response;
+    //   console.log("WorkOrderActivity", this.workorderactivities);
+
+    // }, (error) => {
+    //   console.log('Error is ', error)
+    // })
+  
 
     // get work-order-activity from WAMS
     // this.wamsService.getWorkOrderActivity().subscribe(
