@@ -74,7 +74,7 @@ export class BadgeNoComponent implements OnInit {
       description: ["", Validators.required],
       status: ["IC", Validators.required],
       latest_no: ["", Validators.required],
-      skipped_no: ["", Validators.required]
+      skipped_no: [""]
 
     })
     this.assetTypeFormDesc = this.formBuilder.group({
@@ -83,7 +83,7 @@ export class BadgeNoComponent implements OnInit {
       description: ["", Validators.required],
       status: ["IC", Validators.required],
       latest_no: ["", Validators.required],
-      skipped_no: ["", Validators.required]
+      skipped_no: [""]
     })
   }
 
@@ -168,7 +168,18 @@ export class BadgeNoComponent implements OnInit {
   submitAssetType() {
     // TO DO - parse comma delimited string into array 
     let skipped_no = this.assetTypeForm.value.skipped_no
-    let formatted_skipped_no = skipped_no.split(',');
+    var formatted_skipped_no;
+
+    console.log("SKI", skipped_no);
+    if (skipped_no == null) {
+      formatted_skipped_no = [0];
+    } else {
+      try {
+        formatted_skipped_no = skipped_no.split(',');
+      } catch {
+        formatted_skipped_no = [0];
+      }
+    }
 
     // TO DO - patchValue skipped no with formatted_skipped_no
     this.assetTypeForm.patchValue({
@@ -186,13 +197,15 @@ export class BadgeNoComponent implements OnInit {
 
     this.assetsBadgeNoService.create(this.assetTypeForm.value).subscribe(
       (res) => {
-        this.saveAssetType(createAssetTypeData)
         this.successAlert()
       },
       error => {
         console.error("err", error);
+        this.errorAlertDuplicate();
+
       },
       () => {
+        this.saveAssetType(createAssetTypeData)
 
       }
     )
@@ -321,6 +334,19 @@ export class BadgeNoComponent implements OnInit {
       // this.closeModal()
     });
   }
+
+  errorAlertDuplicate() {
+    swal.fire({
+      title: "Warning",
+      text: "Format with this short name already exist.",
+      type: "warning",
+      buttonsStyling: false,
+      confirmButtonClass: "btn btn-warning",
+    }).then((result) => {
+      // this.closeModal()
+    });
+  }
+
 
   editFormat(row, modalNotification: TemplateRef<any>) {
     this.modal = this.modalService.show(modalNotification, this.modalConfig);

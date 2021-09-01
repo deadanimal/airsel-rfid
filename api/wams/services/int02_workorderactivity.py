@@ -359,9 +359,13 @@ def insert_into_work_order_activity(dict):
 
                     # if queryset is None :
 
-                woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(node_id=node_id,asset_id=asset_id)
+                woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(node_id=node_id,asset_id=asset_id)
                 print("tttttttttttttttttt = ",woacalal_table)
-                woacalal_table.service_histories.add(alalsh)
+                for i in woacalal_table:
+                    try:
+                        i.service_histories.add(alalsh)
+                    except Exception as e:
+                        print(e)
                     
                 # else :
 
