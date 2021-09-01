@@ -1,0 +1,23 @@
+Audit Trail
+- buang module
+- events
+  - user login
+  - user logout
+  - register user
+  - register new, process, reject, approve, extracted by wams
+
+User Privileges
+  - KIV
+
+Login
+  - login make 2 tab
+  - split between AD user, non AD user
+
+User
+- contractor saw password
+- add button
+
+
+### email
+username: nama_user
+default_password: autogenerate
