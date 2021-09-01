@@ -61,13 +61,13 @@ export class MatchPage implements OnInit {
         this.ngZone.run(() => {
           if (this.bBarcode) {
             this.badge_no = event.data;
-            // broadcaster.removeEventListener(ev, listener);
-            // broadcaster.removeEventListener(ev, isGlobal, listener);
+             broadcaster.removeEventListener(ev, listener);
+             broadcaster.removeEventListener(ev, isGlobal, listener);
           }
         });
       }else{
-        // broadcaster.removeEventListener(ev, listener);
-        // broadcaster.removeEventListener(ev, isGlobal, listener);
+         broadcaster.removeEventListener(ev, listener);
+         broadcaster.removeEventListener(ev, isGlobal, listener);
       }
     };
 
@@ -86,13 +86,13 @@ export class MatchPage implements OnInit {
         this.ngZone.run(() => {
           if (this.bRfid) {
             this.hex_code = event.data;
-            // broadcaster.removeEventListener(ev, listener);
-            // broadcaster.removeEventListener(ev, isGlobal, listener);
+             broadcaster.removeEventListener(ev, listener);
+             broadcaster.removeEventListener(ev, isGlobal, listener);
           }
         });
       }else{
-        // broadcaster.removeEventListener(ev, listener);
-        // broadcaster.removeEventListener(ev, isGlobal, listener);
+         broadcaster.removeEventListener(ev, listener);
+         broadcaster.removeEventListener(ev, isGlobal, listener);
       }
     };
     broadcaster.addEventListener(ev, isGlobal, listener);

@@ -309,13 +309,23 @@ export class WorkActivityPage implements OnInit {
   buttonArr = []
   getWOrkActivityData(getdata) {
     let woacalalsh = []
+    let datetime = new Date().toLocaleDateString()
+    console.log("3test",datetime)
     getdata.forEach((element) => {
       let woacalsl = element.toString();
       console.log(woacalsl)
       this.workOrderActivityCompletionAssLocAssListService.getOne(woacalsl).subscribe(
         (Res) => {
+          console.log("1test",Res)
+          console.log("2test",Res.service_histories)
+          if(Res.service_histories == [] || Res.service_histories == undefined || Res.service_histories.length == 0){
+            console.log("3test",datetime)
+            Res.reading_datetime = datetime
+            console.log("4test",Res.reading_datetime)
+          }
           this.workactivityData.push(Res)
-          console.log()
+          console.log("5test",this.workactivityData)
+          console.log(Res)
         },
         (Err) => {
           console.error("err", Err);
@@ -401,7 +411,7 @@ export class WorkActivityPage implements OnInit {
       }
     }); 
 
-    if(checker == true){
+    if(checker == true){ 
       let woacassLocAssLisFormData = {
         status: "Completed",
         completiondatetime: new Date(),
