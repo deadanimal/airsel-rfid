@@ -230,16 +230,15 @@ export class WorkActivityAssetPage implements OnInit {
     }, 1000);
 
     // if (this.router.getCurrentNavigation().extras.state.badge_no) {
-    let badge_no = this.router.getCurrentNavigation().extras.state
-      .badge_no;
-    // console.log("badge_no = ", badge_no)
+    var badge_no = this.workactivityasset.badge_number
+    console.log("badge_no = ", badge_no)
     // if (badge_no == this.workactivityasset.badge_number) {
 
     this.assetsService
       .filter("badge_no=" + badge_no)
       .subscribe(
         (res) => {
-          // console.log("res qweqwe", res)
+          console.log("res qweqwe", res)
           this.workactivityassetFormGroup.patchValue({
             asset_type: res[0].asset_type,
             badge_number: badge_no,
@@ -563,6 +562,7 @@ export class WorkActivityAssetPage implements OnInit {
           text: "OK",
           handler: () => {
             this.router.navigate(["/technical/work-activity"]);
+            //this.router.navigate(["/technical/maintenance-work-detail"]);
           },
         },
       ],

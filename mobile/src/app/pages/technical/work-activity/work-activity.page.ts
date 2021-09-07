@@ -157,6 +157,8 @@ export class WorkActivityPage implements OnInit {
   ngOnInit() {
     broadcaster._debug = true;
     this.menu.enable(false, "menuNotification");
+    this.workactivityData= this.workactivityData;
+
   }
 
   async presentAlert(header: string, message: string) {
@@ -483,8 +485,8 @@ export class WorkActivityPage implements OnInit {
                             loading.dismiss();
                             let navigationExtras: NavigationExtras = {
                               state: {
-                                badge_no: res[0].badge_no,
-                                asset,
+                                badge_no: data.badge_no,
+                                asset:asset,
                                 work_activity: this.workactivity,
                               },
                             };
@@ -507,7 +509,7 @@ export class WorkActivityPage implements OnInit {
                                     let navigationExtras: NavigationExtras = {
                                       state: {
                                         badge_no: data.badge_no,
-                                        asset,
+                                        asset: asset,
                                         work_activity: this.workactivity,
                                       },
                                     };
@@ -603,7 +605,7 @@ export class WorkActivityPage implements OnInit {
             });
           }
         };
-        //broadcaster.addEventListener(ev, isGlobal, listener);
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -628,13 +630,13 @@ export class WorkActivityPage implements OnInit {
               console.log("this.bRfid = ", this.bRfid);
               if (this.bRfid) {
                 loading.dismiss();
-                //broadcaster.removeEventListener(ev, listener);
+                broadcaster.removeEventListener(ev, listener);
                 this.updateRfid(event.data, asset);
               }
             });
           }
         };
-        //broadcaster.addEventListener(ev, isGlobal, listener);
+        broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -710,8 +712,7 @@ export class WorkActivityPage implements OnInit {
                       let navigationExtras: NavigationExtras = {
                         state: {
                           badge_no: res[0].badge_no,
-                          asset,
-                          work_activity: this.workactivity,
+                          asset: asset,
                         },
                       };
 
@@ -774,7 +775,7 @@ export class WorkActivityPage implements OnInit {
                       let navigationExtras: NavigationExtras = {
                         state: {
                           badge_no: res[0].badge_no,
-                          asset
+                          asset: asset,
                         },
                       };
 

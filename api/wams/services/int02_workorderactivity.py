@@ -178,9 +178,9 @@ def insert_into_work_order_activity(dict):
         # workorderactivitycompletion = WorkOrderActivityCompletion.objects.filter(
         #     **dictionary_work_order_activity_completion).values()
 
-        woac_data = WorkOrderActivityCompletion.objects.get(activityid=dict['ACT_ID'])
-        woac_data.status = woac_data.status
-        woac_data.save()
+        #woac_data = WorkOrderActivityCompletion.objects.get(activityid=dict['ACT_ID'])
+        #woac_data.status = woac_data.status
+        #woac_data.save()
 
         woac_id = woac_data.id
         print("ooooo ",woac_id)
@@ -363,14 +363,12 @@ def insert_into_work_order_activity(dict):
 
                     # if queryset is None :
 
-                woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.get(node_id=node_id,asset_id=asset_id,participation=activityid)
+                woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(node_id=node_id,asset_id=asset_id,participation=activityid)
                 print("tttttttttttttttttt = ",woacalal_table)
-                #for i in woacalal_table:
-                    try:
-                        woacalal_table.service_histories.add(alalsh)
-                        woacalal_table.participation = ""
-                    except Exception as e:
-                        print(e)
+                for i in woacalal_table:
+                    i.service_histories.add(alalsh)
+                    i.participation = ""
+                    woacalal_table.save()
                     
                 # else :
 
