@@ -136,29 +136,27 @@ export class MaintenanceWorkListPage implements OnInit {
         //     console.log("else")
         //   }
         // })
+        
         listWorkOrdActComp = res;
         console.log("listWorkOrdActComp>>>>>>", listWorkOrdActComp)
         
         if (res) {
           this.cmArray = listWorkOrdActComp.filter(function (data) {
-            if (data.field_1
-              .indexOf("CORRECTIVE MAINTENANCE") !== -1) {
+            if (data.field_1.indexOf("CORRECTIVE MAINTENANCE") !== -1 && (data.field_2 == userId || data.field_2 == '' )) {
               return true;
             }
             return false;
           });
 
           this.pmArray = listWorkOrdActComp.filter(function (data) {
-            if (data.field_1
-              .indexOf("PREVENTIVE MAINTENANCE") !== -1) {
+            if (data.field_1.indexOf("PREVENTIVE MAINTENANCE") !== -1 && (data.field_2 == userId || data.field_2 == '')) {
               return true;
             }
             return false;
           });
 
           this.itcArray = listWorkOrdActComp.filter(function (data) {
-            if (data.field_1
-              .indexOf("INSTALLATION TESTING AND COM") !== -1) {
+            if (data.field_1.indexOf("INSTALLATION TESTING AND COM") !== -1 && (data.field_2 == userId || data.field_2 == '')) {
               return true;
             }
             return false;
@@ -167,7 +165,7 @@ export class MaintenanceWorkListPage implements OnInit {
           this.pdmArray = listWorkOrdActComp.filter(function (data) {
             console.log(data)
             console.log(data.field_1)
-            if (data.field_1 == "PREDICTIVE MAINTENANCE") {
+            if (data.field_1 == "PREDICTIVE MAINTENANCE" && (data.field_2 == userId || data.field_2 == '')) {
               return true;
             }
             return false;
@@ -176,7 +174,7 @@ export class MaintenanceWorkListPage implements OnInit {
           console.log("this.pdmArray = ", this.pdmArray)
 
           this.dArray = listWorkOrdActComp.filter(function (data) {
-            if (data.field_1 == "RETIRE") {
+            if (data.field_1 == "RETIRE" && (data.field_2 == userId || data.field_2 == '')) {
               return true;
             }
             return false;
@@ -184,7 +182,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.cArray = listWorkOrdActComp.filter(function (data) {
             if (
-              data.field_1 == "FLEET COMPLIANCE") {
+              data.field_1 == "FLEET COMPLIANCE" && (data.field_2 == userId || data.field_2 == '')) {
               return true;
             }
             return false;
@@ -192,7 +190,7 @@ export class MaintenanceWorkListPage implements OnInit {
 
           this.rArray = listWorkOrdActComp.filter(function (data) {
             if (
-              data.field_1 == "UPGRADE") {
+              data.field_1 == "UPGRADE" && (data.field_2 == userId || data.field_2 == '')) {
               return true;
             }
             return false;

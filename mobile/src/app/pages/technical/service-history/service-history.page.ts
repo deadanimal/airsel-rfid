@@ -625,6 +625,8 @@ export class ServiceHistoryPage implements OnInit {
         }
       }
     } else {
+      console.log("1trytest", this.questionAndAnswerData.length)
+      console.log("2trytest", this.updateformData.length)
       if (this.questionAndAnswerData.length != this.updateformData.length) {
         this.alertWarning('Warning', 'Please answer all question.')
       } else {

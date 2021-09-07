@@ -10,7 +10,7 @@ import { WorkRequestsModel } from "./work-requests.model";
   providedIn: "root",
 })
 export class WorkRequestsService {
-  url: string = environment.baseUrl + "v1/work-request-pipe/";
+   url: string = environment.baseUrl + "v1/work-request-pipe/";
   // url: string = environment.baseUrl + "v1/work-requests/";
 
   // Data
@@ -84,7 +84,7 @@ export class WorkRequestsService {
     let urlOrdered = this.url + "desc_ordered_list/";
     return this.http.post<any>(urlOrdered, body).pipe(
       tap((res) => {
-        console.log("WorkOrderActivityCompletionModel", res);
+        console.log("WorkRequestsModel", res);
         this.wrmodels = res;
       })
     );

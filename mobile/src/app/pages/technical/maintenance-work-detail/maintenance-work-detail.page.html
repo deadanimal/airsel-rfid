@@ -33,9 +33,9 @@
     <img [src]="image" style="width: 30%" />
     <h4 style="color: var(--ion-color-primary)">{{ name }}</h4>
   </div>
-  <div *ngIf="workactivities.length == 0">
+  <!-- <div *ngIf="workactivities.length != 0">
     <h6 class="ion-text-center">You have Id {{ status }} Work Activity</h6>
-  </div>
+  </div> -->
   <ion-card *ngFor="let workactivity of workactivitiesDatas">
     <ion-card-header>
       <ion-fab horizontal="end">

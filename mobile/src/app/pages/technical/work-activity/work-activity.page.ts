@@ -1,6 +1,6 @@
 declare var broadcaster: any;
 
-import { Component, NgZone, OnInit } from "@angular/core";
+import { Component, NgZone, OnInit} from "@angular/core";
 import {
   Validators,
   FormBuilder,
@@ -67,7 +67,7 @@ export class WorkActivityPage implements OnInit {
     private assetsService: AssetsService,
     private wamsService: WamsService,
     private assetLocatioSyncService: AssetLocatioSyncService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.workactivityFormGroup = this.formBuilder.group({
       id: new FormControl(""),
@@ -86,6 +86,7 @@ export class WorkActivityPage implements OnInit {
     });
 
     this.route.queryParams.subscribe((params) => {
+    this.ngZone.run(() => {  
       if (this.router.getCurrentNavigation().extras.state) {
         this.workactivity =
           this.router.getCurrentNavigation().extras.state.work_activity;
@@ -141,6 +142,7 @@ export class WorkActivityPage implements OnInit {
         //   console.log('element', element);
         // });
       }
+    })
     });
   }
 
@@ -164,9 +166,9 @@ export class WorkActivityPage implements OnInit {
       buttons: [
         {
           text: "OK",
-          handler: () => {
-            this.router.navigate(["/technical/maintenance-work-list"]);
-          },
+          // handler: () => {
+          //   this.router.navigate(["/technical/maintenance-work-detail"]);
+          // },
         },
       ],
     });
@@ -224,7 +226,7 @@ export class WorkActivityPage implements OnInit {
         {
           text: "OK",
           handler: () => {
-            this.router.navigate(["/technical/maintenance-work-list"]);
+            this.router.navigate(["/technical/maintenance-work-detail"]);
           },
         },
       ],
@@ -234,7 +236,7 @@ export class WorkActivityPage implements OnInit {
   }
 
   clickBack() {
-    this.router.navigate(["/technical/maintenance-work-list"]);
+    this.router.navigate(["/technical/maintenance-work-detail"]);
   }
 
   async clickAddServiceHistory() {
@@ -483,6 +485,7 @@ export class WorkActivityPage implements OnInit {
                               state: {
                                 badge_no: res[0].badge_no,
                                 asset,
+                                work_activity: this.workactivity,
                               },
                             };
 
@@ -505,6 +508,7 @@ export class WorkActivityPage implements OnInit {
                                       state: {
                                         badge_no: data.badge_no,
                                         asset,
+                                        work_activity: this.workactivity,
                                       },
                                     };
 
@@ -583,12 +587,23 @@ export class WorkActivityPage implements OnInit {
               if (this.bBarcode) {
                 loading.dismiss();
                 broadcaster.removeEventListener(ev, listener);
-                this.updateQrbarcode(event.data, asset);
+                //this.updateQrbarcode(event.data, asset);
+                var data = event.data.trim();
+                var badge = asset.badge_number.trim();
+                if(data == badge){
+                  this.updateQrbarcode(event.data, asset);
+                }else{
+                    this.warningAlert(
+                      "Error",
+                      "Batch number not match. Please try again,"
+                    );
+                }
+                
               }
             });
           }
         };
-        broadcaster.addEventListener(ev, isGlobal, listener);
+        //broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -613,13 +628,13 @@ export class WorkActivityPage implements OnInit {
               console.log("this.bRfid = ", this.bRfid);
               if (this.bRfid) {
                 loading.dismiss();
-                broadcaster.removeEventListener(ev, listener);
+                //broadcaster.removeEventListener(ev, listener);
                 this.updateRfid(event.data, asset);
               }
             });
           }
         };
-        broadcaster.addEventListener(ev, isGlobal, listener);
+        //broadcaster.addEventListener(ev, isGlobal, listener);
       });
   }
 
@@ -678,7 +693,7 @@ export class WorkActivityPage implements OnInit {
       this.ngZone.run(() => {
         this.scanValue = data;
 
-        if (this.scanValue != "") {
+        if (this.scanValue != "" || this.scanValue != undefined || this.scanValue != '' || this.scanValue != null) {
           this.loadingController
             .create({
               message: "Please wait...",
@@ -691,10 +706,12 @@ export class WorkActivityPage implements OnInit {
                   loading.dismiss();
                   // if find, go to asset detail list
                   if (res.length > 0) {
-                    if (res[0].badge_no == asset['badge_number']) {
+                    if (res[0].badge_no == asset.badge_number) {
                       let navigationExtras: NavigationExtras = {
                         state: {
                           badge_no: res[0].badge_no,
+                          asset,
+                          work_activity: this.workactivity,
                         },
                       };
 
@@ -703,7 +720,7 @@ export class WorkActivityPage implements OnInit {
                         navigationExtras
                       );
                     } else {
-                      this.warningAlert(
+                      this.presentAlert(
                         "Error",
                         "Batch number not match. Please try again,"
                       );
@@ -741,7 +758,7 @@ export class WorkActivityPage implements OnInit {
         this.scanValue = data;
 
         if (this.scanValue != "") {
-          if (this.scanValue == asset['badge_number']) {
+        //  if (this.scanValue == asset.badge_number) {
             this.loadingController
               .create({
                 message: "Please wait...",
@@ -757,6 +774,7 @@ export class WorkActivityPage implements OnInit {
                       let navigationExtras: NavigationExtras = {
                         state: {
                           badge_no: res[0].badge_no,
+                          asset
                         },
                       };
 
@@ -776,6 +794,8 @@ export class WorkActivityPage implements OnInit {
                             let navigationExtras: NavigationExtras = {
                               state: {
                                 badge_no: this.scanValue,
+                                asset,
+                                work_activity: this.workactivity,
                               },
                             };
 
@@ -813,12 +833,12 @@ export class WorkActivityPage implements OnInit {
                   }
                 );
               });
-          } else {
-            this.warningAlert(
-              "Error",
-              "Batch number not match. Please try again,"
-            );
-          }
+          // } else {
+          //   this.warningAlert(
+          //     "Error",
+          //     "Batch number not match. Please try again,"
+          //   );
+          // }
         } else {
           this.presentAlert("Error", "QR code is invalid. Please try again.");
         }

@@ -106,7 +106,9 @@ export class WorkActivityAssetPage implements OnInit {
     this.workOrderActivityCompletionAssLocAssLisDataAll = [];
     this.workOrderActivityCompletionAssLocAssLisDataReq = [];
 
-    this.workactivityasset.service_histories.forEach(element => {
+    this.workOrderActivityCompletionAssLocAssListService.getOne(this.workactivityasset.id).subscribe(
+    (resWoacalal) => {
+    resWoacalal.service_histories.forEach(element => {
       // this.buttonStatus : Boolean
       this.assetLocationAssetListServiceHistoriesService.getOne(element).subscribe(
         (res) => {
@@ -126,7 +128,29 @@ export class WorkActivityAssetPage implements OnInit {
           // }
 
           if (res.svc_hist_type_req_fl == 'W1YS') {
-            this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+            console.log("datares>>", this.workOrderActivityCompletionAssLocAssLisDataReq)
+            var duplicate = false;
+            var check_history = res.service_history_type.replace(/\-/g, '');
+            check_history = res.service_history_type.replace(/\s/g, '');
+            if (this.workOrderActivityCompletionAssLocAssLisDataReq.length == 0){
+              this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+              duplicate = true;
+            }else{
+              this.workOrderActivityCompletionAssLocAssLisDataReq.forEach(element => {
+                var check_elemenent = element.replace(/\-/g, '');
+                check_elemenent = element.replace(/\s/g, '');
+                console.log("sktlg-DUPLICATE---", check_elemenent+"+++++"+check_history)
+                console.log("sktlg", element+"+++++"+res.service_history_type)
+                  if(check_elemenent == check_history){
+                     duplicate = true;
+                     console.log("sktlg-DUPLICATE!!!", element+"+++++"+res.service_history_type)
+                  }
+              });
+            }
+            if(duplicate == false){
+              this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+            }
+            
             if (res.service_history_type == "FAILURE") {
               console.log("yyyyyyyyyyy")
               if (res.failure_type != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
@@ -195,14 +219,14 @@ export class WorkActivityAssetPage implements OnInit {
         }
       )
     });
-
+ 
     setTimeout(() => {
       if (this.workOrdActComAssLocAssLisReq.length == this.workOrderActivityCompletionAssLocAssLisDataReq.length) {
         this.buttonDisable = false
       } else {
         this.buttonDisable = true
       }
-      console.log("workOrdActComAssLocAssLisReq", this.workOrdActComAssLocAssLisReq)
+      console.log("workOrderActivityCompletionAssLocAssLisDataReq", this.workOrderActivityCompletionAssLocAssLisDataReq)
     }, 1000);
 
     // if (this.router.getCurrentNavigation().extras.state.badge_no) {
@@ -234,6 +258,10 @@ export class WorkActivityAssetPage implements OnInit {
     //   );
     // }
     // }
+    }, () => {
+
+    }
+    )
   }
 
   getAllData2() {
@@ -273,7 +301,28 @@ export class WorkActivityAssetPage implements OnInit {
               // }
 
               if (res.svc_hist_type_req_fl == 'W1YS') {
-                this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+                var duplicate = false;
+                var check_history = res.service_history_type.replace(/\-/g, '');
+                check_history = res.service_history_type.replace(/\s/g, '');
+                if (this.workOrderActivityCompletionAssLocAssLisDataReq.length == 0){
+                  this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+                  duplicate = true;
+                }else{
+                  this.workOrderActivityCompletionAssLocAssLisDataReq.forEach(element => {
+                    var check_elemenent = element.replace(/\-/g, '');
+                    check_elemenent = element.replace(/\s/g, '');
+                    console.log("sktlg-DUPLICATE---", check_elemenent+"+++++"+check_history)
+                    console.log("sktlg", element+"+++++"+res.service_history_type)
+                      if(check_elemenent == check_history){
+                        duplicate = true;
+                        console.log("sktlg-DUPLICATE!!!", element+"+++++"+res.service_history_type)
+                      }
+                  });
+                }
+                if(duplicate == false){
+                  this.workOrderActivityCompletionAssLocAssLisDataReq.push(res.service_history_type)
+                }
+                
                 if (res.service_history_type == "FAILURE") {
                   if (res.failure_type != '' && res.failure_repair != '' && res.failure_mode != '' && res.failure_component != '') {
                     this.workOrdActComAssLocAssLisReq.push(res)
@@ -329,9 +378,10 @@ export class WorkActivityAssetPage implements OnInit {
                 }
               }
               console.log("this.buttonStatusArr.length = ", this.buttonStatusArr.length)
-              console.log("this.workOrderActivityCompletionAssLocAssLisDataReq.length = ", this.workOrderActivityCompletionAssLocAssLisDataReq.length)
-              console.log("workOrderActivityCompletionAssLocAssLisDataReq = ", this.workOrderActivityCompletionAssLocAssLisDataReq)
-              
+              // console.log("this.workOrderActivityCompletionAssLocAssLisDataReq.length = ", this.workOrderActivityCompletionAssLocAssLisDataReq.length)
+              // console.log("workOrderActivityCompletionAssLocAssLisDataReq = ", this.workOrderActivityCompletionAssLocAssLisDataReq)
+              // var workOrderActivityCompletionAssLocAssLisDataReqtrue = new Set(this.workOrderActivityCompletionAssLocAssLisDataReq);
+              // console.log("workOrderActivityCompletionAssLocAssLisDataReqtrue", workOrderActivityCompletionAssLocAssLisDataReqtrue)
               if (this.workOrderActivityCompletionAssLocAssLisDataReq.length == this.buttonStatusArr.length) {
                 this.buttonStatus = true
               } else {
@@ -432,7 +482,7 @@ export class WorkActivityAssetPage implements OnInit {
       // }
       if (element.svc_hist_type_req_fl == 'W1YS') {
         console.log("elementW1YS-----", element)
-
+        check.push(element.service_history_type)
         // if (element.service_history_type == "FAILURE") {
         //   console.log("sini fail")
         //   if (element.failure_type != '' && element.failure_root_cause != '' && element.failure_repair != '' && element.failure_mode != '' && element.failure_component != '') {
@@ -453,11 +503,26 @@ export class WorkActivityAssetPage implements OnInit {
         //   }
         // }
 
-        if (element.service_history_type != '') {
-           check.push(element.service_history_type)
-        } else {
-          console.log(element)
-        }
+        // var duplicate = false;
+        // if (element.service_history_type != '') {
+        //   if (check.length == 0){
+        //     check.push(element.service_history_type)
+        //     duplicate = true;
+        //   }else{
+        //     check.forEach(check => {
+        //       console.log("1t", check)
+        //       console.log("2t", element.service_history_type)
+        //         if(check == element.service_history_type){
+        //           duplicate = true;
+        //         }
+        //     });
+        //   }
+        //   if(duplicate == false){
+        //    check.push(element.service_history_type)
+        //   }
+        // } else {
+        //   console.log(element)
+        // }
       }
 
     });

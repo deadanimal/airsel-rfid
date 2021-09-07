@@ -24,7 +24,7 @@ class WorkOrderActivityCompletion(models.Model):
     
     id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     activityid = models.CharField(max_length=100, blank=True)
-    completiondatetime = models.DateTimeField(auto_now=True)
+    completiondatetime = models.DateTimeField(null=True)
 
     bo_status_cd = models.CharField(max_length=100, blank=True)
     user_id_1 = models.CharField(max_length=100, blank=True)

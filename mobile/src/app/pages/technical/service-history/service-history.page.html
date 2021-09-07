@@ -78,7 +78,7 @@
 
         <div *ngIf="questionAndAnswerFailureDiv == '1'">
           <ion-item>
-            <ion-label position="stacked">Failure Type</ion-label>
+            <ion-label position="stacked">Failure Cause</ion-label>
             <ion-select (ionChange)="saveFailureDontimeArray($event.target.value,'type')" required>
               <ion-select-option>Please Select</ion-select-option>
               <ion-select-option *ngFor="let ansType of failureTypeData" [value]="ansType.failure_type">
