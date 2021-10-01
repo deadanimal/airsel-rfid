@@ -152,7 +152,8 @@ def insert_into_work_order_activity(dict):
     dictionary_work_order_activity_completion_asset_location_asset_list = {
         "node_id": node_id,
         "asset_id": asset_id,
-        "participation":activityid
+        "measurent_type":activityid,
+        "reading_datetime":"1997-10-06 00:00:00"
     }
 
     dictionary_asset_location_asset_list_service_histories = {
@@ -160,6 +161,9 @@ def insert_into_work_order_activity(dict):
         "svc_hist_type_req_fl": svc_hist_type_req_fl
     }
 
+   # dictionary_work_order_activity_completion_update = {
+   #     "bo_status_cd": bo_status_cd,
+   # }
     # WorkOrderActivityCompletion operation
     print('qqqqqqqqqqqqqqqqqq')
     if not workorderactivitycompletion:
@@ -170,20 +174,26 @@ def insert_into_work_order_activity(dict):
         workorderactivitycompletion.save()
         woac_id = workorderactivitycompletion.id
         print('eeeeeeeeeeeeeeeeee',woac_id)
-
-    else:
-        print('aaaaaaaaaaaaa')
-        workorderactivitycompletion = WorkOrderActivityCompletion.objects.filter(
-            **dictionary_work_order_activity_completion).values()
+    
+    #else:
+    #if workorderactivitycompletion:
+    #    print('aaaaaaaaaaaaa')
+        #workorderactivitycompletion = WorkOrderActivityCompletion.objects.filter(
+        #    **dictionary_work_order_activity_completion).values()
+         
+        #workorderactivitycompletion = WorkOrderActivityCompletion(
+        #    **dictionary_work_order_activity_completion_update)
+        
+        #workorderactivitycompletion.save()
         # workorderactivitycompletion = WorkOrderActivityCompletion.objects.filter(
         #     **dictionary_work_order_activity_completion).values()
 
-        #woac_data = WorkOrderActivityCompletion.objects.get(activityid=dict['ACT_ID'])
-        #woac_data.status = woac_data.status
-        #woac_data.save()
-
-        woac_id = woac_data.id
-        print("ooooo ",woac_id)
+    woac = WorkOrderActivityCompletion.objects.get(activityid=activityid)
+    woac.bo_status_cd = bo_status_cd
+    woac.save()
+    print('aaaaaaaaaaaaa',bo_status_cd)
+    woac_id = woac.id
+        #print("ooooo ",woac_id)
 
         # field_object = WorkOrderActivityCompletion._meta.get_field(id)
         # woac_id = field_object.value_from_object(workorderactivitycompletion)
@@ -229,7 +239,8 @@ def insert_into_work_order_activity(dict):
         dictionary_work_order_activity_completion_asset_location_asset_list_inbound = {
             "node_id": node_id,
             "asset_id": asset_id,
-            "activityid":activityid
+            "activityid":activityid,
+            "reading_datetime":"1997-10-06 00:00:00"
         }
         # print("dictionary_work_order_activity_completion_asset_location_asset_list_inbound = ",dictionary_work_order_activity_completion_asset_location_asset_list_inbound)
         # woacalali_exist = WorkOrderActivityCompletionAssetLocationAssetListInbound.objects.filter(activityid=activityid).exists()
@@ -330,6 +341,7 @@ def insert_into_work_order_activity(dict):
         # print("get_asset_data = ")
         # print(get_asset_data[0]['asset_type'])
         asset_asset_type = get_asset_data[0]['asset_type']
+        asset_asset_badge = get_asset_data[0]['badge_no']
         get_asset_type_data = AssetType.objects.filter(asset_type_code=asset_asset_type).values()
         asset_type_id = get_asset_type_data[0]['id']
         # print('asset_type_id = ', asset_type_id)
@@ -337,19 +349,36 @@ def insert_into_work_order_activity(dict):
 
         print(service_history_type," = ",svc_hist_type_req_fl)
         # print("get_asset_type_sh_data = ",get_asset_type_sh_data)
-
-        fill_the_data = "no"
-        for data_val in get_asset_type_sh_data:
-            # print("data_val = ",data_val['assetservicehistory_id'])
-            service_history_ash = AssetServiceHistory.objects.filter(id=data_val['assetservicehistory_id']).values()
-            print(service_history_type," == ",service_history_ash[0]['asset_service_history'])
-            if service_history_type == service_history_ash[0]['asset_service_history'] :
-                fill_the_data = "yes"
         
+        fill_the_data = "no"
+
+        #target_asset = Asset.objects.get(asset_id=asset_id)
+        if len(get_asset_type_sh_data) >= 1:
+            for data_val in get_asset_type_sh_data:
+            # print("data_val = ",data_val['assetservicehistory_id'])
+                service_history_ash = AssetServiceHistory.objects.filter(id=data_val['assetservicehistory_id']).values()
+                print(service_history_type," == ",service_history_ash[0]['asset_service_history'])
+                if service_history_type == service_history_ash[0]['asset_service_history'] :
+                    fill_the_data = "yes"
+
+            if len(get_asset_type_sh_data) == 0:
+                fill_the_data = "no"
+        
+
+        #target_asset = Asset.objects.get(asset_id=asset_id)
+        fill = "yes"
+        if asset_asset_badge == '' or asset_asset_badge == "" :
+            fill = "no"
+
+        #fill = False if asset_asset_badge == '' else True
+
+        print('<----------------------------------------------------------------->',fill)
         print(fill_the_data)
         print(svc_hist_type_req_fl)
+        print(asset_asset_badge)
+        print(fill)
         if not alalshi_exist:
-            if fill_the_data == "yes" and svc_hist_type_req_fl == "W1YS":
+            if fill_the_data == "yes" and svc_hist_type_req_fl == "W1YS" and fill == "yes":
                 # if svc_hist_type_req_fl == "W1YS":
 
                 print('alalsh = ',alalsh)
@@ -363,12 +392,41 @@ def insert_into_work_order_activity(dict):
 
                     # if queryset is None :
 
-                woacalal_table = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(node_id=node_id,asset_id=asset_id,participation=activityid)
-                print("tttttttttttttttttt = ",woacalal_table)
-                for i in woacalal_table:
-                    i.service_histories.add(alalsh)
-                    i.participation = ""
-                    woacalal_table.save()
+                #woacalal_table
+                temp = WorkOrderActivityCompletionAssetLocationAssetList.objects.filter(measurent_type=activityid)
+                
+                #temp.service_histories.add(alalsh)
+                #temp.participation=""
+                #temp.save()
+                
+                if len(temp) > 1:
+                    for i in temp:
+                        if i.asset_id == asset_id:
+                            i.service_histories.add(alalsh)
+                            #i.participation = ""
+                            i.save()
+                
+                if len(temp) == 1:
+                    woacalal = temp[0]
+                    if woacalal.asset_id == asset_id:
+                        woacalal.service_histories.add(alalsh)
+                        #woacalal.participation=""
+                        woacalal.save()
+
+         #woacalal_new = WorkOrderActivityCompletionAssetLocationAssetList.objects.all().update(participation = "")
+
+                #if len(temp) == 1:
+                #    woacalal_table = temp[0]
+                #    woacalal_table.service_histories.add(alalsh)
+                #    woacalal_table.participation=""
+                #    woacalal_table.save()
+
+                #print("tttttttttttttttttt = ",woacalal_table)
+                #for i in woacalal_table.all():
+                #    i.service_histories.add(alalsh)
+                    #i.participation = ""
+                    #i.save()
+        #woacalal_new = WorkOrderActivityCompletionAssetLocationAssetList.objects.all().update(participation = "")
                     
                 # else :
 
@@ -427,7 +485,6 @@ def get_workorderactivity(from_date, to_date):
 
 
     r = requests.post("http://174.138.28.157/getWorkOrderActivity.php", data=payload)
-    print(r)
 
     json_dictionary = json.loads(r.content)
     for key in json_dictionary:
@@ -443,6 +500,11 @@ def get_workorderactivity(from_date, to_date):
                 results_json = json_dictionary[key]
                 for x in results_json:
                     insert_into_work_order_activity(x)
+    
+    #woacalal_new = WorkOrderActivityCompletionAssetLocationAssetList.objects.all().update(measurent_type = "")
+    #woacalal = WorkOrderActivityCompletionAssetLocationAssetList.objects.all()
+    #woacalal.update(participation = "")
+
 
     return json.loads(r.content)
 

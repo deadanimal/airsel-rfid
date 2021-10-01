@@ -140,9 +140,9 @@ def insert_into_asset(dict):
 
             print("here 10")
             
-            asset = Asset.objects.get(asset_id=asset_id)
+            asset = Asset.objects.filter(asset_id=asset_id)
             asset_measurement_type = AssetMeasurementType.objects.create(measurement_type=measurement_types,action_type='UNCHANGED')
-            asset.measurement_types.add(asset_measurement_type)
+            asset[0].measurement_types.add(asset_measurement_type)
 
     # to save characteristic_type && characteristic_value if exist
     if characteristic_type != "" and characteristic_value != "":
@@ -165,16 +165,16 @@ def insert_into_asset(dict):
         if not check_in_asset_attribute_inbound:
             print("characteristic_type = ",characteristic_type)
             if characteristic_type in characteristic_type_list:
-                asset = Asset.objects.get(asset_id=asset_id)
+                asset = Asset.objects.filter(asset_id=asset_id)
                 asset_attribute = AssetAttribute.objects.create(
                     characteristic_type=characteristic_type, characteristic_value=characteristic_value,action_type='UNCHANGED')
-                asset.asset_attributes.add(asset_attribute)
+                asset[0].asset_attributes.add(asset_attribute)
                 print('found',asset_attribute)
             else:
-                asset = Asset.objects.get(asset_id=asset_id)
+                asset = Asset.objects.filter(asset_id=asset_id)
                 asset_attribute = AssetAttribute.objects.create(
                     characteristic_type=characteristic_type, adhoc_value=characteristic_value,action_type='UNCHANGED')
-                asset.asset_attributes.add(asset_attribute)
+                asset[0].asset_attributes.add(asset_attribute)
                 print("not found",asset_attribute)
 
     #     asset = Asset.objects.get(asset_id=asset_id)

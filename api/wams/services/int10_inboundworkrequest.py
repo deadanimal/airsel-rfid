@@ -45,6 +45,7 @@ def get_inboundworkrequest(type, data):
         }
 
         r = requests.post("http://174.138.28.157/getInboundWorkRequestUpdate.php", data = payload)
+    print("DATA", r)
 
     if (int(r.status_code) >= 500):
         return {'status': 'ERROR', 'status_code': r.status_code, 'error_details': 'An internal server error have been occurred.'}

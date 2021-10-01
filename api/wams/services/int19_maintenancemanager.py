@@ -36,11 +36,11 @@ def insert_into_maintenance_manager(dict):
         maintenance_manager.save()
 
     else:
-        maintenance_manager = MaintenanceManager.objects.get(maintenance_manager=maintenance_manager)
-        maintenance_manager.description = description
-        maintenance_manager.status = status
-        maintenance_manager.user_id = user_id
-        maintenance_manager.save()
+        maintenance_manager = MaintenanceManager.objects.filter(maintenance_manager=maintenance_manager)
+        maintenance_manager[0].description = description
+        maintenance_manager[0].status = status
+        maintenance_manager[0].user_id = user_id
+        #maintenance_manager.save()
 
 
 def get_maintenancemanager(from_date, to_date):

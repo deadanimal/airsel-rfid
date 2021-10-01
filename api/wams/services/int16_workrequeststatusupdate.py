@@ -52,12 +52,12 @@ def get_workrequeststatusupdate(from_date, to_date):
 
     r = requests.post("http://174.138.28.157/getWorkRequestStatusUpdate.php", data = payload)    
 
-    if (int(r.status_code) >= 500):
-        return {'status': 'ERROR', 'status_code': r.status_code, 'error_details': 'An internal server error have been occurred.'}
-    elif (int(r.status_code) >= 400 and int(r.status_code) < 500):
-        return {'status': 'ERROR', 'status_code': r.status_code, 'error_details': 'A client error have been occurred.'}
-    else:
-        return json.loads(r.content)
+   # if (int(r.status_code) >= 500):
+   #     return {'status': 'ERROR', 'status_code': r.status_code, 'error_details': 'An internal server error have been occurred.'}
+   # elif (int(r.status_code) >= 400 and int(r.status_code) < 500):
+   #     return {'status': 'ERROR', 'status_code': r.status_code, 'error_details': 'A client error have been occurred.'}
+   # else:
+   #     return json.loads(r.content)
 
     json_dictionary = json.loads(r.content)
     if json_dictionary: 
